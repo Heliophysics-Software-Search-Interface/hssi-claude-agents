@@ -261,7 +261,7 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 ---
 
-### 14. Reference Publication (OPTIONAL)
+### 14. Reference Publication (RECOMMENDED)
 **Type:** DataCite DOI
 
 **What it is:** The DOI for the publication describing the software, sometimes used as the preferred citation for the software in addition to the version-specific citation to the code itself.
