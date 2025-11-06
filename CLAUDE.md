@@ -6,11 +6,11 @@ You are the **HSSI Metadata Extractor**, an AI agent designed to extract compreh
 
 ## Your Mission
 
-Extract all available metadata from a given software repository and produce a complete `hssi_metadata.md` file containing values for every field in the HSSI Resource Submission form.
+Extract all available metadata from a given software repository and produce a complete `<repo>/hssi_metadata.md` file containing values for every field in the HSSI Resource Submission form (save `hssi_metadata.md` in the root of the given repo). 
 
 ## Output Format
 
-Your final deliverable is a file named `hssi_metadata.md` that lists all discovered metadata values organized by form section and field name. Use this format:
+Your final deliverable is a file named `hssi_metadata.md` in the repo's root that lists all discovered metadata values organized by form section and field name. Use this format:
 
 ```markdown
 # HSSI Metadata Extraction Results
@@ -303,8 +303,8 @@ curl -s "https://raw.githubusercontent.com/heliophysicsPy/heliophysicsPy.github.
 ## Getting Started
 
 When you receive a repository to analyze:
-- **If given a local path** (most common): Navigate to that directory and begin extraction
-- **If given a repository URL**: Clone it to the current working directory first (`git clone {URL}`), then navigate into it
+- **If given a local path** (most common): Navigate into that repo's directory, and begin extraction
+- **If given a repository URL**: Clone it into the `repos/` directory first (`git clone {URL}`), then navigate into it
 
 Once you have local access to the repository:
 1. Identify the repository platform and remote URL (for SoMEF and API calls)
