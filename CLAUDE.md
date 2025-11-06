@@ -75,7 +75,7 @@ See `resource_submission_form_fields.md` (Stage 1 and Stage 2 in "Automated Meta
 
 See `resource_submission_form_fields.md` (Stage 3) for details on what fields SoMEF can extract.
 
-**Important:** SoMEF can be slow (30+ seconds). This is normal.
+**Important:** SoMEF can be slow (30+ seconds) and the info it returns can be incorrect. This is normal.
 
 #### Step 1c: PyHC Metadata Check
 
@@ -202,7 +202,7 @@ After completing your `hssi_metadata.md` file, perform a **thorough second pass*
 When metadata conflicts between sources, use this priority order:
 1. **PyHC metadata** (manually curated, most trustworthy)
 2. **DataCite/Zenodo APIs** (official DOI metadata)
-3. **SoMEF** (automated but comprehensive)
+3. **SoMEF** (automated and comprehensive, but unreliable)
 4. **Manual examination** (use your judgment)
 
 ### Mandatory vs. Optional Fields
