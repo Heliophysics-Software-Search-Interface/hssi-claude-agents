@@ -6,4 +6,4 @@ Experiment with Claude Code to extract HSSI metadata from any repo
 2. Clone this repo
 3. Run `claude` from the root dir
 4. Point it to a software repo (e.g. local folder path, GitHub URL, DOI)
-5. Metadata gets extracted into `hssi_metadata.md`
+5. Metadata gets extracted into `repos/<repo>/hssi_metadata.md`
