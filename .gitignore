@@ -1,0 +1,10 @@
+# macOS
+.DS_Store
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Cloned repos — only track the extracted hssi_metadata.md files
+repos/**
+!repos/*/
+!repos/*/hssi_metadata.md

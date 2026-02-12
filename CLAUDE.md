@@ -107,6 +107,7 @@ After automated extraction, **thoroughly examine the repository** to fill in rem
 - This is one of the most important fields
 - Requires understanding the full breadth of what the software does
 - Be **exhaustive** - try not to miss any functionality
+- Use the `software-functionality` skill for detailed classification guidance, code patterns, library mappings, and common mistakes to avoid
 - See `resource_submission_form_fields.md` for the complete list of 85+ possible values
 - Select ALL that apply
 
