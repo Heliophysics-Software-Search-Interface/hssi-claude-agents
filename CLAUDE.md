@@ -165,34 +165,26 @@ See the "Notes for AI Agents" section in `resource_submission_form_fields.md` fo
 
 ---
 
-### Step 3: Verification Pass
+### Step 3: Independent Validation
 
-After completing your `hssi_metadata.md` file, perform a **thorough second pass** to verify:
+After completing your `hssi_metadata.md` file, do NOT self-review. Instead, invoke the **hssi-validator** subagent for independent verification. Self-review is inherently limited — you cannot objectively check your own work.
 
-#### Correctness
-- Are all URLs valid and accessible?
-- Are DOIs formatted correctly (e.g., https://doi.org/10.XXXX/XXXXX)?
-- Are author names formatted properly (Given Name, Initials, Surname)?
-- Are dates in the correct format (YYYY-MM-DD)?
+#### Before writing the file
 
-#### Verifiability
-- Can each piece of metadata be traced back to a source?
-- Are you confident in the accuracy of domain-specific fields (Software Functionality, Related Region)?
-- Do automated extraction results make sense in context?
+Do a quick sanity check before saving `hssi_metadata.md`:
+- All 33 fields are present (value or "Not found")
+- All MANDATORY fields have values
+- Dates are YYYY-MM-DD, DOIs are full URLs, values are from allowed lists
 
-#### Exhaustiveness
-- **Software Functionality**: Did you identify ALL applicable functionalities?
-- **Related Region**: Did you identify ALL applicable regions?
-- **Authors**: Did you include ALL authors, not just the primary one?
-- **Keywords**: Did you capture comprehensive keywords from all sources?
-- **Programming Languages**: Did you list all significant languages, not just the primary one?
+#### After writing the file
 
-#### Completeness
-- Have you provided values (or "Not found") for all 33 form fields?
-- Are multi-entry fields (Authors, Keywords, etc.) fully populated?
-- Have you filled in all sub-fields for nested fields (e.g., Author Identifier, Affiliation)?
+1. **Invoke the `hssi-validator` subagent** on the newly created `hssi_metadata.md` file. The validator will independently verify every field against the repository contents and return a structured report with ERRORs, WARNINGs, and SUGGESTIONs.
 
-**If you find errors or omissions during verification, correct them immediately.**
+2. **Fix all ERRORs immediately.** These are demonstrably wrong (incorrect values, missing mandatory fields, broken URLs, values not from allowed lists). No judgment needed — just fix them.
+
+3. **Present WARNINGs and SUGGESTIONs to the user.** These require human judgment (e.g., "possible missing author", "consider adding this functionality"). Summarize the findings and let the user decide.
+
+4. **Do NOT loop.** Run the validator once. If the user wants another pass after reviewing the findings, they can ask for it explicitly.
 
 ---
 
@@ -252,15 +244,16 @@ Refer to this document throughout your extraction process for detailed specifica
 
 ## Final Checklist
 
-Before submitting your `hssi_metadata.md` file, confirm:
+Before presenting your `hssi_metadata.md` file to the user, confirm:
 
 - [ ] All automated extraction methods attempted (DataCite, Zenodo, SoMEF, PyHC)
 - [ ] Repository thoroughly examined manually
 - [ ] All 33 form fields addressed (value provided or "Not found")
 - [ ] MANDATORY fields have values
 - [ ] Software Functionality and Related Region are exhaustively analyzed
-- [ ] Second verification pass completed
-- [ ] All corrections from verification pass applied
+- [ ] `hssi-validator` subagent invoked and report received
+- [ ] All ERRORs from validation report fixed
+- [ ] WARNINGs and SUGGESTIONs presented to user
 - [ ] Metadata sources are verifiable
 - [ ] Format matches the required structure
 
@@ -296,7 +289,9 @@ curl -s "https://raw.githubusercontent.com/heliophysicsPy/heliophysicsPy.github.
 
 # 7. Create hssi_metadata.md with all findings
 
-# 8. Review and verify hssi_metadata.md
+# 8. Invoke hssi-validator subagent for independent verification
+# 9. Fix any ERRORs from the validation report
+# 10. Present WARNINGs and SUGGESTIONs to the user
 ```
 
 ---
@@ -310,7 +305,8 @@ When you receive a repository to analyze:
 Once you have local access to the repository:
 1. Identify the repository platform and remote URL (for SoMEF and API calls)
 2. Start Step 1a: Search for DOI
-3. Proceed through all steps systematically
-4. Produce the final `hssi_metadata.md` file
+3. Proceed through Steps 1–2 systematically
+4. Write the `hssi_metadata.md` file
+5. Run Step 3: Invoke the `hssi-validator` subagent, fix ERRORs, and present remaining findings to the user
 
 Good luck with your metadata extraction!
