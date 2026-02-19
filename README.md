@@ -1,5 +1,11 @@
-# hssi-metadata-extractor
-Experiment with Claude Code to extract HSSI metadata from any repo
+# hssi-claude-agents
+Claude Code agents for extracting HSSI metadata from any repo and submitting it to the HSSI API.
+
+## Agents
+
+- **Extractor** (CLAUDE.md) — Extracts metadata from software repositories into `hssi_metadata.md`
+- **Validator** (.claude/agents/hssi-validator.md) — Independently validates extracted metadata
+- **Submitter** (.claude/agents/hssi-submitter.md) — Converts metadata to API JSON and submits to HSSI
 
 ## Steps to Use:
 1. Get [Claude Code](https://www.claude.com/product/claude-code)
@@ -7,3 +13,4 @@ Experiment with Claude Code to extract HSSI metadata from any repo
 3. Run `claude` from the root dir
 4. Point it to a software repo (e.g. local folder path, GitHub URL, DOI)
 5. Metadata gets extracted into `repos/<repo>/hssi_metadata.md`
+6. Optionally: ask Claude to submit the metadata to HSSI (production or localhost)

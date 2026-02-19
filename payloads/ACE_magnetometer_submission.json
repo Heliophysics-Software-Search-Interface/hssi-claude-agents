@@ -1,0 +1,91 @@
+[
+  {
+    "submitter": [
+      {
+        "email": "sapols@yahoo.com",
+        "person": {
+          "firstName": "Local Test",
+          "lastName": "User"
+        }
+      }
+    ],
+    "softwareName": "ace_magnetometer",
+    "codeRepositoryUrl": "https://github.com/space-physics/ACE_magnetometer",
+    "authors": [
+      {
+        "firstName": "Michael",
+        "lastName": "Hirsch"
+      }
+    ],
+    "description": "This Python package provides tools to download, load, and plot magnetometer data from the ACE (Advanced Composition Explorer) satellite. The software automatically retrieves 16-second averaged magnetic field data from the ACE mission's FTP server and provides visualization capabilities for analyzing the interplanetary magnetic field (IMF) components including Br, Bt, Bn, Bx, By, Bz, total field magnitude (Btotal), and RMS fluctuations (dBrms).",
+    "conciseDescription": "Load and Plot ACE satellite magnetometer data",
+    "publicationDate": "2017-03-14",
+    "publisher": {
+      "name": "GitHub",
+      "identifier": "https://github.com"
+    },
+    "version": {
+      "number": "v0.9.0",
+      "release_date": "2018-07-25",
+      "description": "Uses zip files with ascii data inside"
+    },
+    "programmingLanguage": [
+      "Python 3.x"
+    ],
+    "license": {
+      "name": "MIT License",
+      "url": "https://spdx.org/licenses/MIT.html"
+    },
+    "keywords": [
+      "ace",
+      "geoscience",
+      "magnetometer",
+      "python",
+      "satellite-magnetometer",
+      "IMF",
+      "magnetic field",
+      "geospace",
+      "magnetosphere",
+      "ionosphere_thermosphere_mesosphere"
+    ],
+    "dataSources": [
+      "FTP/FTPS Directories"
+    ],
+    "inputFormats": [
+      "ascii"
+    ],
+    "operatingSystem": [
+      "Linux",
+      "Mac",
+      "Windows",
+      "Operating System Independent"
+    ],
+    "cpuArchitecture": [
+      "CPU Independent"
+    ],
+    "relatedRegion": [
+      "Interplanetary Space",
+      "Earth Magnetosphere"
+    ],
+    "softwareFunctionality": [
+      "Data Processing and Analysis: Data Access and Retrieval",
+      "Data Processing and Analysis: Processing",
+      "Data Processing and Analysis: Time Series Analysis",
+      "Data Visualization: 2D Graphics",
+      "Data Visualization: Line Plots"
+    ],
+    "developmentStatus": "Active",
+    "documentation": "https://github.com/space-physics/ACE_magnetometer/blob/main/README.md",
+    "relatedInstruments": [
+      {
+        "name": "ACE Magnetometer (MAG)"
+      }
+    ],
+    "relatedObservatories": [
+      {
+        "name": "ACE (Advanced Composition Explorer)"
+      }
+    ],
+    "logo": "https://raw.githubusercontent.com/space-physics/ace_magnetometer/main/tests/timeplot.png"
+  }
+]

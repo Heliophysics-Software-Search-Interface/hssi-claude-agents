@@ -1,0 +1,117 @@
+[
+  {
+    "submitter": [
+      {
+        "email": "sapols@yahoo.com",
+        "person": {
+          "firstName": "Local Test",
+          "lastName": "User"
+        }
+      }
+    ],
+    "softwareName": "Gemini3D",
+    "persistentIdentifier": "https://doi.org/10.5281/zenodo.3647579",
+    "codeRepositoryUrl": "https://github.com/gemini3d/gemini3d",
+    "softwareFunctionality": [
+      "Models and Simulations",
+      "Models and Simulations: MHD",
+      "Models and Simulations: Physics-Based",
+      "Models and Simulations: First Principles",
+      "Data Visualization: 2D Graphics",
+      "Data Visualization: 3D Graphics",
+      "Data Processing and Analysis: Processing"
+    ],
+    "relatedRegion": [
+      "Earth Atmosphere",
+      "Earth Magnetosphere"
+    ],
+    "authors": [
+      {
+        "firstName": "Matthew",
+        "lastName": "Zettergren",
+        "identifier": "https://orcid.org/0000-0002-9837-059X"
+      },
+      {
+        "firstName": "Michael",
+        "lastName": "Hirsch",
+        "identifier": "https://orcid.org/0000-0002-1637-6526"
+      }
+    ],
+    "description": "The GEMINI model (Geospace Environment Model of Ion-Neutral Interactions) is a three-dimensional ionospheric fluid-electrodynamic model written in object-oriented Fortran (2008+ standard). GEMINI is used for various scientific studies including: effects of auroras on the terrestrial ionosphere, natural hazard effects on the space environment, and effects of ionospheric fluid instabilities on radio propagation. The model uses generalized orthogonal curvilinear coordinates and has been tested with dipole and Cartesian coordinates. It solves the coupled ionospheric fluid and electrodynamic equations to simulate plasma dynamics in the ionosphere-thermosphere system.",
+    "conciseDescription": "Three-dimensional ionospheric fluid-electrodynamic model for simulating auroral effects, natural hazards, and ionospheric instabilities on radio propagation.",
+    "publicationDate": "2018-08-31",
+    "publisher": {
+      "name": "Zenodo",
+      "publisherIdentifier": "https://zenodo.org",
+      "identifier": "https://zenodo.org"
+    },
+    "version": {
+      "number": "v1.7.0",
+      "release_date": "2024-01-09",
+      "description": "Working release wrapping up late 2022 and all 2023 changes, before implementing Git Submodules in Gemini3D. CI passes: Linux (GCC 9,10,11,12,13, Intel oneAPI 2024.0), macOS (GCC 13).",
+      "version_pid": "https://doi.org/10.5281/zenodo.10475267"
+    },
+    "programmingLanguage": [
+      "Fortran 2008",
+      "Python 3.x"
+    ],
+    "license": {
+      "name": "Apache License 2.0",
+      "url": "https://spdx.org/licenses/Apache-2.0"
+    },
+    "keywords": [
+      "ionosphere",
+      "aurora",
+      "ionosphere_thermosphere_mesosphere",
+      "magnetosphere",
+      "fluid dynamics",
+      "electrodynamics",
+      "space physics",
+      "space weather",
+      "MHD",
+      "plasma physics",
+      "geospace"
+    ],
+    "dataSources": [
+      "Other"
+    ],
+    "inputFormats": [
+      "HDF5",
+      "ascii"
+    ],
+    "outputFormats": [
+      "HDF5"
+    ],
+    "operatingSystem": [
+      "Linux",
+      "Mac",
+      "Windows"
+    ],
+    "cpuArchitecture": [
+      "x86-64",
+      "Apple Silicon arm64",
+      "Linux aarch64 or arm64",
+      "ppc64le",
+      "HPC or HEC"
+    ],
+    "developmentStatus": "Active",
+    "documentation": "https://gemini3d.github.io/gemini3d/",
+    "funder": [
+      {
+        "name": "NSF"
+      },
+      {
+        "name": "NASA"
+      },
+      {
+        "name": "DARPA"
+      }
+    ],
+    "relatedSoftware": [
+      "https://github.com/gemini3d/mat_gemini",
+      "https://github.com/gemini3d/GEMINI-examples",
+      "https://github.com/gemini3d/GEMINI-docs",
+      "https://github.com/geospace-code/h5fortran"
+    ]
+  }
+]

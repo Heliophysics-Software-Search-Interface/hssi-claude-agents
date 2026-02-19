@@ -8,3 +8,9 @@
 repos/**
 !repos/*/
 !repos/*/hssi_metadata.md
+
+# Payloads — only track reference examples
+payloads/*
+!payloads/.gitkeep
+!payloads/gemini3d_submission.json
+!payloads/ACE_magnetometer_submission.json
