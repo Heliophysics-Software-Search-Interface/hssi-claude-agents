@@ -312,7 +312,8 @@
 
 ### 7. Software Name (MANDATORY)
 - **Name:** sunpy
-- Source: pyproject.toml and repository name
+- **Full Name:** SunPy - Python for Solar Physics
+- **Source:** PyHC registry, GitHub repository, Zenodo
 
 ### 8. Description (MANDATORY)
 - **Description:** sunpy is a Python software package that provides fundamental tools for accessing, loading and interacting with solar physics data in Python. It includes an interface for searching and downloading data from multiple data providers, data containers for image and time series data, commonly used solar coordinate frames and associated transformations, as well as other functionality needed for solar data analysis.
