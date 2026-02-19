@@ -99,6 +99,24 @@ Present a roundtrip verification report:
 - Overall verdict: PASS or FAIL
 - If FAIL, explain what went wrong and potential causes
 
+**Always end with a summary block** listing the new IDs and direct links:
+
+```
+New IDs:
+
+  - submissionId: <submissionId from submit response>
+  - softwareId: <softwareId from submit response>
+  - queueId: <queueId found during verification>
+
+Direct links:
+
+  - Edit page: <targetUrl>/curate/edit_submission/?uid=<queueId>
+  - API view: <targetUrl>/api/view/<softwareId>/
+  - SAPI data: <targetUrl>/sapi/software_edit_data/<queueId>/
+```
+
+This block must always be the last thing the user sees after a successful submission.
+
 ---
 
 ## Safety Rules
