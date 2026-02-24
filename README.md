@@ -4,8 +4,8 @@ Claude Code agents for extracting HSSI metadata from any repo and submitting it 
 ## Agents
 
 - **Extractor** (CLAUDE.md) — Extracts metadata from software repositories into `hssi_metadata.md`
-- **Validator** (.claude/agents/hssi-validator.md) — Independently validates extracted metadata
-- **Submitter** (.claude/agents/hssi-submitter.md) — Converts metadata to API JSON and submits to HSSI
+- **Validator** (.claude/agents/hssi-metadata-validator.md) — Independently validates extracted metadata
+- **Submitter** (.claude/agents/hssi-metadata-submitter.md) — Converts metadata to API JSON and submits to HSSI
 
 ## Steps to Use:
 1. Get [Claude Code](https://www.claude.com/product/claude-code)

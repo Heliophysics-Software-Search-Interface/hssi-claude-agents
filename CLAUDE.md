@@ -29,7 +29,7 @@ When running "extract and submit" or "extract and submit locally":
 3. Once the user has reviewed the metadata, ask for:
    - **Submitter name** (first and last name)
    - **Submitter email**
-4. Invoke the `hssi-submitter` subagent, passing:
+4. Invoke the `hssi-metadata-submitter` subagent, passing:
    - Path to the `hssi_metadata.md` file
    - Submitter name and email
    - Target URL (`https://hssi.hsdcloud.org` for production, `http://localhost` for local)
@@ -196,7 +196,7 @@ See the "Notes for AI Agents" section in `resource_submission_form_fields.md` fo
 
 ### Step 3: Independent Validation
 
-After completing your `hssi_metadata.md` file, do NOT self-review. Instead, invoke the **hssi-validator** subagent for independent verification. Self-review is inherently limited — you cannot objectively check your own work.
+After completing your `hssi_metadata.md` file, do NOT self-review. Instead, invoke the **hssi-metadata-validator** subagent for independent verification. Self-review is inherently limited — you cannot objectively check your own work.
 
 #### Before writing the file
 
@@ -207,7 +207,7 @@ Do a quick sanity check before saving `hssi_metadata.md`:
 
 #### After writing the file
 
-1. **Invoke the `hssi-validator` subagent** on the newly created `hssi_metadata.md` file. The validator will independently verify every field against the repository contents and return a structured report with ERRORs, WARNINGs, and SUGGESTIONs.
+1. **Invoke the `hssi-metadata-validator` subagent** on the newly created `hssi_metadata.md` file. The validator will independently verify every field against the repository contents and return a structured report with ERRORs, WARNINGs, and SUGGESTIONs.
 
 2. **Fix all ERRORs immediately.** These are demonstrably wrong (incorrect values, missing mandatory fields, broken URLs, values not from allowed lists). No judgment needed — just fix them.
 
@@ -280,7 +280,7 @@ Before presenting your `hssi_metadata.md` file to the user, confirm:
 - [ ] All 33 form fields addressed (value provided or "Not found")
 - [ ] MANDATORY fields have values
 - [ ] Software Functionality and Related Region are exhaustively analyzed
-- [ ] `hssi-validator` subagent invoked and report received
+- [ ] `hssi-metadata-validator` subagent invoked and report received
 - [ ] All ERRORs from validation report fixed
 - [ ] WARNINGs and SUGGESTIONs presented to user
 - [ ] Metadata sources are verifiable
@@ -318,7 +318,7 @@ curl -s "https://raw.githubusercontent.com/heliophysicsPy/heliophysicsPy.github.
 
 # 7. Create hssi_metadata.md with all findings
 
-# 8. Invoke hssi-validator subagent for independent verification
+# 8. Invoke hssi-metadata-validator subagent for independent verification
 # 9. Fix any ERRORs from the validation report
 # 10. Present WARNINGs and SUGGESTIONs to the user
 ```
@@ -336,6 +336,6 @@ Once you have local access to the repository:
 2. Start Step 1a: Search for DOI
 3. Proceed through Steps 1–2 systematically
 4. Write the `hssi_metadata.md` file
-5. Run Step 3: Invoke the `hssi-validator` subagent, fix ERRORs, and present remaining findings to the user
+5. Run Step 3: Invoke the `hssi-metadata-validator` subagent, fix ERRORs, and present remaining findings to the user
 
 Good luck with your metadata extraction!

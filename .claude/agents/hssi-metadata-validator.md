@@ -1,5 +1,5 @@
 ---
-name: hssi-validator
+name: hssi-metadata-validator
 description: >
   Validates an HSSI metadata file against the actual repository contents.
   Use when the user asks to validate, verify, check, or review an hssi_metadata.md file.

@@ -1,5 +1,5 @@
 ---
-name: hssi-submitter
+name: hssi-metadata-submitter
 description: >
   Converts hssi_metadata.md files into HSSI API submission payloads and submits
   them. Use when the user asks to submit, build a payload, or send metadata to HSSI.
