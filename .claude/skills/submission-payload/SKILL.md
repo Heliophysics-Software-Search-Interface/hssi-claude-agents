@@ -11,6 +11,8 @@ user-invocable: false
 
 Build a high-fidelity HSSI submission payload by mapping `hssi_metadata.md` sections to API JSON fields.
 
+> **WARNING: Every POST to `/api/submit` is irreversible.** It creates a permanent database record and sends a confirmation email. There is no sandbox, dry-run, undo, or delete. Build the payload correctly here — do not probe the API with test or partial payloads. If you're unsure about a field's format, consult the example payloads or ask the user.
+
 The authoritative API specification lives in the `hssi-website` repo:
 - `concept/import_submission_notes.md` — endpoint spec, field list, object schemas
 - `concept/import_submission.json` — curated example payload (kept up-to-date by HSSI developers)
@@ -205,6 +207,8 @@ Normalize values to **exact** strings from the `name` field in these endpoints o
 4. **Object deduplication** — The backend matches existing DB records: Person by `identifier` then `firstName`+`lastName`, Submitter by `email`, Organization by `identifier`, Instrument/Observatory by `identifier`. If a match is found with fewer fields, the DB record is updated. If a match is found with conflicting fields, the existing DB values win.
 
 5. **`import_submission.json` may lag behind the actual API** — The HSSI developers' curated example (`concept/import_submission.json` in hssi-website) is the intended spec but may be out of sync with the actual backend implementation (e.g., PR #11 proposes camelCase version fields and removing `abbreviation`/`definition`). When in doubt, trust the field names and shapes used in `payloads/gemini3d_submission.json`, which successfully submitted and passed roundtrip verification against the live API.
+
+6. **No dry-run or test mode** — The HSSI API has no sandbox endpoint, no dry-run flag, no email suppression option, and no mechanism to delete submitted records. Every `POST /api/submit` unconditionally creates a permanent database record and sends a confirmation email (via Django's `transaction.on_commit()`). The `submitter.email` field is required — the backend raises `ValueError` if it's missing. There is no way to submit "silently" or "for testing." Treat every POST as a production action with permanent consequences.
 
 ---
 

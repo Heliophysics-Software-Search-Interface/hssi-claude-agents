@@ -23,6 +23,8 @@ Before submitting, confirm:
 - [ ] `submitter` array is non-empty; each entry has `email` and `person` with `firstName`/`lastName`
 - [ ] `authors` array is non-empty; each entry has `firstName` and `lastName`
 - [ ] Submitter email appears valid (contains `@`)
+- [ ] Submitter email is the real submitter's email address — this is the genuine submission, not a test or probe
+- [ ] This is the one and only submission attempt for this metadata — not a test, probe, or iterative experiment
 - [ ] Target site responds (GET the base URL to confirm it's up)
 
 ---
@@ -132,6 +134,10 @@ These differences are expected between submitted and stored forms:
 ### Email-Related False Failures
 
 The submit endpoint sends notification emails after the DB write. If the email recipient is rejected or the mail server is unavailable, the API may return an error even though the submission was successfully stored. Always check `/api/view/<softwareId>/` before concluding that a submission failed.
+
+### Duplicate Prevention
+
+**If a submission appears to fail but the record exists in `/api/view/<softwareId>/`, do NOT resubmit.** The record was persisted successfully — the error was caused by a downstream issue. Resubmitting would create a duplicate permanent record and send another confirmation email. Instead, report the error and the existing record to the user and let them decide how to proceed.
 
 ### Verifying Without Queue ID
 
