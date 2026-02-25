@@ -6,7 +6,7 @@ description: >
   and targeted (specific field changes) modes. Use when the user asks to update,
   refresh, or enrich metadata for software already in HSSI.
 tools: Read, Glob, Grep, Bash, WebFetch
-model: sonnet
+model: opus
 skills:
   - hssi-field-definitions
   - update-payload
