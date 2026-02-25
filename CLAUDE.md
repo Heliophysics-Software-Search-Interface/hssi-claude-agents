@@ -18,6 +18,12 @@ When the user asks to work with a repository, determine the appropriate mode fro
 
 - **Extract and submit locally** — Full pipeline but submit to `http://localhost` for testing. Use when the user mentions localhost or local testing.
 
+- **Update (refresh)** — Check dynamic fields of software already in HSSI against its repo and update stale values. Use when the user says things like "update sunpy on HSSI", "refresh sunpy's metadata", or "check if sunpy's metadata is up to date". Does NOT run SoMEF or deep code analysis — lightweight targeted checks only.
+
+- **Enrich** — Run the full extraction pipeline against a repo, then diff ALL fields against what's currently in HSSI to find missing or outdated metadata. Use when the user says things like "enrich sunpy on HSSI", "check what metadata sunpy is missing", or "fill in sunpy's missing fields".
+
+- **Targeted update** — Apply specific field/value changes to software already in HSSI. No extraction needed — the user provides the exact changes. Use when the user says things like "change sunpy's name to SunPy on HSSI" or "update sunpy's version to v6.1.0".
+
 If the user's intent is ambiguous, ask which mode they want. If it's clear, proceed without asking.
 
 ### Submission Pipeline
@@ -34,6 +40,21 @@ When running "extract and submit" or "extract and submit locally":
    - Submitter name and email
    - Target URL (`https://hssi.hsdcloud.org` for production, `http://localhost` for local)
 5. The submitter will handle payload construction, verification, user approval, submission, and roundtrip verification
+
+### Update Pipeline
+
+When running "update", "enrich", or "targeted update":
+
+1. Determine the software identity (name, repo URL, or UUID)
+2. Determine the mode from the user's request
+3. Ensure local repo access (skip for targeted mode):
+   - If given a local path: use directly
+   - If given a URL: clone into `repos/` directory
+4. Invoke the `hssi-metadata-updater` subagent with:
+   - Software identifier + mode
+   - Repo path (refresh/enrich) or targeted changes (targeted)
+   - Target URL (`https://hssi.hsdcloud.org` for production, `http://localhost` for local)
+5. The updater handles everything: identify software in HSSI → fetch current metadata → extract fresh metadata → diff → present report → user approves → build payload → submit → roundtrip verify
 
 
 
