@@ -60,6 +60,7 @@ Execute these steps in order:
 ### Step 1: Parse hssi_metadata.md
 
 - Read the entire file
+- **Do this by reasoning over the text directly — do not write scripts (Python, shell, etc.) to parse the markdown.** `hssi_metadata.md` is freeform text, so any ad hoc parsing script will be brittle and produce wrong values. You are an LLM; reading text and extracting structured data from it is what you do best.
 - Build a **section ledger**: for each of the 33 sections, record:
   - Section number and title
   - Extracted value(s)
