@@ -60,6 +60,12 @@ The update API requires a bearer token. Resolve it via this cascade:
 
 ---
 
+## Repo Freshness
+
+Before extracting metadata, **always `git pull`** the repo to ensure it reflects the latest upstream state. Never assume a pre-existing repo or its `hssi_metadata.md` is up-to-date — any discovered `hssi_metadata.md` is likely from a previous submission and probably stale.
+
+---
+
 ## Workflow
 
 ### Step 1: Identify Software in HSSI

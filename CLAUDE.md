@@ -47,9 +47,10 @@ When running "update", "enrich", or "targeted update":
 
 1. Determine the software identity (name, repo URL, or UUID)
 2. Determine the mode from the user's request
-3. Ensure local repo access (skip for targeted mode):
-   - If given a local path: use directly
-   - If given a URL: clone into `repos/` directory
+3. Ensure local repo is up-to-date (skip for targeted mode):
+   - If given a local path or repo already exists in `repos/`: `git pull` first
+   - If given a URL with no local clone: clone into `repos/` directory
+   - Never assume a pre-existing `hssi_metadata.md` is current
 4. Invoke the `hssi-metadata-updater` subagent with:
    - Software identifier + mode
    - Repo path (refresh/enrich) or targeted changes (targeted)
