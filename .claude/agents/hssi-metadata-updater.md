@@ -45,6 +45,26 @@ You will be given:
 3. **Repo path** (refresh/enrich modes) — local path to the software's source code
 4. **Targeted changes** (targeted mode only) — specific field/value pairs from the user
 5. **Target URL** — base URL of the HSSI instance (default: `https://hssi.hsdcloud.org`)
+6. **Invocation mode** — PREPARE or EXECUTE (see Invocation Modes below)
+7. **Payload file path** (EXECUTE mode only) — path to a pre-built payload JSON file
+
+---
+
+## Invocation Modes
+
+You will be invoked in one of two modes:
+
+### PREPARE mode (default)
+
+Execute Steps 1–6 only. Identify the software, fetch current HSSI metadata, extract fresh metadata, diff, present the report, and build the update payload. Save the payload to the specified output path (e.g., `payloads/<name>_update.json`). Return the diff report and payload path. Do NOT submit. Do NOT proceed to Steps 8–10.
+
+**Input:** software identifier, mode, repo path or targeted changes, target URL, output payload path.
+
+### EXECUTE mode
+
+Load a pre-built payload from the specified file path. Execute Steps 8–10 only (submit with token, roundtrip verify, report). The orchestrator has already obtained user approval.
+
+**Input:** payload file path, target URL.
 
 ---
 
@@ -179,13 +199,11 @@ For user-approved changes only:
 
 See the `update-payload` skill for the complete field shape reference.
 
-### Step 7: Present Payload and Require Approval
+### Step 7: Return for Approval (PREPARE mode endpoint)
 
-Show the complete JSON payload. Ask:
-- "Ready to submit this update to [target URL]? (yes/no)"
-- If there are unresolved conflicts, resolve them first
+If in **PREPARE mode**, STOP HERE. Save the payload to the specified output path and return the diff report and payload path to the orchestrator. The orchestrator will handle user approval and invoke you again in EXECUTE mode if approved.
 
-**Do not submit until the user explicitly confirms.**
+If invoked directly (not via orchestrator), show the complete JSON payload and ask: "Ready to submit this update to [target URL]? (yes/no)" — do not submit until the user explicitly confirms.
 
 ### Step 8: Submit — One Shot, No Retries
 

@@ -50,6 +50,26 @@ You will be given:
 2. **Submitter name** — first and last name of the person submitting
 3. **Submitter email** — email address of the submitter
 4. **Target URL** — base URL of the HSSI instance (default: `https://hssi.hsdcloud.org`)
+5. **Mode** — PREPARE or EXECUTE (see Invocation Modes below)
+6. **Payload file path** (EXECUTE mode only) — path to a pre-built payload JSON file
+
+---
+
+## Invocation Modes
+
+You will be invoked in one of two modes:
+
+### PREPARE mode (default)
+
+Execute Steps 1–4 only. Build and verify the payload, save it to the specified output path (e.g., `payloads/<name>_submission.json`), and return the verification report. Do NOT submit. Do NOT proceed to Steps 5–8.
+
+**Input:** metadata file path, submitter name/email, target URL, output payload path.
+
+### EXECUTE mode
+
+Load a pre-built payload from the specified file path. Execute Steps 6–8 only (submit, roundtrip verify, report). The orchestrator has already obtained user approval.
+
+**Input:** payload file path, target URL.
 
 ---
 
@@ -100,11 +120,11 @@ Show the user:
    - Warnings or unresolved questions
 3. Any fields that were omitted and why
 
-### Step 5: Wait for Explicit Approval
+### Step 5: Return for Approval (PREPARE mode endpoint)
 
-**Do not submit until the user explicitly confirms.** Ask:
-- "Ready to submit to [target URL]? (yes/no)"
-- If there are unresolved questions, ask those first
+If in **PREPARE mode**, STOP HERE. Save the payload to the specified output path and return the verification report and payload path to the orchestrator. The orchestrator will handle user approval and invoke you again in EXECUTE mode if approved.
+
+If invoked directly (not via orchestrator), ask: "Ready to submit to [target URL]? (yes/no)" and wait for explicit confirmation before proceeding.
 
 ### Step 6: Submit (One Shot — No Retries)
 
