@@ -14,3 +14,6 @@ Claude Code agents for extracting HSSI metadata from any repo and submitting it 
 4. Point it to a software repo (e.g. local folder path, GitHub URL, DOI)
 5. Metadata gets extracted into `repos/<repo>/hssi_metadata.md`
 6. Optionally: ask Claude to submit the metadata to HSSI (production or localhost)
+
+## Codex
+See the Codex version of this repo [here](https://github.com/Heliophysics-Software-Search-Interface/hssi-codex-agents).
