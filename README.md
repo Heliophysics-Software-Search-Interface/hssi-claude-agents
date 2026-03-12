@@ -19,3 +19,6 @@ Claude Code agents for managing HSSI software metadata — extraction, validatio
 5. Metadata gets extracted into `repos/<repo>/hssi_metadata.md`
 6. Optionally: ask Claude to submit the metadata to HSSI
 7. To update existing entries: ask Claude to "update sunpy on HSSI"
+
+## Codex
+See the [Codex version of this repo](https://github.com/Heliophysics-Software-Search-Interface/hssi-codex-agents).
