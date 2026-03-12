@@ -16,4 +16,4 @@ Claude Code agents for extracting HSSI metadata from any repo and submitting it 
 6. Optionally: ask Claude to submit the metadata to HSSI (production or localhost)
 
 ## Codex
-See the Codex version of this repo [here](https://github.com/Heliophysics-Software-Search-Interface/hssi-codex-agents).
+See the [Codex version of this repo](https://github.com/Heliophysics-Software-Search-Interface/hssi-codex-agents).
