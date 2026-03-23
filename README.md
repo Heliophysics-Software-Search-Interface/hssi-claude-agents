@@ -1,6 +1,6 @@
 # hssi-claude-agents
 
-Claude Code agents for managing HSSI software metadata — extraction, validation, submission, and updates.
+Claude Code agents for managing [HSSI](https://hssi.hsdcloud.org) software metadata — extraction, validation, submission, and updates.
 
 ## Agents
 
