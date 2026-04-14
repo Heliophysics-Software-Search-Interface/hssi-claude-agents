@@ -20,8 +20,10 @@ Before submitting, confirm:
 - [ ] Payload is valid JSON
 - [ ] Root JSON value is an array (`[...]`), even for a single submission
 - [ ] Each object contains all five required fields: `submitter`, `softwareName`, `codeRepositoryUrl`, `authors`, `description`
-- [ ] `submitter` array is non-empty; each entry has `email` and `person` with `firstName`/`lastName`
-- [ ] `authors` array is non-empty; each entry has `firstName` and `lastName`
+- [ ] `submitter` array is non-empty; each entry has `email` and `person` with `givenName`/`familyName`
+- [ ] `authors` array is non-empty; each entry has `givenName` and `familyName`
+- [ ] `license` (if present) is a plain string, not an object
+- [ ] `publisher` (if present) uses `{name, identifier}` — no `publisherIdentifier` key
 - [ ] Submitter email appears valid (contains `@`)
 - [ ] Submitter email is the real submitter's email address — this is the genuine submission, not a test or probe
 - [ ] This is the one and only submission attempt for this metadata — not a test, probe, or iterative experiment
@@ -31,8 +33,9 @@ Before submitting, confirm:
 
 ## Submit
 
-- `POST /api/submit` with `Content-Type: application/json`
+- `POST /api/submission/` (note the trailing slash) with `Content-Type: application/json`
 - Capture the full response body
+- Success status: **HTTP 201 Created**
 
 ### Expected Success Response
 
@@ -42,7 +45,7 @@ Before submitting, confirm:
   "count": 1,
   "results": [
     {
-      "submissionId": "...",
+      "index": 0,
       "softwareId": "..."
     }
   ]
@@ -50,7 +53,8 @@ Before submitting, confirm:
 ```
 
 - `count` should match the number of objects submitted
-- Each result has `submissionId` and `softwareId`
+- Each result has `index` and `softwareId` — **no `submissionId`** (the new endpoint does not return one)
+- `queueId` is also not in the response — look it up via the SoftwareEditQueue endpoint (see below)
 
 ---
 
@@ -58,23 +62,28 @@ Before submitting, confirm:
 
 After a successful submit, use these endpoints to verify persistence:
 
-### Public View: `GET /api/view/<softwareId>/`
+### Curator-Level Data: `GET /sapi/software_edit_data/<queueId>/` (primary)
 
-Returns the public-facing representation of the submitted software. Use to confirm key fields are visible:
+Returns the full stored representation at curator fidelity. This is the **primary endpoint** for roundtrip verification because it preserves the most detail.
+
+The new `/api/submission/` endpoint creates a `SoftwareEditQueue` entry (90-day edit window) for every submission, so this flow works — but the `queueId` is not returned in the submit response. To find it:
+
+1. Query `GET /api/models/SoftwareEditQueue/rows/all/`
+2. Find the entry whose `software` (or equivalent FK) matches the `softwareId` returned from submit
+3. Use that row's `id` as the `queueId`
+
+The curator edit link is: `/curate/edit_submission/?uid=<queueId>`
+
+### Public View: `GET /api/view/software/<softwareId>/` (secondary)
+
+Returns the public-facing representation of the submitted software. **Caveat:** this endpoint only returns records that are already in `VerifiedSoftware` — fresh submissions usually aren't verified yet, so expect 404 until a curator approves the entry. Use as a secondary check only.
+
+Key visible fields when available:
 - `softwareName`
 - `codeRepositoryURL` (note: uppercase `URL` in view output)
 - `description`
 - `authors`
 - `submitterName`
-
-### Curator-Level Data: `GET /sapi/software_edit_data/<queueId>/`
-
-Returns the full stored representation at curator fidelity. This is the primary endpoint for roundtrip verification because it preserves more detail than the public view.
-
-To find the `queueId`:
-- Check the submit response for queue-related IDs
-- Or query `GET /api/models/SoftwareEditQueue/rows/all/` and find the matching entry
-- The curator edit link is: `/curate/edit_submission/?uid=<queueId>`
 
 ---
 
@@ -98,15 +107,21 @@ These differences are expected between submitted and stored forms:
 
 1. **`codeRepositoryUrl` → `codeRepositoryURL`** — Key name changes from lowercase `Url` to uppercase `URL`
 
-2. **`submitter[].person/email` → `submitterName.submitterName/submitterEmail`** — Submitter object is flattened; person name may be combined into a single string
+2. **Person fields** — Submitted `givenName`/`familyName` may appear in stored form under the same names, or combined into a single display string (e.g., `submitterName`). The underlying DB columns are `given_name`/`family_name`.
 
-3. **`version.number/release_date/description/version_pid` → `versionNumber/versionDate/versionDescription/...`** — Version sub-object may be flattened to top-level fields with different key names
+3. **Submitter flattening** — The submitted `submitter[].person/email` object may be flattened in stored form to fields like `submitterName`/`submitterEmail`.
 
-4. **`relatedObservatories[].identifier` → `relatedObservatories[].relatedObservatoryIdentifier`** — Identifier key may be renamed in stored form
+4. **Version sub-keys** — Submitted `version.number/releaseDate/description/versionPid` may be flattened to top-level fields (`versionNumber`, `versionDate`, `versionDescription`, etc.) or stored under snake_case (`release_date`, `version_pid`).
 
-5. **Controlled-list values as objects vs strings** — Arrays of strings in the submission may appear as arrays of objects with a `name` field (or vice versa), or as database IDs
+5. **`relatedObservatories[].identifier` → `relatedObservatories[].relatedObservatoryIdentifier`** — Identifier key may be renamed in stored form.
 
-6. **`award` vs stored representation** — Award objects may be restructured
+6. **Controlled-list values as objects vs strings** — Arrays of strings in the submission may appear as arrays of objects with a `name` field (or vice versa), or as database IDs.
+
+7. **`license` string → object** — The submission `license` is a plain string (license name). The stored form may represent it as an object `{name, url, ...}` looked up from the `License` model.
+
+8. **`publisher` identifier** — Submitted `publisher.identifier` may be stored under a renamed key (e.g., `publisherIdentifier`) in the curator view, even though submission uses `identifier`.
+
+9. **`award` vs stored representation** — Award objects may be restructured.
 
 ### Verification Pass
 
@@ -127,24 +142,26 @@ These differences are expected between submitted and stored forms:
 |-------|-------|-----|
 | `400 Root JSON value must be an array` | Submitted a bare object instead of an array | Wrap the object in `[...]` |
 | `FunctionCategory ... does not exist` | Software Functionality value doesn't match controlled list | Normalize to exact strings from `/api/models/FunctionCategory/rows/all/` |
-| `POST expected` on `/api/submit` | Wrong HTTP method (e.g., GET) | Use POST |
-| `400` but submission appears in DB | Email send failed after DB commit | Check `/api/view/<softwareId>/` — the record likely persisted despite the error |
+| `License ... not found` | License string doesn't match any row in the `License` model | Normalize to exact `name` from `/api/models/License/rows/all/` |
+| `405 Method Not Allowed` on `/api/submission/` | Wrong HTTP method (e.g., GET) | Use POST |
+| `404` on `/api/submission` (no trailing slash) | Missing trailing slash | Use `/api/submission/` exactly |
+| `400` but submission appears in DB | Email send failed after DB commit (outside atomic block) | Check `/api/models/SoftwareEditQueue/rows/all/` — the record likely persisted despite the error |
 | `500` or timeout | Server-side error | Check server logs; retry if transient |
 
 ### Email-Related False Failures
 
-The submit endpoint sends notification emails after the DB write. If the email recipient is rejected or the mail server is unavailable, the API may return an error even though the submission was successfully stored. Always check `/api/view/<softwareId>/` before concluding that a submission failed.
+The new endpoint creates the `SoftwareEditQueue` entry and sends the notification email **outside** the atomic transaction (after DB commit). If the email recipient is rejected or the mail server is unavailable, the API can return an error response even though the submission was successfully stored. Always check `/api/models/SoftwareEditQueue/rows/all/` (looking up by `softwareId` if available) before concluding that a submission failed.
 
 ### Duplicate Prevention
 
-**If a submission appears to fail but the record exists in `/api/view/<softwareId>/`, do NOT resubmit.** The record was persisted successfully — the error was caused by a downstream issue. Resubmitting would create a duplicate permanent record and send another confirmation email. Instead, report the error and the existing record to the user and let them decide how to proceed.
+**If a submission appears to fail but the record exists, do NOT resubmit.** The record was persisted successfully — the error was caused by a downstream issue (typically email). Resubmitting would create a duplicate permanent record and send another confirmation email. Instead, report the error and the existing record to the user and let them decide how to proceed.
 
-### Verifying Without Queue ID
+### Verifying Without a Queue ID
 
-If you don't have the `queueId`:
+If you haven't yet located the `queueId`:
 1. Use the `softwareId` from the submit response
-2. Check `/api/view/<softwareId>/` for the public view
-3. Query `/api/models/SoftwareEditQueue/rows/all/` and search for the matching software name or submission time
+2. Query `/api/models/SoftwareEditQueue/rows/all/` and match the row whose software FK equals `softwareId`
+3. Use that row's `id` as `queueId`, then GET `/sapi/software_edit_data/<queueId>/`
 
 ---
 
@@ -157,7 +174,7 @@ After roundtrip verification, produce a summary:
 
 **Submitted:** [timestamp]
 **Software ID:** [softwareId]
-**Queue ID:** [queueId]
+**Queue ID:** [queueId — looked up via SoftwareEditQueue]
 
 ### Results
 

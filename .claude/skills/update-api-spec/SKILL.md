@@ -39,13 +39,26 @@ Read these specific files:
 
 1. **`concept/import_submission_notes.md`** — Official API documentation. Field list, required/recommended/optional classification, object schemas.
 
-2. **`concept/import_submission.json`** — HSSI developers' curated example payload. Check this for the latest field names, shapes, and conventions. **Note:** This file may lag behind the actual API implementation; cross-reference with the parser source.
+2. **`concept/import_submission.json`** — HSSI developers' curated example payload. This is the authoritative template for the new-format payload shape; cross-reference with the serializer source.
 
-3. **`django/website/views/api_submit.py`** — The submission endpoint handler. Shows what the backend actually does with submitted data.
+3. **`django/website/views/api/software_api.py`** — The DRF submission endpoint view (`SubmissionAPI`). Shows the request/response shape, status codes, and the post-commit side effects (SoftwareEditQueue creation, email notification) that run outside the atomic transaction.
 
-4. **`django/website/data_parser.py`** — Contains `api_submission_to_formdict()` and related functions. This is the authoritative field mapping and transformation logic — it defines how submitted JSON is parsed and stored.
+4. **`django/website/models/serializers/submission.py`** — The DRF `SubmissionSerializer`. This is the authoritative field mapping and transformation logic for the new endpoint — it defines how submitted JSON is validated and stored. Pay special attention to:
+   - `to_internal_value_user()` — required field validation
+   - `_get_or_create_person()` — Person dedup and field names (`given_name`/`family_name`)
+   - `_get_or_create_org()` — Organization dedup
+   - License handling (plain string input, `License.objects.filter(name__iexact=...)`)
+   - Version object handling (`number`, `release_date`, `description`, `version_pid`)
 
-5. **`django/website/forms/names.py`** — Field name constants used by the backend. Reveals the canonical internal field names.
+5. **`django/hssi/camel_case_renderer.py`** — Contains `decamelize_data()` and `CamelCaseJSONRenderer`. Explains how incoming camelCase JSON keys are automatically converted to snake_case before the serializer sees them.
+
+6. **`django/website/models/serializers/util.py`** — Contains `SerialView` and shared serializer utilities used by both the submission and software serializers.
+
+7. **`django/website/urls.py`** — URL routing. Confirms the current endpoint paths for `/api/submission/` and related DRF views.
+
+8. **`django/website/forms/names.py`** — Legacy field name constants. Less relevant for the new DRF-based endpoint (which uses serializer field names directly), but still referenced by legacy code paths.
+
+9. **`django/website/views/api_submit.py`** (legacy) — The old function-based `/api/submit` endpoint. Still wired in `urls.py` for backward compatibility. Consult only when investigating legacy behavior.
 
 ### Step 3: Compare Against Current Skills
 
@@ -75,7 +88,7 @@ Update `submission-payload/SKILL.md` and `submission-verification/SKILL.md` to r
 
 Produce a summary of what changed and why:
 - List each change made to the skill files
-- Note any discrepancies between `import_submission.json` and the actual parser behavior
+- Note any discrepancies between `import_submission.json` and the actual serializer behavior
 - Flag any breaking changes that might affect existing payloads
 
 ### Step 6: Cleanup

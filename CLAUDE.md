@@ -62,7 +62,7 @@ If ambiguous, ask which mode the user wants. If clear, proceed.
 
 ## Approval Gate Protocol
 
-Irreversible actions (POST /api/submit, POST /api/update) **ALWAYS** require explicit user approval. The orchestrator:
+Irreversible actions (POST /api/submission/, POST /api/update) **ALWAYS** require explicit user approval. The orchestrator:
 
 1. Shows the complete payload/diff to the user
 2. Asks for confirmation

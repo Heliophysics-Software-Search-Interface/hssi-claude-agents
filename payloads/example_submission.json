@@ -1,0 +1,152 @@
+[
+  {
+    "submitter": [
+      {
+        "email": "jane.doe@example.org",
+        "person": {
+          "givenName": "Jane",
+          "familyName": "Doe",
+          "identifier": "https://orcid.org/0000-0002-1825-0097"
+        }
+      }
+    ],
+    "softwareName": "ExamplePkg",
+    "codeRepositoryUrl": "https://github.com/example-org/examplepkg",
+    "description": "ExamplePkg is a reference Python package for heliophysics data processing. It demonstrates the shape of an HSSI submission payload in the new /api/submission/ format.",
+    "conciseDescription": "Reference Python package for heliophysics data processing.",
+    "persistentIdentifier": "https://doi.org/10.5281/zenodo.1234567",
+    "publicationDate": "2024-06-14",
+    "publisher": {
+      "name": "Zenodo",
+      "identifier": "https://zenodo.org"
+    },
+    "authors": [
+      {
+        "givenName": "Jane",
+        "familyName": "Doe",
+        "identifier": "https://orcid.org/0000-0002-1825-0097",
+        "affiliation": [
+          {
+            "name": "Laboratory for Atmospheric and Space Physics",
+            "identifier": "https://ror.org/01fcjzv38"
+          },
+          {
+            "name": "University of Colorado Boulder",
+            "identifier": "https://ror.org/02ttsq026"
+          }
+        ]
+      },
+      {
+        "givenName": "John",
+        "familyName": "Smith",
+        "identifier": "https://orcid.org/0000-0003-0619-5745"
+      }
+    ],
+    "version": {
+      "number": "2.4.1",
+      "releaseDate": "2025-05-01",
+      "description": "Adds GPU acceleration and adaptive deconvolution.",
+      "versionPid": "https://doi.org/10.5281/zenodo.1234568"
+    },
+    "license": "BSD 3-Clause \"New\" or \"Revised\" License",
+    "programmingLanguage": [
+      "Python 3.x",
+      "Fortran 2003"
+    ],
+    "operatingSystem": [
+      "Linux",
+      "Mac"
+    ],
+    "cpuArchitecture": [
+      "x86-64",
+      "Apple Silicon arm64"
+    ],
+    "softwareFunctionality": [
+      "Data Processing and Analysis",
+      "Data Processing and Analysis: Energy Spectra"
+    ],
+    "relatedRegion": [
+      "Solar Environment",
+      "Interplanetary Space"
+    ],
+    "relatedPhenomena": [
+      "Coronal Heating",
+      "Geomagnetic Storms"
+    ],
+    "dataSources": [
+      "CDAWeb",
+      "HAPI"
+    ],
+    "inputFormats": [
+      "CDF",
+      "FITS"
+    ],
+    "outputFormats": [
+      "CDF",
+      "FITS"
+    ],
+    "keywords": [
+      "spectroscopy",
+      "magnetic fields"
+    ],
+    "developmentStatus": "Active",
+    "documentation": "https://docs.example.org/examplepkg",
+    "referencePublication": "https://doi.org/10.1234/example.reference",
+    "funder": [
+      {
+        "name": "National Science Foundation",
+        "identifier": "https://ror.org/021nxhr62"
+      },
+      {
+        "name": "NASA Heliophysics Division",
+        "identifier": "https://ror.org/03myraf72"
+      }
+    ],
+    "award": [
+      {
+        "name": "Example Heliophysics Award",
+        "identifier": "NNG19PQ28C"
+      },
+      {
+        "name": "Second Example Award",
+        "identifier": "NNG19PB28C"
+      }
+    ],
+    "relatedPublications": [
+      "https://doi.org/10.1234/example.pub1",
+      "https://doi.org/10.1234/example.pub2"
+    ],
+    "relatedDatasets": [
+      "https://doi.org/10.1234/example.dataset1",
+      "https://doi.org/10.1234/example.dataset2"
+    ],
+    "relatedSoftware": [
+      "https://doi.org/10.1234/example.software1",
+      "https://doi.org/10.1234/example.software2"
+    ],
+    "interoperableSoftware": [
+      "https://doi.org/10.1234/example.interop1",
+      "https://doi.org/10.1234/example.interop2"
+    ],
+    "relatedInstruments": [
+      {
+        "name": "Visible Spectro-Polarimeter"
+      },
+      {
+        "name": "Atmospheric Imaging Assembly",
+        "identifier": "https://doi.org/10.1234/example.instrument"
+      }
+    ],
+    "relatedObservatories": [
+      {
+        "name": "Solar Orbiter",
+        "identifier": "https://doi.org/10.1234/example.observatory1"
+      },
+      {
+        "name": "Daniel K. Inouye Solar Telescope",
+        "identifier": "https://doi.org/10.1234/example.observatory2"
+      }
+    ],
+    "logo": "https://cdn.example.org/examplepkg/logo.png"
+  }
+]
