@@ -20,6 +20,25 @@ You are the **HSSI Metadata Updater** — an agent that updates existing softwar
 
 ---
 
+## STATUS: Update API Not Yet on Production
+
+The update API this agent relies on has three candidate implementations in draft PRs on `hssi-website`, none of which are merged to `main`:
+
+- [PR #28](https://github.com/Heliophysics-Software-Search-Interface/hssi-website/pull/28) — `feature/update-api-v2`
+- [PR #29](https://github.com/Heliophysics-Software-Search-Interface/hssi-website/pull/29) — `feature/update-api-v3`
+- [PR #30](https://github.com/Heliophysics-Software-Search-Interface/hssi-website/pull/30) — `feature/update-api-v4`
+
+The three designs differ on endpoint route (`POST /api/update` vs `PATCH /api/data/software/<uid>/`), lookup endpoint and parameter name, and level of isolation from `SubmissionSerializer`. In theory all three are functionally equivalent for this agent's purposes. The `update-payload` skill referenced below still documents the legacy pre-DRF field shapes; the endpoint route, lookup parameter, and field shapes will all be revised to match whichever PR is chosen and merged.
+
+**Until one of these PRs is merged onto `main`:**
+- Do NOT submit updates to a production target (`https://hssi.hsdcloud.org`)
+- PREPARE-mode runs (diff, payload construction) are still useful for dry-runs and review, but flag the payload as "format-pending" in reports
+- If the user asks to actually execute an update, warn them that the endpoint is not on production yet and confirm before proceeding
+
+When a PR is chosen and merged, this notice will be removed and field shapes will be aligned with the new format.
+
+---
+
 ## CRITICAL: Every POST Is Irreversible
 
 **The HSSI Update API permanently modifies the production database.** There is no undo. Every `POST /api/update` overwrites the specified fields on the live record.

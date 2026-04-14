@@ -14,6 +14,14 @@ Build partial update payloads for existing HSSI software entries. Only changed f
 
 > **WARNING: Every POST to `/api/update` modifies the production database permanently.** There is no undo. Build the payload correctly, get user approval, and submit once. Do not retry on failure.
 
+> **STATUS: Not yet on production.** Three candidate update-API implementations are currently in draft PRs on `hssi-website`, none of which are merged to `main`:
+>
+> - [PR #28](https://github.com/Heliophysics-Software-Search-Interface/hssi-website/pull/28) — `feature/update-api-v2`
+> - [PR #29](https://github.com/Heliophysics-Software-Search-Interface/hssi-website/pull/29) — `feature/update-api-v3`
+> - [PR #30](https://github.com/Heliophysics-Software-Search-Interface/hssi-website/pull/30) — `feature/update-api-v4`
+>
+> The three designs differ on endpoint route (`POST /api/update` vs `PATCH /api/data/software/<uid>/`), lookup endpoint and parameter name, and level of isolation from `SubmissionSerializer`. From the agent's perspective all three are functionally equivalent — only one field map needs to win. The field shapes documented below still reflect the legacy pre-DRF format (`firstName`/`lastName`, object-form `license`, snake_case version sub-keys). Once one PR is chosen and merged, this skill will be revised to match the winning route, lookup parameter, and field shape (expected: `givenName`/`familyName`, plain-string `license`, camelCase version sub-keys, aligned with `SubmissionSerializer`). Until then, **do not submit update payloads to a production target**.
+
 ---
 
 ## Authentication
