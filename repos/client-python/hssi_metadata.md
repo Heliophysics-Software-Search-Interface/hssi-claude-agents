@@ -22,11 +22,11 @@
 ### 4. Software Functionality (MANDATORY)
 Based on comprehensive analysis of the code, documentation, and PyHC metadata, the following functionalities apply:
 
+- **Data Processing and Analysis** - Parent category
 - **Data Processing and Analysis:Data Access and Retrieval** - Primary functionality: retrieves time series data from HAPI servers
-- **Data Visualization:Line Plots** - From PyHC keywords and hapiplot integration
-- **Data Visualization:Spectrogram** - From PyHC keywords and hapiplot capabilities
+- **Data Processing and Analysis:Processing** - Parses binary/CSV HAPI responses into NumPy structured arrays; provides time-format conversion (hapitime2datetime, datetime2hapitime), chunked/parallel requests, caching, and data trimming/concatenation
 
-**Analysis:** The HAPI client is a Python interface for accessing time series data from Heliophysics Application Programmer's Interface (HAPI) servers. It retrieves data from various heliophysics data sources (CDAWeb, OMNI, and other HAPI-compliant servers) and provides basic plotting capabilities through the optional hapiplot package.
+**Analysis:** The HAPI client is a Python interface for accessing time series data from Heliophysics Application Programmer's Interface (HAPI) servers. It retrieves data from various heliophysics data sources (CDAWeb, OMNI, and other HAPI-compliant servers). Visualization (line plots, spectrograms) is provided by the separate optional `hapiplot` package and is not part of `hapiclient` itself — the hapiclient public API (`__init__.py`) exports only data retrieval and time-conversion functions.
 
 ### 5. Related Region (MANDATORY)
 Based on analysis of typical HAPI server data and the README examples:
@@ -40,12 +40,12 @@ Based on analysis of typical HAPI server data and the README examples:
 ### 6. Authors (MANDATORY)
 
 **Author 1:**
-- **Name:** Bob Weigel (full name: Robert S. Weigel)
+- **Name:** Robert S. Weigel
 - **Author Identifier:** https://orcid.org/0000-0002-9521-5228
 - **Affiliation - Organization:** George Mason University
-- **Affiliation Identifier:** Not found
-- **Source:** DataCite API (primary), .zenodo.json, setup.py
-- **Note:** CITATION.cff has family-names and given-names reversed
+- **Affiliation Identifier:** https://ror.org/02jqj7156
+- **Source:** ORCID (canonical name), LICENSE.txt (R.S. Weigel), DataCite API, .zenodo.json, setup.py
+- **Note:** setup.py, .zenodo.json list informal "Bob Weigel"; CITATION.cff has family-names and given-names reversed. Canonical form from ORCID used.
 
 **Author 2:**
 - **Name:** Hari Narayana Batta
@@ -60,15 +60,15 @@ Based on analysis of typical HAPI server data and the README examples:
 - **Source:** DataCite API, Zenodo API
 
 **Author 4:**
-- **Name:** jvandegriff
+- **Name:** Jon Vandegriff
 - **Author Identifier:** Not found
 - **Affiliation:** Not found
-- **Source:** DataCite API, Zenodo API
+- **Source:** DataCite API, Zenodo API (handle "jvandegriff"); full name supplied by submitter
 
 ### 7. Software Name (MANDATORY)
-- **Value:** hapiclient
-- **Alternative Names:** HAPI Client, hapi-server/client-python
-- **Source:** setup.py (package name: hapiclient), PyHC registry (display name: HAPI Client)
+- **Value:** HAPI Client
+- **Alternative Names:** hapiclient, hapi-server/client-python
+- **Source:** PyHC registry (authoritative display name: HAPI Client); setup.py package identifier is `hapiclient`
 
 ### 8. Description (MANDATORY)
 - **Value:** A Python client for the Heliophysics Application Programmer's Interface (HAPI). This package provides functions to access time series data from HAPI-compliant servers, which serve data from various heliophysics missions and instruments. The client handles data retrieval, caching, and provides utilities for time format conversions. An optional hapiplot package provides basic visualization capabilities including line plots and spectrograms. The HAPI data model is intentionally minimal and follows the HAPI metadata specification closely.
@@ -84,8 +84,8 @@ Based on analysis of typical HAPI server data and the README examples:
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
-- **Publisher Identifier:** https://zenodo.org
-- **Source:** DataCite API, Zenodo API
+- **Publisher Identifier:** https://ror.org/01ggx4157
+- **Source:** DataCite API, Zenodo API; ROR lookup (api.ror.org)
 
 ### 12. Version (RECOMMENDED)
 
@@ -111,7 +111,8 @@ Based on analysis of typical HAPI server data and the README examples:
 
 ### 13. Programming Language (RECOMMENDED)
 - **Python 3.x** - Primary language (111,259 bytes)
-- **Source:** SoMEF, GitHub API, PyHC registry
+- **Python 2.x** - Also supported: setup.py has Py2 dependency branch, `hapiclient/__init__.py` includes `sys.version_info[0] < 3` compatibility block, tox.ini envlist includes `py27`
+- **Source:** SoMEF, GitHub API, PyHC registry, direct inspection of setup.py/__init__.py/tox.ini
 
 ### 14. Reference Publication (OPTIONAL)
 - **Value:** Not found
@@ -119,9 +120,9 @@ Based on analysis of typical HAPI server data and the README examples:
 
 ### 15. License (RECOMMENDED)
 - **License:** BSD 3-Clause "New" or "Revised" License
-- **License URI:** https://api.github.com/licenses/bsd-3-clause
+- **License URI:** https://spdx.org/licenses/BSD-3-Clause.html
 - **SPDX ID:** BSD-3-Clause
-- **Source:** LICENSE.txt, SoMEF, GitHub API
+- **Source:** LICENSE.txt, SoMEF, GitHub API, SPDX
 
 ---
 
@@ -255,10 +256,10 @@ Metadata was extracted using the following sources (in priority order):
 ### Critical MANDATORY Fields Status
 - ✅ **Submitter** - To be filled by user
 - ✅ **Code Repository** - https://github.com/hapi-server/client-python
-- ✅ **Software Functionality** - Data Access and Retrieval, Line Plots, Spectrogram
+- ✅ **Software Functionality** - Data Processing and Analysis (+ Data Access and Retrieval, Processing)
 - ✅ **Related Region** - Earth Magnetosphere, Interplanetary Space, Solar Environment
 - ✅ **Authors** - 4 authors identified with ORCID for primary author
-- ✅ **Software Name** - hapiclient
+- ✅ **Software Name** - HAPI Client
 - ✅ **Description** - Comprehensive description provided
 
 ### PyHC Package Information
@@ -279,10 +280,10 @@ Metadata was extracted using the following sources (in priority order):
 
 2. **Related Regions:** The three regions selected (Earth Magnetosphere, Interplanetary Space, Solar Environment) represent the most common data types accessed via HAPI servers. Additional regions could be added if needed.
 
-3. **Software Functionality:** The primary functionality is data access/retrieval. Plotting is a secondary feature provided by the optional hapiplot package.
+3. **Software Functionality:** The primary functionality is data access/retrieval plus response parsing/processing. Plotting is NOT part of this package — it is provided by the separate optional `hapiplot` package (https://github.com/hapi-server/plot-python).
 
 4. **Reference Publication:** No primary publication found. Authors may want to consider publishing in JOSS or similar venue.
 
-5. **ORCID Coverage:** Only the primary author (Bob Weigel) has an ORCID identified. Other contributors may benefit from having their ORCIDs linked.
+5. **ORCID Coverage:** Only the primary author (Robert S. Weigel) has an ORCID identified. Other contributors may benefit from having their ORCIDs linked.
 
 6. **Documentation Quality:** Excellent documentation with README, Jupyter notebooks, and example scripts. Hosted on Google Colab for easy access.
