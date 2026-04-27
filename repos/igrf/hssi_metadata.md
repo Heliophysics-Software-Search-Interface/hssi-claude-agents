@@ -23,20 +23,17 @@
 Based on comprehensive repository analysis, the following functionalities apply:
 - **Models and Simulations** - Primary functionality
 - **Models and Simulations:Empirical** - IGRF is an empirical geomagnetic field model
-- **Models and Simulations:Physics-Based** - Based on spherical harmonic analysis
-- **Coordinate Transforms** - Handles geographic coordinate transformations
 - **Data Visualization** - Creates magnetic field visualizations
 - **Data Visualization:2D Graphics** - Generates contour and pcolor plots
 - **Data Processing and Analysis** - Provides geomagnetic field calculations
 - **Data Processing and Analysis:Analysis** - Analyzes magnetic field at various locations
 
-**Source:** Repository code examination (base.py, plots.py), README description
+**Source:** Repository code examination (base.py, __main__.py, plots.py), README description
 
 ### 5. Related Region (MANDATORY)
-- **Earth Magnetosphere** - Primary region; IGRF models Earth's internal magnetic field
-- **Earth Atmosphere** - Secondary region; used for ionosphere/thermosphere/mesosphere research (confirmed by PyHC categorization)
+- **Earth Atmosphere** - Used for ionosphere/thermosphere/mesosphere research (confirmed by PyHC categorization and pyproject.toml Atmospheric Science classifier)
 
-**Source:** PyHC registry keywords ("ionosphere_thermosphere_mesosphere"), software description and purpose
+**Source:** PyHC registry keywords ("ionosphere_thermosphere_mesosphere"), pyproject.toml classifier, software description and purpose
 
 ### 6. Authors (MANDATORY)
 - **Author Name:** Michael Hirsch
@@ -50,14 +47,14 @@ Based on comprehensive repository analysis, the following functionalities apply:
 **Note:** The DataCite API only listed "Michael" without surname; the full name "Michael Hirsch" was found in the PyHC registry as the contact person.
 
 ### 7. Software Name (MANDATORY)
-- **Name:** igrf
+- **Name:** IGRF-13
 - **Full Title:** IGRF 13 in Python (from README)
-- **Alternative Name:** IGRF-13 (from PyHC registry)
+- **Package Name:** igrf (from pyproject.toml)
 
 **Source:** pyproject.toml, SoMEF, README.md, PyHC registry
 
 ### 8. Description (MANDATORY)
-International Geomagnetic Reference Field: IGRF13 in object-oriented Python or Matlab. IGRF13, IGRF12, IGRF11 models with simple object-oriented Python interface. The software provides calculations of Earth's main magnetic field components (north, east, down, total intensity) as well as magnetic inclination and declination at specified geographic coordinates and altitudes. It uses a Fortran backend with Python and Matlab interfaces, and outputs results as xarray Datasets for easy integration with other geoscience tools.
+International Geomagnetic Reference Field: IGRF13 in object-oriented Python or Matlab. The current public Python API and build path target IGRF13; IGRF11 and IGRF12 source files are retained in the repository but are not exposed by the current driver. The software provides calculations of Earth's main magnetic field components (north, east, down, total intensity) as well as magnetic inclination and declination at specified geographic coordinates and altitudes. It uses a Fortran backend with Python and Matlab interfaces, and outputs results as xarray Datasets for easy integration with other geoscience tools. The included IGRF13 synthesis routine is valid through 2025.0, with reduced-accuracy warnings for later dates.
 
 **Source:** Combined from README.md, pyproject.toml, and repository code analysis
 
@@ -92,10 +89,11 @@ International Geomagnetic Reference Field (IGRF13) model with object-oriented Py
 
 ### 13. Programming Language (RECOMMENDED)
 - **Python 3.x** - Primary interface (requires Python >= 3.9 based on pyproject.toml)
-- **Fortran** - Backend computational engine (Fortran code for IGRF calculations)
+- **Fortran90** - Backend computational engine includes the current IGRF13 driver in Fortran 90 format
+- **Fortran77** - Backend also includes fixed-form Fortran source files for IGRF model calculations
 - **MATLAB** - Alternative interface provided
 
-**Source:** GitHub API via SoMEF, pyproject.toml, CI configuration, README.md
+**Source:** GitHub API via SoMEF, pyproject.toml, CI configuration, README.md, src/igrf/fortran files
 
 ### 14. Reference Publication (RECOMMENDED)
 Not found
@@ -104,10 +102,10 @@ Not found
 
 ### 15. License (RECOMMENDED)
 - **License:** MIT License
-- **License URI:** https://api.github.com/licenses/mit
+- **License URI:** https://spdx.org/licenses/MIT.html
 - **SPDX ID:** MIT
 
-**Source:** GitHub API via SoMEF, LICENSE.txt
+**Source:** LICENSE.txt
 
 ---
 
@@ -132,7 +130,7 @@ From multiple sources:
 Not applicable - This is a model/calculation tool that generates magnetic field values from the IGRF model coefficients, not a data retrieval tool.
 
 ### 18. Input File Formats (RECOMMENDED)
-Not applicable - The software uses embedded coefficient files (IGRF12.COF, WMM2015.COF) and takes parameters directly via function calls rather than input files.
+Not applicable - The current IGRF13 driver takes parameters directly via function calls or CLI arguments rather than user-supplied input files. IGRF13 coefficients are embedded in the Fortran source used by the current build path.
 
 **Note:** Users provide datetime, latitude, longitude, and altitude as function parameters.
 
@@ -142,19 +140,19 @@ Not applicable for file output. The software returns xarray.Dataset objects in m
 **Source:** Code examination (base.py)
 
 ### 20. Operating System (RECOMMENDED)
-- **Linux** - Tested on ubuntu-24.04 in CI
-- **Mac** - Tested on macos-latest in CI
-- **Windows** - Supported (code includes Windows-specific handling for MinGW Makefiles)
+- **Operating System Independent** - Declared in pyproject.toml classifier
+- **Linux** - Installation documented in README and tested on ubuntu-24.04 in CI
+- **Mac** - Installation documented in README and tested on macos-latest in CI
+- **Windows** - Installation documented in README; build code includes Windows-specific MinGW handling
 
-**Source:** CI configuration (.github/workflows/ci.yml), base.py code (Windows-specific logic), README installation instructions
+**Source:** pyproject.toml classifier, CI configuration (.github/workflows/ci.yml), base.py code (Windows-specific logic), README installation instructions
 
 **Note:** Requires a Fortran compiler (gfortran) on all platforms.
 
 ### 21. CPU Architecture (RECOMMENDED)
-- **x86-64** - Primary architecture based on CI testing
-- **CPU Independent** - Python/Fortran code should be portable to other architectures with appropriate Fortran compiler
+- **CPU Independent** - Python/Fortran source has no architecture-specific code; requires a compatible Python runtime, CMake, and Fortran compiler
 
-**Source:** Inferred from CI configuration and programming languages
+**Source:** Repository source layout, pyproject.toml, README build requirements
 
 ### 22. Related Phenomena (OPTIONAL)
 Not found in repository metadata.
@@ -162,9 +160,9 @@ Not found in repository metadata.
 **Potential values based on usage:** The software could be relevant to phenomena affected by Earth's magnetic field, but no specific phenomena are explicitly mentioned in the repository.
 
 ### 23. Development Status (RECOMMENDED)
-- **Active** - Package has reached stable, usable state and is being actively developed
+- **Inactive** - Package has reached a stable, usable state but does not show recent active release development
 
-**Source:** Recent commit activity (last commit 2024-08-23), pyproject.toml classifier "Development Status :: 5 - Production/Stable", active release history
+**Source:** Last upstream commit on main is 2024-08-23; latest release is v13.0.2 from 2021-10-11; pyproject.toml classifier is "Development Status :: 5 - Production/Stable"
 
 ### 24. Documentation (RECOMMENDED)
 - **URL:** https://github.com/space-physics/igrf
@@ -188,9 +186,10 @@ Not found
 ## Section 3: Additional Metadata
 
 ### 27. Related Publications (OPTIONAL)
-Not found
+- **Publication DOI:** https://doi.org/10.1186/s40623-020-01288-x
+- **Title:** International Geomagnetic Reference Field: the thirteenth generation
 
-**Note:** No related publications found in DataCite API or repository. The README references the original IGRF Fortran code sources from NOAA/NGDC.
+**Note:** This publication describes the IGRF13 scientific model, not this specific Python/MATLAB wrapper. The README references the original IGRF Fortran code sources from NOAA/NGDC.
 
 ### 28. Related Datasets (OPTIONAL)
 Not found
@@ -199,9 +198,10 @@ Not found
 
 ### 29. Related Software (OPTIONAL)
 **Dependencies:**
-- **xarray** - For dataset output format
-- **numpy** - For numerical operations
-- **matplotlib** - For visualization (optional)
+- **xarray:** https://github.com/pydata/xarray - For dataset output format
+- **NumPy:** https://github.com/numpy/numpy - For numerical operations
+- **Matplotlib:** https://github.com/matplotlib/matplotlib - For optional visualization
+- **CMake:** https://github.com/Kitware/CMake - Build system used to compile the Fortran backend
 
 **Source:** pyproject.toml dependencies, SoMEF requirements
 
@@ -211,9 +211,10 @@ Not found
 - IGRF11 Fortran code: http://www.ngdc.noaa.gov/IAGA/vmod/igrf11.f
 
 ### 30. Interoperable Software (OPTIONAL)
-Not found
+- **xarray:** https://docs.xarray.dev/ - Python API returns `xarray.Dataset` objects
+- **MATLAB:** https://www.mathworks.com/products/matlab.html - Repository includes a MATLAB interface that calls the Python package
 
-**Note:** While the software uses xarray for data output (suggesting compatibility with the xarray ecosystem), no specific interoperability claims are made in the repository.
+**Source:** README example, base.py return types, +igrf/igrf.m
 
 ### 31. Related Instruments (OPTIONAL)
 Not applicable
@@ -259,7 +260,6 @@ This metadata extraction combined information from:
 - This package is listed in the PyHC (Python in Heliophysics Community) unevaluated registry
 - The software provides Python and Matlab interfaces to IGRF geomagnetic field models (versions 11, 12, and 13)
 - Requires compilation of Fortran code using CMake and a Fortran compiler (gfortran)
-- Uses modern Python packaging standards (pyproject.toml) and maintains active CI/CD
+- Uses modern Python packaging standards (pyproject.toml) and includes CI configuration
 - The author "Michael Hirsch" is associated with the "space-physics" GitHub organization and maintains numerous other space physics Python packages
 - Download statistics from PyPI show active usage (per README badge)
-- The software has 73 stars and 29 forks on GitHub, indicating community interest and adoption

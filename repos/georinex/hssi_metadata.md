@@ -16,18 +16,20 @@
 - **Source:** DataCite API, Zenodo API
 
 ### 3. Code Repository (MANDATORY)
-- **URL:** https://github.com/geospace-code/georinex
+- **Repository URL:** https://github.com/geospace-code/georinex
 - **Source:** GitHub repository, DataCite API
 
 ### 4. Software Functionality (MANDATORY)
-- **Data Processing and Analysis:Data Access and Retrieval** - Reads RINEX observation and navigation files from various sources
+- **Coordinate Transforms** - Exposes `keplerian2ecef` and uses optional geodetic coordinate conversions for receiver and satellite location workflows
+- **Data Processing and Analysis**
 - **Data Processing and Analysis:File Format Conversion** - Converts RINEX 2/3/4 to NetCDF4/HDF5 formats for efficient storage and processing
 - **Data Processing and Analysis:Data Reduction** - Supports filtering by time interval, satellite, and measurement type
 - **Data Processing and Analysis:Processing** - Processes GNSS/GPS data with xarray Dataset for efficient analysis
-- **Data Processing and Analysis:Time Series Analysis** - Handles time-series GNSS observations and navigation data
+- **Data Visualization**
 - **Data Visualization:2D Graphics** - Plotting capabilities for RINEX data visualization
 - **Data Visualization:Line Plots** - Time series visualization of GPS/GNSS observations
-- **Source:** README.md, code analysis, package description, pyproject.toml
+- **Data Visualization:Orbit Plots** - Plots satellite and receiver positions on geographic maps
+- **Source:** README.md, `src/georinex/base.py`, `src/georinex/plots.py`, `src/georinex/plots_geo.py`, `src/georinex/keplerian.py`
 
 ### 5. Related Region (MANDATORY)
 - **Earth Atmosphere** - Primary application for ionospheric and atmospheric studies using GNSS data; PyHC keywords indicate ionosphere_thermosphere_mesosphere research
@@ -36,10 +38,10 @@
 ### 6. Authors (MANDATORY)
 
 **Author 1:**
-- **Name:** scivision (Michael Hirsch)
+- **Name:** Michael Hirsch
 - **Author Identifier:** Not found
 - **Affiliation:** Not found
-- **Note:** Identified as Michael Hirsch from LICENSE copyright and PyHC contact
+- **Note:** Normalized from the `scivision` creator handle using LICENSE copyright and git history
 
 **Author 2:**
 - **Name:** Nikolay Mayorov
@@ -72,39 +74,36 @@
 - **Affiliation:** Not found
 
 **Author 8:**
-- **Name:** fmeynadier
+- **Name:** Frédéric Meynadier
 - **Author Identifier:** Not found
 - **Affiliation:** Not found
 
 **Author 9:**
-- **Name:** VOMAY
+- **Name:** Volker Mayer
 - **Author Identifier:** Not found
 - **Affiliation:** Not found
+- **Note:** Normalized from the `VOMAY` GitHub handle; GitHub PR #53 shows "Volker Mayer added 3 commits" for that contributor
 
 **Author 10:**
 - **Name:** Derek Knowles
 - **Author Identifier:** Not found
 - **Affiliation:** Not found
 
-**Author 11:**
-- **Name:** izzydrewlynn
-- **Author Identifier:** Not found
-- **Affiliation:** Not found
-
-- **Source:** DataCite API, Zenodo API
-- **Note:** Primary contact is Michael Hirsch based on PyHC registry and LICENSE file copyright
+- **Source:** DataCite API, Zenodo API, GitHub PR #53, GitHub PR #69
+- **Note:** Creator list follows the Zenodo concept/version DOI creators, with GitHub-handle creators normalized to personal names where primary public evidence was available. The remaining `izzydrewlynn` creator handle appears in DOI metadata and git history but is not mapped here because no primary source located in this workflow ties it to a personal name.
 
 ### 7. Software Name (MANDATORY)
-- **Name:** GeoRinex
-- **Source:** README.md, GitHub repository name (georinex), DataCite API
+- **Software Name:** GEOrinex
+- **Package Name:** georinex
+- **Source:** PyHC registry name is authoritative for HSSI; repository and package use `georinex`, and README title uses `GeoRinex`
 
 ### 8. Description (MANDATORY)
-RINEX 4, RINEX 3 and RINEX 2 reader and batch conversion to NetCDF4 / HDF5 in Python or Matlab. Batch converts NAV and OBS GPS RINEX (including Hatanaka compressed OBS) data into xarray.Dataset for easy use in analysis and plotting. This gives remarkable speed vs. legacy iterative methods, and allows for HPC / out-of-core operations on massive amounts of GNSS data. GeoRinex has over 125 unit tests driven by Pytest. Pure compiled language RINEX processors such as within Fortran NAPEOS give perhaps 2x faster performance than this Python program, but the initial goal was to be for one-time offline conversion of ASCII (and compressed ASCII) RINEX to HDF5/NetCDF4, where ease of cross-platform install and correctness are primary goals.
+RINEX 2, RINEX 3, RINEX 4, and SP3 reader with batch conversion to NetCDF4 / HDF5 in Python or Matlab. GEOrinex reads plain, compressed, and Hatanaka-compressed GNSS navigation and observation files into xarray datasets for filtering, plotting, and offline analysis, and can write converted NetCDF4 outputs for faster reuse on large datasets.
 
 - **Source:** README.md, SoMEF extraction
 
 ### 9. Concise Description (OPTIONAL)
-Python RINEX 2/3/4 NAV/OBS/SP3 reader with batch conversion to HDF5/NetCDF4, offering C-like speed for GNSS data processing and analysis.
+Python RINEX 2/3/4 and SP3 reader with batch conversion to NetCDF4/HDF5 for GNSS processing, plotting, and scalable offline analysis of large local datasets.
 
 - **Source:** Derived from GitHub description and README
 
@@ -125,12 +124,12 @@ Python RINEX 2/3/4 NAV/OBS/SP3 reader with batch conversion to HDF5/NetCDF4, off
 - **Version Date:** 2023-11-15
 - **Version Description:** Fixed numerous bugs, including xarray API update. Requires Python 3.8+ as Python 3.7 library support and wheel availability is dwindling.
 - **Version PID:** https://doi.org/10.5281/zenodo.10130117
-- **Source:** Zenodo API, GitHub releases, git tags
+- **Source:** DataCite API, GitHub releases, git tags, `src/georinex/__init__.py`
 
 ### 13. Programming Language (RECOMMENDED)
 - **Python 3.x** - Primary language (144,698 bytes)
 - **MATLAB** - Secondary support (1,268 bytes)
-- **Source:** GitHub API (via SoMEF), pyproject.toml (requires Python >=3.10)
+- **Source:** GitHub API (via SoMEF), `pyproject.toml` (`requires-python = \">=3.10\"`), `ReadRinex.m`
 
 ### 14. Reference Publication (RECOMMENDED)
 - **DOI:** Not found
@@ -138,9 +137,9 @@ Python RINEX 2/3/4 NAV/OBS/SP3 reader with batch conversion to HDF5/NetCDF4, off
 
 ### 15. License (RECOMMENDED)
 - **License:** MIT License
-- **License URI:** https://api.github.com/licenses/mit
+- **License URI:** https://spdx.org/licenses/MIT.html
 - **SPDX ID:** MIT
-- **Source:** LICENSE.txt, GitHub API, DataCite API
+- **Source:** LICENSE.txt, GitHub API
 
 ---
 
@@ -158,24 +157,25 @@ Python RINEX 2/3/4 NAV/OBS/SP3 reader with batch conversion to HDF5/NetCDF4, off
 - **Source:** GitHub repository topics, pyproject.toml, PyHC registry, SoMEF
 
 ### 17. Data Sources (OPTIONAL)
-- **FTP/FTPS Directories** - UNAVCO RINEX data repositories
-- **HTTP/HTTPS Directories** - Various RINEX data sources
-- **Source:** README.md mentions UNAVCO FTP sites and other data sources
+- Not found
+- **Note:** GEOrinex reads local files and in-memory text streams; the README's UNAVCO URLs are example download locations rather than supported remote-access backends
+- **Source:** README.md, `src/georinex/base.py`, `src/georinex/rio.py`
 
 ### 18. Input File Formats (RECOMMENDED)
 - **ascii** - Plain ASCII RINEX files
+- **netCDF3/4** - Can read previously converted `.nc` datasets
 - **Other** - Compressed formats (.gz, .Z, .bz2, .zip), Hatanaka compressed RINEX (.crx)
-- **Source:** README.md, code analysis
+- **Source:** README.md, `src/georinex/base.py`, code analysis
 
 ### 19. Output File Formats (RECOMMENDED)
 - **netCDF3/4** - Primary output format
-- **HDF5** - NetCDF4 is a subset of HDF5
-- **Source:** README.md, package description
+- **Source:** README.md, `src/georinex/base.py`, `src/georinex/sp3.py`
 
 ### 20. Operating System (RECOMMENDED)
 - **Linux** - Tested in CI (ubuntu-latest)
 - **Mac** - Tested in CI (macos-latest)
 - **Windows** - Tested in CI (windows-latest)
+- **Operating System Independent** - Declared in package classifiers and designed for cross-platform use
 - **Source:** .github/workflows/ci.yml, README mentions cross-platform install
 
 ### 21. CPU Architecture (RECOMMENDED)
@@ -188,10 +188,10 @@ Python RINEX 2/3/4 NAV/OBS/SP3 reader with batch conversion to HDF5/NetCDF4, off
 
 ### 23. Development Status (RECOMMENDED)
 - **Active** - Reached stable, usable state and being actively developed
-- **Source:** Recent commit (2025-12-03), multiple recent releases, PyHC unevaluated registry
+- **Source:** Recent commit (2025-03-09), released tag v1.16.2, PyHC unevaluated registry
 
 ### 24. Documentation (RECOMMENDED)
-- **URL:** https://github.com/geospace-code/georinex/blob/main/README.md
+- **Documentation URL:** https://github.com/geospace-code/georinex
 - **Note:** Documentation is primarily in the README; no separate documentation site found
 - **Source:** Repository structure, no .readthedocs.yml or docs hosting detected
 
@@ -216,27 +216,28 @@ Python RINEX 2/3/4 NAV/OBS/SP3 reader with batch conversion to HDF5/NetCDF4, off
 - **Note:** While the software processes UNAVCO and other RINEX datasets, no specific dataset DOIs are referenced
 
 ### 29. Related Software (OPTIONAL)
-- **xarray** - Core dependency for data structures
-- **numpy** - Numerical processing
-- **hatanaka** - Hatanaka CRINEX decompression (https://github.com/valgur/hatanaka)
-- **PyMap3d** - Coordinate conversions (https://github.com/scivision/pymap3d)
-- **Source:** pyproject.toml dependencies, README.md mentions
+- https://github.com/pydata/xarray
+- https://github.com/numpy/numpy
+- https://github.com/valgur/hatanaka
+- https://github.com/vapier/ncompress
+- https://github.com/Unidata/netcdf4-python
+- https://github.com/scivision/pymap3d
+- **Source:** `pyproject.toml` dependencies, README.md mentions
 
 ### 30. Interoperable Software (OPTIONAL)
-- **xarray** - Direct integration as primary data structure
-- **Pandas** - Can convert to Pandas DataFrames
-- **matplotlib** - Optional plotting dependency
-- **cartopy** - Optional geospatial plotting
-- **Source:** pyproject.toml, README.md
+- https://github.com/pydata/xarray
+- https://github.com/pandas-dev/pandas
+- https://github.com/matplotlib/matplotlib
+- https://github.com/SciTools/cartopy
+- **Source:** `pyproject.toml`, README.md
 
 ### 31. Related Instruments (OPTIONAL)
 - Not found
 - **Note:** Software is instrument-agnostic, processing standard RINEX format from any GNSS receiver
 
 ### 32. Related Observatories (OPTIONAL)
-- **UNAVCO** - Major data source mentioned in README
-- **Note:** Software works with data from any GNSS observatory/network that produces RINEX files
-- **Source:** README.md extensive references to UNAVCO data repositories
+- Not found
+- **Note:** The package is general-purpose across GNSS networks; README references to UNAVCO are data-source examples rather than an observatory-specific software target
 
 ### 33. Logo (OPTIONAL)
 - Not found

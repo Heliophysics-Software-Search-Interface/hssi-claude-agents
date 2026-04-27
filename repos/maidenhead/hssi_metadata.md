@@ -21,9 +21,8 @@
 
 ### 4. Software Functionality (MANDATORY)
 - **Coordinate Transforms**
-- **Data Processing and Analysis**
 
-**Rationale:** This software performs coordinate transformations between Maidenhead grid locator system and WGS84 latitude/longitude coordinates. It is used for geolocation and is particularly useful for crowdsourced observations in ionosphere/thermosphere research. The software also outputs geoJSON format, which involves data processing.
+**Rationale:** This software provides user-facing coordinate conversions between the Maidenhead grid locator system and WGS84 latitude/longitude coordinates. The public API exposes functions for converting latitude/longitude to Maidenhead locators, converting Maidenhead locators back to latitude/longitude, and representing a Maidenhead grid square as GeoJSON geometry.
 
 ### 5. Related Region (MANDATORY)
 - **Earth Atmosphere**
@@ -31,13 +30,13 @@
 **Rationale:** According to PyHC metadata, this package has keywords "ionosphere_thermosphere_mesosphere" and is used for crowdsourced ground-based observations. The Maidenhead coordinate system is primarily used for Earth-based location hashing, particularly relevant to ionosphere and thermosphere observations.
 
 ### 6. Authors (MANDATORY)
-Multiple authors identified from Zenodo metadata:
+Authors identified from Zenodo metadata and git history:
 
-1. **scivision**
+1. **Michael Hirsch**
    - Author Identifier: Not found
    - Affiliation: Not found
 
-2. **ErofeevK**
+2. **Kirill Erofeev**
    - Author Identifier: Not found
    - Affiliation: Not found
 
@@ -65,16 +64,20 @@ Multiple authors identified from Zenodo metadata:
    - Author Identifier: Not found
    - Affiliation: Not found
 
+9. **Henri Kuiper**
+   - Author Identifier: Not found
+   - Affiliation: Not found
+
 **Primary Contact:** Michael Hirsch (from PyHC registry)
-**Source:** Zenodo API, DataCite API, PyHC registry
+**Source:** Zenodo API, DataCite API, PyHC registry, git history
 
 ### 7. Software Name (MANDATORY)
-- **Name:** maidenhead
+- **Name:** Maidenhead
 - **Full Title:** Maidenhead <-> Lat/Lon
-- **Source:** DataCite API, SoMEF, pyproject.toml
+- **Source:** PyHC registry, DataCite API, SoMEF, pyproject.toml
 
 ### 8. Description (MANDATORY)
-Python Maidenhead <--> WGS84 coordinate conversions. This package provides a simple, yet effective location hashing algorithm. Maidenhead allows global location precision down to sub-meter accuracy with 6 levels of precision (from World to 1m precision). The software converts between Maidenhead grid locator strings and WGS84 latitude/longitude coordinates, and can also output geoJSON format. It is particularly useful for amateur radio applications and crowdsourced observations in geospace research.
+Python Maidenhead <--> WGS84 coordinate conversions. This package provides a simple, yet effective location hashing algorithm. Maidenhead provides up to six levels of precision, from world-scale grid cells to approximately 1 m precision, according to the README. The software converts between Maidenhead grid locator strings and WGS84 latitude/longitude coordinates, and can also output GeoJSON geometry. It is particularly useful for amateur radio applications and crowdsourced observations in geospace research.
 
 **Source:** DataCite API, README.md, PyHC registry
 
@@ -84,8 +87,8 @@ Python Maidenhead <--> WGS84 coordinate conversions, useful for crowdsourced obs
 **Source:** PyHC registry, DataCite API (modified for brevity)
 
 ### 10. Publication Date (RECOMMENDED)
-- **Date:** 2018-05-08
-- **Source:** SoMEF (date_created from GitHub API)
+- **Date:** 2013-03-05
+- **Source:** Git history (first commit); GitHub repository creation date from SoMEF is 2018-05-08
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
@@ -200,7 +203,7 @@ Python Maidenhead <--> WGS84 coordinate conversions, useful for crowdsourced obs
 - DOI: 10.5281/zenodo.3229069
 - Title: space-physics/maidenhead: Python >= 3.9. Correct and extended precision
 - Description: Python Maidenhead <--> WGS84 coordinate conversions
-- Creators: 8 authors (scivision, ErofeevK, Andre Pastore, powermik, Cédric DELAYRE, Hilary Jendrasiak, Sybrand Strauss, flashbanger)
+- Creators: 8 authors (scivision, ErofeevK, Andre Pastore, powermik, Cédric DELAYRE, Hilary Jendrasiak, Sybrand Strauss, flashbanger); git history also identifies Michael Hirsch, Kirill Erofeev, and Henri Kuiper by name
 - Publisher: Zenodo
 - Publication Year: 2025 (latest version)
 - License: MIT License
@@ -324,9 +327,9 @@ Python Maidenhead <--> WGS84 coordinate conversions, useful for crowdsourced obs
 
 3. The software is actively maintained with the latest release in May 2025, requiring Python >= 3.9.
 
-4. Author names from Zenodo are primarily GitHub usernames; real names and ORCIDs are not available in the metadata sources examined.
+4. Author names from Zenodo are partly GitHub usernames. The metadata uses real names where git history confirms them (Michael Hirsch, Kirill Erofeev, and Henri Kuiper) and preserves remaining Zenodo creator names where fuller names were not found.
 
-5. The software's primary functionality is coordinate transformation, which is fundamental for geolocation and spatial data processing in heliophysics research.
+5. The software's primary functionality is coordinate transformation, which is fundamental for geolocation in heliophysics research.
 
 6. No formal reference publication (e.g., JOSS paper) was found for this software.
 

@@ -31,9 +31,9 @@
 - Data Processing and Analysis:Data Access and Retrieval
 - Data Processing and Analysis:File Format Conversion
 - Data Processing and Analysis:Image Processing
+- Data Processing and Analysis:Processing
 - Data Visualization
 - Data Visualization:2D Graphics
-- Data Visualization:Line Plots
 - Data Visualization:Movies
 
 **Source:** Manual analysis of README.md, source code, and PyHC metadata
@@ -44,7 +44,7 @@
 3. **Calibration** - Spatial registration using azimuth/elevation plate scale calibration data
 4. **Coordinate Transforms** - Azimuth/elevation transformations, map projections to geographic grids at specified altitudes
 5. **File Format Conversion** - Converts FITS image stacks to HDF5 format with lossless compression
-6. **Visualization** - Creates 2D plots, azimuth/elevation plots, projected images, time-series movies
+6. **Visualization** - Creates 2D plots, azimuth/elevation plots, projected images, and movies
 
 ### 5. Related Region (MANDATORY)
 **Values:**
@@ -60,37 +60,30 @@
 - **Authors:** Michael Hirsch
 - **Author Identifier:** Not found
 - **Affiliation:**
-  - **Organization:** Not found (Note: Associated with U. Alaska Geophysical Institute based on software description, but no formal affiliation listed in metadata)
+  - **Organization:** Not found
   - **Affiliation Identifier:** Not found
 
-**Source:** PyHC registry (contact: Michael Hirsch), DataCite API lists "Michael" but with malformed name structure
+**Source:** PyHC registry (contact: Michael Hirsch), repository authorship metadata
 
 **Author 2:**
-- **Authors:** Samuel
-- **Author Identifier:** Not found
-- **Affiliation:** Not found
-
-**Source:** DataCite API (surname appears to be missing in the metadata)
-
-**Author 3:**
 - **Authors:** Sebastijan Mrak
 - **Author Identifier:** Not found
 - **Affiliation:** Not found
 
-**Source:** DataCite API, contributors.md (credited for mapping projection contributions)
+**Source:** contributors.md (credited for mapping projection contributions)
 
-**Note:** Author names from DataCite appear incomplete or malformed. The primary maintainer/contact is Michael Hirsch based on PyHC registry and repository ownership. Samuel's full name could not be determined from available metadata.
+**Note:** Zenodo/DataCite author metadata for this project contains incomplete names, so only verifiable author names from repository-adjacent sources are listed here.
 
 ### 7. Software Name (MANDATORY)
-**Value:** dascasi
+**Value:** DASCutils
 
 **Alternate Names:**
-- DASCutils (PyHC registry name)
+- dascasi (Python package name)
 - space-physics/dascasi (GitHub repository name)
 
-**Source:** SoMEF (package name from pyproject.toml), PyHC registry
+**Source:** PyHC registry (authoritative HSSI software name), pyproject.toml package name, and repository name
 
-**Note:** The formal Python package name is "dascasi". The PyHC registry refers to it as "DASCutils". DataCite lists the title as "space-physics/dascasi: use python -m" which appears to be a release-specific title.
+**Note:** The formal Python package name is "dascasi", but the authoritative HSSI software name is the PyHC registry name "DASCutils".
 
 ### 8. Description (MANDATORY)
 **Value:** Digital All Sky Camera utilities for the University of Alaska Geophysical Institute cameras. This software provides utilities for plotting, saving, and analyzing data from the Poker Flat Research Range Digital All Sky Camera and other locations. It reads FITS format all-sky camera images, performs spatial calibration using azimuth/elevation plate scale data, supports map projection to specified altitudes for auroral and airglow analysis, converts FITS image stacks to HDF5 format with lossless compression, and creates visualizations including movies and projected images. The software handles corrupted FITS files from the 2013 RAID array failure and supports multi-wavelength image analysis for scientific studies of aurora and airglow phenomena.
@@ -107,7 +100,7 @@
 
 **Source:** SoMEF (date_created from GitHub API), confirmed by git log first commit date
 
-**Note:** This is the initial publication/creation date of the repository. The concept DOI publication year is 2022, which corresponds to when the Zenodo integration was established.
+**Note:** This is the initial publication/creation date of the repository. The concept DOI reflects later archival publication activity and does not replace the repository creation date used here.
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
@@ -117,23 +110,23 @@
 
 ### 12. Version (RECOMMENDED)
 
-**Version Number:** v2.3.0
+**Version Number:** v3.0.0
 
-**Version Date:** 2022-04-06
+**Version Date:** 2026-03-26
 
-**Version Description:** Use python -m
+**Version Description:** dascasi name, modernize
 
-**Version PID:** https://doi.org/10.5281/zenodo.6419126
+**Version PID:** https://doi.org/10.5281/zenodo.19229352
 
-**Source:** DataCite API, Zenodo API, SoMEF releases, git tags
+**Source:** DataCite API, Zenodo API, git tags, and src/dascasi/__init__.py
 
-**Note:** This is the latest version with a DOI. The actual current code version in the repository is 3.0.0 (from __init__.py), but this version does not appear to have a corresponding DOI release on Zenodo. Previous versions include v2.2.1, v2.2.0, v2.1.0, v2.0.3, v2.0.2, v2.0.1, v2.0.0, and earlier versions back to v1.0 (2016-10-19).
+**Note:** This matches the current tagged repository version and the latest Zenodo version DOI.
 
 ### 13. Programming Language (RECOMMENDED)
 **Values:**
 - Python 3.x
 
-**Source:** SoMEF (programming_languages from GitHub API), pyproject.toml (requires-python = ">=3.7"), CI configuration (tests Python 3.7 and 3.11)
+**Source:** SoMEF (programming_languages from GitHub API), pyproject.toml (requires-python = ">=3.11"), CI configuration (tests Python 3.11)
 
 **Note:** Primary language is Python. Repository also contains minor amounts of Jupyter Notebook (2,038 bytes) and Shell scripts (497 bytes) according to GitHub language statistics.
 
@@ -173,6 +166,7 @@
 ### 17. Data Sources (OPTIONAL)
 **Values:**
 - FTP/FTPS Directories
+- Observatory/Mission-specific
 
 **Source:** README.md mentions downloading from FTP server at ftp://optics.gi.alaska.edu/
 
@@ -190,10 +184,11 @@
 ### 19. Output File Formats (RECOMMENDED)
 **Values:**
 - HDF5
+- Other
 
 **Source:** README.md (save_hdf5 function), hdf5.py module
 
-**Note:** The software saves processed image stacks to HDF5 format with lossless compression. Visualization outputs (plots, movies) are also generated but file formats for these are not explicitly specified in the documentation.
+**Note:** The software saves processed image stacks to HDF5 format with lossless compression and also writes PNG visualization outputs.
 
 ### 20. Operating System (RECOMMENDED)
 **Values:**
@@ -228,7 +223,7 @@
 
 **Source:** SoMEF (date_updated: 2023-03-20 shows recent activity), git history shows commits through 2023, CI workflow actively maintained
 
-**Note:** The repository shows signs of active maintenance with updates in 2023, though the last Zenodo release was in 2022. Based on repostatus.org definitions, this qualifies as "Active" - reached stable, usable state and being actively developed.
+**Note:** The repository shows ongoing maintenance with updates through 2026 and a matching Zenodo release for v3.0.0, which supports the `Active` classification.
 
 ### 24. Documentation (RECOMMENDED)
 **Value:** https://github.com/space-physics/dascasi
@@ -267,25 +262,25 @@
 
 ### 29. Related Software (OPTIONAL)
 
-**Value 1:** pymap3d
+**Value 1:** https://github.com/geospace-code/pymap3d
 
 **Source:** Listed in dependencies (pyproject.toml)
 
 **Note:** PyMap3D provides 3D coordinate conversions used for geographic transformations. No DOI found; repository at https://github.com/geospace-code/pymap3d
 
-**Value 2:** xarray
+**Value 2:** https://github.com/pydata/xarray
 
 **Source:** Listed in dependencies, core data structure used
 
 **Note:** Xarray provides labeled multi-dimensional arrays. No specific DOI for the software itself.
 
-**Value 3:** astropy
+**Value 3:** https://github.com/astropy/astropy
 
 **Source:** Listed in dependencies, used for FITS file I/O
 
 **Note:** Astropy is used for reading FITS files. While Astropy has publications, the software dependency is on the package itself.
 
-**Value 4:** themisasi
+**Value 4:** https://github.com/space-physics/themisasi
 
 **Source:** Listed in optional dependencies (pyproject.toml)
 
@@ -325,9 +320,9 @@
 **Note:** Operates the DASC camera network
 
 ### 33. Logo (OPTIONAL)
-**Value:** https://i.ibb.co/JKLF4FB/logo.jpg
+**Value:** Not found
 
-**Source:** PyHC registry metadata
+**Source:** No stable repository-hosted or archival logo asset was identified
 
 ---
 
@@ -352,8 +347,8 @@ This metadata extraction utilized the following sources in priority order:
 
 ## Known Limitations
 
-1. **Author Information Incomplete:** Full names and ORCIDs not available for all authors (particularly "Samuel")
+1. **Author Information Incomplete:** Full names, ORCIDs, and affiliations are not available for all authors in authoritative metadata sources
 2. **No Reference Publication:** No peer-reviewed publication describing the software
-3. **Version DOI Gap:** Current code version (3.0.0) does not have a corresponding Zenodo DOI
+3. **No Reference Publication DOI:** The software has code DOIs, but no separate journal or reference-publication DOI was identified
 4. **Affiliation Information Missing:** No formal institutional affiliations listed for authors
 5. **Phenomena Vocabulary Mismatch:** Aurora and airglow are key phenomena but may not be in HSSI controlled vocabulary

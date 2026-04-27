@@ -13,7 +13,7 @@
 
 ### 2. Persistent Identifier (RECOMMENDED)
 - **Concept DOI:** https://doi.org/10.5281/zenodo.596378
-- **Note:** This is the concept DOI for all versions, found in Zenodo API response
+- **Note:** This is the concept DOI for all released versions; the README badge points to the v1.0 version DOI https://doi.org/10.5281/zenodo.167565
 
 ### 3. Code Repository (MANDATORY)
 - **Repository URL:** https://github.com/space-physics/digital-meridian-spectrometer
@@ -23,16 +23,13 @@
 Based on comprehensive analysis of code, documentation, and functionality:
 
 - **Data Processing and Analysis**
-- **Data Processing and Analysis:Data Access and Retrieval** - Loads data from remote FTP sources (Poker Flat Research Range)
-- **Data Processing and Analysis:File Format Conversion** - Supports both NetCDF3 (.PF) and NetCDF4 (.NC) formats
 - **Data Processing and Analysis:Processing** - Processes spectral intensity data with filter factors and calibration
-- **Data Processing and Analysis:Time Series Analysis** - Time-indexed spectral data analysis with temporal filtering
 - **Data Visualization**
 - **Data Visualization:2D Graphics** - Creates pcolormesh visualizations of spectral data
 - **Data Visualization:Line Plots** - Plots spectral data vs elevation angle
 - **Data Visualization:Spectrogram** - Creates time-elevation-intensity spectrograms for multiple wavelengths
 
-**Analysis rationale:** The software loads spectral data from the Digital Meridian Spectrometer, processes it (applying filter factors, handling multiple file formats), and creates comprehensive visualizations including spectrograms and 2D plots. It performs time series analysis with temporal filtering capabilities.
+**Analysis rationale:** The `load()` function reads local NetCDF input, applies wavelength filtering and filter-factor scaling, and returns processed `xarray.Dataset` objects. The plotting module generates pcolormesh spectrograms and line plots for meridian spectrometer data, which supports the processing and visualization classifications above.
 
 ### 5. Related Region (MANDATORY)
 - **Earth Atmosphere** - The Digital Meridian Spectrometer measures atmospheric emissions including auroral phenomena
@@ -43,13 +40,13 @@ Based on comprehensive analysis of code, documentation, and functionality:
 ### 6. Authors (MANDATORY)
 
 #### Author 1:
-- **Author Name:** Michael Hirsch, Ph.D.
-- **Author Identifier:** Not found in DataCite/Zenodo metadata
+- **Author Name:** Michael Hirsch
+- **Author Identifier:** Not found
 - **Affiliation:**
-  - **Organization:** SciVision, Inc.
+  - **Organization:** Not found
   - **Affiliation Identifier:** Not found
 
-**Note:** DataCite API listed "Ph.D." as given name and "Michael Hirsch" as family name (appears to be parsing error). PyHC registry lists "Michael Hirsch" as contact for this package.
+**Note:** Repository and DOI metadata consistently attribute the software to Michael Hirsch. Zenodo records disagree on affiliation details, so the affiliation is left unset here.
 
 ### 7. Software Name (MANDATORY)
 - **Software Name:** Digital Meridian Spectrometer
@@ -74,19 +71,13 @@ Load and plot UAF Geophysical Institute Digital Meridian Spectrometer data from 
 
 ### 12. Version (RECOMMENDED)
 
-#### Latest Version Information:
-- **Version Number:** v1.0 (from git tags, current development version 1.0.0 in __init__.py)
-- **Version Date:** Not found in git tags for v1.0
-- **Version Description:** Not found
-- **Version PID:** Not found (no specific DOI for v1.0)
+#### Latest Released Version Information:
+- **Version Number:** v1.0
+- **Version Date:** 2016-11-06
+- **Version Description:** for Poker Flat Digital Meridian Spectrometer, which uses netCDF
+- **Version PID:** https://doi.org/10.5281/zenodo.167565
 
-#### Documented Version from Zenodo:
-- **Version Number:** v0.6.0
-- **Version Date:** 2018-10-10
-- **Version Description:** Simplify "load" API like many other of our programs. Create Matlab API and plots.
-- **Version PID:** https://doi.org/10.5281/zenodo.1453766
-
-**Note:** Repository appears to have evolved beyond v0.6.0 (current code shows v1.0.0), but v1.0 has not been formally released to Zenodo with a DOI.
+**Note:** The latest tagged release is `v1.0`, with a matching Zenodo DOI. The package source currently reports `__version__ = "1.0.0"` in `src/dmsp/__init__.py`, which appears to reflect post-release repository state rather than a newer tagged release.
 
 ### 13. Programming Language (RECOMMENDED)
 - **Python 3.x** - Primary language (13,378 bytes from GitHub API, ~89%)
@@ -99,7 +90,7 @@ Load and plot UAF Geophysical Institute Digital Meridian Spectrometer data from 
 
 ### 15. License (RECOMMENDED)
 - **License:** Apache License 2.0
-- **License URI:** http://www.apache.org/licenses/LICENSE-2.0
+- **License URI:** https://www.apache.org/licenses/LICENSE-2.0
 - **SPDX ID:** Apache-2.0
 - **Note:** Confirmed from GitHub API, SoMEF, and LICENSE.txt file in repository
 
@@ -131,8 +122,8 @@ From multiple sources (GitHub topics, PyHC registry, pyproject.toml):
 - **Note:** Software explicitly handles both NetCDF3 (legacy .PF format, 1983-2010) and NetCDF4 (.NC format, 2011-present)
 
 ### 19. Output File Formats (RECOMMENDED)
-- **Not specified** - Software focuses on data loading and visualization; primary output is xarray.Dataset objects (in-memory)
-- **Note:** Plots can be saved in standard matplotlib formats (PNG, PDF, etc.) but no explicit file writing functionality in the API
+- **Output File Formats:** Not found
+- **Note:** The package returns in-memory `xarray.Dataset` objects and plotting functions, but the repository does not expose dedicated file-writing APIs for generated outputs
 
 ### 20. Operating System (RECOMMENDED)
 - **Linux** - Tested on ubuntu-latest in CI/CD (GitHub Actions)
@@ -176,26 +167,24 @@ Detected from spectral analysis in code (plots.py):
 - **Note:** No related publications in DataCite metadata or repository
 
 ### 28. Related Datasets (OPTIONAL)
-- **Related Datasets:** The UAF Geophysical Institute Poker Flat Digital Meridian Spectrometer data archive
-  - FTP: ftp://optics.gi.alaska.edu/PKR/DMSP/
-  - Historical: 1983-present
-- **Note:** No formal DOI for the dataset itself
+- **Related Datasets:** University of Alaska Fairbanks Geophysical Institute. (n.d.). Poker Flat Digital Meridian Spectrometer data archive. ftp://optics.gi.alaska.edu/PKR/DMSP/
+- **Note:** No formal DOI for the dataset was found in the repository or DOI metadata
 
 ### 29. Related Software (OPTIONAL)
-Dependencies from pyproject.toml:
+Dependencies and closely related packages from `pyproject.toml` and imports:
 
-- netCDF4 - For reading NetCDF files
-- xarray - For data container/manipulation
-- numpy - For numerical operations
-- python-dateutil - For date/time parsing
-- matplotlib (implied from plots.py) - For visualization
+- https://github.com/Unidata/netcdf4-python
+- https://github.com/pydata/xarray
+- https://github.com/numpy/numpy
+- https://github.com/dateutil/dateutil
+- https://github.com/matplotlib/matplotlib
 
-**Note:** No DOIs found for related software; these are standard scientific Python packages
+**Note:** Repository URLs are used because no software DOIs were identified in the local metadata sources
 
 ### 30. Interoperable Software (OPTIONAL)
-- **xarray** - Returns xarray.Dataset objects, making it interoperable with the xarray ecosystem
-- **MATLAB** - Provides MATLAB interface (dmsp.m) for MATLAB users
-- **Note:** Software designed to integrate with broader scientific Python ecosystem
+- https://github.com/pydata/xarray
+- https://www.mathworks.com/products/matlab.html
+- **Note:** The package returns `xarray.Dataset` objects and includes a MATLAB interface in `matlab/dmsp.m`
 
 ### 31. Related Instruments (OPTIONAL)
 - **Instrument Name:** Digital Meridian Spectrometer (also called Meridian Scanning Photometer)
@@ -216,8 +205,8 @@ Dependencies from pyproject.toml:
 
 ## Metadata Sources Summary
 
-1. **DataCite API** (DOI: 10.5281/zenodo.596378): Software name, description, authors, publisher, publication date, version, license, repository URL
-2. **Zenodo API** (Record: 1453766): Concept DOI, version-specific DOI, detailed version information
+1. **DataCite API** (DOI: 10.5281/zenodo.596378): Concept DOI, software name, authors, publisher, publication date, and release relationships
+2. **DataCite API** (DOI: 10.5281/zenodo.167565): Latest released version DOI, version title, and issued date
 3. **SoMEF**: Keywords, programming languages, repository statistics, descriptions, license confirmation, dates
 4. **PyHC Registry** (unevaluated packages): Package entry confirmed, contact information, keywords (ionosphere_thermosphere_mesosphere)
 5. **Manual Repository Examination**:
@@ -236,8 +225,7 @@ Dependencies from pyproject.toml:
 - Code repository, software name, description, programming languages, license, keywords, input formats, operating systems, development status
 
 ### Medium Confidence Fields:
-- Authors (single author confirmed from multiple sources, but no ORCID found)
-- Version information (v0.6.0 well-documented, but current v1.0 not formally released)
+- Authors (single author confirmed from multiple sources, but no ORCID found and affiliation metadata conflicts across DOI records)
 - Software functionality (comprehensive analysis performed)
 - Related region (based on scientific understanding of auroral measurements)
 

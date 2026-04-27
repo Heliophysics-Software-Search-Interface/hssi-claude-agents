@@ -23,14 +23,16 @@
 - **Models and Simulations**
 - **Models and Simulations:Empirical**
 - **Models and Simulations:Physics-Based**
+- **Data Processing and Analysis**
 - **Data Processing and Analysis:Analysis**
+- **Data Processing and Analysis:Processing**
 - **Data Visualization**
 - **Data Visualization:2D Graphics**
 - **Data Visualization:Line Plots**
 
-**Justification:** LOWTRAN is an empirical atmospheric radiative transfer model that uses physics-based calculations to compute atmospheric absorption, transmission, extinction, scattering, radiance, and irradiance. It can be used for analyzing atmospheric properties and modeling light propagation through Earth's atmosphere. The software includes comprehensive visualization capabilities (plot.py module) for creating 2D line plots of transmittance, radiance, and irradiance vs. wavelength, as demonstrated in the examples.
+**Justification:** LOWTRAN is an empirical atmospheric radiative transfer model that uses physics-based calculations to compute atmospheric absorption, transmission, extinction, scattering, radiance, and irradiance. It can be used for analyzing atmospheric properties and modeling light propagation through Earth's atmosphere. The Python wrapper processes user-provided atmospheric parameters and optional tabular input into xarray datasets. The software includes comprehensive visualization capabilities (plot.py module) for creating 2D line plots of transmittance, radiance, and irradiance vs. wavelength, as demonstrated in the examples.
 
-**Source:** Manual analysis of repository README, examples, documentation, and source code (src/lowtran/plot.py). LOWTRAN7 is a well-established empirical atmospheric model based on observational data and atmospheric physics principles.
+**Source:** Manual analysis of repository README, examples, documentation, and source code (src/lowtran/base.py, src/lowtran/scenarios.py, src/lowtran/plot.py). LOWTRAN7 is a well-established empirical atmospheric model based on observational data and atmospheric physics principles.
 
 ### 5. Related Region (MANDATORY)
 - **Earth Atmosphere**
@@ -53,11 +55,11 @@
 **Note:** The Zenodo and DataCite records list "scivision" as the creator, which is Michael Hirsch's GitHub username. Additional authors may exist but were not found in the available metadata sources.
 
 ### 7. Software Name (MANDATORY)
-- **Name:** lowtran
+- **Name:** LOWTRAN
 
-**Alternative Names:** LOWTRAN, Lowtran in Python, space-physics/lowtran
+**Alternative Names:** lowtran, Lowtran in Python, space-physics/lowtran
 
-**Source:** SoMEF (name field), pyproject.toml (project name), GitHub repository name
+**Source:** PyHC unevaluated registry official name. SoMEF, pyproject.toml, and GitHub repository name use the package/repository name "lowtran".
 
 ### 8. Description (MANDATORY)
 LOWTRAN7 atmospheric absorption extinction model. Updated to be platform independent and easily accessible from Python and Matlab. The main LOWTRAN program is accessible from Python by using direct memory transfers instead of the cumbersome and error-prone process of writing/reading text files. xarray.Dataset high-performance, simple N-D array data is passed out, with appropriate metadata. LOWTRAN models Earth atmosphere absorption and transmission vs. wavelength and location, including atmospheric scattering and radiance calculations.
@@ -106,7 +108,7 @@ Use pyproject.toml alone. f2py builds on first use of import lowtran function e.
 
 ### 13. Programming Language (RECOMMENDED)
 - **Python 3.x** (specifically Python >=3.9 from pyproject.toml)
-- **Fortran** (LOWTRAN7 Fortran code, compiled via f2py)
+- **Fortran77** (LOWTRAN7 Fortran code, compiled via f2py)
 - **MATLAB** (interface provided for MATLAB users)
 
 **Source:** SoMEF (programming_languages from GitHub API), pyproject.toml (requires-python), README.md (MATLAB support), CI configuration (.github/workflows/ci.yml tests Python 3.9-3.12)
@@ -149,9 +151,12 @@ Not found
 **Note:** LOWTRAN is a model/simulation tool, not a data access tool. It does not retrieve data from external sources; users provide atmospheric parameters as input.
 
 ### 18. Input File Formats (RECOMMENDED)
-Not found
+- **csv**
+- **HDF5**
 
-**Note:** LOWTRAN primarily accepts input parameters programmatically through Python/MATLAB function calls rather than reading from files. The README mentions the software can optionally write output to HDF5 format with the `-o` option, but specific supported input file formats were not documented.
+**Source:** `src/lowtran/scenarios.py` reads user-defined atmospheric input with `pandas.read_csv()` and can load `.h5` datasets with `xarray.open_dataset()`.
+
+**Note:** LOWTRAN primarily accepts input parameters programmatically through Python/MATLAB function calls; documented file input support is limited to these scenario helpers.
 
 ### 19. Output File Formats (RECOMMENDED)
 - **HDF5**
@@ -212,16 +217,17 @@ Not found
 Not found
 
 ### 29. Related Software (OPTIONAL)
-- **numpy** (dependency)
-- **xarray** (dependency for data handling)
-- **MATLAB** (interoperable - Python modules can be called from MATLAB)
+- **NumPy:** https://numpy.org/ (dependency)
+- **xarray:** https://docs.xarray.dev/ (dependency for data handling)
+- **python-dateutil:** https://dateutil.readthedocs.io/ (dependency for date parsing)
+- **MATLAB:** https://www.mathworks.com/products/matlab.html (interoperable - Python modules can be called from MATLAB)
 
 **Source:** pyproject.toml (dependencies), README.md (MATLAB interoperability via RunLowtran.m)
 
 **Note:** The original LOWTRAN7 Fortran code (http://www1.ncdc.noaa.gov/pub/data/software/lowtran/) is the basis for this implementation.
 
 ### 30. Interoperable Software (OPTIONAL)
-- **MATLAB** (demonstrated interoperability via Python-MATLAB interface as shown in RunLowtran.m)
+- **MATLAB:** https://www.mathworks.com/products/matlab.html (demonstrated interoperability via Python-MATLAB interface as shown in RunLowtran.m)
 
 **Source:** README.md Matlab section demonstrating seamless access from MATLAB
 
@@ -290,7 +296,7 @@ The following sources were used to extract metadata:
 - Reference publication (peer-reviewed paper about this implementation) not found
 - Funding information not available
 - Related publications not found in metadata
-- Specific input file formats not well-documented (uses programmatic input)
+- Input file format support is limited to documented scenario helpers for CSV and HDF5; most use is programmatic input
 - Related instruments/observatories not applicable for this general atmospheric model
 
 ### Metadata Confidence

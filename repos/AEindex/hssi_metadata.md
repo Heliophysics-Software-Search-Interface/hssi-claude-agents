@@ -22,14 +22,13 @@ https://github.com/space-physics/AEindex
 **Source:** GitHub repository URL
 
 ### 4. Software Functionality (MANDATORY)
-- Data Processing and Analysis:Analysis
-- Data Processing and Analysis:Data Access and Retrieval
+- Data Processing and Analysis
 - Data Processing and Analysis:Processing
 - Data Processing and Analysis:Time Series Analysis
-- Data Visualization:2D Graphics
+- Data Visualization
 - Data Visualization:Line Plots
 
-**Source:** Analyzed from code examination. The software reads auroral electrojet index data from ASCII files, performs analysis and processing of time series data, and creates line plots for visualization.
+**Source:** Code analysis shows the software reads local ASCII AE index files, processes time-series index data, and generates line plots for visualization.
 
 ### 5. Related Region (MANDATORY)
 - Earth Atmosphere
@@ -40,7 +39,7 @@ https://github.com/space-physics/AEindex
 ### 6. Authors (MANDATORY)
 
 **Author 1:**
-- **Authors:** Michael Hirsch, Ph.D.
+- **Authors:** Michael Hirsch
 - **Author Identifier:** Not found
 - **Affiliation:**
   - **Organization:** Not found
@@ -51,9 +50,9 @@ https://github.com/space-physics/AEindex
 **Note:** PyHC registry lists contact as "Michael Hirsch" but does not provide ORCID or affiliation information.
 
 ### 7. Software Name (MANDATORY)
-AEindex (package name: aeindex)
+Auroral Electrojet
 
-**Source:** Repository name, PyHC registry ("Auroral Electrojet"), SoMEF, and setup.cfg (name field)
+**Source:** PyHC registry (authoritative software name), repository name, SoMEF, and setup.cfg (package name: aeindex)
 
 ### 8. Description (MANDATORY)
 Auroral Electrojet AE-index read and plot. This software loads and plots auroral electrojet indices (AE, AU, AL, AO) from data files obtained from the AE-index data web interface at Kyoto University. The data is provided in WDC-like format as ASCII data tables.
@@ -130,9 +129,9 @@ Not found
 - PyHC keywords: ionosphere_thermosphere_mesosphere
 
 ### 17. Data Sources (OPTIONAL)
-- Other
+- HTTP/HTTPS Directories
 
-**Note:** Data comes from the AE-index data web interface at Kyoto University (http://wdc.kugi.kyoto-u.ac.jp/aeasy/index.html). Data is downloaded manually and provided as local ASCII files in WDC-like format.
+**Note:** Data comes from the AE-index data web interface at Kyoto University (https://wdc.kugi.kyoto-u.ac.jp/aeasy/index.html). Data is downloaded manually and provided as local ASCII files in WDC-like format.
 
 ### 18. Input File Formats (RECOMMENDED)
 - ascii
@@ -140,7 +139,7 @@ Not found
 **Source:** README.md indicates data is obtained as "ASCII data tables" in "WDC-like format". Code analysis shows reading from fixed-width format files.
 
 ### 19. Output File Formats (RECOMMENDED)
-- Other (plotting output - display only)
+Not found
 
 **Source:** Code analysis shows the software primarily produces matplotlib plots for display. No evidence of file output functionality in the code.
 
@@ -160,16 +159,16 @@ Not found in standard controlled vocabularies
 **Note:** The software deals with auroral electrojet phenomena, which relates to geomagnetic activity and auroral processes, but specific controlled vocabulary terms were not available in the provided list.
 
 ### 23. Development Status (RECOMMENDED)
-- Active
+- Inactive
 
-**Source:** setup.cfg classifiers include "Development Status :: 4 - Beta", indicating active development. Latest commit was 2022-08-11, suggesting the project may be less active now but has reached a usable state.
+**Source:** setup.cfg classifiers include "Development Status :: 4 - Beta", but the latest upstream repository commit is 2022-08-11 and the project does not show clear evidence of ongoing active maintenance.
 
-**Note:** SoMEF did not detect a specific repostatus.org badge. Based on commit history (last commit in 2022) and Beta status, it appears to be in an "Inactive" or "Active" state depending on interpretation.
+**Note:** The package appears usable and stable, but the available repository evidence better supports `Inactive` than ongoing active development.
 
 ### 24. Documentation (RECOMMENDED)
-Not found
+https://github.com/space-physics/AEindex
 
-**Note:** No separate documentation URL found. README.md contains basic installation and usage instructions but no link to external documentation. No docs/ folder in repository. No readthedocs configuration found.
+**Note:** No separate documentation site exists; the repository README provides the available installation and usage documentation.
 
 ### 25. Funder (OPTIONAL)
 Not found
@@ -187,9 +186,9 @@ Not found
 **Note:** README includes a link to a paper about the physical meaning of the AE index (http://onlinelibrary.wiley.com/doi/10.1029/2004EO190010/abstract), but this is a background reference, not a publication about this specific software.
 
 ### 28. Related Datasets (OPTIONAL)
-Not found
+World Data Center for Geomagnetism, Kyoto. (n.d.). AE-index data web interface. https://wdc.kugi.kyoto-u.ac.jp/aeasy/index.html
 
-**Note:** The software uses data from the AE-index data web interface (http://wdc.kugi.kyoto-u.ac.jp/aeasy/index.html), but no DOI or formal dataset citation is available.
+**Note:** No DOI or formal dataset citation was found, so the persistent landing page for the AE-index source is used instead.
 
 ### 29. Related Software (OPTIONAL)
 Not found

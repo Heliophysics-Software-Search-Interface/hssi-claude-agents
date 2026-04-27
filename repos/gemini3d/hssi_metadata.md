@@ -23,15 +23,24 @@
 
 ### 4. Software Functionality (MANDATORY)
 **Values:**
+- Coordinate Transforms
+- Coordinate Transforms:Ionospheric
+- Data Processing and Analysis
+- Data Processing and Analysis:2D Slices
+- Data Processing and Analysis:Analysis
 - Models and Simulations
-- Models and Simulations:MHD
-- Models and Simulations:Physics-Based
+- Models and Simulations:Empirical
 - Models and Simulations:First Principles
+- Models and Simulations:Physics-Based
+- Data Visualization
 - Data Visualization:2D Graphics
-- Data Visualization:3D Graphics
+- Data Visualization:2D Slices
+- Data Visualization:Line Plots
+- Servers and Environments
+- Servers and Environments:High Performance Computing
 - Data Processing and Analysis:Processing
 
-**Note:** Gemini3D is a three-dimensional ionospheric fluid-electrodynamic model that solves MHD equations. It includes visualization capabilities for 2D and 3D outputs, and processes simulation data. The model uses first-principles physics to simulate ionospheric dynamics.
+**Note:** PyGemini is the PyHC registry name for the Gemini3D/GEMINI software stack. The repository implements a three-dimensional ionospheric fluid-electrodynamic model, uses empirical ionospheric/atmospheric components such as Fang, GLOW, MSIS, and HWM, exposes geographic/geomagnetic and dipole coordinate utilities, supports HDF5 simulation data loading/processing, includes 2D and slice plotting examples, and is built for MPI/HPC execution.
 
 ### 5. Related Region (MANDATORY)
 **Values:**
@@ -55,19 +64,19 @@
 **Note:** Authors extracted from CITATION.cff, codemeta.json, and DataCite API.
 
 ### 7. Software Name (MANDATORY)
-**Value:** Gemini3D
+**Value:** PyGemini
 
 **Full Name:** GEMINI (Geospace Environment Model of Ion-Neutral Interactions)
 
-**Note:** From repository name, README, and all metadata sources.
+**Note:** PyGemini is the authoritative PyHC/HSSI registry name for this entry. The repository, README, CITATION.cff, codemeta.json, and Zenodo records use Gemini3D or GEMINI as alternate names.
 
 ### 8. Description (MANDATORY)
-**Value:** The GEMINI model (Geospace Environment Model of Ion-Neutral Interactions) is a three-dimensional ionospheric fluid-electrodynamic model written in object-oriented Fortran (2008+ standard). GEMINI is used for various scientific studies including: effects of auroras on the terrestrial ionosphere, natural hazard effects on the space environment, and effects of ionospheric fluid instabilities on radio propagation. The model uses generalized orthogonal curvilinear coordinates and has been tested with dipole and Cartesian coordinates. It solves the coupled ionospheric fluid and electrodynamic equations to simulate plasma dynamics in the ionosphere-thermosphere system.
+**Value:** PyGemini is the PyHC registry name for the Gemini3D/GEMINI software stack, a three-dimensional ionospheric fluid-electrodynamic model written primarily in object-oriented Fortran 2008. GEMINI is used for studies of auroral effects on the terrestrial ionosphere, natural hazard effects on the space environment, and ionospheric fluid instabilities that affect radio propagation. The model uses generalized orthogonal curvilinear coordinates, has been tested with dipole and Cartesian coordinates, supports MPI/HPC execution, and includes Python/MATLAB-facing workflows for running simulations and loading, plotting, and analyzing HDF5 output.
 
-**Note:** Compiled from README.md and codemeta.json descriptions.
+**Note:** Compiled from README.md, docs/Readme_output.md, docs/Readme_magcalc.md, CITATION.cff, codemeta.json, and the PyHC registry name.
 
 ### 9. Concise Description (OPTIONAL)
-**Value:** Three-dimensional ionospheric fluid-electrodynamic model for simulating auroral effects, natural hazards, and ionospheric instabilities on radio propagation.
+**Value:** PyHC entry for the Gemini3D ionospheric fluid-electrodynamic model and scripting workflows for simulations, HDF5 output, plotting, and analysis.
 
 **Note:** Condensed version of main description (under 200 characters).
 
@@ -94,14 +103,16 @@
 
 **Version PID:** https://doi.org/10.5281/zenodo.10475267
 
-**Note:** Latest version from git tags and Zenodo API. The concept DOI is 10.5281/zenodo.3647579, while the version-specific DOI is 10.5281/zenodo.10475267.
+**Note:** Latest tagged/Zenodo release from git tags and Zenodo API. The concept DOI is 10.5281/zenodo.3647579, while the version-specific DOI is 10.5281/zenodo.10475267. The refreshed main branch declares a development project version of 2.0.0 in CMakeLists.txt, but no newer release tag or version DOI is present.
 
 ### 13. Programming Language (RECOMMENDED)
 **Values:**
 - Fortran 2008
+- C
+- C++
 - Python 3.x
 
-**Note:** Primary code is in Fortran 2008+ (from README and codemeta.json), with Python frontend for scripting, plotting, and analysis.
+**Note:** Primary code is Fortran 2008+ (README and source tree). The repository also contains C/C++ interface and utility code, and Python is used for scripting, tests, plotting, and analysis workflows described in the documentation.
 
 ### 14. Reference Publication (RECOMMENDED)
 **Value:** Not found
@@ -130,7 +141,7 @@
 - electrodynamics
 - space physics
 - space weather
-- MHD
+- ionospheric fluid electrodynamics
 - plasma physics
 - geospace
 
@@ -146,8 +157,9 @@
 **Values:**
 - HDF5
 - ascii
+- Other
 
-**Note:** From documentation (Readme_input.md). Primary format is HDF5, with support for raw binary (.dat) files which are ASCII-like.
+**Note:** From docs/Readme_input.md and docs/Readme_magcalc.md. Primary scientific input is HDF5; text configuration is provided through config.nml/config.ini; raw binary .dat field-point files are also supported for magcalc and are represented as Other.
 
 ### 19. Output File Formats (RECOMMENDED)
 **Values:**
@@ -175,58 +187,75 @@
 
 ### 22. Related Phenomena (OPTIONAL)
 **Values:**
-- Not found in standard controlled vocabularies
-
-**Suggested values based on software purpose:**
 - Auroral emissions
 - Ionospheric disturbances
-- Geomagnetic storms
+- Ionospheric instabilities
+- Natural hazard effects on the space environment
 - Space weather events
 
-**Note:** While the software models auroras and ionospheric phenomena, specific controlled vocabulary terms were not found in the available metadata.
+**Note:** Based on README.md use cases for auroras, natural hazard effects on the space environment, and ionospheric fluid instabilities affecting radio propagation.
 
 ### 23. Development Status (RECOMMENDED)
 **Value:** Active
 
-**Note:** From codemeta.json (developmentStatus: "active"). The repository shows recent activity (last updated 2025-12-01 per SoMEF) and active development.
+**Note:** From codemeta.json (developmentStatus: "active") and recent upstream activity. The copied repository was fast-forwarded to origin/main at commit a0ae56fe from 2026-04-22; the latest release tag remains v1.7.0 from 2024-01-09.
 
 ### 24. Documentation (RECOMMENDED)
 **Value:** https://gemini3d.github.io/gemini3d/
 
-**Note:** Main documentation page. Inline source code documentation is at https://gemini3d.github.io/gemini/. Additional documentation in docs/ directory of repository.
+**Note:** Public generated documentation page. Additional durable documentation is in the repository docs/ directory at https://github.com/gemini3d/gemini3d/tree/main/docs.
 
 ### 25. Funder (OPTIONAL)
 
 **Funder 1:**
-- **Organization:** NSF
+- **Organization:** National Science Foundation
 - **Funder Identifier:** Not found
 
 **Funder 2:**
-- **Organization:** NASA
+- **Organization:** National Aeronautics and Space Administration
 - **Funder Identifier:** Not found
 
 **Funder 3:**
-- **Organization:** DARPA
+- **Organization:** Defense Advanced Research Projects Agency
 - **Funder Identifier:** Not found
 
-**Note:** From codemeta.json. Specific grant identifiers not provided in available metadata.
+**Note:** Funder names expanded from codemeta.json. Specific funder identifiers are not provided in available repository metadata.
 
 ### 26. Award Title (OPTIONAL)
 
 **Award 1:**
-- **Award Title:** Not found
+- **Award Title:** NASA Heliophysics Data Environment Enhancements
 - **Award Number:** NNH19ZDA001N-HDEE grant 80NSSC20K0176
 
-**Note:** From README.md, this NASA HDEE grant funded development of h5fortran and PyGemini components. Full award title not provided.
+**Note:** From README.md, this NASA HDEE grant funded development of h5fortran and PyGemini components.
 
 ---
 
 ## Section 3: Additional Metadata
 
 ### 27. Related Publications (OPTIONAL)
-**Value:** Not found
+**Values:**
+- https://doi.org/10.1029/2012JA017637
+- https://doi.org/10.1002/2013GL058018
+- https://doi.org/10.1002/2013JA019583
+- https://doi.org/10.1002/2015JA021116
+- https://doi.org/10.1002/2015GL066806
+- https://doi.org/10.1002/2015JA021790
+- https://doi.org/10.1002/2014JA020860
+- https://doi.org/10.1002/2015JA021536
+- https://doi.org/10.1002/2016JA023159
+- https://doi.org/10.1002/2016RS006182
+- https://doi.org/10.1029/2018JA025721
+- https://doi.org/10.1029/2018GL081569
+- https://doi.org/10.1029/2018GL081886
+- https://doi.org/10.1029/2019GL082576
+- https://doi.org/10.1029/2019JA027200
+- https://doi.org/10.1029/2019JA027734
+- https://doi.org/10.1029/2008JA013384
+- https://doi.org/10.1029/2010GL045406
+- https://doi.org/10.1029/2011JA016649
 
-**Note:** No specific publications citing or describing the software were found in the repository metadata.
+**Note:** Related model-use and method publications found in docs/Readme_references.md and inline source references. Field 14 remains Not found because the repository does not identify one preferred software-reference publication separate from the software DOI.
 
 ### 28. Related Datasets (OPTIONAL)
 **Value:** Not found
@@ -243,12 +272,28 @@
 
 **Software 4:** https://github.com/geospace-code/h5fortran (HDF5 Fortran library, dependency)
 
-**Note:** From README.md. These are companion repositories and key dependencies.
+**Software 5:** https://github.com/gemini3d/glow (GLOW dependency used by the build)
+
+**Software 6:** https://github.com/gemini3d/hwm14 (HWM14 dependency used by the build)
+
+**Software 7:** https://github.com/gemini3d/msis (MSIS dependency used by the build)
+
+**Software 8:** https://mumps-solver.org/ (MUMPS sparse solver dependency)
+
+**Note:** From README.md and CMake configuration. These are companion repositories and key model/numerical dependencies.
 
 ### 30. Interoperable Software (OPTIONAL)
-**Value:** Not found
+**Values:**
+- https://github.com/gemini3d/pygemini
+- https://github.com/gemini3d/mat_gemini
+- https://github.com/HDFGroup/hdf5
+- https://github.com/geospace-code/h5fortran
+- https://www.mcs.anl.gov/research/projects/mpi/
+- https://netlib.org/lapack/
+- https://www.netlib.org/scalapack/
+- https://mumps-solver.org/
 
-**Note:** While the software depends on standard numerical libraries (LAPACK, ScaLAPACK, MUMPS, HDF5), no specific DOIs for interoperable software packages were identified.
+**Note:** Interoperable companion front ends and important runtime/numerical libraries documented in README.md and CMake configuration.
 
 ### 31. Related Instruments (OPTIONAL)
 **Value:** Not found
@@ -288,14 +333,14 @@
 ### SoMEF
 - Repository: https://github.com/gemini3d/gemini3d
 - Date created: 2018-08-31
-- Date updated: 2025-12-01
+- Date updated: 2025-12-01 in the original SoMEF output; current Codex copy was refreshed to origin/main commit a0ae56fe dated 2026-04-22
 - License: Apache-2.0
 - Keywords: aurora, ionosphere
 - Description excerpts from README
 
 ### PyHC Registry (Unevaluated)
 - Entry name: PyGemini
-- Description: Python frontend for Gemini3D ionospheric kintic + fluid dynamics models
+- Description: Python frontend for Gemini3D ionospheric kinetic + fluid dynamics models
 - Repository: https://github.com/gemini3d/gemini3d
 - Contact: Michael Hirsch
 - Keywords: ionosphere_thermosphere_mesosphere, specific

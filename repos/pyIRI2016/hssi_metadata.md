@@ -2,6 +2,7 @@
 
 **Repository:** https://github.com/rilma/pyIRI2016
 **Extraction Date:** 2025-12-03
+**Validation Update:** 2026-04-24
 
 ---
 
@@ -13,107 +14,103 @@
 
 ### 2. Persistent Identifier (RECOMMENDED)
 - **DOI:** https://doi.org/10.5281/zenodo.240895
-- **Source:** DataCite API, Zenodo badge in README.md
-- **Note:** This is the DOI for version v1.1.0. The concept DOI was not found in the Zenodo API response.
+- **Source:** README.md Zenodo DOI badge; Zenodo API record 240895
+- **Note:** Version-specific DOI for the archived v1.1.0 software release. The Zenodo API record has conceptrecid 591270 but no populated concept DOI.
 
 ### 3. Code Repository (MANDATORY)
 - **Repository URL:** https://github.com/rilma/pyIRI2016
-- **Source:** DataCite API, SoMEF, manual examination
+- **Source:** git remote origin; GitHub repository metadata; Zenodo related identifier
 
 ### 4. Software Functionality (MANDATORY)
 - **Coordinate Transforms**
 - **Coordinate Transforms:Ionospheric**
 - **Models and Simulations**
 - **Models and Simulations:Empirical**
-- **Models and Simulations:Physics-Based**
 - **Data Processing and Analysis**
 - **Data Processing and Analysis:Analysis**
+- **Data Processing and Analysis:Data Access and Retrieval**
+- **Data Processing and Analysis:Processing**
+- **Data Visualization**
+- **Data Visualization:2D Graphics**
+- **Data Visualization:Line Plots**
 
-**Rationale:** pyIRI2016 is a Python wrapper for the International Reference Ionosphere (IRI) 2016 model, which is an empirical, physics-based model of the Earth's ionosphere. The software computes electron density (Ne), electron temperature (Te), ion temperature (Ti), and ion densities (O+, H+, N+, He+, O2+, NO+, cluster ions). It provides various profile types (height, latitude, longitude, time) for analysis purposes. The underlying code includes coordinate transformations between geographic and geomagnetic (Corrected Geomagnetic - CGM) coordinate systems, which are essential for ionospheric research.
+**Rationale:** IRI-2016 is a Python wrapper for the International Reference Ionosphere 2016 empirical ionospheric model. The public API computes ionospheric parameters including electron density, electron temperature, ion temperature, ion densities, NmF2, hmF2, and B0 for height, latitude, longitude, local-time, and 2D profile modes. The package includes retrieval helpers for IRI source/data files, optional ionospheric field-line and IGRF-related calculations, and plotting/example code that generates line plots and 2D pcolor/contour graphics.
 
-**Source:** Manual code examination of pyiri2016/__init__.py, README.md, setup.py, and source/igrf.for (contains GEODIP subroutine for geographic-geomagnetic coordinate conversions)
+**Source:** README.md; pyproject.toml; pyiri2016/__init__.py; pyiri2016/iri2016prof2D.py; pyiri2016/api/update.py; examples/*.py; scripts/*.py; settings/settings.py; source/igrf.for
 
 ### 5. Related Region (MANDATORY)
 - **Earth Atmosphere**
 
-**Rationale:** The IRI2016 model specifically models the ionosphere, which is part of Earth's upper atmosphere (approximately 60-1000 km altitude). The software is designed for ionospheric research.
+**Rationale:** The International Reference Ionosphere models the ionosphere, which is part of Earth's upper atmosphere.
 
-**Source:** Software description, model domain knowledge
+**Source:** README.md; pyproject.toml topic classifier; package API and examples
 
 ### 6. Authors (MANDATORY)
 
 #### Author 1:
-- **Author Name:** Ronald Ilma
+- **Author Name:** Ronald R. Ilma Campana
 - **Author Identifier:** Not found
 - **Affiliation - Organization:** Cornell University
 - **Affiliation - Identifier:** https://ror.org/05bnh6r87
-- **Source:** DataCite API, Zenodo API, LICENSE.md (Copyright 2017 Ronald Ilma)
-
-#### Author 2:
-- **Author Name:** Ronald R. Ilma Campana
-- **Author Identifier:** Not found
-- **Affiliation - Organization:** Not found
-- **Affiliation - Identifier:** Not found
-- **Source:** SoMEF (from pyproject.toml)
-- **Note:** This appears to be the same person as Author 1, with full name in pyproject.toml
-
-#### Author 3:
-- **Author Name:** Michael Hirsch
-- **Author Identifier:** Not found
-- **Affiliation - Organization:** Not found
-- **Affiliation - Identifier:** Not found
-- **Source:** setup.py (listed as co-author)
-- **Note:** Listed as "Michael Hirsch, Ph.D." in setup.py
+- **Source:** pyproject.toml author field; Zenodo creator "Ronald Ilma" with Cornell University affiliation; LICENSE.md copyright holder
+- **Note:** Zenodo and the license use the shorter name "Ronald Ilma"; pyproject.toml gives the fuller current package-author form.
 
 ### 7. Software Name (MANDATORY)
-- **Name:** pyIRI2016
-- **Source:** DataCite API, Zenodo API, SoMEF, repository name, README.md
+- **Name:** IRI-2016
+- **Source:** PyHC registry / Google sheet official software name supplied for this validation workflow
+- **Note:** The repository, Python package, and README use the alternate name pyIRI2016.
 
 ### 8. Description (MANDATORY)
-- **Description:** Python wrapper for the International Reference Ionosphere (IRI) 2016 model. The IRI2016 model provides empirical predictions of ionospheric parameters including electron density (Ne), electron temperature (Te), ion temperature (Ti), and ion densities for various species (O+, H+, N+, He+, O2+, NO+, cluster ions). The software supports various profile types including height profiles, latitudinal profiles, longitudinal profiles, and time profiles. It enables users to compute ionospheric parameters as a function of location, time, altitude, and solar/geomagnetic conditions.
-- **Source:** README.md, DataCite API, code examination
+- **Description:** Python wrapper for the International Reference Ionosphere (IRI) 2016 model. The package computes empirical ionospheric parameters including electron density, electron temperature, ion temperature, ion densities, NmF2, hmF2, and B0 as functions of location, time, altitude, and solar/geomagnetic conditions. It supports height, latitude, longitude, local-time, and 2D profile workflows, includes helpers for retrieving IRI-related source and coefficient files, and provides example plotting workflows for line plots and 2D maps.
+- **Source:** README.md; pyproject.toml; pyiri2016/__init__.py; pyiri2016/iri2016prof2D.py; pyiri2016/api/update.py; examples/README.md
 
 ### 9. Concise Description (OPTIONAL)
-- **Concise Description:** Python wrapper for the International Reference Ionosphere (IRI) 2016 model.
-- **Source:** DataCite API, Zenodo API description
+- **Concise Description:** Python wrapper for the International Reference Ionosphere 2016 empirical ionospheric model.
+- **Source:** README.md; pyproject.toml; Zenodo API record 240895
 
 ### 10. Publication Date (RECOMMENDED)
 - **Publication Date:** 2017-01-12
-- **Source:** DataCite API (date issued), Zenodo API, git tag date for v1.1.0
+- **Source:** Zenodo API record 240895 publication_date; v1.1.0 git tag date
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
 - **Publisher Identifier:** https://zenodo.org
-- **Source:** DataCite API, Zenodo API
+- **Source:** Zenodo API record 240895
 
 ### 12. Version (RECOMMENDED)
 
-#### Version v1.1.0 (DOI version):
+#### Version v1.2.0 (current repository release):
+- **Version Number:** v1.2.0
+- **Version Date:** 2026-02-21
+- **Version Description:** Upgrade to Python 3.11; adds TimeUtilities fallback and explicit timeutil dependency; removes obsolete Poetry/Meson/legacy build artifacts.
+- **Version PID:** Not found
+- **Source:** GitHub release v1.2.0; git tag v1.2.0; pyproject.toml version 1.2.0; CHANGELOG.md
+
+#### Version v1.1.0 (archived DOI release):
 - **Version Number:** v1.1.0
 - **Version Date:** 2017-01-12
-- **Version Description:** Release with License and DOI number.
+- **Version Description:** Official release of the IRI2016 wrapper in Python, archived on Zenodo.
 - **Version PID:** https://doi.org/10.5281/zenodo.240895
-- **Source:** DataCite API, Zenodo API, git tag, SoMEF (release information)
+- **Source:** Zenodo API record 240895; README.md DOI badge; git tag v1.1.0; CHANGELOG.md
 
-#### Note on version discrepancy:
-The setup.py file shows version '1.2.2', while the DOI and git tag reference v1.1.0. The pyproject.toml shows version "0.1.0". The repository appears to have been updated after the DOI was minted for v1.1.0, but no subsequent releases were tagged or assigned DOIs.
+#### Version note:
+The current repository version and latest GitHub release are v1.2.0, while the available Zenodo DOI is for v1.1.0. No DOI for v1.2.0 was found.
 
 ### 13. Programming Language (RECOMMENDED)
-- **Python** (primary language for wrapper)
-- **Python 3.x** (requires Python >=3.8.6,<3.11 per pyproject.toml; >=2.7 per setup.py)
-- **Fortran** (for the underlying IRI2016 model code)
+- **Python 3.x**
+- **Fortran77**
 
-**Source:** SoMEF (GitHub API shows Fortran: 2363231 bytes, Python: 40413 bytes), setup.py (uses f2py), pyproject.toml, README.md
+**Source:** pyproject.toml requires Python >=3.11; source/*.for contains Fortran source; CMakeLists.txt builds a Fortran extension through f2py/scikit-build-core.
 
 ### 14. Reference Publication (RECOMMENDED)
 - **Reference Publication DOI:** Not found
-- **Note:** No reference publication DOI found in repository files, README, CITATION files, or metadata sources.
+- **Note:** No software reference publication DOI was found in README.md, pyproject.toml, repository citation files, or Zenodo metadata. Scientific DOIs appear in bundled IRI/Fortran source comments but do not describe this Python wrapper as a software publication.
 
 ### 15. License (RECOMMENDED)
 - **License:** MIT License
-- **License URI:** https://api.github.com/licenses/mit
+- **License URI:** https://spdx.org/licenses/MIT.html
 - **SPDX ID:** MIT
-- **Source:** SoMEF (GitHub API), LICENSE.md file, setup.py
+- **Source:** LICENSE.md; pyproject.toml; GitHub repository license metadata
 
 ---
 
@@ -134,68 +131,73 @@ The setup.py file shows version '1.2.2', while the DOI and git tag reference v1.
 - International Reference Ionosphere
 - empirical model
 - ionospheric physics
+- CMake
+- scikit-build-core
 
-**Source:** SoMEF (GitHub topics), manual extraction from description and README.md
+**Source:** GitHub repository topics; README.md; pyproject.toml; CHANGELOG.md
 
 ### 17. Data Sources (OPTIONAL)
-- **Other** (uses internal data files)
+- **HTTP/HTTPS Directories**
+- **Other** (bundled IRI coefficient and index files)
 
-**Note:** The software includes data files in subdirectories (ccir, igrf, index, mcsat, ursi) which are part of the IRI model distribution. These are reference data files, not external data sources.
+**Note:** The package includes IRI coefficient/index data files and has a retrieval helper for remote IRI/Common Files/index archives.
 
-**Source:** setup.py (iriDataFiles), repository structure examination
+**Source:** data/ccir; data/igrf; data/index; data/mcsat; data/ursi; pyiri2016/api/update.py; settings/settings.py; CHANGELOG.md
 
 ### 18. Input File Formats (RECOMMENDED)
-- **ascii** (uses .asc and .dat files for model coefficients)
+- **ascii**
 
-**Source:** setup.py shows data files: ccir/*.asc, igrf/*.dat, index/*.dat, mcsat/*.dat, ursi/*.asc
+**Source:** Bundled .asc and .dat IRI coefficient/index files in data/ccir, data/igrf, data/index, data/mcsat, and data/ursi.
 
 ### 19. Output File Formats (RECOMMENDED)
-- Not found
+- **Other** (PNG figures from plotting/example workflows)
 
-**Note:** The software returns data as Python dictionaries/arrays. Output file generation is not explicitly implemented in the core package, though users could save outputs using standard Python methods.
+**Note:** The core model API returns Python dictionaries and NumPy arrays rather than writing science-data files. Plotting and example workflows save PNG graphics.
+
+**Source:** examples/*.py; scripts/*.py; pyiri2016/iri2016prof2D.py
 
 ### 20. Operating System (RECOMMENDED)
-- **Operating System Independent** (or OS Independent)
+- **Operating System Independent**
 
-**Rationale:** Python package with compiled Fortran extensions via f2py should work on any platform with appropriate compilers. The README shows Docker support, suggesting cross-platform capability.
+**Rationale:** The package is a Python 3.11+ project with a CMake/scikit-build-core build and compiled Fortran extension. It should be portable to systems with Python 3.11, NumPy, CMake, and a Fortran compiler.
 
-**Source:** Inference from Python/f2py architecture, Docker support in README.md
+**Source:** README.md; QUICKSTART.md; pyproject.toml; CMakeLists.txt; Makefile
 
 ### 21. CPU Architecture (RECOMMENDED)
 - **CPU Independent**
 
-**Rationale:** Python with f2py-compiled Fortran should compile on standard CPU architectures where compilers are available.
+**Rationale:** The software uses Python, NumPy, and compiled Fortran/C extension code without GPU-specific or architecture-specific requirements.
 
-**Source:** Inference from software architecture
+**Source:** pyproject.toml; CMakeLists.txt; repository source files
 
 ### 22. Related Phenomena (OPTIONAL)
 - Not found in controlled vocabularies
 
-**Note:** While the software models ionospheric phenomena, no specific controlled vocabulary terms were found in the available metadata.
+**Note:** The software models ionospheric quantities such as electron density, electron/ion temperature, ion composition, NmF2, hmF2, B0, and total electron content, but no controlled related-phenomena term was identified in the available HSSI guidance.
 
 ### 23. Development Status (RECOMMENDED)
-- **Inactive**
+- **Active**
 
-**Rationale:** The repository shows the last tagged release was in 2017 (v1.1.0). While the main branch was updated more recently (SoMEF shows date_updated: 2025-05-21T20:55:24Z), there have been no new releases or active development indicators. The package reached a stable, usable state but appears to no longer be actively developed.
+**Rationale:** The repository has a stable package release v1.2.0 dated 2026-02-21, current pyproject metadata, modernized CMake/scikit-build-core build configuration, updated CI, and recent changelog entries. As of validation on 2026-04-24, the latest release and push were recent.
 
-**Source:** Git history, SoMEF date information, release history
+**Source:** GitHub release v1.2.0; git tag v1.2.0; GitHub repository metadata; CHANGELOG.md; pyproject.toml
 
 ### 24. Documentation (RECOMMENDED)
-- **Documentation URL:** https://github.com/rilma/pyIRI2016/blob/main/README.md
+- **Documentation URL:** https://github.com/rilma/pyIRI2016
 
-**Note:** Documentation consists primarily of the README.md with examples. No dedicated documentation site (e.g., ReadTheDocs) was found.
+**Note:** Documentation is provided through README.md, QUICKSTART.md, and examples/README.md in the repository. No separate documentation site was found.
 
-**Source:** Repository examination, SoMEF
+**Source:** README.md; QUICKSTART.md; examples/README.md
 
 ### 25. Funder (OPTIONAL)
 - Not found
 
-**Source:** DataCite API (no fundingReferences), manual examination of repository files
+**Source:** Zenodo API record 240895; repository files
 
 ### 26. Award Title (OPTIONAL)
 - Not found
 
-**Source:** DataCite API (no fundingReferences), manual examination of repository files
+**Source:** Zenodo API record 240895; repository files
 
 ---
 
@@ -204,12 +206,12 @@ The setup.py file shows version '1.2.2', while the DOI and git tag reference v1.
 ### 27. Related Publications (OPTIONAL)
 - Not found
 
-**Source:** DataCite API, repository examination (no CITATION.cff or papers/ directory)
+**Source:** Repository search; README.md; pyproject.toml; Zenodo API record 240895
 
 ### 28. Related Datasets (OPTIONAL)
 - Not found
 
-**Source:** DataCite API, repository examination
+**Source:** Repository search; Zenodo API record 240895
 
 ### 29. Related Software (OPTIONAL)
 
@@ -217,93 +219,53 @@ The setup.py file shows version '1.2.2', while the DOI and git tag reference v1.
 - **Name/Repository:** TimeUtilities
 - **URL:** https://github.com/rilma/TimeUtilities
 - **Relationship:** Required dependency
-- **Source:** README.md, setup.py dependency_links
+- **Source:** README.md; pyproject.toml; CHANGELOG.md
 
 #### Related Software 2:
-- **Name/Repository:** IRI-2016 (alternative implementation)
+- **Name/Repository:** space-physics/iri2016
 - **URL:** https://github.com/space-physics/iri2016
-- **Relationship:** Similar package - different Python wrapper for IRI2016
-- **Source:** PyHC unevaluated registry, manual knowledge
-
-**Note:** While this package is not formally related, there exists another Python package for IRI2016 by Michael Hirsch (who is listed as a co-author of pyIRI2016).
+- **Relationship:** Alternative Python implementation/wrapper for the IRI model
+- **Source:** PyHC registry / Google sheet context supplied for this validation workflow
 
 ### 30. Interoperable Software (OPTIONAL)
 - Not found
 
-**Source:** Repository examination, no explicit interoperability statements
+**Source:** Repository examination; no explicit interoperability statement found
 
 ### 31. Related Instruments (OPTIONAL)
 - Not found
 
-**Note:** IRI is a model, not instrument-specific, though it can be used with data from various ionospheric instruments (ionosondes, ISRs, etc.).
+**Note:** IRI-2016 is a general ionospheric model and is not tied to a specific instrument.
 
 ### 32. Related Observatories (OPTIONAL)
 - Not found
 
-**Note:** The IRI model is a general ionospheric model not tied to specific observatories, though it incorporates data from various ground-based and satellite observations.
+**Note:** IRI-2016 is a general ionospheric model and is not tied to a specific observatory.
 
 ### 33. Logo (OPTIONAL)
 - Not found
 
-**Source:** SoMEF, repository examination
+**Source:** Repository examination; no logo asset or URL found
 
 ---
 
 ## Metadata Quality Notes
 
-### PyHC Package Status
-- **PyHC Registry:** Not found in PyHC core, community, or unevaluated packages
-- **Note:** A different IRI2016 package (https://github.com/space-physics/iri2016) appears in the PyHC unevaluated registry
+### PyHC/HSSI Naming
+- **Official HSSI Software Name:** IRI-2016
+- **Repository/package alternate name:** pyIRI2016
+- **Note:** Field 7 intentionally uses the PyHC/HSSI software-sheet name rather than the repository or import-package name.
 
 ### Completeness Assessment
 - **MANDATORY fields:** All filled or marked for user completion
-- **RECOMMENDED fields:** Most filled; missing Reference Publication, complete version history
-- **OPTIONAL fields:** Partially filled where information available
-
-### Data Quality Issues
-1. **Version Inconsistency:** Three different version numbers found (v1.1.0 in git tag, 1.2.2 in setup.py, 0.1.0 in pyproject.toml)
-2. **Author Name Variation:** Ronald Ilma vs. Ronald R. Ilma Campana may be same person
-3. **Concept DOI:** Not found in Zenodo API response (field was empty)
-4. **Limited Documentation:** No comprehensive documentation site, only README with examples
+- **RECOMMENDED fields:** Filled where evidence was available; Reference Publication and v1.2.0 DOI remain not found
+- **OPTIONAL fields:** Filled where evidence was available
 
 ### Verification Status
-- DataCite API: ✓ Verified
-- Zenodo API: ✓ Verified
-- SoMEF: ✓ Completed
-- PyHC Registry: ✓ Checked (not found)
-- Repository Examination: ✓ Completed
-- Code Analysis: ✓ Completed
-
----
-
-## Extraction Methodology
-
-This metadata was extracted using the following cascade:
-
-1. **DataCite API** (https://api.datacite.org/dois/10.5281/zenodo.240895)
-2. **Zenodo API** (https://zenodo.org/api/records/240895)
-3. **SoMEF** (Software Metadata Extraction Framework v0.9.11)
-4. **PyHC Registry Check** (all three registry files examined)
-5. **Manual Repository Examination**:
-   - README.md
-   - LICENSE.md
-   - pyproject.toml
-   - setup.py
-   - pyiri2016/__init__.py
-   - Git history and tags
-   - Repository structure
-
----
-
-## Recommended Actions for Submitter
-
-1. **Create CITATION.cff** file with complete author information including ORCIDs
-2. **Resolve version numbering** inconsistencies across setup.py, pyproject.toml, and git tags
-3. **Consider creating formal documentation** using ReadTheDocs or similar
-4. **Add concept DOI** to repository if available from Zenodo
-5. **Tag newer versions** if updates beyond v1.1.0 should be released
-6. **Consider publishing reference paper** describing the wrapper implementation
-7. **Clarify development status** - update README if package is actively maintained or add archive notice if not
+- Zenodo API: Verified for DOI and v1.1.0 archival metadata
+- GitHub API: Verified for repository metadata and latest v1.2.0 release
+- Repository Examination: Completed against refreshed main branch
+- Code Analysis: Completed for public API, retrieval helper, build system, examples, and plotting workflows
 
 ---
 

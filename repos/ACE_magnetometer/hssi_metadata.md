@@ -20,22 +20,22 @@ https://github.com/space-physics/ACE_magnetometer
 **Source:** PyHC unevaluated registry, GitHub API, setup.cfg
 
 ### 4. Software Functionality (MANDATORY)
+- Data Processing and Analysis
 - Data Processing and Analysis:Data Access and Retrieval
 - Data Processing and Analysis:Processing
-- Data Processing and Analysis:Time Series Analysis
+- Data Visualization
 - Data Visualization:2D Graphics
 - Data Visualization:Line Plots
 
-**Source:** Manual code analysis - The software downloads ACE satellite magnetometer data from FTP, processes 16-second averaged magnetic field measurements, and creates time series plots of multiple magnetic field components (Br, Bt, Bn, Bx, By, Bz, Btotal, dBrms).
+**Source:** Manual code analysis - The software downloads ACE satellite magnetometer data from an FTP archive, loads 16-second averaged magnetic field measurements, and creates multi-panel line plots of magnetic field components (Br, Bt, Bn, Bx, By, Bz, Btotal, dBrms) in both Python and MATLAB workflows.
 
 ### 5. Related Region (MANDATORY)
 - Interplanetary Space
-- Earth Magnetosphere
 
-**Source:** Domain knowledge - ACE satellite is positioned at the L1 Lagrange point between Earth and Sun, primarily observing the Interplanetary Magnetic Field (IMF) in interplanetary space. This IMF data is commonly used for Earth magnetosphere studies, as solar wind conditions measured at L1 affect the magnetosphere.
+**Source:** README.md, source code, and mission context - The package downloads and plots ACE magnetometer data from the ACE archive. ACE measures the interplanetary magnetic field from the L1 region, so the directly supported science region is Interplanetary Space.
 
 ### 6. Authors (MANDATORY)
-- **Authors:** Michael Hirsch, Ph.D.
+- **Authors:** Michael Hirsch
 - **Author Identifier:** Not found
 - **Affiliation:**
   - **Organization:** Not found
@@ -44,23 +44,23 @@ https://github.com/space-physics/ACE_magnetometer
 **Source:** setup.cfg (line 4), PyHC unevaluated registry (contact: Michael Hirsch)
 
 ### 7. Software Name (MANDATORY)
-ace_magnetometer
+ACEmag
 
-**Source:** setup.cfg (line 2), PyHC unevaluated registry (name: ACEmag), SoMEF (name: ACE_magnetometer)
+**Source:** PyHC unevaluated registry (official software name: ACEmag), setup.cfg (package name: ace_magnetometer), GitHub repository name (ACE_magnetometer), SoMEF
 
-**Note:** The package is named "ace_magnetometer" in the Python package metadata, "ACEmag" in the PyHC registry, and "ACE_magnetometer" as the GitHub repository name.
+**Note:** The package is named "ace_magnetometer" in the Python package metadata and "ACE_magnetometer" in the GitHub repository, but the authoritative software name for HSSI entry purposes is the PyHC registry name "ACEmag".
 
 ### 8. Description (MANDATORY)
-Load and Plot ACE satellite magnetometer data
+ACE_magnetometer provides Python and MATLAB tools for working with 16-second ACE satellite magnetometer data. The Python workflow downloads and loads ACE archive files, while the MATLAB workflow reads local ACE HDF files and plots IMF components including Br, Bt, Bn, Bx, By, Bz, Btotal, and dBrms.
 
-**Source:** setup.cfg (line 6), README.md (line 10), PyHC unevaluated registry, SoMEF
+**Source:** setup.cfg (line 6), README.md, ace_magnetometer/__init__.py, PlotACE.py, matlab/PlotACE.m
 
 **Extended Description:** This Python package provides tools to download, load, and plot magnetometer data from the ACE (Advanced Composition Explorer) satellite. The software automatically retrieves 16-second averaged magnetic field data from the ACE mission's FTP server and provides visualization capabilities for analyzing the interplanetary magnetic field (IMF) components including Br, Bt, Bn, Bx, By, Bz, total field magnitude (Btotal), and RMS fluctuations (dBrms).
 
 ### 9. Concise Description (OPTIONAL)
-Load and Plot ACE satellite magnetometer data
+Python and MATLAB tools to retrieve, load, and plot 16-second ACE magnetometer data from the ACE archive.
 
-**Source:** README.md, setup.cfg - The existing description is already concise (under 200 characters).
+**Source:** Derived from README.md, setup.cfg, and the implemented Python and MATLAB workflows.
 
 ### 10. Publication Date (RECOMMENDED)
 2017-03-14
@@ -83,10 +83,9 @@ Load and Plot ACE satellite magnetometer data
 
 ### 13. Programming Language (RECOMMENDED)
 - Python 3.x
+- MATLAB
 
-**Source:** setup.cfg (Programming Language :: Python :: 3.6, 3.7, 3.8 on lines 16-18), SoMEF programming_languages
-
-**Note:** Also contains MATLAB code (2564 bytes) according to SoMEF, but Python is the primary language (4018 bytes).
+**Source:** setup.cfg (Programming Language :: Python :: 3.6, 3.7, 3.8 on lines 16-18), SoMEF programming_languages, matlab/PlotACE.m, matlab/loadACEhdf.m
 
 ### 14. Reference Publication (RECOMMENDED)
 Not found - No reference publication DOI found in repository files
@@ -110,20 +109,20 @@ Not found - No reference publication DOI found in repository files
 - IMF
 - magnetic field
 - geospace
-- magnetosphere
-- ionosphere_thermosphere_mesosphere
 
-**Source:** SoMEF (ace, geoscience, magnetometer, python, satellite-magnetometer from GitHub topics), setup.cfg (IMF, magnetic field, geospace), PyHC unevaluated registry (magnetosphere, ionosphere_thermosphere_mesosphere, specific)
+**Source:** SoMEF (ace, geoscience, magnetometer, python, satellite-magnetometer from GitHub topics), setup.cfg (IMF, magnetic field, geospace)
 
 ### 17. Data Sources (OPTIONAL)
 - FTP/FTPS Directories
+- Observatory/Mission-specific
 
-**Source:** Manual code analysis - Downloads data from ftp://mussel.srl.caltech.edu/pub/ace/browse/MAG16sec/ (ace_magnetometer/__init__.py line 12)
+**Source:** Manual code analysis - Downloads ACE mission data from ftp://mussel.srl.caltech.edu/pub/ace/browse/MAG16sec/ (ace_magnetometer/__init__.py line 12), which is both an FTP source and an observatory-specific archive.
 
 ### 18. Input File Formats (RECOMMENDED)
 - ascii
+- Other
 
-**Source:** Manual code analysis - The software reads ASCII text files from within ZIP archives (ace_magnetometer/__init__.py lines 59-62, using pd.read_csv with whitespace separator)
+**Source:** Manual code analysis - The Python workflow reads ASCII text files from within ZIP archives (ace_magnetometer/__init__.py lines 59-62, using pd.read_csv with whitespace separator). The MATLAB workflow reads ACE `.HDF` files with hdfinfo/hdfread (matlab/PlotACE.m, matlab/loadACEhdf.m), so `Other` is included for that mission-specific HDF input path.
 
 ### 19. Output File Formats (RECOMMENDED)
 Not found - The software produces interactive matplotlib plots displayed to screen, not saved to file by default
@@ -149,11 +148,11 @@ Not found - No specific phenomena keywords found in repository
 **Note:** The software measures the Interplanetary Magnetic Field (IMF), which is related to solar wind phenomena and space weather, but specific phenomena are not explicitly listed.
 
 ### 23. Development Status (RECOMMENDED)
-- Active
+- Inactive
 
-**Source:** setup.cfg (Development Status :: 5 - Production/Stable on line 12), GitHub activity (last updated 2023-01-27 according to SoMEF)
+**Source:** setup.cfg (Development Status :: 5 - Production/Stable on line 12), git history (latest upstream commit on main: 2021-04-27), SoMEF date_updated (2023-01-27)
 
-**Note:** While the last update was in January 2023, the package is marked as "Production/Stable" in its classifiers, suggesting it reached a stable, usable state.
+**Note:** The package appears stable and usable, but the available repository evidence does not show ongoing active development.
 
 ### 24. Documentation (RECOMMENDED)
 https://github.com/space-physics/ACE_magnetometer/blob/main/README.md
@@ -179,14 +178,7 @@ Not found - No related dataset DOIs found in repository files
 **Note:** The software works with ACE magnetometer data from the ACE mission archive, but no specific dataset DOI is referenced.
 
 ### 29. Related Software (OPTIONAL)
-Not found - No related software explicitly referenced in repository
-
-**Dependencies (from setup.cfg):**
-- pandas
-- numpy
-- python-dateutil
-- matplotlib (for plotting)
-- seaborn (for plotting)
+Not found - No related software with repository links or persistent identifiers is documented in the repository metadata
 
 ### 30. Interoperable Software (OPTIONAL)
 Not found - No explicit interoperability with other software packages documented
@@ -205,11 +197,7 @@ Not found - No explicit interoperability with other software packages documented
 **Mission Details:** ACE is a NASA space exploration mission positioned at the L1 Lagrange point (approximately 1.5 million km from Earth toward the Sun) to observe solar wind and cosmic rays. The mission was launched in 1997 and continues to provide real-time space weather data.
 
 ### 33. Logo (OPTIONAL)
-https://raw.githubusercontent.com/space-physics/ace_magnetometer/main/tests/timeplot.png
-
-**Source:** SoMEF images - This is an example plot image, not an official logo. No official software logo was found.
-
-**Note:** This is an example visualization output, not a dedicated logo for the software package.
+Not found - No official software logo was found in the repository or linked metadata
 
 ---
 
@@ -242,4 +230,4 @@ This metadata was extracted from the following sources:
 - **Limited Documentation:** Documentation is minimal and contained only in README. Consider creating comprehensive documentation using ReadTheDocs or similar.
 - **No CITATION.cff:** Consider adding a CITATION.cff file to specify how the software should be cited.
 - **Author Information Incomplete:** No ORCID or affiliation information available for the author.
-- **Active but not recently updated:** The package is marked as Production/Stable but hasn't been updated since January 2023. This may indicate it has reached a stable state rather than being abandoned.
+- **Development status:** The package appears stable, but the available repository evidence does not indicate ongoing active development.

@@ -18,30 +18,27 @@ Not found - No DOI found in repository files (CITATION.cff, .zenodo.json, or cod
 https://github.com/space-physics/GOESplot
 
 ### 4. Software Functionality (MANDATORY)
-Based on code analysis and documentation:
 - **Data Processing and Analysis**
 - **Data Processing and Analysis:Data Access and Retrieval** (downloads GOES satellite data from NOAA servers)
-- **Data Processing and Analysis:Image Processing** (processes and loads satellite imagery)
 - **Data Processing and Analysis:Processing** (loads and processes GOES data from multiple formats)
 - **Data Visualization**
 - **Data Visualization:2D Graphics** (plots on geographic/map coordinates using Cartopy)
-- **Mission-related:Distribution/Access** (provides access to GOES mission data)
+- **Source:** README.md, `get-goes-preview.py`, `src/goesplot/io.py`, `src/goesplot/plots.py`
 
 ### 5. Related Region (MANDATORY)
-Based on GOES satellite mission scope and PyHC keywords:
 - **Earth Atmosphere** (GOES satellites primarily observe Earth's weather and atmospheric phenomena)
-- **Solar Environment** (GOES monitors solar activity and space weather)
-- **Earth Magnetosphere** (related to space weather observations)
+- **Source:** README.md, setup.cfg classifier `Topic :: Scientific/Engineering :: Atmospheric Science`
 
 ### 6. Authors (MANDATORY)
-- **Authors:** Michael Hirsch, Ph.D.
+- **Name:** Michael Hirsch
 - **Author Identifier:** Not found
-- **Affiliation:**
-  - **Organization:** Not found
-  - **Affiliation Identifier:** Not found
+- **Affiliation:** Not found
+- **Source:** setup.cfg, git history
 
 ### 7. Software Name (MANDATORY)
-GOESplot (also referred to as "goesplot" in package metadata and "GOESutils" in PyHC registry)
+- **Software Name:** GOESutils
+- **Package Name:** goesplot
+- **Source:** PyHC registry name is authoritative for HSSI; repository title is `GOES Plot` and package metadata uses `goesplot`
 
 ### 8. Description (MANDATORY)
 Download and plot GOES satellite PNGs and high-resolution NetCDF4 by date/time. This Python package provides tools to download GOES (Geostationary Operational Environmental Satellite) preview images at 3-hour cadence and full-fidelity NetCDF4 data at 1-minute cadence from NOAA repositories. The software includes functionality to plot GOES infrared and other data georegistered on map coordinates using Cartopy. It supports both GOES-13 and GOES-16 satellites and can access data from the NOAA NCDC GIBBS service for preview images and NOAA CLASS for high-resolution data.
@@ -50,17 +47,19 @@ Download and plot GOES satellite PNGs and high-resolution NetCDF4 by date/time. 
 Quick Python script to download and plot GOES satellite preview and hi-resolution data by date/time.
 
 ### 10. Publication Date (RECOMMENDED)
-2018-02-22 (from first git commit)
+- **Date:** 2018-02-22
+- **Source:** first git commit date
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** GitHub
 - **Publisher Identifier:** https://github.com
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** v1.1.0 (from setup.cfg; most recent tagged release is v1.0.8)
-- **Version Date:** 2018-08-19 (date of v1.0.8 tag; v1.1.0 is untagged)
-- **Version Description:** Initial Release (description for v1.0.8)
+- **Version Number:** 1.1.0
+- **Version Date:** 2020-05-04
+- **Version Description:** rename, refactor
 - **Version PID:** Not found
+- **Source:** setup.cfg, git history for the commit introducing version 1.1.0
 
 ### 13. Programming Language (RECOMMENDED)
 - **Python 3.x** (requires Python >= 3.7)
@@ -70,7 +69,7 @@ Not found
 
 ### 15. License (RECOMMENDED)
 - **License:** Apache License 2.0
-- **License URI:** http://www.apache.org/licenses/LICENSE-2.0
+- **License URI:** https://www.apache.org/licenses/LICENSE-2.0
 
 ---
 
@@ -114,17 +113,13 @@ Note: Visualization outputs are displayed interactively and not automatically sa
 - **CPU Independent** (Python package with no specific architecture requirements)
 
 ### 22. Related Phenomena (OPTIONAL)
-Not explicitly specified in repository, but GOES satellites observe:
-- Solar flares
-- Coronal mass ejections
-- X-ray emission
-(Note: These are inferred from GOES mission scope but not explicitly stated in the software documentation)
+Not found
 
 ### 23. Development Status (RECOMMENDED)
 **Active** - Based on setup.cfg classifier "Development Status :: 4 - Beta". Repository was last updated 2024-06-22 (from SoMEF), indicating continued maintenance.
 
 ### 24. Documentation (RECOMMENDED)
-https://github.com/space-physics/GOESplot (documentation is in the README; no separate documentation site found)
+https://github.com/space-physics/GOESplot
 
 ### 25. Funder (OPTIONAL)
 Not found
@@ -140,24 +135,20 @@ Not found
 Not found
 
 ### 28. Related Datasets (OPTIONAL)
-The software supports access to GOES satellite datasets from NOAA, but specific dataset DOIs were not found in the repository.
+Not found
 
 ### 29. Related Software (OPTIONAL)
-Dependencies that this software requires:
-- python-dateutil
-- numpy
-- imageio
-- xarray
-- requests
-- cartopy (optional, for plotting)
-- matplotlib (optional, for plotting)
-- netCDF4 (optional, for high-resolution data)
+- https://github.com/pydata/xarray
+- https://github.com/SciTools/cartopy
+- https://github.com/matplotlib/matplotlib
+- https://github.com/Unidata/netcdf4-python
+- **Source:** setup.cfg dependencies and plotting extras
 
 ### 30. Interoperable Software (OPTIONAL)
-Based on dependencies, this software is designed to work with:
-- xarray (for data handling)
-- cartopy (for geospatial visualization)
-- matplotlib (for plotting)
+- https://github.com/pydata/xarray
+- https://github.com/SciTools/cartopy
+- https://github.com/matplotlib/matplotlib
+- **Source:** `src/goesplot/plots.py`, setup.cfg plotting extras
 
 ### 31. Related Instruments (OPTIONAL)
 - **Instrument Name:** GOES-13 Imager
@@ -172,9 +163,7 @@ Based on dependencies, this software is designed to work with:
 - **Observatory Name:** GOES East (mentioned in code)
 
 ### 33. Logo (OPTIONAL)
-https://raw.githubusercontent.com/space-physics/GOESplot/main/src/goesplot/tests/goes13-IR-2017-07-13-12.jpg
-
-Note: The PyHC registry lists this with "master" branch, but the repository uses "main" as the default branch.
+Not found
 
 ---
 
@@ -194,7 +183,7 @@ Note: The PyHC registry lists this with "master" branch, but the repository uses
 ## Notes
 
 - **No DOI found:** This package does not appear to have a persistent identifier (DOI) registered through Zenodo or other services.
-- **Version discrepancy:** The setup.cfg lists version 1.1.0, but the only git tag is v1.0.8 from 2018. Version 1.1.0 appears to be untagged.
+- **Version note:** The current package metadata declares version 1.1.0, while the latest git tag is v1.0.8 from 2018.
 - **Limited author information:** Only the primary author (Michael Hirsch) is identified. No ORCID or institutional affiliation information was found in the repository.
 - **PyHC Status:** Listed in the PyHC unevaluated packages registry, indicating it's recognized by the Python in Heliophysics Community but hasn't undergone full evaluation.
 - **Active but minimal maintenance:** Last update was 2024-06-22, showing the package is still maintained, though updates appear infrequent.

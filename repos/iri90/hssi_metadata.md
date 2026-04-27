@@ -34,28 +34,28 @@ https://github.com/space-physics/iri90
 **Source:** Software models the ionosphere, which is part of Earth's upper atmosphere in the altitude range 50km to 2000km (from README.md).
 
 ### 6. Authors (MANDATORY)
-- **Author:** Michael Hirsch, Ph.D.
+- **Author:** Michael Hirsch
   - **Author Identifier:** Not found
   - **Affiliation:**
     - **Organization:** Not found
     - **Affiliation Identifier:** Not found
 
-**Source:** From setup.cfg and LICENSE.txt (Copyright 2015 Michael Hirsch). PyHC registry lists contact as "Michael Hirsch".
+**Source:** From setup.cfg and LICENSE.txt (Copyright 2015 Michael Hirsch). The setup.cfg author value includes the suffix "Ph.D."; the author name is normalized here without credential suffixes. PyHC registry lists contact as "Michael Hirsch".
 
 ### 7. Software Name (MANDATORY)
-iri90
+IRI-90
 
-**Alternative names:** IRI-90, IRI90: International reference ionosphere in Python
+**Alternative names:** iri90, IRI90, IRI90: International reference ionosphere in Python
 
-**Source:** From setup.cfg (metadata name), repository name, and README.md title.
+**Source:** PyHC registry name is authoritative for this HSSI workflow. setup.cfg and the repository use the package name "iri90"; README.md uses "IRI90: International reference ionosphere in Python".
 
 ### 8. Description (MANDATORY)
-IRI90 from Python, clean and flexible ionospheric model. IRI-90 provides monthly mean values for magnetically quiet conditions at non-auroral latitudes in the altitude range 50km to 2000km. However, IRI90 is often used as an initialization for conditions at auroral latitudes, understanding the caveats. This IRI90 Python module is as small and clean as possible to enable custom IRI90 applications. The module outputs electron density, neutral temperature, ion temperature, electron temperature, and ion composition (O+, H+, He+, O2+, NO+) as an xarray.DataArray indexable by species, altitude, etc. and includes metadata.
+IRI-90 from Python, clean and flexible ionospheric model. IRI-90 provides monthly mean values for magnetically quiet conditions at non-auroral latitudes in the altitude range 50km to 2000km. However, IRI-90 is often used as an initialization for conditions at auroral latitudes, understanding the caveats. This IRI-90 Python module is as small and clean as possible to enable custom IRI-90 applications. The module outputs electron density, neutral temperature, ion temperature, electron temperature, and ion composition (O+, H+, He+, O2+, NO+) as an xarray.DataArray indexable by species, altitude, etc. and includes metadata.
 
 **Source:** Combined from setup.cfg and README.md
 
 ### 9. Concise Description (OPTIONAL)
-IRI90-international reference ionosphere in Python providing monthly mean ionospheric parameters for magnetically quiet conditions in the altitude range 50km to 2000km.
+IRI-90 is an international reference ionosphere model in Python providing monthly mean ionospheric parameters from 50km to 2000km altitude.
 
 **Source:** Derived from GitHub API description and README.md (limited to ~200 characters)
 
@@ -73,10 +73,10 @@ IRI90-international reference ionosphere in Python providing monthly mean ionosp
 ### 12. Version (RECOMMENDED)
 - **Version Number:** v1.1.1
 - **Version Date:** 2018-08-15
-- **Version Description:** Modernization release including documentation improvements, CI template updates, badge updates, and cleanup. Adds time profile functionality for plotting versus time, species and altitude in one xarray.DataArray.
+- **Version Description:** Modernization release including documentation improvements, CI template updates, badge updates, and cleanup. No detailed v1.1.1 release notes are provided in the GitHub release.
 - **Version PID:** Not found
 
-**Source:** From setup.cfg (version 1.1.1), git tag v1.1.1 (date: 2018-08-15 02:02:55 -0400), and git log comparing v1.1.0 to v1.1.1. Previous version v1.1.0 released 2018-03-02 added altitude and time profiles with xarray.DataArray containing all metadata for easy API and plotting.
+**Source:** From setup.cfg (version 1.1.1), git tag v1.1.1 (date: 2018-08-15 02:02:55 -0400), and the GitHub release name "modernization". Previous version v1.1.0 released 2018-03-02 added altitude and time profiles with xarray.DataArray containing all metadata for easy API and plotting.
 
 ### 13. Programming Language (RECOMMENDED)
 - Python 3.x
@@ -123,9 +123,9 @@ Not found
 **Source:** The model includes data files in .asc (ASCII) format located in the data/ directory (from setup.py: package_data includes "data/*.asc"). Primary inputs are programmatic parameters rather than files.
 
 ### 19. Output File Formats (RECOMMENDED)
-Not applicable - outputs xarray.DataArray objects
+Not found
 
-**Source:** From code analysis (__init__.py), the runiri() function returns xarray.DataArray with ionospheric parameters. Users can save this using xarray's built-in methods (netCDF, etc.), but the package itself doesn't specify output file formats.
+**Source:** From code analysis (__init__.py), the runiri() function returns xarray.DataArray with ionospheric parameters. The package itself does not specify generated output file formats.
 
 ### 20. Operating System (RECOMMENDED)
 - Linux
@@ -135,7 +135,6 @@ Not applicable - outputs xarray.DataArray objects
 **Source:** From README.md installation instructions (provides instructions for Linux, Mac, and Windows) and .github/workflows/ci.yml (tests on ubuntu-latest, with commented-out tests for macos and windows). The package requires a Fortran compiler (gfortran) which is available on all three platforms.
 
 ### 21. CPU Architecture (RECOMMENDED)
-- x86-64
 - CPU Independent
 
 **Source:** No specific CPU architecture requirements found. Python and Fortran code should be CPU architecture independent as long as a compatible Fortran compiler is available. The package uses f2py to compile Fortran extensions.
@@ -146,9 +145,9 @@ Not found
 **Source:** While the software relates to ionospheric phenomena, specific controlled vocabulary terms for phenomena (like those from SPASE) were not found in the repository or documentation.
 
 ### 23. Development Status (RECOMMENDED)
-Active
+Inactive
 
-**Source:** From setup.cfg: "Development Status :: 4 - Beta". Repository shows commits as recent as 2021-10-10 and was last updated 2025-10-08 according to SoMEF. The package is functional and in active use, though development appears intermittent.
+**Source:** From setup.cfg: "Development Status :: 4 - Beta". The latest local git commit is 2021-10-10 and the package has a stable public release, but there is no repository evidence of ongoing active development.
 
 ### 24. Documentation (RECOMMENDED)
 https://github.com/space-physics/iri90
@@ -181,13 +180,13 @@ Not found
 **Source:** The model includes empirical coefficient data files but no external dataset DOIs or references.
 
 ### 29. Related Software (OPTIONAL)
-- numpy (https://numpy.org) - required dependency
-- xarray (https://xarray.dev) - required dependency
-- matplotlib (https://matplotlib.org) - optional dependency for plotting
+- https://numpy.org - required dependency
+- https://xarray.dev - required dependency
+- https://matplotlib.org - optional dependency for plotting
+- http://download.hao.ucar.edu/pub/stans/iri/iri90.f - original IRI-90 Fortran code referenced in README.md
+- https://github.com/space-physics/iri2016 - related Python package for the newer IRI-2016 model by the same author
 
-**Source:** From setup.cfg install_requires and extras_require sections. Also uses f2py (part of numpy) for Fortran-Python interface.
-
-**Note:** The original IRI-90 Fortran code is available at http://download.hao.ucar.edu/pub/stans/iri/iri90.f (referenced in README.md). Related packages by the same author include IRI-2016 (more recent version of IRI model) at https://github.com/space-physics/iri2016.
+**Source:** From setup.cfg install_requires and extras_require sections, README.md reference to original Fortran code, and PyHC registry entry for IRI-2016. Also uses f2py (part of numpy) for Fortran-Python interface.
 
 ### 30. Interoperable Software (OPTIONAL)
 Not found
@@ -205,9 +204,9 @@ Not found
 **Source:** IRI-90 is a general ionospheric model, not observatory-specific.
 
 ### 33. Logo (OPTIONAL)
-https://iri.gsfc.nasa.gov/images/tail-179.jpg
+https://spdf.gsfc.nasa.gov/research/IRI/website/doc/images/tail-179.jpg
 
-**Source:** From PyHC unevaluated registry (pyhc_unevaluated.yml line 82). This appears to be a generic IRI model logo from NASA GSFC.
+**Source:** From PyHC unevaluated registry (pyhc_unevaluated.yml line 82). The original URL redirects to this NASA GSFC-hosted image.
 
 ---
 

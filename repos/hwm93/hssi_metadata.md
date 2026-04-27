@@ -29,9 +29,8 @@
 - Data Visualization
 - Data Visualization:2D Graphics
 - Data Visualization:Line Plots
-- Data Processing and Analysis
 
-**Note:** HWM93 is an empirical, physics-based horizontal wind model for Earth's atmosphere. It computes meridional and zonal wind components at specified altitudes, locations, and times. The software includes visualization capabilities to plot wind profiles as line plots.
+**Note:** HWM-93 is an empirical, physics-based horizontal wind model for Earth's atmosphere. It computes meridional and zonal wind components at specified altitudes, locations, and times. The software also includes visualization capabilities to plot wind profiles.
 
 **Source:** Manual code examination, README, and SoMEF
 
@@ -45,18 +44,25 @@
 ### 6. Authors (MANDATORY)
 
 **Author 1:**
-- **Author Name:** Michael Hirsch, Ph.D.
+- **Author Name:** Michael Hirsch
 - **Author Identifier:** Not found
 - **Affiliation:**
   - **Organization:** Not found
   - **Affiliation Identifier:** Not found
 
-**Note:** Michael Hirsch is the primary developer of this Python/Matlab implementation. The original Fortran 77 code was developed by A. E. Hedin (NASA) in 1993.
+**Author 2:**
+- **Author Name:** A. E. Hedin
+- **Author Identifier:** Not found
+- **Affiliation:**
+  - **Organization:** Not found
+  - **Affiliation Identifier:** Not found
+
+**Note:** Michael Hirsch is the primary developer of this Python/Matlab implementation. The bundled original HWM-93 Fortran code is attributed in the repository source and documentation to A. E. Hedin.
 
 **Source:** setup.cfg, RunHWM93.py, Fortran source code header
 
 ### 7. Software Name (MANDATORY)
-**Value:** HWM93
+**Value:** HWM-93
 
 **Alternate name:** hwm93 (package name)
 
@@ -110,11 +116,11 @@
 **Source:** setup.cfg, SoMEF, README
 
 ### 14. Reference Publication (RECOMMENDED)
-**Value:** Hedin, A. E., et al. (1996), "Empirical wind model for the upper, middle and lower atmosphere," J. Atmos. Terr. Phys., 58, 1421–1447
+**Value:** https://doi.org/10.1016/0021-9169(95)00122-0
 
-**Note:** This publication describes the HWM93 model developed by A. E. Hedin and colleagues. The model is based on wind data from AE-E and DE 2 satellites. Earlier foundational work includes Hedin et al. (1991) in J. Geophys. Res., 96, 7657-7688, and Hedin et al. (1988) in J. Geophys. Res., 93, 9959–9978. The original Fortran 77 code is available from: ftp://hanna.ccmc.gsfc.nasa.gov/pub/modelweb/atmospheric/hwm93/
+**Note:** DOI for `Empirical wind model for the upper, middle and lower atmosphere` (Hedin et al., 1996), which describes the HWM-93 model. The bundled Fortran source is also attributed to A. E. Hedin in 1993.
 
-**Source:** Web search for "HWM93 A. E. Hedin", README, RunHWM93.py, Fortran source header
+**Source:** Crossref DOI metadata, README, RunHWM93.py, Fortran source header
 
 ### 15. License (RECOMMENDED)
 - **License:** MIT License
@@ -193,18 +199,18 @@
 **Source:** Model description
 
 ### 23. Development Status (RECOMMENDED)
-**Value:** Active
+**Value:** Inactive
 
-**Note:** The repository shows recent activity (last updated 2025-05-21 according to SoMEF). The setup.cfg indicates "Development Status :: 4 - Beta".
+**Note:** The repository is usable and packaged, but the latest commit in the local clone is from 2021-03-22 and the latest tagged release is v0.9.1 from 2018-08-16, so active ongoing development is not well supported.
 
-**Source:** SoMEF (date_updated), setup.cfg classifiers
+**Source:** git log, git tags, setup.cfg classifiers
 
 ### 24. Documentation (RECOMMENDED)
-**Value:** https://github.com/space-physics/hwm93/wiki
+**Value:** https://github.com/space-physics/hwm93
 
-**Note:** Documentation is available on the GitHub wiki. Installation and usage instructions are also in the README.
+**Note:** Installation and usage documentation are provided in the repository README.
 
-**Source:** SoMEF, PyHC registry
+**Source:** README, repository root
 
 ### 25. Funder (OPTIONAL)
 **Value:** Not found
@@ -240,22 +246,22 @@
 
 ### 29. Related Software (OPTIONAL)
 **Values:**
-- numpy (dependency)
-- xarray (dependency)
-- python-dateutil (dependency)
-- sciencedates (dependency)
+- https://github.com/numpy/numpy
+- https://github.com/pydata/xarray
+- https://github.com/dateutil/dateutil
+- https://github.com/geospace-code/sciencedates
 
-**Note:** The package depends on several Python scientific computing libraries. Other related atmospheric models may include MSIS, IRI, and IGRF, though these are not explicitly mentioned in the repository.
+**Note:** These are the core Python dependencies declared by the package metadata.
 
 **Source:** setup.cfg, pyproject.toml
 
 ### 30. Interoperable Software (OPTIONAL)
 **Values:**
-- numpy
-- xarray
-- matplotlib
+- https://github.com/numpy/numpy
+- https://github.com/pydata/xarray
+- https://github.com/matplotlib/matplotlib
 
-**Note:** The software integrates with standard scientific Python libraries and can be used alongside other packages in the Python scientific ecosystem.
+**Note:** The software interoperates with standard scientific Python libraries; it returns xarray datasets and optional plotting workflows use matplotlib.
 
 **Source:** Code examination, setup.cfg
 
@@ -274,11 +280,11 @@
 **Source:** Repository examination
 
 ### 33. Logo (OPTIONAL)
-**Value:** https://ccmc.gsfc.nasa.gov/images/CCMC-LOGO-2.gif
+**Value:** Not found
 
-**Note:** PyHC registry lists the NASA CCMC logo as the package logo
+**Note:** No project-specific logo was found in the repository.
 
-**Source:** PyHC unevaluated registry
+**Source:** Repository examination, PyHC unevaluated registry
 
 ---
 
@@ -291,7 +297,7 @@
 - **Model Year:** 1993
 
 ### Python Implementation
-- **Developer:** Michael Hirsch, Ph.D.
+- **Developer:** Michael Hirsch
 - **Contact:** scivision@users.noreply.github.com
 - **GitHub Organization:** space-physics
 - **PyHC Status:** Unevaluated package

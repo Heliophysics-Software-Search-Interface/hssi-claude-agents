@@ -23,23 +23,19 @@
 
 ### 4. Software Functionality (MANDATORY)
 **Values:**
-- Data Processing and Analysis:Data Access and Retrieval
-- Data Processing and Analysis:File Format Conversion
+- Data Processing and Analysis
 - Data Processing and Analysis:Processing
+- Data Visualization
 - Data Visualization:2D Graphics
 - Data Visualization:Spectrogram
-- Mission-related:Analysis
-- Mission-related:Science Data Processing
 
 **Source:** Code analysis, README
 **Reasoning:**
-- **Data Access and Retrieval:** Reads Mars Global Surveyor radio occultation data files (.sri, .lbl, .srt formats)
-- **File Format Conversion:** Converts binary data to structured xarray DataArray format
+- **Data Processing and Analysis:** Reads and transforms Mars Global Surveyor radio occultation data files (.sri, .lbl, .srt formats)
 - **Processing:** Applies scaling factors, byte order conversion (big-endian to native), and array reshaping to raw binary data
+- **Data Visualization:** Provides plotting support for the processed occultation data
 - **2D Graphics:** Creates 2D visualizations using matplotlib pcolormesh
-- **Spectrogram:** Displays frequency vs time plots of radio occultation data
-- **Mission-related Analysis:** Specifically designed for Mars Global Surveyor mission data analysis
-- **Mission-related Science Data Processing:** Processes Mars Global Surveyor radio science data for scientific analysis
+- **Spectrogram:** Displays frequency vs time plots of radio occultation signal power
 
 ### 5. Related Region (MANDATORY)
 **Value:** Planetary Magnetospheres
@@ -48,7 +44,7 @@
 
 ### 6. Authors (MANDATORY)
 **Author 1:**
-- **Authors:** Michael Hirsch, Ph.D.
+- **Authors:** Michael Hirsch
 - **Author Identifier:** Not found
 - **Affiliation:**
   - **Organization:** SciVision, Inc.
@@ -58,7 +54,7 @@
 **Note:** Only one author identified across all metadata sources
 
 ### 7. Software Name (MANDATORY)
-**Value:** mgsradio
+**Value:** MGSutils
 **Source:** setup.cfg (package name), PyHC registry lists it as "MGSutils"
 **Note:** The package name is "mgsradio" but it's known as "MGSutils" in PyHC registry and was originally "mgs-utils". Current repository name is "mgs-radio"
 
@@ -150,10 +146,12 @@
 
 ### 18. Input File Formats (RECOMMENDED)
 **Values:**
+- ascii
+- csv
 - Other
 
 **Source:** Code analysis
-**Note:** The software reads mission-specific file formats (.sri, .lbl, .srt) which are not in the standard list. These are:
+**Note:** The software reads mission-specific .sri files plus text label/time companion files. These are:
 - .sri: binary data files (big-endian int16, Fortran order)
 - .lbl: label/metadata files (parsed as CSV with '=' separator)
 - .srt: time information files
@@ -165,10 +163,9 @@
 ### 20. Operating System (RECOMMENDED)
 **Values:**
 - Operating System Independent
-- Linux
 
-**Source:** setup.cfg declares "Operating System :: OS Independent", CI testing on Linux (ubuntu-latest)
-**Note:** As a pure Python package, it should work on all major operating systems (Linux, Mac, Windows)
+**Source:** setup.cfg declares "Operating System :: OS Independent"
+**Note:** As a pure Python package with no platform-specific compiled extensions, it should work on major operating systems supported by its dependencies.
 
 ### 21. CPU Architecture (RECOMMENDED)
 **Value:** CPU Independent
@@ -179,12 +176,12 @@
 **Source:** No specific phenomena keywords found in metadata; general radio occultation science applicable
 
 ### 23. Development Status (RECOMMENDED)
-**Value:** Active
-**Source:** setup.cfg classifiers (Development Status :: 4 - Beta), recent updates
-**Note:** setup.cfg indicates "Beta" status, which corresponds to "Active" in HSSI terminology. Last update was 2023-11-01 according to SoMEF.
+**Value:** Inactive
+**Source:** setup.cfg classifiers (Development Status :: 4 - Beta), git history
+**Note:** setup.cfg indicates beta maturity and the package has usable released versions, but there has been no release since 2020-05-04 and no repository commit since 2021-03-22.
 
 ### 24. Documentation (RECOMMENDED)
-**Value:** https://github.com/space-physics/mgs-radio#readme
+**Value:** https://github.com/space-physics/mgs-radio
 **Source:** Repository README
 **Note:** No separate documentation site found; documentation is in README.md with installation and usage examples. Data source links are provided to PDS Geosciences Node.
 
@@ -215,15 +212,15 @@
 
 ### 29. Related Software (OPTIONAL)
 **Dependencies:**
-- python-dateutil
-- numpy
-- pandas
-- xarray
-- matplotlib (implied by plotting code)
-- seaborn (used in example script)
+- https://github.com/dateutil/dateutil (python-dateutil)
+- https://github.com/numpy/numpy (NumPy)
+- https://github.com/pandas-dev/pandas (pandas)
+- https://github.com/pydata/xarray (xarray)
+- https://github.com/matplotlib/matplotlib (Matplotlib, used by plotting code)
+- https://github.com/mwaskom/seaborn (seaborn, used by the example script)
 
 **Source:** setup.cfg (install_requires), code analysis
-**Note:** These are required dependencies, not necessarily related software packages. No DOIs available for dependencies.
+**Note:** These are required and example plotting dependencies rather than software packages with direct domain overlap.
 
 ### 30. Interoperable Software (OPTIONAL)
 **Value:** Not found

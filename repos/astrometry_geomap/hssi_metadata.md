@@ -22,21 +22,23 @@
 ### 4. Software Functionality (MANDATORY)
 - **Values:**
   - Coordinate Transforms
+  - Data Processing and Analysis
+  - Data Processing and Analysis:Data Access and Retrieval
   - Data Processing and Analysis:Calibration
   - Data Processing and Analysis:Data Reduction
   - Data Processing and Analysis:Image Processing
   - Data Processing and Analysis:File Format Conversion
+  - Data Visualization
   - Data Visualization:2D Graphics
-  - Data Visualization:Line Plots
 
 - **Rationale:**
   - **Coordinate Transforms:** Converts RA/Dec (celestial coordinates) to Az/El (local horizon coordinates) using observer location and time
+  - **Data Access and Retrieval:** Includes a user-facing downloader for Astrometry.net star catalog index files from HTTP directories
   - **Calibration:** Performs plate scaling and calibration of star field images using Astrometry.net
   - **Data Reduction:** Averages multi-frame image stacks to improve signal-to-noise ratio (AverageImageStack.py)
   - **Image Processing:** Processes FITS astronomical images (both grayscale and color), handles WCS coordinate systems
   - **File Format Conversion:** Converts FITS to netCDF format for output
   - **2D Graphics:** Creates geographic projections, overlays star positions and altitude contours on images
-  - **Line Plots:** Generates plots of azimuth/elevation and RA/Dec data
 
 ### 5. Related Region (MANDATORY)
 - **Value:** Earth Atmosphere
@@ -55,9 +57,9 @@
 - **Note:** Author name from DataCite API and PyHC contact. No ORCID or affiliation information available in repository metadata.
 
 ### 7. Software Name (MANDATORY)
-- **Value:** astrometry_azel
-- **Alternative Names:** AstrometryAzEl (PyHC), astrometry_geomap (current repository name)
-- **Source:** Package name from pyproject.toml; PyPI package name is "astrometry-azel"
+- **Value:** AstrometryAzEl
+- **Alternative Names:** astrometry_azel (package and PyPI name), astrometry_geomap (current repository name)
+- **Source:** PyHC registry name (authoritative software name), pyproject.toml package name, and current repository name
 
 ### 8. Description (MANDATORY)
 - **Value:** Register images to geographic maps using the astrometry.net program. This software performs plate scale calibration of star imagery to enable use of multiple auroral and airglow cameras together. It converts FITS images to azimuth/elevation coordinates using Astrometry.net, with applications in aeronomy for studying aurora and airglow emissions. The software assumes emissions occur at a specified altitude (typically ~100 km for auroral observations) and projects images onto geographic coordinates.
@@ -78,12 +80,12 @@
 - **Source:** DataCite API and Zenodo metadata
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** v1.3.0 (latest release on Zenodo); v1.4.0 (current development version)
-- **Version Date:** 2021-02-10 (for v1.3.0)
+- **Version Number:** v1.3.0
+- **Version Date:** 2021-02-10
 - **Version Description:** python >= 3.7, to keep up with NEP29 stack, src/ layout
-- **Version PID:** https://doi.org/10.5281/zenodo.4527817 (for v1.3.0)
+- **Version PID:** https://doi.org/10.5281/zenodo.4527817
 
-- **Note:** Latest Zenodo release is v1.3.0 from 2021-02-10. Current development version in repository is v1.4.0 (from __init__.py) but not yet released on Zenodo.
+- **Note:** The current repository declares development version v1.4.0 in `src/astrometry_azel/__init__.py`, but that unreleased development state does not have a Zenodo version DOI and is not used for this version record.
 
 ### 13. Programming Language (RECOMMENDED)
 - **Values:**
@@ -119,28 +121,30 @@
 - **Sources:** pyproject.toml, GitHub topics (from SoMEF), PyHC keywords
 
 ### 17. Data Sources (OPTIONAL)
-- **Value:** Not found
-- **Note:** Software processes user-provided FITS images and uses downloaded star catalog index files (2MASS, Tycho), but doesn't directly interface with standard data sources like CDAWeb, HAPI, etc.
+- **Value:** HTTP/HTTPS Directories
+- **Note:** The repository includes a downloader for Astrometry.net star catalog index files (2MASS and Tycho) from HTTP directories.
 
 ### 18. Input File Formats (RECOMMENDED)
 - **Values:**
   - FITS
+  - HDF5
+  - Other
 
-- **Source:** Code analysis shows FITS is the primary input format (astropy.io.fits); also mentions JPEG, TIFF, PNG for initial image inputs before FITS conversion
+- **Source:** Code analysis shows support for FITS and HDF5 inputs, plus additional image-stack inputs handled outside the controlled list (for example TIFF, GIF, PNG, and MATLAB `.mat` files).
 
 ### 19. Output File Formats (RECOMMENDED)
 - **Values:**
   - netCDF3/4
   - FITS
+  - Other
 
-- **Source:** Code analysis shows netCDF4 output (via xarray and netcdf4 dependencies); also outputs FITS files with WCS coordinates; PNG plots are generated
+- **Source:** Code analysis shows netCDF4 output, FITS output, and generated PNG plots/products.
 
 ### 20. Operating System (RECOMMENDED)
 - **Values:**
   - Linux
-  - Mac
 
-- **Source:** CI configuration tests on ubuntu-latest; macOS support mentioned in CI but currently disabled. pyproject.toml classifies as "Operating System :: OS Independent" but Astrometry.net dependency limits practical OS support
+- **Source:** CI validates Linux on ubuntu-latest. The package metadata says OS Independent, but the Astrometry.net dependency chain is only tested here on Linux.
 
 ### 21. CPU Architecture (RECOMMENDED)
 - **Value:** CPU Independent
@@ -154,8 +158,8 @@
 - **Note:** These are the primary atmospheric phenomena this software is designed to study, though these specific terms may not be in the controlled vocabulary
 
 ### 23. Development Status (RECOMMENDED)
-- **Value:** Active
-- **Source:** Repository shows recent commits (last updated 2025-03-27 per SoMEF), multiple releases, active maintenance
+- **Value:** Inactive
+- **Source:** The local repository snapshot is stable but not under clearly ongoing active maintenance: the latest upstream commit is 2024-02-05 and the latest tagged release is v1.3.0 from 2021-02-10.
 
 ### 24. Documentation (RECOMMENDED)
 - **Value:** https://github.com/space-physics/astrometry_geomap
@@ -183,21 +187,21 @@
 
 ### 29. Related Software (OPTIONAL)
 - **Values:**
-  - Astrometry.net (https://github.com/dstndstn/astrometry.net)
-  - AstroPy (astropy, listed as dependency)
-  - starscale (https://github.com/scivision/starscale) - mentioned in README as related for source extraction/photometry
+  - https://github.com/dstndstn/astrometry.net
+  - https://github.com/astropy/astropy
+  - https://github.com/scivision/starscale
 
-- **Note:** Astrometry.net is the critical dependency that underlies this software's core functionality
+- **Note:** Astrometry.net is the critical dependency that underlies this software's core functionality, and `starscale` is referenced in the README as related software for source extraction and photometry.
 
 ### 30. Interoperable Software (OPTIONAL)
 - **Values:**
-  - numpy
-  - astropy
-  - xarray
-  - netcdf4
-  - python-dateutil
+  - https://github.com/numpy/numpy
+  - https://github.com/astropy/astropy
+  - https://github.com/pydata/xarray
+  - https://github.com/Unidata/netcdf4-python
+  - https://github.com/dateutil/dateutil
 
-- **Source:** These are the core dependencies from pyproject.toml that the software is designed to work with
+- **Source:** These are core Python packages from `pyproject.toml` that the software interoperates with directly.
 
 ### 31. Related Instruments (OPTIONAL)
 - **Instrument Name:** Digital All Sky Cameras (general category)
@@ -246,7 +250,7 @@ The software critically depends on:
 ### Development Status Details
 - Latest Zenodo release: v1.3.0 (2021-02-10)
 - Current development version: v1.4.0
-- Repository shows active development (2025-03-27 last update)
+- Latest upstream commit in the local refreshed repository: 2024-02-05
 - 10 releases total spanning 2016-2021
 - CI configured for Python 3.9 and 3.12
 - 12 stargazers, 3 forks on GitHub

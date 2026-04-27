@@ -42,7 +42,7 @@
 ### 6. Authors (MANDATORY)
 
 **Author 1:**
-- **Name:** scivision (Michael Hirsch)
+- **Name:** Michael Hirsch
 - **Author Identifier:** Not found
 - **Affiliation:** Not found
 
@@ -52,10 +52,10 @@
 - **Affiliation:** Not found
 
 **Source:** DataCite API, Zenodo API, PyHC contact field
-**Note:** The DataCite API lists "Scivision" and "Solomon, Stan" as creators. The PyHC registry lists "Michael Hirsch" as the contact. "Scivision" appears to be Michael Hirsch's GitHub username. ORCIDs were not found in the repository or metadata sources.
+**Note:** The DataCite API lists "Scivision" and "Solomon, Stan" as creators. The PyHC registry lists Michael Hirsch as the contact. ORCIDs were not found in the repository or metadata sources.
 
 ### 7. Software Name (MANDATORY)
-**Value:** GLOW (or NCAR-GLOW)
+**Value:** GLOW
 **Source:** PyHC registry, SoMEF, README
 **Note:** The Python package name is "ncarglow" but the software is referred to as "GLOW" in documentation. The full expanded name is "GLobal airglOW Model" (per README).
 
@@ -69,9 +69,9 @@
 **Source:** Adapted from PyHC registry description and README
 
 ### 10. Publication Date (RECOMMENDED)
-**Value:** 2018-12-20
-**Source:** SoMEF (date_created from GitHub API)
-**Note:** This is the date the repository was created. The first commit was on 2017-01-06, but the GitHub repository was created in 2018.
+**Value:** 2005-04-01
+**Source:** docs/Releasenotes.txt earliest software-specific release note (`Version 0.97 release notes, 4/2005`); the 2017 GLOW paper also states that `v. 0.97 was released in 2005`
+**Note:** Exact day of the initial v0.97 software release was not found. The first day of the month is used only to satisfy HSSI's full-date format while preserving the earliest software-specific evidence found.
 
 ### 11. Publisher (RECOMMENDED)
 
@@ -100,17 +100,17 @@
 **Note:** Primary implementation is in Fortran (435,994 bytes), with Python (14,376 bytes) and MATLAB (12,742 bytes) interfaces. The package also uses CMake and Meson build systems.
 
 ### 14. Reference Publication (RECOMMENDED)
-**Value:** Not found
-**Source:** Checked README, repository files, and all metadata sources
-**Note:** No reference publication DOI or citation was found in the repository. Users should check with the original NCAR GLOW model for potential reference papers.
+**Value:** https://doi.org/10.1029/JA093iA09p09867
+**Source:** Official GLOW references list (`https://download.hao.ucar.edu/pub/stans/glow/refs/glowrefs.txt`) and OSTI record for Solomon, Hays, and Abreu (1988)
+**Note:** Early peer-reviewed publication associated with an early GLOW model formulation: `The auroral 6300 A emission: Observations and modeling`.
 
 ### 15. License (RECOMMENDED)
 
-**License:** Apache License 2.0
-**License URI:** https://www.apache.org/licenses/LICENSE-2.0
+**License:** Open Source Academic Research License Agreement
+**License URI:** https://github.com/space-physics/NCAR-GLOW/blob/main/src/ncarglow/fortran/Glowlicense.txt
 
-**Source:** SoMEF (GitHub API), LICENSE.txt file
-**Note:** Full license text is available in LICENSE.txt
+**Source:** docs/Glow.txt, src/ncarglow/fortran/Glowlicense.txt, LICENSE.txt
+**Note:** The repository root contains Apache License 2.0 text for wrapper/repository files, but bundled GLOW documentation and source files state that use of the GLOW model is governed by the Open Source Academic Research License Agreement.
 
 ---
 
@@ -133,20 +133,21 @@
 
 ### 18. Input File Formats (RECOMMENDED)
 **Values:**
-- Other (binary scratch disk files for Matlab interface)
-- Other (NetCDF for TIEGCM I/O in MPI version)
+- ascii
+- Other
+- netCDF3/4
 
-**Source:** README mentions binary files for Matlab interface and NetCDF for TIEGCM I/O
-**Note:** The Python interface uses direct API calls rather than file I/O.
+**Source:** docs/Quickstart.txt documents text-driver inputs (`glow.exe < in.basic.day`, `glow.exe < in.basic.aur`) and README mentions binary files for Matlab interface and NetCDF for TIEGCM I/O
+**Note:** The Python interface uses direct API calls rather than file I/O, but the bundled standalone workflows support ascii text inputs in addition to other scratch-file and NetCDF workflows.
 
 ### 19. Output File Formats (RECOMMENDED)
 **Values:**
-- Other (xarray.Dataset in Python)
-- Other (binary scratch disk files for Matlab interface)
-- netCDF3/4 (for TIEGCM I/O in MPI version)
+- ascii
+- Other
+- netCDF3/4
 
-**Source:** README documentation
-**Note:** Primary Python output is an xarray.Dataset object.
+**Source:** docs/Quickstart.txt documents text-driver outputs (`glow.exe < in.basic.day > test.basic.day`) and README documents Matlab scratch-file exchange and MPI/TIEGCM NetCDF workflows
+**Note:** Primary Python output is an xarray.Dataset object, but the bundled standalone workflows also write ascii text outputs.
 
 ### 20. Operating System (RECOMMENDED)
 **Values:**
@@ -166,11 +167,9 @@
 **Note:** Should work on any architecture with a Fortran compiler, though primarily tested on x86-64.
 
 ### 22. Related Phenomena (OPTIONAL)
-**Values:**
-- Not explicitly categorized using HSSI controlled vocabulary
-
+**Value:** Not found
 **Source:** Manual analysis
-**Note:** The software models auroral and airglow phenomena, which are related to geomagnetic activity and solar-terrestrial interactions, but these specific phenomena are not in the provided HSSI controlled vocabulary list.
+**Note:** The software models auroral and airglow phenomena, but no matching term was used from the provided HSSI controlled vocabulary.
 
 ### 23. Development Status (RECOMMENDED)
 **Value:** Active
@@ -178,9 +177,9 @@
 **Note:** The software reached a stable, usable state and is being actively developed. Latest update was in October 2025.
 
 ### 24. Documentation (RECOMMENDED)
-**Value:** https://github.com/space-physics/NCAR-GLOW/blob/main/README.md
+**Value:** https://github.com/space-physics/NCAR-GLOW
 **Source:** Repository README
-**Note:** Documentation is primarily in the README file. No separate documentation site was found.
+**Note:** Documentation is primarily in the repository README and bundled docs directory.
 
 ### 25. Funder (OPTIONAL)
 **Value:** Not found
@@ -208,12 +207,10 @@
 
 ### 29. Related Software (OPTIONAL)
 **Values:**
-- numpy (dependency)
-- xarray (dependency)
-- geomagindices (dependency, version >=1.5.0)
-
-**Source:** pyproject.toml dependencies
-**Note:** These are the primary Python dependencies. The software also uses MSIS and other atmospheric models internally.
+- https://github.com/space-physics/geomagindices
+- https://github.com/pydata/xarray
+- https://github.com/numpy/numpy
+**Source:** pyproject.toml core dependencies (`geomagindices`, `xarray`, `numpy`); repository URLs for those dependency projects
 
 ### 30. Interoperable Software (OPTIONAL)
 **Value:** Not found
@@ -231,9 +228,7 @@
 **Note:** GLOW is a general-purpose model not tied to a specific observatory or mission.
 
 ### 33. Logo (OPTIONAL)
-**Value:** https://www2.hao.ucar.edu/sites/default/files/resize/images/ICON-GOLD_2016/IonosphereHorizon-Banner-980x232.jpg
-**Source:** PyHC registry
-**Note:** This logo URL is from the PyHC registry entry.
+**Value:** Not found
 
 ---
 
@@ -260,7 +255,7 @@ While GLOW is in the "unevaluated" PyHC registry, the package appears to be well
 - Recent updates (2025-10-23)
 - Active CI/CD with testing on multiple platforms
 - Clear documentation in README
-- Apache 2.0 open-source license
+- Clearly documented licensing terms for both the wrapper/repository files and the core GLOW model
 - Support for multiple programming languages
 
 ### Scientific Context

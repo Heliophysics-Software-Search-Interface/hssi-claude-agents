@@ -24,12 +24,13 @@ https://github.com/space-physics/POLAN
 ### 4. Software Functionality (MANDATORY)
 - Data Processing and Analysis
 - Data Processing and Analysis:Analysis
-- Data Processing and Analysis:Data Reduction
 - Data Processing and Analysis:Processing
+- Data Visualization
+- Data Visualization:Line Plots
 - Models and Simulations
 - Models and Simulations:Empirical
 
-**Source:** Manual analysis of README and code purpose. POLAN performs polynomial analysis to calculate real-height profiles from sweep-frequency ionogram data (virtual height measurements from ionosondes). This involves processing and reducing ionospheric sounding data to estimate true ionospheric height profiles. The software also implements empirical models including Chapman layer peak fitting and ionospheric valley modeling between E and F layers.
+**Source:** Manual analysis of README and code purpose. POLAN performs polynomial analysis to calculate real-height profiles from sweep-frequency ionogram data (virtual height measurements from ionosondes). This involves processing and analyzing ionospheric sounding data to estimate true ionospheric height profiles. The software also implements empirical models including Chapman layer peak fitting and ionospheric valley modeling between E and F layers. The bundled POLPLOT program plots virtual-height data and calculated profiles.
 
 ### 5. Related Region (MANDATORY)
 - Earth Atmosphere
@@ -46,7 +47,7 @@ https://github.com/space-physics/POLAN
   - **Affiliation Identifier:** https://ror.org/03b94tp07
 
 **Author 2 (Package Maintainer):**
-- **Authors:** Michael Hirsch, Ph.D.
+- **Authors:** Michael Hirsch
 - **Author Identifier:** Not found
 - **Affiliation:**
   - **Organization:** Not found
@@ -81,12 +82,12 @@ Titheridge's POLAN for estimating true ionosphere height from ionosonde measurem
 **Source:** Repository is hosted on GitHub with no DOI/Zenodo integration found
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** Not found
+- **Version Number:** 1.0.0
 - **Version Date:** Not found
-- **Version Description:** Not found
+- **Version Description:** Version declared in setup.cfg package metadata
 - **Version PID:** Not found
 
-**Note:** No version tags found in git repository; no releases on GitHub; package does not appear to use semantic versioning
+**Source:** setup.cfg declares version 1.0.0. No version tags, GitHub releases, release date, or version DOI were found.
 
 ### 13. Programming Language (RECOMMENDED)
 - Fortran77
@@ -119,6 +120,8 @@ Not found
 - ionospheric sounding
 - electron density
 - sweep-frequency
+- ionosphere_thermosphere_mesosphere
+- specific
 
 **Source:** SoMEF extraction ("ionosphere"), PyHC registry ("ionosphere_thermosphere_mesosphere"), and keywords derived from software description and functionality
 
@@ -139,10 +142,8 @@ Not found
 
 ### 20. Operating System (RECOMMENDED)
 - Linux
-- Mac
-- Windows
 
-**Source:** CI configuration shows testing on Linux (ubuntu-latest). Fortran code is generally portable across platforms. The original README.1ST mentions compilation on IBM PC (DOS/Windows). Modern CMake build system supports cross-platform compilation.
+**Source:** CI configuration directly tests Linux (ubuntu-latest). README.1ST gives historical PC portability notes, but current automated support evidence is Linux.
 
 ### 21. CPU Architecture (RECOMMENDED)
 - CPU Independent
@@ -157,12 +158,12 @@ Not found
 ### 23. Development Status (RECOMMENDED)
 - Inactive
 
-**Source:** Repository last updated 2024-06-24 (per SoMEF); has reached stable, usable state as a mature tool (originally from 1980s-1990s); appears to be maintained but not actively developed with new features. Code has not had recent commits focused on new functionality.
+**Source:** Upstream main branch last changed on 2025-06-24; setup.cfg declares "Development Status :: 4 - Beta". POLAN has reached a usable state as a mature tool originally developed in the 1980s-1990s, but the repository does not show current feature development.
 
 ### 24. Documentation (RECOMMENDED)
-https://github.com/space-physics/POLAN/blob/main/README.1ST
+https://github.com/space-physics/POLAN
 
-**Source:** Primary documentation is in README.1ST file which contains detailed usage instructions. Full documentation available in UAG-93 report referenced at http://www.sws.bom.gov.au/IPSHosted/INAG/uag_93/uag_93.html (link reported as down in README)
+**Source:** Documentation and installation instructions are provided in the repository README and README.1ST file. Full documentation is also referenced through the UAG-93 report link in README, but that external link is reported as down.
 
 ### 25. Funder (OPTIONAL)
 Not found

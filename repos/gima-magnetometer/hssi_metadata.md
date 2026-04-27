@@ -21,13 +21,14 @@
 
 ### 4. Software Functionality (MANDATORY)
 **Values:**
-- Data Processing and Analysis:Data Access and Retrieval
+- Data Processing and Analysis
 - Data Processing and Analysis:Processing
 - Data Processing and Analysis:Time Series Analysis
+- Data Visualization
 - Data Visualization:2D Graphics
 - Data Visualization:Line Plots
 
-**Analysis:** The software reads UAF Geophysical Institute GIMA magnetometer network data from netCDF4 files, processes and filters magnetometer time series data by time windows, concatenates multiple hourly data files, and generates 2D line plots showing the three magnetic field components (horizontal, declination, and vertical).
+**Analysis:** The software reads local UAF Geophysical Institute GIMA magnetometer netCDF4 files, processes and filters magnetometer time series data by time windows, concatenates multiple hourly data files, and generates 2D line plots showing the three magnetic field components (horizontal, declination, and vertical).
 
 ### 5. Related Region (MANDATORY)
 **Values:**
@@ -38,17 +39,16 @@
 
 ### 6. Authors (MANDATORY)
 **Author 1:**
-- **Authors:** Michael Hirsch, Ph.D.
+- **Name:** Michael Hirsch
 - **Author Identifier:** Not found
-- **Affiliation:**
-  - **Organization:** Not found
-  - **Affiliation Identifier:** Not found
+- **Affiliation:** Not found
 
 **Source:** setup.cfg author field and copyright notice in source code
 
 ### 7. Software Name (MANDATORY)
-**Value:** gima-magnetometer (also: gima_magnetometer, GIMAmag)
-**Source:** Repository name, setup.cfg (name field), and PyHC registry
+**Value:** GIMAmag
+**Package Name:** gima_magnetometer
+**Source:** PyHC registry name is authoritative for HSSI; repository name is `gima-magnetometer`
 
 ### 8. Description (MANDATORY)
 **Value:** UAF Geophysical Institute magnetometer network data read and plot. This software package provides tools for reading, processing, and visualizing magnetometer data from the University of Alaska Fairbanks Geophysical Institute Magnetometer Array (GIMA) network. The software reads netCDF4 format data files containing magnetic field measurements, allows time-based filtering and extraction, concatenates multiple hourly data files, and generates time series plots of the three magnetic field components (horizontal, declination, and vertical). The package is designed to support analysis of geomagnetic variations related to ionospheric currents and magnetospheric processes observed by the ground-based GIMA magnetometer network in Alaska.
@@ -70,19 +70,11 @@
 **Note:** No DOI obtained; code is hosted on GitHub
 
 ### 12. Version (RECOMMENDED)
-**Current Version:**
 - **Version Number:** 0.6.2
-- **Version Date:** Not found (no date for version 0.6.2 in git tags)
-- **Version Description:** Not found
+- **Version Date:** 2018-07-08
+- **Version Description:** modernize, pep8, mypy
 - **Version PID:** Not found
-
-**Latest Tagged Release:**
-- **Version Number:** v1.0
-- **Version Date:** 2017-03-13
-- **Version Description:** initial release
-- **Version PID:** Not found
-
-**Source:** setup.cfg for current version (0.6.2), git tags and SoMEF releases for v1.0
+**Source:** setup.cfg, git history for the commit introducing version 0.6.2
 
 ### 13. Programming Language (RECOMMENDED)
 **Value:** Python 3.x
@@ -95,7 +87,7 @@
 ### 15. License (RECOMMENDED)
 **Value:**
 - **License:** Apache License 2.0
-- **License URI:** http://www.apache.org/licenses/LICENSE-2.0
+- **License URI:** https://www.apache.org/licenses/LICENSE-2.0
 
 **Note:** LICENSE.txt file contains Apache License 2.0, but setup.cfg indicates "License :: OSI Approved :: MIT License" - there is a discrepancy. The actual LICENSE.txt file is Apache 2.0, which should be considered authoritative.
 **Source:** LICENSE.txt file and SoMEF GitHub API license data
@@ -114,16 +106,18 @@
 **Source:** setup.cfg keywords field and SoMEF GitHub API topics
 
 ### 17. Data Sources (OPTIONAL)
-**Value:** Other
-**Note:** Data is downloaded from UAF Geophysical Institute archive at https://www.gi.alaska.edu/monitors/magnetometer/archive
+**Values:**
+- HTTP/HTTPS Directories
+- Observatory/Mission-specific
+**Note:** Data comes from the UAF Geophysical Institute GIMA archive at https://www.gi.alaska.edu/monitors/magnetometer/archive
 
 ### 18. Input File Formats (RECOMMENDED)
 **Value:** netCDF3/4
 **Source:** Code analysis - uses netCDF4 library to read .nc files (see __init__.py lines 17, 58)
 
 ### 19. Output File Formats (RECOMMENDED)
-**Value:** Other (matplotlib figures/plots)
-**Note:** Software generates matplotlib visualizations but does not write data to file formats
+**Value:** Not found
+**Note:** Software generates interactive matplotlib visualizations but does not write output files
 
 ### 20. Operating System (RECOMMENDED)
 **Values:**
@@ -147,9 +141,9 @@
 **Source:** setup.cfg classifiers and git commit history
 
 ### 24. Documentation (RECOMMENDED)
-**Value:** https://www.gi.alaska.edu/monitors/magnetometer/archive
-**Note:** This is the data source/archive page. No dedicated software documentation site found beyond the README.
-**Source:** README.md data download link
+**Value:** https://github.com/space-physics/gima-magnetometer#readme
+**Note:** Installation and usage documentation are in the repository README.
+**Source:** README.md
 
 ### 25. Funder (OPTIONAL)
 **Value:** Not found
@@ -165,17 +159,14 @@
 **Value:** Not found
 
 ### 28. Related Datasets (OPTIONAL)
-**Value:** GIMA magnetometer data archive at https://www.gi.alaska.edu/monitors/magnetometer/archive
-**Note:** No DOI available for this dataset
+**Value:** Not found
 
 ### 29. Related Software (OPTIONAL)
-**Values (dependencies):**
-- numpy
-- python-dateutil
-- xarray
-- netcdf4
-- matplotlib (optional, for plotting)
-- seaborn (optional, for plotting enhancement)
+**Values:**
+- https://github.com/pydata/xarray
+- https://github.com/Unidata/netcdf4-python
+- https://github.com/matplotlib/matplotlib
+- https://github.com/mwaskom/seaborn
 
 **Source:** setup.cfg install_requires and extras_require
 
@@ -228,7 +219,7 @@ GIMA data archive: https://www.gi.alaska.edu/monitors/magnetometer/archive
 - **Stars:** 1
 - **Forks:** 1
 - **Release v1.0:** 2017-03-13 (initial release)
-- **Current Version:** 0.6.2 (per setup.cfg, no git tag for this version)
+- **Current Version:** 0.6.2 (introduced in commit `87953c1`; latest git tag is `v1.0`)
 
 ---
 
