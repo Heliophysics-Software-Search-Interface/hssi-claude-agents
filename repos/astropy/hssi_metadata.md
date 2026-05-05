@@ -42,9 +42,7 @@
 ### 5. Related Region (MANDATORY)
 - Solar Environment
 - Interplanetary Space
-- Earth Magnetosphere
-- Planetary Magnetospheres
-- Source: Astropy is a general-purpose astronomy package, but its coordinate frames (HCRS, GCRS, ICRS, ITRS, ecliptic, Galactic), time systems, ephemerides, and units underpin essentially all Python heliophysics workflows. Foundational dependency of SunPy (Solar Environment), spiceypy-bridging packages and mission tools (Interplanetary Space, Planetary Magnetospheres), and Earth-spacecraft tracking and pointing tools (Earth Magnetosphere). Earth Atmosphere omitted (no atmospheric/ionospheric coordinate frames). Note for reviewers: astropy is NOT in any PyHC registry — included here as foundational infrastructure for heliophysics tooling rather than as a heliophysics package per se.
+- Source: Solar Environment supportable via `HeliocentricMeanEcliptic`, `HCRS`, and `astropy.coordinates.solar_system` (Sun body positioning), plus the WCSAxes helioprojective axis-display capability (consumed by SunPy and other heliophysics tools). Interplanetary Space supportable via `astropy.coordinates.solar_system` ephemeris (`get_body`, `get_body_barycentric_posvel`) for positions of solar system bodies. Earth Magnetosphere and Planetary Magnetospheres NOT included — astropy has no magnetospheric coordinate frames (no GSE/GSM/SM/MAG/AACGM) and no planet-fixed or magnetospheric science capability. Earth Atmosphere also not included (no atmospheric/ionospheric models). Note for reviewers: astropy is NOT in any PyHC registry — included here as foundational infrastructure for heliophysics tooling rather than as a heliophysics package per se.
 
 ### 6. Authors (MANDATORY)
 1. **The Astropy Developers** (corporate author) | astropy.team@gmail.com — from pyproject.toml
@@ -63,8 +61,13 @@
 14. **Erik Tollerud** | ORCID: https://orcid.org/0000-0002-9599-310X
 15. **Brett M. Morris** | ORCID: https://orcid.org/0000-0003-2528-3409
 16. **Adam Ginsburg** | ORCID: https://orcid.org/0000-0001-6431-9633
-17. **Thomas P. Robitaille** | ORCID: https://orcid.org/0000-0002-8642-1329
-- Source: pyproject.toml authors (corporate) and CITATION.cff `preferred-citation.authors` (lead authors with ORCIDs from the v5.0 paper, Astropy Collaboration et al. 2022). CITATION.cff lists ~136 individual co-authors total plus "Astropy Project Contributors"; the lead authors above are enumerated here. Full contributor base on https://github.com/astropy/astropy/graphs/contributors.
+17. **Eero Vaher**
+18. **Benjamin A. Weaver**
+19. **James Tocknell** | ORCID: https://orcid.org/0000-0001-6637-6922
+20. **William Jamieson** | ORCID: https://orcid.org/0000-0001-5976-4492
+21. **Marten H. van Kerkwijk** | ORCID: https://orcid.org/0000-0002-5830-8505
+22. **Thomas P. Robitaille** | ORCID: https://orcid.org/0000-0002-8642-1329
+- Source: pyproject.toml authors (corporate) and CITATION.cff `preferred-citation.authors` (lead authors with ORCIDs from the v5.0 paper, Astropy Collaboration et al. 2022). CITATION.cff lists ~136 individual co-authors total plus "Astropy Project Contributors"; the first 21 named co-authors are enumerated above. Full contributor base on https://github.com/astropy/astropy/graphs/contributors.
 
 ### 7. Software Name (MANDATORY)
 - **Name:** astropy
