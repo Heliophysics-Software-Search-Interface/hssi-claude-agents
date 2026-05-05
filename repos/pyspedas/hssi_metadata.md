@@ -24,6 +24,7 @@
 - Coordinate Transforms:Ionospheric
 - Coordinate Transforms:Magnetospheric
 - Coordinate Transforms:Mission-Specific
+- Coordinate Transforms:Planetary
 - Data Processing and Analysis
 - Data Processing and Analysis:2D Slices
 - Data Processing and Analysis:3D Particle Distribution Processing
@@ -122,8 +123,8 @@
 - Source: Derived from pyproject.toml description and README.md.
 
 ### 10. Publication Date (RECOMMENDED)
-- **Publication Date:** 2018-05-01
-- Source: First public PyPI release of pyspedas (v0.6) was around May 2018; the GitHub repository's first commit is 2016-10-11. The DataCite-recorded concept-DOI publication year is 2026 (most recent), but original publication is earlier. This date reflects the initial public release.
+- **Publication Date:** 2016-10-11
+- Source: First commit date from repository history (`git log --reverse --format='%H %cs %s'`); DataCite/CITATION.cff dates describe later DOI/software-release records rather than the original repository publication.
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
@@ -230,19 +231,15 @@
 
 ### 17. Data Sources (OPTIONAL)
 - CDAWeb
-- HAPI servers (including HAPI-CDAWeb, ISEE/Nagoya HAPI, SuperMAG HAPI, INTERMAGNET HAPI)
-- SPDF (Space Physics Data Facility)
-- MMS Science Data Center (LASP)
-- THEMIS Mission Operations / UC Berkeley SSL
-- ERG Science Center (ISEE/Nagoya)
-- LASP MAVEN data archive
-- VirES for Swarm
-- IRIS / FDSN (MTH5 magnetotelluric data)
-- Kyoto WDC for Geomagnetism (Dst, AE indices)
-- NOAA SWPC (Kp, GOES, POES)
-- Cloud / S3 repositories (configurable via SPEDAS_DATA_DIR)
+- FTP/FTPS Directories
+- HAPI
+- HTTP/HTTPS Directories
+- OMNIWeb
 - Observatory/Mission-specific
-- Source: Codebase analysis (cdagui_tools/, hapi_tools/, mth5/, vires/, projects/*/load.py); README "Cloud Repositories" section; .github/workflows/full_coverage.yml shows CDAWeb, HAPI, SPDF, MMS-SDC, LASP, IRIS as test servers.
+- Other
+- S3/Cloud-aware
+- VirES
+- Source: Codebase analysis (cdagui_tools/, hapi_tools/, mth5/, vires/, projects/*/load.py); README "Cloud Repositories" section; .github/workflows/full_coverage.yml shows CDAWeb, HAPI, SPDF, MMS-SDC, LASP, IRIS, mission-specific, HTTP/HTTPS, and S3/cloud-aware data sources.
 
 ### 18. Input File Formats (RECOMMENDED)
 - CDF
@@ -267,9 +264,8 @@
 - Source: README.md ("PySPEDAS supports Windows, macOS and Linux"); pyproject.toml classifier `Operating System :: OS Independent`; CI workflows test on `ubuntu-latest`; cross-platform compatibility documented in pyspedas/projects/mms/README.md.
 
 ### 21. CPU Architecture (RECOMMENDED)
-- x86-64
-- Apple Silicon arm64
-- Source: Pure-Python package with NumPy/SciPy native dependencies; standard PyPI wheels available for x86-64 Linux/Windows and Apple Silicon arm64 macOS via dependency wheels (numpy, scipy, cdflib, spacepy).
+- CPU Independent
+- Source: Pure-Python package with NumPy/SciPy native dependencies; pyproject.toml classifies the package as operating-system independent and does not declare a CPU-architecture-specific requirement.
 
 ### 22. Related Phenomena (OPTIONAL)
 - Solar Wind
@@ -341,7 +337,6 @@ Not found — PySPEDAS accesses many heliophysics datasets at runtime but does n
 - https://github.com/astropy/astropy — Astropy (core dependency)
 - https://github.com/PlasmaPy/PlasmaPy — PlasmaPy (used in PySPEDAS analysis examples)
 - https://github.com/spedas/bleeding_edge — IDL SPEDAS (compatible coordinate frames, file conventions, save-file restore)
-- https://github.com/sunpy/sunpy — SunPy (interoperable for solar coordinate frames)
 - https://github.com/numpy/numpy — NumPy
 - https://github.com/scipy/scipy — SciPy
 - https://github.com/matplotlib/matplotlib — matplotlib

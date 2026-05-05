@@ -32,12 +32,14 @@
 - Data Processing and Analysis:Time Series Analysis
 - Data Visualization
 - Data Visualization:2D Graphics
+- Data Visualization:2D Slices
 - Data Visualization:Line Plots
 - Models and Simulations
 - Models and Simulations:Empirical
+- Models and Simulations:Forward-Fitting
 - Models and Simulations:Physics-Based
 - Models and Simulations:Theory
-- Source: `astropy.coordinates` provides built-in HCRS/ICRS/GCRS/ITRS/ecliptic/Galactic/AltAz frames and transforms — Sun-centered ecliptic frames support solar-system positioning, planetary ephemerides via `astropy.coordinates.solar_system`. `astropy.io.fits`, `astropy.io.votable`, `astropy.io.ascii`, `astropy.io.misc` for file format read/write/conversion; `astropy.table`, `astropy.timeseries`, `astropy.stats`, `astropy.nddata`, `astropy.uncertainty`, `astropy.convolution` for data processing; `astropy.visualization` (with `wcsaxes`, stretches, normalizations, RGB image, histogram tools) for plotting; `astropy.modeling` provides analytic and physical model classes plus fitters; `astropy.cosmology` provides empirical and theoretical cosmological models. NOT applicable: Coordinate Transforms:Heliospheric (no HCI/HAE/HEE/Carrington/Stonyhurst/RTN frames — those are in SunPy), Coordinate Transforms:Magnetospheric, Coordinate Transforms:Ionospheric (no GSE/GSM/SM/MAG/AACGM frames).
+- Source: `astropy.coordinates` provides built-in HCRS/ICRS/GCRS/ITRS/ecliptic/Galactic/AltAz frames and transforms — Sun-centered ecliptic frames support solar-system positioning, planetary ephemerides via `astropy.coordinates.solar_system`. `astropy.io.fits`, `astropy.io.votable`, `astropy.io.ascii`, `astropy.io.misc` for file format read/write/conversion; `astropy.table`, `astropy.timeseries`, `astropy.stats`, `astropy.nddata`, `astropy.uncertainty`, `astropy.convolution` for data processing; `astropy.visualization` (with `wcsaxes`, stretches, normalizations, RGB image, histogram tools) for plotting, including WCSAxes slicing of multidimensional FITS cubes into plotted 1D/2D views; `astropy.modeling` provides analytic and physical model classes plus fitters for fitting models to data; `astropy.cosmology` provides empirical and theoretical cosmological models. NOT applicable: Coordinate Transforms:Heliospheric (no HCI/HAE/HEE/Carrington/Stonyhurst/RTN frames — those are in SunPy), Coordinate Transforms:Magnetospheric, Coordinate Transforms:Ionospheric (no GSE/GSM/SM/MAG/AACGM frames).
 
 ### 5. Related Region (MANDATORY)
 - Solar Environment
@@ -47,32 +49,12 @@
 ### 6. Authors (MANDATORY)
 1. **The Astropy Developers** (corporate author) | astropy.team@gmail.com — from pyproject.toml
 2. **Astropy Collaboration** (corporate author) — from CITATION.cff top-level `authors`
-3. **Adrian M. Price-Whelan** | ORCID: https://orcid.org/0000-0003-0872-7098
-4. **Pey Lian Lim** | ORCID: https://orcid.org/0000-0003-0079-4114
-5. **Nicholas Earl** | ORCID: https://orcid.org/0000-0003-1714-7415
-6. **Nathaniel Starkman** | ORCID: https://orcid.org/0000-0003-3954-3291
-7. **Larry Bradley** | ORCID: https://orcid.org/0000-0002-7908-9284
-8. **David L. Shupe** | ORCID: https://orcid.org/0000-0003-4401-0430
-9. **Aarya A. Patil** | ORCID: https://orcid.org/0000-0002-7626-506X
-10. **Lia Corrales** | ORCID: https://orcid.org/0000-0002-5466-3817
-11. **C. E. Brasseur** | ORCID: https://orcid.org/0000-0002-9314-960X
-12. **Maximilian Nöthe** | ORCID: https://orcid.org/0000-0001-7993-8189
-13. **Axel Donath** | ORCID: https://orcid.org/0000-0003-4568-7005
-14. **Erik Tollerud** | ORCID: https://orcid.org/0000-0002-9599-310X
-15. **Brett M. Morris** | ORCID: https://orcid.org/0000-0003-2528-3409
-16. **Adam Ginsburg** | ORCID: https://orcid.org/0000-0001-6431-9633
-17. **Eero Vaher**
-18. **Benjamin A. Weaver**
-19. **James Tocknell** | ORCID: https://orcid.org/0000-0001-6637-6922
-20. **William Jamieson** | ORCID: https://orcid.org/0000-0001-5976-4492
-21. **Marten H. van Kerkwijk** | ORCID: https://orcid.org/0000-0002-5830-8505
-22. **Thomas P. Robitaille** | ORCID: https://orcid.org/0000-0002-8642-1329
-- Source: pyproject.toml authors (corporate) and CITATION.cff `preferred-citation.authors` (lead authors with ORCIDs from the v5.0 paper, Astropy Collaboration et al. 2022). CITATION.cff lists ~136 individual co-authors total plus "Astropy Project Contributors"; the first 21 named co-authors are enumerated above. Full contributor base on https://github.com/astropy/astropy/graphs/contributors.
+- Source: pyproject.toml authors and CITATION.cff top-level software authors. Individual paper authors are represented in the Reference Publication and Related Publications fields; CITATION.cff and astropy/CITATION list many additional publication authors and project contributors.
 
 ### 7. Software Name (MANDATORY)
-- **Name:** astropy
-- **Full Name:** Astropy
-- Source: pyproject.toml `name`, README.rst, CITATION.cff `title`.
+- **Name:** Astropy
+- **Alt Name:** astropy
+- Source: pyproject.toml `name`, README.rst, CITATION.cff `title`. PyHC core, community, and unevaluated registries have no matching `astropy` / `github.com/astropy/astropy` entry, so there is no PyHC-curated name overriding repo evidence.
 
 ### 8. Description (MANDATORY)
 - **Description:** Astropy is a community-developed core Python package for astronomy. It provides a comprehensive, interoperable foundation for astronomical and astrophysical research, including astronomical coordinate systems and transforms, time and date handling, physical units and constants, FITS/VOTable/ASCII/HDF5/Parquet file I/O, world coordinate systems (WCS), tables, NDData, modeling and fitting, statistics, convolution, cosmological calculations, time series, uncertainties, and visualization. Astropy is the canonical core of a large astronomy ecosystem and is widely used as a dependency by mission analysis tools and heliophysics packages such as SunPy.
@@ -93,10 +75,10 @@
 
 ### 12. Version (RECOMMENDED)
 - **Version Number:** v7.2.0
-- **Version Date:** 2025-11-28
+- **Version Date:** 2025-11-25
 - **Version Description:** Adds CODATA 2022 support in `astropy.constants`; allows `np.concatenate`, `np.stack` and similar numpy functions on representations, differentials, frames, and `SkyCoord`; introduces named attributes on `match_coordinates_*` and `search_around_*` results; adds new `astropy.cosmology.traits` (CurvatureComponent, HubbleParameter, DarkEnergyComponent, DarkMatterComponent, MatterComponent, BaryonComponent); cosmology methods now exclusively return arrays.
 - **Version PID:** https://doi.org/10.5281/zenodo.17756022
-- Source: Zenodo/DataCite metadata for concept DOI 10.5281/zenodo.4670728; version-specific DOI resolved via DataCite `HasVersion` relations; version description summarized from CHANGES.rst (which dates v7.2.0 as 2025-11-25 vs Zenodo's issued date 2025-11-28). Note: no git tags in local shallow clone; CITATION.cff lacks top-level `version` and `date-released`, both sourced from Zenodo metadata.
+- Source: CHANGES.rst and git tag `v7.2.0` date the software release to 2025-11-25. Zenodo/DataCite metadata for concept DOI 10.5281/zenodo.4670728 provides the version-specific DOI via `HasVersion`; Zenodo issued the archived DOI on 2025-11-28. Version description summarized from CHANGES.rst. CITATION.cff lacks top-level `version` and `date-released`.
 
 ### 13. Programming Language (RECOMMENDED)
 - Python 3.x
@@ -137,8 +119,9 @@
 - Source: pyproject.toml `keywords`.
 
 ### 17. Data Sources (OPTIONAL)
-Not found
-- Source: Astropy is observatory-agnostic and does not include specific data-source modules. IERS data and ephemerides are loaded internally via `astropy-iers-data` and `jplephem`; remote data services for astronomical archives are provided by the separate `astroquery` package.
+- HTTP/HTTPS Directories
+- S3/Cloud-aware
+- Source: Astropy is observatory-agnostic and does not include archive-specific data-source modules. It documents FITS access from HTTP web servers and S3/cloud storage through `fsspec`; IERS data and ephemerides are loaded internally via `astropy-iers-data` and `jplephem`. Remote data services for astronomical archives are provided by the separate `astroquery` package.
 
 ### 18. Input File Formats (RECOMMENDED)
 - FITS
@@ -176,7 +159,7 @@ Not found
 
 ### 23. Development Status (RECOMMENDED)
 - **Status:** Active
-- Source: Continuous releases (v7.2.0 issued 2025-11-28); active CI; pyOpenSci peer-reviewed (https://github.com/pyOpenSci/software-review/issues/251); >100 contributors; regular release cadence.
+- Source: Continuous releases (v7.2.0 released 2025-11-25, archived by Zenodo on 2025-11-28); active CI; pyOpenSci peer-reviewed (https://github.com/pyOpenSci/software-review/issues/251); >100 contributors; regular release cadence.
 
 ### 24. Documentation (RECOMMENDED)
 - **URL:** https://docs.astropy.org
@@ -214,8 +197,7 @@ Not found
 - https://github.com/astropy/specutils — specutils (Astropy coordinated package)
 - https://github.com/astropy/regions — regions (Astropy coordinated package)
 - https://github.com/astropy/reproject — reproject (Astropy coordinated package)
-- https://ascl.net/1304.002 — ASCL listing (`ascl:1304.002`)
-- Source: pyproject.toml dependencies, Astropy coordinated packages list, ASCL.
+- Source: pyproject.toml dependencies and Astropy coordinated packages list. ASCL entry `ascl:1304.002` is an identifier for Astropy itself, not separate related software.
 
 ### 30. Interoperable Software (OPTIONAL)
 - https://numpy.org — NumPy (required dependency; >=2.0)
@@ -223,7 +205,10 @@ Not found
 - https://matplotlib.org — Matplotlib (recommended; >=3.8.4)
 - https://github.com/sunpy/sunpy — SunPy (heliophysics interoperability)
 - https://github.com/spacetelescope/gwcs — gwcs (Astropy coordinated package)
-- Source: pyproject.toml dependencies and Astropy ecosystem interoperability.
+- https://pandas.pydata.org — pandas DataFrame interoperability
+- https://pola.rs — Polars DataFrame interoperability
+- https://arrow.apache.org — Apache Arrow / PyArrow interoperability
+- Source: pyproject.toml dependencies, Astropy ecosystem interoperability, and Astropy Table DataFrame interface documentation.
 
 ### 31. Related Instruments (OPTIONAL)
 Not found
