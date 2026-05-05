@@ -311,7 +311,7 @@
 - Source: .zenodo.json (authoritative, curated author list with 261 contributors)
 
 ### 7. Software Name (MANDATORY)
-- **Name:** sunpy
+- **Name:** SunPy
 - **Full Name:** SunPy - Python for Solar Physics
 - **Source:** PyHC registry, GitHub repository, Zenodo
 
