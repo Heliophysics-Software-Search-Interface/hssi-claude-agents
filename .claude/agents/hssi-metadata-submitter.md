@@ -110,6 +110,8 @@ Run three sub-checks:
   - Normalize each value to an exact match from the endpoint's `name` field
   - If no exact match exists, flag for user review — do not silently drop or approximate
 
+**D. Organization-name sanity** — For `affiliation[].name` (Field 6) and `funder[].name` (Field 25), if a value is a bare acronym (e.g., `ESA` rather than `European Space Agency`), surface it in the verification report and ask the user before submitting. Do not auto-expand — the value should already be expanded upstream by the extractor. Also flag funder entries that combine multiple organizations into one value (the form expects one organization per entry).
+
 ### Step 4: Present Payload and Verification Report
 
 Show the user:

@@ -154,6 +154,8 @@ Examine these repository locations systematically:
 9. **Git history** — Tags for versions, commit activity for development status, CHANGELOG.md
 10. **Code analysis** — File I/O operations for file format support, import statements for dependencies
 
+**Organization names (Author Affiliation, Funder) — expand acronyms.** When you encounter an acronym for an affiliation (Field 6) or funder (Field 25), record the full institutional name instead. Example: `NASA` → `National Aeronautics and Space Administration`. If the source only contains an ambiguous acronym you can't confidently expand, leave it as-is and note it so the validator/user can resolve it.
+
 See the "Notes for AI Agents" section in the `hssi-field-definitions` skill for detailed guidance on where to find each type of metadata.
 
 ---

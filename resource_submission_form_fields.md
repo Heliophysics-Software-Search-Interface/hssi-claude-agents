@@ -481,7 +481,7 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 **What it is:** A person or organization that supports (sponsors) something through some kind of financial contribution.
 
-**How to fill it:** The name of the organization that provided funding (e.g., NASA or The Sloan Foundation).
+**How to fill it:** The name of the organization that provided the funding (e.g., National Aeronautics and Space Administration). Avoid acronyms and enter one organization per field.
 
 **Sub-fields:**
 - **Organization** (OPTIONAL): Funder name

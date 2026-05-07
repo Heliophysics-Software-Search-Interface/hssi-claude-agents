@@ -287,3 +287,7 @@ When comparing fresh metadata against HSSI:
 - Report every proposed change with its source
 - Ask for clarification instead of guessing on ambiguous fields
 - Keep the user informed about what you're checking and finding
+
+### Organization names — expand acronyms
+
+When extracting fresh values for **Author Affiliation (Field 6)** or **Funder (Field 25)**, record the full institutional name instead of an acronym (example: `NASA` → `National Aeronautics and Space Administration`). When diffing against HSSI, do not flag an existing full name as STALE just because the fresh source uses an acronym — prefer the full-name form. For Funder, also keep one organization per entry rather than combining multiple into a single value.

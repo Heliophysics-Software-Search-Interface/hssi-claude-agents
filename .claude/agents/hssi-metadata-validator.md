@@ -100,6 +100,7 @@ Cross-reference each metadata value against primary sources in the repository. F
   - Package metadata (setup.py, pyproject.toml, setup.cfg, package.json)
 - Flag authors present in sources but missing from metadata
 - Verify ORCIDs match the right person (check ORCID URL resolves)
+- **Affiliation organization names should be the full institutional name, not acronyms.** Flag any affiliation that is a bare acronym (e.g., `ESA` instead of `European Space Agency`) as a WARNING with `Suggested fix: expand to the full institutional name`. Do not flag values that include an acronym alongside the full name (e.g., "European Space Agency (ESA)").
 
 **Field 7 (Software Name):**
 - Compare against: repo name, README title, package name in config files
@@ -135,6 +136,10 @@ Cross-reference each metadata value against primary sources in the repository. F
 
 **Field 33 (Logo):**
 - If a URL is provided, verify it resolves
+
+**Field 25 (Funder):**
+- **Funder organization names should be the full institutional name, not acronyms.** Flag any funder value that is a bare acronym (e.g., `ESA` instead of `European Space Agency`) as a WARNING with `Suggested fix: expand to the full institutional name`. Do not flag values that include an acronym alongside the full name (e.g., "European Space Agency (ESA)").
+- Each funder entry should be a single organization — flag entries that combine multiple organizations.
 
 **For all other fields:**
 - Where a value is given, verify it against available sources
