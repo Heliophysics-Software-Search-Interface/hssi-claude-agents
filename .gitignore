@@ -12,6 +12,11 @@ repos/**
 !repos/*/
 !repos/*/hssi_metadata.md
 
+# Modelling software clones — only track the extracted hssi_metadata.md files
+models/**
+!models/*/
+!models/*/hssi_metadata.md
+
 # Payloads — only track reference examples
 payloads/*
 !payloads/.gitkeep
