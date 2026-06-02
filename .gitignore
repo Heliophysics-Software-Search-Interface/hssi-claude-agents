@@ -13,9 +13,13 @@ repos/**
 !repos/*/hssi_metadata.md
 
 # Modelling software clones — only track the extracted hssi_metadata.md files
+# One-level (models/<software>/) and two-level (models/<collection>/<paper>/) layouts.
+# Each level un-ignores only its own subdirs so git never descends deeper (no leaks).
 models/**
 !models/*/
 !models/*/hssi_metadata.md
+!models/*/*/
+!models/*/*/hssi_metadata.md
 
 # Payloads — only track reference examples
 payloads/*
