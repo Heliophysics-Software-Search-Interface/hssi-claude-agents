@@ -2,6 +2,7 @@
 
 **Repository:** https://github.com/hapi-server/client-python
 **Extraction Date:** 2025-10-01
+**HSSI Sync:** 2026-06-09 — reconciled with the live HSSI record after a local metadata update. Field values below reflect what is in HSSI (software UUID `f6e3429d-e80e-4cf6-889e-44af1e93f87d`).
 
 ---
 
@@ -29,13 +30,15 @@ Based on comprehensive analysis of the code, documentation, and PyHC metadata, t
 **Analysis:** The HAPI client is a Python interface for accessing time series data from Heliophysics Application Programmer's Interface (HAPI) servers. It retrieves data from various heliophysics data sources (CDAWeb, OMNI, and other HAPI-compliant servers). Visualization (line plots, spectrograms) is provided by the separate optional `hapiplot` package and is not part of `hapiclient` itself — the hapiclient public API (`__init__.py`) exports only data retrieval and time-conversion functions.
 
 ### 5. Related Region (MANDATORY)
-Based on analysis of typical HAPI server data and the README examples:
+Based on analysis of typical HAPI server data and the README examples, plus the regions already curated in the HSSI record:
 
+- **Earth Atmosphere** - retained from the existing HSSI record
 - **Earth Magnetosphere** - OMNI data example in README includes magnetospheric data
 - **Interplanetary Space** - HAPI servers provide solar wind and interplanetary data
+- **Planetary Magnetospheres** - retained from the existing HSSI record
 - **Solar Environment** - HAPI servers provide solar data
 
-**Analysis:** The HAPI client is a general-purpose data access tool that can retrieve data from any HAPI-compliant server. Since HAPI servers provide data across multiple heliophysics regions, and the example in the README uses OMNI data (which spans solar wind, magnetosphere, and interplanetary space), all three regions are appropriate. Note that this is a client library, so the actual regions depend on which HAPI servers and datasets the user accesses.
+**Analysis:** The HAPI client is a general-purpose data access tool that can retrieve data from any HAPI-compliant server, so a broad set of regions applies. The extraction originally identified three regions (Earth Magnetosphere, Interplanetary Space, Solar Environment); the HSSI record additionally includes Earth Atmosphere and Planetary Magnetospheres, which were kept during reconciliation. The actual regions depend on which HAPI servers and datasets the user accesses.
 
 ### 6. Authors (MANDATORY)
 
@@ -79,8 +82,8 @@ Based on analysis of typical HAPI server data and the README examples:
 - **Source:** Synthesized from multiple sources
 
 ### 10. Publication Date (RECOMMENDED)
-- **Value:** 2017-06-02
-- **Source:** SoMEF (date_created from GitHub API)
+- **Value:** 2021-10-06
+- **Source:** HSSI record (Zenodo concept DOI publication date). The extraction originally proposed 2017-06-02 (GitHub date_created via SoMEF); the HSSI DOI-based date was kept during reconciliation.
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
@@ -89,25 +92,17 @@ Based on analysis of typical HAPI server data and the README examples:
 
 ### 12. Version (RECOMMENDED)
 
-**Latest Release Version:**
-- **Version Number:** v0.2.6
-- **Version Date:** 2024-05-11
+**Latest Release Version (current HSSI value):**
+- **Version Number:** v0.2.9
+- **Version Date:** 2026-06-08
 - **Version Description:** Not found in repository
-- **Version PID:** Not found (no specific DOI for v0.2.6)
-- **Source:** Git tags
+- **Version PID:** https://doi.org/10.5281/zenodo.20598746
+- **Source:** GitHub release v0.2.9 (published 2026-06-08); Zenodo version DOI 10.5281/zenodo.20598746
 
-**Version from Zenodo DOI:**
-- **Version Number:** v0.2.1
-- **Version Date:** 2021-10-06
-- **Version Description:** Not found
-- **Version PID:** https://doi.org/10.5281/zenodo.5553156
-- **Source:** Zenodo API, DataCite API
+**Earlier release (extraction-time):**
+- **Version Number:** v0.2.6 (2024-05-11) — superseded by v0.2.9
 
-**Current Development Version:**
-- **Version Number:** v0.2.7b1
-- **Source:** setup.py (in development, not yet released)
-
-**Note:** The latest GitHub release is v0.2.6 (2024-05-11), but the most recent DOI is for v0.2.1 (2021-10-06). The package appears to be actively maintained with newer versions not yet registered with Zenodo.
+**Note:** v0.2.9 was released 2026-06-08 and registered on Zenodo; this is the value set in HSSI during the local update.
 
 ### 13. Programming Language (RECOMMENDED)
 - **Python 3.x** - Primary language (111,259 bytes)
@@ -115,8 +110,8 @@ Based on analysis of typical HAPI server data and the README examples:
 - **Source:** SoMEF, GitHub API, PyHC registry, direct inspection of setup.py/__init__.py/tox.ini
 
 ### 14. Reference Publication (OPTIONAL)
-- **Value:** Not found
-- **Note:** No JOSS paper or primary reference publication was found in the repository
+- **Value:** https://doi.org/10.1029/2021JA029534
+- **Source:** Kept from the existing HSSI record (the extraction found no reference publication in the repository).
 
 ### 15. License (RECOMMENDED)
 - **License:** BSD 3-Clause "New" or "Revised" License
@@ -257,7 +252,7 @@ Metadata was extracted using the following sources (in priority order):
 - ✅ **Submitter** - To be filled by user
 - ✅ **Code Repository** - https://github.com/hapi-server/client-python
 - ✅ **Software Functionality** - Data Processing and Analysis (+ Data Access and Retrieval, Processing)
-- ✅ **Related Region** - Earth Magnetosphere, Interplanetary Space, Solar Environment
+- ✅ **Related Region** - Earth Atmosphere, Earth Magnetosphere, Interplanetary Space, Planetary Magnetospheres, Solar Environment
 - ✅ **Authors** - 4 authors identified with ORCID for primary author
 - ✅ **Software Name** - HAPI Client
 - ✅ **Description** - Comprehensive description provided
@@ -276,9 +271,9 @@ Metadata was extracted using the following sources (in priority order):
 
 ## Notes and Recommendations
 
-1. **Version Discrepancy:** The latest Zenodo DOI is for v0.2.1 (2021), but the repository has v0.2.6 (2024) and development v0.2.7b1. Recommend updating Zenodo with recent releases.
+1. **Version:** As of the 2026-06-09 HSSI sync, the current release is v0.2.9 (2026-06-08), registered on Zenodo (10.5281/zenodo.20598746). (At extraction time the newest DOI was v0.2.1 while the repo had v0.2.6.)
 
-2. **Related Regions:** The three regions selected (Earth Magnetosphere, Interplanetary Space, Solar Environment) represent the most common data types accessed via HAPI servers. Additional regions could be added if needed.
+2. **Related Regions:** The HSSI record carries five regions (Earth Atmosphere, Earth Magnetosphere, Interplanetary Space, Planetary Magnetospheres, Solar Environment). The extraction proposed three; the two additional regions were retained from the existing HSSI record during reconciliation.
 
 3. **Software Functionality:** The primary functionality is data access/retrieval plus response parsing/processing. Plotting is NOT part of this package — it is provided by the separate optional `hapiplot` package (https://github.com/hapi-server/plot-python).
 
