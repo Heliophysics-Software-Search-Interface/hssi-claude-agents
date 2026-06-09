@@ -58,9 +58,9 @@ Based on analysis of typical HAPI server data and the README examples, plus the 
 
 **Author 3:**
 - **Name:** Jeremy Faden
-- **Author Identifier:** Not found
-- **Affiliation:** Not found
-- **Source:** DataCite API, Zenodo API
+- **Author Identifier:** https://orcid.org/0000-0003-2397-488X
+- **Affiliation - Organization:** Cottage Systems; University of Iowa
+- **Source:** Existing HSSI record (ORCID + affiliations carried from the maintainer submission and kept during reconciliation); DataCite/Zenodo API for name
 
 **Author 4:**
 - **Name:** Jon Vandegriff
@@ -156,7 +156,7 @@ Data returned as:
 **Note:** Users can convert the returned data to formats like CSV, HDF5, or CDF using other libraries
 
 ### 20. Operating System (RECOMMENDED)
-- **OS Independent** - Pure Python package, works on any OS with Python
+- **Operating System Independent** - Pure Python package, works on any OS with Python
 - **Source:** Package structure analysis (no OS-specific dependencies)
 
 ### 21. CPU Architecture (RECOMMENDED)
@@ -205,11 +205,9 @@ Data returned as:
 - **Source:** README.md
 
 ### 30. Interoperable Software (OPTIONAL)
-From setup.py dependencies and README:
-- **numpy** - Data arrays
-- **pandas** - Data manipulation
-- **isodate** - Time format handling
-- **hapiplot** - Visualization (optional)
+- **hapiplot** - Companion visualization package for HAPI data
+  - Repository: https://github.com/hapi-server/plot-python
+- **Note:** numpy/pandas/isodate are runtime dependencies rather than interoperable software, so only hapiplot is recorded here (and in HSSI).
 
 ### 31. Related Instruments (OPTIONAL)
 - **Value:** Not specific instruments
