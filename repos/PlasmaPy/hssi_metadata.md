@@ -2,6 +2,7 @@
 
 **Repository:** https://github.com/PlasmaPy/PlasmaPy
 **Extraction Date:** 2026-04-24
+**HSSI Sync:** 2026-06-09 — reconciled with the live HSSI record after a local metadata update (software UUID `4507d98e-44d1-40ea-8733-8047738b9a7a`). Field values below reflect HSSI. **Authors are pending a union reconciliation** (HSSI's 60 + the maintainers below + the full CITATION.cff roster) — see the Authors note.
 
 ---
 
@@ -56,6 +57,8 @@ https://github.com/PlasmaPy/PlasmaPy
 ### 6. Authors (MANDATORY)
 
 The PlasmaPy CITATION.cff lists 157 contributing authors. The recommended group attribution is "PlasmaPy Community"; primary maintainers and lead developers are listed individually below. The complete list of contributors with ORCIDs and affiliations is in `CITATION.cff` in the repository.
+
+> **Authors — pending union reconciliation (2026-06-09):** HSSI currently has 60 authors (21 with ORCIDs); this file lists the PlasmaPy Community + the maintainers below. Authors were left untouched during the local update. They will be reconciled as the **union** of HSSI's 60, the maintainers below, and the full `CITATION.cff` roster — applying name updates (e.g. Dominik Stańczak-Marikin, Erik T. Everson, Peter V. Heuer) so no contributor is lost — then pushed to HSSI and reflected here.
 
 - **Author:** PlasmaPy Community
   - *Affiliation:* (collective; see CITATION.cff)
@@ -218,7 +221,7 @@ https://docs.plasmapy.org
 *Source: README.md, pyproject.toml, .readthedocs.yml, PyHC registry entry.*
 
 ### 25. Funder (OPTIONAL)
-- **Organization:** U.S. National Science Foundation
+- **Organization:** National Science Foundation
   - *Funder Identifier:* https://ror.org/021nxhr62
 
 - **Organization:** United States Department of Energy
