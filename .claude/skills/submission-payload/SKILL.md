@@ -222,7 +222,7 @@ Normalize values to **exact** strings from the `name` field in these endpoints o
 
 **How to use:** Fetch each relevant endpoint, extract the `name` field from each row, and normalize your metadata values to match exactly. If an extracted value doesn't match any controlled-list entry, flag it for user review rather than silently dropping it.
 
-**Software Functionality format:** Use `"Parent: Child"` (with space after colon). Values must be exact matches from the endpoint. Graph-list lookup walks the parent → child chain.
+**Software Functionality format:** Use `"Parent: Child"` (with space after colon). Values must be exact matches from the endpoint. Graph-list lookup walks the parent → child chain. **Always also include the bare parent top-level category as its own array entry** (e.g. include `"Data Processing and Analysis"` in addition to `"Data Processing and Analysis: Data Access and Retrieval"`). Selecting a subcategory does NOT automatically add its parent — the parent must be listed separately or it won't appear on the record. See the `software-functionality` skill.
 
 ---
 

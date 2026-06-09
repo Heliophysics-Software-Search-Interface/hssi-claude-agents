@@ -143,7 +143,7 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | `license` | String | License name only — must match an existing `License.name` (case-insensitive) |
 | `version` | Object | `{number, releaseDate, description, versionPid}` |
 | `programmingLanguage` | Array of strings | |
-| `softwareFunctionality` | Array of strings (`"Parent: Child"`) | |
+| `softwareFunctionality` | Array of strings (`"Parent: Child"`) | **Always also include the bare parent top-level category as its own array entry** (e.g. `"Data Processing and Analysis"` alongside `"Data Processing and Analysis: Data Access and Retrieval"`). Selecting a subcategory does NOT auto-add its parent. See the `software-functionality` skill. |
 | `relatedRegion` | Array of strings | |
 | `keywords` | Array of strings | |
 | `dataSources` | Array of strings | |
