@@ -1,7 +1,7 @@
 # HSSI Metadata Extraction Results
 
 **Repository:** https://github.com/sunpy/sunpy
-**Extraction Date:** 2026-02-18
+**Extraction Date:** 2026-06-10
 
 ---
 
@@ -47,6 +47,8 @@
 - Source: Solar Environment is the primary focus. Interplanetary Space supported via heliospheric coordinate frames (HeliocentricEarthEcliptic, HeliocentricInertial) and solar wind data. Earth Magnetosphere supported via magnetospheric coordinate frames (GeocentricSolarMagnetospheric, GeocentricSolarEcliptic, Geomagnetic, SolarMagnetic).
 
 ### 6. Authors (MANDATORY)
+- **SunPy Community** | Author Identifier: https://github.com/sunpy/sunpy/blob/main/CITATION.cff
+
 1. **Stuart J. Mumford** | ORCID: https://orcid.org/0000-0003-4217-4642 | Aperio Software Ltd.
 2. **Nabil Freij** | ORCID: https://orcid.org/0000-0002-6253-082X | SETI Institute & Lockheed Martin Solar and Astrophysics Laboratory
 3. **David Stansby** | ORCID: https://orcid.org/0000-0002-1365-1908 | University College London
@@ -308,7 +310,7 @@
 259. **yasintoda**
 260. **Raphael Attie**
 261. **Sophie A. Murray** | ORCID: https://orcid.org/0000-0002-9378-5315
-- Source: .zenodo.json (authoritative, curated author list with 261 contributors)
+- Source: SunPy Community is the recommended group attribution and links to CITATION.cff; the 261 individual contributors are from the authoritative, curated .zenodo.json roster for v7.1.2. The full HSSI author union contains 262 entries with SunPy Community first.
 
 ### 7. Software Name (MANDATORY)
 - **Name:** SunPy
@@ -333,11 +335,11 @@
 - Source: DataCite API (publisher of DOI)
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** v7.1.0
-- **Version Date:** 2025-12-08
-- **Version Description:** Breaking changes include increased minimum dependency versions (Python >= 3.12). Removals of long-deprecated APIs. New features include SOLARNETClient for querying solarnet API data, interactive Fido results in Jupyter notebooks, heliocentric angle helper function, improved error handling in Fido search, ANA support on Windows, and Python 3.14 support.
-- **Version PID:** https://doi.org/10.5281/zenodo.17857260
-- Source: Git tags, CHANGELOG.rst, Zenodo API
+- **Version Number:** v7.1.2
+- **Version Date:** 2026-04-19
+- **Version Description:** SunPy 7.1.2 fixes a bug where SIP distortion information in a Map WCS was ignored. Since 7.1.0, the patch releases also corrected local file URI handling on Windows and improved SPICE time-conversion accuracy.
+- **Version PID:** Not found for v7.1.2
+- Source: Git tag v7.1.2, CHANGELOG.rst, and PyPI release metadata; no version-specific Zenodo DOI was available for v7.1.2
 
 ### 13. Programming Language (RECOMMENDED)
 - Python 3.x
@@ -421,7 +423,7 @@
 
 ### 23. Development Status (RECOMMENDED)
 - **Status:** Active
-- Source: README.rst repostatus badge ("Project Status: Active"), PyHC quality ratings all "Good", recent commits and releases (v7.1.0 released 2025-12-08)
+- Source: README.rst repostatus badge ("Project Status: Active"), PyHC quality ratings all "Good", recent commits and releases (v7.1.2 released 2026-04-19)
 
 ### 24. Documentation (RECOMMENDED)
 - **URL:** https://docs.sunpy.org
