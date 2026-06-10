@@ -2,7 +2,7 @@
 
 **Repository:** https://github.com/spedas/pyspedas
 **Extraction Date:** 2026-04-24
-**HSSI Sync:** 2026-06-10 — reconciled with the final local HSSI record after the approved enrichment and targeted Software Functionality correction (software UUID `82f57fc4-357f-49d3-af4b-e8bfb0a35210`). Field values below reflect HSSI; unsupported observatory candidates are retained separately as a vocabulary recommendation.
+**HSSI Sync:** 2026-06-10 — reconciled with the final local HSSI record after the approved enrichment and targeted Software Functionality correction (software UUID `82f57fc4-357f-49d3-af4b-e8bfb0a35210`). Field values below reflect HSSI; unsupported observatory candidates are retained separately as a vocabulary recommendation. Related Software was subsequently trimmed and Interoperable Software reduced to PyTplot only (see Fields 29–30).
 
 ---
 
@@ -309,30 +309,16 @@ Not found — PySPEDAS accesses many heliophysics datasets at runtime but does n
 
 ### 29. Related Software (OPTIONAL)
 - https://github.com/hapi-server/client-python — hapiclient (HAPI server data retrieval)
-- https://github.com/MAVENSDC/cdflib — cdflib (CDF file I/O dependency)
 - https://github.com/spedas/bleeding_edge — IDL SPEDAS (parent project, IDL-based predecessor)
 - https://github.com/spedas/mms-examples — MMS PySPEDAS examples
 - https://github.com/spedas/pyspedas_examples — pyspedas_examples (companion examples and Jupyter notebooks)
 - https://github.com/spedas/themis-examples — THEMIS PySPEDAS examples
-- https://github.com/tsssss/geopack — geopack (Tsyganenko/IGRF magnetic field model implementation)
-- https://github.com/spacepy/spacepy — SpacePy (CDF/coordinates/quaternion dependency)
 - https://doi.org/10.5281/zenodo.14919975 — supplementary software dataset (related via Zenodo `isSupplementedBy`)
-- Source: pyproject.toml dependencies, README.md "Additional Information" links, Zenodo related identifiers.
+- Source: pyproject.toml dependencies, README.md "Additional Information" links, Zenodo related identifiers. cdflib, geopack, and SpacePy were removed as routine dependencies rather than distinguishing related software.
 
 ### 30. Interoperable Software (OPTIONAL)
-- https://github.com/astropy/astropy — Astropy (core dependency)
-- https://github.com/hapi-server/client-python — hapiclient
-- https://github.com/matplotlib/matplotlib — matplotlib
-- https://github.com/MAVENSDC/cdflib — cdflib
-- https://github.com/numpy/numpy — NumPy
-- https://github.com/pandas-dev/pandas — pandas
-- https://github.com/PlasmaPy/PlasmaPy — PlasmaPy (used in PySPEDAS analysis examples)
-- https://github.com/pydata/xarray — xarray (tplot variables backed by xarray DataArrays)
-- https://github.com/scipy/scipy — SciPy
-- https://github.com/spedas/bleeding_edge — IDL SPEDAS (compatible coordinate frames, file conventions, save-file restore)
-- https://github.com/tsssss/geopack — geopack
-- https://github.com/spacepy/spacepy — SpacePy
-- Source: pyproject.toml `dependencies`, README "Examples" section (PlasmaPy notebook, SpacePy quaternion notebook), `convert_tplotxarray_to_pandas_dataframe` interoperability function.
+- https://github.com/MAVENSDC/PyTplot — PyTplot (the time-series/plotting framework PySPEDAS is built around and exchanges tplot variables with)
+- Source: PyTplot is the one genuinely interoperable companion. The former entries (Astropy, hapiclient, matplotlib, cdflib, NumPy, pandas, PlasmaPy, xarray, SciPy, IDL SPEDAS, geopack, SpacePy) were removed as generic dependencies or loosely-related projects rather than true interoperability partners.
 
 ### 31. Related Instruments (OPTIONAL)
 No related instruments are present in the current HSSI record. The repository supports many mission-specific instruments, but none of the 156 extracted instrument labels matched HSSI's current 27-entry instrument vocabulary exactly. They were intentionally omitted to avoid creating a large set of unnormalized global vocabulary rows.

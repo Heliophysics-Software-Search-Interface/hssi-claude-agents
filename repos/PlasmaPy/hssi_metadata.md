@@ -2,7 +2,7 @@
 
 **Repository:** https://github.com/PlasmaPy/PlasmaPy
 **Extraction Date:** 2026-04-24
-**HSSI Sync:** 2026-06-10 — reconciled with the final local HSSI record after a clean metadata replay and author-union update (software UUID `4507d98e-44d1-40ea-8733-8047738b9a7a`). Field values below reflect HSSI.
+**HSSI Sync:** 2026-06-10 — reconciled with the final local HSSI record after a clean metadata replay and author-union update (software UUID `4507d98e-44d1-40ea-8733-8047738b9a7a`). Field values below reflect HSSI. Related Software was subsequently trimmed to non-generic libraries and Interoperable Software was cleared (see Fields 29–30).
 
 ---
 
@@ -674,19 +674,13 @@ Not found
 - https://github.com/astropy/astropy (Astropy — core dependency for units/constants)
 - https://github.com/h5py/h5py (h5py — HDF5 I/O)
 - https://github.com/lmfit/lmfit-py (lmfit — Thomson scattering fitting)
-- https://github.com/matplotlib/matplotlib (Matplotlib — visualization)
-- https://github.com/numpy/numpy (NumPy — core dependency)
-- https://github.com/pandas-dev/pandas (pandas — tabular data)
-- https://github.com/pydata/xarray (xarray — labeled arrays for grids)
-- https://github.com/scipy/scipy (SciPy — core dependency)
 
-*Source: pyproject.toml dependencies. PlasmaPy is built on the scientific Python ecosystem.*
+*Source: pyproject.toml dependencies. Matplotlib, NumPy, pandas, xarray, and SciPy were intentionally removed — they are ubiquitous, generic Python libraries, not distinguishing related software worth listing.*
 
 ### 30. Interoperable Software (OPTIONAL)
-- https://github.com/spacepy/spacepy (SpacePy — fellow PyHC core package)
-- https://github.com/sunpy/sunpy (SunPy — fellow PyHC core package)
+Not found
 
-*Source: PlasmaPy is part of the heliopythoniverse/PyHC ecosystem, designed to install alongside other PyHC core packages without conflict.*
+*SpacePy and SunPy were removed: although they are fellow PyHC core packages installable alongside PlasmaPy, there is no explicit interoperability layer between them and PlasmaPy, so listing them as "interoperable software" overstated the relationship.*
 
 ### 31. Related Instruments (OPTIONAL)
 Not found

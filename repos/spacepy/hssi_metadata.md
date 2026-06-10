@@ -2,7 +2,7 @@
 
 **Repository:** https://github.com/spacepy/spacepy
 **Extraction Date:** 2026-04-24
-**HSSI Sync:** 2026-06-10 — reconciled with the final local HSSI record after the approved enrichment and targeted Related Software updates (software UUID `7bd65217-fdbe-4945-a657-496a494fff48`). Field values below reflect HSSI.
+**HSSI Sync:** 2026-06-10 — reconciled with the final local HSSI record after the approved enrichment and targeted Related Software updates (software UUID `7bd65217-fdbe-4945-a657-496a494fff48`). Field values below reflect HSSI. Interoperable Software was subsequently cleared (see Field 30).
 
 ---
 
@@ -323,12 +323,9 @@ Not found
 - https://github.com/sunpy/sunpy (sister heliophysics Python package; PyHC core)
 
 ### 30. Interoperable Software (OPTIONAL)
-- https://matplotlib.org/ (Matplotlib - required runtime dependency for visualization)
-- https://pandas.pydata.org/ (pandas - datamodel provides pandas integration for SpaceData/dmarray)
-- https://scipy.org/ (SciPy - required runtime dependency)
-- https://www.astropy.org/ (Astropy - optional interoperability in `spacepy.time` and `spacepy.coordinates` via SkyCoord conversion)
-- https://www.h5py.org/ (h5py - required for HDF5 I/O)
-- https://www.numpy.org/ (NumPy - required runtime dependency)
+Not found
+
+(All former entries — Matplotlib, pandas, SciPy, Astropy, h5py, NumPy — were removed: they are generic runtime dependencies, not interoperable software with an explicit interoperability layer.)
 
 ### 31. Related Instruments (OPTIONAL)
 Not found
