@@ -2,7 +2,7 @@
 
 **Repository:** https://github.com/spedas/pyspedas
 **Extraction Date:** 2026-04-24
-**HSSI Sync:** 2026-06-10 — reconciled with the final local HSSI record after the approved enrichment update (software UUID `82f57fc4-357f-49d3-af4b-e8bfb0a35210`). Field values below reflect HSSI; unsupported observatory candidates are retained separately as a vocabulary recommendation.
+**HSSI Sync:** 2026-06-10 — reconciled with the final local HSSI record after the approved enrichment and targeted Software Functionality correction (software UUID `82f57fc4-357f-49d3-af4b-e8bfb0a35210`). Field values below reflect HSSI; unsupported observatory candidates are retained separately as a vocabulary recommendation.
 
 ---
 
@@ -60,8 +60,6 @@
 - Models and Simulations: Empirical
 - Models and Simulations: Field-line Tracing
 - Models and Simulations: Physics-Based
-- Servers and Environments
-- Servers and Environments: Data servers processing and handling
 - Source: Determined from source code analysis. Coordinate transforms cover GSE/GSM/SM/GEO/MAG/GEI/J2000 (cotrans_tools/cotrans_lib.py), MLT (sm2mlt), and mission-specific frames (mms_qcotrans for BCS/DBCS/DMPA/SMPA/DSL/SSL/ECI; mms_cotrans_lmn). Data Processing covers wavelet/wavpol (analysis/wavelet*.py, twavpol.py), magnetic null finding (find_magnetic_nulls.py), linear gradient estimation (lingradest.py), curlometer (mms.curlometer), particle moments (particles/moments/), pitch angle distributions (mms_feeps_pad, mms_eis_pad), 2D slices of distributions (spd_slice2d/), energy spectra (mms_part_getspec, energy spectrum routines), field-line tracing (geopack/ttrace2endpoint, trace_to_event), spectrograms (pwr_spec, dpwrspc), time series (tplot_math/), filtering (time_domain_filter), data reduction (avg_data, reduce_tres, rebin), calibration (elfin epd cal, mms scm cal), file format conversion (cdf_to_tplot, netcdf_to_tplot, tplot_ascii), data access (CDAWeb, HAPI, SPDF, ISTP, mission-specific load routines), interpolation (interpol, tinterpol, tinterp). Visualization covers line plots, spectrograms, hodograms, 2D/3D plots (tplotxy, tplotxy3), orbit plots (mms_orbit_plot), formation plots (mms_tetrahedron_qf), 2D slice plots (slice2d_plot, slice1d_plot). Models include Tsyganenko T89/T96/T01/TS04 (geopack/), IGRF empirical magnetic field model, neutral sheet models, magnetopause/bow shock models (mpause_2, mpause_t96, bshock_2), L-shell calculation.
 
 ### 5. Related Region (MANDATORY)
