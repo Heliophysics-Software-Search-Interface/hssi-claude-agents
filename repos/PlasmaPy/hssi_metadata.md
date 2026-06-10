@@ -2,7 +2,7 @@
 
 **Repository:** https://github.com/PlasmaPy/PlasmaPy
 **Extraction Date:** 2026-04-24
-**HSSI Sync:** 2026-06-09 — reconciled with the live HSSI record after a local metadata update (software UUID `4507d98e-44d1-40ea-8733-8047738b9a7a`). Field values below reflect HSSI. **Authors are pending a union reconciliation** (HSSI's 60 + the maintainers below + the full CITATION.cff roster) — see the Authors note.
+**HSSI Sync:** 2026-06-10 — reconciled with the final local HSSI record after a clean metadata replay and author-union update (software UUID `4507d98e-44d1-40ea-8733-8047738b9a7a`). Field values below reflect HSSI.
 
 ---
 
@@ -22,19 +22,19 @@ https://github.com/PlasmaPy/PlasmaPy
 
 ### 4. Software Functionality (MANDATORY)
 - Data Processing and Analysis
-- Data Processing and Analysis:Analysis
-- Data Processing and Analysis:Energy Spectra
-- Data Processing and Analysis:Magnetic Null Finding
-- Data Processing and Analysis:Time Series Analysis
+- Data Processing and Analysis: Analysis
+- Data Processing and Analysis: Energy Spectra
+- Data Processing and Analysis: Magnetic Null Finding
+- Data Processing and Analysis: Time Series Analysis
 - Data Visualization
-- Data Visualization:Line Plots
-- Data Visualization:2D Graphics
+- Data Visualization: Line Plots
+- Data Visualization: 2D Graphics
 - Models and Simulations
-- Models and Simulations:First Principles
-- Models and Simulations:Forward-Fitting
-- Models and Simulations:MHD
-- Models and Simulations:Physics-Based
-- Models and Simulations:Theory
+- Models and Simulations: First Principles
+- Models and Simulations: Forward-Fitting
+- Models and Simulations: MHD
+- Models and Simulations: Physics-Based
+- Models and Simulations: Theory
 
 *Source: Manual examination of `src/plasmapy/` subpackages.*
 - `plasmapy.particles` — particle/atomic data, ionization states (Analysis).
@@ -56,24 +56,30 @@ https://github.com/PlasmaPy/PlasmaPy
 
 ### 6. Authors (MANDATORY)
 
-The PlasmaPy CITATION.cff lists 157 contributing authors. The recommended group attribution is "PlasmaPy Community"; primary maintainers and lead developers are listed individually below. The complete list of contributors with ORCIDs and affiliations is in `CITATION.cff` in the repository.
+The PlasmaPy `CITATION.cff` lists 157 contributing authors. The recommended group attribution is **PlasmaPy Community**, which is listed first and links directly to the authoritative contributor roster.
 
-> **Authors — pending union reconciliation (2026-06-09):** HSSI currently has 60 authors (21 with ORCIDs); this file lists the PlasmaPy Community + the maintainers below. Authors were left untouched during the local update. They will be reconciled as the **union** of HSSI's 60, the maintainers below, and the full `CITATION.cff` roster — applying name updates (e.g. Dominik Stańczak-Marikin, Erik T. Everson, Peter V. Heuer) so no contributor is lost — then pushed to HSSI and reflected here.
+> **Recommendation for HSSI maintainers:** The author list may optionally be simplified to the single **PlasmaPy Community** group entry, using https://github.com/PlasmaPy/PlasmaPy/blob/main/CITATION.cff as its author identifier. The full individual roster is retained below because it mirrors the current HSSI record.
+
+> **Folded contributors:** Twelve `CITATION.cff` entries without a usable personal name are represented by **PlasmaPy Community** rather than separate Person records: the GitHub handles `BH4`, `Bzero`, `CBrown345`, `cicciope`, `flaixman`, `itsraashi`, `lgoenner`, `nrb1234`, `Physics-is-awesome`, `seanjunheng2`, and `WineDarkMoon`, plus `Oscar` (alias `0scvr`).
+
+**Full HSSI author list (148 entries): PlasmaPy Community + 145 named `CITATION.cff` contributors + 2 contributors retained from the original HSSI record (Anthony Vo and Frank Silva).**
 
 - **Author:** PlasmaPy Community
-  - *Affiliation:* (collective; see CITATION.cff)
+  - *Author Identifier:* https://github.com/PlasmaPy/PlasmaPy/blob/main/CITATION.cff
 
 - **Author:** Nicholas A. Murphy
   - *Author Identifier:* https://orcid.org/0000-0001-6628-8033
-  - *Affiliation:* Center for Astrophysics | Harvard & Smithsonian
+  - *Affiliation:* Center for Astrophysics, Harvard & Smithsonian
+  - *Affiliation:* Smithsonian Astrophysical Observatory
+  - *Affiliation:* Smithsonian Institution
 
 - **Author:** Erik T. Everson
   - *Author Identifier:* https://orcid.org/0000-0001-6079-8307
-  - *Affiliation:* University of California, Los Angeles (UCLA)
+  - *Affiliation:* University of California, Los Angeles
 
 - **Author:** Dominik Stańczak-Marikin
   - *Author Identifier:* https://orcid.org/0000-0001-6291-8843
-  - *Affiliation:* (independent contributor)
+  - *Affiliation:* University of Warsaw
 
 - **Author:** Peter V. Heuer
   - *Author Identifier:* https://orcid.org/0000-0001-5050-6606
@@ -81,10 +87,9 @@ The PlasmaPy CITATION.cff lists 157 contributing authors. The recommended group 
 
 - **Author:** Pawel M. Kozlowski
   - *Author Identifier:* https://orcid.org/0000-0001-6849-3612
-  - *Affiliation:* Los Alamos National Laboratory
+  - *Affiliation:* West Virginia University
 
 - **Author:** Elliot Johnson
-  - *Author Identifier:* https://orcid.org/0000-0003-2892-6924
   - *Affiliation:* University of Delaware
 
 - **Author:** Ritiek Malhotra
@@ -96,9 +101,410 @@ The PlasmaPy CITATION.cff lists 157 contributing authors. The recommended group 
 
 - **Author:** Steve Vincena
   - *Author Identifier:* https://orcid.org/0000-0002-6468-5710
-  - *Affiliation:* University of California, Los Angeles (UCLA)
+  - *Affiliation:* University of California, Los Angeles
 
-*Source: CITATION.cff (top-listed maintainers/lead authors).*
+- **Author:** Mel Abler
+  - *Author Identifier:* https://orcid.org/0000-0003-2528-8752
+
+- **Author:** James Addison
+
+- **Author:** Paula Valentina Alarcon
+  - *Author Identifier:* https://orcid.org/0000-0002-7860-9567
+  - *Affiliation:* North Carolina State University
+
+- **Author:** Benjamin Antognetti
+  - *Author Identifier:* https://orcid.org/0000-0002-1444-9680
+  - *Affiliation:* University of Wisconsin–Madison
+
+- **Author:** Ataf Fazledin Ahamed
+  - *Affiliation:* OpenRefactory Inc.
+
+- **Author:** Christoper Arran
+  - *Author Identifier:* https://orcid.org/0000-0002-8644-8118
+  - *Affiliation:* University of York
+
+- **Author:** Haman Bagherianlemraski
+  - *Author Identifier:* https://orcid.org/0000-0001-7381-1996
+  - *Affiliation:* University of Massachusetts Amherst
+
+- **Author:** Jasper P. Beckers
+  - *Affiliation:* ASML (United States)
+
+- **Author:** Manas Satish Bedmutha
+
+- **Author:** Camilo Bedoya-Lopez
+
+- **Author:** Justin Bergeron
+
+- **Author:** Ludovico Bessi
+
+- **Author:** Riley Britten
+
+- **Author:** Shane Brown
+  - *Author Identifier:* https://orcid.org/0000-0003-3309-3939
+  - *Affiliation:* University of Delaware
+
+- **Author:** Khalil Bryant
+  - *Author Identifier:* https://orcid.org/0000-0002-2105-0280
+  - *Affiliation:* University of Michigan
+
+- **Author:** Sean Carroll
+
+- **Author:** Carlos Cartagena-Sanchez
+  - *Author Identifier:* https://orcid.org/0000-0002-0486-1292
+  - *Affiliation:* Beloit College
+
+- **Author:** Sarthak Choudhary
+
+- **Author:** Christian Clauss
+
+- **Author:** Sean Chambers
+
+- **Author:** Ankur Chattopadhyay
+
+- **Author:** Apoorv Choubey
+
+- **Author:** Sebastian Colom
+  - *Author Identifier:* https://orcid.org/0009-0006-0863-0180
+  - *Affiliation:* NASA Ames Research Center
+
+- **Author:** Chase Davies
+
+- **Author:** Jacob Deal
+
+- **Author:** Gregor Decristoforo
+  - *Author Identifier:* https://orcid.org/0000-0002-7616-0946
+  - *Affiliation:* UiT The Arctic University of Norway
+
+- **Author:** Diego A. Diaz Riega
+
+- **Author:** Fionnlagh Mackenzie Dover
+  - *Author Identifier:* https://orcid.org/0000-0002-1984-7303
+  - *Affiliation:* SP2RC, School of Mathematics and Statistics, University of Sheffield
+
+- **Author:** David Drozdov
+
+- **Author:** Tiger Du
+  - *Author Identifier:* https://orcid.org/0000-0002-8676-1710
+  - *Affiliation:* Vanderbilt University
+
+- **Author:** Leah Einhorn
+
+- **Author:** Tamar Ervin
+  - *Author Identifier:* https://orcid.org/0000-0002-8475-8606
+  - *Affiliation:* University of California, Berkeley
+
+- **Author:** Thomas Fan
+
+- **Author:** Samaiyah I. Farid
+  - *Author Identifier:* https://orcid.org/0000-0003-0223-7004
+  - *Affiliation:* Center for Astrophysics, Harvard & Smithsonian
+
+- **Author:** Emmanuel Ferdman
+  - *Author Identifier:* https://orcid.org/0009-0004-8953-0151
+
+- **Author:** Michael Fischer
+
+- **Author:** Bryan Foo
+  - *Author Identifier:* https://orcid.org/0000-0001-5308-6870
+  - *Affiliation:* Massachusetts Institute of Technology
+
+- **Author:** Heinz-Alexander Fütterer
+  - *Author Identifier:* https://orcid.org/0000-0003-4397-027X
+
+- **Author:** Rajagopalan Gangadharan
+
+- **Author:** Seth Gerow
+  - *Author Identifier:* https://orcid.org/0009-0008-3588-0497
+  - *Affiliation:* Embry-Riddle Aeronautical University
+
+- **Author:** Mahlet Getahun
+  - *Affiliation:* Marietta College
+
+- **Author:** Jessica Gonzalez
+  - *Affiliation:* California Institute of Technology
+
+- **Author:** Brian Goodall
+
+- **Author:** Shauna Gordon-McKeon
+  - *Author Identifier:* https://orcid.org/0000-0002-2373-8927
+
+- **Author:** Marco Gorelli
+
+- **Author:** Graham Goudeau
+
+- **Author:** Silvina Guidoni
+  - *Author Identifier:* https://orcid.org/0000-0003-1439-4218
+  - *Affiliation:* American University
+
+- **Author:** Julia Guimiot
+
+- **Author:** Colby C. Haggerty
+  - *Author Identifier:* https://orcid.org/0000-0002-2160-7288
+  - *Affiliation:* University of Chicago
+
+- **Author:** Raymon Skjørten Hansen
+
+- **Author:** Mohammed Haque
+  - *Affiliation:* Columbia University
+
+- **Author:** Julien Hillairet
+  - *Author Identifier:* https://orcid.org/0000-0002-1073-6383
+
+- **Author:** Chris Hoang
+
+- **Author:** Poh Zi How
+
+- **Author:** Yi-Min Huang
+  - *Author Identifier:* https://orcid.org/0000-0002-4237-2211
+  - *Affiliation:* Princeton University
+
+- **Author:** Nabil Humphrey
+  - *Author Identifier:* https://orcid.org/0000-0002-4227-2544
+
+- **Author:** Maria Isupova
+
+- **Author:** Alexis Jeandet
+  - *Author Identifier:* https://orcid.org/0000-0003-2892-6924
+  - *Affiliation:* Laboratory of Plasma Physics (LPP/CNRS)
+
+- **Author:** Evan Jones
+  - *Author Identifier:* https://orcid.org/0009-0004-6699-4869
+
+- **Author:** Marcin Kastek
+  - *Author Identifier:* https://orcid.org/0009-0002-5918-4652
+  - *Affiliation:* Institute of Plasma Physics and Laser Microfusion
+
+- **Author:** James Kent
+
+- **Author:** Dusan Klima
+  - *Author Identifier:* https://orcid.org/0009-0008-5134-6171
+
+- **Author:** Alf Köhn-Seemann
+  - *Author Identifier:* https://orcid.org/0000-0002-1192-2057
+  - *Affiliation:* University of Stuttgart
+
+- **Author:** Siddharth Kulshrestha
+
+- **Author:** Sundaran Kumar
+
+- **Author:** Piotr Kuszaj
+
+- **Author:** Samuel J. Langendorf
+  - *Author Identifier:* https://orcid.org/0000-0002-7757-5879
+  - *Affiliation:* Los Alamos National Laboratory
+
+- **Author:** Anna Lanteri
+
+- **Author:** Terrance Takho Lee
+
+- **Author:** Andrew J. Leonard
+  - *Author Identifier:* https://orcid.org/0000-0001-5270-7487
+  - *Affiliation:* Aperio Software Ltd.
+
+- **Author:** Nicolas Lequette
+  - *Affiliation:* Laboratoire de Physique des Plasmas
+
+- **Author:** Pey Lian Lim
+  - *Author Identifier:* https://orcid.org/0000-0003-0079-4114
+  - *Affiliation:* Space Telescope Science Institute
+
+- **Author:** Aditya Magarde
+
+- **Author:** Joao Victor Martinelli
+
+- **Author:** Muhammad Masood
+  - *Affiliation:* University of Edinburgh
+
+- **Author:** Isaias McHardy
+  - *Author Identifier:* https://orcid.org/0000-0001-5394-9445
+
+- **Author:** Dhawal Modi
+
+- **Author:** Kevin Montes
+  - *Author Identifier:* https://orcid.org/0000-0002-0762-3708
+  - *Affiliation:* Massachusetts Institute of Technology
+
+- **Author:** Stuart J. Mumford
+  - *Author Identifier:* https://orcid.org/0000-0003-4217-4642
+  - *Affiliation:* Aperio Software Ltd.
+  - *Affiliation:* https://orcid.org/0000-0001-5270-7487
+  - *Affiliation:* University of Sheffield
+
+- **Author:** Joshua Munn
+
+- **Author:** Leo Murphy
+  - *Affiliation:* College of William & Mary
+
+- **Author:** Bao Nguyen
+  - *Author Identifier:* https://orcid.org/0000-0002-1753-4223
+  - *Affiliation:* Imperial College London
+
+- **Author:** Suzanne Nie
+
+- **Author:** Carlos Ortiz
+  - *Affiliation:* University of Wisconsin–Madison
+
+- **Author:** Shivam Panda
+
+- **Author:** Mahima Pannala
+
+- **Author:** Tulasi Parashar
+  - *Author Identifier:* https://orcid.org/0000-0003-0602-8381
+  - *Affiliation:* University of Delaware
+
+- **Author:** Neil Patel
+
+- **Author:** Francisco Silva Pavon
+
+- **Author:** Roberto Díaz Pérez
+
+- **Author:** Preston Pitzer
+  - *Author Identifier:* https://orcid.org/0009-0007-0655-1347
+  - *Affiliation:* Virginia Tech
+
+- **Author:** Jakub Polak
+
+- **Author:** Ramiz Qudsi
+  - *Author Identifier:* https://orcid.org/0000-0001-8358-0482
+  - *Affiliation:* Boston University
+
+- **Author:** Raajit Raj
+
+- **Author:** Vishwas Rajashekar
+  - *Author Identifier:* https://orcid.org/0000-0002-4914-6612
+
+- **Author:** Afzal Rao
+
+- **Author:** Jeffrey Reep
+  - *Author Identifier:* https://orcid.org/0000-0003-4739-1152
+  - *Affiliation:* University of Hawaii at Manoa
+
+- **Author:** Steve Richardson
+  - *Author Identifier:* https://orcid.org/0000-0002-3056-6334
+  - *Affiliation:* U.S. Naval Research Laboratory
+
+- **Author:** Jayden Roberts
+  - *Author Identifier:* https://orcid.org/0009-0009-9490-5284
+
+- **Author:** Shanshan Rodriguez
+  - *Author Identifier:* https://orcid.org/0000-0003-2944-0424
+  - *Affiliation:* Grinnell College
+
+- **Author:** Reynaldo Rojas Zelaya
+
+- **Author:** Armando Salcido
+
+- **Author:** Andrew Sandeman
+
+- **Author:** Antonia Savcheva
+  - *Author Identifier:* https://orcid.org/0000-0002-5598-046X
+  - *Affiliation:* Center for Astrophysics, Harvard & Smithsonian
+
+- **Author:** Cora Schneck
+
+- **Author:** Chengcai Shen
+  - *Author Identifier:* https://orcid.org/0000-0002-9258-4490
+  - *Affiliation:* Center for Astrophysics, Harvard & Smithsonian
+
+- **Author:** Andrew Sheng
+
+- **Author:** Dawa Nurbu Sherpa
+
+- **Author:** Luciano Silvestri
+  - *Author Identifier:* https://orcid.org/0000-0003-3530-7910
+  - *Affiliation:* Michigan State University
+
+- **Author:** Trestan F. Simon
+  - *Author Identifier:* https://orcid.org/0009-0000-3029-8619
+
+- **Author:** Angad Singh
+
+- **Author:** Ankit Singh
+
+- **Author:** Brigitta Sipőcz
+  - *Author Identifier:* https://orcid.org/0000-0002-3713-6337
+  - *Affiliation:* DIRAC Institute, University of Washington
+  - *Affiliation:* Infrared Processing and Analysis Center
+
+- **Author:** Cody Skinner
+  - *Affiliation:* Phoenix Security Labs
+
+- **Author:** Tomasz Adam Skrzypczak
+
+- **Author:** Nikita Smirnov
+
+- **Author:** Joseph Smith
+  - *Author Identifier:* https://orcid.org/0000-0002-5978-6840
+  - *Affiliation:* Marietta College
+
+- **Author:** Stuart Sobeske
+  - *Affiliation:* University of Michigan
+
+- **Author:** Matteo Spedicato
+
+- **Author:** David Stansby
+  - *Author Identifier:* https://orcid.org/0000-0002-1365-1908
+  - *Affiliation:* Advanced Research Computing Centre, University College London, UK
+  - *Affiliation:* Department of Mechanical Engineering, University College London
+  - *Affiliation:* Imperial College London
+  - *Affiliation:* University College London
+
+- **Author:** Tomás Stinson
+
+- **Author:** Shelley Sugiharto
+  - *Author Identifier:* https://orcid.org/0009-0003-3159-0541
+  - *Affiliation:* Texas A&M University
+
+- **Author:** Michaela Švancarová
+
+- **Author:** Antoine Tavant
+  - *Author Identifier:* https://orcid.org/0000-0003-0010-8073
+  - *Affiliation:* Laboratoire de Physique des Plasmas, Ecole Polytechnique
+
+- **Author:** Veronica Tranquilino
+  - *Affiliation:* University of Michigan
+
+- **Author:** Thomas Ulrich
+
+- **Author:** Mychal Valle
+  - *Author Identifier:* https://orcid.org/0000-0003-4230-6916
+  - *Affiliation:* University of California, Los Angeles
+
+- **Author:** Thomas Varnish
+  - *Author Identifier:* https://orcid.org/0000-0002-8078-214X
+
+- **Author:** Tien Vo
+  - *Author Identifier:* https://orcid.org/0000-0002-8335-1441
+  - *Affiliation:* Laboratory for Atmospheric and Space Physics
+
+- **Author:** Tingfeng Wu
+  - *Author Identifier:* https://orcid.org/0000-0001-8745-204X
+
+- **Author:** Sixue Xu
+  - *Author Identifier:* https://orcid.org/0000-0001-7959-8495
+  - *Affiliation:* University of California, Los Angeles
+
+- **Author:** Chun Hei Yip
+
+- **Author:** Carol Zhang
+
+- **Author:** Clément Robert
+  - *Author Identifier:* https://orcid.org/0000-0001-8629-7068
+
+- **Author:** Shawn Polson
+  - *Author Identifier:* https://orcid.org/0000-0003-0619-5745
+  - *Affiliation:* Laboratory for Atmospheric and Space Physics
+
+- **Author:** Yaocheng Chen
+  - *Author Identifier:* https://orcid.org/0000-0002-8967-4911
+  - *Affiliation:* Korea Astronomy and Space Science Institute
+
+- **Author:** Anthony Vo
+
+- **Author:** Frank Silva
+
+*Source: final local HSSI record after union reconciliation, cross-checked against `CITATION.cff`; HSSI-only contributors Anthony Vo and Frank Silva were retained.*
 
 ### 7. Software Name (MANDATORY)
 PlasmaPy
@@ -118,7 +524,7 @@ PlasmaPy is an open source, community-developed Python package for plasma resear
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
-- **Publisher Identifier:** https://ror.org/01ggx4157
+- **Publisher Identifier:** https://zenodo.org
 
 *Source: DataCite API for the concept DOI.*
 
@@ -142,7 +548,7 @@ Not found
 
 ### 15. License (RECOMMENDED)
 - **License:** BSD 3-Clause "New" or "Revised" License
-- **License URI:** https://opensource.org/licenses/BSD-3-Clause
+- **License URI:** https://spdx.org/licenses/BSD-3-Clause.html
 
 *Source: LICENSE.md and pyproject.toml.*
 
@@ -151,29 +557,30 @@ Not found
 ## Section 2: Additional Data
 
 ### 16. Keywords (OPTIONAL)
-- plasma
-- plasma physics
-- plasma science
-- heliophysics
-- solar physics
-- space plasmas
-- space physics
-- physics
-- astronomy
-- astrophysics
-- atomic physics
-- particles
-- fusion
-- high-energy-density physics
-- science
-- python
-- open source software
-- Thomson scattering
-- proton radiography
-- plasma diagnostics
-- Langmuir probes
-- plasma parameters
-- plasma astrophysics
+- Astronomy
+- Astrophysics
+- Atomic Physics
+- Fusion
+- Heliophysics
+- High-Energy-Density Physics
+- Langmuir Probes
+- Open Source
+- Open Source Software
+- Particles
+- Physics
+- Plasma
+- Plasma Astrophysics
+- Plasma Diagnostics
+- Plasma Parameters
+- Plasma Physics
+- Plasma Science
+- Proton Radiography
+- Python
+- Science
+- Solar Physics
+- Space Physics
+- Space Plasmas
+- Thomson Scattering
 
 *Source: pyproject.toml keywords, DataCite subjects, GitHub repo topics (via SoMEF), and PyHC entry.*
 
@@ -200,8 +607,8 @@ Not found
 *Source: `pyproject.toml` classifier "Operating System :: OS Independent" and `.github/workflows/installability.yml` test matrix `[windows-latest, macos-latest, ubuntu-latest]`.*
 
 ### 21. CPU Architecture (RECOMMENDED)
-- x86-64
 - Apple Silicon arm64
+- x86-64
 
 *Source: GitHub macOS-latest runners are Apple Silicon arm64 since 2024. Default GitHub-hosted Linux/Windows runners are x86-64. Pure Python package is also broadly portable.*
 
@@ -216,22 +623,22 @@ Active
 *Source: Frequent commits, CI badges, regular releases (most recent: 2026.2.0 on 2026-02-20). Listed in PyHC core packages.*
 
 ### 24. Documentation (RECOMMENDED)
-https://docs.plasmapy.org
+https://docs.plasmapy.org/
 
 *Source: README.md, pyproject.toml, .readthedocs.yml, PyHC registry entry.*
 
 ### 25. Funder (OPTIONAL)
+- **Organization:** National Aeronautics and Space Administration
+  - *Funder Identifier:* https://ror.org/027ka1x80
+
 - **Organization:** National Science Foundation
   - *Funder Identifier:* https://ror.org/021nxhr62
 
-- **Organization:** United States Department of Energy
-  - *Funder Identifier:* https://ror.org/01bj3aw27
-
-- **Organization:** National Aeronautics and Space Administration (NASA)
-  - *Funder Identifier:* https://ror.org/027ka1x80
-
 - **Organization:** Smithsonian Institution
   - *Funder Identifier:* https://ror.org/01pp8nd67
+
+- **Organization:** United States Department of Energy
+  - *Funder Identifier:* https://ror.org/01bj3aw27
 
 *Source: README.md acknowledgments section and DataCite fundingReferences.*
 
@@ -265,19 +672,19 @@ Not found
 
 ### 29. Related Software (OPTIONAL)
 - https://github.com/astropy/astropy (Astropy — core dependency for units/constants)
-- https://github.com/numpy/numpy (NumPy — core dependency)
-- https://github.com/scipy/scipy (SciPy — core dependency)
 - https://github.com/h5py/h5py (h5py — HDF5 I/O)
-- https://github.com/matplotlib/matplotlib (Matplotlib — visualization)
 - https://github.com/lmfit/lmfit-py (lmfit — Thomson scattering fitting)
+- https://github.com/matplotlib/matplotlib (Matplotlib — visualization)
+- https://github.com/numpy/numpy (NumPy — core dependency)
 - https://github.com/pandas-dev/pandas (pandas — tabular data)
 - https://github.com/pydata/xarray (xarray — labeled arrays for grids)
+- https://github.com/scipy/scipy (SciPy — core dependency)
 
 *Source: pyproject.toml dependencies. PlasmaPy is built on the scientific Python ecosystem.*
 
 ### 30. Interoperable Software (OPTIONAL)
-- https://github.com/sunpy/sunpy (SunPy — fellow PyHC core package)
 - https://github.com/spacepy/spacepy (SpacePy — fellow PyHC core package)
+- https://github.com/sunpy/sunpy (SunPy — fellow PyHC core package)
 
 *Source: PlasmaPy is part of the heliopythoniverse/PyHC ecosystem, designed to install alongside other PyHC core packages without conflict.*
 
