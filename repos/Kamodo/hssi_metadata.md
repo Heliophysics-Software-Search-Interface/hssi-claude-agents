@@ -103,10 +103,15 @@ Classified per the software-functionality skill; every subcategory also lists it
 - **Note:** Kept the HSSI record's full name (matches the README title). The PyHC registry / PyPI use the short forms "Kamodo" / `kamodo_ccmc`. Source: HSSI record, README.
 
 ### 8. Description (MANDATORY)
-- **Value (HSSI record — kept):** Kamodo is an official NASA open-source python package built upon the functionalization of datasets. Once a dataset is functionalized in Kamodo, several important capabilities are then available to the user, including data analysis via function composition, automatic unit conversions, and publication quality graphics all using intuitive and simplistic syntax. By applying these capabilities to heliophysics model outputs, we aim to:
--	Drastically simplify the currently complex data utilization process for model outputs,
--	Provide interactive access to functionalized model outputs for users ranging in programming skill from beginners – via code-free interfaces and video tutorials – to advanced users – via thorough documentation, Jupyter notebook examples and sample workflows,
--	Layer multiple functionalities on top of the functionalized model outputs, all with model-agnostic and uniform syntax, including but not limited to:
+- **Source:** HSSI record (maintainers' README vision statement), reformatted into valid Markdown — dash-space bullets and a blank line before the list — so it renders as a nested bulleted list. The originally-stored text used tab-indented pseudo-bullets that the site's Markdown renderer (`django-markdownify`) collapsed into a run-on paragraph.
+
+**Value (as stored in HSSI):**
+
+Kamodo is an official NASA open-source python package built upon the functionalization of datasets. Once a dataset is functionalized in Kamodo, several important capabilities are then available to the user, including data analysis via function composition, automatic unit conversions, and publication quality graphics all using intuitive and simplistic syntax. By applying these capabilities to heliophysics model outputs, we aim to:
+
+- Drastically simplify the currently complex data utilization process for model outputs,
+- Provide interactive access to functionalized model outputs for users ranging in programming skill from beginners – via code-free interfaces and video tutorials – to advanced users – via thorough documentation, Jupyter notebook examples and sample workflows,
+- Layer multiple functionalities on top of the functionalized model outputs, all with model-agnostic and uniform syntax, including but not limited to:
     - Flythrough tools,
     - Vector field tracing (including magnetic field mapping),
     - Coordinate conversions,
@@ -115,12 +120,12 @@ Classified per the software-functionality skill; every subcategory also lists it
     - Satellite constellation mission planning tools,
     - Simulated imagery, and
     - A line of sight calculation tool,
--	Greatly reduce the programming skill currently required outside of Kamodo to perform model validation studies and model-data comparisons,
--	Enable model output utilization both on the cloud and on personal laptops in a variety of methods (e.g. through HAPI and interactive calls from the command line),
--	Streamline the CCMC user workflow by becoming interoperable with other CCMC services (e.g. CAMEL and the various scoreboards),
--	And become the next generation interface for CCMC users to interact with and analyze model outputs (e.g. through ROR and IR), 
+- Greatly reduce the programming skill currently required outside of Kamodo to perform model validation studies and model-data comparisons,
+- Enable model output utilization both on the cloud and on personal laptops in a variety of methods (e.g. through HAPI and interactive calls from the command line),
+- Streamline the CCMC user workflow by becoming interoperable with other CCMC services (e.g. CAMEL and the various scoreboards),
+- And become the next generation interface for CCMC users to interact with and analyze model outputs (e.g. through ROR and IR),
+
 ...all while keeping the developed software open-source and freely available. The Kamodo team also supports the heliophysics community by pursuing interoperability with commonly-used python packages, collaborating with community members to add model outputs and new functionalities, and remaining involved with community events (e.g. conferences, challenges, and research support). As the library of supported model outputs types expands and new model-agnostic tools are added, Kamodo will become a staple software package in the heliophysics community to transform current workflows into a more efficient and productive process. We are building the next generation of capability with Kamodo. Join us!
-- **Source:** HSSI record (maintainers' vision statement from the README).
 
 ### 9. Concise Description (OPTIONAL)
 - **Value:** A functional Python API from NASA's Community Coordinated Modeling Center for accessing, interpolating, unit-converting, and visualizing heliophysics/space-weather model outputs and data.
