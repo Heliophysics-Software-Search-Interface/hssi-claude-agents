@@ -2,6 +2,7 @@
 
 **Repository:** https://github.com/spacepy/spacepy
 **Extraction Date:** 2026-04-24
+**HSSI Sync:** 2026-06-10 — reconciled with the final local HSSI record after the approved enrichment update (software UUID `7bd65217-fdbe-4945-a657-496a494fff48`). Field values below reflect HSSI.
 
 ---
 
@@ -21,28 +22,28 @@ https://github.com/spacepy/spacepy
 
 ### 4. Software Functionality (MANDATORY)
 - Coordinate Transforms
-- Coordinate Transforms:Magnetospheric
+- Coordinate Transforms: Magnetospheric
 - Data Processing and Analysis
-- Data Processing and Analysis:Analysis
-- Data Processing and Analysis:Data Access and Retrieval
-- Data Processing and Analysis:Data Reduction
-- Data Processing and Analysis:Energy Spectra
-- Data Processing and Analysis:Field-line Tracing
-- Data Processing and Analysis:File Format Conversion
-- Data Processing and Analysis:Pitch Angle Distributions
-- Data Processing and Analysis:Processing
-- Data Processing and Analysis:Spectrogram
-- Data Processing and Analysis:Time Series Analysis
+- Data Processing and Analysis: Analysis
+- Data Processing and Analysis: Data Access and Retrieval
+- Data Processing and Analysis: Data Reduction
+- Data Processing and Analysis: Energy Spectra
+- Data Processing and Analysis: Field-line Tracing
+- Data Processing and Analysis: File Format Conversion
+- Data Processing and Analysis: Pitch Angle Distributions
+- Data Processing and Analysis: Processing
+- Data Processing and Analysis: Spectrogram
+- Data Processing and Analysis: Time Series Analysis
 - Data Visualization
-- Data Visualization:2D Graphics
-- Data Visualization:2D Slices
-- Data Visualization:Line Plots
-- Data Visualization:Orbit Plots
-- Data Visualization:Spectrogram
+- Data Visualization: 2D Graphics
+- Data Visualization: 2D Slices
+- Data Visualization: Line Plots
+- Data Visualization: Orbit Plots
+- Data Visualization: Spectrogram
 - Models and Simulations
-- Models and Simulations:Empirical
-- Models and Simulations:Field-line Tracing
-- Models and Simulations:ML/AI
+- Models and Simulations: Empirical
+- Models and Simulations: Field-line Tracing
+- Models and Simulations: ML/AI
 
 Notes on classification:
 - Coordinate Transforms (Magnetospheric): `spacepy.coordinates` and `spacepy.ctrans` provide transforms among magnetospheric and Earth-fixed systems (GSE, GSM, SM, GEO, GEI/J2000/TOD/MOD, MAG/CDMAG, TEME, SPH, RLL, GDZ). The "Ionospheric" subcategory is intentionally not claimed because SpacePy does not implement AACGM/MLT/apex coordinate transforms.
@@ -54,6 +55,7 @@ Notes on classification:
 - Earth Magnetosphere
 - Earth Atmosphere
 - Interplanetary Space
+- Planetary Magnetospheres
 
 Notes: SpacePy's primary focus is Earth's magnetosphere (coordinates, radiation belts, ring current, magnetopause). It also addresses the ionosphere/thermosphere (IGRF, ionospheric coordinate systems, ionospheric model output via pybats.rim) and interplanetary/solar wind (OMNI data, Shue model inputs, pybats IMF input).
 
@@ -67,14 +69,14 @@ Notes: SpacePy's primary focus is Earth's magnetosphere (coordinates, radiation 
 - **Author:** Jonathan T. Niehof
   - **Author Identifier:** https://orcid.org/0000-0001-6286-5809
   - **Affiliation:** University of New Hampshire
-    - Affiliation Identifier: https://ror.org/03rmrcq20
+    - Affiliation Identifier: https://ror.org/01rmh9n78
 
 - **Author:** Daniel T. Welling
   - **Author Identifier:** https://orcid.org/0000-0002-0590-1022
   - **Affiliation:** University of Michigan
     - Affiliation Identifier: https://ror.org/00jmfr291
 
-- **Author:** Brian A. Larsen
+- **Author:** Brian Larsen
   - **Author Identifier:** https://orcid.org/0000-0003-4515-0208
   - **Affiliation:** Los Alamos National Laboratory
     - Affiliation Identifier: https://ror.org/01e41cf67
@@ -90,7 +92,8 @@ Notes: SpacePy's primary focus is Earth's magnetosphere (coordinates, radiation 
 
 - **Author:** Jan Gieseler
   - **Author Identifier:** https://orcid.org/0000-0003-1848-7067
-  - **Affiliation:** Not found
+  - **Affiliation:** University of Turku
+    - Affiliation Identifier: https://ror.org/05vghhr25
 
 - **Author:** John Haiducek
   - **Author Identifier:** https://orcid.org/0000-0002-4027-8475
@@ -105,8 +108,9 @@ Notes: SpacePy's primary focus is Earth's magnetosphere (coordinates, radiation 
   - **Affiliation:** Not found
 
 - **Author:** Michael Hirsch
-  - **Author Identifier:** Not found
-  - **Affiliation:** Not found
+  - **Author Identifier:** https://orcid.org/0000-0002-1637-6526
+  - **Affiliation:** Boston University
+    - Affiliation Identifier: https://ror.org/05qwgg493
 
 - **Author:** Peter Killick
   - **Author Identifier:** Not found
@@ -125,27 +129,31 @@ Notes: SpacePy's primary focus is Earth's magnetosphere (coordinates, radiation 
   - **Affiliation:** Not found
 
 - **Author:** Ashton Reimer
-  - **Author Identifier:** Not found
-  - **Affiliation:** Not found
+  - **Author Identifier:** https://orcid.org/0000-0002-4621-3453
+  - **Affiliation:** SRI International
+    - Affiliation Identifier: https://ror.org/05s570m15
 
 - **Author:** Albert Y. Shih
-  - **Author Identifier:** Not found
-  - **Affiliation:** Not found
+  - **Author Identifier:** https://orcid.org/0000-0001-6874-2594
+  - **Affiliation:** Goddard Space Flight Center
+    - Affiliation Identifier: https://ror.org/0171mag52
 
 - **Author:** Amanda Stricklan
   - **Author Identifier:** Not found
   - **Affiliation:** Not found
 
-(Source: CITATION.cff and DataCite metadata for DOI 10.5281/zenodo.3252523)
+> **Name preservation:** `CITATION.cff` gives **Brian A. Larsen**, but the shared HSSI Person record is **Brian Larsen**. The user explicitly chose to preserve the existing HSSI name, so the final HSSI author list uses **Brian Larsen**.
+
+(Source: Final local HSSI author list, unioned with all 18 `CITATION.cff` authors while preserving existing HSSI Person records and affiliations.)
 
 ### 7. Software Name (MANDATORY)
 SpacePy
 
 ### 8. Description (MANDATORY)
-SpacePy is a package for Python, targeted at the space sciences, that aims to make basic data analysis, modeling and visualization easier. It builds on the capabilities of the well-known NumPy and MatPlotLib packages. Publication-quality output direct from analyses is emphasized. Core capabilities include: quickly obtaining data (e.g., OMNI/Qin-Denton solar-wind and geomagnetic indices); reading and writing data in formats like NASA CDF, HDF5, and JSON-headed ASCII; creating publication-quality plots; performing complicated scientific analysis easily (superposed epoch analysis, association analysis, bootstrap statistics); running common empirical models (plasmapause, magnetopause, Lmax, radiation-belt models); changing coordinate and time systems effortlessly (GSE, GSM, SM, GEO, GEI/ECI2000/ECITOD/ECIMOD, MAG, TEME, SPH, RLL, GDZ, plus quaternion-based generalized transforms and many time systems including UTC, TAI, GPS, ISO, JD/MJD, CDF epoch, TT2000). SpacePy also wraps IRBEMlib (magnetic-field tracing and L*/phase-space-density calculations), ships an IGRF implementation, provides the LANLstar neural-network model, supports AE9/AP9 radiation-belt model output, and includes PyBats for analysis and visualization of SWMF/BATS-R-US/RAM-SCB/GITM output. The SpacePy project seeks to promote accurate and open research by providing a comprehensive, open-source library of widely-used space-physics analysis and visualization tools in a free, modern, and intuitive language.
+SpacePy is a Python package for the space sciences that makes data analysis, modeling, and visualization easier. It supports obtaining OMNI and Qin-Denton data; reading and writing NASA CDF, HDF5, and JSON-headed ASCII; publication-quality plotting; superposed epoch, association, and bootstrap analyses; empirical plasmapause, magnetopause, Lmax, and radiation-belt models; coordinate and time conversion; IRBEM magnetic-field tracing and L-star calculations; IGRF; the LANLstar neural-network model; AE9/AP9 output; and PyBats analysis and visualization of SWMF, BATS-R-US, RAM-SCB, and GITM output.
 
 ### 9. Concise Description (OPTIONAL)
-SpacePy is a Python package for the space sciences providing data analysis, modeling, coordinate and time conversions, file I/O (including NASA CDF), and publication-quality visualization for magnetospheric and space-weather research.
+Python tools for space-science data analysis, coordinate and time conversion, empirical modeling, scientific file I/O, and publication-quality visualization.
 
 ### 10. Publication Date (RECOMMENDED)
 2010-05-20
@@ -154,23 +162,21 @@ SpacePy is a Python package for the space sciences providing data analysis, mode
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
-- **Publisher Identifier:** https://ror.org/01ggx4157
-
-(Zenodo is operated by CERN; the ROR record is for CERN — European Organization for Nuclear Research. Zenodo does not have a separate ROR entry.)
+- **Publisher Identifier:** https://zenodo.org
 
 ### 12. Version (RECOMMENDED)
 - **Version Number:** 0.7.0
 - **Version Date:** 2024-11-08
 - **Version Description:** Binary wheels now provided for 64-bit ARM Linux (Raspberry Pi). `help()` supports searching the documentation. Full NumPy 2.0 support. NumPy and f2py are no longer required to build SpacePy (binary wheels decoupled from NumPy/Python version). Support for Python 3.6 removed; Python 3.7+ required. Several deprecations including `toolbox.timeout_check_call`. `data_assimilation`, `radbelt`, and `spacepy_EnKF` modules moved to sandbox.
-- **Version PID:** Not found (per-version DOI not published; concept DOI is https://doi.org/10.5281/zenodo.3252523)
+- **Version PID:** https://doi.org/10.5281/zenodo.14057789
 
-(Note: pyproject.toml indicates an in-development version of 0.8.0a0; 0.7.0 is the most recent tagged public release. A preliminary 0.8.0 release-notes section exists for an upcoming release.)
+(Note: `pyproject.toml` indicates an in-development version of 0.8.0a0; 0.7.0 remains the most recent tagged public release.)
 
 ### 13. Programming Language (RECOMMENDED)
-- Python 3.x
 - C
 - Fortran77
 - Fortran90
+- Python 3.x
 
 (Python is the primary language. C source is present in `libspacepy`. The bundled IRBEMlib Fortran is primarily fixed-format Fortran77 but uses Fortran 90 features (e.g., `!`-prefixed line comments) so both `Fortran77` and `Fortran90` are listed. The project's classifiers explicitly list "Programming Language :: C" and "Programming Language :: Fortran".)
 
@@ -180,8 +186,10 @@ https://doi.org/10.3389/fspas.2022.1023612
 (Niehof, J. T., Morley, S. K., Welling, D. T., & Larsen, B. A. (2022). The SpacePy space science package at 12 years. Frontiers in Astronomy and Space Sciences, 9. This is the preferred package reference per the README and CITATION.cff. An additional historical reference is the SciPy 2010 paper at https://doi.org/10.25080/Majora-92bf1922-012.)
 
 ### 15. License (RECOMMENDED)
-- **License:** Python Software Foundation License 2.0
+- **Repository License:** Python Software Foundation License 2.0
 - **License URI:** https://spdx.org/licenses/PSF-2.0.html
+
+> **HSSI vocabulary recommendation:** Add Python Software Foundation License 2.0 to HSSI's controlled license vocabulary. The current local HSSI record leaves the license field empty rather than mapping SpacePy to the inaccurate generic `Other` entry.
 
 (LICENSE.md contains a license modeled on the Python Software Foundation License, granted by Triad National Security, LLC (Los Alamos National Laboratory). pyproject.toml classifier: "License :: OSI Approved :: Python Software Foundation License". The bundled modified IRBEMlib is separately covered by the LGPL.)
 
@@ -190,64 +198,66 @@ https://doi.org/10.3389/fspas.2022.1023612
 ## Section 2: Additional Data
 
 ### 16. Keywords (OPTIONAL)
-- magnetosphere
-- plasma
-- physics
-- space
-- solar wind
-- space weather
-- magnetohydrodynamics
-- heliophysics
-- coordinates
-- cdf
-- hdf5
-- ascii
-- csv
-- data access
-- data analysis
-- data container
-- ionosphere
-- igrf
-- omni
-- plotting
-- simulation
-- swmf
-- batsrus
-- shue
-- tsyganenko
-- reference data
-- time
-- radiation belts
+- Ascii
+- Batsrus
+- Cdf
+- Coordinates
+- Csv
+- Data Access
+- Data Analysis
+- Data Container
+- Hdf5
+- Heliophysics
+- Igrf
+- Ionosphere
+- Magnetohydrodynamics
+- Magnetosphere
+- Omni
+- Physics
+- Plasma
+- Plotting
+- Python
+- Radiation Belts
+- Reference Data
+- Shue
+- Simulation
+- Solar Wind
+- Space
+- Space Weather
+- Swmf
+- Time
+- Tsyganenko
 
 (Sources: pyproject.toml `keywords`, PyHC registry entry, README, and capabilities documentation.)
 
 ### 17. Data Sources (OPTIONAL)
-- OMNIWeb
-- HTTP/HTTPS Directories
 - FTP/FTPS Directories
+- HTTP/HTTPS Directories
 - Observatory/Mission-specific
+- OMNIWeb
 - Other
 
 (OMNIWeb via `spacepy.omni` and the Qin-Denton OMNI database; toolbox.update() fetches leapseconds, OMNI, PSDdata, and QD-OMNI over HTTP/FTP; pybats reads mission/model outputs (SWMF/BATS-R-US, RAM-SCB, GITM); AE9/AP9 files are supported.)
 
 ### 18. Input File Formats (RECOMMENDED)
+- ascii
 - CDF
 - HDF5
-- netCDF3/4
-- ISTP-Compliant
-- ascii
-- JSON
 - IDL.sav
+- ISTP-Compliant
+- JSON
+- netCDF3/4
 - Other
 
 (NASA CDF via `spacepy.pycdf`; HDF5 and netCDF via `spacepy.datamodel`; ISTP-compliant CDF metadata checks and tooling via `pycdf.istp`; JSON-headed ASCII via datamodel; IDL .sav via scipy.io.readsav usage noted in docs; "Other" covers proprietary SWMF/BATS-R-US IDL binary output, RAM-SCB binary/NetCDF, AE9/AP9 text outputs.)
 
 ### 19. Output File Formats (RECOMMENDED)
+- ascii
 - CDF
 - HDF5
-- ascii
-- JSON
 - ISTP-Compliant
+- JSON
+- Other
 
 (SpacePy datamodel and pycdf support writing to each of these formats via `toCDF`, `toHDF5`, and `toJSONheadedASCII`. netCDF is supported only on input (via `fromNC3`/`fromHDF5` for netCDF4-as-HDF5), not output, so it is intentionally omitted here.)
 
@@ -259,16 +269,16 @@ https://doi.org/10.3389/fspas.2022.1023612
 (pyproject.toml classifiers explicitly list MacOS X, Microsoft Windows, POSIX, and POSIX:Linux. CI runs across Linux, macOS, and Windows.)
 
 ### 21. CPU Architecture (RECOMMENDED)
-- x86-64
 - Apple Silicon arm64
 - Linux aarch64 or arm64
+- x86-64
 
 (Release notes for 0.7.0 explicitly add 64-bit ARM Linux wheels (Raspberry Pi); macOS wheels include Apple Silicon; x86-64 supported on all three OSes.)
 
 ### 22. Related Phenomena (OPTIONAL)
 Not found
 
-(SpacePy's primary phenomena focus is magnetospheric/ionospheric: geomagnetic storms, radiation belts, substorms, ring current, plasmapause, magnetopause, solar wind. None of these match the HSSI controlled vocabulary for this field (Coronal Heating, Coronal Holes, Coronal Mass Ejections, Solar Corona, Solar Flares, X-ray emission), so the field is left empty rather than submit values outside the controlled list.)
+(No related phenomena are present in the final HSSI record. SpacePy supports geomagnetic storms, radiation belts, substorms, ring current, plasmapause, magnetopause, and solar-wind studies. This field was left empty in the approved update; a future review could consider the currently controlled terms Solar Wind and Geomagnetic Storms.)
 
 ### 23. Development Status (RECOMMENDED)
 Active
@@ -279,10 +289,12 @@ Active
 https://spacepy.github.io/
 
 ### 25. Funder (OPTIONAL)
-- **Organization:** Los Alamos National Laboratory (Triad National Security, LLC)
-  - **Funder Identifier:** https://ror.org/01e41cf67
+- **Organization:** National Aeronautics and Space Administration
+  - **Funder Identifier:** https://ror.org/027ka1x80
+- **Organization:** United States Department of Energy
+  - **Funder Identifier:** https://ror.org/01bj3aw27
 
-(Copyright notices across the codebase attribute development to Los Alamos National Security/Triad National Security, LLC; no explicit external funding agencies listed in the repository or DataCite record. Additional funders may exist but are not documented in authoritative repository files.)
+(These two funders were preserved from the pre-existing HSSI record. Repository copyright notices additionally document development at Los Alamos National Laboratory, but that institution is not currently represented as a SpacePy funder in HSSI.)
 
 ### 26. Award Title (OPTIONAL)
 Not found
@@ -305,19 +317,19 @@ Not found
 (SpacePy operates on data from many external sources (OMNI/Qin-Denton, NASA CDF archives, AE9/AP9 model output, SWMF model output) but no specific dataset DOIs are documented in the repository as "related datasets".)
 
 ### 29. Related Software (OPTIONAL)
-- https://github.com/PRBEM/IRBEM (IRBEM library - bundled and wrapped by `spacepy.irbempy`)
+- https://github.com/heliopython/heliopy (HelioPy - related heliophysics Python toolbox; archived/no longer actively maintained)
 - https://github.com/MAVENSDC/cdflib (pure-Python CDF library, similar/alternative to `spacepy.pycdf`)
-- https://github.com/sunpy/sunpy (sister heliophysics Python package; PyHC core)
-- https://github.com/heliopython/heliopy (HelioPy - related heliophysics Python toolbox; note: archived/no longer actively maintained, with much of its functionality now in sunpy)
+- https://github.com/PRBEM/IRBEM (IRBEM library - bundled and wrapped by `spacepy.irbempy`)
 - https://github.com/spacepy/dbprocessing (companion data processing framework from the SpacePy organization)
+- https://github.com/sunpy/sunpy (sister heliophysics Python package; PyHC core)
 
 ### 30. Interoperable Software (OPTIONAL)
-- https://www.numpy.org/ (NumPy - required runtime dependency)
 - https://matplotlib.org/ (Matplotlib - required runtime dependency for visualization)
-- https://scipy.org/ (SciPy - required runtime dependency)
-- https://www.h5py.org/ (h5py - required for HDF5 I/O)
-- https://www.astropy.org/ (Astropy - optional interoperability in `spacepy.time` and `spacepy.coordinates` via SkyCoord conversion)
 - https://pandas.pydata.org/ (pandas - datamodel provides pandas integration for SpaceData/dmarray)
+- https://scipy.org/ (SciPy - required runtime dependency)
+- https://www.astropy.org/ (Astropy - optional interoperability in `spacepy.time` and `spacepy.coordinates` via SkyCoord conversion)
+- https://www.h5py.org/ (h5py - required for HDF5 I/O)
+- https://www.numpy.org/ (NumPy - required runtime dependency)
 
 ### 31. Related Instruments (OPTIONAL)
 Not found
@@ -325,16 +337,11 @@ Not found
 (SpacePy is a general-purpose toolkit and is not designed for a specific instrument. Many modules (e.g., pycdf, pybats) are used with data from many instruments but no single "related instrument" is appropriate.)
 
 ### 32. Related Observatories (OPTIONAL)
-- **Observatory Name:** Space Weather Modeling Framework (SWMF) / BATS-R-US
-- **Observatory Name:** RAM-SCB
-- **Observatory Name:** GITM (Global Ionosphere-Thermosphere Model)
-- **Observatory Name:** OMNI
-- **Observatory Name:** AE9/AP9 (radiation-belt model ensemble)
+Not found
 
-(These are model frameworks/data products the pybats, omni, and ae9ap9 modules specifically support. SpacePy is not mission-specific.)
+(No observatories are present in the final HSSI record. The extracted candidates — SWMF/BATS-R-US, RAM-SCB, GITM, OMNI, and AE9/AP9 — are model frameworks or data products rather than observatories, so they were intentionally not added to HSSI's global observatory vocabulary.)
 
 ### 33. Logo (OPTIONAL)
-https://spacepy.github.io/_static/spacepy_logo.jpg
+https://raw.githubusercontent.com/spacepy/spacepy/main/Doc/source/_static/spacepy_logo.jpg
 
-(Source: PyHC registry entry.)
-
+(Source: Canonical logo asset in the SpacePy repository.)
