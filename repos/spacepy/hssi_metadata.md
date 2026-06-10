@@ -2,7 +2,7 @@
 
 **Repository:** https://github.com/spacepy/spacepy
 **Extraction Date:** 2026-04-24
-**HSSI Sync:** 2026-06-10 — reconciled with the final local HSSI record after the approved enrichment update (software UUID `7bd65217-fdbe-4945-a657-496a494fff48`). Field values below reflect HSSI.
+**HSSI Sync:** 2026-06-10 — reconciled with the final local HSSI record after the approved enrichment and targeted Related Software updates (software UUID `7bd65217-fdbe-4945-a657-496a494fff48`). Field values below reflect HSSI.
 
 ---
 
@@ -317,7 +317,6 @@ Not found
 (SpacePy operates on data from many external sources (OMNI/Qin-Denton, NASA CDF archives, AE9/AP9 model output, SWMF model output) but no specific dataset DOIs are documented in the repository as "related datasets".)
 
 ### 29. Related Software (OPTIONAL)
-- https://github.com/heliopython/heliopy (HelioPy - related heliophysics Python toolbox; archived/no longer actively maintained)
 - https://github.com/MAVENSDC/cdflib (pure-Python CDF library, similar/alternative to `spacepy.pycdf`)
 - https://github.com/PRBEM/IRBEM (IRBEM library - bundled and wrapped by `spacepy.irbempy`)
 - https://github.com/spacepy/dbprocessing (companion data processing framework from the SpacePy organization)
