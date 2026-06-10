@@ -61,7 +61,7 @@ Check that values conform to expected formats:
 - **Author names** should follow "Given Name, Initials, Surname" convention (Field 6)
 - **ORCIDs** must be full URLs: `https://orcid.org/XXXX-XXXX-XXXX-XXXX` (Field 6)
 - **ROR identifiers** must be full URLs: `https://ror.org/XXXXXXXXX` (Fields 6, 11, 25)
-- **Software Functionality** values must be from the allowed list in the form spec (Field 4)
+- **Software Functionality** values must be from the allowed list, written as `Parent: Child` for subcategories (Field 4). **Do NOT flag the space after the colon as an error.** The HSSI API strips whitespace around the colon (the graph-list parser does `part.strip()` on `value.split(":")`), so `Parent: Child` and `Parent:Child` are equivalent; the API stores and returns the **with-space** form, which the `submission-payload` skill specifies as canonical. The no-space listing in `resource_submission_form_fields.md` is just the raw taxonomy, not a spacing rule. Also confirm every subcategory has its bare parent top-level category listed as a separate value (see the `software-functionality` skill).
 - **Related Region** values must be from: Earth Atmosphere, Earth Magnetosphere, Interplanetary Space, Planetary Magnetospheres, Solar Environment (Field 5)
 - **Programming Language** values must be from the allowed list (Field 13)
 - **Development Status** must be one of: Abandoned, Active, Concept, Inactive, Moved, Suspended, Unsupported, WIP (Field 23)
