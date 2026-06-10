@@ -220,8 +220,8 @@ Examples from README and HAPI server listings:
 - **Note:** Many other observatories serve data via HAPI. See http://hapi-server.org/servers/
 
 ### 33. Logo (OPTIONAL)
-- **Value:** https://raw.githubusercontent.com/hapi-server/hapi-server.github.io/master/logos/HAPI.svg
-- **Source:** PyHC registry
+- **Value:** https://hapi-server.org/logos/HAPI-large.png
+- **Source:** HAPI server project logo (hapi-server.org), set per user request. (Earlier value was the PyHC-registry SVG `https://raw.githubusercontent.com/hapi-server/hapi-server.github.io/master/logos/HAPI.svg`.)
 
 ---
 
