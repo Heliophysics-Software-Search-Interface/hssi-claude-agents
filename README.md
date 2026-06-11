@@ -22,5 +22,9 @@ Claude Code agents for managing [HSSI](https://hssi.hsdcloud.org) software metad
 
 (Note: for the best results, always use the latest available model on the highest thinking setting—via `/model`)
 
-## Codex
-See the [Codex version of this repo](https://github.com/Heliophysics-Software-Search-Interface/hssi-codex-agents).
+## Other versions
+
+This repo is the Claude Code version. Equivalent versions exist for other agent CLIs:
+
+- [Codex CLI version](https://github.com/Heliophysics-Software-Search-Interface/hssi-codex-agents)
+- [GitHub Copilot CLI version](https://github.com/Heliophysics-Software-Search-Interface/hssi-copilot-agents)
