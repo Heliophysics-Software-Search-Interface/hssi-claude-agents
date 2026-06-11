@@ -157,21 +157,30 @@ eventual import will clobber that prod-only data.
 All on the prod host, user-driven. Provide these as a runbook with explicit STOP gates.
 
 1. **Confirm prod is at the pre-import commit** and the CSV dir is clean.
-2. **Pre-flight drift check (read-only):** export the live DB and compare CRLF-normalized against the snapshot
-   baseline. **If it reports drift, STOP** — new data entered prod since the snapshot; fold it in (a fresh
-   Phase 1) before importing.
+2. **Pre-flight drift check (read-only).** Export the live DB and compare it, CRLF-normalized, against the
+   correct baseline. **If it reports drift, STOP** — new data entered prod since the snapshot; fold it in (a
+   fresh Phase 1) before importing.
+
+   **Pick the baseline carefully — do NOT use prod's `HEAD` blindly.** The baseline is *the commit whose CSVs
+   equal current production* — i.e. the most recent **prod-snapshot sync** (Phase 1's merge). The prod box's
+   checked-out `HEAD` is frequently the *wrong* target: it may be **behind** the snapshot (stale seed files →
+   the comparison reports false "drift" everywhere, which is what happened to us — `HEAD` was old `main`), or
+   **ahead** (already includes the enrichment PR → your own changes read as "drift"). So `git fetch` first and
+   compare against the snapshot commit explicitly:
    ```bash
    cd ~/hssi
+   git fetch origin
+   BASE=<prod-snapshot commit SHA>   # the "Sync DB seed CSVs to production snapshot" merge that made main == prod
    docker exec HSSI sh -lc 'cd /django && python manage.py shell -c "from website.admin.csv_export import export_db_csv; export_db_csv()"'
    drift=0
    for f in django/website/config/db/*.csv; do
-     diff <(git show "HEAD:$f" | tr -d '\r' | sort) <(tr -d '\r' < "$f" | sort) >/dev/null 2>&1 || { echo "DRIFT: $(basename "$f")"; drift=1; }
+     diff <(git show "$BASE:$f" | tr -d '\r' | sort) <(tr -d '\r' < "$f" | sort) >/dev/null 2>&1 || { echo "DRIFT: $(basename "$f")"; drift=1; }
    done
    git checkout -- django/website/config/db/
    [ $drift -eq 0 ] && echo "PRE-FLIGHT: SAFE" || echo "PRE-FLIGHT: DRIFT — STOP"
    ```
-   (Compare against the **snapshot commit** the enrichments were built on. If `HEAD` already includes the
-   enrichment PR, compare against the snapshot commit instead so your own changes don't read as "drift".)
+   (If you cannot identify the snapshot SHA, re-run Phase 1's verification against `origin/main` first to
+   re-establish that `main` == prod, then use that commit as `BASE`.)
 3. **Back up the DB** (small, gzipped):
    ```bash
    docker exec website_db pg_dumpall -U postgres | gzip > ~/hssi_prod_db_backup_$(date +%Y%m%d_%H%M).sql.gz
@@ -231,7 +240,7 @@ All on the prod host, user-driven. Provide these as a runbook with explicit STOP
 |---|---|
 | Export DB → CSVs (read-only) | `docker exec HSSI sh -lc 'cd /django && python manage.py shell -c "from website.admin.csv_export import export_db_csv; export_db_csv()"'` |
 | Import CSVs → DB (DESTRUCTIVE) | `docker exec HSSI sh -lc 'cd /django && python manage.py shell -c "from website.admin.csv_export import remove_all_model_entries, import_db_csv; remove_all_model_entries(); import_db_csv()"'` |
-| CRLF-safe drift check | `for f in django/website/config/db/*.csv; do diff <(git show "HEAD:$f" | tr -d '\r' | sort) <(tr -d '\r' < "$f" | sort) >/dev/null 2>&1 || echo "DRIFT: $f"; done` |
+| CRLF-safe drift check (set `BASE` to the prod-snapshot commit, **not** `HEAD`) | `git fetch origin; for f in django/website/config/db/*.csv; do diff <(git show "$BASE:$f" | tr -d '\r' | sort) <(tr -d '\r' < "$f" | sort) >/dev/null 2>&1 || echo "DRIFT: $f"; done` |
 | Backup prod DB | `docker exec website_db pg_dumpall -U postgres | gzip > ~/hssi_prod_db_backup_$(date +%Y%m%d_%H%M).sql.gz` |
 | Local PATCH token | `docker exec HSSI printenv HSSI_UPDATE_TOKEN` |
 | Restart app (template changes) | `docker-compose restart hssi` |

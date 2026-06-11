@@ -46,6 +46,10 @@ A direct `PATCH` to **production** (target = `https://hssi.hsdcloud.org`, or any
 3. **Recommend the version-controlled alternative** — the CSV pull-request workflow: sync production's DB into GitHub's CSVs, make the change locally, open a PR with the CSV diff, then re-import in production. The **`production-csv-update` skill** has the complete runbook (architecture, commands, safety gates, and gotchas).
 4. **Let the user decide.** Direct production PATCHes are **not forbidden** — if, after being informed, the user explicitly chooses the direct PATCH, proceed through the normal approval gate (Steps 6–10).
 
+**When this fires:** raise it as early as possible — in **PREPARE** mode, as part of (or before) your diff-report return — so it reaches the user *before* any approval to PATCH. Do **not** defer it to EXECUTE / Step 8; by then the user has already approved. (The Step 8 guard is only a backstop for the direct-invocation path.)
+
+**Your role vs. the workflow:** driving the full CSV-PR workflow is a session-level effort spanning multiple PRs and user-driven prod SSH — you do not run it end-to-end yourself. Your job is to (a) surface this recommendation, and (b) if the user chooses the workflow, follow the `production-csv-update` skill, which includes doing the actual metadata PATCHes against **`localhost`** (the prod-seeded local instance) in its Phase 2.
+
 This applies **only to production targets**. For `localhost` / local testing — including the local PATCH step *inside* the CSV-PR workflow — proceed normally, no warning needed.
 
 ---
@@ -74,6 +78,8 @@ You will be invoked in one of two modes:
 ### PREPARE mode (default)
 
 Execute Steps 1–6 only. Identify the software, fetch current HSSI metadata, extract fresh metadata, diff, present the report, and build the update payload. Save the payload to the specified output path (e.g., `payloads/<name>_update.json`). Return the diff report and payload path. Do NOT submit. Do NOT proceed to Steps 8–10.
+
+**If the target is production, lead your return with the version-control-trail recommendation (see the CRITICAL section above) — surface it here in PREPARE, before the approval gate, so the user can choose the CSV-PR workflow instead of a direct PATCH. Do not wait until EXECUTE.**
 
 **Input:** software identifier, mode, repo path or targeted changes, target URL, output payload path.
 
