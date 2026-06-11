@@ -79,8 +79,10 @@
 #### Author 6:
 - **Author Name:** Jonathon M. Smith
 - **Author Identifier:** https://orcid.org/0000-0002-8191-4765
-- **Affiliation - Organization:** Catholic University of America, Goddard Space Flight Center
-- **Affiliation - Identifier:** Not found
+- **Affiliation 1 - Organization:** Catholic University of America
+- **Affiliation 1 - Identifier:** https://ror.org/047yk3s18
+- **Affiliation 2 - Organization:** Goddard Space Flight Center
+- **Affiliation 2 - Identifier:** https://ror.org/0171mag52
 
 #### Author 7:
 - **Author Name:** Matthew Depew
@@ -91,8 +93,10 @@
 #### Author 8:
 - **Author Name:** Aadarsh Govada
 - **Author Identifier:** https://orcid.org/0009-0004-7873-5899
-- **Affiliation - Organization:** Universities Space Research Association, Goddard Space Flight Center
-- **Affiliation - Identifier:** Not found
+- **Affiliation 1 - Organization:** Universities Space Research Association
+- **Affiliation 1 - Identifier:** https://ror.org/043pgqy52
+- **Affiliation 2 - Organization:** Goddard Space Flight Center
+- **Affiliation 2 - Identifier:** https://ror.org/0171mag52
 
 #### Author 9:
 - **Author Name:** Ryan Fuller
@@ -103,8 +107,8 @@
 #### Author 10:
 - **Author Name:** Teresa Esman
 - **Author Identifier:** https://orcid.org/0000-0003-0382-6281
-- **Affiliation - Organization:** NASA NPP
-- **Affiliation - Identifier:** Not found
+- **Affiliation - Organization:** Goddard Space Flight Center
+- **Affiliation - Identifier:** https://ror.org/0171mag52
 
 #### Author 11:
 - **Author Name:** Veronica Von Bose
@@ -127,10 +131,10 @@
 #### Author 14:
 - **Author Name:** Silvio Leite
 - **Author Identifier:** https://orcid.org/0000-0003-1707-7963
-- **Affiliation - Organization:** @olist
+- **Affiliation - Organization:** Olist
 - **Affiliation - Identifier:** Not found
 
-**Source:** `.zenodo.json` creators; Zenodo/DataCite creators for the v3.2.2 software record; corroborated by `pyproject.toml` package author summary and git shortlog.
+**Source:** `.zenodo.json` creators; Zenodo/DataCite creators for the v3.2.2 software record; author ORCID and contributor profiles; CEDAR 2023 presentation; ROR records; corroborated by `pyproject.toml` package author summary and git shortlog.
 
 ### 7. Software Name (MANDATORY)
 - **Name:** pysat
@@ -324,49 +328,53 @@
 - **Funder Identifier:** Not found
 
 #### Funder 12:
-- **Organization:** NASA Space Precipitation Impacts (SPI) project at Goddard Space Flight Center through the Heliophysics Internal Science Funding Model
-- **Funder Identifier:** Not found
+- **Organization:** Goddard Space Flight Center
+- **Funder Identifier:** https://ror.org/0171mag52
 
-**Source:** `ACKNOWLEDGEMENTS.md`; `docs/funding.rst`.
+**Note:** The pysat project explicitly states that the listed institutions, missions, and programs provided funding for its development. Mission funders are therefore retained as project-reported funding sources. The Space Precipitation Impacts project is represented under Award Title, while its funding organization is listed here.
+
+**Source:** `ACKNOWLEDGEMENTS.md`; `docs/funding.rst`; ROR.
 
 ### 26. Award Title (OPTIONAL)
 #### Award 1:
-- **Award Title:** NSF 125908
-- **Award Number:** 125908
+- **Award Title:** Collaborative Research: Inferring High Latitude Convection Patterns Using SuperDARN, DMSP and ACE
+- **Award Number:** 1259508
 
 #### Award 2:
-- **Award Title:** NSF AGS-1651393
+- **Award Title:** Collaborative Research: CEDAR--Assimilative Analysis of Low- and Mid-latitude Ionospheric Electrodynamics
 - **Award Number:** AGS-1651393
 
 #### Award 3:
-- **Award Title:** NASA NNX10AT02G
+- **Award Title:** NASA grant
 - **Award Number:** NNX10AT02G
 
 #### Award 4:
-- **Award Title:** NASA NNH20ZDA001N-LWS
+- **Award Title:** NASA ROSES-2020 B.5 Living With a Star Science program element
 - **Award Number:** NNH20ZDA001N-LWS
 
 #### Award 5:
-- **Award Title:** NASA 80NSSC18K120
-- **Award Number:** 80NSSC18K120
+- **Award Title:** NASA grant
+- **Award Number:** 80NSSC18K1203
 
 #### Award 6:
-- **Award Title:** NASA 80NSSC21M0180
+- **Award Title:** NASA Goddard Space Flight Center HSD Support Partnership
 - **Award Number:** 80NSSC21M0180
 
 #### Award 7:
-- **Award Title:** Naval Research Laboratory N00173191G016
+- **Award Title:** U.S. Naval Research Laboratory award
 - **Award Number:** N00173191G016
 
 #### Award 8:
-- **Award Title:** Naval Research Laboratory N0017322P0744
+- **Award Title:** U.S. Naval Research Laboratory award
 - **Award Number:** N0017322P0744
 
 #### Award 9:
-- **Award Title:** NASA Space Precipitation Impacts (SPI) project at Goddard Space Flight Center through the Heliophysics Internal Science Funding Model
+- **Award Title:** Space Precipitation Impacts (SPI)
 - **Award Number:** Not found
 
-**Source:** `ACKNOWLEDGEMENTS.md`; `docs/funding.rst`.
+**Note:** Awards 3, 5, 7, and 8 appear in the project's acknowledgements as award numbers only, with no public project title (Stoneback et al., 2023 describes the two NRL awards simply as Naval Research Laboratory support, and no NASA NSPIRES/USAspending title was found). They are labeled here by funding agency ("NASA grant", "U.S. Naval Research Laboratory award") to preserve the award numbers without asserting an unverified title.
+
+**Source:** `ACKNOWLEDGEMENTS.md`; `docs/funding.rst`; National Science Foundation award records; NASA NSPIRES; USAspending award record; repository-linked publications and project acknowledgements.
 
 ---
 
@@ -383,122 +391,55 @@
 **Source:** Repository DOI search; `.zenodo.json`; README and documentation review; Zenodo/DataCite DOI review.
 
 ### 29. Related Software (OPTIONAL)
+- Not found
 
-#### Related Software 1:
-- **Name/Repository:** pysatNASA
-- **URL:** https://github.com/pysat/pysatNASA
-- **Relationship:** pysat ecosystem package for NASA instruments and data products.
-
-#### Related Software 2:
-- **Name/Repository:** pysatMadrigal
-- **URL:** https://github.com/pysat/pysatMadrigal
-- **Relationship:** pysat ecosystem package for Madrigal data access.
-
-#### Related Software 3:
-- **Name/Repository:** pysatCDAAC
-- **URL:** https://github.com/pysat/pysatCDAAC
-- **Relationship:** pysat ecosystem package for CDAAC data products.
-
-#### Related Software 4:
-- **Name/Repository:** pysatModels
-- **URL:** https://github.com/pysat/pysatModels
-- **Relationship:** pysat ecosystem package for model outputs and model-data comparisons.
-
-#### Related Software 5:
-- **Name/Repository:** pysatSpaceWeather
-- **URL:** https://github.com/pysat/pysatSpaceWeather
-- **Relationship:** pysat ecosystem package for space-weather products and indices.
-
-**Source:** `README.md`; `docs/ecosystem.rst`; `ecosystem.txt`; PyHC core registry keywords.
+**Source:** Repository and ecosystem review; software packages with demonstrated direct integration are classified under Interoperable Software.
 
 ### 30. Interoperable Software (OPTIONAL)
+
 #### Interoperable Software 1:
-- **Name/Repository:** pandas
-- **URL:** https://github.com/pandas-dev/pandas
-- **Relationship:** Core data structure dependency for pysat `Instrument` data.
+- **Name/Repository:** pysatNASA
+- **URL:** https://github.com/pysat/pysatNASA
+- **Relationship:** Provides pysat `Instrument` and `Constellation` modules for NASA instruments and missions.
 
 #### Interoperable Software 2:
-- **Name/Repository:** xarray
-- **URL:** https://github.com/pydata/xarray
-- **Relationship:** Core data structure dependency for multidimensional pysat data.
+- **Name/Repository:** pysatMadrigal
+- **URL:** https://github.com/pysat/pysatMadrigal
+- **Relationship:** Provides instrument modules that register with and run through pysat for Madrigal data access.
 
 #### Interoperable Software 3:
-- **Name/Repository:** netCDF4-python
-- **URL:** https://github.com/Unidata/netcdf4-python
-- **Relationship:** Dependency used for netCDF input/output workflows.
+- **Name/Repository:** pysatCDAAC
+- **URL:** https://github.com/pysat/pysatCDAAC
+- **Relationship:** Provides pysat `Instrument` and `Constellation` modules for COSMIC data products from CDAAC.
 
 #### Interoperable Software 4:
-- **Name/Repository:** dask
-- **URL:** https://github.com/dask/dask
-- **Relationship:** Runtime dependency for scalable scientific array/dataframe workflows.
+- **Name/Repository:** pysatModels
+- **URL:** https://github.com/pysat/pysatModels
+- **Relationship:** Provides a pysat interface and instrument modules for model outputs, analysis, and model-data comparisons.
 
 #### Interoperable Software 5:
-- **Name/Repository:** NumPy
-- **URL:** https://github.com/numpy/numpy
-- **Relationship:** Core numerical array dependency used throughout pysat data workflows.
+- **Name/Repository:** pysatSpaceWeather
+- **URL:** https://github.com/pysat/pysatSpaceWeather
+- **Relationship:** Provides registered pysat instruments and analysis routines for real-time and historical space-weather products and indices.
 
 #### Interoperable Software 6:
-- **Name/Repository:** SciPy
-- **URL:** https://github.com/scipy/scipy
-- **Relationship:** Scientific Python dependency listed for pysat analysis workflows.
+- **Name/Repository:** pysatCDF
+- **URL:** https://github.com/pysat/pysatCDF
+- **Relationship:** Reads NASA CDF files and exports their data and metadata directly into pysat format through `to_pysat()`.
 
-**Source:** `pyproject.toml`; `README.md`; `pysat/_instrument.py`; `pysat/utils/io.py`.
+**Source:** `README.md`; `docs/ecosystem.rst`; instrument and analysis documentation; tutorial integration examples; `ecosystem.txt`; pysatCDF repository and README.
 
 ### 31. Related Instruments (OPTIONAL)
-#### Related Instrument 1:
-- **Instrument Name:** C/NOFS Vector Electric Field Instrument DC magnetometer
-- **Instrument Identifier:** Not found
+- Not found
 
-#### Related Instrument 2:
-- **Instrument Name:** Defense Meteorological Satellite Program Ion Velocity Meter
-- **Instrument Identifier:** Not found
-
-#### Related Instrument 3:
-- **Instrument Name:** Advanced Composition Explorer Electron, Proton, and Alpha Monitor
-- **Instrument Identifier:** Not found
-
-#### Related Instrument 4:
-- **Instrument Name:** Advanced Composition Explorer Magnetic Field Experiment
-- **Instrument Identifier:** Not found
-
-#### Related Instrument 5:
-- **Instrument Name:** Advanced Composition Explorer Solar Isotope Spectrometer
-- **Instrument Identifier:** Not found
-
-#### Related Instrument 6:
-- **Instrument Name:** Advanced Composition Explorer Solar Wind Electron, Proton, and Alpha Monitor
-- **Instrument Identifier:** Not found
-
-**Note:** These are documented examples and ecosystem-supported instruments, not an exhaustive inventory of all instruments that can be accessed through pysat-compatible plug-ins.
+**Note:** Intentionally left empty. The instruments previously listed (C/NOFS VEFI DC magnetometer, DMSP IVM, and the four ACE real-time instruments EPAM/MAG/SIS/SWEPAM) were tutorial and demo examples drawn from ecosystem plug-in packages (pysatNASA, pysatMadrigal, pysatSpaceWeather), not instruments the core pysat framework is designed to support. The four ACE entries were a single realtime-constellation example expanding to four sub-instruments. Per HSSI Field 31 ("the instrument the software is designed to support"), an instrument-agnostic framework supports none specifically; instrument associations belong to the ecosystem packages' own records.
 
 **Source:** `docs/examples/example_orbit.rst`; `docs/tutorial/tutorial_basics.rst`; `docs/tutorial/tutorial_constellation.rst`; `docs/ecosystem.rst`.
 
 ### 32. Related Observatories (OPTIONAL)
-#### Related Observatory 1:
-- **Observatory Name:** Communication/Navigation Outage Forecasting System
+- Not found
 
-#### Related Observatory 2:
-- **Observatory Name:** Defense Meteorological Satellite Program
-
-#### Related Observatory 3:
-- **Observatory Name:** Advanced Composition Explorer
-
-#### Related Observatory 4:
-- **Observatory Name:** Dynamics Explorer 2
-
-#### Related Observatory 5:
-- **Observatory Name:** Ionospheric Connection Explorer
-
-#### Related Observatory 6:
-- **Observatory Name:** Constellation Observing System for Meteorology, Ionosphere, and Climate
-
-#### Related Observatory 7:
-- **Observatory Name:** Super Dual Auroral Radar Network
-
-#### Related Observatory 8:
-- **Observatory Name:** Jicamarca Radio Observatory
-
-**Note:** These missions and observatories are documented examples or ecosystem targets rather than a fixed, exhaustive list for the core framework.
+**Note:** Intentionally left empty. The observatories previously listed (C/NOFS, DMSP, ACE, Dynamics Explorer 2, ICON, COSMIC, SuperDARN, Jicamarca Radio Observatory) were tutorial examples or illustrative name-drops — SuperDARN, JRO, and COSMIC trace to a single example sentence in `docs/new_instrument.rst` listing platforms one could write a module for. None is a mission/observatory the core framework is designed to support (HSSI Field 32). ICON's only deeper link is that pysat's netCDF output conventions derive from ICON file standards, which is already captured under Output File Formats (ISTP-Compliant) rather than as a supported observatory.
 
 **Source:** `docs/examples/example_orbit.rst`; `docs/tutorial/tutorial_basics.rst`; `docs/tutorial/tutorial_constellation.rst`; `docs/new_instrument.rst`; `docs/ecosystem.rst`.
 
