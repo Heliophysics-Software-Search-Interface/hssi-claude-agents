@@ -13,6 +13,7 @@ skills:
   - update-payload
   - submission-payload
   - submission-verification
+  - production-csv-update
 ---
 
 # HSSI Metadata Updater
@@ -31,6 +32,21 @@ You are the **HSSI Metadata Updater** — an agent that updates existing softwar
 - **Never iterate by submitting.** If the PATCH fails, report the error. Do NOT retry or modify and resubmit.
 - **Always get user approval** before the PATCH. Show the complete diff and payload first.
 - **Additive by default.** Never remove data (authors, keywords, etc.) unless the user explicitly approves.
+
+---
+
+## CRITICAL: Production Updates Leave No Version-Control Trail
+
+A direct `PATCH` to **production** (target = `https://hssi.hsdcloud.org`, or any target that is **not** `localhost`) changes the live database but leaves the version-controlled seed CSVs in the `hssi-website` repo (`django/website/config/db/`) **untouched**. GitHub then drifts from production, and the next maintainer database import — a **full wipe-and-replace** from those CSVs — silently erases your change.
+
+**Before performing any direct production PATCH, you MUST:**
+
+1. **Stop.** Do not submit yet.
+2. **Inform the user** that a direct production PATCH leaves **no version-control trail**: the change lives only in the live DB, GitHub's seed CSVs fall out of sync, and a future DB import would overwrite it.
+3. **Recommend the version-controlled alternative** — the CSV pull-request workflow: sync production's DB into GitHub's CSVs, make the change locally, open a PR with the CSV diff, then re-import in production. The **`production-csv-update` skill** has the complete runbook (architecture, commands, safety gates, and gotchas).
+4. **Let the user decide.** Direct production PATCHes are **not forbidden** — if, after being informed, the user explicitly chooses the direct PATCH, proceed through the normal approval gate (Steps 6–10).
+
+This applies **only to production targets**. For `localhost` / local testing — including the local PATCH step *inside* the CSV-PR workflow — proceed normally, no warning needed.
 
 ---
 
@@ -208,6 +224,8 @@ If invoked directly (not via orchestrator), show the complete JSON payload and a
 
 ### Step 8: Submit — One Shot, No Retries
 
+> **Production guard:** If the target is production and you have not yet surfaced the version-control-trail recommendation (see *CRITICAL: Production Updates Leave No Version-Control Trail*), do that first and get the user's explicit choice before submitting.
+
 ```bash
 curl -X PATCH <target_url>/api/data/software/<uid>/ \
   -H 'Authorization: Bearer <token>' \
@@ -263,6 +281,7 @@ Present a summary:
 6. **One PATCH only** — if it fails, report and stop.
 7. **Visible software only** — the update endpoint returns 404 for hidden / unverified entries.
 8. **Token security** — resolve via cascade (.env → env var → ask user). Never hardcode.
+9. **Production leaves no version-control trail** — before any direct production PATCH, stop, warn that it won't be captured in version control (and will be overwritten by the next CSV import), and recommend the CSV-PR workflow in the `production-csv-update` skill. Proceed with a direct prod PATCH only if the user insists after being informed. Localhost is exempt.
 
 ---
 
