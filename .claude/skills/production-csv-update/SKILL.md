@@ -181,6 +181,13 @@ All on the prod host, user-driven. Provide these as a runbook with explicit STOP
    ```
    (If you cannot identify the snapshot SHA, re-run Phase 1's verification against `origin/main` first to
    re-establish that `main` == prod, then use that commit as `BASE`.)
+
+   **Reconciled snapshots make this report false drift.** If Phase 1 committed a *reconciled* (minimal-diff)
+   snapshot instead of prod's verbatim export, the snapshot is set-aware identical to prod but **not**
+   byte-identical to a fresh export, so this line-sorted check flags **DRIFT** on the reconciled files
+   (`software.csv`, the `software_*` through-tables, `submission_info.csv`) even when prod is unchanged.
+   **Don't STOP on that alone** — re-export and confirm set-aware equality first (see the "Reconciled
+   snapshots trigger false drift" gotcha). Only treat it as real drift if the set-aware compare disagrees.
 3. **Back up the DB** (small, gzipped):
    ```bash
    docker exec website_db pg_dumpall -U postgres | gzip > ~/hssi_prod_db_backup_$(date +%Y%m%d_%H%M).sql.gz
@@ -225,6 +232,17 @@ All on the prod host, user-driven. Provide these as a runbook with explicit STOP
   - **Accidental duplicate orgs** — e.g. a publisher given a ROR id when prod's record uses a different URL
     creates a second "Zenodo"; repoint the reference to the existing org and drop the dup.
   Then verify: exactly the intended software rows changed, 0 dangling references, no duplicate entities.
+- **Reconciled snapshots trigger false drift in the Phase 3 pre-flight check.** A *reconciled* snapshot
+  (keeping `main`'s within-cell M2M ordering, reusing `main`'s surrogate through-table integer PKs, and
+  keeping `main`'s `date_modified`) is **set-aware identical** to prod but not byte-identical to a fresh
+  export. The Phase 3 line-sorted check (`diff <(... | sort) ...`) therefore reports **DRIFT** on exactly
+  those files (`software.csv`, the `software_*` through-tables, `submission_info.csv`) even when prod has
+  not changed. **Do not abort on this alone.** Re-export prod and confirm **set-aware** equality: split
+  comma-joined cells into sets, key through-tables by `(fk1, fk2, sort_value)` ignoring the integer `id`,
+  and ignore `date_modified`; a fresh export being line-identical to the *previous* export is a fast extra
+  confirmation that prod is unchanged. If set-aware-equal, the import is safe. (Verbatim snapshots avoid the
+  false positive but produce huge noisy PRs — ~2,400 lines vs ~90 for one new package — so if you reconcile,
+  expect to re-confirm this on every future import.)
 - **Import resets `date_modified`.** The wipe-and-reimport sets `date_modified` (auto-now) on **every** row to
   the import time; `date_created` / submission dates are preserved. Cosmetic but global — mention it.
 - **Vocabulary UUID churn.** `fetch_vocab` re-mints controlled-vocab UUIDs in prod, which cascades into the
