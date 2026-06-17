@@ -81,6 +81,14 @@ The existing **`update-api-spec`** skill is the precedent/mechanism for re-synci
   redeploys). `git pull` / redeploy do **not** import the CSVs; the DB persists untouched.
 - **Disk is tight** (~1.2 GB free) — keep DB dumps small and gzipped.
 - **Prod URL:** `https://hssi.hsdcloud.org`.
+- **Automated DB backups:** a nightly cron on prod runs `pg_dumpall` and commits gzipped
+  daily/weekly/monthly snapshots to the **private** repo
+  `Heliophysics-Software-Search-Interface/hssi-db-backups` (same org), pushed via a write-scoped
+  deploy key. That repo's `scripts/backup-db.sh` is the cron job; **`scripts/restore-db.sh` is the
+  true DB recovery path** (replays a dump into `website_db`, taking a safety dump first). This is
+  separate from the CSV wipe-and-replace import below, which is a *seeding* mechanism, not a backup.
+  *(Confirmed live on prod 2026-06-17: nightly `0 3 * * *` UTC cron pushing to `hssi-db-backups`.
+  To re-verify later, check for recent commits there and a `hssi-db-backup` block in `crontab -l`.)*
 
 ## Seed CSVs & data model
 
@@ -192,6 +200,9 @@ All on the prod host, user-driven. Provide these as a runbook with explicit STOP
    ```bash
    docker exec website_db pg_dumpall -U postgres | gzip > ~/hssi_prod_db_backup_$(date +%Y%m%d_%H%M).sql.gz
    ```
+   (If the automated `hssi-db-backups` cron is live, a fresh nightly dump may already exist there;
+   this manual dump is still worth taking immediately before a destructive import. To recover later,
+   use that repo's `scripts/restore-db.sh <dump.sql.gz>`.)
 4. **Pull the merged main:** `git pull --ff-only origin main` (the prod-only config edits are untouched
    because no PR changes them).
 5. **Import — DESTRUCTIVE wipe-and-replace** (get explicit user approval immediately before):
