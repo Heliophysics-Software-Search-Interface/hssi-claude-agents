@@ -157,7 +157,7 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | `relatedSoftware` | Array of strings (URLs) | |
 | `interoperableSoftware` | Array of strings (URLs) | |
 | `funder` | Array of Organization objects | `{name, identifier}` |
-| `awardTitle` | Array of Award objects | `{name, identifier}` |
+| `award` | Array of Award objects | `{name, identifier}` (the API field is `award`, **not** `awardTitle`) |
 | `relatedInstruments` | Array of Instrument objects | `{name, identifier}` |
 | `relatedObservatories` | Array of Observatory objects | `{name, identifier}` |
 
@@ -283,3 +283,45 @@ Same endpoints as the submission payload — use these to normalize values befor
 | Data Sources | `/api/models/DataInput/rows/all/` |
 | Related Phenomena | `/api/models/Phenomena/rows/all/` |
 | License | `/api/models/License/rows/all/` |
+| Related Instruments / Observatories | `/api/models/InstrumentObservatory/rows/all/` (`type` 1 = instrument, 2 = observatory) |
+
+**Instruments / Observatories matching:** First apply the **relevance gate** — only list instruments/observatories the software is *designed to support* (see Fields 31/32 "When to include it"); the resolution below is for entries that have already passed it. Resolve those names against
+`/api/models/InstrumentObservatory/rows/all/`. The endpoint returns the whole vocabulary (~7,700 rows)
+in `data[]` — **fetch it once to a file and filter locally** (`grep`/`jq`/`python`); don't load every
+row into context (`?columns=id,name,identifier,type,abbreviation` drops the large `definition` field;
+keep `id`, or the API returns an empty `data[]`).
+Then:
+
+- **Keep only SPASE-backed rows** — `identifier.startswith("https://spase-metadata.org/")`. The list
+  also holds ~60 legacy rows (blank or `helio.data.nasa.gov/...` identifiers) that must never be
+  matched; rely on the prefix filter, not the count (it shrinks as the backfill runs).
+- **Normalize `.html`** — ~40+ identifiers exist in both bare and `.html` forms (e.g.
+  `.../SDO/AIA` and `.../SDO/AIA.html`); treat them as one resource and prefer the non-`.html` row.
+- **Match on multiple signals** — the row `name`, its `abbreviation`, source parenthetical aliases,
+  and the SPASE **identifier path segments** (platform/mission evidence, e.g. `.../GOES/17/SUVI`),
+  restricted to the right `type` (1 = instrument, 2 = observatory). Abbreviations are often non-unique,
+  so they feed the collision rule rather than resolve uniquely.
+- **Prefer `SMWG/...` only as a tie-breaker** among same-name duplicates (over `CNES/...` archives); a
+  single non-SMWG match is still correct (Solar Orbiter is `ESA/Observatory/SolarOrbiter`). The
+  canonical SMWG name is sometimes the long form (e.g. `SMWG/Observatory/THEMIS` is
+  "Time History of Events and Macroscale Interactions during Substorms"). Copy the matched row's `name`
+  verbatim.
+- **On an unresolved collision, omit the entry entirely** — if more than one SPASE candidate remains
+  after namespace/platform evidence (e.g. `Solar Ultraviolet Imager` matches four GOES-16/17/18/19
+  rows), **drop the instrument/observatory from the payload** and flag for user/manual review. Do
+  **not** send a bare `name`: the no-identifier path is a case-sensitive `filter(name=…, type=…).first()`,
+  so a bare name matching several identically-named rows binds to an arbitrary one — the same silent
+  mis-link a wrong identifier causes. A collision flag is a hard blocker for the approval gate.
+- Otherwise send the single chosen row's `name` plus its SPASE `identifier`. If **no SPASE row matches**,
+  do **not** immediately free-type a bare name: the no-identifier fallback `filter(name=…, type=…).first()`
+  runs over the **whole table**, including the ~63 legacy non-SPASE rows. Check the **full, unfiltered**
+  endpoint for any plausible same-type row — exact match first, then case-insensitive/trimmed comparison
+  and obvious parenthetical-abbreviation variants. If one exists (a legacy row, several same-name rows,
+  or a near-existing row that differs only by casing/spacing/parenthetical abbreviation), a bare name
+  binds to it or creates a likely duplicate; in the legacy case it also re-links the software to a row
+  the backfill is removing (56 of 63 legacy rows have no SPASE twin), so **omit the entry and flag it**
+  instead. Only free-type the `name` (no `identifier`) when **no row of any kind** plausibly matches that
+  `name`+`type` (a genuinely new entry). Backend matching is `identifier` first, then the case-sensitive
+  `name`+`type` match, so the identifier is the reliable key. Never send `landing_url` (server-derived —
+  a HelioData mission page when one is confirmed, otherwise empty so the link falls back to the SPASE
+  `identifier`).

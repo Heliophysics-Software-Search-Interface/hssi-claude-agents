@@ -56,7 +56,7 @@ Verify the file is well-formed and complete:
 Check that values conform to expected formats:
 
 - **Dates** must be YYYY-MM-DD (Fields 10, 12)
-- **DOIs** must be full URLs: `https://doi.org/10.XXXX/XXXXX` (Fields 2, 12, 14, 27, 28, 29, 30, 31)
+- **DOIs** must be full URLs: `https://doi.org/10.XXXX/XXXXX` (Fields 2, 12, 14, 27, 28, 29, 30). **Field 31 (Instrument Identifier) is normally a SPASE Resource ID URL** (`https://spase-metadata.org/...`), not a DOI — do **not** flag a SPASE identifier as a malformed DOI (a DOI there is only a manual exception).
 - **URLs** must be complete with protocol (Fields 3, 24, 33)
 - **Author names** should follow "Given Name, Initials, Surname" convention (Field 6)
 - **ORCIDs** must be full URLs: `https://orcid.org/XXXX-XXXX-XXXX-XXXX` (Field 6)
@@ -168,6 +168,46 @@ Actively look for metadata the extractor might have missed:
 
 5. **Check for related instruments/observatories** not mentioned:
    - Search README and docs for instrument or mission names
+   - **Apply the "designed to support" relevance bar to what's listed and what's missing.** An
+     instrument/observatory belongs in Field 31/32 only if the software directly works with that
+     specific instrument's/observatory's data or is purpose-built for it. Flag **over-inclusion** —
+     entries that look like instrument/observatory-agnostic claims, tutorial/demo name-drops,
+     "configurable for" / "optimized for" mentions, or links that really belong to another field (a
+     *generic* file format → Input/Output Formats, a *generic/multi-mission* data source → Data Sources,
+     a *phenomenon* → Related Phenomena — but an instrument/mission-**specific** format or data source
+     legitimately stays, and an observatory-specific data source should be cross-listed here per
+     Field 17) — and recommend removing or moving only the genuinely-misfiled ones. Flag
+     **under-inclusion** — an instrument/observatory the software is genuinely designed to support but
+     that is missing from 31/32. (A genuinely-supported instrument that is merely hard to resolve is
+     still *related* — it should be resolved or marked `NEEDS MANUAL RESOLUTION`, not dropped.)
+   - For any instrument/mission found, check it resolves to HSSI's controlled vocabulary at
+     `/api/models/InstrumentObservatory/rows/all/`. The endpoint returns the whole vocabulary
+     (~7,700 rows) in `data[]` — fetch it once to a file and filter with `grep`/`jq`/`python` rather
+     than loading every row into context (`?columns=id,name,identifier,type,abbreviation` drops the large
+     `definition`; keep `id`, or the API returns an empty `data[]`). **Consider only SPASE-backed rows** (`identifier.startswith("https://spase-metadata.org/")`)
+     — the list also holds ~60 legacy rows (blank or `helio.data.nasa.gov/...` identifiers) that must
+     be ignored (rely on the prefix filter, not the count). **Normalize `.html`** — ~40+ identifiers
+     exist in both bare and `.html` forms (e.g. `.../SDO/AIA` and `.../SDO/AIA.html`); treat them as one
+     and prefer the non-`.html` row. Match on multiple signals restricted to the right `type`
+     (1 = instrument, 2 = observatory): the row `name`, its `abbreviation`, source parenthetical
+     aliases, and the SPASE **identifier path segments** (platform/mission evidence, e.g.
+     `.../GOES/17/SUVI`). Prefer `SMWG/...` only as a tie-breaker among same-name duplicates (a single
+     non-SMWG match like `ESA/Observatory/SolarOrbiter` is still correct). Recommend that row's
+     canonical `name` (verbatim) and SPASE `identifier` rather than a free-typed string. **If several
+     SPASE candidates remain after namespace/platform evidence** (e.g. `Solar Ultraviolet Imager` →
+     GOES-16/17/18/19), flag it as an **unresolved collision that must be manually resolved before
+     submission** — do not recommend a bare `name`, because the backend's no-identifier path is a
+     case-sensitive `filter(name=…, type=…).first()` that silently binds a bare name to an arbitrary
+     same-name row. **Before endorsing any no-identifier (free-typed) value, check the full, unfiltered
+     endpoint for any plausible same-type row:** exact match first, then case-insensitive/trimmed
+     comparison and obvious parenthetical-abbreviation variants. If one exists — a same-name collision,
+     a **legacy non-SPASE row** (56 of the 63 legacy rows have no SPASE twin, e.g. `ELFIN`, `COSMIC-2`),
+     or a near-existing row that differs only by casing/spacing/parenthetical abbreviation — the bare
+     name would bind to it or create a likely duplicate, so flag it as **needs manual resolution**, not
+     as an acceptable value. A free-typed value is only acceptable when **no row of any kind** plausibly
+     matches that `name`+`type`. Treat any extractor entry already marked `NEEDS MANUAL RESOLUTION` as
+     unresolved (don't silently "fix" it into a submittable value). Also flag embedded-abbreviation
+     names (e.g. `Parker Solar Probe (PSP)`) and missing identifiers.
 
 6. **Verify "Not found" fields** — for each field marked "Not found", spend a moment confirming it truly cannot be determined from available sources
 

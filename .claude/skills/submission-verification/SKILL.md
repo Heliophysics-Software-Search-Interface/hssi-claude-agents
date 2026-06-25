@@ -113,7 +113,7 @@ These differences are expected between submitted and stored forms:
 
 4. **Version sub-keys** — Submitted `version.number/releaseDate/description/versionPid` may be flattened to top-level fields (`versionNumber`, `versionDate`, `versionDescription`, etc.) or stored under snake_case (`release_date`, `version_pid`).
 
-5. **`relatedObservatories[].identifier` → `relatedObservatories[].relatedObservatoryIdentifier`** — Identifier key may be renamed in stored form.
+5. **`relatedObservatories[].identifier` → `relatedObservatories[].relatedObservatoryIdentifier`** and **`relatedInstruments[].identifier` → `relatedInstruments[].relatedInstrumentIdentifier`** — The identifier key is renamed in the stored form (confirmed in `forms/names.py`). Match on these renamed keys when verifying, not the submitted `identifier`, to avoid false verification failures.
 
 6. **Controlled-list values as objects vs strings** — Arrays of strings in the submission may appear as arrays of objects with a `name` field (or vice versa), or as database IDs.
 

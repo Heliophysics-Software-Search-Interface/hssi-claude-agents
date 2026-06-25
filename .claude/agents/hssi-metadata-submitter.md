@@ -94,7 +94,7 @@ Execute these steps in order:
 - Map each usable section to its corresponding API field
 - Produce a root JSON array with one submission object
 - For "Not found" sections, omit the field entirely
-- Strip any source annotations or prose notes from values — extract only the actual data
+- Strip any source annotations or prose notes from values — extract only the actual data. **Exception:** a `relatedInstruments`/`relatedObservatories` entry marked `NEEDS MANUAL RESOLUTION` (unresolved instrument/observatory collision) is **non-submittable** — do **not** strip the marker and submit the bare name. Omit that entry from the payload and carry it into the verification report (see Step 3E).
 
 > **Important:** Build the complete, correct payload in a single pass. Do NOT submit partial payloads, test payloads, or "probes" to the API to check if things work — every POST creates a permanent record and sends email. If you are unsure about a field's format or structure, consult the `submission-payload` skill, the example payload (`payloads/example_submission.json`), or ask the user. Never use the live API for experimentation.
 
@@ -112,6 +112,8 @@ Run three sub-checks:
   - If no exact match exists, flag for user review — do not silently drop or approximate
 
 **D. Organization-name sanity** — For `affiliation[].name` (Field 6) and `funder[].name` (Field 25), if a value is a bare acronym (e.g., `ESA` rather than `European Space Agency`), surface it in the verification report and ask the user before submitting. Do not auto-expand — the value should already be expanded upstream by the extractor. Also flag funder entries that combine multiple organizations into one value (the form expects one organization per entry).
+
+**E. Instrument/Observatory collision gate** — For `relatedInstruments`/`relatedObservatories`, if the extractor marked an entry `NEEDS MANUAL RESOLUTION`, or the validator / `submission-payload` resolution flagged an **unresolved match** — a name matching several controlled-list rows (e.g. the four `Solar Ultraviolet Imager` GOES-16/17/18/19 rows) **or** a name with no SPASE match that still exactly or plausibly matches an existing same-type row (case-insensitive/trimmed or obvious parenthetical-abbreviation variants, including legacy non-SPASE rows that `filter(name, type).first()` would bind to) — that entry must have been **omitted** from the payload (never sent as a bare name — see `submission-payload`). Surface every such omission in the report as requiring manual resolution. This is a **hard blocker for EXECUTE:** PREPARE may produce the report, but do **not** POST while any unresolved instrument/observatory entry remains — the user must pick the right SPASE identifier (or confirm dropping the entry) first.
 
 ### Step 4: Present Payload and Verification Report
 
@@ -131,6 +133,7 @@ If invoked directly (not via orchestrator), ask: "Ready to submit to [target URL
 
 ### Step 6: Submit (One Shot — No Retries)
 
+- **Do not POST if Step 3E flagged an unresolved instrument/observatory collision** — that is a hard blocker; return to the user for resolution first.
 - `POST /api/submission/` (note the trailing slash) to the target URL with `Content-Type: application/json`
 - Expect **HTTP 201 Created** on success
 - Capture the full response

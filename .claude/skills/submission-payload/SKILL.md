@@ -114,8 +114,71 @@ Each submission object **must** include these five fields:
 - `identifier` — URL (typically ROR for institutions)
 
 ### Instrument / Observatory
-- `name` (required) — string
-- `identifier` — URL
+- `name` (required) — string — **the matched controlled-list row's `name`, copied verbatim**. (That
+  name is typically the SPASE name with any parenthetical abbreviation already stripped — e.g.
+  `Parker Solar Probe`, not `Parker Solar Probe (PSP)` — but don't re-derive it; use the row's value.)
+- `identifier` — URL — the SPASE Resource ID (`https://spase-metadata.org/...`) from the controlled
+  list. **Strongly preferred:** it is the reliable de-duplication key (see Backend Quirks).
+- Do **not** send a `landing_url` — that field is server-derived (a HelioData mission page when one is
+  confirmed to exist; otherwise empty so the link falls back to the SPASE `identifier`) and is ignored
+  on submission. Agents only ever set `name` and `identifier`.
+
+**First apply the relevance gate, then resolve.** Only list instruments/observatories the software is *designed to support* (see Fields 31/32 "When to include it" in the field definitions / extractor relevance gate); the steps below resolve the entries that have already passed it.
+
+**How to resolve against the controlled list** (`/api/models/InstrumentObservatory/rows/all/`):
+
+1. **Fetch once to a file; filter locally.** The endpoint returns the entire vocabulary (~7,700 rows)
+   in `data[]` — do **not** load it all into context. Save the response to a file (e.g. `curl`/Bash)
+   and filter it with `grep`/`jq`/`python`. You can request
+   `?columns=id,name,identifier,type,abbreviation` to drop the large `definition` field (keep `id` —
+   the API returns an empty `data[]` if it's omitted).
+2. **Filter to SPASE-backed rows only** — keep rows where
+   `identifier.startswith("https://spase-metadata.org/")`. The list also holds ~60 **legacy** rows
+   (blank identifiers or a `helio.data.nasa.gov/...` URL) that are not canonical — never resolve to
+   them, or you reintroduce the duplicates the backfill is removing. (That count shrinks as the
+   backfill runs; rely on the SPASE-prefix filter, not the number.)
+3. **Normalize `.html` identifiers.** ~40+ SPASE identifiers exist in both a bare and a `.html` form
+   (e.g. `.../SMWG/Instrument/SDO/AIA` and `.../SMWG/Instrument/SDO/AIA.html`). Treat them as the same
+   resource and **prefer the non-`.html` identifier** when both are present, so you don't split links
+   across two rows for one instrument.
+4. **Match on multiple signals**, not just the canonical name. Repos often mention only an acronym or
+   platform (`AIA`, `SDO`, `PSP`, `SUVI`). Compare your candidate against each row's `name`, its
+   `abbreviation`, the source's parenthetical aliases, and the **SPASE identifier path segments**
+   (which carry platform/mission evidence, e.g. `.../GOES/17/SUVI`). Restrict to the right `type`
+   (1 = instrument, 2 = observatory). Abbreviations are themselves often non-unique (e.g. `ELECTRON`
+   appears on both SMWG and CNES rows), so treat them as candidate signals that feed the collision
+   rule below — not as unique keys.
+5. **Prefer the `SMWG/...` namespace as a tie-breaker** among same-name duplicates (the authoritative
+   registry) over project archives like `CNES/...`. This is *only* a tie-breaker: a single non-SMWG
+   match is still correct (e.g. Solar Orbiter's canonical row is `ESA/Observatory/SolarOrbiter`).
+   The canonical SMWG `name` is sometimes the long form (e.g. `SMWG/Observatory/THEMIS` is named
+   "Time History of Events and Macroscale Interactions during Substorms", not "THEMIS"). **Copy the
+   matched row's `name` verbatim** — don't re-derive it.
+6. **On an unresolved collision, omit the entry entirely.** If more than one SPASE candidate still
+   remains after namespace and platform/mission evidence (e.g. `Solar Ultraviolet Imager` matches four
+   instrument rows, one each for GOES-16/17/18/19), **do not include the instrument/observatory in the
+   payload at all** — leave it out and flag it for user/manual review. Do **not** fall back to emitting
+   the bare `name`: the backend's no-identifier path is a case-sensitive `filter(name=…, type=…).first()`
+   (see Backend Quirks), so a bare name that matches several identically-named rows silently binds to an
+   **arbitrary** one — the same mis-link a wrong identifier would cause. Omission is the only safe
+   option, and the orchestrator's approval gate must treat a collision flag as a **hard blocker**.
+7. Otherwise emit the single chosen row's `name` + SPASE `identifier`. If **no SPASE row matches**, do
+   **not** immediately free-type a bare name — the backend's no-identifier fallback is
+   `filter(name=…, type=…).first()` over the **whole table**, including the ~63 legacy non-SPASE rows.
+   First check the **full, unfiltered** endpoint for any plausible same-type row (legacy included):
+   exact match first, then case-insensitive/trimmed comparison and obvious parenthetical-abbreviation
+   variants (e.g. `Parker Solar Probe (PSP)` vs. `Parker Solar Probe`).
+   - If **any** plausible `name`+`type` row exists (a legacy non-SPASE row, several same-name rows, or
+     a near-existing row that differs only by casing/spacing/parenthetical abbreviation), a bare name
+     would silently bind to it or create a likely duplicate — re-linking the software to exactly the
+     legacy rows the backfill is removing in the legacy case (56 of the 63 legacy rows have no SPASE
+     twin, so this is common, e.g. `ELFIN`, `COSMIC-2`, `ACE (Advanced Composition Explorer)`). **Omit
+     the entry and flag it for manual review** instead.
+   - Only when **no row of any kind** plausibly matches that `name`+`type` is it safe to free-type the
+     `name` with no `identifier` — that genuinely creates a new row rather than binding to an existing
+     one or duplicating a near-existing row.
+   Always surface free-typed or omitted entries to the user. (Net rule: emitting a bare name is safe
+   **only** when the full vocab has zero plausible `name`+`type` matches.)
 
 ### Award
 - `name` (required) — string
@@ -219,6 +282,7 @@ Normalize values to **exact** strings from the `name` field in these endpoints o
 | Data Sources | `/api/models/DataInput/rows/all/` |
 | Related Phenomena | `/api/models/Phenomena/rows/all/` |
 | License | `/api/models/License/rows/all/` |
+| Related Instruments / Observatories | `/api/models/InstrumentObservatory/rows/all/` (`type` 1 = instrument, 2 = observatory; **filter to SPASE-backed `identifier`s** — see Instrument / Observatory above) |
 
 **How to use:** Fetch each relevant endpoint, extract the `name` field from each row, and normalize your metadata values to match exactly. If an extracted value doesn't match any controlled-list entry, flag it for user review rather than silently dropping it.
 
@@ -254,7 +318,7 @@ Normalize values to **exact** strings from the `name` field in these endpoints o
    - Person: by `identifier` (ORCID) first, then by `givenName`+`familyName`
    - Submitter: by `email` (case-insensitive)
    - Organization: by `identifier` first, then by `name` (case-insensitive)
-   - InstrumentObservatory: by `identifier` first, then by `name`+`type`
+   - InstrumentObservatory: by `identifier` first, then by `name`+`type`. **The name fallback is a case-sensitive exact match** (`filter(name=..., type=...).first()`, unlike the case-insensitive matching used for most other models), so any drift in spelling, casing, or an embedded abbreviation (`Parker Solar Probe (PSP)` vs the canonical `Parker Solar Probe`) silently creates a **duplicate** row. And because it takes `.first()`, a name that exactly matches **several** identically-named rows (e.g. the four `Solar Ultraviolet Imager` GOES rows) binds to an **arbitrary** one — which is why a collision must be omitted entirely, not sent as a bare name (see the resolution steps under Instrument / Observatory). Always send the SPASE `identifier` to bind to the canonical entry reliably.
    - Award: by `identifier` first, then by `name` (case-insensitive)
    - RelatedItem (publications/datasets/software): by `identifier` (URL)
    - Keyword: case-insensitive name match, created if missing
