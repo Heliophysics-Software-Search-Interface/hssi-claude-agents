@@ -233,6 +233,7 @@
 
 **Source:** README.md, scientific context
 **Note:** The software is designed to work with data from the Mars Global Surveyor Radio Science Subsystem used for radio occultation experiments
+**SPASE follow-up note (2026-06-26):** Confirmed this is a real PDS instrument/investigation (`INSTRUMENT_ID = RSS`, `INSTRUMENT_NAME = RADIO SCIENCE SUBSYSTEM`, PDS4 context `urn:nasa:pds:context:instrument:mgs.rss`), but the current HSSI/SPASE vocabulary has no corresponding SPASE instrument row for MGS RSS. HSSI should omit this instrument association until SPASE adds a canonical record and HSSI re-fetches the vocabulary.
 
 ### 32. Related Observatories (OPTIONAL)
 **Value:**
