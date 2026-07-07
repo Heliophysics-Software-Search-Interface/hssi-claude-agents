@@ -292,9 +292,9 @@ row into context (`?columns=id,name,identifier,type,abbreviation` drops the larg
 keep `id`, or the API returns an empty `data[]`).
 Then:
 
-- **Keep only SPASE-backed rows** — `identifier.startswith("https://spase-metadata.org/")`. The list
-  also holds ~60 legacy rows (blank or `helio.data.nasa.gov/...` identifiers) that must never be
-  matched; rely on the prefix filter, not the count (it shrinks as the backfill runs).
+- **Every row is SPASE-backed** — each `identifier` is a `https://spase-metadata.org/...` URL. Keeping
+  `identifier.startswith("https://spase-metadata.org/")` is fine as a cheap sanity guard, but it no
+  longer excludes anything: there are no non-SPASE rows left to filter out.
 - **Normalize `.html`** — ~40+ identifiers exist in both bare and `.html` forms (e.g.
   `.../SDO/AIA` and `.../SDO/AIA.html`); treat them as one resource and prefer the non-`.html` row.
 - **Match on multiple signals** — the row `name`, its `abbreviation`, source parenthetical aliases,
@@ -312,16 +312,14 @@ Then:
   **not** send a bare `name`: the no-identifier path is a case-sensitive `filter(name=…, type=…).first()`,
   so a bare name matching several identically-named rows binds to an arbitrary one — the same silent
   mis-link a wrong identifier causes. A collision flag is a hard blocker for the approval gate.
-- Otherwise send the single chosen row's `name` plus its SPASE `identifier`. If **no SPASE row matches**,
+- Otherwise send the single chosen row's `name` plus its SPASE `identifier`. If **no row matches exactly**,
   do **not** immediately free-type a bare name: the no-identifier fallback `filter(name=…, type=…).first()`
-  runs over the **whole table**, including the ~63 legacy non-SPASE rows. Check the **full, unfiltered**
-  endpoint for any plausible same-type row — exact match first, then case-insensitive/trimmed comparison
-  and obvious parenthetical-abbreviation variants. If one exists (a legacy row, several same-name rows,
-  or a near-existing row that differs only by casing/spacing/parenthetical abbreviation), a bare name
-  binds to it or creates a likely duplicate; in the legacy case it also re-links the software to a row
-  the backfill is removing (56 of 63 legacy rows have no SPASE twin), so **omit the entry and flag it**
-  instead. Only free-type the `name` (no `identifier`) when **no row of any kind** plausibly matches that
-  `name`+`type` (a genuinely new entry). Backend matching is `identifier` first, then the case-sensitive
-  `name`+`type` match, so the identifier is the reliable key. Never send `landing_url` (server-derived —
-  a HelioData mission page when one is confirmed, otherwise empty so the link falls back to the SPASE
-  `identifier`).
+  runs case-sensitively over the **whole table**. Check the vocabulary for any plausible same-type row —
+  exact match first, then case-insensitive/trimmed comparison and obvious parenthetical-abbreviation
+  variants. If one exists (several same-name rows, or a near-existing row that differs only by
+  casing/spacing/parenthetical abbreviation), a bare name binds to an arbitrary one or creates a
+  near-duplicate SPASE row, so **omit the entry and flag it** instead. Only free-type the `name` (no
+  `identifier`) when **no row** plausibly matches that `name`+`type` (a genuinely new entry). Backend
+  matching is `identifier` first, then the case-sensitive `name`+`type` match, so the identifier is the
+  reliable key. Never send `landing_url` (server-derived — a HelioData mission page when one is
+  confirmed, otherwise empty so the link falls back to the SPASE `identifier`).

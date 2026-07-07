@@ -132,11 +132,10 @@ Each submission object **must** include these five fields:
    and filter it with `grep`/`jq`/`python`. You can request
    `?columns=id,name,identifier,type,abbreviation` to drop the large `definition` field (keep `id` —
    the API returns an empty `data[]` if it's omitted).
-2. **Filter to SPASE-backed rows only** — keep rows where
-   `identifier.startswith("https://spase-metadata.org/")`. The list also holds ~60 **legacy** rows
-   (blank identifiers or a `helio.data.nasa.gov/...` URL) that are not canonical — never resolve to
-   them, or you reintroduce the duplicates the backfill is removing. (That count shrinks as the
-   backfill runs; rely on the SPASE-prefix filter, not the number.)
+2. **Every row is SPASE-backed.** Each `identifier` is a `https://spase-metadata.org/...` URL, so the
+   whole vocabulary is canonical. You may keep `identifier.startswith("https://spase-metadata.org/")`
+   as a cheap sanity guard, but it no longer filters anything out — there are no non-SPASE rows
+   left to exclude.
 3. **Normalize `.html` identifiers.** ~40+ SPASE identifiers exist in both a bare and a `.html` form
    (e.g. `.../SMWG/Instrument/SDO/AIA` and `.../SMWG/Instrument/SDO/AIA.html`). Treat them as the same
    resource and **prefer the non-`.html` identifier** when both are present, so you don't split links
@@ -162,19 +161,16 @@ Each submission object **must** include these five fields:
    (see Backend Quirks), so a bare name that matches several identically-named rows silently binds to an
    **arbitrary** one — the same mis-link a wrong identifier would cause. Omission is the only safe
    option, and the orchestrator's approval gate must treat a collision flag as a **hard blocker**.
-7. Otherwise emit the single chosen row's `name` + SPASE `identifier`. If **no SPASE row matches**, do
-   **not** immediately free-type a bare name — the backend's no-identifier fallback is
-   `filter(name=…, type=…).first()` over the **whole table**, including the ~63 legacy non-SPASE rows.
-   First check the **full, unfiltered** endpoint for any plausible same-type row (legacy included):
-   exact match first, then case-insensitive/trimmed comparison and obvious parenthetical-abbreviation
-   variants (e.g. `Parker Solar Probe (PSP)` vs. `Parker Solar Probe`).
-   - If **any** plausible `name`+`type` row exists (a legacy non-SPASE row, several same-name rows, or
-     a near-existing row that differs only by casing/spacing/parenthetical abbreviation), a bare name
-     would silently bind to it or create a likely duplicate — re-linking the software to exactly the
-     legacy rows the backfill is removing in the legacy case (56 of the 63 legacy rows have no SPASE
-     twin, so this is common, e.g. `ELFIN`, `COSMIC-2`, `ACE (Advanced Composition Explorer)`). **Omit
-     the entry and flag it for manual review** instead.
-   - Only when **no row of any kind** plausibly matches that `name`+`type` is it safe to free-type the
+7. Otherwise emit the single chosen row's `name` + SPASE `identifier`. If **no row matches exactly**, do
+   **not** immediately free-type a bare name — the backend's no-identifier fallback is a case-sensitive
+   `filter(name=…, type=…).first()` over the **whole table**. First check the vocabulary for any
+   plausible same-type row: exact match first, then case-insensitive/trimmed comparison and obvious
+   parenthetical-abbreviation variants (e.g. `Parker Solar Probe (PSP)` vs. `Parker Solar Probe`).
+   - If **any** plausible `name`+`type` row exists (several same-name rows, or a near-existing row that
+     differs only by casing/spacing/parenthetical abbreviation), a bare name would silently bind to an
+     arbitrary one or create a near-duplicate SPASE row. **Omit the entry and flag it for manual
+     review** instead.
+   - Only when **no row** plausibly matches that `name`+`type` is it safe to free-type the
      `name` with no `identifier` — that genuinely creates a new row rather than binding to an existing
      one or duplicating a near-existing row.
    Always surface free-typed or omitted entries to the user. (Net rule: emitting a bare name is safe
