@@ -184,9 +184,10 @@ Actively look for metadata the extractor might have missed:
      `/api/models/InstrumentObservatory/rows/all/`. The endpoint returns the whole vocabulary
      (~7,700 rows) in `data[]` — fetch it once to a file and filter with `grep`/`jq`/`python` rather
      than loading every row into context (`?columns=id,name,identifier,type,abbreviation` drops the large
-     `definition`; keep `id`, or the API returns an empty `data[]`). **Consider only SPASE-backed rows** (`identifier.startswith("https://spase-metadata.org/")`)
-     — the list also holds ~60 legacy rows (blank or `helio.data.nasa.gov/...` identifiers) that must
-     be ignored (rely on the prefix filter, not the count). **Normalize `.html`** — ~40+ identifiers
+     `definition`; keep `id`, or the API returns an empty `data[]`). **Every row is SPASE-backed** — each
+     `identifier` is a `https://spase-metadata.org/...` URL; `identifier.startswith("https://spase-metadata.org/")`
+     is fine as a cheap sanity guard but no longer excludes anything (no non-SPASE rows remain).
+     **Normalize `.html`** — ~40+ identifiers
      exist in both bare and `.html` forms (e.g. `.../SDO/AIA` and `.../SDO/AIA.html`); treat them as one
      and prefer the non-`.html` row. Match on multiple signals restricted to the right `type`
      (1 = instrument, 2 = observatory): the row `name`, its `abbreviation`, source parenthetical
@@ -198,14 +199,13 @@ Actively look for metadata the extractor might have missed:
      GOES-16/17/18/19), flag it as an **unresolved collision that must be manually resolved before
      submission** — do not recommend a bare `name`, because the backend's no-identifier path is a
      case-sensitive `filter(name=…, type=…).first()` that silently binds a bare name to an arbitrary
-     same-name row. **Before endorsing any no-identifier (free-typed) value, check the full, unfiltered
-     endpoint for any plausible same-type row:** exact match first, then case-insensitive/trimmed
-     comparison and obvious parenthetical-abbreviation variants. If one exists — a same-name collision,
-     a **legacy non-SPASE row** (56 of the 63 legacy rows have no SPASE twin, e.g. `ELFIN`, `COSMIC-2`),
+     same-name row. **Before endorsing any no-identifier (free-typed) value, check the vocabulary for
+     any plausible same-type row:** exact match first, then case-insensitive/trimmed
+     comparison and obvious parenthetical-abbreviation variants. If one exists — a same-name collision
      or a near-existing row that differs only by casing/spacing/parenthetical abbreviation — the bare
-     name would bind to it or create a likely duplicate, so flag it as **needs manual resolution**, not
-     as an acceptable value. A free-typed value is only acceptable when **no row of any kind** plausibly
-     matches that `name`+`type`. Treat any extractor entry already marked `NEEDS MANUAL RESOLUTION` as
+     name would bind to an arbitrary one or create a near-duplicate SPASE row, so flag it as **needs
+     manual resolution**, not as an acceptable value. A free-typed value is only acceptable when **no
+     row** plausibly matches that `name`+`type`. Treat any extractor entry already marked `NEEDS MANUAL RESOLUTION` as
      unresolved (don't silently "fix" it into a submittable value). Also flag embedded-abbreviation
      names (e.g. `Parker Solar Probe (PSP)`) and missing identifiers.
 
