@@ -59,7 +59,7 @@ Check that values conform to expected formats:
 - **DOIs** must be full URLs: `https://doi.org/10.XXXX/XXXXX` (Fields 2, 12, 14, 27, 28, 29, 30). **Field 31 (Instrument Identifier) is normally a SPASE Resource ID URL** (`https://spase-metadata.org/...`), not a DOI — do **not** flag a SPASE identifier as a malformed DOI (a DOI there is only a manual exception).
 - **URLs** must be complete with protocol (Fields 3, 24, 33)
 - **Author names** should follow "Given Name, Initials, Surname" convention (Field 6)
-- **ORCIDs** must be full URLs: `https://orcid.org/XXXX-XXXX-XXXX-XXXX` (Field 6)
+- **Author identifiers** must be full URLs (Field 6): an **ORCID** (`https://orcid.org/XXXX-XXXX-XXXX-XXXX`) for a person author, or a **ROR** (`https://ror.org/XXXXXXXXX`) for an author that is an organization. Do **not** flag a `ror.org` author identifier as an error — HSSI treats such an author as an organization.
 - **ROR identifiers** must be full URLs: `https://ror.org/XXXXXXXXX` (Fields 6, 11, 25)
 - **Software Functionality** values must be from the allowed list, written as `Parent: Child` for subcategories (Field 4). **Do NOT flag the space after the colon as an error.** The HSSI API strips whitespace around the colon (the graph-list parser does `part.strip()` on `value.split(":")`), so `Parent: Child` and `Parent:Child` are equivalent; the API stores and returns the **with-space** form, which the `submission-payload` skill specifies as canonical. The no-space listing in `resource_submission_form_fields.md` is just the raw taxonomy, not a spacing rule. Also confirm every subcategory has its bare parent top-level category listed as a separate value (see the `software-functionality` skill).
 - **Related Region** values must be from: Earth Atmosphere, Earth Magnetosphere, Interplanetary Space, Planetary Magnetospheres, Solar Environment (Field 5)
@@ -99,7 +99,7 @@ Cross-reference each metadata value against primary sources in the repository. F
   - .zenodo.json
   - Package metadata (setup.py, pyproject.toml, setup.cfg, package.json)
 - Flag authors present in sources but missing from metadata
-- Verify ORCIDs match the right person (check ORCID URL resolves)
+- Verify author identifiers resolve and match the right entity: an **ORCID** should match the right person; a **ROR** identifies an *organization* author (a lab/consortium/institution credited as an author) — check the ROR resolves to that organization, and do not flag it as a malformed person ORCID
 - **Affiliation organization names should be the full institutional name, not acronyms.** Flag any affiliation that is a bare acronym (e.g., `ESA` instead of `European Space Agency`) as a WARNING with `Suggested fix: expand to the full institutional name`. Do not flag values that include an acronym alongside the full name (e.g., "European Space Agency (ESA)").
 
 **Field 7 (Software Name):**

@@ -120,9 +120,9 @@ Before extracting metadata, **always `git pull`** the repo to ensure it reflects
    Returns `{"data": [{"id": "<uuid>", "name": "..."}, ...]}`. Because the match is exact (case-insensitive only — no URL normalization on the server), try canonical variants in order before giving up: with/without trailing `/`, with/without `.git` suffix, and for GitHub `tree`/`blob` URLs the bare `https://github.com/<owner>/<repo>` form. Use the first variant that returns a non-empty `data` array.
 2. **Fallback — search by name:**
    ```
-   GET <target_url>/api/search/?q=<name>
+   GET <target_url>/api/search/?q=<name>&mode=id
    ```
-   If multiple results, present them and ask the user to choose.
+   `mode=id` is required — since hssi-website PR #55 this endpoint defaults to `mode=jsonld` (full JSON-LD objects); `mode=id` returns `{"results": ["<uuid>", ...]}`. If multiple results, fetch each via `/api/view/software/<uid>/`, present them, and ask the user to choose.
 3. **If not found:** Tell the user the software isn't in HSSI yet and suggest using the normal extraction+submission pipeline instead.
 
 ### Step 2: Fetch Current HSSI Metadata
@@ -322,3 +322,5 @@ When comparing fresh metadata against HSSI:
 ### Organization names — expand acronyms
 
 When extracting fresh values for **Author Affiliation (Field 6)** or **Funder (Field 25)**, record the full institutional name instead of an acronym (example: `NASA` → `National Aeronautics and Space Administration`). When diffing against HSSI, do not flag an existing full name as STALE just because the fresh source uses an acronym — prefer the full-name form. For Funder, also keep one organization per entry rather than combining multiple into a single value.
+
+When an author is itself an **organization** (a lab, consortium, or institution credited as an author), its identifier is a **ROR** (`https://ror.org/…`) rather than an ORCID, and HSSI treats such an author as an organization. During refresh/enrich, match and dedupe these authors by that ROR identifier (exactly as ORCID is used for people), and don't flag a `ror.org` author identifier as invalid.

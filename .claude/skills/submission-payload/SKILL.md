@@ -102,8 +102,10 @@ Each submission object **must** include these five fields:
 ### Person
 - `givenName` (required) — string
 - `familyName` (required) — string
-- `identifier` — URL (typically ORCID)
+- `identifier` — URL: an **ORCID** for a person author, or a **ROR** for an organization author (see "Organization authors" below)
 - `affiliation` — array of Organization objects
+
+**Organization authors.** An author may be an organization (a lab, consortium, or institution credited as an author) rather than a person. To submit one, put its **ROR URL** in `identifier` (e.g., `https://ror.org/03c3r2d17`). HSSI derives org-ness server-side purely from the `ror.org` identifier — there is no separate flag — and renders the author as a schema.org `Organization`, with its affiliations as `parentOrganization`. `givenName` and `familyName` are still both required and non-empty, and the stored name is `givenName + " " + familyName`, so **split the org name on the first whitespace**: first token → `givenName`, the remainder → `familyName` (e.g., "The SunPy Community" → `givenName: "The"`, `familyName: "SunPy Community"`). A single-token org name (e.g., "NASA") can't satisfy the non-empty `familyName` rule — flag it to the user rather than guessing a split. This applies to **authors only**; contributors remain person/ORCID-only.
 
 ### Submitter
 - `email` (required) — string
@@ -311,7 +313,7 @@ Normalize values to **exact** strings from the `name` field in these endpoints o
 2. **Email notifications** — The endpoint sends a confirmation email to the submitter after the DB commit, via `email_existing_edit_link()`. The email send happens **outside** the atomic transaction (after it commits), so an email failure will NOT roll back the submission — but it can still produce an error response even though the DB record was created. Always check the record exists before concluding that a submission failed.
 
 3. **Object deduplication** — The backend matches existing DB records:
-   - Person: by `identifier` (ORCID) first, then by `givenName`+`familyName`
+   - Person: by `identifier` (ORCID for a person, or ROR for an organization author) first, then by `givenName`+`familyName`
    - Submitter: by `email` (case-insensitive)
    - Organization: by `identifier` first, then by `name` (case-insensitive)
    - InstrumentObservatory: by `identifier` first, then by `name`+`type`. **The name fallback is a case-sensitive exact match** (`filter(name=..., type=...).first()`, unlike the case-insensitive matching used for most other models), so any drift in spelling, casing, or an embedded abbreviation (`Parker Solar Probe (PSP)` vs the canonical `Parker Solar Probe`) silently creates a **duplicate** row. And because it takes `.first()`, a name that exactly matches **several** identically-named rows (e.g. the four `Solar Ultraviolet Imager` GOES rows) binds to an **arbitrary** one — which is why a collision must be omitted entirely, not sent as a bare name (see the resolution steps under Instrument / Observatory). Always send the SPASE `identifier` to bind to the canonical entry reliably.

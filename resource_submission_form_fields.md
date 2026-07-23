@@ -161,7 +161,7 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 **Sub-fields:**
 - **Authors** (MANDATORY): Author name
-- **Author Identifier** (RECOMMENDED): The identifier of the author, such as the ORCiD. Enter the complete identifier (e.g., https://orcid.org/0000-0003-0875-2023)
+- **Author Identifier** (RECOMMENDED): The identifier of the author. For a person author, this is the ORCiD (e.g., https://orcid.org/0000-0003-0875-2023). For an author that is an **organization** (a lab, consortium, or institution credited as an author), use its ROR instead (e.g., https://ror.org/03c3r2d17) — HSSI recognizes a ror.org identifier and treats that author as an organization. Enter the complete identifier URL.
 - **Affiliation** (RECOMMENDED, multi-entry):
   - **Organization**: Complete name without acronyms (e.g., Center for Astrophysics Harvard & Smithsonian)
   - **Affiliation Identifier**: ROR identifier if one exists (e.g., https://ror.org/03c3r2d17)
@@ -620,7 +620,7 @@ Each stage adds more metadata, with later stages filling in gaps or providing mo
 - **Concise Description** (from short descriptions ≤200 chars or truncated description)
 - **Authors** with sub-fields:
   - Author name (from `attributes.creators[].name` or `givenName` + `familyName`)
-  - Author Identifier / ORCID (from `attributes.creators[].nameIdentifiers[]` where `nameIdentifierScheme` = "ORCID")
+  - Author Identifier (from `attributes.creators[].nameIdentifiers[]`): an **ORCID** (`nameIdentifierScheme` = "ORCID") for person creators, or a **ROR** (`nameIdentifierScheme` = "ROR", usually with `nameType` = "Organizational") for organization creators
   - Affiliations (from `attributes.creators[].affiliation[]`)
 - **Publisher** (from `attributes.publisher`)
 - **Publication Date** (from `attributes.dates[]` where `dateType` = "Issued")
