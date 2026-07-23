@@ -82,12 +82,19 @@ Content-Type: application/json
 **Key behaviors:**
 - The URL `<uid>` must reference a visible Software entry (404 otherwise)
 - Only fields present in the body are updated; omitted fields are untouched
-- For M2M fields (authors, keywords, etc.), the provided list **fully replaces** that field
+- For M2M fields (authors, keywords, etc.), the provided list **fully replaces** that field — the API does **not** merge. To *add* to an M2M field without dropping anything, send the full intended identity-aware set = **`existing ∪ new`** (fetch the current values, union in the new ones). This is why enriching a shallow-but-non-empty M2M list (e.g. adding Software Functionality values to an entry that already has one) still requires sending the existing values alongside the new ones.
 - Empty list `[]` clears the M2M; `null` clears nullable scalars
 - `submitter` is rejected with 400 — partial updates cannot rewrite the submitter
 - Touches the most recent `SubmissionInfo` on success: sets `modification_description = "Partial update via API: <fields>"` and bumps `date_modified` (auto_now). Does NOT create a new SubmissionInfo
 - Does NOT send confirmation emails
 - Wrapped in `transaction.atomic()`
+
+**Shared structured-entity limitations:**
+
+- Top-level M2M associations such as `authors`, `funder`, `award`, `relatedInstruments`, and `relatedObservatories` are replaced by the complete submitted list.
+- People, organizations, awards, instruments, and observatories are shared database entities. When an identifier matches an existing entity, PATCH reuses it and does **not** overwrite its nonblank name. Identity matching therefore prevents duplicates but does not make a conflicting label equivalent or patchable.
+- Author affiliations are added to the matched Person; the endpoint does not remove existing affiliations. Union affiliations for matched authors. Treat any requested affiliation removal as NON-PATCHABLE.
+- Omit shared-entity renames and nested affiliation removals from the PATCH and report them as hard blockers requiring the CSV/manual database workflow. Top-level association removals are still supported when the user approves the complete replacement list.
 
 ### GET /api/list/software/?repo_url=<url> — Software Lookup
 
@@ -121,6 +128,40 @@ If the canonical form returns no match, fall back to a name search via `/api/sea
 
 ---
 
+## Transient Update Plan
+
+PREPARE and EXECUTE communicate through a transient update-plan file under the gitignored `payloads/` directory. The wrapper preserves the exact approved target, identity, baseline, and PATCH body across separate agent invocations:
+
+```json
+{
+  "softwareId": "<uuid>",
+  "softwareName": "<display name>",
+  "mode": "apply",
+  "targetUrl": "https://hssi.hsdcloud.org",
+  "metadataFile": "<working hssi_metadata.md path>",
+  "preparedAt": "<ISO-8601 timestamp>",
+  "baseline": {
+    "<only fields in patch>": "<normalized current HSSI values>"
+  },
+  "patch": {
+    "<only approved changed fields>": "<approved final API values>"
+  },
+  "blockers": []
+}
+```
+
+- `softwareId` and `targetUrl` identify the exact PATCH URL; EXECUTE must not infer or override either.
+- `mode` records the actual Updater mode; the file-driven full-refresh workflow uses `apply`.
+- `baseline` contains exactly the fields in `patch`, represented in the same normalized API shapes used for comparison.
+- `patch` contains only changed metadata fields and never `submitter`.
+- `blockers` must exist and be empty before the plan can be approved or executed.
+- The HTTP body is the nested `patch` object only, never the wrapper.
+- The plan is disposable operational state. Do not commit it or treat it as the canonical metadata record.
+
+Immediately before PATCH, re-fetch the same UUID from the exact target and compare every recorded baseline field. Abort without sending anything if a value changed; return to PREPARE so the user can review and approve a newly based plan.
+
+---
+
 ## Field Shapes in the PATCH Body
 
 The PATCH body uses the **same key names and shapes** as the `/api/submission/` payload (both go through `SubmissionSerializer` in USER view). `submitter` is the only field rejected by the update path.
@@ -137,7 +178,6 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | `referencePublication` | String (DOI URL) | |
 | `publicationDate` | String (`YYYY-MM-DD`) | |
 | `logo` | String URL | |
-| `licenseFileURL` | String URL | |
 | `authors` | Array of Person objects | `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}` |
 | `publisher` | Organization object | `{name, identifier}` |
 | `license` | String | License name only — must match an existing `License.name` (case-insensitive) |
@@ -243,15 +283,19 @@ When comparing fresh metadata against HSSI data, classify each field as:
 |--------|---------|--------|
 | **MATCH** | Values equivalent | No update needed |
 | **STALE** | HSSI value differs, fresh value is clearly newer | Update (with approval) |
-| **ENRICHMENT** | HSSI field is empty, fresh metadata has a value | Add (with approval) |
+| **ENRICHMENT** | HSSI field is empty **— or, for an M2M field, the fresh set contains values HSSI lacks** | Add the new value(s), keeping any existing ones (with approval) |
 | **CONFLICT** | Both have values, unclear which is correct | User decides |
 | **HSSI-ONLY** | HSSI has value, fresh metadata doesn't | Keep — never remove without explicit approval |
+| **NON-PATCHABLE** | The desired change targets a shared-entity attribute or nested affiliation removal that PATCH cannot perform | Block PATCH; route to CSV/manual correction |
 
 ### Safety rules:
 
 - **Additive by default** — Never remove data (reduce authors, remove keywords) unless the user explicitly approves with a warning
+- **M2M enrichment is identity-aware set-union** — to add values to an M2M field, send `existing ∪ new` (the API replaces the whole field, it does not merge). Expand shallow non-empty lists (e.g. Software Functionality with only 1–2 values) rather than skipping them as "already populated." If the user explicitly approves a removal, send the complete approved final set; do not union the removed member back in.
+- **Match structured entries by stable identity before name without ignoring attributes** — authors by ORCID, then normalized name; author affiliations and organizations by ROR, then normalized name; awards by identifier, then normalized name; instruments and observatories by normalized SPASE identifier, then canonical name. For matched authors, union affiliations. After identity matching, separately compare labels and nested values; route non-PATCHable shared-entity differences through the blocker rule above. Compare scalar controlled-value and URL collections as normalized sets.
+- **Submitter is out of scope** — never include Field 1 in an update diff, baseline, or PATCH.
 - **One PATCH only** — If it fails, report and stop. No retries.
-- **Present diff before submitting** — Always show the user what will change
+- **Present the exact plan before submitting** — Always show the diff, complete update plan, and nested PATCH body the user is approving.
 
 ---
 
@@ -261,7 +305,8 @@ After a successful update:
 
 1. Re-fetch `GET /api/view/software/<uid>/` from the target URL (no auth required)
 2. For each field that was updated, confirm the new value is reflected
-3. Report any discrepancies
+3. Confirm the response did not report a field outside the nested `patch` as updated
+4. Report any discrepancies without retrying
 
 This is simpler than the submit verification because we only need to check the fields we changed, not all 33.
 

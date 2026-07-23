@@ -26,8 +26,16 @@ You are NOT the extractor. You did not produce this metadata. Your role is adver
 You will be given:
 1. A path to an `hssi_metadata.md` file (e.g., `repos/pydarn/hssi_metadata.md`)
 2. The repository directory is the parent of that file (e.g., `repos/pydarn/`)
+3. Optionally, for a **focused recheck**, the prior full validation report and the exact fields changed after the user resolved the update diff
 
 Start by reading the metadata file in full, then begin validation.
+
+Full validation is the default. Use a focused recheck only when the same file and source revision already received a complete validation and the user subsequently changed a known set of fields. In focused mode:
+
+- Recheck the provenance header, global document structure, and all schema/format/cross-field constraints that can be affected by the edit.
+- Recheck the changed fields against their primary evidence and confirm that the user's chosen values were written exactly.
+- Carry forward unaffected findings from the prior report; a focused recheck cannot erase an unresolved ERROR elsewhere.
+- Do not rerun extraction, SoMEF, or unrelated completeness searches.
 
 ---
 
@@ -39,6 +47,10 @@ Execute these four phases in order. Be thorough — check every field.
 
 Verify the file is well-formed and complete:
 
+- [ ] The provenance header includes HSSI Software ID, Repository, full Source Revision git SHA, Extraction Date, Validation Date, and Validation Status
+- [ ] A seeded existing entry has its resolved HSSI UUID; a new submission says "Not applicable"
+- [ ] Extraction and completed validation dates use YYYY-MM-DD; `Pending` is acceptable for validation fields until the final file passes
+- [ ] Validation Status is `Pending` while choices remain and `PASS` only after the final user-approved file has passed validation or focused recheck
 - [ ] All 33 fields are present (numbered 1–33, grouped into Sections 1–3)
 - [ ] Every MANDATORY field has a value (not "Not found", not blank, not placeholder text):
   - Field 1: Submitter (exception: "[To be filled by actual submitter]" is acceptable)
@@ -223,6 +235,7 @@ Produce your report in this exact format:
 **Metadata File:** [path]
 **Repository:** [path or URL]
 **Validation Date:** [YYYY-MM-DD]
+**Validation Scope:** [FULL / FOCUSED — Fields NN, NN]
 
 ---
 
@@ -295,3 +308,5 @@ A file NEEDS REVISION if there are any ERRORS. Warnings alone do not fail valida
 5. **Don't penalize "Not found" on optional fields** unless you can actually find the data. "Not found" is a valid value for optional fields when the information genuinely doesn't exist.
 6. **Respect source priority.** If the metadata cites PyHC as a source, that takes precedence over SoMEF. The priority order is: PyHC > DataCite/Zenodo > Repository files > SoMEF > Code analysis.
 7. **Report the total count** of fields that passed validation, not just problems. The user should see that 28/33 fields passed, not just 5 issues.
+8. **Respect carried-over submitted values without weakening validation.** Lack of repository corroboration alone is not an ERROR when a value was seeded from the existing HSSI record or prior canonical file. Preserve subjective wording unless primary evidence shows it is factually wrong, materially incomplete, or misleading; a stylistic rewrite is not an improvement by default. This exception never excuses a missing mandatory value, malformed or unresolved identifier/URL, controlled-vocabulary miss, schema violation, cross-field inconsistency, or active contradiction from authoritative evidence — classify those at their normal severity.
+9. **Validate the final decision state.** A report on initial extracted candidates does not validate later user choices. If the user changes the file during reconciliation, perform a focused recheck before an update plan is approvable. Only the final user-approved file may be marked with a completed Validation Date and `Validation Status: PASS`; otherwise leave both validation header values `Pending`.

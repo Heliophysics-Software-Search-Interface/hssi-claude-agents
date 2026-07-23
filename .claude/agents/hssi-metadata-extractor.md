@@ -2,8 +2,9 @@
 name: hssi-metadata-extractor
 description: >
   Extracts comprehensive metadata from software repositories for HSSI submission.
-  Produces hssi_metadata.md files. Use when the orchestrator needs metadata extracted
-  from a repo.
+  Produces hssi_metadata.md files. Can optionally be seeded with a software's
+  existing HSSI metadata and/or a prior hssi_metadata.md as a starting point. Use
+  when the orchestrator needs metadata extracted from a repo.
 tools: Read, Glob, Grep, Bash, WebFetch, WebSearch
 model: opus
 skills:
@@ -30,6 +31,25 @@ Extract all available metadata from the given software repository and produce a 
 You will be given:
 1. **Repo path** — local path to the repository (e.g., `repos/pydarn/`)
 2. Optionally, a **repository URL** if different from what's in the local repo's git remote
+3. Optionally, a **seed / baseline** to start from instead of a blank slate (see *Seeding From Existing Metadata*):
+   - the software's **current HSSI metadata** (JSON from `GET /api/view/software/<uid>/`), and/or
+   - an **existing `hssi_metadata.md`** from a previous extraction/submission
+4. When seeding from HSSI, the software's resolved **HSSI UUID**
+
+---
+
+## Seeding From Existing Metadata (optional)
+
+When you are given a **seed** (the software's current HSSI metadata and/or an existing `hssi_metadata.md`), use it as your **starting point** rather than extracting from a blank slate. This is faster and, importantly, respects how a prior submitter or curator intentionally represented the software. This matters especially when a maintainer supplied wording such as the name or description, but the HSSI view API does not identify the submitter: apply the respectful default to every seeded record rather than trying to infer maintainer status.
+
+- **Pre-populate** every field from the seed first. If both a prior `hssi_metadata.md` and live HSSI metadata are provided, live HSSI is the authoritative baseline for what is currently published. For scalar fields, keep a populated live HSSI value when the sources disagree and retain the prior-file value only as a documented candidate. For multi-valued fields, take the identity-aware union of values that either source has; do not concatenate conflicting scalar values. Match authors by ORCID and then normalized name, and for each matched author union affiliations by ROR and then normalized organization name so choosing one author object never discards affiliations from the other seed. Match other structured entries by stable identifier before normalized name.
+- **Then use the repository to fill gaps and find objectively newer or materially better values** — a newer release version, authoritative missing authors, missing functionality, unfilled optional fields, broken or moved URLs, and factual corrections supported by primary sources.
+- **Preserve editorial intent.** Do not replace a software name, description, concise description, or other subjective wording merely because you would phrase it differently. A stylistic alternative is not "fresh metadata." Keep the seeded value and note the alternative only if it reveals a material ambiguity.
+- **Allow evidence-backed improvements.** Where primary evidence proves that a seeded value is stale, factually wrong, or materially incomplete, write the supported candidate and clearly note why it supersedes the seed. Leave genuine conflicts and proposed removals visible for the validator and user approval; never silently discard a seeded value.
+- **Record provenance** in each field's source note (e.g. "From existing HSSI record" / "From prior hssi_metadata.md" / "From CITATION.cff") so the validator can tell repo-evidenced values from carried-over submitted ones.
+- **Still produce a complete `hssi_metadata.md`** with all 33 fields — seeding changes where you start, not what you output.
+
+If no seed is provided, extract normally (from a blank slate) as described below.
 
 ---
 
@@ -40,8 +60,12 @@ Your deliverable is `hssi_metadata.md` saved in the repo's root:
 ```markdown
 # HSSI Metadata Extraction Results
 
+**HSSI Software ID:** [UUID, or "Not applicable" for a new submission]
 **Repository:** [URL]
-**Extraction Date:** [Date]
+**Source Revision:** [Full git commit SHA]
+**Extraction Date:** [YYYY-MM-DD]
+**Validation Date:** Pending
+**Validation Status:** Pending
 
 ---
 
@@ -187,6 +211,7 @@ See the "Notes for AI Agents" section in the `hssi-field-definitions` skill for 
 ## Pre-Write Sanity Check
 
 Before saving `hssi_metadata.md`, verify:
+- The provenance header records the HSSI UUID (when supplied), repository URL, full source commit SHA, extraction date, and pending validation state
 - All 33 fields are present (value or "Not found")
 - All MANDATORY fields have values (Submitter can be placeholder)
 - Dates are YYYY-MM-DD
@@ -198,11 +223,12 @@ Before saving `hssi_metadata.md`, verify:
 ## Getting Started
 
 When you receive a repository to analyze:
-1. Identify the repository platform and remote URL (for SoMEF and API calls)
-2. Start Step 1a: Search for DOI
-3. Proceed through Steps 1–2 systematically
-4. Run the pre-write sanity check
-5. Write the `hssi_metadata.md` file and return
+1. **If you were given a seed** (existing HSSI metadata and/or a prior `hssi_metadata.md`), pre-populate all fields from it first (see *Seeding From Existing Metadata*), then use the steps below to fill gaps and find newer/better values.
+2. Identify the repository platform, remote URL (for SoMEF and API calls), and full current git commit SHA for the provenance header
+3. Start Step 1a: Search for DOI
+4. Proceed through Steps 1–2 systematically
+5. Run the pre-write sanity check
+6. Write the `hssi_metadata.md` file and return
 
 ---
 
