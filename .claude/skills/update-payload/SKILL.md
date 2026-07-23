@@ -117,7 +117,7 @@ The response only includes `id` and `name` — not the repo URL or any other fie
 2. Lowercase the host (`github.com`, `gitlab.com`)
 3. For GitHub URLs of the form `.../tree/<branch>/...` or `.../blob/<branch>/...`, drop everything after the second path segment
 
-If the canonical form returns no match, fall back to a name search via `/api/search/?q=<name>`.
+If the canonical form returns no match, fall back to a name search via `/api/search/?q=<name>&mode=id`, which returns `{"results": ["<uuid>", ...]}`. **`mode=id` is required**: since hssi-website PR #55 this endpoint defaults to `mode=jsonld` (full JSON-LD objects), not a UUID list.
 
 ---
 
