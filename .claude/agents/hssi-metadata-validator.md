@@ -153,6 +153,15 @@ Cross-reference each metadata value against primary sources in the repository. F
 - **Funder organization names should be the full institutional name, not acronyms.** Flag any funder value that is a bare acronym (e.g., `ESA` instead of `European Space Agency`) as a WARNING with `Suggested fix: expand to the full institutional name`. Do not flag values that include an acronym alongside the full name (e.g., "European Space Agency (ESA)").
 - Each funder entry should be a single organization — flag entries that combine multiple organizations.
 
+**Fields 29 & 30 (Related / Interoperable Software):**
+- **Field 30 is not a dependency list.** It records other high-level heliophysics/science tools this software genuinely interoperates with — a shared or converted data model, output from one imported into the other, an adapter/converter API, a plugin/companion relationship, or a cross-language bridge to a named domain tool. Field 29 records *distinguishing* software (similar-purpose tools, predecessor/fork parent, companion, domain-specific dependency).
+- **Over-inclusion.** For each listed entry, demand the specific exchange evidence — a named function, doc page, example, or test.
+  - A **Tier A** package under either field (numpy, scipy, pandas, matplotlib, requests, python-dateutil, pytest, tqdm, PyYAML, click, setuptools and the rest of the generic stack) is an **ERROR**, with `Suggested fix: remove — a dependency shared by most of the Python ecosystem is not interoperability`. No evidence rehabilitates a Tier A entry.
+  - A **Tier B** package (astropy, xarray, cdflib, h5py, netCDF4, dask, MATLAB, Jupyter) with no cited exchange is a **WARNING**. A cited, specific exchange ("public API returns `xarray.Dataset` as its documented interchange format") is acceptable; "uses xarray internally" is not.
+  - Reject these justifications by name wherever they appear in a source note: *"listed as a dependency"* / *"in pyproject.toml"*, *"part of the standard scientific Python ecosystem"*, and *"PyHC member, so it interoperates with PyHC packages."* Ecosystem membership is not interoperation with any particular package.
+  - The fix is normally **removal, not relocation to Field 29** — Field 29 applies the same Tier A exclusion.
+- **Under-inclusion.** Check README, docs, examples, and tests for genuine interoperability with named domain tools that is *missing* from Field 30 — `to_*`/`from_*` converters, documented export→import handoffs, companion or plugin packages, shared data models. Flag these as WARNING/SUGGESTION. The gate is not purely subtractive: a real interoperability partner left out is as wrong as numpy left in.
+
 **For all other fields:**
 - Where a value is given, verify it against available sources
 - Where "Not found" is listed, do a quick check to confirm it truly can't be found
@@ -293,7 +302,7 @@ A file NEEDS REVISION if there are any ERRORS. Warnings alone do not fail valida
 
 ## Severity Definitions
 
-- **ERROR**: The metadata is demonstrably wrong, a mandatory field is missing/empty, a value is not from the allowed list, a DOI/URL doesn't resolve, or an author is verifiably misattributed. Errors must be fixed.
+- **ERROR**: The metadata is demonstrably wrong, a mandatory field is missing/empty, a value is not from the allowed list, a DOI/URL doesn't resolve, an author is verifiably misattributed, or a Tier A generic dependency (numpy, pandas, matplotlib, scipy, …) is listed under Field 29 or 30. Errors must be fixed.
 - **WARNING**: The metadata is likely incomplete or inaccurate but you can't fully prove it. Examples: an author appears in CITATION.cff but not in the metadata, a plausible software functionality seems missing, a version number seems stale.
 - **SUGGESTION**: The metadata is acceptable but could be improved. Examples: a "Not found" field that you found a partial answer for, a description that could be more precise, additional keywords that would improve discoverability.
 

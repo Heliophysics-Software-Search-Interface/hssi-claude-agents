@@ -178,6 +178,8 @@ This produces fresh metadata for ALL 33 fields, which is then compared against w
 
 **Relevance gate (Fields 31 & 32):** when this extraction produces Related Instruments/Observatories, apply the **same "designed to support" relevance gate as the `hssi-metadata-extractor`** (stage A of its Fields 31/32 rule) — only enrich in an instrument/observatory the software is genuinely designed to support, not tutorial/agnostic/format-only mentions. Relevance (whether to list) precedes resolution (which SPASE row).
 
+**Relevance gate (Fields 29 & 30):** likewise apply the **`hssi-metadata-extractor`'s Fields 29/30 relevance gate** to any Related/Interoperable Software this extraction produces. Never enrich a Tier A generic dependency (numpy, scipy, pandas, matplotlib, requests, python-dateutil, …) into either field, and enrich a Tier B package (astropy, xarray, cdflib, h5py, netCDF4, dask, MATLAB, Jupyter) only on cited evidence of a specific exchange. Field 30 is not a dependency list, and a package rejected from 30 is not thereby a Field 29 entry. Since both fields are enrich-only, this mode is the main path by which a generic dependency would otherwise reach a live HSSI entry.
+
 #### Targeted Mode (no extraction)
 
 No repo needed. Use the specific field/value pairs provided by the user directly.
