@@ -1,7 +1,11 @@
 # HSSI Metadata Extraction Results
 
+**HSSI Software ID:** aebd4757-08dc-4ca0-be33-aa85171de59d
 **Repository:** https://github.com/JHUAPL/kaiju
-**Extraction Date:** 2026-06-01
+**Source Revision:** 9e19bfc61a63206e7e74340b5dbf0b7537afa8a7
+**Extraction Date:** 2026-07-24
+**Validation Date:** 2026-07-24
+**Validation Status:** PASS
 
 ---
 
@@ -14,51 +18,48 @@
 ### 2. Persistent Identifier (RECOMMENDED)
 https://doi.org/10.5281/zenodo.16818620
 
-*Source: CITATION.cff (Zenodo concept DOI). Confirmed via DataCite/Zenodo APIs — title "MAGE: Multiscale Atmosphere Geospace Environment Model", publisher Zenodo, resource type Software, IsSupplementTo https://github.com/JHUAPL/kaiju/tree/MAGE_1.25.1. Versioned DOIs also exist (e.g., 10.5281/zenodo.16818621); this is the all-versions concept DOI.*
+*Source: Seeded from existing HSSI record and confirmed by CITATION.cff line 6, DataCite concept DOI metadata, and Zenodo concept record. This is the all-versions concept DOI; the latest version DOI is recorded in Field 12.*
 
 ### 3. Code Repository (MANDATORY)
 https://github.com/JHUAPL/kaiju
 
-*Source: git remote origin and CITATION.cff repository-code.*
+*Source: Seeded from existing HSSI record and confirmed by git remote origin, CITATION.cff line 7, and docs/source/building/index.rst lines 27-32.*
 
 ### 4. Software Functionality (MANDATORY)
-- Models and Simulations
-- Models and Simulations:First Principles
-- Models and Simulations:MHD
-- Models and Simulations:Physics-Based
-- Models and Simulations:Data Guided
-- Models and Simulations:Forecasting
-- Models and Simulations:Empirical
 - Coordinate Transforms
-- Coordinate Transforms:Magnetospheric
 - Coordinate Transforms:Heliospheric
 - Coordinate Transforms:Ionospheric
+- Coordinate Transforms:Magnetospheric
 - Data Processing and Analysis
-- Data Processing and Analysis:Field-line Tracing
+- Data Processing and Analysis:2D Slices
+- Data Processing and Analysis:3D Particle Distribution Processing
 - Data Processing and Analysis:Analysis
+- Data Processing and Analysis:Data Access and Retrieval
+- Data Processing and Analysis:Field-line Tracing
+- Data Processing and Analysis:File Format Conversion
+- Data Processing and Analysis:Plasma Moments
 - Data Processing and Analysis:Processing
+- Models and Simulations
+- Models and Simulations:Data Guided
+- Models and Simulations:Empirical
+- Models and Simulations:First Principles
+- Models and Simulations:Forecasting
+- Models and Simulations:MHD
+- Models and Simulations:Physics-Based
 - Servers and Environments
 - Servers and Environments:High Performance Computing
 - Servers and Environments:Software or Environment Container
 
-*Source: Manual examination of src/ (213 Fortran F90 files), CMakeLists.txt, docs/, and containers/. Kaiju is the C++/Fortran simulation code for the Multiscale Atmosphere-Geospace Environment (MAGE) model and GAMERA-helio. Core capabilities:*
-- *GAMERA (src/gamera): a three-dimensional finite-volume MHD solver for non-orthogonal curvilinear geometries (Zhang et al. 2019) — Models and Simulations:MHD, First Principles, Physics-Based. Applied to global magnetosphere and the inner heliosphere/solar wind.*
-- *RAIJU/RCM (src/raiju): full rewrite of the Rice Convection Model, an inner-magnetosphere ring-current/plasma model (physics-based bounce-averaged drift kinetics).*
-- *REMIX (src/remix): ionospheric electrodynamics module (mixsolver, mixconductance) coupling magnetosphere to ionosphere; couples to TIEGCM ionosphere-thermosphere (empirical/physics-based ionosphere-thermosphere model — Models and Simulations:Empirical for the TIEGCM/EUV climatology components).*
-- *Dragon King (src/dragonking): energetic precipitation model.*
-- *CHIMP (src/chimp): test-particle pushing, field-line tracing, and ground/space magnetic-perturbation (dB) calculation — Data Processing and Analysis:Field-line Tracing, Processing, Analysis (drivers tracex, pushx, psdx, calcdbx).*
-- *VOLTRON (src/voltron): the coupling framework (dyncoupling, modelInterfaces) that couples MHD, inner magnetosphere, and ionosphere — multi-model coupled simulation; boundary/initial conditions can be data-driven (earthcmi IC, GAMERA-helio driven by WSA coronal maps) — Models and Simulations:Data Guided, Forecasting (space-weather predictive use; available for runs at NASA CCMC).*
-- *Coordinate transforms: the magnetosphere/ionosphere/heliosphere grids and couplers require transforms among GSM/SM/GEO/MAG (Magnetospheric), heliospheric/inner-heliosphere frames (Heliospheric), and magnetic-coordinate/MLT ionospheric grids in REMIX (Ionospheric).*
-- *HPC: OpenMP (ENABLE_OMP default ON) and MPI (ENABLE_MPI, gamera_mpix/voltron_mpix/kaitoy_mpix drivers) parallelization; build guides for NASA Pleiades/Aitken and NCAR Derecho HPC systems — Servers and Environments:High Performance Computing. Docker/Singularity definitions (containers/Dockerfile, containers/gamera.def) — Software or Environment Container.*
+*Source: Seeded HSSI record had only Models and Simulations; repository evidence supports a fuller set. README.md lines 5-25 identify MAGE, GAMERA-helio, GAMERA, RAIJU, Dragon King, REMIX, and TIEGCM. CMakeLists.txt lines 122-274 builds CHIMP, GAMERA, Dragon King, REMIX, RAIJU, VOLTRON, GAMERA-helio, and MPI variants. Coordinate transforms are supported by src/base/kai2geo.F90 and src/base/defs/mixdefs.F90 for SM/GEO/GSM/APEX transforms and by src/chimp/gridloc.F90 for LFM and heliospheric spherical coordinates. Data access/retrieval and file conversion are supported by docs/source/running/geoGRQuickStart.rst lines 76-107 and scripts/makeitso/makeitso.py lines 848-855 for CDAWeb solar-wind retrieval and HDF5 conversion; docs/source/running/helioQuickStart.rst lines 54-87 and scripts/makeitso-gamhelio/makeitso-gamhelio.py lines 227-256 support WSA FITS input. Field-line tracing and analysis tools are built in CMakeLists.txt lines 130-143 and documented in docs/source/tools. 2D slice extraction is documented in docs/source/tools/slice.rst, and particle distribution/PSD processing is implemented in src/chimp/psdio.F90. RAIJU moments and precipitation outputs are in src/raiju/raijuIO.F90. Container and HPC support are documented in docs/source/building/index.rst lines 17-48 and containers/containerization.md lines 95-168, 220-228. Standalone visualization, mission-operations support, and observatory/instrument model categories were considered but not selected because visualization is delegated to companion Kaipy/quicklook workflows, CCMC/HPC packaging does not make the software mission-specific, and WSA/TIEGCM coupling does not establish instrument or observatory model support.*
 
 ### 5. Related Region (MANDATORY)
-- Earth Magnetosphere
 - Earth Atmosphere
+- Earth Magnetosphere
 - Interplanetary Space
-- Solar Environment
 - Planetary Magnetospheres
+- Solar Environment
 
-*Source: MAGE models the coupled geospace system — global magnetosphere (Earth Magnetosphere), the ionosphere-thermosphere via REMIX/TIEGCM (Earth Atmosphere), and is driven by the upstream solar wind. GAMERA-helio simulates the inner heliosphere / solar wind from the Sun to ~1 AU (Solar Environment, Interplanetary Space). README/docs state the software also simulates "planetary magnetospheres" (Planetary Magnetospheres).*
+*Source: Seeded from existing HSSI record and enriched with Interplanetary Space. README.md lines 5-25 and docs/source/index.rst lines 4-11 describe geospace, inner heliosphere, planetary magnetospheres, solar wind, ionosphere, and thermosphere support.*
 
 ### 6. Authors (MANDATORY)
 - **Author:** Slava Merkin
@@ -156,56 +157,60 @@ https://github.com/JHUAPL/kaiju
     - **Organization:** NSF National Center for Atmospheric Research
       - **Affiliation Identifier:** https://ror.org/05cvfcr44
 
-*Source: CITATION.cff (19 authors with ORCIDs and affiliations). ROR identifiers resolved via ROR v2 API: Johns Hopkins University Applied Physics Laboratory (029pp9z10), NSF National Center for Atmospheric Research (05cvfcr44), Rice University (008zs3103). "Gamera Consulting" has no ROR record found. Affiliation acronyms in source were already expanded full names; no acronym expansion needed.*
+*Source: Live HSSI record contained only three incomplete author entries. Replaced with the complete DOI/CITATION.cff creator set from CITATION.cff lines 10-86 and DataCite/Zenodo metadata. The CITATION.cff/Zenodo spelling "Haonon Wu" conflicts with the ORCID public record for https://orcid.org/0000-0002-3272-8106, which gives "Haonan Wu"; the ORCID-backed spelling is used. ROR identifiers resolved through the ROR API for JHU/APL, NSF NCAR, and Rice University. No ROR found for Gamera Consulting.*
 
 ### 7. Software Name (MANDATORY)
 Kaiju
 
-*Source: README.md ("Project Kaiju"), repository name. The Kaiju software contains the MAGE (Multiscale Atmosphere-Geospace Environment) model and GAMERA-helio; the Zenodo/CITATION.cff title is "MAGE: Multiscale Atmosphere Geospace Environment Model". Kaiju is the encompassing software package/framework name; MAGE is its flagship application.*
+*Source: Seeded from existing HSSI record and confirmed by README.md line 1 and repository name. CITATION.cff line 3 titles the DOI record as MAGE because MAGE is a primary application within Kaiju.*
 
 ### 8. Description (MANDATORY)
-Kaiju is a space-physics modeling framework developed primarily at the Johns Hopkins University Applied Physics Laboratory by the Center for Geospace Storms (CGS), a NASA DRIVE Science Center, together with the NSF National Center for Atmospheric Research and Rice University. It contains the Multiscale Atmosphere-Geospace Environment (MAGE) model for the coupled geospace system and the GAMERA-helio application for the inner heliosphere and solar wind. The core numerical engine is GAMERA, a three-dimensional finite-volume magnetohydrodynamic (MHD) solver designed for non-orthogonal curvilinear geometries with high-order reconstruction and low numerical diffusion. MAGE couples GAMERA's global magnetosphere simulation with RAIJU (a modern full rewrite of the Rice Convection Model for the inner magnetosphere ring current and plasma), the REMIX ionospheric electrodynamics solver, the Dragon King energetic-precipitation model, and the TIEGCM ionosphere-thermosphere model, all orchestrated through the VOLTRON coupling framework. GAMERA-helio applies the same MHD core to time-dependent simulations of the inner heliosphere and coronal mass ejection propagation, driven by solar coronal magnetic field maps (e.g., WSA). The CHIMP toolset provides test-particle tracing, field-line tracing, and ground/space magnetic-perturbation (delta-B) calculations from the simulation output. Kaiju is written predominantly in modern Fortran (with C), parallelized with OpenMP and MPI for high-performance and supercomputing platforms (e.g., NASA Pleiades/Aitken, NCAR Derecho), reads and writes HDF5 data, and is distributed with Docker/Singularity container definitions. Previous MAGE versions (0.75, 1.0) and GAMERA-helio are also available for community runs through the NASA Community Coordinated Modeling Center (CCMC). The companion Python package kaipy is recommended for analysis and visualization of Kaiju output.
+Kaiju software includes the Multiscale Atmosphere-Geospace Environment (MAGE) model developed by the Center for Geospace Storms (CGS) as well as other scientific software for simulation of heliospheric environments such as planetary magnetospheres and the solar wind. Currently supported applications include MAGE (version 1.25) and GAMERA-helio, the geospace and inner heliosphere applications of the Kaiju software. MAGE 1.25 includes the GAMERA global magnetosphere model, RAIJU inner-magnetosphere model, Dragon King energetic-precipitation model, REMIX ionospheric electrodynamics module, and TIEGCM ionosphere-thermosphere coupling. Kaiju also includes CHIMP analysis tools for field-line tracing, test-particle calculations, slices, and ground/space magnetic perturbation calculations. The software is primarily modern Fortran with Python run-preparation tooling, uses HDF5 and related input conversion workflows, and is built for serial and MPI/OpenMP high-performance computing runs. Users are encouraged to use the companion Kaipy package for analysis and visualization of Kaiju simulations.
 
-*Source: README.md, docs/source/index.rst, CMakeLists.txt, src/ module structure, containers/, and CGS/MAGE web pages.*
+*Source: Seeded HSSI description, streamlined without changing factual scope; confirmed by README.md lines 5-53, CMakeLists.txt lines 122-274, docs/source/building/index.rst lines 17-48, and docs/source/running/geoGRQuickStart.rst lines 76-131.*
 
 ### 9. Concise Description (OPTIONAL)
-A Fortran/C HPC space-physics modeling framework containing the MAGE coupled magnetosphere-ionosphere-thermosphere model and GAMERA-helio inner-heliosphere model, built on the GAMERA 3D finite-volume MHD solver.
+HPC space-physics modeling framework for MAGE coupled geospace simulations and GAMERA-helio inner-heliosphere simulations, built around the GAMERA MHD solver.
+
+*Source: Derived from README.md lines 5-25 and docs/source/index.rst lines 4-11.*
 
 ### 10. Publication Date (RECOMMENDED)
 2025-12-12
 
-*Source: Zenodo/DataCite issued date for the concept DOI 10.5281/zenodo.16818620 (2025-12-12), the initial open-source public release. CITATION.cff date-released is 2025-12-01.*
+*Source: DataCite issued date and Zenodo publication date for DOI 10.5281/zenodo.16818620 / 10.5281/zenodo.17915213. This supersedes the older HSSI value 2025-06-16.*
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
 - **Publisher Identifier:** https://zenodo.org
 
-*Source: DataCite/Zenodo metadata for DOI 10.5281/zenodo.16818620 (publisher: Zenodo).*
+*Source: DataCite/Zenodo metadata for DOI 10.5281/zenodo.16818620.*
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** 1.25.1
-- **Version Date:** 2025-12-01
-- **Version Description:** Initial open-source launch of the kaiju software. Introduces a "CONE" geometry type and improves thread-safety for OpenMP parallel processing. (MAGE version 1.25; master branch under active development.)
+- **Version Number:** MAGE_1.25.1
+- **Version Date:** 2025-12-12
+- **Version Description:** First official open-source release of the Kaiju software; adds CONE geometry type and improves OpenMP thread-safety.
 - **Version PID:** https://doi.org/10.5281/zenodo.17915213
 
-*Source: CITATION.cff (version 1.25.1, date-released 2025-12-01), git tag MAGE_1.25.1, Zenodo record. The versioned DOI for MAGE_1.25.1 is 10.5281/zenodo.17915213 (DataCite confirms version "MAGE_1.25.1", issued 2025-12-12); the all-versions concept DOI (10.5281/zenodo.16818620) is recorded under Field 2.*
+*Source: git tag MAGE_1.25.1 at revision 9e19bfc61a63206e7e74340b5dbf0b7537afa8a7, DataCite version field "MAGE_1.25.1", Zenodo record 17915213, and CITATION.cff lines 4-6. The release date uses the Zenodo/DataCite publication date; CITATION.cff date-released is 2025-12-01.*
 
 ### 13. Programming Language (RECOMMENDED)
 - Fortran90
 - Fortran 2008
+- Python 3.x
+- Other
 
-*Source: src/ contains 213 .F90 (free-form modern Fortran) source files; cmake/compilers.cmake requires MPI with `MPI_Fortran_HAVE_F08_MODULE` and references Fortran 2008 features, so both Fortran90 and Fortran 2008 apply. Note: `project(Kaiju Fortran C)` in CMakeLists.txt declares C only as a toolchain workaround for recent HDF5 ("Adding C to project to deal w/ issues w/ most recent HDF") — there are no `.c` source files in the repository, so C is not listed as a programming language. Build scripts use shell/csh; ancillary run-setup scripts use Python. The companion analysis package kaipy (separate repository) is Python.*
+*Source: GitHub/SoMEF language scan and local extension counts show 215 .F90 files and 27 Python files. CMakeLists.txt line 2 declares Fortran and C, but line 3 states C was added for HDF5 build issues rather than code content, and no .c source files were found. Fortran 2008 is supported by the MPI F08 requirement in cmake/compilers.cmake lines 18-37. Python 3.x is used for run-preparation scripts and documentation tooling; Other covers shell, CMake, Dockerfile, and PBS/job templates.*
 
 ### 14. Reference Publication (RECOMMENDED)
 https://doi.org/10.3847/1538-4365/ab3a4c
 
-*Zhang, B., Sorathia, K.A., Lyon, J.G., Merkin, V.G., Garretson, J.S. and Wiltberger, M., 2019. GAMERA: A three-dimensional finite-volume MHD solver for non-orthogonal curvilinear geometries. The Astrophysical Journal Supplement Series, 244(1), p.20. This is the foundational paper for the GAMERA MHD core, the primary algorithm of the Kaiju/MAGE software, and the citation requested in README.md "How to cite this work". (Component/configuration-specific references — Sorathia et al. 2020/2023, Merkin & Lyon 2010, Pham et al. 2022, Provornikova et al. 2024, Merkin et al. 2016 — are listed under Related Publications.)*
+*Source: README.md lines 76-80 asks users to cite the GAMERA MHD algorithm paper, the foundational solver for Kaiju/MAGE/GAMERA-helio.*
 
 ### 15. License (RECOMMENDED)
 - **License:** BSD 3-Clause "New" or "Revised" License
 - **License URI:** https://spdx.org/licenses/BSD-3-Clause.html
 
-*Source: LICENSE.md and CITATION.cff (BSD-3-Clause). Copyright held by Johns Hopkins University Applied Physics Laboratory, US NSF National Center for Atmospheric Research, John G. Lyon, and Rice University. Confirmed via DataCite rightsList (SPDX bsd-3-clause).*
+*Source: Seeded from existing HSSI record and confirmed by README.md lines 136-139, CITATION.cff line 8, GitHub/SoMEF license metadata, and LICENSE.md lines 6-19.*
 
 ---
 
@@ -215,125 +220,137 @@ https://doi.org/10.3847/1538-4365/ab3a4c
 - space weather
 - MAGE
 - geospace modeling
+- Kaiju
+- GAMERA
+- GAMERA-helio
 - magnetohydrodynamics
 - MHD
 - magnetosphere
 - ionosphere
 - thermosphere
-- inner heliosphere
+- heliosphere
 - solar wind
-- GAMERA
-- magnetosphere-ionosphere coupling
-- ring current
-- numerical simulation
+- planetary magnetospheres
+- RAIJU
+- REMIX
+- TIEGCM
+- Dragon King
+- CHIMP
+- field-line tracing
 - high performance computing
-- geomagnetic storms
-- substorms
-- aurora
+- CDAWeb
+- HDF5
+- WSA
+- coronal mass ejections
 
-*Source: CITATION.cff/Zenodo keywords ("space weather", "MAGE", "geospace modeling") plus keywords derived from README/docs scientific content. Geomagnetic storms, substorms, and aurora were moved here from Field 22 Related Phenomena as they are not in that field's controlled vocabulary.*
+*Source: DataCite/CITATION.cff keywords plus README.md lines 5-25, 33-53, 67-133; docs/source/running/geoGRQuickStart.rst lines 76-131; docs/source/running/helioQuickStart.rst lines 54-94.*
 
 ### 17. Data Sources (OPTIONAL)
+- CDAWeb
 - Other
-- Observatory/Mission-specific
 
-*Source: MAGE/GAMERA are driven by solar wind / IMF upstream boundary conditions (observed near-Earth solar wind, e.g., OMNI) and GAMERA-helio is driven by solar coronal magnetic field model maps (WSA derived from synoptic magnetograms); the simulation itself produces model output. Inputs include both model-derived (WSA/coronal model) and observatory/mission-specific (solar wind monitor) data.*
+*Source: docs/source/running/geoGRQuickStart.rst lines 76-107 and scripts/makeitso/makeitso.py lines 848-855 fetch solar-wind/f10.7 data through CDAWeb. GAMERA-helio uses WSA FITS boundary-condition files (docs/source/running/helioQuickStart.rst lines 54-87), represented as Other/model-derived source data. Observatory/Mission-specific was considered but not selected because the repository does not establish one specific mission or observatory as a supported target.*
 
 ### 18. Input File Formats (RECOMMENDED)
-- HDF5
-- netCDF3/4
 - ascii
+- CDF
+- FITS
+- HDF5
+- JSON
+- netCDF3/4
 - Other
 
-*Source: HDF5 is the primary grid/state I/O format (cmake/compilers.cmake requires HDF5 Fortran/Fortran_HL; src/gamera/gioH5.F90, src/remix/mixio.F90). TIEGCM coupling uses netCDF (netCDF3/4). Some inputs/run setup use plain-text/ascii (.txt). Configuration/run-definition inputs use XML and JSON, captured as "Other" (neither is in the standard allowed list). Note: CDF was removed as a direct Kaiju input format — a search of all 213 .F90 source files found no CDF library calls; CDF time-series solar-wind input is handled upstream by the kaipy `cda2wind` preprocessor (a separate package), with the Fortran code reading the resulting HDF5.*
+*Source: docs/source/running/geoGRQuickStart.rst lines 51-78 and 96-107 require CDF support for CDAWeb-derived solar-wind retrieval and produce HDF5 boundary files; docs/source/running/helioQuickStart.rst lines 54-94 uses WSA FITS input and produces HDF5/XML/JSON run files. scripts/makeitso/makeitso.py and scripts/makeitso-gamhelio/makeitso-gamhelio.py read/write JSON and convert INI to XML. TIEGCM coupling requires netCDF data/modules per docs/source/building/buildAitken_GTR.rst lines 28 and 149-152. Plain text/ascii is used for config/tables and generated OMNI text inputs; Other covers XML/INI/PBS run-control files.*
 
 ### 19. Output File Formats (RECOMMENDED)
+- ascii
 - HDF5
+- JSON
+- Other
 
-*Source: Simulation state and results are written to HDF5 (gioH5.F90, mixio.F90, voltio.F90, chmpio.F90); compiler/git-hash provenance is embedded in H5 files. CDF was removed as a Kaiju output format — no CDF library calls exist in the 213 .F90 source files; CDF time-series products (e.g., dB/CHIMP) are generated downstream by the kaipy Python package (separate), not by the Fortran simulation.*
+*Source: src/base/ioH5.F90 and module-specific IO files write HDF5 outputs; docs/source/running/geoGRQuickStart.rst lines 121-155 and docs/source/running/helioQuickStart.rst lines 89-115 list generated HDF5, JSON, XML, PBS, PNG, and log files. JSON is included for run-option records. Other covers XML/PBS/log products; PNG quicklook plots are not an allowed HSSI format value.*
 
 ### 20. Operating System (RECOMMENDED)
 - Linux
 - Mac
 
-*Source: Build guides (docs/source/building, docs/source/misc/build_guides) cover Ubuntu 20.04, CentOS Stream 9, macOS, and HPC systems (NASA Pleiades/Aitken, NCAR Derecho); .readthedocs.yaml uses ubuntu-22.04; containers/Dockerfile uses Intel oneAPI on Ubuntu 22.04. Targets Unix-like HPC environments; no Windows build documented.*
+*Source: docs/source/building/index.rst lines 8-48 emphasizes supercomputer/Linux builds and serial single-machine builds; .readthedocs.yaml lines 3-20 uses Ubuntu; cmake/compilers.cmake lines 165-167 explicitly handles Apple Silicon/macOS. No Windows build is documented.*
 
 ### 21. CPU Architecture (RECOMMENDED)
-- x86-64
 - Apple Silicon arm64
 - HPC or HEC
+- x86-64
 
-*Source: Container/build environments target x86-64 (Intel oneAPI HPC toolkit, x86-64 HPC clusters; git-lfs amd64 in .readthedocs.yaml). Apple Silicon arm64 is explicitly handled in cmake/compilers.cmake (`if (CMAKE_HOST_SYSTEM_PROCESSOR MATCHES arm64)` "#Apple silicon"). HPC or HEC applies given build guides for NASA Pleiades/Aitken and NCAR Derecho HPC systems. Compiler support includes Intel and GNU Fortran.*
+*Source: docs/source/building/index.rst lines 8-21 and build guides document Aitken/Derecho HPC systems; containers/Dockerfile and containers/gamera.def use Intel oneAPI/x86-64 HPC stacks; .readthedocs.yaml lines 8-13 downloads linux-amd64 git-lfs; cmake/compilers.cmake lines 165-167 handles Apple Silicon arm64.*
 
 ### 22. Related Phenomena (OPTIONAL)
 - Coronal Mass Ejections
 
-*Source: GAMERA-helio models CME propagation in the inner heliosphere — Coronal Mass Ejections is the only term in the HSSI controlled vocabulary that applies. Other phenomena central to MAGE (Geomagnetic Storms, Substorms, Aurora) are not in the controlled vocabulary and have been moved to Field 16 Keywords; Ring Current and Solar Wind were already in Keywords.*
+*Source: README.md lines 122-133 and GAMERA-helio documentation discuss CME modeling. Other central phenomena such as geomagnetic storms, substorms, aurora, ring current, and solar wind are recorded as keywords because they are not in the current HSSI Related Phenomena controlled list.*
 
 ### 23. Development Status (RECOMMENDED)
 Active
 
-*Source: README states the master branch (v1.25) is "bleeding-edge code that is under active development"; most recent commit 2025-12-12, tag MAGE_1.25.1, with team noting forthcoming publications for RAIJU, Dragon King, and MAGE 1.25.*
+*Source: README.md lines 27-31 states the master branch is under active development; git HEAD and latest tag MAGE_1.25.1 are dated 2025-12-12; SoMEF/GitHub metadata reports repository update activity.*
 
 ### 24. Documentation (RECOMMENDED)
 https://kaiju-docs.readthedocs.io/en/latest/
 
-*Source: README.md and .readthedocs.yaml (Sphinx docs at docs/source/conf.py).*
+*Source: README.md lines 45-48 and docs/source/index.rst. URL returned HTTP 200 on 2026-07-24. This broad documentation landing page supersedes the narrower seeded HSSI rules-of-road URL.*
 
 ### 25. Funder (OPTIONAL)
-- **Organization:** National Aeronautics and Space Administration
-  - **Funder Identifier:** https://ror.org/027ka1x80
+Not found
 
-*Source: The software is developed by the Center for Geospace Storms (CGS), a NASA DRIVE Science Center funded by the National Aeronautics and Space Administration (NASA began funding CGS in April 2020; Phase II extension granted). Per CGS/JHUAPL and NASA Heliophysics DRIVE Science Center pages. No specific award number is stated in the repository. ROR for NASA: 027ka1x80.*
+*Source: No funder entries are present in DataCite/Zenodo metadata, CITATION.cff, README.md, or repository documentation. README.md identifies CGS and NASA CCMC availability, but does not state a specific funder for the software metadata record.*
 
 ### 26. Award Title (OPTIONAL)
-- **Award Title:** Center for Geospace Storms (DRIVE Science Center)
-  - **Award Number:** Not found
+Not found
 
-*Source: CGS is a NASA DRIVE (Diversity, Realize, Integrate, Venture, Educate) Science Center. The specific grant/award number is not stated in the repository, CITATION.cff, or LICENSE; submitter should add the NASA cooperative-agreement number if known.*
+*Source: No grant or award title/number is present in DataCite/Zenodo metadata, CITATION.cff, README.md, or repository documentation.*
 
 ---
 
 ## Section 3: Additional Metadata
 
 ### 27. Related Publications (OPTIONAL)
-- https://doi.org/10.1029/2020GL088227 *(Sorathia et al. 2020 — GAMERA global magnetosphere; ballooning-interchange instability and auroral beads)*
-- https://doi.org/10.1029/2010JA015461 *(Merkin & Lyon 2010 — REMIX low-latitude ionospheric boundary condition)*
-- https://doi.org/10.1002/9781118704417.ch7 *(Qian et al. 2014 — NCAR TIE-GCM)*
-- https://doi.org/10.1029/2023JA031594 *(Sorathia et al. 2023 — MAGE 0.75 multiscale magnetosphere-ionosphere coupling)*
-- https://doi.org/10.1029/2021JA030071 *(Pham et al. 2022 — MAGE 1.0 thermospheric density perturbations)*
-- https://doi.org/10.3847/1538-4357/ad83b1 *(Provornikova et al. 2024 — GAMERA-helio MHD modeling of a geoeffective ICME)*
-- https://doi.org/10.1002/2015JA022200 *(Merkin et al. 2016 — GAMERA-helio time-dependent inner-heliosphere MHD simulations)*
+- https://doi.org/10.1029/2020GL088227
+- https://doi.org/10.1029/2010JA015461
+- https://doi.org/10.1002/9781118704417.ch7
+- https://doi.org/10.1029/2023JA031594
+- https://doi.org/10.1029/2021JA030071
+- https://doi.org/10.3847/1538-4357/ad83b1
+- https://doi.org/10.1002/2015JA022200
 
-*Source: README.md "How to cite this work" — component- and configuration-specific references for the Kaiju/MAGE software.*
+*Source: README.md lines 82-133 lists component/configuration citation papers for GAMERA magnetosphere, REMIX, TIEGCM, MAGE 0.75, MAGE 1.0, and GAMERA-helio. The GAMERA MHD algorithm DOI is Field 14.*
 
 ### 28. Related Datasets (OPTIONAL)
 Not found
 
-*Source: No dataset DOIs are published in the repository. (MAGE/GAMERA-helio runs are also available on request via the NASA CCMC, but no specific dataset PID is provided.)*
+*Source: No dataset DOI or persistent dataset identifier is present in CITATION.cff, DataCite/Zenodo metadata, README.md, or docs. CCMC run availability is a service/model-run access path, not a specific dataset PID.*
 
 ### 29. Related Software (OPTIONAL)
-- https://doi.org/10.5281/zenodo.17914543 *(kaipy — companion Python package for analysis and visualization of Kaiju simulation output; recommended in README)*
+- https://doi.org/10.5281/zenodo.15801040
+- https://github.com/NCAR/tiegcm
 
-*Source: README.md "Analysis" section and src/voltron/modelInterfaces (TIEGCM coupling). kaipy is in the PyHC community registry.*
+*Source: README.md lines 52-53 and docs/source/python/index.rst lines 9-17 identify kaipy as the companion package for analysis, visualization, and run-preparation dependencies. docs/source/building/buildAitken_GTR.rst lines 115-180 and docs/source/building/buildDerecho_GTR.rst document TIEGCM source/build coupling.*
 
 ### 30. Interoperable Software (OPTIONAL)
-- https://doi.org/10.5281/zenodo.17914543 *(kaipy reads and post-processes Kaiju HDF5/CDF output)*
-- https://www.hao.ucar.edu/modeling/tgcm/tie.php
+- https://doi.org/10.5281/zenodo.15801040
+- https://github.com/NCAR/tiegcm
 
-*Source: README.md and src/remix/tgcm.F90, src/voltron/modelInterfaces. MAGE 1.0+ provides two-way coupling with TIEGCM (NCAR Thermosphere-Ionosphere-Electrodynamics General Circulation Model), coupled within MAGE via the VOLTRON framework; kaipy interoperates with Kaiju output files.*
+*Source: Kaipy is explicitly recommended for analysis and visualization of Kaiju simulations in README.md lines 50-53 and is required for run-preparation/data workflows in docs/source/python/index.rst lines 9-17; DataCite confirms the Kaipy concept DOI. TIEGCM interoperates through coupled GTR workflows and VOLTRON/REMIX interfaces, with build/run requirements documented in docs/source/building/buildAitken_GTR.rst lines 115-180 and code evidence in src/remix/tgcm.F90 / src/voltron/mpi/gcm_mpi.F90. Generic dependencies such as numpy, h5py, netCDF4, matplotlib, SpacePy, and astropy are intentionally excluded.*
 
 ### 31. Related Instruments (OPTIONAL)
 Not found
 
-*Source: No specific instrument is associated with the model in the repository.*
+*Source: The software is a model/run framework and preprocessing workflow, not a package designed to support a specific instrument's data. WSA FITS, CDAWeb/OMNI, TIEGCM, and GONG-like magnetogram sources were considered but do not establish a specific instrument-level support target under the HSSI relevance gate.*
 
 ### 32. Related Observatories (OPTIONAL)
 Not found
 
-*Source: No specific observatory is asserted in the software. (GAMERA-helio coronal boundary maps are typically derived from ground-based synoptic magnetograms, e.g., GONG/ADAPT, but no specific observatory is named as a software dependency.)*
+*Source: The software supports geospace/heliosphere models and generic data-source workflows, but the repository does not show design support for one specific mission/observatory. OMNI and GONG vocabulary matches were considered; OMNI is a multi-source data product/source and GONG is only an upstream WSA magnetogram source, so neither is listed as a related observatory.*
 
 ### 33. Logo (OPTIONAL)
-Not found
+https://raw.githubusercontent.com/JHUAPL/kaiju/master/docs/source/_static/MAGE_Logo_final_dark-bg_vertical.png
 
-*Source: No logo image file identified in the repository root or docs/_static. (containers/screenshot.png is a documentation screenshot, not a logo.)*
+*Source: docs/source/conf.py lines 37-41 sets this image as the documentation logo; file exists at docs/source/_static/MAGE_Logo_final_dark-bg_vertical.png in the source repository.*
