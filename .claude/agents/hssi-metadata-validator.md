@@ -201,14 +201,17 @@ Actively look for metadata the extractor might have missed:
      Field 17) — and recommend removing or moving only the genuinely-misfiled ones. Flag
      **under-inclusion** — an instrument/observatory the software is genuinely designed to support but
      that is missing from 31/32. (A genuinely-supported instrument that is merely hard to resolve is
-     still *related* — it should be resolved or marked `NEEDS MANUAL RESOLUTION`, not dropped.)
+     still *related* — the valid outcomes are a resolved identifier, an observatory-level substitution,
+     `NEEDS MANUAL RESOLUTION`, or an omission with a recorded reason. Never a bare name.)
    - For any instrument/mission found, check it resolves to HSSI's controlled vocabulary at
      `/api/models/InstrumentObservatory/rows/all/`. The endpoint returns the whole vocabulary
      (~7,700 rows) in `data[]` — fetch it once to a file and filter with `grep`/`jq`/`python` rather
      than loading every row into context (`?columns=id,name,identifier,type,abbreviation` drops the large
-     `definition`; keep `id`, or the API returns an empty `data[]`). **Every row is SPASE-backed** — each
-     `identifier` is a `https://spase-metadata.org/...` URL; `identifier.startswith("https://spase-metadata.org/")`
-     is fine as a cheap sanity guard but no longer excludes anything (no non-SPASE rows remain).
+     `definition`; keep `id`, or the API returns an empty `data[]`). **Vocabulary state — verify, don't
+     assume:** as of the PR #54 backfill (2026-07-07) it is 100% SPASE-backed (7,648 rows, 0 non-SPASE;
+     re-verified 2026-07-27), but treat that as a **dated observation, not an invariant**. Keep
+     `identifier.startswith("https://spase-metadata.org/")` as a **real guard** — a row failing it means
+     upstream drift or a row an agent wrongly created; **report it, never endorse it**.
      **Normalize `.html`** — ~40+ identifiers
      exist in both bare and `.html` forms (e.g. `.../SDO/AIA` and `.../SDO/AIA.html`); treat them as one
      and prefer the non-`.html` row. Match on multiple signals restricted to the right `type`
@@ -216,20 +219,26 @@ Actively look for metadata the extractor might have missed:
      aliases, and the SPASE **identifier path segments** (platform/mission evidence, e.g.
      `.../GOES/17/SUVI`). Prefer `SMWG/...` only as a tie-breaker among same-name duplicates (a single
      non-SMWG match like `ESA/Observatory/SolarOrbiter` is still correct). Recommend that row's
-     canonical `name` (verbatim) and SPASE `identifier` rather than a free-typed string. **If several
-     SPASE candidates remain after namespace/platform evidence** (e.g. `Solar Ultraviolet Imager` →
-     GOES-16/17/18/19), flag it as an **unresolved collision that must be manually resolved before
-     submission** — do not recommend a bare `name`, because the backend's no-identifier path is a
-     case-sensitive `filter(name=…, type=…).first()` that silently binds a bare name to an arbitrary
-     same-name row. **Before endorsing any no-identifier (free-typed) value, check the vocabulary for
-     any plausible same-type row:** exact match first, then case-insensitive/trimmed
-     comparison and obvious parenthetical-abbreviation variants. If one exists — a same-name collision
-     or a near-existing row that differs only by casing/spacing/parenthetical abbreviation — the bare
-     name would bind to an arbitrary one or create a near-duplicate SPASE row, so flag it as **needs
-     manual resolution**, not as an acceptable value. A free-typed value is only acceptable when **no
-     row** plausibly matches that `name`+`type`. Treat any extractor entry already marked `NEEDS MANUAL RESOLUTION` as
-     unresolved (don't silently "fix" it into a submittable value). Also flag embedded-abbreviation
-     names (e.g. `Parker Solar Probe (PSP)`) and missing identifiers.
+     canonical `name` (verbatim) and SPASE `identifier`. Validate against the **SPASE resolution ladder**
+     in the `hssi-field-definitions` skill (Field 31) — it is the authoritative procedure. In particular:
+     - **An entry with a `name` but no SPASE `identifier` is always an ERROR.** Never endorse one, under
+       any circumstances — there is no "no plausible match, so free-typing is fine" exception. The
+       backend turns such a value into either an arbitrary same-name binding or a **brand-new
+       identifierless row**, reintroducing the legacy rows PR #54 deleted (63 → 0). The correct outcomes
+       are a resolved identifier, an observatory-level substitution, `NEEDS MANUAL RESOLUTION`, or a
+       documented omission.
+     - **Several candidates with cited in-repo evidence** naming which ones (a supported-version list, a
+       station table, an explicit doc/API statement) → a multi-row expansion is **correct**; verify the
+       evidence actually appears in the repo, then PASS it. Without such evidence (e.g. `Solar Ultraviolet
+       Imager` → GOES-16/17/18/19 with nothing selecting among them), flag an **unresolved collision that
+       must be manually resolved before submission**.
+     - **A missing instrument whose platform/mission does resolve** → recommend the observatory-level
+       association rather than an omission (SPASE/HDRL guidance, 2026-07-01).
+     - **A documented omission is a valid, passing outcome** for a generic class label (`Ionosonde`,
+       `Digital All Sky Cameras`) or an out-of-heliophysics-scope entry (`NEXRAD`) — do not flag it as
+       under-inclusion when the reason is recorded.
+     Treat any extractor entry already marked `NEEDS MANUAL RESOLUTION` as unresolved (don't silently
+     "fix" it into a submittable value). Also flag embedded-abbreviation names (e.g. `Parker Solar Probe (PSP)`).
 
 6. **Verify "Not found" fields** — for each field marked "Not found", spend a moment confirming it truly cannot be determined from available sources
 

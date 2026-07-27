@@ -328,7 +328,7 @@ Same endpoints as the submission payload — use these to normalize values befor
 | Data Sources | `/api/models/DataInput/rows/all/` |
 | Related Phenomena | `/api/models/Phenomena/rows/all/` |
 | License | `/api/models/License/rows/all/` |
-| Related Instruments / Observatories | `/api/models/InstrumentObservatory/rows/all/` (`type` 1 = instrument, 2 = observatory) |
+| Related Instruments / Observatories | `/api/models/InstrumentObservatory/rows/all/` (`type` 1 = instrument, 2 = observatory; **resolve to a SPASE-backed `identifier` — never send a bare name** — see the resolution notes below) |
 
 **Instruments / Observatories matching:** First apply the **relevance gate** — only list instruments/observatories the software is *designed to support* (see Fields 31/32 "When to include it"); the resolution below is for entries that have already passed it. Resolve those names against
 `/api/models/InstrumentObservatory/rows/all/`. The endpoint returns the whole vocabulary (~7,700 rows)
@@ -337,9 +337,10 @@ row into context (`?columns=id,name,identifier,type,abbreviation` drops the larg
 keep `id`, or the API returns an empty `data[]`).
 Then:
 
-- **Every row is SPASE-backed** — each `identifier` is a `https://spase-metadata.org/...` URL. Keeping
-  `identifier.startswith("https://spase-metadata.org/")` is fine as a cheap sanity guard, but it no
-  longer excludes anything: there are no non-SPASE rows left to filter out.
+- **Vocabulary state — verify, don't assume.** As of the PR #54 backfill (2026-07-07) the vocabulary is
+  100% SPASE-backed (7,648 rows, 0 non-SPASE; re-verified 2026-07-27) — a **dated observation, not an
+  invariant**. Keep `identifier.startswith("https://spase-metadata.org/")` as a **real guard**: a row
+  failing it signals upstream drift or a row an agent wrongly created, and must be **reported, never used**.
 - **Normalize `.html`** — ~40+ identifiers exist in both bare and `.html` forms (e.g.
   `.../SDO/AIA` and `.../SDO/AIA.html`); treat them as one resource and prefer the non-`.html` row.
 - **Match on multiple signals** — the row `name`, its `abbreviation`, source parenthetical aliases,
@@ -357,14 +358,15 @@ Then:
   **not** send a bare `name`: the no-identifier path is a case-sensitive `filter(name=…, type=…).first()`,
   so a bare name matching several identically-named rows binds to an arbitrary one — the same silent
   mis-link a wrong identifier causes. A collision flag is a hard blocker for the approval gate.
-- Otherwise send the single chosen row's `name` plus its SPASE `identifier`. If **no row matches exactly**,
-  do **not** immediately free-type a bare name: the no-identifier fallback `filter(name=…, type=…).first()`
-  runs case-sensitively over the **whole table**. Check the vocabulary for any plausible same-type row —
-  exact match first, then case-insensitive/trimmed comparison and obvious parenthetical-abbreviation
-  variants. If one exists (several same-name rows, or a near-existing row that differs only by
-  casing/spacing/parenthetical abbreviation), a bare name binds to an arbitrary one or creates a
-  near-duplicate SPASE row, so **omit the entry and flag it** instead. Only free-type the `name` (no
-  `identifier`) when **no row** plausibly matches that `name`+`type` (a genuinely new entry). Backend
-  matching is `identifier` first, then the case-sensitive `name`+`type` match, so the identifier is the
-  reliable key. Never send `landing_url` (server-derived — a HelioData mission page when one is
+- Otherwise send the chosen row's `name` plus its SPASE `identifier`, following the **SPASE resolution
+  ladder** in the `hssi-field-definitions` skill (Field 31), which is authoritative. At payload level:
+  several rows with cited in-repo evidence → send **all** the evidenced rows (a legitimate one-to-many
+  expansion, not a collision); several rows with nothing selecting among them → **omit and flag**; no
+  instrument row but a resolvable platform/mission → send the **observatory** row instead and note the
+  substitution; nothing defensible → **omit and document why**. **Never send a `name` with no
+  `identifier`** — there is no free-type path and no "zero plausible matches" exception. The
+  no-identifier fallback `filter(name=…, type=…).first()` runs case-sensitively over the **whole table**
+  and, failing that, *creates a new identifierless row* — exactly the legacy rows PR #54 deleted
+  (63 → 0). Backend matching is `identifier` first, then the case-sensitive `name`+`type` match, so the
+  identifier is the reliable key. Never send `landing_url` (server-derived — a HelioData mission page when one is
   confirmed, otherwise empty so the link falls back to the SPASE `identifier`).

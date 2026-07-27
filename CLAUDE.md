@@ -89,6 +89,8 @@ Irreversible actions (POST /api/submission/, PATCH /api/data/software/<uid>/) **
 3. Only proceeds to EXECUTE phase after affirmative approval of that exact artifact
 4. Never auto-approves, regardless of tool permission settings
 
+**Hard blocker — unresolved instruments/observatories.** If the submitter or updater reports any `relatedInstruments`/`relatedObservatories` entry that is unresolved (`NEEDS MANUAL RESOLUTION`, an ambiguous multi-row match) **or carries no `https://spase-metadata.org/` identifier**, the orchestrator must **not** proceed to EXECUTE — even with user approval of the rest of the payload. Surface the entry, get the user's per-entry decision (pick the SPASE identifier, accept an observatory-level substitution, or drop it), and have the agent rebuild the artifact. Fields 31–32 are SPASE-only: a bare name creates a new identifierless row in HSSI. See the resolution ladder in `hssi-field-definitions` (Field 31).
+
 ## Error Handling
 
 - If an agent fails, report the error to the user with context
