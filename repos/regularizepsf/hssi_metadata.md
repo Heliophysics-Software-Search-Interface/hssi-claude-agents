@@ -688,5 +688,3 @@ figures, not marks. The PyHC registry entry for regularizePSF has no `logo` fiel
 - All MANDATORY fields populated: **yes** (Submitter is the standard placeholder)
 - Dates in YYYY-MM-DD: **yes** · DOIs as full `https://doi.org/…` URLs: **yes**
 - Fields 31/32 SPASE-only, no bare names, no unresolved collisions emitted: **yes**
-- Outstanding data issue for humans: the `Sam Van` / `Kooten` name split in the live HSSI `Person` row
-  (see Field 6) — not fixable through the update API.
