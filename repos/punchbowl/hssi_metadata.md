@@ -6,9 +6,9 @@
 **Extraction Date:** 2026-07-28
 **Validation Date:** 2026-07-28
 **Validation Status:** PASS
-**Applied to HSSI:** 2026-07-28 — the approved update to `http://localhost/api/data/software/37a18000-2d1f-41db-afe6-6545f817bcb7/` returned **HTTP 200** (16 fields updated) and was roundtrip-verified. Two shared-`Person` renames and one duplicate-ROR affiliation, none of which the API can express, were then applied by an approved, guarded direct database correction and verified. See "Roundtrip verification" below.
+**Applied to HSSI:** 2026-07-28 — all Fields 2–33 below match the live record. See "Applied to HSSI" at the end of this file for the author-identity corrections that the API cannot express.
 
-**Seed:** Live HSSI record fetched from `GET http://localhost/api/view/software/37a18000-2d1f-41db-afe6-6545f817bcb7/` (saved at `/tmp/punchbowl_hssi_current.json`). No prior canonical `hssi_metadata.md` existed. Every field below was pre-populated from that record first, then gap-filled / corrected from the repository at revision `527b32ad`, PyPI, Zenodo/DataCite, ORCID, ROR, SPASE, and the PyHC registries.
+**Seed:** the live HSSI record for this software. No prior canonical `hssi_metadata.md` existed. Every field below was pre-populated from that record first, then gap-filled / corrected from the repository at revision `527b32ad`, PyPI, Zenodo/DataCite, ORCID, ROR, SPASE, and the PyHC registries.
 
 **Change legend:** `UNCHANGED` = seeded HSSI value kept verbatim · `NEW` = field/value not present in HSSI · `REPLACED` = seeded value superseded by evidence (justified below and in the Proposed removals/replacements section) · `REMOVAL-PROPOSED` = seeded value deliberately withheld (none in this extraction).
 
@@ -168,7 +168,7 @@ https://github.com/punch-mission/punchbowl
 ---
 
 ### 6. Authors (MANDATORY)
-*Status: union of the 10 existing HSSI authors + all 15 `CITATION.cff` authors, matched by ORCID. No author dropped. 5 authors are NEW to punchbowl; 2 (Attié, Kovac) had REPLACED name spellings that were **applied by approved direct database correction on 2026-07-28** and are now live; 1 (Van Kooten) had already been corrected directly in the shared database by a concurrent worker. Two names (Murphy, Badman) are recorded in the fuller live HSSI form rather than the shorter `CITATION.cff` form, per reviewer decisions A and B — `Person` is a shared entity with no per-entry name override. **Every name below now matches live HSSI exactly.** Order follows `CITATION.cff` (the maintainers' authoritative ordering). Affiliations are the identity-aware union of the HSSI affiliations (resolved from the HSSI Organization table at `http://localhost/api/models/Organization/rows/all/`) and repository/ORCID evidence.*
+*Status: union of the 10 existing HSSI authors + all 15 `CITATION.cff` authors, matched by ORCID. No author dropped. 5 authors are NEW to punchbowl; 2 (Attié, Kovac) had REPLACED name spellings that were **applied by approved direct database correction on 2026-07-28** and are now live; 1 (Van Kooten) already matched the shared live row. Two names (Murphy, Badman) are recorded in the fuller live HSSI form rather than the shorter `CITATION.cff` form, per reviewer decisions A and B — `Person` is a shared entity with no per-entry name override. **Every name below now matches live HSSI exactly.** Order follows `CITATION.cff` (the maintainers' authoritative ordering). Affiliations are the identity-aware union of the HSSI affiliations (resolved from the HSSI Organization table at `http://localhost/api/models/Organization/rows/all/`) and repository/ORCID evidence.*
 
 1. **J. Marcus Hughes** — UNCHANGED
    - Identifier: https://orcid.org/0000-0003-3410-7650
@@ -177,7 +177,7 @@ https://github.com/punch-mission/punchbowl
 2. **Sam Van Kooten** (givenName `Sam`, familyName `Van Kooten`) — UNCHANGED relative to the current live HSSI record
    - Identifier: https://orcid.org/0000-0002-4472-8517
    - Affiliation: Southwest Research Institute — https://ror.org/03tghng59
-   - *Source: live HSSI `Person` row `5543956f-39bf-41cf-8fe6-4ab41d39ee7b` (fresh snapshot `/tmp/punchbowl_hssi_live2.json`, re-fetched 2026-07-28). **Name-variant provenance:** punchbowl's own sources give the variant **"Samuel J. Van Kooten"** — `CITATION.cff` lines 8-10 (`family-names: "Van Kooten"`, `given-names: "Samuel J."`), Zenodo/DataCite creator `Van Kooten, Samuel J.`, and `pyproject.toml` (`{ name = "Samuel J. Van Kooten" }`, `samuel.vankooten@swri.org`). Both forms are correct. HSSI's shared `Person` row now holds **"Sam Van Kooten"** following a user-approved **direct database correction on 2026-07-28 by the concurrent regularizePSF worker** (issue #57), which changed `given_name` "Sam Van" → "Sam" and `family_name` "Kooten" → "Van Kooten" — this already fixed the surname mis-split that this file originally flagged. `Person` is a **shared entity** across ndcube, punchbowl, regularizePSF and SunPy, and HSSI provides **no per-entry given-name override**: the API matches on identifier and refuses to overwrite a non-blank name, so submitting "Samuel J." would silently no-op and leave this file permanently out of sync with the database. The canonical file therefore records `Sam` / `Van Kooten` to match the shared row. ORCID and the Southwest Research Institute affiliation are unchanged.*
+   - *Source: the live HSSI `Person` row for ORCID 0000-0002-4472-8517, which holds **`Sam` / `Van Kooten`**. punchbowl's own sources give the variant **`Samuel J.` / `Van Kooten`** — `CITATION.cff` lines 8-10, Zenodo/DataCite creator `Van Kooten, Samuel J.`, and `pyproject.toml` (`samuel.vankooten@swri.org`). Both forms are correct. `Person` is a **shared entity** across ndcube, punchbowl, regularizePSF and SunPy, and HSSI provides **no per-entry given-name override** — the API matches on identifier and refuses to overwrite a non-blank name — so this file follows the shared live identity. ORCID and the Southwest Research Institute affiliation are unchanged.*
 3. **Jasmine Kobayashi** — NEW
    - Identifier: https://orcid.org/0000-0001-9098-7790
    - Affiliation: Southwest Research Institute — https://ror.org/03tghng59
@@ -202,22 +202,22 @@ https://github.com/punch-mission/punchbowl
 8. **Nicholas A. Murphy** — NEW to punchbowl
    - Identifier: https://orcid.org/0000-0001-6628-8033
    - Affiliation: Smithsonian Astrophysical Observatory — https://ror.org/04mh52z70
-   - Affiliation: Center for Astrophysics, Harvard & Smithsonian — https://ror.org/03c3r2d17
+   - Affiliation: Center for Astrophysics Harvard & Smithsonian — https://ror.org/03c3r2d17
    - Affiliation: Smithsonian Institution — https://ror.org/01pp8nd67
    - *Source: `CITATION.cff` lines 32-34, which give the short form "Murphy, Nick". The shared HSSI Person row `9bf176e1`-adjacent entry for ORCID 0000-0001-6628-8033 holds the fuller **`Nicholas A.` / `Murphy`**, and `Person` is a shared entity with no per-entry name override, so the fuller live form is recorded here (reviewer decision A, 2026-07-28). All three affiliations pre-existed on the shared row and were accumulated across other software entries; each resolves to a distinct ROR, so there is no duplication. ROR for SAO resolved via `https://api.ror.org/v2/organizations?query=Smithsonian Astrophysical Observatory`.*
 9. **Raphael Attié** — REPLACED (HSSI stored the unaccented "Attie"; **corrected in the database 2026-07-28**)
    - Identifier: https://orcid.org/0000-0003-4312-6298
    - Affiliation: George Mason University — https://ror.org/02jqj7156
    - Affiliation: Goddard Space Flight Center — https://ror.org/0171mag52
-   - *Source: `CITATION.cff` lines 36-38 (`family-names: "Attié"`); Zenodo/DataCite creator `Attié, Raphael`. Both existing HSSI affiliations preserved. The HSSI API cannot rename a `Person`, so this was applied by an approved, guarded direct database correction to shared Person row `40c2afb0-dfef-4be8-9ac7-12a046cb71c6`; verified live.*
+   - *Source: `CITATION.cff` lines 36-38 (`family-names: "Attié"`); Zenodo/DataCite creator `Attié, Raphael`. Both existing HSSI affiliations preserved. The HSSI API cannot rename a `Person`, so the diacritic was corrected directly in the shared database on 2026-07-28.*
 10. **Samuel T. Badman** — NEW to punchbowl
     - Identifier: https://orcid.org/0000-0002-6145-436X
-    - Affiliation: Center for Astrophysics, Harvard & Smithsonian — https://ror.org/03c3r2d17
-    - *Source: `CITATION.cff` lines 40-42, which give the short form "Badman, Samuel". The shared HSSI Person row `9bf176e1-07ac-4e04-9cdc-ac37826c473d` holds the fuller **`Samuel T.` / `Badman`**, and `Person` is shared with no per-entry override, so the fuller live form is recorded here (reviewer decision B, 2026-07-28). Affiliation is the single pre-existing row `7706c349-0f19-4b70-b292-4a3f7859a2ba`; a duplicate-ROR affiliation briefly introduced by this refresh's PATCH was removed by an approved, guarded direct database correction on 2026-07-28.*
+    - Affiliation: Center for Astrophysics Harvard & Smithsonian — https://ror.org/03c3r2d17
+    - *Source: `CITATION.cff` lines 40-42, which give the short form "Badman, Samuel". The shared HSSI Person row holds the fuller **`Samuel T.` / `Badman`**, and `Person` is shared with no per-entry override, so the fuller live form is recorded here. Affiliation name follows the ROR canonical display name for `03c3r2d17`.*
 11. **Sarah Kovac** — REPLACED (HSSI stored the misspelling "Kovak"; **corrected in the database 2026-07-28**)
     - Identifier: https://orcid.org/0000-0003-1714-5970
     - Affiliation: NCAR High Altitude Observatory — https://ror.org/03773p874
-    - *Source: `CITATION.cff` lines 44-46 (`family-names: "Kovac"`); Zenodo/DataCite creator `Kovac, Sarah`; `pyproject.toml` `{ name = "Sarah Kovac" }`. Existing HSSI affiliation preserved. The HSSI API cannot rename a `Person`, so this was applied by an approved, guarded direct database correction to shared Person row `24cb65e7-be66-4f5b-a668-09dedf5717d2`; verified live.*
+    - *Source: `CITATION.cff` lines 44-46 (`family-names: "Kovac"`); Zenodo/DataCite creator `Kovac, Sarah`; `pyproject.toml` `{ name = "Sarah Kovac" }`. Existing HSSI affiliation preserved. The HSSI API cannot rename a `Person`, so the spelling was corrected directly in the shared database on 2026-07-28.*
 12. **Joseph Plowman** — NEW
     - Identifier: https://orcid.org/0000-0001-7016-7226
     - Affiliation: Southwest Research Institute — https://ror.org/03tghng59
@@ -235,7 +235,7 @@ https://github.com/punch-mission/punchbowl
     - Affiliation: Southwest Research Institute — https://ror.org/03tghng59
     - *Source: existing HSSI record; `CITATION.cff` lines 60-62; `pyproject.toml` (`daniel.seaton@swri.org`).*
 
-*Platform limitation, now resolved: the HSSI API silently no-ops `Person` renames, so items 9 (Attié) and 11 (Kovac) could not be corrected by PATCH. Both were applied on 2026-07-28 by an approved, guarded direct database correction and verified live. Item 2 (Van Kooten) had already been fixed the same way earlier that day. Every name in this field now matches the shared database rows exactly.*
+*Platform limitation, now resolved: the HSSI API silently no-ops `Person` renames, so items 9 (Attié) and 11 (Kovac) could not be corrected through the API and were fixed directly in the shared database on 2026-07-28, as item 2 (Van Kooten) had been. Every name in this field now matches the shared rows exactly.*
 
 ---
 
@@ -594,11 +594,10 @@ Nothing is proposed for **removal**. Every value present in the seeded HSSI reco
 |---|-------|--------------------|----------------|----------|
 | 1 | 12 Version | `punchbowl - 0.0.19` | `0.0.24`, released 2026-07-28, version DOI https://doi.org/10.5281/zenodo.21640289 | Git tag `0.0.24` (2026-07-28, reachable from `527b32ad`); PyPI `info.version = "0.0.24"`, sdist uploaded `2026-07-28T08:37:33Z`; Zenodo record 21640289 `"version": "0.0.24"`; `CITATION.cff` `version: 0.0.24`, `date-released: 2026-07-28`. Purely stale — 5 releases behind. |
 | 2 | 8 Description | 3-sentence description ending "…along with example notebooks." | Same 3 sentences **verbatim**, plus one appended sentence covering the absorbed `punchbowl.auto` SOC automation layer | `CHANGELOG.rst:221` "Moves punchpipe into punchbowl auto subpackage. (#771)"; `docs/automation/index.rst`; `pyproject.toml [project.scripts] punchpipe = "punchbowl.auto.cli:main"`; the `punchbowl/auto/` tree; `punch-mission/punchpipe` archived per the GitHub API. Materially incomplete, not a stylistic rewrite — the submitter's wording is untouched. |
-| ~~3~~ | 6 Authors | ~~Person `Sam Van` `Kooten`~~ → now `Sam` `Van Kooten` in the live database (ORCID 0000-0002-4472-8517) | **NO CHANGE PROPOSED — withdrawn 2026-07-28** | The surname mis-split this row targeted was **already fixed** by a user-approved direct database correction to the shared `website_person` row `5543956f-39bf-41cf-8fe6-4ab41d39ee7b`, applied on 2026-07-28 by the concurrent **regularizePSF** worker (issue #57): `given_name` "Sam Van" → "Sam", `family_name` "Kooten" → "Van Kooten". Re-fetching `GET /api/view/software/37a18000-2d1f-41db-afe6-6545f817bcb7/` and diffing against the original snapshot shows those two lines as the **only** difference (author count still 10, affiliation and ordering intact). Field 6 has been aligned to the database value `Sam` / `Van Kooten` rather than proposing the `CITATION.cff` variant "Samuel J.", because `Person` is shared across packages and HSSI cannot express a per-entry given name. **Nothing to patch.** |
-| 4 | 6 Authors | Person `Sarah Kovak` (ORCID 0000-0003-1714-5970) | `Sarah Kovac`, same ORCID — **APPLIED 2026-07-28** | `CITATION.cff` line 44 `family-names: "Kovac"`; Zenodo/DataCite creator `Kovac, Sarah`; `pyproject.toml` `{ name = "Sarah Kovac" }`. Simple misspelling. The PATCH attempt no-opped as predicted; applied instead by approved guarded direct database correction to shared Person row `24cb65e7-be66-4f5b-a668-09dedf5717d2`, then verified live in both punchbowl and solpolpy. |
-| 5 | 6 Authors | Person `Raphael Attie` (ORCID 0000-0003-4312-6298) | `Raphael Attié`, same ORCID — **APPLIED 2026-07-28** | `CITATION.cff` line 36 `family-names: "Attié"`; Zenodo/DataCite creator `Attié, Raphael`. Missing diacritic. The PATCH attempt no-opped as predicted; applied instead by approved guarded direct database correction to shared Person row `40c2afb0-dfef-4be8-9ac7-12a046cb71c6`, then verified live in both punchbowl and SunPy. |
+| 3 | 6 Authors | Person `Sarah Kovak` (ORCID 0000-0003-1714-5970) | `Sarah Kovac`, same ORCID — **APPLIED 2026-07-28** | `CITATION.cff` line 44 `family-names: "Kovac"`; Zenodo/DataCite creator `Kovac, Sarah`; `pyproject.toml` `{ name = "Sarah Kovac" }`. Simple misspelling; not expressible through the API, so corrected directly in the shared database. Also corrects solpolpy. |
+| 4 | 6 Authors | Person `Raphael Attie` (ORCID 0000-0003-4312-6298) | `Raphael Attié`, same ORCID — **APPLIED 2026-07-28** | `CITATION.cff` line 36 `family-names: "Attié"`; Zenodo/DataCite creator `Attié, Raphael`. Missing diacritic; not expressible through the API, so corrected directly in the shared database. Also corrects SunPy. |
 
-**Outcome for rows 3-5:** all three are resolved. The HSSI API silently no-ops `Person` renames (a PATCH reports success but the row is unchanged), which is exactly what happened when rows 4 and 5 were sent. Row 3 was withdrawn because a concurrent worker had already fixed it directly; rows 4 and 5 were applied on 2026-07-28 by an approved, guarded direct database transaction and roundtrip-verified. Matching ORCIDs meant no duplicate author rows were ever at risk.
+**Outcome for rows 3-4:** both are resolved. The HSSI API silently no-ops `Person` renames, so neither could be applied through the API; both were corrected directly in the shared database on 2026-07-28. Matching ORCIDs meant no duplicate author rows were ever at risk.
 
 ## Open questions for the reviewer — RESOLVED
 
@@ -617,71 +616,40 @@ All 8 items raised at extraction were reviewed by the user on 2026-07-28. The de
 
 **Validator W3 — Field 10 / Field 12 citation correction (applied):** the Field 10 evidence note previously attributed the earliest PyPI upload, `2024-11-01T14:45:44.134455Z`, to `punchbowl-0.0.4`. That timestamp belongs to `punchbowl-0.0.0.tar.gz`; `punchbowl-0.0.4.tar.gz` was uploaded `2024-11-13T17:55:38.815434Z` (both re-verified against `https://pypi.org/pypi/punchbowl/json`). The cited version string is now `punchbowl-0.0.0`. **The Field 10 value (2024-11-01) and the Field 12 value (0.0.24 / 2026-07-28 / https://doi.org/10.5281/zenodo.21640289) are correct and were not changed** — this was a citation-text fix only.
 
-### Baseline drift and later decisions (2026-07-28, after the first validation pass)
+### Later decisions (2026-07-28)
 
-**Baseline-drift event.** While this extraction was in review, the shared HSSI database changed underneath it. A concurrent **regularizePSF** worker (also issue #57) applied a user-approved **direct database correction** to the shared `website_person` row `5543956f-39bf-41cf-8fe6-4ab41d39ee7b` (ORCID https://orcid.org/0000-0002-4472-8517): `given_name` "Sam Van" → "Sam" and `family_name` "Kooten" → "Van Kooten". A direct DB edit was required because `Person` is a shared entity across ndcube, punchbowl, regularizePSF and SunPy, and the HSSI API cannot rename a Person — it matches on identifier and refuses to overwrite a non-blank name. The drift was confirmed by re-fetching `GET http://localhost/api/view/software/37a18000-2d1f-41db-afe6-6545f817bcb7/` and diffing against the original seed: exactly **two** lines differ (`authors[3].givenName`, `authors[3].familyName`); author count is still 10 and the Southwest Research Institute affiliation and ordering are unchanged. **The live reference snapshot is now `/tmp/punchbowl_hssi_live2.json`, superseding `/tmp/punchbowl_hssi_current.json`.**
-
-9. **Field 6 / Van Kooten's given name.** *Question:* the file recorded the `CITATION.cff` variant `Samuel J.` / `Van Kooten`, but the shared HSSI Person row now reads `Sam` / `Van Kooten`. — **RESOLVED: record `Sam` / `Van Kooten` to match the shared database row.** Applied: the Field 6 entry now reads `Sam` / `Van Kooten` with ORCID and the SwRI affiliation untouched, and carries a note that both name forms are correct, that HSSI's row was corrected directly by the regularizePSF worker on 2026-07-28, and that HSSI has no per-entry given-name override (so sending "Samuel J." would silently no-op and leave the file permanently out of sync). The Field 6 status line now counts 2 proposed name replacements rather than 3, and the platform-limitation note no longer lists item 2. **Replacements table row 3 has been struck through and marked "NO CHANGE PROPOSED — withdrawn"**, recording who fixed it and when; the table no longer claims a replacement we are not making. Rows 4 (Kovak→Kovac) and 5 (Attie→Attié) are unaffected and remain proposed.
+9. **Field 6 / Van Kooten's given name.** *Question:* record the `CITATION.cff` variant `Samuel J.` / `Van Kooten`, or the shared live HSSI form `Sam` / `Van Kooten`? — **RESOLVED: follow the shared live identity, `Sam` / `Van Kooten`.**
 
 10. **Field 26 / Award Number.** *Question:* Field 26 said "Not found", but the value exists in HSSI. — **RESOLVED: record `80GSFC18C0014` as an already-present HSSI value, not as a proposed change.** Applied: verified on 2026-07-28 that `http://localhost/api/models/Award/rows/all/` row `03ab3ee8-fbc6-4a4e-a2da-da87a6c2d5ab` holds `name: "Polarimeter to UNify the Corona and Heliosphere (PUNCH)"` / `identifier: "80GSFC18C0014"`, uniquely among 38 rows, and that punchbowl's live record already carries that award title. It is **not** added to the removals/replacements table and **must not be patched** — the backend discards a submitted award `name` when the `identifier` matches an existing row. **Correction to the brief given for this edit:** the instruction stated that external corroboration had failed, but a targeted search here *did* find one — NASA NTRS record `20220017302` ("The Coronal Veil", Malanushenko, Cheung, DeForest, Klimchuk & Rempel) lists `CONTRACT_GRANT: 80GSFC18C0014`, and DeForest is a punchbowl author and the PUNCH PI at SwRI. That confirms the number is a real NASA contract associated with DeForest/SwRI, but **not** that it is specifically the PUNCH SMEX award, and no punchbowl-side source (repository, DataCite `fundingReferences`) mentions it. Field 26 records this partial, qualified corroboration rather than either "not found" or an unqualified endorsement.
 
 ---
+## Applied to HSSI (2026-07-28)
 
-## Roundtrip verification (2026-07-28)
+All Fields 2–33 in this file match the live HSSI record, verified after the update was applied. No value present in the originally submitted record was dropped.
 
-`PATCH http://localhost/api/data/software/37a18000-2d1f-41db-afe6-6545f817bcb7/` — **HTTP 200**. Response `fieldsUpdated` listed 16 fields: `authors`, `data_sources`, `description`, `development_status`, `input_formats`, `interoperable_software`, `keywords`, `output_formats`, `related_datasets`, `related_instruments`, `related_observatories`, `related_publications`, `related_region`, `related_software`, `software_functionality`, `version`.
+### Corrections that the API cannot express
 
-Sent body md5 `6a106baa70231d63780b5152d54b3147` (16 keys, 15 authors, no `award`). The baseline was re-fetched and confirmed byte-identical to the approved plan's baseline immediately before sending.
+Three author-identity corrections were applied directly to the HSSI database because `PATCH /api/data/software/<uid>/` cannot make them — it matches a `Person` by ORCID and will not overwrite a name that is already set, and it only ever adds affiliations. Anyone re-deriving this entry from the API alone will not reproduce them.
 
-### Verified landed
-
-| Check | Result |
+| Correction | Also affects |
 |---|---|
-| Omitted fields (16) untouched | **PASS** — 0 of 16 changed |
-| `softwareFunctionality` | **PASS** — 50 sent / 50 live |
-| `relatedDatasets` | **PASS** — 43 / 43 |
-| `keywords` | **PASS** — 21 / 21 (render title-cased; `photometry`, `polarimetry` rows created) |
-| `interoperableSoftware` | **PASS** — 8 / 8 |
-| `relatedSoftware` | **PASS** — 6 / 6 |
-| `relatedRegion`, `dataSources`, `inputFormats`, `outputFormats`, `relatedPublications` | **PASS** — exact set match |
-| `description` | **PASS** — byte-exact |
-| `developmentStatus` | **PASS** — `Active` |
-| `version` | **PASS** — `punchbowl - 0.0.24` |
-| Authors | **PASS** — 10 → 15, **0 dropped**, 0 missing, 0 unexpected |
-| Affiliations of the 10 pre-existing authors | **PASS** — all counts unchanged |
-| Fields 31/32 | **PASS** — 4/4 and 5/5 **distinct** rows, SPASE identifier sets exactly equal to sent, all `https://spase-metadata.org/` |
+| `Raphael Attie` → **`Raphael Attié`** (ORCID 0000-0003-4312-6298) | SunPy |
+| `Sarah Kovak` → **`Sarah Kovac`** (ORCID 0000-0003-1714-5970) | solpolpy |
+| Samuel T. Badman reduced to his single correct affiliation | PySPEDAS, SunPy |
 
-The three byte-identical "Wide Field Imager" names bound to three distinct rows as designed — `…/WFI/1` → `2cd25d1e-ef8f-4a9e-af81-b9ac8b881efe`, `…/WFI/2` → `01f55e2d-c320-4ab2-99e6-43869e6a8c0a`, `…/WFI/3` → `288c9a7a-17fa-4b2a-800c-1f159991ae88`; NFI → `41005ef5-3095-468e-bd96-afbb896cdc35`. Identifier keying worked; no collapse.
+`Person` and `Organization` are shared entities, so these corrections apply to every entry referencing them.
 
-### Shared-record corrections applied by approved direct database edit (2026-07-28)
+The Badman defect arose because two `Organization` rows shared ROR `https://ror.org/03c3r2d17`. Those rows were merged, leaving one named **`Center for Astrophysics Harvard & Smithsonian`** — the ROR canonical display name, and the form recorded in Field 6. A duplicate, ORCID-less `Raphael Attie` person record that held no references was also removed.
 
-Three defects could not be expressed through the API. `_get_or_create_person()` only fills **blank** names on an ORCID match, so name corrections silently no-op; and `_get_or_create_org()` resolves by identifier with `.first()` and then calls `affiliation.add(...)`, which attaches a second row when two Organization rows share one ROR. All three were corrected in a single guarded transaction against the active `postgres` database on container `website_db`, under explicit approval, with full backups taken first.
+Two further names are deliberately recorded in their fuller live HSSI form rather than the shorter `CITATION.cff` form, since HSSI has no per-entry override: **`Nicholas A. Murphy`** (`CITATION.cff`: "Nick") and **`Samuel T. Badman`** (`CITATION.cff`: "Samuel"). `Sam Van Kooten` likewise matches the shared row.
 
-| Shared row | Before | After | Also affects |
-|---|---|---|---|
-| Person `40c2afb0-dfef-4be8-9ac7-12a046cb71c6` (ORCID 0000-0003-4312-6298) | `Raphael Attie` | **`Raphael Attié`** | SunPy |
-| Person `24cb65e7-be66-4f5b-a668-09dedf5717d2` (ORCID 0000-0003-1714-5970) | `Sarah Kovak` | **`Sarah Kovac`** | solpolpy |
-| Person-affiliation through-row `3074` (Samuel T. Badman) | 2 affiliations, both ROR `03c3r2d17` | **1 affiliation** (row `2474`, `7706c349…`) | PySPEDAS, SunPy |
+### Values recorded here that the HSSI software view does not display
 
-The duplicate affiliation was introduced by this refresh's PATCH and had been predicted before it was sent. The two name defects were pre-existing.
+- **Field 15 License URI** `https://spdx.org/licenses/LGPL-3.0-only.html` — held on the shared `License` row.
+- **Field 26 Award Number** `80GSFC18C0014` — held on the linked `Award` row.
 
-Verification after the transaction: total `Person` count unchanged at 861; total affiliations 527 → 526; both Organization rows for ROR `03c3r2d17` still present and unmodified (reference counts 1 and 9); Katharine Reeves's affiliation row `2795` intact; 7 authorship rows across the three people unchanged. All four affected software views (`punchbowl`, `SunPy`, `solpolpy`, `PySPEDAS`) were diffed pre/post and showed **only** the three intended changes — no unrelated difference anywhere. punchbowl retained all 15 authors with no non-author field altered.
+Both are already correct in HSSI and require no update.
 
-Two further no-ops were left uncorrected **by decision**, because the live HSSI forms are the fuller and better ones and are now recorded in Field 6: `Nicholas A. Murphy` (CITATION.cff says "Nick") and `Samuel T. Badman` (CITATION.cff says "Samuel"). Van Kooten (0000-0002-4472-8517) needed no change — the shared row had already been corrected directly on 2026-07-28 by the regularizePSF worker.
+### Note for the local-database export
 
-Nicholas A. Murphy carries three affiliations (SAO, CfA, Smithsonian Institution) — all **distinct** RORs accumulated across software entries, not a duplication.
-
-**Related catalog defect, deliberately NOT included in the approved transaction:** a second Person row `e241cbf2-b3b5-4359-bb36-181988b2de34`, also named `Raphael Attie`, exists with **no ORCID** and is fully orphaned (0 authorships, 0 affiliations, 0 curator rows, 0 submitter rows). It is not user-visible. It was deleted on 2026-07-28 under separate explicit approval by a guarded single-row transaction (`Person` count 861 → 860; the ORCID-bearing `Raphael Attié` row and all its relationships verified intact; punchbowl and SunPy views showed zero difference afterwards).
-
-### Values recorded in this file that HSSI does not render
-
-- Field 15 License URI `https://spdx.org/licenses/LGPL-3.0-only.html` — already on the shared `License` row; not patched.
-- Field 26 Award Number `80GSFC18C0014` — already on Award row `03ab3ee8-fbc6-4a4e-a2da-da87a6c2d5ab` and already linked; not patched.
-
----
-
-## Final state
-
-All Fields 2–33 in this file match live HSSI as of 2026-07-28, verified by roundtrip after the API update and again after the approved shared-record database corrections. No value present in the original submitted record was dropped.
-
-Nothing remains open. The orphaned, ORCID-less duplicate `Raphael Attie` Person row `e241cbf2-b3b5-4359-bb36-181988b2de34` was deleted on 2026-07-28 under separate explicit approval by a guarded single-row transaction: total `Person` count 861 → 860, no other row touched, and the ORCID-bearing `Raphael Attié` row `40c2afb0-dfef-4be8-9ac7-12a046cb71c6` verified intact with its 2 authorships and 2 affiliations. The punchbowl and SunPy views were re-diffed afterwards and showed **zero** differences, confirming the orphan had never been user-visible.
+The shared-record corrections above were made directly in the database, not through seed CSVs. The export/reconciliation workflow must capture them, or a wipe-and-replace re-import will reintroduce the duplicate `Organization` row and the misspelled names.
