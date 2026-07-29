@@ -169,29 +169,17 @@ single-region value is the curated live value; add it only on explicit approval.
 
 **Source:** Identity-aware union of live HSSI (matched by ORCID) and CITATION.cff at 8bd926e1; the two
 sources agree on the same six people and the same six ORCID assignments. Affiliations
-(Organization UUID `7d4f0f58-8d42-4a8d-a6bb-94821a2079f3` = Southwest Research Institute,
-ROR https://ror.org/03tghng59 confirmed via the ROR API) are PRESERVED from live HSSI; the prior canonical
+(Southwest Research Institute, ROR https://ror.org/03tghng59 confirmed via the ROR API) are PRESERVED from
+live HSSI; the prior canonical
 file had "Not found" for every affiliation, so live wins. Author order follows CITATION.cff (credit order);
 the live record displays them alphabetically by family name — order carries no semantics for this M2M field.
 DataCite/Zenodo creators for the concept DOI list exactly these six, so no author is *added* here.
 
-**NAME SPLIT — CORRECTED IN THE DATABASE 2026-07-28.** Live HSSI previously stored Sam Van Kooten as
-`givenName: "Sam Van"` / `familyName: "Kooten"`, contradicting CITATION.cff (`given-names: "Sam"`,
-`family-names: "Van Kooten"`), the DataCite record for 10.5281/zenodo.7392170
-(`"givenName": "Sam", "familyName": "Van Kooten"`), and ORCID 0000-0002-4472-8517 (family name
-"Van Kooten"). The HSSI API cannot rename an existing `Person` — PATCH matches by identifier and will not
-overwrite a nonblank name, so a rename silently no-ops. The defect was therefore fixed by a direct,
-user-approved `UPDATE` on `website_person` row `5543956f-39bf-41cf-8fe6-4ab41d39ee7b` in the active Django
-database (`postgres` @ container `website_db`, used by app container `HSSI`): `given_name` `'Sam Van'` →
-`'Sam'`, `family_name` `'Kooten'` → `'Van Kooten'`. Exactly one row was affected; the primary key was not
-touched, so all four referencing associations were preserved (`website_software_authors` = 4,
-`website_person_affiliation` = 1, curator = 0, submitter = 0) and the table still holds 858 rows.
-Because `Person` is a shared entity, the correction also fixed the same wrong split on **ndcube**,
-**punchbowl**, and **SunPy**, each of which now reports `givenName: "Sam"` / `familyName: "Van Kooten"` with
-its affiliation intact. Pre-change backups: `/tmp/regularizepsf-refresh/backups/`
-(`hssi_postgres_pre_vankooten_20260728.dump`, `person_5543956f_before.csv`,
-`person_5543956f_refs_before.csv`). No seed CSV was edited — this correction is to be captured by the later
-export/reconciliation workflow.
+**NAME SPLIT.** Live HSSI stores this author as `givenName: "Sam"` / `familyName: "Van Kooten"`. That split
+matches CITATION.cff (`given-names: "Sam"`, `family-names: "Van Kooten"`), the DataCite record for
+10.5281/zenodo.7392170 (`"givenName": "Sam", "familyName": "Van Kooten"`), and ORCID 0000-0002-4472-8517
+(family name "Van Kooten"). His ORCID and his Southwest Research Institute affiliation
+(ROR https://ror.org/03tghng59) are unchanged. This file follows that verified shared identity.
 
 **UNCREDITED CONTRIBUTOR — upstream gap, deliberately not added (validator finding W1):** `Chris Lowder`
 has **16 commits** in this repository touching `regularizepsf/builder.py`, `image_processing.py`,
@@ -294,14 +282,16 @@ Regularizing Variable Point-spread Functions," *The Astronomical Journal* 165(5)
 README.md ("Please cite the associated paper if you use this technique") and `docs/source/cite.rst`.
 
 ### 15. License (RECOMMENDED)
-**License:** GNU Library or 'Lesser' General Public Licenses (LGPL version 3)
+**License:** GNU Lesser General Public License v3.0 only
 
-**License URI:** https://www.gnu.org/licenses/lgpl-3.0.html
+**License URI:** https://spdx.org/licenses/LGPL-3.0-only.html
 
-**Source:** License name PRESERVED from live HSSI (live renders the quotes as typographic
-'Lesser' — same controlled-vocabulary row). Confirmed by LICENSE: "This software may be used, modified, and
-distributed under the terms of the GNU Lesser General Public License v3 (LGPL-v3)". License URI carried
-forward from the prior canonical file (live HSSI exposes only the license name through the view API).
+**Source:** LICENSE is authoritative: "This software may be used, modified, and distributed under the terms
+of the GNU Lesser General Public License v3 (LGPL-v3)" — i.e. SPDX `LGPL-3.0-only`. The name and URI were
+corrected on 2026-07-28 so that this entry references HSSI's canonical SPDX `License` vocabulary row; the
+substantive LGPL-3.0-only license did not change. The prior name was a legacy non-SPDX label, and the prior
+URI (`https://www.gnu.org/licenses/lgpl-3.0.html`) matched no row in the vocabulary.
+
 Known discrepancy, unchanged: the Zenodo/DataCite deposit records `cc-by-4.0`, which describes the Zenodo
 deposit, not the source license; the LICENSE file is authoritative.
 
@@ -662,8 +652,10 @@ figures, not marks. The PyHC registry entry for regularizePSF has no `logo` fiel
   title, via HSSI's existing shared `Award` row); Field 29 Related Software; Field 30 Interoperable Software.
 - **Extended:** Field 4 Software Functionality (+4 values, all six live values retained);
   Field 16 Keywords (+`plotting`, all 14 live values retained).
-- **Preserved unchanged:** Fields 2, 3, 5, 6 (people + affiliations), 7, 8, 9, 10, 11, 13, 14, 15, 18, 19,
+- **Preserved unchanged:** Fields 2, 3, 5, 6 (people + affiliations), 7, 8, 9, 10, 11, 13, 14, 18, 19,
   20, 21, 24, 27, 32.
+- **Corrected (2026-07-28):** Field 15 License — name and URI now reference HSSI's canonical SPDX
+  vocabulary row for `LGPL-3.0-only`; the substantive license is unchanged.
 - **Still "Not found" after investigation:** Fields 17, 22, 28, 31, 33 (each with written justification).
 
 ### Validation findings applied (validator report, 2026-07-28)
