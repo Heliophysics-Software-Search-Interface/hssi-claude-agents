@@ -507,25 +507,24 @@ Field 2 note, and the concept DOI stays in Field 2 itself, so no identifier is l
 
 ### 17. Data Sources (OPTIONAL)
 
-**Final intended set (4):**
+**Final intended set (3):**
 
 | Value | Origin |
 |---|---|
-| `Other - https://xrt.cfa.harvard.edu/level1/` | live HSSI |
 | `Observatory/Mission-specific` | **`Source: HSSI duplicate 8ee452af (supplemental)`** |
 | `HTTP/HTTPS Directories` | **NEW — repo evidence** |
 | `The Virtual Solar Observatory.` | **ADDED — documented gallery workflow** |
 
-**Controlled-list spellings:** all four verified present as rows in the live `DataInput` list, so all
-four bind without creating new rows. Note the **trailing period** in
+**Controlled-list spellings:** all three are present as rows in the live `DataInput` list. Note the
+**trailing period** in
 `The Virtual Solar Observatory.` — that is the only spelling in the live list; there is no
 period-less variant, so omitting it would create a duplicate row.
 
-- **`Other - https://xrt.cfa.harvard.edu/level1/`** — retained from live HSSI. Directly corroborated
-  by `xrtpy/util/filename2repo_path.py`, whose default `urlroot` is `https://xrt.cfa.harvard.edu/`
-  and which builds `level1/`, `data_products/Level1_Qual/`, `data_products/Level2_Synoptics/`,
-  `data_products/Level2_gmap/` and `data_products/jp2/` paths. This exists as a row in the live
-  `DataInput` list, so it binds.
+**Corrected 2026-07-29:** the former controlled-list value
+`Other - https://xrt.cfa.harvard.edu/level1/` was retired from localhost and is no longer a valid
+Field 17 value. Its meaning remains represented by `Observatory/Mission-specific` and
+`HTTP/HTTPS Directories`.
+
 - **`Observatory/Mission-specific`** — the CfA XRT archive is Hinode/XRT-specific. Per Field 17's
   instruction, the observatory is cross-listed in Field 32 (`Hinode`).
 - **`HTTP/HTTPS Directories`** — **NEW.** `filename2repo_path` constructs `https://` archive
