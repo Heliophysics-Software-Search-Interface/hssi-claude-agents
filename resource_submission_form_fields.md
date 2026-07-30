@@ -441,7 +441,7 @@ rather than minting a near-duplicate.
 
 **How to fill it:** Select all data input sources the software supports. If a source is not listed, select 'Other'. If observatory-specific, select 'observatory-specific' and indicate the observatory/mission name in the Related Observatory field.
 
-**Possible Values** — *18 values, snapshot 2026-07-29, verified identical on `https://hssi.hsdcloud.org` and `http://localhost`. Live `/api/models/DataInput/rows/all/` is authoritative.*
+**Possible Values** — *17 values, snapshot 2026-07-29. Live `/api/models/DataInput/rows/all/` is authoritative. **Row counts differ by target**: `http://localhost` has these 17; `https://hssi.hsdcloud.org` still carries an 18th junk row pending the end-of-campaign import (see below).*
 
 - AMDA
 - CDAWeb
@@ -454,7 +454,6 @@ rather than minting a near-duplicate.
 - Observatory/Mission-specific
 - OMNIWeb
 - Other
-- ~~`Other - https://xrt.cfa.harvard.edu/level1/`~~ — **junk row, never select** (see below)
 - S3/Cloud-aware
 - SSCWeb
 - TAP
@@ -467,9 +466,13 @@ rather than minting a near-duplicate.
 - **`The Virtual Solar Observatory.` ends with a period.** The stored row name includes a trailing
   full stop; `The Virtual Solar Observatory` (without it) does **not** match and will be rejected.
   The row is otherwise genuine — it carries the canonical `…/DataSources#VSO` identifier.
-- **`Other - https://xrt.cfa.harvard.edu/level1/` is a data-entry artifact**, not vocabulary — a
-  free-text "Other" value that leaked into the controlled list. It is listed here only so it is
-  recognizable; select plain `Other` instead.
+- **`Other - https://xrt.cfa.harvard.edu/level1/` — never emit this.** A free-text "Other" value that
+  leaked into the controlled vocabulary; it carries no identifier and was selectable in the live
+  submission form. **Removed from `http://localhost` on 2026-07-29** (checkpoints
+  `2026-07-29-{pre,post}-datainput-junkrow-removal`), and still present on production until the
+  end-of-campaign seed-CSV import. Its only user was XRTpy `a74cb76b`, whose remaining
+  `Observatory/Mission-specific` + `HTTP/HTTPS Directories` convey the same meaning. If you meet it
+  on a production record, treat it as **drift to correct**, not a value to preserve.
 - **`AMDA`, `GFZ`, `Madrigal`, and `WDC` have empty `identifier` fields**, unlike every other row.
   They appear to be legitimate later additions rather than artifacts, and are safe to select.
 
