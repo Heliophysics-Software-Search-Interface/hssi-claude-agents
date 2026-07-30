@@ -11,6 +11,38 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 ---
 
+## Controlled Vocabularies — read this before using any value list
+
+Every **Possible Values** list below is a **dated snapshot**, not the source of truth. The live
+vocabulary on the submission target is authoritative and wins on any conflict:
+
+```
+GET <target>/api/models/<Model>/rows/all/
+```
+
+**Use the snapshot to pick candidates; use the API to confirm they exist.** Confirm every
+controlled-list value against the live endpoint for the target you are working with before writing it
+into a payload or an `hssi_metadata.md`.
+
+**Why exactness matters.** `serializers/submission.py` resolves controlled lists with
+`Model.objects.filter(name__iexact=value)` after nothing more than `.strip()`. There is no alias
+table and no fuzzy matching. A value that is one character off — a missing trailing period, a
+straight quote where the row has a curly one — raises `ValidationError: Unknown value` and fails the
+entire submission. Case is the only difference that is forgiven.
+
+**Vocabularies can differ between targets.** As of the 2026-07-29 audit every vocabulary was
+identical between `https://hssi.hsdcloud.org` and `http://localhost` **except `License`**, which has
+two prod-only rows. Never assume a value that worked on one target exists on the other.
+
+**Only Keywords (Field 16) is an open vocabulary** — `_get_or_create_keyword` creates missing rows.
+Every other list rejects unknown values.
+
+The field-to-endpoint mapping is in `.claude/skills/hssi-field-definitions/SKILL.md`, which wraps this
+document. To re-verify these snapshots against live and refresh them, run **Step A** of the
+`update-api-spec` skill.
+
+---
+
 ## Section 1: Basic Information
 
 ### 1. Submitter (MANDATORY)
@@ -49,7 +81,10 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 **How to fill it:** Select all types of software functionalities that apply to the software.
 
-**Possible Values:**
+**Possible Values** — *83 values, snapshot 2026-07-29, verified identical on `https://hssi.hsdcloud.org` and `http://localhost`. Live `/api/models/FunctionCategory/rows/all/` is authoritative.*
+
+Written `Parent:Child`; the serializer splits on `:`. The 6 top-level categories are also selectable on their own, and **when a subcategory applies its parent must be listed too**. 13 subcategory names (`ML/AI`, `Spectrogram`, `Analysis`, …) recur under more than one parent — that is intentional, and the parent prefix disambiguates them. Every child has exactly one parent, so paths are never deeper than two levels.
+
 - Coordinate Transforms
 - Coordinate Transforms:Heliospheric
 - Coordinate Transforms:Ionospheric
@@ -143,12 +178,41 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 **How to fill it:** Select all physical regions the software's functionality is commonly used or intended for.
 
-**Possible Values:**
+**Possible Values** — *24 values, snapshot 2026-07-29, verified identical on `https://hssi.hsdcloud.org` and `http://localhost`. Live `/api/models/Region/rows/all/` is authoritative.*
+
+The vocabulary is currently flat — every row is a top-level value, no `Parent:Child` form.
+
+- Chromosphere
+- Corona
 - Earth Atmosphere
+- Earth Auroral Subregion
+- Earth Inner Magnetosphere
+- Earth Ionosphere
+- Earth Lower and Middle Atmosphere
+- Earth Magnetosheath
 - Earth Magnetosphere
+- Earth Magnetotail
+- Earth Outer Magnetosphere
+- Earth Thermosphere
+- Heliosheath
 - Interplanetary Space
+- Jupiter Magnetosphere
+- Mars Magnetosphere
+- Neptune Magnetosphere
+- Photosphere
 - Planetary Magnetospheres
+- Saturn Magnetosphere
 - Solar Environment
+- Solar Interior
+- Solar Wind
+- Uranus Magnetosphere
+
+> **Historical note.** Until the 2026-07-29 audit this field listed only 5 values (Earth Atmosphere,
+> Earth Magnetosphere, Interplanetary Space, Planetary Magnetospheres, Solar Environment). Those are
+> the keys of `REGION_MAPPING_TTL` in `models/vocab.py` — a mapping used for TTL export, **not** the
+> selectable vocabulary. All 24 rows above are offered by `/api/models/Region/choices/`. Prefer the
+> most specific applicable region (e.g. `Earth Ionosphere` over `Earth Atmosphere`) rather than
+> defaulting to the old five.
 
 ---
 
@@ -239,12 +303,16 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 **How to fill it:** Select the most important languages (e.g., Python, Fortran, C). This is not meant to be an exhaustive list.
 
-**Possible Values:**
+**Possible Values** — *19 values, snapshot 2026-07-29, verified identical on `https://hssi.hsdcloud.org` and `http://localhost`. Live `/api/models/ProgrammingLanguage/rows/all/` is authoritative.*
+
+Note the exact spellings: **`Javascript`** (not `JavaScript`) and **`Typescript`** (not `TypeScript`).
+
 - C
 - C#
 - C++
 - Fortran 2003
 - Fortran 2008
+- Fortran 2023
 - Fortran77
 - Fortran90
 - IDL
@@ -281,13 +349,37 @@ The form collects metadata about heliophysics software packages for inclusion in
 - **License** (RECOMMENDED): License name
 - **License URI** (RECOMMENDED): URI of the license (auto-populated for SPDX licenses)
 
-**Common License Options:**
+**Possible Values** — *snapshot 2026-07-29. **This vocabulary differs by target**: 13 distinct names on `https://hssi.hsdcloud.org`, 11 on `http://localhost`. Live `/api/models/License/rows/all/` is authoritative.*
+
+This is a **closed** list despite the "copy the SPDX title" instruction above: the serializer does
+`License.objects.filter(name__iexact=<value>)` and raises `Unknown license` on no match. An SPDX
+title that is not a row below will be rejected — use `Other` instead.
+
 - Apache License 2.0
+- BSD 2-Clause "Simplified" License
+- BSD 3-Clause "New" or "Revised" License
+- Creative Commons Attribution 4.0 International
 - GNU General Public Licenses (GPL version 2)
-- GNU Library or 'Lesser' General Public Licenses (LGPL version 2)
+- GNU General Public License v3.0 or later
+- GNU Lesser General Public License v3.0 only
+- GNU Library or ‘Lesser’ General Public Licenses (LGPL version 2)
+- GNU Library or ‘Lesser’ General Public Licenses (LGPL version 3) — **prod only**
 - MIT License
-- New BSD license
+- New BSD license — **prod only**
 - Other
+- Restricted
+
+**Traps in this list:**
+
+- **Curly quotes.** The two LGPL rows use typographic quotes — `‘Lesser’` (U+2018/U+2019), *not*
+  `'Lesser'`. A straight-quote copy will not match.
+- **Two prod-only rows.** `New BSD license` and `GNU Library or ‘Lesser’ General Public Licenses
+  (LGPL version 3)` exist on production but **not** on localhost; sending either to a local instance
+  returns a 400. For BSD-3 on localhost use `BSD 3-Clause "New" or "Revised" License`.
+- **Duplicate `Other` on prod.** Production carries two `Other` rows, both with an empty URL.
+  `License.get_other_licence()` resolves them with `.first()`, so which one a submission binds to is
+  arbitrary. Harmless for submission, but worth knowing when a roundtrip diff shows an unexpected
+  license id.
 
 ---
 
@@ -300,7 +392,14 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 **How to fill it:** Begin typing the keyword in the box. Keywords from UAT and AGU Index lists will appear in a dropdown. Choose correct one(s) or type in if not listed.
 
-**Example Values (from database):**
+**Example Values** — *20 of 483 rows on `https://hssi.hsdcloud.org` / 572 on `http://localhost`, sampled 2026-07-29. Full list at `/api/models/Keyword/rows/all/`.*
+
+**This is the only genuinely open vocabulary in the form.** `_get_or_create_keyword` creates a row
+for any keyword not already present (case-insensitive match), so a new keyword will never fail a
+submission — but it also means typos and un-split comma-delimited strings become permanent rows.
+Enter **one keyword per entry**, lower-case, and check the live list first to reuse an existing row
+rather than minting a near-duplicate.
+
 - analysis
 - batsrus
 - cdf
@@ -331,20 +430,37 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 **How to fill it:** Select all data input sources the software supports. If a source is not listed, select 'Other'. If observatory-specific, select 'observatory-specific' and indicate the observatory/mission name in the Related Observatory field.
 
-**Possible Values:**
+**Possible Values** — *18 values, snapshot 2026-07-29, verified identical on `https://hssi.hsdcloud.org` and `http://localhost`. Live `/api/models/DataInput/rows/all/` is authoritative.*
+
+- AMDA
 - CDAWeb
 - das2
 - FTP/FTPS Directories
+- GFZ
 - HAPI
 - HTTP/HTTPS Directories
+- Madrigal
 - Observatory/Mission-specific
 - OMNIWeb
 - Other
+- ~~`Other - https://xrt.cfa.harvard.edu/level1/`~~ — **junk row, never select** (see below)
 - S3/Cloud-aware
 - SSCWeb
 - TAP
-- The Virtual Solar Observatory
+- The Virtual Solar Observatory.
 - VirES
+- WDC
+
+**Traps in this list:**
+
+- **`The Virtual Solar Observatory.` ends with a period.** The stored row name includes a trailing
+  full stop; `The Virtual Solar Observatory` (without it) does **not** match and will be rejected.
+  The row is otherwise genuine — it carries the canonical `…/DataSources#VSO` identifier.
+- **`Other - https://xrt.cfa.harvard.edu/level1/` is a data-entry artifact**, not vocabulary — a
+  free-text "Other" value that leaked into the controlled list. It is listed here only so it is
+  recognizable; select plain `Other` instead.
+- **`AMDA`, `GFZ`, `Madrigal`, and `WDC` have empty `identifier` fields**, unlike every other row.
+  They appear to be legitimate later additions rather than artifacts, and are safe to select.
 
 ---
 
@@ -355,7 +471,8 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 **How to fill it:** Select all file formats your software supports for input files. Only formats actually supported should be indicated.
 
-**Possible Values:**
+**Possible Values** — *11 values, snapshot 2026-07-29, verified identical on `https://hssi.hsdcloud.org` and `http://localhost`. Live `/api/models/FileFormat/rows/all/` is authoritative. Fields 18 and 19 draw on the same vocabulary.*
+
 - ascii
 - CDF
 - csv
@@ -377,7 +494,8 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 **How to fill it:** Select all file formats your software supports for generated files. Only formats actually supported should be indicated.
 
-**Possible Values:**
+**Possible Values** — *same 11-value `FileFormat` vocabulary as Field 18; snapshot 2026-07-29. Live `/api/models/FileFormat/rows/all/` is authoritative.*
+
 - ascii
 - CDF
 - csv
@@ -399,15 +517,19 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 **How to fill it:** Select all operating systems the software can successfully be installed on.
 
-**Possible Values:**
+**Possible Values** — *7 values, snapshot 2026-07-29, verified identical on `https://hssi.hsdcloud.org` and `http://localhost`. Live `/api/models/OperatingSystem/rows/all/` is authoritative.*
+
 - Linux
 - Mac
 - MobilePlatform
 - Operating System Independent
-- OS Independent
 - Other
 - Solaris
 - Windows
+
+> **Trap.** `OS Independent` is **not** a value and never has been — it was listed here in error
+> until the 2026-07-29 audit and would be rejected on submission. The only cross-platform value is
+> `Operating System Independent`, spelled out in full.
 
 ---
 
@@ -418,7 +540,8 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 **How to fill it:** Select all CPU architectures the software can successfully be installed and executed on.
 
-**Possible Values:**
+**Possible Values** — *9 values, snapshot 2026-07-29, verified identical on `https://hssi.hsdcloud.org` and `http://localhost`. Live `/api/models/CpuArchitecture/rows/all/` is authoritative (`CPUArchitecture` also resolves — model names are case-insensitive).*
+
 - x86-64
 - Apple Silicon arm64
 - Sun (SPARC)
@@ -432,19 +555,26 @@ The form collects metadata about heliophysics software packages for inclusion in
 ---
 
 ### 22. Related Phenomena (OPTIONAL)
-**Type:** Multi-select dropdown (allows custom entries)
+**Type:** Multi-select dropdown (**closed** controlled vocabulary — custom entries are rejected)
 
 **What it is:** The phenomena the software supports science functionality for.
 
-**How to fill it:** Select phenomena terms from a supported controlled vocabulary.
+**How to fill it:** Select phenomena terms from the controlled vocabulary below. Despite the web form's free-text affordance, the API path is strict: `related_phenomena` resolves through `_get_graph_list_item`, which raises `Unknown value` on anything not in the list. A phenomenon the software supports that has no row belongs in **Keywords** (Field 16, the open vocabulary), not here.
 
-**Possible Values:**
+**Possible Values** — *7 values, snapshot 2026-07-29, verified identical on `https://hssi.hsdcloud.org` and `http://localhost`. Live `/api/models/Phenomena/rows/all/` is authoritative.*
+
 - Coronal Heating
-- Coronal Holes
 - Coronal Mass Ejections
+- Geomagnetic Storms
 - Solar Corona
 - Solar Flares
+- Solar Wind
 - X-ray emission
+
+> **Trap.** `Coronal Holes` is **not** a value — it was listed here in error until the 2026-07-29
+> audit and would be rejected on submission. `Geomagnetic Storms` and `Solar Wind` were missing from
+> that same stale list. The vocabulary is currently flat: every row is a top-level value, no
+> `Parent:Child` form.
 
 ---
 
@@ -455,7 +585,11 @@ The form collects metadata about heliophysics software packages for inclusion in
 
 **How to fill it:** Select the development status of the code repository. See repostatus.org for term descriptions.
 
-**Possible Values:**
+**Possible Values** — *8 values, snapshot 2026-07-29, verified identical on `https://hssi.hsdcloud.org` and `http://localhost`. Live `/api/models/RepoStatus/rows/all/` is authoritative.*
+
+Submit the bare term only (`Active`, `WIP`, …); the descriptions below are the repostatus.org
+definitions, not part of the value.
+
 - **Abandoned**: Initial development started but abandoned; no stable release
 - **Active**: Reached stable, usable state and being actively developed
 - **Concept**: Minimal/no implementation; limited example/demo/proof-of-concept only

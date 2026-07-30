@@ -3,16 +3,21 @@ name: software-functionality
 description: >
   Analytical framework for classifying software into HSSI Software Functionality categories.
   Use when analyzing, extracting, or validating the Software Functionality field (Field 4) for
-  HSSI metadata. Provides code patterns, library mappings, and decision guidance for the 85+
+  HSSI metadata. Provides code patterns, library mappings, and decision guidance for all 83
   functionality values.
 user-invocable: false
 ---
 
 # Software Functionality Classification Guide
 
-The HSSI Software Functionality field (Field 4) is the most analytically demanding metadata field. It requires understanding what a software package actually does and mapping those capabilities to a taxonomy of 85+ values.
+The HSSI Software Functionality field (Field 4) is the most analytically demanding metadata field. It requires understanding what a software package actually does and mapping those capabilities to a taxonomy of **83 values** — 6 top-level categories plus 77 `Parent:Child` subcategory paths, built from 67 distinct names (13 subcategory names recur under more than one parent, disambiguated by the parent prefix; every child has exactly one parent, so the taxonomy is two levels deep and never deeper).
 
 This guide provides the framework for doing that classification accurately and exhaustively.
+
+> **Counts verified 2026-07-29** against `/api/models/FunctionCategory/rows/all/`, identical on
+> `https://hssi.hsdcloud.org` and `http://localhost`. Treat that as a dated observation: the live
+> endpoint is authoritative, and this taxonomy should be re-checked against it (see the
+> `update-api-spec` skill) rather than assumed current.
 
 ---
 
