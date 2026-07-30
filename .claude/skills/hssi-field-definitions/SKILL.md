@@ -34,8 +34,10 @@ straight quote where the row has a curly one — raises `ValidationError: Unknow
 whole submission.
 
 **Vocabularies can differ between targets.** As of 2026-07-29 every vocabulary was identical between
-`https://hssi.hsdcloud.org` and `http://localhost` **except `License`**, where two rows exist only on
-prod. Never assume a value that worked on one target exists on the other.
+`https://hssi.hsdcloud.org` and `http://localhost` **except `License`**, where production still
+carries three legacy duplicate rows that localhost has retired. Never assume a value that worked on
+one target exists on the other — and never treat an extra row on one side as automatically correct.
+See Field 15 for the canonical-vs-legacy mapping.
 
 ### Field → model endpoint
 

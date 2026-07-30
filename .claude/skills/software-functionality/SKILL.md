@@ -10,7 +10,9 @@ user-invocable: false
 
 # Software Functionality Classification Guide
 
-The HSSI Software Functionality field (Field 4) is the most analytically demanding metadata field. It requires understanding what a software package actually does and mapping those capabilities to a taxonomy of **83 values** — 6 top-level categories plus 77 `Parent:Child` subcategory paths, built from 67 distinct names (13 subcategory names recur under more than one parent, disambiguated by the parent prefix; every child has exactly one parent, so the taxonomy is two levels deep and never deeper).
+The HSSI Software Functionality field (Field 4) is the most analytically demanding metadata field. It requires understanding what a software package actually does and mapping those capabilities to a taxonomy of **83 values** — 6 top-level categories plus 77 `Parent: Child` subcategory paths, built from 67 distinct names (13 subcategory names recur under more than one parent, disambiguated by the parent prefix; every child has exactly one parent, so the taxonomy is two levels deep and never deeper).
+
+**Write subcategories as `Parent: Child`, with a space after the colon** — the canonical form the API returns and the payload skills specify. `Parent:Child` is also accepted on input (the serializer strips around the colon), so older files written that way are not errors; prefer the spaced form in anything new.
 
 This guide provides the framework for doing that classification accurately and exhaustively.
 
@@ -29,7 +31,7 @@ The taxonomy uses two levels: **top-level categories** and **subcategories**.
 
 Example: If software produces spectrograms, list BOTH:
 - Data Visualization
-- Data Visualization:Spectrogram
+- Data Visualization: Spectrogram
 
 There are 6 top-level categories:
 1. Coordinate Transforms
@@ -137,7 +139,7 @@ There are 6 top-level categories:
 
 **What it means:** Software specifically designed to support a space mission's operations or data pipeline. This is distinct from general-purpose analysis software that happens to work with mission data.
 
-**Key distinction:** A package that *reads* MMS data is "Data Processing and Analysis:Data Access and Retrieval". A package that is *part of the MMS ground system* is "Mission-related".
+**Key distinction:** A package that *reads* MMS data is "Data Processing and Analysis: Data Access and Retrieval". A package that is *part of the MMS ground system* is "Mission-related".
 
 **Subcategories:** Analysis, Archive, Calibration, Distribution/Access, Infrastructure as Code, Ingest, Instrumentation, Instrument Response, Inventory, ML/AI, Monitoring, Observatory/Instrument Models, Operations, Orchestration, Packet Decommutation, Processing, Science Data Processing, System Testing
 
@@ -189,29 +191,29 @@ These mappings are **indicators**, not guarantees. Always verify the software ac
 
 | Library / Import | Likely Functionality |
 |---|---|
-| `sunpy.coordinates` | Coordinate Transforms, Coordinate Transforms:Solar |
+| `sunpy.coordinates` | Coordinate Transforms, Coordinate Transforms: Solar |
 | `astropy.coordinates` | Coordinate Transforms |
-| `aacgmv2` | Coordinate Transforms:Ionospheric |
-| `spacepy.coordinates` | Coordinate Transforms:Magnetospheric |
-| `spiceypy` | Coordinate Transforms:Mission-Specific |
-| `geopack` | Coordinate Transforms:Magnetospheric |
-| `sunpy.net`, `sunpy.net.Fido` | Data Processing and Analysis:Data Access and Retrieval |
-| `astroquery` | Data Processing and Analysis:Data Access and Retrieval |
-| `hapiclient` | Data Processing and Analysis:Data Access and Retrieval |
+| `aacgmv2` | Coordinate Transforms: Ionospheric |
+| `spacepy.coordinates` | Coordinate Transforms: Magnetospheric |
+| `spiceypy` | Coordinate Transforms: Mission-Specific |
+| `geopack` | Coordinate Transforms: Magnetospheric |
+| `sunpy.net`, `sunpy.net.Fido` | Data Processing and Analysis: Data Access and Retrieval |
+| `astroquery` | Data Processing and Analysis: Data Access and Retrieval |
+| `hapiclient` | Data Processing and Analysis: Data Access and Retrieval |
 | `cdflib`, `spacepy.pycdf` | Data Processing and Analysis (file I/O) |
 | `astropy.io.fits` | Data Processing and Analysis (FITS file I/O) |
 | `h5py` | Data Processing and Analysis (HDF5 file I/O) |
 | `matplotlib` | Data Visualization |
-| `matplotlib.animation` | Data Visualization:Movies |
-| `plotly`, `bokeh` | Data Visualization:Web-Based |
-| `vtk`, `mayavi`, `pyvista` | Data Visualization:3D Graphics |
-| `scikit-image`, `skimage` | Data Processing and Analysis:Image Processing |
-| `scipy.signal` | Data Processing and Analysis:Time Series Analysis |
-| `pycwt` | Data Processing and Analysis:Wavelet Analysis |
+| `matplotlib.animation` | Data Visualization: Movies |
+| `plotly`, `bokeh` | Data Visualization: Web-Based |
+| `vtk`, `mayavi`, `pyvista` | Data Visualization: 3D Graphics |
+| `scikit-image`, `skimage` | Data Processing and Analysis: Image Processing |
+| `scipy.signal` | Data Processing and Analysis: Time Series Analysis |
+| `pycwt` | Data Processing and Analysis: Wavelet Analysis |
 | `tensorflow`, `pytorch`, `sklearn` | ML/AI (under whichever parent category applies) |
-| `pfsspy` | Models and Simulations:Field-line Tracing |
-| `Docker`, `Singularity` | Servers and Environments:Software or Environment Container |
-| `mpi4py` | Servers and Environments:High Performance Computing |
+| `pfsspy` | Models and Simulations: Field-line Tracing |
+| `Docker`, `Singularity` | Servers and Environments: Software or Environment Container |
+| `mpi4py` | Servers and Environments: High Performance Computing |
 
 ---
 
@@ -225,7 +227,7 @@ These mappings are **indicators**, not guarantees. Always verify the software ac
 
 4. **Distinguish "uses internally" from "provides to users."** A package that internally converts coordinates as a utility step doesn't necessarily need "Coordinate Transforms" listed — only if coordinate transformation is a user-facing capability. However, if the user can access or benefit from the transform (even indirectly), err on the side of inclusion.
 
-5. **Distinguish processing from visualization.** Computing a spectrogram is "Data Processing and Analysis:Spectrogram". Displaying a spectrogram is "Data Visualization:Spectrogram". Many packages do both — list both.
+5. **Distinguish processing from visualization.** Computing a spectrogram is "Data Processing and Analysis: Spectrogram". Displaying a spectrogram is "Data Visualization: Spectrogram". Many packages do both — list both.
 
 6. **Read the tests and examples.** They often reveal functionality not mentioned in the README. A test file named `test_spectrogram.py` is a strong signal.
 
@@ -240,13 +242,13 @@ These mappings are **indicators**, not guarantees. Always verify the software ac
 | Mistake | Why it happens | How to avoid |
 |---|---|---|
 | Missing subcategories | Listed "Data Visualization" but didn't identify specific types | Check each subcategory against the code |
-| Missing parent categories | Listed "Data Visualization:Spectrogram" without "Data Visualization" | Always add parent when adding subcategory |
+| Missing parent categories | Listed "Data Visualization: Spectrogram" without "Data Visualization" | Always add parent when adding subcategory |
 | Overlooking Data Access | Data downloading is seen as "utility" not "functionality" | If users call a function to get data, it's Data Access |
 | Confusing processing and visualization | Spectrogram computation vs display | Check if the code produces arrays (processing) or figures (visualization) |
 | Ignoring coordinate transforms | Packages do transforms as part of workflow without advertising it | Search for coordinate system names and transform functions |
 | Under-classifying models | A model that's physics-based AND MHD AND forecasting | Check if multiple model subcategories apply |
 | Classifying dependencies as features | Package imports `astropy.coordinates` but users never do transforms | Only classify user-facing capabilities |
-| Missing "Data Processing and Analysis:Analysis" | Catch-all subcategory is easy to forget | If the package does any scientific analysis, this likely applies |
+| Missing "Data Processing and Analysis: Analysis" | Catch-all subcategory is easy to forget | If the package does any scientific analysis, this likely applies |
 
 ---
 

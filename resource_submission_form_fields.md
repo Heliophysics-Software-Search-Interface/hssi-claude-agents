@@ -31,8 +31,10 @@ straight quote where the row has a curly one — raises `ValidationError: Unknow
 entire submission. Case is the only difference that is forgiven.
 
 **Vocabularies can differ between targets.** As of the 2026-07-29 audit every vocabulary was
-identical between `https://hssi.hsdcloud.org` and `http://localhost` **except `License`**, which has
-two prod-only rows. Never assume a value that worked on one target exists on the other.
+identical between `https://hssi.hsdcloud.org` and `http://localhost` **except `License`**, where
+production still carries three legacy duplicate rows that localhost has retired (see Field 15).
+Never assume a value that worked on one target exists on the other — and never treat an extra row on
+one side as automatically the correct value.
 
 **Only Keywords (Field 16) is an open vocabulary** — `_get_or_create_keyword` creates missing rows.
 Every other list rejects unknown values.
@@ -83,91 +85,95 @@ document. To re-verify these snapshots against live and refresh them, run **Step
 
 **Possible Values** — *83 values, snapshot 2026-07-29, verified identical on `https://hssi.hsdcloud.org` and `http://localhost`. Live `/api/models/FunctionCategory/rows/all/` is authoritative.*
 
-Written `Parent:Child`; the serializer splits on `:`. The 6 top-level categories are also selectable on their own, and **when a subcategory applies its parent must be listed too**. 13 subcategory names (`ML/AI`, `Spectrogram`, `Analysis`, …) recur under more than one parent — that is intentional, and the parent prefix disambiguates them. Every child has exactly one parent, so paths are never deeper than two levels.
+**Write subcategories as `Parent: Child` — with a space after the colon.** That is the canonical form: it is what `get_full_name()` produces, what the API returns, what the submission form displays, and what the `submission-payload` / `update-payload` skills specify for payloads. Using it means a roundtrip diff against HSSI compares equal instead of showing a spurious whitespace difference.
+
+The no-space form `Parent:Child` is also **accepted on input** — the serializer does `part.strip()` on `value.split(":")` — so older `hssi_metadata.md` files written that way are not wrong and must not be flagged as errors. Prefer the spaced form in anything new.
+
+The 6 top-level categories are also selectable on their own, and **when a subcategory applies its parent must be listed too** (selecting a subcategory does not auto-add its parent). 13 subcategory names (`ML/AI`, `Spectrogram`, `Analysis`, …) recur under more than one parent — that is intentional, and the parent prefix disambiguates them. Every child has exactly one parent, so paths are never deeper than two levels.
 
 - Coordinate Transforms
-- Coordinate Transforms:Heliospheric
-- Coordinate Transforms:Ionospheric
-- Coordinate Transforms:Magnetospheric
-- Coordinate Transforms:Mission-Specific
-- Coordinate Transforms:Planetary
-- Coordinate Transforms:Solar
+- Coordinate Transforms: Heliospheric
+- Coordinate Transforms: Ionospheric
+- Coordinate Transforms: Magnetospheric
+- Coordinate Transforms: Mission-Specific
+- Coordinate Transforms: Planetary
+- Coordinate Transforms: Solar
 - Data Processing and Analysis
-- Data Processing and Analysis:2D Slices
-- Data Processing and Analysis:3D Particle Distribution Processing
-- Data Processing and Analysis:Analysis
-- Data Processing and Analysis:Calibration
-- Data Processing and Analysis:Curlometer
-- Data Processing and Analysis:Data Access and Retrieval
-- Data Processing and Analysis:Data Assimilation
-- Data Processing and Analysis:Data Reduction
-- Data Processing and Analysis:Energy Spectra
-- Data Processing and Analysis:Field-line Tracing
-- Data Processing and Analysis:File Format Conversion
-- Data Processing and Analysis:Image Processing
-- Data Processing and Analysis:Linear Gradient Estimation
-- Data Processing and Analysis:Magnetic Null Finding
-- Data Processing and Analysis:ML/AI
-- Data Processing and Analysis:Packet Decommutation
-- Data Processing and Analysis:Pitch Angle Distributions
-- Data Processing and Analysis:Plasma Moments
-- Data Processing and Analysis:Processing
-- Data Processing and Analysis:Spectrogram
-- Data Processing and Analysis:Time Series Analysis
-- Data Processing and Analysis:Wave Polarization Analysis
-- Data Processing and Analysis:Wavelet Analysis
+- Data Processing and Analysis: 2D Slices
+- Data Processing and Analysis: 3D Particle Distribution Processing
+- Data Processing and Analysis: Analysis
+- Data Processing and Analysis: Calibration
+- Data Processing and Analysis: Curlometer
+- Data Processing and Analysis: Data Access and Retrieval
+- Data Processing and Analysis: Data Assimilation
+- Data Processing and Analysis: Data Reduction
+- Data Processing and Analysis: Energy Spectra
+- Data Processing and Analysis: Field-line Tracing
+- Data Processing and Analysis: File Format Conversion
+- Data Processing and Analysis: Image Processing
+- Data Processing and Analysis: Linear Gradient Estimation
+- Data Processing and Analysis: Magnetic Null Finding
+- Data Processing and Analysis: ML/AI
+- Data Processing and Analysis: Packet Decommutation
+- Data Processing and Analysis: Pitch Angle Distributions
+- Data Processing and Analysis: Plasma Moments
+- Data Processing and Analysis: Processing
+- Data Processing and Analysis: Spectrogram
+- Data Processing and Analysis: Time Series Analysis
+- Data Processing and Analysis: Wave Polarization Analysis
+- Data Processing and Analysis: Wavelet Analysis
 - Data Visualization
-- Data Visualization:2D Graphics
-- Data Visualization:2D Slices
-- Data Visualization:3D Graphics
-- Data Visualization:Hodograms
-- Data Visualization:Line Plots
-- Data Visualization:Mission-Specific
-- Data Visualization:ML/AI
-- Data Visualization:Movies
-- Data Visualization:Orbit Plots
-- Data Visualization:Spacecraft Formation Plots
-- Data Visualization:Spectrogram
-- Data Visualization:Web-Based
+- Data Visualization: 2D Graphics
+- Data Visualization: 2D Slices
+- Data Visualization: 3D Graphics
+- Data Visualization: Hodograms
+- Data Visualization: Line Plots
+- Data Visualization: Mission-Specific
+- Data Visualization: ML/AI
+- Data Visualization: Movies
+- Data Visualization: Orbit Plots
+- Data Visualization: Spacecraft Formation Plots
+- Data Visualization: Spectrogram
+- Data Visualization: Web-Based
 - Mission-related
-- Mission-related:Analysis
-- Mission-related:Archive
-- Mission-related:Calibration
-- Mission-related:Distribution/Access
-- Mission-related:Infrastructure as Code
-- Mission-related:Ingest
-- Mission-related:Instrumentation
-- Mission-related:Instrument Response
-- Mission-related:Inventory
-- Mission-related:ML/AI
-- Mission-related:Monitoring
-- Mission-related:Observatory/Instrument Models
-- Mission-related:Operations
-- Mission-related:Orchestration
-- Mission-related:Packet Decommutation
-- Mission-related:Processing
-- Mission-related:Science Data Processing
-- Mission-related:System Testing
+- Mission-related: Analysis
+- Mission-related: Archive
+- Mission-related: Calibration
+- Mission-related: Distribution/Access
+- Mission-related: Infrastructure as Code
+- Mission-related: Ingest
+- Mission-related: Instrumentation
+- Mission-related: Instrument Response
+- Mission-related: Inventory
+- Mission-related: ML/AI
+- Mission-related: Monitoring
+- Mission-related: Observatory/Instrument Models
+- Mission-related: Operations
+- Mission-related: Orchestration
+- Mission-related: Packet Decommutation
+- Mission-related: Processing
+- Mission-related: Science Data Processing
+- Mission-related: System Testing
 - Models and Simulations
-- Models and Simulations:Data Guided
-- Models and Simulations:Empirical
-- Models and Simulations:Field-line Tracing
-- Models and Simulations:First Principles
-- Models and Simulations:Forecasting
-- Models and Simulations:Forward-Fitting
-- Models and Simulations:Instrument Response
-- Models and Simulations:MHD
-- Models and Simulations:Mission-Specific
-- Models and Simulations:ML/AI
-- Models and Simulations:Observatory/Instrument Models
-- Models and Simulations:Physics-Based
-- Models and Simulations:Theory
+- Models and Simulations: Data Guided
+- Models and Simulations: Empirical
+- Models and Simulations: Field-line Tracing
+- Models and Simulations: First Principles
+- Models and Simulations: Forecasting
+- Models and Simulations: Forward-Fitting
+- Models and Simulations: Instrument Response
+- Models and Simulations: MHD
+- Models and Simulations: Mission-Specific
+- Models and Simulations: ML/AI
+- Models and Simulations: Observatory/Instrument Models
+- Models and Simulations: Physics-Based
+- Models and Simulations: Theory
 - Servers and Environments
-- Servers and Environments:Data servers processing and handling
-- Servers and Environments:Distribution/Access
-- Servers and Environments:High Performance Computing
-- Servers and Environments:Infrastructure as Code
-- Servers and Environments:Software or Environment Container
+- Servers and Environments: Data servers processing and handling
+- Servers and Environments: Distribution/Access
+- Servers and Environments: High Performance Computing
+- Servers and Environments: Infrastructure as Code
+- Servers and Environments: Software or Environment Container
 
 ---
 
@@ -349,7 +355,7 @@ Note the exact spellings: **`Javascript`** (not `JavaScript`) and **`Typescript`
 - **License** (RECOMMENDED): License name
 - **License URI** (RECOMMENDED): URI of the license (auto-populated for SPDX licenses)
 
-**Possible Values** — *snapshot 2026-07-29. **This vocabulary differs by target**: 13 distinct names on `https://hssi.hsdcloud.org`, 11 on `http://localhost`. Live `/api/models/License/rows/all/` is authoritative.*
+**Possible Values** — *11 canonical values, snapshot 2026-07-29. Live `/api/models/License/rows/all/` is authoritative. **Row counts differ by target**: `http://localhost` has these 11; `https://hssi.hsdcloud.org` additionally carries 3 legacy duplicate rows (see below) — use the canonical name on either target.*
 
 This is a **closed** list despite the "copy the SPDX title" instruction above: the serializer does
 `License.objects.filter(name__iexact=<value>)` and raises `Unknown license` on no match. An SPDX
@@ -363,23 +369,28 @@ title that is not a row below will be rejected — use `Other` instead.
 - GNU General Public License v3.0 or later
 - GNU Lesser General Public License v3.0 only
 - GNU Library or ‘Lesser’ General Public Licenses (LGPL version 2)
-- GNU Library or ‘Lesser’ General Public Licenses (LGPL version 3) — **prod only**
 - MIT License
-- New BSD license — **prod only**
 - Other
 - Restricted
 
 **Traps in this list:**
 
-- **Curly quotes.** The two LGPL rows use typographic quotes — `‘Lesser’` (U+2018/U+2019), *not*
-  `'Lesser'`. A straight-quote copy will not match.
-- **Two prod-only rows.** `New BSD license` and `GNU Library or ‘Lesser’ General Public Licenses
-  (LGPL version 3)` exist on production but **not** on localhost; sending either to a local instance
-  returns a 400. For BSD-3 on localhost use `BSD 3-Clause "New" or "Revised" License`.
-- **Duplicate `Other` on prod.** Production carries two `Other` rows, both with an empty URL.
-  `License.get_other_licence()` resolves them with `.first()`, so which one a submission binds to is
-  arbitrary. Harmless for submission, but worth knowing when a roundtrip diff shows an unexpected
-  license id.
+- **Curly quotes.** The LGPL version 2 row uses typographic quotes — `‘Lesser’` (U+2018/U+2019),
+  *not* `'Lesser'`. A straight-quote copy will not match.
+- **Three legacy duplicate rows exist on production and must not be used.** They are *not* extra
+  licences; each is a second name for a row already listed above, and localhost has already retired
+  them. Always emit the canonical name on the left:
+
+  | Canonical (use this) | Legacy duplicate on prod (never emit) | Why it is a duplicate |
+  |---|---|---|
+  | `GNU Lesser General Public License v3.0 only` | `GNU Library or ‘Lesser’ General Public Licenses (LGPL version 3)` | identical URL `https://spdx.org/licenses/LGPL-3.0-only.html` |
+  | `BSD 3-Clause "New" or "Revised" License` | `New BSD license` | same SPDX identifier `BSD-3-Clause`; unused by any software on either target |
+  | `Other` | a second url-empty `Other` row | `License.get_other_licence()` resolves them with `.first()`, so binding is arbitrary |
+
+  Sending a legacy name to localhost returns a 400 — correctly, because the canonical row is the one
+  to use. When diffing a production record, a stored legacy value is **drift to correct**, not a
+  value to preserve: prod's `regularizePSF` carried the LGPL-3 legacy name and was reconciled to
+  `GNU Lesser General Public License v3.0 only` during the #57 campaign.
 
 ---
 
