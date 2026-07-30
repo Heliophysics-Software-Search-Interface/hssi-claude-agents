@@ -2,23 +2,102 @@
 name: update-api-spec
 description: >
   Sync the submitter's and updater's API reference skills with the hssi-website
-  source code. Use when the HSSI API has changed and reference files need
-  syncing. Clones or pulls the hssi-website repo, reads the relevant source
-  files, and updates submission-payload, submission-verification, and
-  update-payload skills.
+  source code, and reconcile the documented controlled-value lists against the
+  live HSSI vocabularies. Use when the HSSI API has changed, when allowed-value
+  lists may have drifted, or before trusting a value snapshot. Clones or pulls
+  the hssi-website repo, reads the relevant source files, and updates
+  submission-payload, submission-verification, update-payload,
+  hssi-field-definitions, and software-functionality.
 ---
 
 # Update API Spec
 
-Sync the submitter's and updater's reference files with the latest HSSI API source code.
+Sync the reference files with the latest HSSI API source **and** the live controlled vocabularies.
 
-**When to use:** The HSSI API has changed (new fields, renamed keys, changed shapes, new quirks) and the `submission-payload`, `submission-verification`, or `update-payload` skills need updating.
+**When to use:**
+- The HSSI API has changed (new fields, renamed keys, changed shapes, new quirks) and the `submission-payload`, `submission-verification`, or `update-payload` skills need updating. → Steps 1–5.
+- A controlled-value list may have drifted, or you want to re-date a snapshot before trusting it. → **Step A** (independent; needs no repo clone).
 
-**How often:** Rarely. The API is relatively stable. Run this when you notice submission/update failures due to field name mismatches, or when the HSSI team announces API changes.
+**How often:** The API itself is relatively stable — run Steps 1–5 on failures or announced changes. **Vocabulary drift is different**: rows get added and edited through normal operation, so **Step A should be run before any campaign that leans on the documented value lists**, and whenever a submission fails with `Unknown value`.
 
 ---
 
-## Workflow
+## Step A: Reconcile controlled vocabularies against live
+
+> **Verify assumptions before trusting them.** The **Possible Values** lists in
+> `resource_submission_form_fields.md` and the taxonomy counts in `software-functionality` are
+> **dated snapshots of an external system**, not invariants. Nothing in this repo detects drift on
+> its own. Start this step by re-checking, not by assuming the last audit still holds.
+
+### A1. Fetch every vocabulary from **both** targets
+
+Prod and localhost can and do diverge — at the 2026-07-29 audit `License` had two prod-only rows. Always check both; the authority for any given operation is the target actually in play.
+
+```bash
+OUT=$(mktemp -d)
+for ENV in "prod https://hssi.hsdcloud.org" "local http://localhost"; do
+  set -- $ENV
+  mkdir -p "$OUT/$1"
+  for M in FunctionCategory Region ProgrammingLanguage FileFormat OperatingSystem \
+           CpuArchitecture RepoStatus DataInput Phenomena License Keyword; do
+    curl -s -m 60 -o "$OUT/$1/$M.json" "$2/api/models/$M/rows/all/"
+  done
+done
+echo "$OUT"
+```
+
+Notes: model names resolve case-insensitively (`CpuArchitecture` is the canonical Django class; `CPUArchitecture` also works). There is **no** `/api/models/` index endpoint — it 404s, so the model list above is maintained by hand; cross-check it against `django/website/models/vocab.py` when you have the source checked out.
+
+### A2. Diff each vocabulary against the documented list
+
+For each model, set-compare the live `name` values against the corresponding **Possible Values** list in `resource_submission_form_fields.md`, and report three classes separately:
+
+| Class | Meaning | Severity |
+|---|---|---|
+| **doc-only** | In the document, absent from live | **Breaking** — `serializers/submission.py` matches with `name__iexact` after a bare `.strip()`, so these raise `ValidationError: Unknown value` and fail the whole submission |
+| **live-only** | In live, missing from the document | Agents can't pick a valid value they can't see |
+| **target-divergent** | Present on one target only | Value works against one instance, 400s against the other |
+
+Compare **case-insensitively after trimming** — that is exactly what the backend does — but report every other difference as breaking. Real examples caught this way: `The Virtual Solar Observatory` missing the stored trailing period, and straight `'Lesser'` where the License rows use curly `‘Lesser’`.
+
+Structural cases:
+- **`FunctionCategory`** is hierarchical. Build full names as `Parent:Child` from each row's `parents` before comparing; comparing bare names produces false duplicates. Also re-derive the counts quoted in `software-functionality` (rows, top-level, distinct names, recurring names).
+- **`Region`** and **`Phenomena`** are graph lists that are currently *flat*. If a future refresh gives them parents, they'd need `Parent:Child` handling too — check before assuming.
+- **`Keyword`** is an **open** vocabulary (`_get_or_create_keyword` creates missing rows), so live-only keywords are expected and are not drift. Only refresh the sample count and date.
+
+### A3. Flag likely data-entry junk — **report, never delete**
+
+Some rows are artifacts of free-text values leaking into controlled lists rather than real vocabulary. **This skill never deletes or edits a live row**; it reports them so a human can decide. Signals:
+
+- an embedded URL in the `name` (`Other - https://xrt.cfa.harvard.edu/level1/`; an Organization named `https://zenodo.org/records/18494048`)
+- a `name` prefixed with another valid value plus free text (`Other - …`)
+- trailing punctuation where siblings have none (`The Virtual Solar Observatory.`)
+- an empty `identifier` where every sibling row has one (`AMDA`, `GFZ`, `Madrigal`, `WDC` in `DataInput`)
+- duplicate names within a *flat* list (prod carries two url-empty `License` rows named `Other`; `get_other_licence()` resolves them with `.first()`, so binding is arbitrary)
+- a single row holding a comma-delimited list (a `Keyword` row containing seven comma-separated terms)
+
+**Repeated names in `FunctionCategory` are not junk** — 13 subcategory names legitimately recur under different parents and are disambiguated by the parent prefix.
+
+If a junk row is the *only* row for a real concept, say so explicitly: `The Virtual Solar Observatory.` carries the canonical `…#VSO` identifier, so the typo'd name is the value that must be used, not avoided.
+
+### A4. Apply the reconciliation
+
+- Correct each drifted list in `resource_submission_form_fields.md`.
+- Refresh that list's provenance line to the run date and the targets actually checked:
+  `*N values, snapshot YYYY-MM-DD, verified identical on https://hssi.hsdcloud.org and http://localhost. Live /api/models/<Model>/rows/all/ is authoritative.*`
+- Keep a short **Traps** note under any list with a byte-level hazard or a target divergence, and a `> **Trap.**` callout for any value removed as never-valid — the removal is the fix, but the note is what stops it being re-added.
+- Update the counts and date in `software-functionality/SKILL.md` if the taxonomy changed.
+- Never edit `repos/*/hssi_metadata.md` from this skill. If reconciliation invalidates a value already recorded in canonical metadata files, **report the affected files and values** and let the orchestrator route the fix through the normal Updater pipeline.
+
+### A5. Verify
+
+Re-run the A2 diff against the edited document and confirm zero doc-only and zero live-only entries for every list, except deliberately annotated target-divergent rows. Byte-check the known traps explicitly rather than eyeballing them.
+
+---
+
+## Workflow (API source sync)
+
+Steps 1–6 below sync the **API contract** from source. They are independent of Step A — run either alone.
 
 ### Step 1: Get the hssi-website Source
 
@@ -103,6 +182,14 @@ Produce a summary of what changed and why:
 - List each change made to the skill files
 - Note any discrepancies between `import_submission.json` and the actual serializer behavior
 - Flag any breaking changes that might affect existing payloads
+- If Step A ran, report the vocabulary diff by class (doc-only / live-only / target-divergent), the junk rows flagged, and any canonical `repos/*/hssi_metadata.md` values invalidated by the reconciliation
+
+### Step 5b: Check whether the vocabulary contract changed
+
+Two source-level changes silently invalidate Step A's assumptions, so check for them whenever you have the source checked out:
+
+- **`django/website/models/vocab.py`** — a new `ControlledList`/`ControlledGraphList` model means a new vocabulary to reconcile (add it to Step A1's model list); a model switching between `ControlledList` and `ControlledGraphList` changes whether values are flat or `Parent:Child`.
+- **`_normalize_term` / `_get_controlled_item` / `_get_graph_list_item` in `serializers/submission.py`** — these currently do nothing but `.strip()` plus `name__iexact`. If an alias table or fuzzy matching is ever introduced, the "one character off fails the submission" warnings throughout these skills become wrong and must be rewritten, not just re-dated.
 
 ### Step 6: Cleanup
 
