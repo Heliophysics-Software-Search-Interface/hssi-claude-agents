@@ -7,18 +7,8 @@
 **Validation Date:** 2026-07-30
 **Validation Status:** PASS
 
-**Applied to HSSI:** 2026-07-30 on `http://localhost`. All 24 patched fields were roundtrip-verified
-against this file, and the nine deliberately-omitted fields were confirmed unchanged. Fields 2-33
-below match the live entry's verified final state.
-
-**Mode:** Full metadata refresh (hssi-website issue #57), seeded from the live HSSI record on
-`http://localhost` (`GET /api/view/software/6ad99ded-.../` and `/api/data/software/6ad99ded-.../`,
-retrieved 2026-07-30). No prior `hssi_metadata.md` existed; this is the first canonical file.
-
-**Baseline:** the live record populated only 12 of 33 fields. Of the 33 fields recorded here, **15 are
-newly filled**, **8 are changed** with cited justification, **4 remain unchanged and populated**, and
-**6 are empty or placeholder** — 5 of those deliberately empty with documented reasoning, plus the
-submitter placeholder. (15 + 8 + 4 + 6 = 33.)
+This canonical file records the validated HSSI state as of 2026-07-30. It was seeded from the prior
+record and reconciled against the pinned source revision and authoritative external sources.
 
 **Scope note.** CESM is a top-level coupled Earth system model whose repository pins external
 component repositories via `git-fleximod`/`.gitmodules` rather than vendoring their source. The
@@ -27,10 +17,8 @@ working clone has not run `./bin/git-fleximod update`, so `components/`, `cime/`
 component manifest, its versioned documentation, and authoritative CESM/NCAR/UCAR sources. Metadata
 scope is **CESM itself**, not the individual components.
 
-**Controlled vocabularies.** Every controlled-list value written below was confirmed against the live
-`http://localhost/api/models/<Model>/rows/all/` endpoints on 2026-07-30 (FunctionCategory 83 rows,
-Region 24, ProgrammingLanguage 19, License 11, DataInput 17, FileFormat 11, OperatingSystem 7,
-CpuArchitecture 9, Phenomena 7, RepoStatus 8, InstrumentObservatory 7,648 rows / 0 non-SPASE).
+**Controlled vocabularies.** Every controlled-list value written below was confirmed against the
+live HSSI vocabulary during validation.
 
 ---
 
@@ -41,16 +29,11 @@ CpuArchitecture 9, Phenomena 7, RepoStatus 8, InstrumentObservatory 7,648 rows /
 - **Submitter Name:** [To be filled by actual submitter]
 - **Submitter Email:** [To be filled by actual submitter]
 
-**Status:** Placeholder. The HSSI view/data APIs do not expose the original submitter, so no seed
-value exists.
-
 ---
 
 ### 2. Persistent Identifier (RECOMMENDED)
 
 **Value:** `https://doi.org/10.5281/zenodo.11229775`
-
-**Status:** UNCHANGED (from existing HSSI record).
 
 **Evidence.** Re-verified against the Zenodo API on 2026-07-30: `GET
 https://zenodo.org/api/records/11229775` returns `conceptrecid: "11229775"` and
@@ -66,10 +49,6 @@ Zenodo deposit is the only persistent identifier for the software.
 ### 3. Code Repository (MANDATORY)
 
 **Value:** `https://github.com/ESCOMP/CESM`
-
-**Status:** CHANGED.
-
-**Previous value:** `https://www.cesm.ucar.edu/models/ccsm`
 
 **Why the replacement.** The stored value is not a code repository at all — it is the marketing page
 for **CCSM**, the *predecessor* model that CESM superseded. It exposes no source code and no
@@ -117,9 +96,6 @@ predecessor model belongs.
 - `Servers and Environments`
 - `Servers and Environments: High Performance Computing`
 
-**Status:** CHANGED (enriched). Previous value was the single entry `Models and Simulations`, which
-is retained. All four required parent categories are present for the 14 subcategory values.
-
 **Version-scope policy for this field.** Field 4 describes the software's capabilities **as they exist
 at the recorded Source Revision** (`926b9403ae276ec29e7b61ee458aa0bb1ca0d3c3`, repository HEAD),
 because HSSI carries **one Software Functionality set per software, not one per version**. Field 12
@@ -128,8 +104,7 @@ discard capabilities the software demonstrably has today. Four values below rest
 exists at HEAD but **not** in `release-cesm2.1.5` — `Models and Simulations: ML/AI` (FTorch), and
 `Data Processing and Analysis: Processing`, `Data Visualization: 2D Graphics` and `Data
 Visualization: Line Plots` (all three CUPiD). Each carries the identical `HEAD-only` scope note
-below, applied uniformly; drop all four together if the user prefers strict release-only scope. Every
-other value is present at both HEAD and `release-cesm2.1.5`.
+below, applied uniformly. Every other value is present at both HEAD and `release-cesm2.1.5`.
 
 **Per-value evidence**
 
@@ -190,8 +165,6 @@ other value is present at both HEAD and `release-cesm2.1.5`.
 - `Earth Lower and Middle Atmosphere`
 - `Earth Thermosphere`
 - `Earth Ionosphere`
-
-**Status:** CHANGED (enriched). Previous value was `Earth Atmosphere` alone, which is retained.
 
 **Evidence**
 
@@ -268,28 +241,23 @@ planetary regions — no evidence.
 
 - **Name:** CESM Team (stored in HSSI as `givenName: "CESM"`, `familyName: "Team"`)
 - **Author Identifier:** Not found
-- **Affiliation 1 (existing):** NSF National Center for Atmospheric Research —
+- **Affiliation 1:** NSF National Center for Atmospheric Research —
   `https://ror.org/05cvfcr44`
-- **Affiliation 2 (PROPOSED ADDITION):** University Corporation for Atmospheric Research —
+- **Affiliation 2:** University Corporation for Atmospheric Research —
   `https://ror.org/04zhhyn23`
-
-**Status:** UNCHANGED for the author and its existing affiliation; one affiliation proposed as an
-addition (union, nothing dropped).
 
 **Evidence**
 
 - Author name and NCAR affiliation are the seeded HSSI values and are corroborated by the Zenodo
   deposit: `creators: [{name: "CESM Team", affiliation: "NCAR"}]`
   (`GET https://zenodo.org/api/records/11229775`, 2026-07-30).
-- The stored affiliation resolves to HSSI organization `52650b8d-56ca-4b30-b808-b53ad36b0d81` =
-  "NSF National Center for Atmospheric Research", `https://ror.org/05cvfcr44` — confirmed correct and
-  correctly ROR-identified against `https://api.ror.org/v2/organizations/05cvfcr44`
+- The NCAR affiliation is "NSF National Center for Atmospheric Research",
+  `https://ror.org/05cvfcr44` — confirmed against `https://api.ror.org/v2/organizations/05cvfcr44`
   (`ror_display: "NSF National Center for Atmospheric Research"`, status active). No change needed.
-- Proposed second affiliation: `LICENSE.txt:3-4` — "Copyright (c) 2018, University Corporation for
+- The second affiliation is supported by `LICENSE.txt:3-4` — "Copyright (c) 2018, University Corporation for
   Atmospheric Research (UCAR) All rights reserved." UCAR is the copyright holder for CESM, and
   `https://ror.org/04zhhyn23` is verified as the active ROR whose display name is exactly "University
-  Corporation for Atmospheric Research". An HSSI organization row with that exact name and ROR
-  already exists (`fc9335f0-4d9a-4a3e-901c-b1a027874c1d`), so this reuses an existing row.
+  Corporation for Atmospheric Research".
 
 **Author identifier.** "CESM Team" is an organizational-style author, so the field definition would
 call for a ROR. A ROR search for "Community Earth System Model"
@@ -304,16 +272,11 @@ vendored `.lib/git-fleximod/pyproject.toml:5`, which is the git-fleximod tool's 
 CESM's. The ~40 authors of the CESM2 reference paper are paper authors, not declared software
 authors; adding them would fabricate authorship. Recorded here so the omission is auditable.
 
-**API caveat.** The HSSI API cannot rename an existing Person row, so the split of "CESM Team" into
-`givenName`/`familyName` is left exactly as stored.
-
 ---
 
 ### 7. Software Name (MANDATORY)
 
 **Value:** `CESM`
-
-**Status:** UNCHANGED.
 
 **Evidence.** Repository name `ESCOMP/CESM`; SoMEF `name = "CESM"` at confidence 1. The expanded form
 "Community Earth System Model" is the GitHub repository description and appears throughout the
@@ -346,10 +309,6 @@ in the Description instead.
 > specific CESM tag. CESM is written mostly in Fortran with a Python and Perl scripting layer,
 > requires a Fortran 2003 compiler, MPI, NetCDF 4.3 or newer and LAPACK/BLAS, reads and writes
 > netCDF, and is designed to run on Unix-like high-performance computing systems.
-
-**Status:** CHANGED.
-
-**Previous value:** `The Community Climate Earth System Modelrelease version cesm2.2.0`
 
 **Why the replacement.** The stored description is a corrupted, version-pinned Zenodo blurb, not a
 description of the software. Zenodo stores
@@ -386,20 +345,11 @@ release-cesm2.1.5:cime_config/config_compsets.xml` (CMIP6, SSP, SMYLE compsets);
 
 (195 characters — within the 200-character limit.)
 
-**Status:** CHANGED.
-
-**Previous value:** `The Community Climate Earth System Modelrelease version cesm2.2.0` (identical to
-the old Description; same defects, same rationale as Field 8).
-
 ---
 
 ### 10. Publication Date (RECOMMENDED)
 
 **Value:** `2018-06-08`
-
-**Status:** CHANGED.
-
-**Previous value:** `2024-05-21`
 
 **Why the replacement.** Field 10 is defined as "Date of first broadcast/publication ... Used for the
 initial version of the software" (`resource_submission_form_fields.md:271-273`). `2024-05-21` is
@@ -417,17 +367,12 @@ evidence for such a date, and every other field in this entry — the persistent
 reference publication, and the version — is CESM2-generation, so 2018-06-08 is the earliest defensible
 date consistent with the rest of the record.
 
-**Decision provenance.** Changed on Shawn's explicit decision, 2026-07-30, in response to validation
-finding S3.
-
 ---
 
 ### 11. Publisher (RECOMMENDED)
 
 - **Organization:** `Zenodo`
 - **Publisher Identifier:** `https://zenodo.org`
-
-**Status:** UNCHANGED.
 
 **Evidence.** The persistent identifier in Field 2 is a Zenodo DOI, which is exactly the case Field 11
 names ("For software where a DOI has been obtained through Zenodo ... Zenodo is the correct entry").
@@ -447,10 +392,6 @@ Confirmed against `GET https://zenodo.org/api/records/11229775`.
   (including default layouts for AWS 1- and 2-degree coupled runs); moves to versioned documentation
   and refreshes the CESM2 copyright notice.
 - **Version PID:** Not found
-
-**Status:** CHANGED.
-
-**Previous value:** `2.2.0` (stored bare; the view API renders it as `CESM - 2.2.0`).
 
 **Version determination — re-checked from scratch on 2026-07-30.** Four independent sources agree
 that the current release is **CESM2.1.5**:
@@ -477,9 +418,8 @@ that the current release is **CESM2.1.5**:
 **Why 2.1.5 rather than 2.2.2.** 2.2.2 carries the numerically higher version string and shares the
 same tag date, but the project itself designates it a *development* release and explicitly directs
 users to the 2.1.z series for science. Field 12 records the version of the software instance a user
-would obtain and cite, which is the production release. Recorded transparently so the user can
-override: if the preference is "highest-numbered tagged 2.x release regardless of support level", the
-alternative value is `2.1.5` → `2.2.2` with Version Date `2023-12-22`.
+would obtain and cite, which is the production release. The higher-numbered `2.2.2` is not selected
+because the project designates it a development release.
 
 **Version Date.** `2023-12-22`, from the annotated git tag `release-cesm2.1.5`
 (`taggerdate=2023-12-22`, subject "Tagging release-cesm2.1.5 release."; tagged commit
@@ -495,9 +435,6 @@ externals update to address git/svn."
 `10.5281/zenodo.11229776`, which is "CESM-release-cesm2.2.0" — a different version. Recording it here
 would mislabel 2.1.5.
 
-**View-layer note.** The stored value must be the bare string `2.1.5`. The rendered form
-`CESM - 2.1.5` is a view-layer transform and must never be written back.
-
 ---
 
 ### 13. Programming Language (RECOMMENDED)
@@ -507,8 +444,6 @@ would mislabel 2.1.5.
 - `Fortran 2003`
 - `C`
 - `Python 3.x`
-
-**Status:** NEWLY FILLED (field was empty).
 
 **Evidence**
 
@@ -533,7 +468,7 @@ would mislabel 2.1.5.
 - **Perl 5** — genuinely part of CESM (`README.rst:50` "perl version 5"; CIME contains 878 KB of Perl
   and CTSM 454 KB; `LICENSE.txt:109-112` separately licenses the Perl XML-Lite module used by CESM's
   namelist generation). The vocabulary has no `Perl` row, so it could only be recorded as the
-  uninformative `Other`. Documented here instead; add `Other` if the user prefers.
+  uninformative `Other`, which is not selected.
 - **C++** — present but minor (tuv-x 54 KB); `.github/workflows/build.yaml:17` sets `CXX: mpicxx`.
   Below the "most important languages" bar of Field 13.
 - **SoMEF's language output is not usable here.** It returned Python/Shell/Batchfile/Makefile — the
@@ -545,8 +480,6 @@ would mislabel 2.1.5.
 ### 14. Reference Publication (RECOMMENDED)
 
 **Value:** `https://doi.org/10.1029/2019MS001916`
-
-**Status:** NEWLY FILLED (field was empty).
 
 **Evidence.** Danabasoglu, G., Lamarque, J.-F., Bacmeister, J., Bailey, D. A., DuVivier, A. K.,
 Edwards, J., Emmons, L. K., Fasullo, J., et al. (2020). "The Community Earth System Model Version 2
@@ -561,10 +494,6 @@ the standard citation for the software.
 
 - **License:** `Other`
 - **License URI:** `https://www.cesm.ucar.edu/models/cesm2/copyright.html`
-
-**Status:** CHANGED.
-
-**Previous value:** `Creative Commons Attribution 4.0 International`
 
 **Why the replacement.** CESM is not released under CC-BY-4.0. The repository's actual licence is a
 custom instrument:
@@ -593,12 +522,9 @@ component-specific LGPL/NCSA/non-redistributable terms the project explicitly at
 
 **Why `Other` and not a specific SPDX row.** The HSSI `License` vocabulary is closed
 (`License.objects.filter(name__iexact=...)`, `Unknown license` on no match). Live
-`http://localhost/api/models/License/rows/all/` has 11 rows, and none corresponds to "CESM2 Copyright
-and Terms of Use". The field definition's own instruction is that an SPDX title absent from the list
-must be recorded as `Other`. `Other` is confirmed present in the live vocabulary.
-
-**This is a substantive change to a submitted value** — surfaced explicitly for user decision rather
-than applied silently.
+HSSI license choices have no entry corresponding to "CESM2 Copyright and Terms of Use". The field
+definition's own instruction is that an SPDX title absent from the list must be recorded as `Other`.
+`Other` is confirmed present in the live vocabulary.
 
 ---
 
@@ -613,16 +539,8 @@ than applied silently.
 `mesosphere`, `thermosphere`, `ionosphere`, `upper atmosphere`, `waccm`, `cmip6`,
 `data assimilation`, `high performance computing`, `fortran`, `ncar`
 
-**Status:** NEWLY FILLED (field was empty).
-
-**Evidence and vocabulary reuse.** Keywords is the only open vocabulary, so the live list
-(`http://localhost/api/models/Keyword/rows/all/`, checked 2026-07-30) was consulted first to reuse
-existing rows rather than mint near-duplicates. Eleven of the 22 already existed verbatim:
-`earth system model`, `general circulation model`, `atmosphere`, `stratosphere`, `mesosphere`,
-`thermosphere`, `ionosphere`, `upper atmosphere`, `data assimilation`, `high performance computing`,
-`fortran`. The other eleven were created by this refresh: `climate`, `climate model`,
-`coupled model`, `ocean`, `sea ice`, `land ice`, `land surface`, `whole atmosphere`, `waccm`,
-`cmip6`, `ncar`. (11 + 11 = 22.)
+**Evidence.** The keywords were checked for exact and near-duplicate matches in the live HSSI
+vocabulary and normalized to the stored lower-case form.
 
 Sources: GitHub repository topics `climate`, `climate-model`, `ncar` (`GET
 https://api.github.com/repos/ESCOMP/CESM`; SoMEF also returns `keywords: "climate, climate-model,
@@ -642,12 +560,10 @@ waves); WACCM/whole-atmosphere and the upper-atmosphere terms from the WACCM com
 
 **Values (2):** `HTTP/HTTPS Directories`, `FTP/FTPS Directories`
 
-**Status:** NEWLY FILLED (field was empty).
-
 Both protocols are genuinely used across CESM's lineage, and which one dominates depends on the
 version: **FTP/gftp** at the CIME tag pinned by the production release recorded in Field 12, and
-**HTTPS** at the `ccs_config` tag pinned at HEAD. Both values are therefore recorded. Both were
-confirmed present in the live 17-row `DataInput` vocabulary (`http://localhost`, 2026-07-30).
+**HTTPS** at the `ccs_config` tag pinned at HEAD. Both values are therefore recorded and were
+confirmed in the live HSSI `DataInput` vocabulary.
 
 **Evidence — `HTTP/HTTPS Directories` (HEAD).** CESM's input-data acquisition configuration ships in
 the `ccs_config` submodule that CESM pins as required (`.gitmodules:29-34`,
@@ -694,8 +610,6 @@ Fields 31/32 being empty).
 
 **Values (3):** `netCDF3/4`, `ascii`, `Other`
 
-**Status:** NEWLY FILLED (field was empty).
-
 **Evidence**
 
 - `netCDF3/4` — the primary science-data format for all initial, boundary and forcing datasets.
@@ -726,8 +640,6 @@ represent CESM as a CSV-consuming tool.
 
 **Values (3):** `netCDF3/4`, `ascii`, `Other`
 
-**Status:** NEWLY FILLED (field was empty).
-
 **Evidence**
 
 - `netCDF3/4` — all CESM history and restart output is netCDF, written in parallel through
@@ -748,8 +660,6 @@ represent CESM as a CSV-consuming tool.
 
 **Values (3):** `Linux`, `Mac`, `Other`
 
-**Status:** NEWLY FILLED (field was empty).
-
 **Evidence.** `README.rst:44` — "a Unix-like operating system (Linux, AIX, OS X, etc.)";
 `doc/source/introduction.rst:94` — "UNIX style operating system such as CNL, AIX or Linux".
 
@@ -767,8 +677,6 @@ Fortran 2003 toolchain, so it is not OS-independent. (`OS Independent` is not a 
 ### 21. CPU Architecture (RECOMMENDED)
 
 **Values (2):** `x86-64`, `HPC or HEC`
-
-**Status:** NEWLY FILLED (field was empty).
 
 **Evidence**
 
@@ -793,8 +701,6 @@ support is stated at the OS level (`README.rst:44`) but no architecture-specific
 
 **Value:** Not found — deliberately left empty.
 
-**Status:** UNCHANGED (empty).
-
 **Rationale.** The live `Phenomena` vocabulary has exactly 7 closed values — `Coronal Heating`,
 `Coronal Mass Ejections`, `Geomagnetic Storms`, `Solar Corona`, `Solar Flares`, `Solar Wind`,
 `X-ray emission` — all solar or magnetospheric. CESM is a coupled Earth-system/climate model; none of
@@ -802,19 +708,16 @@ these is a phenomenon it is built to study. The vocabulary is closed (`_get_grap
 `Unknown value`), so a phenomenon such as "climate variability" or "ENSO" cannot be added here; those
 belong in Keywords, where the whole-atmosphere terms have been recorded.
 
-**Documented candidate (not applied).** `Geomagnetic Storms` is arguable *via WACCM-X*, which
+**Candidate considered and not selected.** `Geomagnetic Storms` is arguable *via WACCM-X*, which
 simulates the thermosphere/ionosphere response to geomagnetic forcing. It is not applied because the
 top-level CESM repository contains no geomagnetic-forcing evidence whatever, and asserting it would
-push past the scope discipline this refresh is operating under. Recorded so the user can add it if
-they judge the WACCM-X association sufficient.
+push past the evidence threshold used for this record.
 
 ---
 
 ### 23. Development Status (RECOMMENDED)
 
 **Value:** `Active`
-
-**Status:** NEWLY FILLED (field was empty).
 
 **Evidence.** CESM has reached a stable, usable state and is under vigorous ongoing development.
 `git log --since=2025-07-30 --oneline | wc -l` → 159 commits in the last twelve months; latest commit
@@ -832,17 +735,14 @@ production release. This matches repostatus.org "Active" exactly.
 
 **Value:** `https://escomp.github.io/CESM/`
 
-**Status:** NEWLY FILLED (field was empty).
-
 **Evidence.** `README.rst:9-11` — "The CESM Quickstart Guide is available at:
 http://escomp.github.io/cesm". `doc/README.md` confirms this site is built from this repository's
 `doc/` directory and published to the orphan `gh-pages` branch. The guide contains exactly what
 Field 24 asks for — installation and download instructions plus a quick start:
 `doc/source/downloading_cesm.rst`, `doc/source/quickstart.rst`, `doc/source/introduction.rst`
-(software prerequisites at `:88-128`), `doc/source/cesm_configurations.rst`. Verified live
-(HTTP 200, 2026-07-30); the landing page redirects to `versions/master/html/index.html`, and the
-versioned build for the production release is reachable at
-`https://escomp.github.io/CESM/versions/cesm2.1/html/index.html` (HTTP 200).
+(software prerequisites at `:88-128`), `doc/source/cesm_configurations.rst`. The landing page and
+the versioned build for the production release at
+`https://escomp.github.io/CESM/versions/cesm2.1/html/index.html` both resolve successfully.
 
 **Related, not selected.** `https://www.cesm.ucar.edu` (`README.rst:5-7`) is the project website, and
 the CIME Case Control System documentation at `http://esmci.github.io/cime`
@@ -859,8 +759,6 @@ that SoMEF returned (`https://github.com/ESCOMP/CESM/wiki`) is not the project's
 | United States Department of Energy | `https://ror.org/01bj3aw27` |
 | National Aeronautics and Space Administration | `https://ror.org/027ka1x80` |
 | University Corporation for Atmospheric Research | `https://ror.org/04zhhyn23` |
-
-**Status:** NEWLY FILLED (field was empty).
 
 **Evidence.** `LICENSE.txt:6-10` — "The Community Earth System Model (CESM) was developed primarily in
 cooperation with the National Science Foundation, the Department of Energy, the National Aeronautics
@@ -879,16 +777,13 @@ organization rows with these exact names and identifiers, so no new rows are min
 
 **Not listed.** NSF National Center for Atmospheric Research (`https://ror.org/05cvfcr44`) — named in
 the same `LICENSE.txt` phrase, but as CESM's *host institution* rather than a funder; it is already
-recorded as the author affiliation in Field 6. Add it here if the user prefers the literal
-`LICENSE.txt` reading.
+recorded as the author affiliation in Field 6.
 
 ---
 
 ### 26. Award Title (OPTIONAL)
 
 **Value:** Not found
-
-**Status:** UNCHANGED (empty).
 
 **Rationale.** No grant or award title or number appears anywhere in the repository, the Zenodo
 deposit (`fundingReferences` absent), or the CESM licence/copyright pages.
@@ -911,8 +806,6 @@ funding awards, and are deliberately not recorded as award numbers.
 | `https://doi.org/10.1175/BAMS-D-12-00121.1` | Hurrell et al. (2013), "The Community Earth System Model: A Framework for Collaborative Research", *BAMS* |
 | `https://doi.org/10.5194/esd-12-1393-2021` | Rodgers et al. (2021), "Ubiquity of human-induced changes in climate variability" (CESM2 Large Ensemble), *Earth System Dynamics* |
 
-**Status:** NEWLY FILLED (field was empty).
-
 **Evidence.** All four DOIs were resolved and their titles, containers and publication dates verified
 against `https://api.crossref.org/works/<doi>` on 2026-07-30. Selection rationale: the two WACCM
 papers document the whole-atmosphere and thermosphere/ionosphere configurations that make CESM
@@ -928,20 +821,18 @@ the Field 14 reference publication.
 **Value:** `https://doi.org/10.26024/kgmp-c556` — CESM2 Large Ensemble Community Project (LENS2),
 NSF NCAR Geoscience Data Exchange dataset `d651056`
 
-**Status:** NEWLY FILLED (field was empty).
-
 **Evidence.** `https://gdex.ucar.edu/datasets/d651056/` (retrieved 2026-07-30) publishes
 `DOI: 10.26024/KGMP-C556` for the dataset and directs users to cite Rodgers et al. 2021
 (`https://doi.org/10.5194/esd-12-1393-2021`, recorded in Field 27). The dataset is 100 CESM2 ensemble
 members at 1-degree resolution spanning 1850-2100 under CMIP6 historical and SSP370 forcing.
 
-**Judgement recorded.** Field 28 asks for "datasets the software supports functionality for (e.g.,
+**Selection rationale.** Field 28 asks for "datasets the software supports functionality for (e.g.,
 analysis)". LENS2 is CESM2 *output* rather than CESM *input*; it is included because CESM is the
 software that produces, extends and is used to interpret it, and because the CESM release lineage
 directly supports reproducing it (`git show release-cesm2.1.5:cime_config/config_compsets.xml`
 defines the `BHISTsmbb` / `BSSP370smbb` large-ensemble compsets and sets LENS2 members such as
-`b.e21.BSSP370smbb.f09_g17.LE2-1171.009` as `REFCASE` values). Flagged as a judgement call for the
-validator. The CESM input-data collections that the model actually reads have no DOI.
+`b.e21.BSSP370smbb.f09_g17.LE2-1171.009` as `REFCASE` values). The CESM input-data collections that
+the model actually reads have no DOI.
 
 ---
 
@@ -973,8 +864,6 @@ from `.gitmodules` at revision `926b940`, with the exact `fxtag` CESM pins):
 | CCSM (Community Climate System Model) | `https://www.cesm.ucar.edu/models/ccsm` | Predecessor model that CESM superseded. This is exactly the value previously mis-filed in Field 3; it is preserved here, where a predecessor belongs. |
 | E3SM | `https://github.com/E3SM-Project/E3SM` | Peer coupled Earth system model performing the same task; shares the CIME case control system with CESM and shares CIME's copyright (`LICENSE.txt:36-46` — "Common Infrastructure for Modeling the Earth (CIME) ... UCAR and DOE BER E3SM project team members, including those at SNL and ANL"). |
 
-**Status:** NEWLY FILLED (field was empty). All URLs verified HTTP 200 on 2026-07-30.
-
 **Considered and rejected (audit trail).** `git-fleximod`
 (`https://github.com/jedwards4b/git-fleximod`, vendored at `.lib/git-fleximod`) — an important
 dependency in the mechanical sense, but a **generic** git submodule/sparse-checkout manager that
@@ -997,8 +886,6 @@ per the scope-discipline rule.
 | PyCECT | `https://github.com/NCAR/PyCECT` | Companion package that reads CESM netCDF history files to run the CESM Ensemble Consistency Test. `tools/statistical_ensemble_test/README:95-113` documents the exchange concretely: copy every `*.cam.h0.*` (CAM-ECT/UF-CAM-ECT) or `*.pop.h.*` (POP-ECT) history file into a directory, then run `pyEnsSum.py`/`pyEnsSumPop.py` and `pyCECT.py`. Pinned at `.gitmodules:155-160` (`3.3.1`). |
 | FTorch | `https://github.com/Cambridge-ICCS/FTorch` (CESM interface: `https://github.com/ESCOMP/FTorch_interface`) | Cross-language bridge letting CESM's Fortran components call PyTorch models. Pinned at `.gitmodules:169-175` (`v0.0.5`, `fxrequired = ToplevelOptional`). *Scope caveat:* CESM3 development line only — not present in `release-cesm2.1.5`. |
 
-**Status:** NEWLY FILLED (field was empty). All URLs verified HTTP 200 on 2026-07-30.
-
 **Relevance gate applied.** Every entry above names a specific artifact demonstrating exchange (a
 compset, a testmods directory, a documented file-handoff procedure, a pinned interface library, a CI
 driver setting) rather than mere co-presence. No entry rests on "part of the ecosystem" reasoning.
@@ -1016,8 +903,6 @@ Field 4 evidence instead.
 
 **Value:** None — deliberately empty.
 
-**Status:** UNCHANGED (empty).
-
 **Rationale.** CESM is an instrument-agnostic numerical model. It does not read, parse, calibrate or
 process any specific instrument's data, and implements no instrument-specific format. Applying the
 Field 31 sanity check: a user searching HSSI for `instrument:"X"` would not expect a coupled climate
@@ -1033,18 +918,13 @@ nor processes those instruments' actual data. The instruments are also Earth-obs
 sensors outside heliophysics scope, and this synthetic-observation capability is already correctly
 captured as `Models and Simulations: Observatory/Instrument Models` in Field 4.
 
-**No resolution was attempted and no value invented.** The `InstrumentObservatory` vocabulary was
-nevertheless fetched and audited for this refresh: 7,648 rows, **0** failing the
-`identifier.startswith("https://spase-metadata.org/")` guard (`http://localhost`, 2026-07-30) — the
-100%-SPASE state is intact.
+No instrument entry is recorded because none is relevant to CESM's role as a general coupled model.
 
 ---
 
 ### 32. Related Observatories (OPTIONAL)
 
 **Value:** None — deliberately empty.
-
-**Status:** UNCHANGED (empty).
 
 **Rationale.** CESM is not designed to support any specific mission or observatory. It works with
 gridded geophysical forcing and boundary datasets (emissions, sea-surface temperatures, solar
@@ -1067,8 +947,6 @@ so the entry is omitted and documented rather than invented.
 
 **Value:** Not found
 
-**Status:** UNCHANGED (empty).
-
 **Rationale.** No CESM logo exists at a permanent, publicly accessible URL. Checked on 2026-07-30:
 the repository contains no logo asset (`doc/source/_static/` holds only `pop_ver.js`); the CESM
 website `https://www.cesm.ucar.edu/` and `https://www.cesm.ucar.edu/models/cesm2` serve only the
@@ -1078,66 +956,3 @@ no CESM-specific image; the published documentation on the `gh-pages` branch use
 Read-the-Docs theme with no project logo; and SoMEF returned no `logo` field. Recording the ESCOMP
 GitHub organization avatar would misidentify the org's mark as the software's logo. Correctly left
 empty rather than fabricated.
-
----
-
-## Extraction Summary
-
-| Status | Count | Fields |
-|---|---|---|
-| CHANGED | 8 | 3 (Code Repository), 4 (Software Functionality), 5 (Related Region), 8 (Description), 9 (Concise Description), 10 (Publication Date), 12 (Version), 15 (License). Fields 4 and 5 are enrichments that retain every seeded value. |
-| NEWLY FILLED | 15 | 13, 14, 16, 17, 18, 19, 20, 21, 23, 24, 25, 27, 28, 29, 30 |
-| UNCHANGED (populated) | 4 | 2, 6 (one affiliation proposed as an addition), 7, 11 |
-| UNCHANGED (empty or placeholder) | 6 | 1 (submitter placeholder), 22, 26, 31, 32, 33 |
-
-Total: 8 + 15 + 4 + 6 = 33 fields.
-
----
-
-## Validation Record
-
-**Validation round 1 (2026-07-30):** 0 ERRORS / 4 WARNINGS / 6 SUGGESTIONS / 29 PASS. All findings
-were reviewed by Shawn on 2026-07-30 and dispositioned as recorded below; the corresponding edits are
-applied in the field sections above. A focused revalidation of the changed fields follows.
-
-**These are metadata *content* decisions only. They do not constitute approval of any PATCH to HSSI.**
-No update has been proposed, approved, or executed. `Validation Status` remains `Pending`.
-
-### Findings and dispositions
-
-| # | Field | Finding | Disposition (Shawn, 2026-07-30) |
-|---|---|---|---|
-| W1 | 5 Related Region | Thermosphere/ionosphere rested on the CESM website alone; the literal string "WACCM" is absent from the HEAD working tree. | **Keep all 4 values; citation replaced.** WACCM-X is now evidenced by active, non-commented `WXIE` compsets in the CAM tags CESM pins at *both* HEAD (`cam6_4_187`) and the production release (`cam_cesm2_1_rel_60`), plus CESM's own `ChangeLog` regression-test records for `FXHIST … cam-waccmx_weimer`. Counter-evidence disclosed in-field. |
-| W2 | 4 Software Functionality | Version-scope caveats applied asymmetrically — only `ML/AI` was caveated, though three CUPiD-derived values share the same HEAD-only status. | **Keep all 18 values; policy stated and applied evenly.** Field 4 is now explicitly scoped to the recorded Source Revision, with an identical `HEAD-only` note on all four affected values. |
-| W3 | 17 Data Sources | The "no active server uses FTP" claim is false for the version recorded in Field 12. | **Value corrected to two entries** — `HTTP/HTTPS Directories` **and** `FTP/FTPS Directories` — with the false claim removed and replaced by the version split (FTP/gftp at `cime5.6.49`; HTTPS at `ccs_config_cesm1.0.87`). |
-| W4 | header | Provenance tokens did not match this repository's convention. | **Normalized** to `Validation Date: Pending` / `Validation Status: Pending`. |
-| S1 | 4 Software Functionality | `Instrument Response` carried a confidence hedge. | **Hedge removed.** COSP has no version-scope problem: `Externals_CAM.cfg` at `cam_cesm2_1_rel_60` pins `cosp2` → `CFMIP/COSPv2.0` `v2.1.4cesm` with `required = True`. The remaining question was categorization judgment, which Shawn accepted. |
-| S2 | 25 Funder | NCAR not listed as a funder. | **Accepted as-is.** NCAR is CESM's host institution and is already recorded as the Field 6 author affiliation. No change. |
-| S3 | 10 Publication Date | `2024-05-21` is a Zenodo deposit date, not a first-publication date. | **CHANGED to `2018-06-08`** (`release-cesm2.0.0`, the first release in this repository), with the CESM1/CCSM caveat recorded in-field. |
-| S4 | 3 Code Repository | Star/fork counts are volatile metrics. | **Removed.** They drifted during validation (482 → 483); the durable GitHub API evidence is retained. |
-| S5 | 30 Interoperable Software | FTorch entry questioned. | **Accepted as-is.** The citation is a specific pinned interface library, not an ecosystem-membership claim. No change. |
-| S6 | 32 Related Observatories | NEON server entry not addressed. | **Omission note added.** No NEON row exists in the live `InstrumentObservatory` vocabulary, and NEON is a terrestrial ecological network outside heliophysics scope — resolution-ladder rule 5. |
-
-### Substantive changes to previously-submitted values
-
-Recorded together for reviewer convenience; each is argued in full in its own field section above.
-
-1. **Field 3 — Code Repository.** `https://www.cesm.ucar.edu/models/ccsm` →
-   `https://github.com/ESCOMP/CESM`. The old URL is the predecessor CCSM website, not a repository;
-   it is preserved in Field 29 where a predecessor belongs.
-2. **Field 15 — License.** `Creative Commons Attribution 4.0 International` → `Other`. The repository
-   ships a custom "CESM2 Copyright and Terms of Use"; the CC-BY value came only from the Zenodo
-   deposit's metadata and would drop the component-specific LGPL/NCSA/non-redistributable terms.
-3. **Field 12 — Version.** `2.2.0` → `2.1.5`, the project-designated production release, with `2.2.2`
-   documented as the alternative if the highest-numbered 2.x tag is preferred.
-4. **Field 10 — Publication Date.** `2024-05-21` → `2018-06-08` (finding S3).
-5. **Fields 8 and 9 — Descriptions** rewritten, replacing the mangled, version-pinned Zenodo blurb.
-6. **Field 6 — one additional affiliation proposed** (University Corporation for Atmospheric Research,
-   `https://ror.org/04zhhyn23`) alongside the existing NCAR affiliation. Nothing is removed.
-
-### No blockers
-
-No unresolved instrument/observatory entries exist (Fields 31 and 32 are correctly and deliberately
-empty, each with a documented omission rationale), so the SPASE hard blocker does not apply. Every
-controlled-list value written above was confirmed present on the live `http://localhost` vocabularies
-on 2026-07-30.

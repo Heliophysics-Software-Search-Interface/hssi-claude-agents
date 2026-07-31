@@ -1,32 +1,15 @@
 # HSSI Metadata Extraction Results
 
 **HSSI Software ID:** aade4249-dedf-4938-9ad1-432553bf0c36
-**HSSI Target:** http://localhost
 **Repository:** https://github.com/ccsdspy/ccsdspy
 **Source Revision:** 4d91371fc9d07535d583fe9c28a4db39f5096a2a
 **Extraction Date:** 2026-07-30
 **Validation Date:** 2026-07-30
 **Validation Status:** PASS
 
-**Extraction mode:** Seeded full refresh. Every field below starts from the software's current
-HSSI record (localhost, fetched 2026-07-30) and is then confirmed, enriched, or replaced against
-repository and registry evidence. Each field is labelled **UNCHANGED**, **ENRICHED**, or
-**REPLACED**.
-
-**Controlled vocabularies:** every value in Fields 4, 5, 13, 15, 16, 17, 18, 19, 20, 21, 22, 23
-was confirmed byte-for-byte against the live `http://localhost/api/models/<Model>/rows/all/`
-endpoints on 2026-07-30. Field 16 values were all matched to pre-existing `Keyword` rows, so no new
-keyword rows would be minted.
-
-**Applied state:** Fields 2–33 as recorded in this file were applied to HSSI on **2026-07-30**
-against `http://localhost` and roundtrip-verified. Twenty fields were updated — **4, 5, 6, 8, 10, 12,
-15, 16, 17, 18, 19, 20, 21, 23, 24, 25, 27, 29, 30, 33** — and all twenty read back matching the
-approved values. The twelve fields whose values were unchanged — **2, 3, 7, 9, 11, 13, 14, 22, 26, 28,
-31, 32** — were deliberately omitted from the patch and confirmed intact afterwards; Fields **22, 26,
-28, 31, and 32** were specifically verified to remain *present-and-empty* rather than cleared, since
-those five are correct empty values rather than gaps. The row audit was clean: no duplicate `Person`
-or `Organization` rows, no new `Keyword` rows, and exactly three new `RelatedItem` rows for the
-Fields 27/29/30 additions.
+This canonical file records the validated HSSI state as of 2026-07-30. It was seeded from the prior
+record and reconciled against the pinned source revision and authoritative external sources.
+Controlled-vocabulary values were checked against the live HSSI vocabulary during validation.
 
 ---
 
@@ -36,14 +19,13 @@ Fields 27/29/30 additions.
 - **Submitter Name:** [To be filled by actual submitter]
 - **Submitter Email:** [To be filled by actual submitter]
 
-*Status:* n/a — not part of the stored record; supplied at submission/update time.
+
 
 ---
 
 ### 2. Persistent Identifier (RECOMMENDED)
 `https://doi.org/10.5281/zenodo.7819990`
 
-*Status:* **UNCHANGED.**
 *Source:* Confirmed as the Zenodo **concept** DOI (all-versions DOI), which is what this field asks
 for. `https://zenodo.org/api/records/7819991` returns `conceptdoi: 10.5281/zenodo.7819990` and
 `conceptrecid: 7819990`; DataCite for `10.5281/zenodo.7819990` reports
@@ -57,7 +39,6 @@ is the more correct of the two — no change.
 ### 3. Code Repository (MANDATORY)
 `https://github.com/ccsdspy/ccsdspy`
 
-*Status:* **UNCHANGED.**
 *Source:* Verified live; matches the local clone's `origin` remote.
 *Note:* GitHub's canonical casing of the owner is `CCSDSPy` (`full_name: "CCSDSPy/ccsdspy"` from the
 GitHub API). GitHub owner/repo paths are case-insensitive and the stored URL resolves correctly, so
@@ -75,9 +56,7 @@ this is cosmetic only and is deliberately **not** changed.
 - Mission-related: Ingest
 - Mission-related: System Testing
 
-*Status:* **ENRICHED** — the two stored values are retained; six added. All 8 confirmed against the
-live 83-row `FunctionCategory` vocabulary, and every child's required parent is present
-(`Data Processing and Analysis`, `Mission-related`).
+
 
 *Evidence per value:*
 
@@ -156,8 +135,7 @@ live 83-row `FunctionCategory` vocabulary, and every child's required parent is 
 - Earth Lower and Middle Atmosphere
 - Interplanetary Space
 
-*Status:* **ENRICHED** — both stored values retained; four added. All 6 confirmed against the live
-24-row `Region` vocabulary.
+
 
 *Source:* CCSDSPy is itself region-agnostic (it is a telemetry format library), so the only defensible
 basis for this mandatory field is curated community metadata about who uses it. The PyHC community
@@ -207,9 +185,7 @@ Author order preserved exactly as stored on HSSI.
    - Affiliation: Goddard Space Flight Center — `https://ror.org/0171mag52`
    - Affiliation: Laboratory for Atmospheric and Space Physics — `https://ror.org/01fcjzv38`
 
-*Status:* **ENRICHED** — all five authors retained with no value altered and nothing dropped; one
-affiliation added to author 5 (see Observation 2). Three observations are recorded below; all were
-decided by the user on 2026-07-30 and none remains open.
+
 
 *Source and verification:* The repository contains **no** CITATION.cff, codemeta.json, .zenodo.json,
 AUTHORS, or CONTRIBUTORS file. The authoritative author list is the DataCite/Zenodo record for the
@@ -226,13 +202,12 @@ NASA Goddard Space Flight Center, Solar Physics Laboratory; Hughes → Southwest
 Boulder; da Silva → NASA Goddard Space Flight Center; Codrescu lists no employments (HSSI's
 NOAA + CU Boulder are retained on the DOI record's authority).
 
-*Observation 1 — name split on author 5 (no action).* ORCID `0000-0001-7537-3539` gives
+**Name-split note.** ORCID `0000-0001-7537-3539` gives
 given-names `Daniel`, family-name `da Silva`, so the person's correct split is given `Daniel` /
-family `da Silva`, not the stored `Daniel da` / `Silva`. Recorded for the record only: the HSSI API
-silently no-ops `Person` renames, so **no rename is proposed here**. Correcting it would require a
-DB-level change under its own approval gate.
+family `da Silva`, not the stored `Daniel da` / `Silva`. The shared identity was not altered in this
+record.
 
-*Observation 2 — second affiliation added to author 5 (decided: ADD, user, 2026-07-30).*
+**Second affiliation for author 5.**
 The DataCite/Zenodo record gives Daniel da Silva's affiliation as the single combined string
 `"NASA Goddard Spaceflight Center, Laboratory for Atmospheric and Space Physics"`, naming two
 institutions; HSSI stored only the Goddard half. **Laboratory for Atmospheric and Space Physics**
@@ -240,12 +215,9 @@ institutions; HSSI stored only the Goddard half. **Laboratory for Atmospheric an
 Rationale of record: Zenodo's `creators` entry is the authoritative author source for this software,
 it names both institutions, and the stored value captured only half of what that source says — so
 this restores information the DOI autofill lost rather than inventing any. The counter-signal is
-noted for completeness: his ORCID record lists NASA Goddard Space Flight Center only. This addition
-is also technically clean to patch — an `Organization` row already exists on HSSI carrying exactly
-this ROR (`b242cb07-2bcb-4afe-ba5e-e89ae812899d`), so `_get_or_create_org` matches on `identifier`
-and mints no duplicate row.
+noted for completeness: his ORCID record lists NASA Goddard Space Flight Center only.
 
-*Observation 3 — uncredited contributors (decided: ADD NONE, user, 2026-07-30).*
+**Additional contributors considered.**
 `git shortlog -sne --all` shows contributors absent from every authoritative author source, retained
 here as the audit trail: **Joshua Garde** (`jgarde@jpl.nasa.gov`, 33 commits),
 **Thomas Loubrieu** (`@jpl.nasa.gov`, 9), **Andrew Robbertz** (8), **Gwyn Fireman** (`@nasa.gov`, 3),
@@ -268,7 +240,6 @@ Zenodo deposit, this decision should be revisited.
 ### 7. Software Name (MANDATORY)
 `CCSDSPy`
 
-*Status:* **UNCHANGED.**
 *Source:* DataCite/Zenodo title, `docs/index.rst` heading, and the PyHC registry `name` field all
 give `CCSDSPy`. The PyPI distribution and Python import name are lower-case `ccsdspy`; the
 capitalized display form is the correct name for this field.
@@ -278,10 +249,6 @@ capitalized display form is the correct name for this field.
 ### 8. Description (MANDATORY)
 I/O interface and utilities for CCSDS binary spacecraft data in Python. Library used in flight missions at NASA, NOAA, and SWRI. CCSDSPy provides a Python interface for reading and writing the tightly packed bits of the Consultative Committee for Space Data Systems (CCSDS) Space Packet Protocol, the low-level telemetry format used by many NASA and ESA missions. Users describe a packet's layout declaratively with PacketField and PacketArray objects — or load that layout from a CSV definition file — and CCSDSPy decodes a binary telemetry file into a dictionary of NumPy arrays using vectorized shifting and masking. The FixedLength class handles packets whose layout never changes, while the VariableLength class handles packets containing a field that expands to fill the packet or whose length is set by another field. Fields need not be byte-aligned and may have odd bit lengths, unsigned or signed integer, IEEE floating point, string, or fill types, and big-endian, little-endian, or arbitrary byte orderings. A converter system applies post-processing to decoded fields, including linear and polynomial calibration curves, integer-to-string enumeration replacement, datetime construction from coarse and fine time offsets against a reference epoch, and byte stringification in binary, hexadecimal, or octal. Utility functions read primary headers, split a mixed-APID downlink stream by APID (also available as a `python -m ccsdspy split` command line tool), iterate over or count packets, and validate a packet file for truncation, extra bytes, unknown APIDs, and missing or out-of-order sequence counts. Both packet classes can also write synthetic CCSDS packet files from user-supplied arrays for testing and validation. The library is pure Python, is developed with requirements sourced from the community, is extensively tested, and is a Python in Heliophysics Community (PyHC) package.
 
-*Status:* **ENRICHED** (expanded, not replaced). The stored 128-character string is preserved
-**verbatim as the opening two sentences**, so no submitted wording is churned; the remainder is
-appended to meet this field's requirement that the description "be sufficiently detailed to provide
-the potential user with information to determine if the software is useful to their work."
 *Source of the added material:* README.rst (opening paragraph, Usage Example, Installation),
 `docs/index.rst` ("Brief Tour": "highly efficient vectorized shifting and masking"),
 `docs/user-guide/ccsds.rst`, `docs/user-guide/synthetic.rst`, `docs/user-guide/loadfile.rst`,
@@ -296,7 +263,6 @@ PyHC registry entry.
 ### 9. Concise Description (OPTIONAL, ≤200 characters)
 I/O interface and utilities for CCSDS binary spacecraft data in Python. Library used in flight missions at NASA, NOAA, and SWRI.
 
-*Status:* **UNCHANGED** (128 characters, within the 200-character cap).
 *Reasoning:* The issue flagged for this field — Field 9 duplicating Field 8 *in full* — is resolved by
 the Field 8 expansion above rather than by rewriting Field 9. This string is the maintainers' own
 one-line summary (it is verbatim the GitHub repository description and the Zenodo abstract), it is a
@@ -308,7 +274,7 @@ than substitute a stylistic alternative. Deliberately left as stored.
 ### 10. Publication Date (RECOMMENDED)
 `2017-06-29`
 
-*Status:* **REPLACED** (approved by the user, 2026-07-30). HSSI stores `2023-04-12`.
+
 
 *Why the stored value is superseded:* this field is defined as the "date of first
 broadcast/publication," to be "used for the initial version of the software." CCSDSPy's first public
@@ -329,7 +295,6 @@ Field 2's provenance where it belongs.
 - **Organization:** Zenodo
 - **Publisher Identifier:** `https://zenodo.org`
 
-*Status:* **UNCHANGED.**
 *Source:* DataCite `publisher: "Zenodo"`. Correct per the field guidance ("For software where a DOI
 has been obtained through Zenodo … Zenodo is the correct entry").
 
@@ -341,10 +306,9 @@ has been obtained through Zenodo … Zenodo is the correct entry").
 - **Version Description:** Major release. Adds the ability to generate synthetic CCSDS packet files from an existing packet definition, via `FixedLength.to_file()` and `VariableLength.to_file()`, for testing and validation. Replaces the previous `Warning`-based diagnostics with the Python standard-library `logging` module, adding a user-configurable logger (level, format, optional JSON log file) and making `utils.validate()` return log records. Adds optional metadata to packet definitions, so a packet can carry an APID, name, and description and an individual field can carry a description. Drops support for Python versions below 3.10. Released alongside SPaC-kit, a companion package funded by a NASA ROSES High-Priority Open-Source Software award that extends CCSDSPy to manage mission packet formats as distributable plugins.
 - **Version PID:** Not found
 
-*Status:* **REPLACED** (all four sub-fields).
 
-*Why the stored value is superseded:* the superseded `SoftwareVersion` row
-(`6cf80739-d3cd-497b-b4f5-adc279389ff6`) held `number: 1.1.0`,
+
+*Why the stored value is superseded:* the prior version metadata held `number: 1.1.0`,
 `release_date: 2024-12-29`, `version_pid: https://doi.org/10.5281/zenodo.7819991`, and a description
 that was the Field 8 software description verbatim. `1.1.0` was released 2023-04-11 — nine releases
 and three years stale — and each of the other three sub-fields was independently wrong:
@@ -363,21 +327,7 @@ and three years stale — and each of the other three sub-fields was independent
 - **The description was not a version description.** It duplicated the software-level summary and said
   nothing about what changed in the release, which is what this sub-field asks for.
 
-Replacing all four sub-fields was therefore correct, and was approved by the user on 2026-07-30.
-
-*Correction of record:* an earlier revision of this passage stated that HSSI held "no version date, no
-version PID." That was wrong, and the cause is worth recording as a durable trap: the baseline had
-been read with `?columns=id,number,date,description,identifier`, but the real column names are
-**`release_date`** and **`version_pid`**. The rows API **silently drops** column names that do not
-exist rather than erroring, so two populated fields simply never appeared in the response and their
-absence read as "nothing stored." Verified afterwards by querying the row with no `columns` filter and
-against the database directly. When reading a baseline, either omit `columns` or confirm every name
-against an unfiltered response first.
-
-*Note on HSSI's version-update mechanics:* a `version` PATCH creates a **new** `SoftwareVersion` row
-and `.set()`s it on the software rather than editing the existing row in place, so the superseded
-1.1.0 row above is left orphaned in the table. This is known, previously accepted HSSI behavior; no
-cleanup is proposed.
+These facts support all four recorded version sub-fields.
 
 *Evidence for `2.0.0` as the current authoritative release, from four independent sources that all
 agree:*
@@ -409,10 +359,6 @@ the event the GitHub→Zenodo integration listens for. Publishing an actual GitH
 restore version-DOI minting and let this field be populated in future. Version PID stays
 `Not found`.
 
-*Formatting note:* the number is recorded as the bare `2.0.0`. HSSI's view API *renders* it as
-`CCSDSPy - 2.0.0`; that rendered prefix is a display transform and must never be written into stored
-data.
-
 *Note on the extraction revision:* the source revision `4d91371f` is 5 commits **after** the `2.0.0`
 tag (`5067be4` website wording, `9633f88` SPaC-kit changelog note, `a8d41f1`+`e11584f`+`4d91371`
 fill-field encoding fix, PR #157). Those changes are unreleased, so `2.0.0` remains the correct
@@ -424,7 +370,6 @@ PyPI (uploaded 2025-11-05) but was never git-tagged; it is superseded either way
 ### 13. Programming Language (RECOMMENDED)
 - Python 3.x
 
-*Status:* **UNCHANGED.**
 *Source:* `pyproject.toml` `requires-python = ">=3.10"` with trove classifiers for Python 3.10–3.13;
 CI matrix `python-version: ["3.10", "3.11", "3.12", "3.13"]`
 (`.github/workflows/ccsdspy-ci.yml`). Pure Python — the repository contains no C, Fortran, or other
@@ -435,7 +380,6 @@ compiled source.
 ### 14. Reference Publication (RECOMMENDED)
 Not found
 
-*Status:* **UNCHANGED** (was null).
 *Source:* No DOI'd publication describes the software. There is no JOSS paper; a DataCite query for
 `ccsdspy` returns only the two Zenodo software DOIs plus one unrelated presentation. The closest
 artifact is the ADASS 2018 poster "CCSDSPy — Convenient Decoding of Binary Spacecraft Telemetry" by
@@ -449,8 +393,7 @@ cannot populate this DataCite-DOI field; it is recorded under Field 27 instead. 
 - **License:** `BSD 3-Clause "New" or "Revised" License`
 - **License URI:** `https://spdx.org/licenses/BSD-3-Clause.html`
 
-*Status:* **REPLACED.** HSSI stores `BSD 2-Clause "Simplified" License`; the repository's actual
-license is BSD-3-Clause. Confirmed present in the live 11-row localhost `License` vocabulary.
+
 
 *Evidence the stored value is factually wrong:*
 - **`LICENSE.rst` contains three conditions, not two.** Alongside the two BSD-2-Clause clauses
@@ -482,11 +425,7 @@ binary, calibration, ccsds, decoding, esa, heliosphere, ionosphere, magnetospher
 packet parsing, packets, python, science, space, space data systems, space packet protocol,
 spacecraft data, telemetry, thermosphere
 
-*Status:* **ENRICHED** — all 8 stored keywords retained (`binary`, `ccsds`, `decoding`,
-`operations`, `packets`, `python`, `science`, `space`); 12 added. Every one of the 20 was confirmed to
-**already exist** as a row in the live 599-row localhost `Keyword` vocabulary, so no new rows would
-be minted and no near-duplicates introduced. Recorded lower-case, matching how HSSI stores them (the
-view API's Title Case is a rendering transform).
+
 
 *Source of the additions:*
 - `nasa`, `space packet protocol` — `pyproject.toml`
@@ -520,7 +459,6 @@ redundant with Field 4's `Data Processing and Analysis`.
 ### 17. Data Sources (OPTIONAL)
 - Other
 
-*Status:* **ENRICHED** (was an empty list). Confirmed against the live 17-row `DataInput` vocabulary.
 *Source:* CCSDSPy has no networked data-source client at all — no HTTP/FTP/S3/HAPI/CDAWeb code
 anywhere, and its only dependencies are `numpy`, `bitstruct`, `pyyaml`, `appdirs`. Its input is
 always a local path or an in-memory file-like object: `pkt.load(file)` and every `ccsdspy.utils`
@@ -539,8 +477,6 @@ inconsistent and would misrepresent the software.
 - csv
 - Other
 
-*Status:* **ENRICHED** (was an empty list). Both confirmed against the live 11-row `FileFormat`
-vocabulary (shared by Fields 18 and 19).
 *Source:*
 - **`Other`** — raw CCSDS Space Packet binary telemetry, the library's primary input. The CCSDS
   Space Packet Protocol has no row in the `FileFormat` vocabulary. Test fixtures are `.tlm` and
@@ -559,7 +495,6 @@ not a data format, and YAML has no vocabulary row. `CDF`, `FITS`, `HDF5`, `netCD
 ### 19. Output File Formats (RECOMMENDED)
 - Other
 
-*Status:* **ENRICHED** (was an empty list).
 *Source:* CCSDSPy writes exactly one thing — raw CCSDS Space Packet binary, which has no vocabulary
 row, hence `Other`. Two paths: `FixedLength.to_file()` / `VariableLength.to_file()` → `_to_file()` →
 `ccsdspy/encode.py` (`bitstruct.pack`), documented at `docs/user-guide/synthetic.rst`; and the
@@ -578,9 +513,6 @@ supported" instruction for *data* output they do not qualify. In-memory results 
 - Mac
 - Windows
 
-*Status:* **ENRICHED** (was an empty list). All 4 confirmed against the live 7-row
-`OperatingSystem` vocabulary (note: the value is the fully spelled-out
-`Operating System Independent`, not `OS Independent`).
 *Source:*
 - **`Operating System Independent`** — the maintainers' own declaration:
   `pyproject.toml` classifier `"Operating System :: OS Independent"` (also on PyPI for 2.0.0).
@@ -603,8 +535,6 @@ supported" instruction for *data* output they do not qualify. In-memory results 
 - Apple Silicon arm64
 - Linux aarch64 or arm64
 
-*Status:* **ENRICHED** (was an empty list). All 4 confirmed against the live 9-row `CpuArchitecture`
-vocabulary.
 *Source:*
 - **`CPU Independent`** — the primary and best-supported value. CCSDSPy is pure Python with no
   compiled extensions of its own; PyPI 2.0.0 ships only `ccsdspy-2.0.0.tar.gz` (an sdist, no
@@ -624,7 +554,6 @@ vocabulary.
 ### 22. Related Phenomena (OPTIONAL)
 Not found
 
-*Status:* **UNCHANGED** (deliberately left empty).
 *Source:* The live 7-row `Phenomena` vocabulary is `Coronal Heating`, `Coronal Mass Ejections`,
 `Geomagnetic Storms`, `Solar Corona`, `Solar Flares`, `Solar Wind`, `X-ray emission`. CCSDSPy
 supports **no** science functionality for any phenomenon: it decodes a packet format. There is no
@@ -640,8 +569,6 @@ Fields 31 and 32. A documented empty field is the correct outcome; the field is 
 ### 23. Development Status (RECOMMENDED)
 `Active`
 
-*Status:* **ENRICHED** (was null). Confirmed against the live 8-row `RepoStatus` vocabulary; the bare
-term is recorded, with no repostatus.org description appended.
 *Source:* Matches the repostatus.org definition "reached a stable, usable state and is being actively
 developed" on every available signal:
 - `pyproject.toml` classifier `"Development Status :: 5 - Production/Stable"`.
@@ -659,11 +586,6 @@ developed" on every available signal:
 ### 24. Documentation (RECOMMENDED)
 `https://docs.ccsdspy.org/en/latest/`
 
-*Status:* **REPLACED.** HSSI stores the corrupted string
-`https://ccsdspy.readthedocs.io/en/latest/>`__.` — trailing reStructuredText hyperlink syntax
-(``>`__.``) leaked in when the value was scraped from README.rst's
-``here <https://ccsdspy.readthedocs.io/en/latest/>`__.`` construct, producing a URL that cannot
-resolve.
 *Source of the replacement:* The project's own canonical documentation host. Verified by request:
 `https://ccsdspy.readthedocs.io/en/latest/` **redirects**, and resolves successfully, to
 `https://docs.ccsdspy.org/en/latest/`, and the repository's GitHub `homepage` field is
@@ -679,9 +601,6 @@ this field's "documentation link including installation instructions".
 - **Organization:** National Aeronautics and Space Administration
 - **Funder Identifier:** `https://ror.org/027ka1x80`
 
-*Status:* **ENRICHED** (was an empty list). ROR verified: `027ka1x80` =
-"National Aeronautics and Space Administration" (acronyms NASA, NASA HQ). Recorded with the acronym
-expanded, per the field guidance "Avoid acronyms".
 *Source:* The only explicit funding statement anywhere in the repository is in CHANGELOG.rst, in the
 2.0.0 release entry: "Coinciding with this release is the release of SPaC-kit. **Funded through a
 ROSES High-Priority Open-Source Software award**, SPaC-kit extends the capabilities of ccsdspy to
@@ -704,15 +623,13 @@ award only to SPaC-kit's own record. Weighed and settled in favour of recording 
 ### 26. Award Title (OPTIONAL)
 Not found
 
-*Status:* **UNCHANGED** (was an empty list).
 *Source:* No award title or award number is published. CHANGELOG.rst refers only generically to "a
 ROSES High-Priority Open-Source Software award" — a solicitation-element description (NASA ROSES
 element F.15, "High Priority Open-Source Science"), not an award title. The repository has no
 acknowledgements section, no `FUNDING` file, and no grant number; a code search of the companion
 `CCSDSPy/SPaC-Kit` repository for `ROSES`, `award`, and `80NSSC` returns nothing. Recording a
 paraphrase of the changelog sentence as an "award title" would be fabrication, so this field is left
-empty. (Also note HSSI's `Award.name` field is capped at 128 characters, relevant if the user later
-supplies the real title.)
+empty.
 
 ---
 
@@ -726,7 +643,6 @@ supplies the real title.)
    Astronomical Data Analysis Software and Systems XXVIII (ADASS 2018), College Park, MD.
    https://adass2018.astro.umd.edu/abstracts/P7.2.html
 
-*Status:* **ENRICHED** (was an empty list).
 *Source:*
 - **Entry 1** is a publication that explicitly uses and credits this software, by one of its own
   authors. Found via a DataCite full-text query for `ccsdspy`; its abstract reads "Our packages
@@ -745,7 +661,6 @@ supplies the real title.)
 ### 28. Related Datasets (OPTIONAL)
 Not found
 
-*Status:* **UNCHANGED** (was an empty list).
 *Source:* CCSDSPy supports no specific published dataset — it is format-generic. The mission
 telemetry in the repository (`ccsdspy/tests/data/europa_clipper/`, `.../csa/apid00400.tlm`,
 `.../split/CYGNSS_F7_L0_2022_086_10_15_V01_F__first101pkts.tlm`, `.../hs/`) consists of unpublished
@@ -760,7 +675,6 @@ dataset".
 1. `https://doi.org/10.5281/zenodo.7735001` — **space_packet_parser**
    (repository: `https://github.com/lasp/space_packet_parser`)
 
-*Status:* **ENRICHED** (was an empty list).
 *Source and relevance:* space_packet_parser is a *similar-purpose, distinguishing* tool: an
 independent Python library for the same task — "A CCSDS telemetry packet decoding library based on
 the XTCE packet format description standard" (PyHC registry `_data/projects.yml`; identical GitHub
@@ -803,7 +717,6 @@ packages. The DOI recorded is the **active concept DOI** — DataCite reports
 ### 30. Interoperable Software (OPTIONAL)
 1. `https://github.com/CCSDSPy/SPaC-Kit` — **SPaC-Kit** (Space Packet as Code Kit)
 
-*Status:* **ENRICHED** (was an empty list).
 *Source and cited evidence of a demonstrated exchange* — this clears the Field 30 bar on three
 independent counts:
 - **A companion release announced by CCSDSPy itself.** CHANGELOG.rst, 2.0.0 entry: "Coinciding with
@@ -836,11 +749,9 @@ packages".
 ### 31. Related Instruments (OPTIONAL)
 Not found — **no instrument entries. Deliberate, documented omission at the relevance gate.**
 
-*Status:* **UNCHANGED** (was an empty list), now with reasoning recorded.
 
-*This is a relevance decision, not a resolution failure.* No entry reaches the SPASE resolution
-ladder, so there is **no ambiguity, no `NEEDS MANUAL RESOLUTION`, and no approval blocker** from this
-field.
+
+*This is a relevance decision, not a resolution failure.*
 
 *Reasoning:*
 1. **CCSDSPy contains no instrument-specific code of any kind.** No instrument name, APID table,
@@ -874,11 +785,8 @@ field.
    instrument's science software, not a generic packet library; and someone working with a given
    instrument's science data would not reach for CCSDSPy.
 
-*Due diligence on the vocabulary (so the omission is a choice, not an inability):* the live
-`http://localhost/api/models/InstrumentObservatory/rows/all/` list was fetched to file
-(7,648 rows; **0** rows failing the `identifier.startswith("https://spase-metadata.org/")` guard, so
-no drift or agent-created rows to report) and filtered locally. Resolvable rows do exist for six of
-the ten "Used By" missions — for example instrument rows `Narrow Field Imager`
+*Vocabulary due diligence:* resolvable SPASE rows exist for six of the ten "Used By" missions — for
+example instrument rows `Narrow Field Imager`
 (`https://spase-metadata.org/NASA/Instrument/PUNCH/NFI`) and four `Solar Ultraviolet Imager` rows
 (`.../NOAA/Instrument/GOES/{16,17,18,19}/SUVI`) — and none exist for Europa Clipper, the Canadian
 Space Agency, PACE, or SPHEREx. They are omitted on relevance, not because they could not be
@@ -897,7 +805,7 @@ instrument/observatory vocabulary can represent it. It is therefore an omission 
 ### 32. Related Observatories (OPTIONAL)
 Not found — **no observatory entries. Deliberate, documented omission at the relevance gate.**
 
-*Status:* **UNCHANGED** (was an empty list), now with reasoning recorded.
+
 
 *Source:* The five-point analysis under Field 31 applies unchanged at the mission/observatory level.
 CCSDSPy directly works with no *specific* mission's data products, implements no mission's
@@ -925,71 +833,8 @@ guidance treats as a correct outcome.
 ### 33. Logo (OPTIONAL)
 `https://docs.ccsdspy.org/en/latest/_static/logo.png`
 
-*Status:* **ENRICHED** (was an empty string).
 *Source:* Two independent sources agree, and the URL was verified to resolve and serve the image. The curated
 PyHC registry lists exactly `logo: https://docs.ccsdspy.org/en/latest/_static/logo.png` for CCSDSPy,
 and the asset exists in the repository at `docs/_static/logo.png`, published to the project's
 canonical documentation host (see Field 24) and referenced by `docs/_templates/logo.html`. This is a
 permanent, publicly accessible location, as the field requires.
-
----
-
-## Summary of changes relative to the stored HSSI record
-
-| # | Field | Change | Basis |
-|---|-------|--------|-------|
-| 2 | Persistent Identifier | UNCHANGED | Verified as the Zenodo concept DOI |
-| 3 | Code Repository | UNCHANGED | Verified live |
-| 4 | Software Functionality | **ENRICHED** 2 → 8 | Code/docs evidence per value; all parents present |
-| 5 | Related Region | **ENRICHED** 2 → 6 | PyHC curated keywords, all three sub-terms |
-| 6 | Authors | **ENRICHED** (5 authors retained, 1 affiliation added) | LASP affiliation from the Zenodo `creators` string; ORCID + ROR re-verified |
-| 7 | Software Name | UNCHANGED | — |
-| 8 | Description | **ENRICHED** (expanded; stored text kept verbatim as the opening) | README, docs, source |
-| 9 | Concise Description | UNCHANGED (128 chars) | Now a genuine preview of the expanded Field 8 |
-| 10 | Publication Date | **REPLACED** | 2023-04-12 was the DOI minting date; first publication was PyPI 0.0.7 on 2017-06-29 |
-| 11 | Publisher | UNCHANGED | — |
-| 12 | Version | **REPLACED** (all 4 sub-fields) | 1.1.0 → 2.0.0 / 2026-06-10; real release notes; no version DOI exists |
-| 13 | Programming Language | UNCHANGED | — |
-| 14 | Reference Publication | UNCHANGED (none) | No DOI'd paper exists |
-| 15 | License | **REPLACED** | LICENSE.rst has the 3rd BSD clause; Zenodo autofill was wrong |
-| 16 | Keywords | **ENRICHED** 8 → 20 | pyproject + PyHC + repo; all pre-existing rows |
-| 17 | Data Sources | **ENRICHED** 0 → 1 | Local files only → `Other` |
-| 18 | Input File Formats | **ENRICHED** 0 → 2 | CCSDS binary → `Other`; CSV definitions → `csv` |
-| 19 | Output File Formats | **ENRICHED** 0 → 1 | CCSDS binary → `Other` |
-| 20 | Operating System | **ENRICHED** 0 → 4 | Trove classifier + CI |
-| 21 | CPU Architecture | **ENRICHED** 0 → 4 | Pure Python sdist + CI |
-| 22 | Related Phenomena | UNCHANGED (empty) | Phenomenon-agnostic; documented omission |
-| 23 | Development Status | **ENRICHED** null → `Active` | Classifier, 2.0.0, post-release commits |
-| 24 | Documentation | **REPLACED** | Stored value had leaked RST syntax and cannot resolve |
-| 25 | Funder | **ENRICHED** 0 → 1 | CHANGELOG ROSES award; retained by user decision |
-| 26 | Award Title | UNCHANGED (none) | No title or number published |
-| 27 | Related Publications | **ENRICHED** 0 → 2 | DASH 2023 presentation DOI; ADASS 2018 poster |
-| 28 | Related Datasets | UNCHANGED (none) | Test fixtures are not published datasets |
-| 29 | Related Software | **ENRICHED** 0 → 1 | space_packet_parser (similar-purpose peer) |
-| 30 | Interoperable Software | **ENRICHED** 0 → 1 | SPaC-Kit (companion + plugin architecture) |
-| 31 | Related Instruments | UNCHANGED (empty) | Relevance gate; documented omission, no blocker |
-| 32 | Related Observatories | UNCHANGED (empty) | Relevance gate; documented omission, no blocker |
-| 33 | Logo | **ENRICHED** empty → 1 | PyHC-curated URL, verified reachable |
-
-**No stored value was dropped, and no open decisions remain.** All four items that had been
-surfaced for the user were decided on **2026-07-30**:
-
-- **Field 6** — the `Laboratory for Atmospheric and Space Physics` affiliation (`https://ror.org/01fcjzv38`)
-  **was added** to author 5, on the basis that Zenodo's `creators` entry names both institutions and
-  HSSI had stored only one of them.
-- **Field 6** — the uncredited git contributors **were not added**, because no authoritative source
-  credits them as authors and commit history is contribution rather than authorship. The list is kept
-  in the file as the audit trail.
-- **Field 10** — `2023-04-12` **was replaced** with `2017-06-29`, the first public release, because the
-  stored value was the date the DOI was minted rather than a publication date for the initial version.
-- **Field 25** — the `National Aeronautics and Space Administration` funder entry **was retained**,
-  with the SPaC-kit grammatical-subject nuance preserved as evidence.
-
-Validator findings resolved in the same pass: `Earth Lower and Middle Atmosphere` added to Field 5 so
-all three sub-terms of PyHC's compound keyword are treated consistently; the Fields 31/32
-due-diligence text corrected to name the Canadian Space Agency (one of the ten "Used By" entries,
-absent from the vocabulary because it is an agency rather than a mission) in place of CYGNSS (a
-regression fixture, never a "Used By" entry); all four `Solar Ultraviolet Imager` rows now cited;
-`MattyG` added to the contributor audit trail; the declined Field 16 keywords and the structural
-cause of the missing Field 12 version DOI both recorded. Neither Field 31 nor Field 32 changed
-value — both remain correctly empty.
