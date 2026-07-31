@@ -36,12 +36,13 @@ Full validation is the default. Use a focused recheck only when the same file an
 - Recheck the changed fields against their primary evidence and confirm that the user's chosen values were written exactly.
 - Carry forward unaffected findings from the prior report; a focused recheck cannot erase an unresolved ERROR elsewhere.
 - Do not rerun extraction, SoMEF, or unrelated completeness searches.
+- When the recheck is the last one before the file is finalized to `PASS`, run **Phase 5 over the whole document**, not just the changed fields — stale decision scaffolding and run narration are usually somewhere other than the fields the user just changed. This recheck happens on every full refresh, so **the changed-field set may legitimately be empty**; when it is, Phase 5 plus the header and structural checks is the entire recheck, and that is a complete, reportable validation rather than a no-op to skip.
 
 ---
 
 ## Validation Process
 
-Execute these four phases in order. Be thorough — check every field.
+Execute these five phases in order. Be thorough — check every field. Phase 5 runs only when the file is being finalized to `PASS`.
 
 ### Phase 1: Structural Validation
 
@@ -242,6 +243,38 @@ Actively look for metadata the extractor might have missed:
 
 6. **Verify "Not found" fields** — for each field marked "Not found", spend a moment confirming it truly cannot be determined from available sources
 
+### Phase 5: Canonical State
+
+`hssi_metadata.md` is a durable metadata dossier, not a report of the run that produced it — see *The Canonical Metadata File* in the orchestrator's instructions. **Run this phase only when the file is being finalized to `PASS`** (the orchestrator says so, or the file's header already claims `PASS`). While the header says `Pending`, the file is a working document and everything below is legitimate; do not raise these findings.
+
+**Read the keep-list first. It governs.**
+
+A passage is durable, and you must **not** flag it at any severity, if removing it would make it harder for a future agent to determine the correct value or to avoid re-proposing a value that was already rejected. That includes:
+
+- authoritative evidence and the reasoning behind a value;
+- alternatives considered and rejected, with their reasons — "Considered and rejected", "Considered and not selected", "Considered and excluded" are the file working as intended;
+- previous incorrect values and why they were corrected, including an earlier HSSI value and the evidence that superseded it;
+- documented omissions and the reason for them;
+- negative research (a candidate investigated, found unsupported, and recorded so nobody repeats the search);
+- durable upstream limitations or follow-ups — including that an API limitation blocks a correction, so a future agent should not re-propose it;
+- settled user decisions expressed as final rationale;
+- scope and caveat notes that change how the evidence should be read.
+
+**Two ERROR classes**, and only these two:
+
+1. **Unsettled decision language in a file going to `PASS`.** Text that asks for, awaits, or defers a decision — "pending user decision", "needs approval", "do not submit without approval", "flagged for user decision", "proposed addition", "add it if the user prefers". `Suggested fix: rewrite as the settled outcome and the reason for it, or remove.` A `PASS` header and an open question cannot coexist.
+2. **Run-execution narration.** Text whose only content is how a run reached the result: PREPARE/EXECUTE, PATCH or roundtrip narration; target URLs, HTTP statuses, request counts; payload, baseline, preflight, checkpoint or retry mechanics; internal HSSI database row identifiers and table behavior; approval requests and conversational history; per-field workflow disposition labels and their legends (`Status: UNCHANGED`, `ENRICHED`, `REPLACED`, `NEWLY FILLED`, `MATCH`, `[HSSI]`/`[NEW]`/`[CHANGED]`); controlled-vocabulary row counts cited as a receipt that a check was performed; and change-summary sections describing what the pass altered. `Suggested fix: remove — this belongs in the run's report, not the canonical file.`
+
+**Judge by purpose, not vocabulary.** The same words can fall on either side:
+
+- Enumerating a controlled vocabulary **as the reason a field is correctly empty** ("the live `Phenomena` vocabulary has exactly these 7 rows, none of which applies") is durable evidence — keep. "Confirmed against the live 17-row `DataInput` vocabulary" is a receipt — remove.
+- "Considered and rejected because the repository contains no evidence" is durable — keep. "Recorded so the user can decide whether to add it" is scaffolding — flag under class 1.
+- Words like *considered*, *excluded*, *previously*, *superseded*, and references to an earlier HSSI value are normal in a healthy file. Never flag one on the strength of the word alone.
+
+**Carve-outs.** The software's own **HSSI Software ID** in the provenance header is durable identity, as are SPASE identifiers, DOIs, RORs, ORCIDs and repository URLs. Never flag these as internal identifiers.
+
+**Tie-break.** If a passage is arguably either durable rationale or run narration, it is **not** an ERROR — raise it as a SUGGESTION or leave it. Length alone is never a finding: a long file dense with evidence and rejected alternatives is a correct outcome, and "this could be shorter" is not a canonical-state defect.
+
 ---
 
 ## Output Format
@@ -255,6 +288,7 @@ Produce your report in this exact format:
 **Repository:** [path or URL]
 **Validation Date:** [YYYY-MM-DD]
 **Validation Scope:** [FULL / FOCUSED — Fields NN, NN]
+**Canonical State:** [CLEAN / NEEDS FINALIZATION — Phase 5 ERROR count, or NOT CHECKED if the file is still Pending]
 
 ---
 
@@ -328,4 +362,5 @@ A file NEEDS REVISION if there are any ERRORS. Warnings alone do not fail valida
 6. **Respect source priority.** If the metadata cites PyHC as a source, that takes precedence over SoMEF. The priority order is: PyHC > DataCite/Zenodo > Repository files > SoMEF > Code analysis.
 7. **Report the total count** of fields that passed validation, not just problems. The user should see that 28/33 fields passed, not just 5 issues.
 8. **Respect carried-over submitted values without weakening validation.** Lack of repository corroboration alone is not an ERROR when a value was seeded from the existing HSSI record or prior canonical file. Preserve subjective wording unless primary evidence shows it is factually wrong, materially incomplete, or misleading; a stylistic rewrite is not an improvement by default. This exception never excuses a missing mandatory value, malformed or unresolved identifier/URL, controlled-vocabulary miss, schema violation, cross-field inconsistency, or active contradiction from authoritative evidence — classify those at their normal severity.
-9. **Validate the final decision state.** A report on initial extracted candidates does not validate later user choices. If the user changes the file during reconciliation, perform a focused recheck before an update plan is approvable. Only the final user-approved file may be marked with a completed Validation Date and `Validation Status: PASS`; otherwise leave both validation header values `Pending`.
+9. **Validate the final decision state.** A report on initial extracted candidates does not validate later user choices. If the user changes the file during reconciliation, perform a focused recheck before an update plan is approvable. Only the final user-approved file may be marked with a completed Validation Date and `Validation Status: PASS`; otherwise leave both validation header values `Pending`. `PASS` additionally requires that **Phase 5 found no ERRORs** — a file that still reads as a working document is not canonical, however correct its values are.
+10. **Judge canonical state by purpose, never by vocabulary.** Phase 5 exists to remove one run's execution history while preserving the metadata's reasoning history. Do not maintain or apply a forbidden-word list; the presence of a term like *considered*, *excluded*, *previously*, or *rejected* is at least as likely to mark durable rationale as cruft. When in doubt, keep.
