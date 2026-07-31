@@ -60,9 +60,9 @@ Your deliverable is `hssi_metadata.md` saved in the repo's root.
 
 **What this file is.** It is a durable metadata dossier — the record a future agent reads to understand, defend, or correctly maintain this software's HSSI metadata. It is not a report of your run. (The `# HSSI Metadata Extraction Results` heading below is historical and does not describe the file's purpose; keep it for consistency with existing files.) Write every note for a reader who was not present for this extraction and does not care how it was performed. The orchestrator's *The Canonical Metadata File* section states the full contract; the finalization rules below are your part of it.
 
-The provenance header's fields already record the UUID, repository, source revision, and extraction/validation dates, so no paragraph restating them is required. A brief orientation or **scope note is worth adding when it changes how the evidence should be read** — for example, that a repository pins its components as submodules that were never checked out, so the evidence is drawn from the top level only. A paragraph describing which record seeded the file or how the run proceeded is not. An acceptable minimal form, when one helps:
+The provenance header's fields already record the UUID, repository, source revision, and extraction/validation dates, so no paragraph restating them is required. In particular, leave validation state to the header's `Validation Status` — prose must not claim the file is validated, since the prose is written before validation runs. A brief orientation or **scope note is worth adding when it changes how the evidence should be read** — for example, that a repository pins its components as submodules that were never checked out, so the evidence is drawn from the top level only. A paragraph describing which record seeded the file or how the run proceeded is not. An acceptable minimal form, when one helps:
 
-> This canonical file records the validated HSSI state as of `<date>`. It was reconciled against the pinned source revision and authoritative external sources.
+> This canonical file records the HSSI metadata for `<name>` as of `<date>`, reconciled against the pinned source revision and authoritative external sources.
 
 The file's shape:
 

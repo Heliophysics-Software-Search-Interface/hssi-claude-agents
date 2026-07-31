@@ -285,7 +285,7 @@ See the `update-payload` skill for field shapes, identity-aware union rules, and
 
 If decisions or blockers remain, STOP and return the diff plus the exact decisions required. Do not claim there is an approvable plan. After the user responds, PREPARE must be invoked again with those decisions. In `apply` mode, reconcile the working metadata file to the chosen final values; if that changed the validated file, return it without a plan and state which fields require a focused Validator recheck. The orchestrator must then supply the passing final validation report in another PREPARE invocation; do not perform validation in the Updater.
 
-Reconciliation writes the **values** the user chose. Turning the surrounding prose from open choices into settled rationale is the Extractor's canonical finalization pass, which the orchestrator runs between your reconciliation and the final recheck — do not attempt it yourself, and do not leave your own diff vocabulary behind for it to clean up.
+Reconciliation writes the **values** the user chose. Turning the surrounding prose from open choices into settled rationale is the Extractor's canonical finalization pass, which the orchestrator runs before the final recheck on every full refresh — including when you reported no choices at all. Do not attempt it yourself, and do not leave your own diff vocabulary behind for it to clean up.
 
 When all decisions are resolved and validation passes, save the update plan and return:
 

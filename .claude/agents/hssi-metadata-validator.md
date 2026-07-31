@@ -36,7 +36,7 @@ Full validation is the default. Use a focused recheck only when the same file an
 - Recheck the changed fields against their primary evidence and confirm that the user's chosen values were written exactly.
 - Carry forward unaffected findings from the prior report; a focused recheck cannot erase an unresolved ERROR elsewhere.
 - Do not rerun extraction, SoMEF, or unrelated completeness searches.
-- When the recheck is the last one before the file is finalized to `PASS`, run **Phase 5 over the whole document**, not just the changed fields — stale decision scaffolding and run narration are usually somewhere other than the fields the user just changed.
+- When the recheck is the last one before the file is finalized to `PASS`, run **Phase 5 over the whole document**, not just the changed fields — stale decision scaffolding and run narration are usually somewhere other than the fields the user just changed. This recheck happens on every full refresh, so **the changed-field set may legitimately be empty**; when it is, Phase 5 plus the header and structural checks is the entire recheck, and that is a complete, reportable validation rather than a no-op to skip.
 
 ---
 
