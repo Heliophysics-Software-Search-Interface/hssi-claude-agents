@@ -273,6 +273,10 @@ Build the update plan only when every user decision is resolved and every hard b
 ```
 
 `blockers` must be an empty array for an executable plan. A plan with blockers may be saved for diagnosis, but it is not approvable or executable. The update plan is operational state, not canonical metadata: never commit it or copy its target/baseline/PATCH data into `hssi_metadata.md`.
+
+**More generally — `hssi_metadata.md` is a durable metadata dossier, not a record of your run.** See *The Canonical Metadata File* in the orchestrator's instructions. When you reconcile the working metadata file in `apply` mode, you may change **field values and the rationale that supports them, and nothing else.** Never write into that file: diff status labels (`MATCH`, `STALE`, `ENRICHMENT`, `CONFLICT`, `HSSI-ONLY`, `NON-PATCHABLE`) or any per-field disposition legend; target URLs, HTTP statuses, or `fieldsUpdated`; baseline, preflight, checkpoint, retry or roundtrip narration; update-plan contents; internal HSSI database row identifiers or table behavior; or a summary table of what this pass changed. Every one of those belongs in your return to the orchestrator, which relays it to the user.
+
+Recording *why* a value is what it is — the evidence, the alternatives you rejected, the earlier value you superseded and what proved it wrong — is not narration and is welcome. The line is purpose: reasoning about the metadata stays, mechanics of the run do not.
 Record the actual Updater mode in `mode`; the file-driven pipeline shown above uses `apply`, while the other supported workflows use `refresh`, `enrich`, or `targeted`.
 
 See the `update-payload` skill for field shapes, identity-aware union rules, and the complete update-plan contract.
@@ -280,6 +284,8 @@ See the `update-payload` skill for field shapes, identity-aware union rules, and
 ### Step 7: Return for Approval (PREPARE mode endpoint)
 
 If decisions or blockers remain, STOP and return the diff plus the exact decisions required. Do not claim there is an approvable plan. After the user responds, PREPARE must be invoked again with those decisions. In `apply` mode, reconcile the working metadata file to the chosen final values; if that changed the validated file, return it without a plan and state which fields require a focused Validator recheck. The orchestrator must then supply the passing final validation report in another PREPARE invocation; do not perform validation in the Updater.
+
+Reconciliation writes the **values** the user chose. Turning the surrounding prose from open choices into settled rationale is the Extractor's canonical finalization pass, which the orchestrator runs between your reconciliation and the final recheck — do not attempt it yourself, and do not leave your own diff vocabulary behind for it to clean up.
 
 When all decisions are resolved and validation passes, save the update plan and return:
 
@@ -324,7 +330,7 @@ Send only the nested `patch`, not the update-plan wrapper.
 1. Re-fetch `GET <targetUrl>/api/view/software/<softwareId>/`
 2. For each field in `patch`, confirm the approved final value is reflected
 3. Confirm no field outside `patch` was reported as updated
-4. Return the verified live values and working metadata-file path so the orchestrator can confirm Fields 2–33 match the approved final state before saving the canonical file
+4. Return the verified live values and working metadata-file path so the orchestrator can confirm Fields 2–33 match the approved final state before saving the canonical file. Report roundtrip results **to the orchestrator only** — never write them into `hssi_metadata.md`
 5. Report any discrepancy as a failed verification; do not retry the PATCH
 
 This is simpler than submit verification — only check the fields we changed.
@@ -366,6 +372,7 @@ Present a summary:
 9. **Production leaves no version-control trail** — before any direct production PATCH, stop, warn that it won't be captured in version control (and will be overwritten by the next CSV import), and recommend the CSV-PR workflow in the `production-csv-update` skill. Proceed with a direct prod PATCH only if the user insists after being informed. Localhost is exempt.
 10. **Approved baseline is immutable** — if live HSSI changed after PREPARE, abort and rebuild the plan; never alter an approved PATCH in EXECUTE.
 11. **Transient plans are not canonical** — keep update plans under gitignored `payloads/`; never commit them.
+12. **`hssi_metadata.md` carries metadata, not run mechanics** — when reconciling it, change field values and their supporting rationale only. Diff labels, target URLs, HTTP results, plan contents, database row identifiers, and roundtrip narration go in your return to the orchestrator, never into the file.
 
 ---
 

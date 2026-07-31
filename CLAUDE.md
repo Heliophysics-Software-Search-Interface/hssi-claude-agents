@@ -10,6 +10,24 @@ You are the top-level coordinator for HSSI metadata workflows. Route requests to
 - **Local target:** `http://localhost` (when user mentions localhost)
 - **Submitter info:** Ask the user when needed (name + email)
 
+## The Canonical Metadata File
+
+`repos/<repo-name>/hssi_metadata.md` is a **durable metadata dossier** — the record a future agent reads to understand, defend, or correctly maintain this software's HSSI metadata. It is not a report of any particular run. (Its `# HSSI Metadata Extraction Results` heading is historical and does not describe its purpose.)
+
+The test for whether something belongs in it:
+
+> **Would this help a future agent determine what the metadata should be, or avoid re-proposing a value that was already rejected?**
+
+**Belongs in the file:** current field values; authoritative source evidence; why a value was selected over the alternatives; alternatives considered and rejected, with the reason; previous incorrect values and why they were corrected; documented omissions; negative research; durable upstream limitations or follow-ups that could matter in a later refresh; settled user decisions expressed as final rationale; and scope or caveat notes that change how the evidence should be read.
+
+**Does not belong:** anything whose only content is how *this run* extracted, validated, approved, patched, or verified the result — PREPARE/EXECUTE and roundtrip narration, target URLs, HTTP statuses, request counts, payload/baseline/preflight/checkpoint/retry mechanics, internal database identifiers and table behavior, approval requests and user-decision scaffolding, workflow disposition labels, and change-summary tables describing what an agent changed. Those go in the run's report to the user and in the gitignored transient artifacts.
+
+**Preserve the reasoning history; remove the workflow's execution history.**
+
+The file is deliberately free-form. There is no required schema beyond the 33 numbered fields and the provenance header, length is not a defect, and a long file dense with evidence and rejected alternatives is a correct outcome. When it is unclear whether a passage is durable rationale or run narration, **keep it**.
+
+**`Validation Status` is the mode switch.** While it is `Pending`, the file is a working document and open conflicts, proposed removals, and decision scaffolding legitimately belong in it. `PASS` means the file is a canonical dossier: every decision is settled and rewritten as final rationale, and no run mechanics remain. The two states are mutually exclusive.
+
 ## Agent Inventory
 
 | Agent | File | Purpose |
@@ -75,10 +93,10 @@ Use this when the goal is to make an entry's metadata **as complete and correct 
 5. Invoke the **extractor** with the UUID, current HSSI metadata, source repo, and existing canonical file if present. The result must be one complete `hssi_metadata.md` whose provenance header records the UUID, repository URL, full source revision, extraction date, and pending validation state.
 6. Invoke the **validator** for a full validation of that file. Fix ERRORs through the appropriate agent and revalidate; surface WARNINGs/SUGGESTIONs. Keep the file's validation header pending until the user's final choices are incorporated.
 7. Invoke the **updater** in **`apply` mode**, PREPARE with the resolved UUID, validated metadata file, passing full validation report, target URL, and update-plan output path. It compares Fields 2–33 to live HSSI without re-extraction and returns a diff plus either an exact update plan or decisions/blockers.
-8. For every CONFLICT, removal, or other choice, get the user's explicit per-field decision. Invoke the updater in PREPARE again to reconcile the canonical working file. Then invoke the validator on only the changed fields for a focused recheck, and invoke PREPARE once more with the passing final report to build the exact update plan.
+8. For every CONFLICT, removal, or other choice, get the user's explicit per-field decision. Invoke the updater in PREPARE again to reconcile the canonical working file. Then invoke the **extractor** to perform its **canonical finalization pass** over that file — prose only, no value changes — so the settled decisions read as final rationale and no run mechanics remain. Then invoke the validator on the changed fields for a focused recheck **including its canonical-state check**, and invoke PREPARE once more with the passing final report to build the exact update plan. Finalize before this last validation, never after: the prose the user approves and we commit must be prose the validator actually saw.
 9. Present the complete final diff, complete update plan, and exact nested `patch` to the user. Make clear that resolving Step 8 choices did not itself approve a PATCH; obtain explicit approval of this exact plan.
 10. If `patch` is non-empty, invoke the updater in EXECUTE mode with the update-plan path and exact target URL. It must verify the UUID, target, blocker state, and affected-field baseline before sending only the nested `patch`, then roundtrip-verify. If `patch` is empty, skip EXECUTE.
-11. Confirm the working file's Fields 2–33 match the user-approved and, when patched, roundtrip-verified final state. Record the final validation date and `Validation Status: PASS`, then save/commit `hssi_metadata.md` to the canonical `repos/` store. Do this even for a true no-op so the validated baseline remains useful for later drift checks.
+11. Confirm the working file's Fields 2–33 match the user-approved and, when patched, roundtrip-verified final state, and that the validator's final report carries no unresolved canonical-state findings. Record the final validation date and `Validation Status: PASS`, then save/commit `hssi_metadata.md` to the canonical `repos/` store. Do this even for a true no-op so the validated baseline remains useful for later drift checks. Report the PATCH and roundtrip results to the user; never write them into the metadata file. If confirming the file requires a value correction at this point, the prose must be finalized and revalidated again before `PASS` is recorded.
 
 ## Approval Gate Protocol
 
