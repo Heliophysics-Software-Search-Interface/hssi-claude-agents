@@ -132,6 +132,17 @@ These differences are expected between submitted and stored forms:
    - Classify as Match, Equivalent, or Degraded/Lost
 3. Any **Degraded/Lost** field is a verification failure unless the user explicitly accepts it
 
+### Secondary Representation Checks
+
+When the public representation is available:
+
+- Treat display decorations as representations, not stored values. A view may combine fields (for
+  example, prefixing a version with the software name) or append an abbreviation; verify the
+  underlying structured fields before classifying the difference as drift.
+- Check related-item semantic types non-vacuously. Inspect the actual JSON-LD `mentions` entries and
+  confirm datasets emit `Dataset`, software emits `SoftwareSourceCode`, and publications emit
+  `ScholarlyArticle`; an empty result is not a passing check.
+
 ---
 
 ## Troubleshooting

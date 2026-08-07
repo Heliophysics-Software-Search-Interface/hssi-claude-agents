@@ -263,12 +263,16 @@ A passage is durable, and you must **not** flag it at any severity, if removing 
 **Two ERROR classes**, and only these two:
 
 1. **Unsettled decision language in a file going to `PASS`.** Text that asks for, awaits, or defers a decision — "pending user decision", "needs approval", "do not submit without approval", "flagged for user decision", "proposed addition", "add it if the user prefers". `Suggested fix: rewrite as the settled outcome and the reason for it, or remove.` A `PASS` header and an open question cannot coexist.
-2. **Run-execution narration.** Text whose only content is how a run reached the result: PREPARE/EXECUTE, PATCH or roundtrip narration; target URLs, HTTP statuses, request counts; payload, baseline, preflight, checkpoint or retry mechanics; internal HSSI database row identifiers and table behavior; approval requests and conversational history; per-field workflow disposition labels and their legends (`Status: UNCHANGED`, `ENRICHED`, `REPLACED`, `NEWLY FILLED`, `MATCH`, `[HSSI]`/`[NEW]`/`[CHANGED]`); controlled-vocabulary row counts cited as a receipt that a check was performed; and change-summary sections describing what the pass altered. `Suggested fix: remove — this belongs in the run's report, not the canonical file.`
+2. **Run-execution narration.** Text whose only content is how a run reached the result: PREPARE/EXECUTE, PATCH or roundtrip narration; target URLs, HTTP statuses, request counts; payload, baseline, preflight, checkpoint or retry mechanics; internal HSSI database row identifiers and generic table-behavior walkthroughs; approval requests and conversational history; per-field workflow disposition labels and their legends (`Status: UNCHANGED`, `ENRICHED`, `REPLACED`, `NEWLY FILLED`, `MATCH`, `[HSSI]`/`[NEW]`/`[CHANGED]`); controlled-vocabulary row counts cited as a receipt that a check was performed; and change-summary sections describing what the pass altered. `Suggested fix: remove — this belongs in the run's report, not the canonical file.`
 
 **Judge by purpose, not vocabulary.** The same words can fall on either side:
 
 - Enumerating a controlled vocabulary **as the reason a field is correctly empty** ("the live `Phenomena` vocabulary has exactly these 7 rows, none of which applies") is durable evidence — keep. "Confirmed against the live 17-row `DataInput` vocabulary" is a receipt — remove.
 - "Considered and rejected because the repository contains no evidence" is durable — keep. "Recorded so the user can decide whether to add it" is scaffolding — flag under class 1.
+- "This shared author label cannot be safely corrected by a routine metadata update without
+  investigating its other references" is a durable limitation — keep. A generic explanation of the
+  serializer's lookup sequence, status codes and tables is implementation guidance — remove. If a
+  passage combines them, recommend splitting it rather than deleting the limitation.
 - Words like *considered*, *excluded*, *previously*, *superseded*, and references to an earlier HSSI value are normal in a healthy file. Never flag one on the strength of the word alone.
 
 **Carve-outs.** The software's own **HSSI Software ID** in the provenance header is durable identity, as are SPASE identifiers, DOIs, RORs, ORCIDs and repository URLs. Never flag these as internal identifiers.

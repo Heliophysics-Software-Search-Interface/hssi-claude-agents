@@ -94,6 +94,10 @@ Content-Type: application/json
 - Top-level M2M associations such as `authors`, `funder`, `award`, `relatedInstruments`, and `relatedObservatories` are replaced by the complete submitted list.
 - People, organizations, awards, instruments, and observatories are shared database entities. When an identifier matches an existing entity, PATCH reuses it and does **not** overwrite its nonblank name. Identity matching therefore prevents duplicates but does not make a conflicting label equivalent or patchable.
 - Author affiliations are added to the matched Person; the endpoint does not remove existing affiliations. Union affiliations for matched authors. Treat any requested affiliation removal as NON-PATCHABLE.
+- Publications, datasets and software share `RelatedItem` rows matched by identifier alone. Reusing an
+  identifier does **not** change the row's existing semantic `type`; moving a URL between relation
+  fields can therefore leave JSON-LD with the old type. Treat the type correction as NON-PATCHABLE
+  and verify the serialized type independently.
 - Omit shared-entity renames and nested affiliation removals from the PATCH and report them as hard blockers requiring the CSV/manual database workflow. Top-level association removals are still supported when the user approves the complete replacement list.
 
 ### GET /api/list/software/?repo_url=<url> — Software Lookup

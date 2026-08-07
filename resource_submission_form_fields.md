@@ -30,11 +30,11 @@ table and no fuzzy matching. A value that is one character off — a missing tra
 straight quote where the row has a curly one — raises `ValidationError: Unknown value` and fails the
 entire submission. Case is the only difference that is forgiven.
 
-**Vocabularies can differ between targets.** As of the 2026-07-29 audit every vocabulary was
-identical between `https://hssi.hsdcloud.org` and `http://localhost` **except `License`**, where
-production still carries three legacy duplicate rows that localhost has retired (see Field 15).
-Never assume a value that worked on one target exists on the other — and never treat an extra row on
-one side as automatically the correct value.
+**Vocabularies can differ between targets.** As of the 2026-08-06 audit, the closed vocabularies are
+identical between `https://hssi.hsdcloud.org` and `http://localhost` except `License` and `DataInput`:
+production still carries three legacy duplicate License rows and one junk DataInput row that
+localhost has retired (see Fields 15 and 17). Never assume a value that worked on one target exists
+on the other — and never treat an extra row on one side as automatically the correct value.
 
 **Only Keywords (Field 16) is an open vocabulary** — `_get_or_create_keyword` creates missing rows.
 Every other list rejects unknown values.
@@ -355,7 +355,7 @@ Note the exact spellings: **`Javascript`** (not `JavaScript`) and **`Typescript`
 - **License** (RECOMMENDED): License name
 - **License URI** (RECOMMENDED): URI of the license (auto-populated for SPDX licenses)
 
-**Possible Values** — *11 canonical values, snapshot 2026-07-29. Live `/api/models/License/rows/all/` is authoritative. **Row counts differ by target**: `http://localhost` has these 11; `https://hssi.hsdcloud.org` additionally carries 3 legacy duplicate rows (see below) — use the canonical name on either target.*
+**Possible Values** — *11 canonical values, snapshot 2026-08-06. Live `/api/models/License/rows/all/` is authoritative. **Row counts differ by target**: `http://localhost` has these 11; `https://hssi.hsdcloud.org` additionally carries 3 legacy duplicate rows (see below) — use the canonical name on either target.*
 
 This is a **closed** list despite the "copy the SPDX title" instruction above: the serializer does
 `License.objects.filter(name__iexact=<value>)` and raises `Unknown license` on no match. An SPDX
@@ -389,8 +389,7 @@ title that is not a row below will be rejected — use `Other` instead.
 
   Sending a legacy name to localhost returns a 400 — correctly, because the canonical row is the one
   to use. When diffing a production record, a stored legacy value is **drift to correct**, not a
-  value to preserve: prod's `regularizePSF` carried the LGPL-3 legacy name and was reconciled to
-  `GNU Lesser General Public License v3.0 only` during the #57 campaign.
+  value to preserve.
 
 ---
 
@@ -441,7 +440,7 @@ rather than minting a near-duplicate.
 
 **How to fill it:** Select all data input sources the software supports. If a source is not listed, select 'Other'. If observatory-specific, select 'observatory-specific' and indicate the observatory/mission name in the Related Observatory field.
 
-**Possible Values** — *17 values, snapshot 2026-07-29. Live `/api/models/DataInput/rows/all/` is authoritative. **Row counts differ by target**: `http://localhost` has these 17; `https://hssi.hsdcloud.org` still carries an 18th junk row pending the end-of-campaign import (see below).*
+**Possible Values** — *17 values, snapshot 2026-08-06. Live `/api/models/DataInput/rows/all/` is authoritative. **Row counts differ by target**: `http://localhost` has these 17; `https://hssi.hsdcloud.org` still carries the junk row described below.*
 
 - AMDA
 - CDAWeb
@@ -468,11 +467,9 @@ rather than minting a near-duplicate.
   The row is otherwise genuine — it carries the canonical `…/DataSources#VSO` identifier.
 - **`Other - https://xrt.cfa.harvard.edu/level1/` — never emit this.** A free-text "Other" value that
   leaked into the controlled vocabulary; it carries no identifier and was selectable in the live
-  submission form. **Removed from `http://localhost` on 2026-07-29** (checkpoints
-  `2026-07-29-{pre,post}-datainput-junkrow-removal`), and still present on production until the
-  end-of-campaign seed-CSV import. Its only user was XRTpy `a74cb76b`, whose remaining
-  `Observatory/Mission-specific` + `HTTP/HTTPS Directories` convey the same meaning. If you meet it
-  on a production record, treat it as **drift to correct**, not a value to preserve.
+  submission form. As of the snapshot above it is absent from `http://localhost` but still present on
+  `https://hssi.hsdcloud.org`. If you meet it on any stored record, treat it as **drift to correct**,
+  not a value to preserve.
 - **`AMDA`, `GFZ`, `Madrigal`, and `WDC` have empty `identifier` fields**, unlike every other row.
   They appear to be legitimate later additions rather than artifacts, and are safe to select.
 

@@ -31,7 +31,9 @@ Sync the reference files with the latest HSSI API source **and** the live contro
 
 ### A1. Fetch every vocabulary from **both** targets
 
-Prod and localhost can and do diverge — at the 2026-07-29 audit `License` had two prod-only rows. Always check both; the authority for any given operation is the target actually in play.
+Prod and localhost can and do diverge — at the 2026-08-06 audit the closed vocabularies differed in
+`License` and `DataInput`. Always check both; the authority for any given operation is the target
+actually in play.
 
 ```bash
 OUT=$(mktemp -d)

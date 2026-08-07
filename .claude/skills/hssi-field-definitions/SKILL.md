@@ -33,11 +33,11 @@ table and no fuzzy matching, so a value that is one character off — a missing 
 straight quote where the row has a curly one — raises `ValidationError: Unknown value` and fails the
 whole submission.
 
-**Vocabularies can differ between targets.** As of 2026-07-29 every vocabulary was identical between
-`https://hssi.hsdcloud.org` and `http://localhost` **except `License`**, where production still
-carries three legacy duplicate rows that localhost has retired. Never assume a value that worked on
-one target exists on the other — and never treat an extra row on one side as automatically correct.
-See Field 15 for the canonical-vs-legacy mapping.
+**Vocabularies can differ between targets.** As of 2026-08-06 the closed vocabularies were identical
+between `https://hssi.hsdcloud.org` and `http://localhost` except `License` and `DataInput`, where
+production still carries three legacy duplicate License rows and one junk DataInput row that localhost
+has retired. Never assume a value that worked on one target exists on the other — and never treat an
+extra row on one side as automatically correct. See Fields 15 and 17 for the durable traps.
 
 ### Field → model endpoint
 

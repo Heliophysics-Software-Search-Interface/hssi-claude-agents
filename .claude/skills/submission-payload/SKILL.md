@@ -322,7 +322,9 @@ Normalize values to **exact** strings from the `name` field in these endpoints o
    - Organization: by `identifier` first, then by `name` (case-insensitive)
    - InstrumentObservatory: by `identifier` first, then by `name`+`type`. **The name fallback is a case-sensitive exact match** (`filter(name=..., type=...).first()`, unlike the case-insensitive matching used for most other models), so any drift in spelling, casing, or an embedded abbreviation (`Parker Solar Probe (PSP)` vs the canonical `Parker Solar Probe`) silently creates a **duplicate** row. And because it takes `.first()`, a name that exactly matches **several** identically-named rows (e.g. the four `Solar Ultraviolet Imager` GOES rows) binds to an **arbitrary** one — which is why a collision must be omitted entirely, not sent as a bare name (see the resolution steps under Instrument / Observatory). Always send the SPASE `identifier` to bind to the canonical entry reliably.
    - Award: by `identifier` first, then by `name` (case-insensitive)
-   - RelatedItem (publications/datasets/software): by `identifier` (URL)
+   - RelatedItem (publications/datasets/software): by `identifier` (URL). Reuse preserves the
+     existing row's semantic `type`; submitting the same URL under a different relation does not
+     retype it.
    - Keyword: case-insensitive name match, created if missing
    
    If a match is found with fewer fields, the DB record is enriched (empty fields filled in). If a match is found with conflicting fields, the existing DB values win.

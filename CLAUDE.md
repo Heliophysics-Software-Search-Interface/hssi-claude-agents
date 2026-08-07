@@ -20,9 +20,18 @@ The test for whether something belongs in it:
 
 **Belongs in the file:** current field values; authoritative source evidence; why a value was selected over the alternatives; alternatives considered and rejected, with the reason; previous incorrect values and why they were corrected; documented omissions; negative research; durable upstream limitations or follow-ups that could matter in a later refresh; settled user decisions expressed as final rationale; and scope or caveat notes that change how the evidence should be read.
 
-**Does not belong:** anything whose only content is how *this run* extracted, validated, approved, patched, or verified the result — PREPARE/EXECUTE and roundtrip narration, target URLs, HTTP statuses, request counts, payload/baseline/preflight/checkpoint/retry mechanics, internal database identifiers and table behavior, approval requests and user-decision scaffolding, workflow disposition labels, and change-summary tables describing what an agent changed. Those go in the run's report to the user and in the gitignored transient artifacts.
+**Does not belong:** anything whose only content is how *this run* extracted, validated, approved, patched, or verified the result — PREPARE/EXECUTE and roundtrip narration, target URLs, HTTP statuses, request counts, payload/baseline/preflight/checkpoint/retry mechanics, internal database identifiers and generic table-behavior walkthroughs, approval requests and user-decision scaffolding, workflow disposition labels, and change-summary tables describing what an agent changed. Those go in the run's report to the user and in the gitignored transient artifacts.
 
 **Preserve the reasoning history; remove the workflow's execution history.**
+
+**For a mixed passage, split by purpose:** keep the software-specific consequence and only enough
+platform mechanism to make a durable limitation understandable or actionable; remove the run receipt
+or reusable implementation tutorial. Generic API behavior belongs in the existing payload and
+verification guidance, but mentioning an API, serializer, database row, or earlier HSSI value does
+not by itself make a passage non-canonical.
+
+Any later publication review must apply this same purpose-based standard: it may catch a concrete
+miss, but must not impose a stricter forbidden-term or platform-noun scrub after Phase 5.
 
 The file is deliberately free-form. There is no required schema beyond the 33 numbered fields and the provenance header, length is not a defect, and a long file dense with evidence and rejected alternatives is a correct outcome. When it is unclear whether a passage is durable rationale or run narration, **keep it**.
 

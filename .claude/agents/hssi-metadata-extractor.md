@@ -112,7 +112,7 @@ You may be invoked to **finalize** an existing `hssi_metadata.md` — typically 
 
 **Rewrite** decided items from proposal framing into the settled outcome and its reason. The substance survives; only the framing changes. "Proposed addition, pending user decision: affiliation X, because the DOI record names both institutions" becomes "Affiliation X is recorded because the DOI record names both institutions and the stored value captured only one." "Documented candidate (not applied); recorded so the user can add it if they judge the association sufficient" becomes "Considered and not selected, because the repository contains no evidence of it."
 
-**Remove** passages whose only content is how a run reached the result: PREPARE/EXECUTE, PATCH and roundtrip narration; target URLs, HTTP statuses and request counts; payload, baseline, preflight, checkpoint and retry mechanics; internal HSSI database row identifiers and table behavior; approval requests and conversational history; per-field workflow disposition labels and their legends; controlled-vocabulary row counts cited as a receipt that a check was performed; and change-summary tables describing what the pass altered.
+**Remove** passages whose only content is how a run reached the result: PREPARE/EXECUTE, PATCH and roundtrip narration; target URLs, HTTP statuses and request counts; payload, baseline, preflight, checkpoint and retry mechanics; internal HSSI database row identifiers and generic table-behavior walkthroughs; approval requests and conversational history; per-field workflow disposition labels and their legends; controlled-vocabulary row counts cited as a receipt that a check was performed; and change-summary tables describing what the pass altered.
 
 **Keep, always** — these are the point of the file: authoritative evidence and the reasoning behind each value; alternatives considered and rejected, with their reasons; previous incorrect values and why they were corrected; documented omissions; negative research that stops a future agent re-proposing something; durable upstream limitations or follow-ups; settled user decisions expressed as final rationale; scope and caveat notes that change how the evidence should be read.
 
@@ -120,6 +120,11 @@ Two distinctions worth internalizing, because they turn on purpose rather than w
 
 - Enumerating a controlled vocabulary **as the reason a field is correctly empty** is durable evidence — keep it. Citing the same vocabulary **as proof you checked it** is a receipt — remove it.
 - A note that an API limitation blocks a correction, so a future agent should not re-propose it, is durable — keep it. A note about how you read or wrote data during this run is not.
+- If one passage mixes both purposes, split it: keep the software-specific consequence and the
+  minimum mechanism needed to make the limitation actionable; remove the generic implementation
+  walkthrough. For example, keep that a shared author label cannot be safely corrected by a
+  routine metadata update without investigating its other references; remove the serializer's
+  lookup sequence, status-code history and table-level play-by-play.
 
 The software's own **HSSI Software ID** in the provenance header stays, as do SPASE identifiers, DOIs, RORs, ORCIDs and repository URLs — those are metadata, not run mechanics.
 
@@ -223,7 +228,7 @@ GET <target>/api/models/<Model>/rows/all/
 
 Applies to Fields 4, 5, 13, 15, 17, 18/19, 20, 21, 22, 23 and 31/32 — the endpoint for each is tabled in the `hssi-field-definitions` skill. In extract-only mode (no target given), resolve against production `https://hssi.hsdcloud.org`.
 
-This matters because the backend matches with `name__iexact` after a bare `.strip()` — no aliases, no fuzzy matching. A value that is one character off (a missing trailing period, a straight quote where the row has a curly one) fails the whole submission later. Vocabularies also differ by target: as of 2026-07-29 `License` had two rows on prod that do not exist on localhost. If a value you want has no live row, record what the repo actually says and flag it for the user rather than substituting a near-miss.
+This matters because the backend matches with `name__iexact` after a bare `.strip()` — no aliases, no fuzzy matching. A value that is one character off (a missing trailing period, a straight quote where the row has a curly one) fails the whole submission later. Vocabularies also differ by target: as of 2026-08-06 production has legacy `License` names and a junk `DataInput` value that do not exist on localhost. If a value you want has no live row, record what the repo actually says and flag it for the user rather than substituting a near-miss.
 
 **Organization names (Author Affiliation, Funder) — expand acronyms.** When you encounter an acronym for an affiliation (Field 6) or funder (Field 25), record the full institutional name instead. Example: `NASA` → `National Aeronautics and Space Administration`. If the source only contains an ambiguous acronym you can't confidently expand, leave it as-is and note it so the validator/user can resolve it.
 
