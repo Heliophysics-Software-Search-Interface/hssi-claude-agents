@@ -132,7 +132,9 @@ Irreversible actions (POST /api/submission/, PATCH /api/data/software/<uid>/) **
 - If extraction is incomplete, present what was found and note gaps
 - If an agent reports a source it could not reach — typically a publisher returning 402/403, which is
   usually bot-blocking rather than a paywall — treat it as a blocker you can resolve, not a dead end.
-  The agents have no browser; you may. Fetch the text yourself, then re-invoke the agent with it
+  Agents may run with a narrower tool set than yours — this suite's extractor and validator are
+  granted no browser, though that varies by suite and can change. If you can reach what the agent
+  could not, fetch the text yourself and re-invoke the agent with it
 
 ## Repo Management
 
