@@ -167,7 +167,7 @@ Cross-reference each metadata value against primary sources in the repository. F
 **For all other fields:**
 - Where a value is given, verify it against available sources
 - Where "Not found" is listed, do a quick check to confirm it truly can't be found
-- A source returning 402/403 to an automated fetch is often bot-blocking, not genuine unavailability; open-access articles frequently refuse `curl` but load in a browser tool. Confirm a source is truly unreachable before reporting a claim unverifiable
+- A source returning 402/403 to an automated fetch is often bot-blocking, not genuine unavailability; the article may be fully open access. Try Europe PMC (`.../europepmc/webservices/rest/search?query=DOI:"<doi>"&resultType=core&format=json`; if `inEPMC=Y`, the PMC page is readable by ordinary fetch). A browser User-Agent does not defeat the block. If no route works, report the claim as **unverified for lack of access** rather than unsupported, and say which routes you tried — the orchestrator may have a browser and can supply the text
 
 ### Phase 4: Completeness Validation
 

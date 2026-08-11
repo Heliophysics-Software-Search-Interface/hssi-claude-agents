@@ -192,17 +192,28 @@ discoverable and accept a thinner dossier; never invent a repository URL.
 
 When the repo cannot supply a field, the literature usually can:
 
-- **A publisher 402/403 is usually bot-blocking, not a paywall.** Open-access articles that refuse an
-  automated fetch often render fine in a browser tool, if one is available. Try that before recording
-  a field as unretrievable.
+- **A publisher 402/403 is usually bot-blocking, not a paywall** — the article may be fully open
+  access. Setting a browser User-Agent does *not* defeat it, and Unpaywall/Semantic Scholar often
+  report an "open access" location that is the same blocked publisher URL. The portable route is
+  **Europe PMC**: query
+  `https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:"<doi>"&resultType=core&format=json`,
+  and if it returns `inEPMC=Y`, the corresponding PMC article page is readable by ordinary fetch,
+  acknowledgements included. Coverage is partial — expect it to miss most AGU/Wiley papers.
+  **If no route works, report it as a blocker in your result rather than recording the field as
+  unavailable.** A browser renders these pages fine, and the orchestrator may have one; it can fetch
+  the text and re-invoke you with it.
 - **A paper's Acknowledgments and Data Availability Statement are the best source for Fields 25/26,**
   and are where code/data DOIs surface. See Field 25 in `hssi-field-definitions` for why they beat
   Crossref's funding block.
 - **ADS/Sci-X needs no personal API token.** `GET https://scixplorer.org/v1/accounts/bootstrap`
   returns an anonymous token, usable as `Authorization: Bearer <token>` against
   `https://api.adsabs.harvard.edu/v1/search/query`. It supports `ack:` (acknowledgements section),
-  `body:`, `full:`, proximity (`"a b"~N`) and fuzzy (`word~`). If the bootstrap stops working, it was
-  a convenience route to full-text search — fall back to the publisher page in a browser.
+  `body:`, `full:`, proximity (`"a b"~N`) and fuzzy (`word~`). When the full text is unreachable,
+  `ack:"<award>" bibcode:<paper>` still works as a membership probe — enough to settle which awards a
+  paper acknowledges without reading it. Validate with controls: a nonsense token must return 0, and
+  an award you believe absent should still be findable in *other* papers, proving real absence rather
+  than a tokenization artifact. If the bootstrap stops working, it was a convenience route to
+  full-text search — fall back to the routes above.
 - **Semantic Scholar** (`api.semanticscholar.org/graph/v1`, no key) gives the citation graph, and its
   citation `contexts`/`intents` separate substantive use from a passing mention — which is what
   Fields 27 and 30 turn on. **OpenAlex** is open but its `grants` field is often null; don't rely on

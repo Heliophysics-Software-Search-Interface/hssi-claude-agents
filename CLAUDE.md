@@ -130,6 +130,9 @@ Irreversible actions (POST /api/submission/, PATCH /api/data/software/<uid>/) **
 - If the validator finds ERRORs, fix simple ones (format, missing parents) and re-validate if needed
 - Never retry irreversible API calls without explicit user instruction
 - If extraction is incomplete, present what was found and note gaps
+- If an agent reports a source it could not reach — typically a publisher returning 402/403, which is
+  usually bot-blocking rather than a paywall — treat it as a blocker you can resolve, not a dead end.
+  The agents have no browser; you may. Fetch the text yourself, then re-invoke the agent with it
 
 ## Repo Management
 
