@@ -641,6 +641,8 @@ definitions, not part of the value.
 
 **How to fill it:** Copy the full title of the award.
 
+**Agent guidance — where funding information comes from.** Prefer the reference publication's **Acknowledgments** section, and read its **Data Availability Statement** too. Crossref's funding metadata flattens distinct tiers into one undifferentiated list — support for the software's authors, an input mission's own funding, and a validation-only data service's funding can all appear together. Record only what funded *this software*; note the others' actual roles as rejected alternatives, so a later refresh doesn't reintroduce them from Crossref. This applies equally to Field 25.
+
 **Sub-fields:**
 - **Award Title** (OPTIONAL, multi-entry): Full award title
 - **Award Number** (RECOMMENDED): Identifier associated with the award (e.g., NNG19PQ28C). Used by funding agencies to track impact.

@@ -167,6 +167,7 @@ Cross-reference each metadata value against primary sources in the repository. F
 **For all other fields:**
 - Where a value is given, verify it against available sources
 - Where "Not found" is listed, do a quick check to confirm it truly can't be found
+- A source returning 402/403 to an automated fetch is often bot-blocking, not genuine unavailability; open-access articles frequently refuse `curl` but load in a browser tool. Confirm a source is truly unreachable before reporting a claim unverifiable
 
 ### Phase 4: Completeness Validation
 
@@ -350,7 +351,7 @@ A file NEEDS REVISION if there are any ERRORS. Warnings alone do not fail valida
 
 ## Severity Definitions
 
-- **ERROR**: The metadata is demonstrably wrong, a mandatory field is missing/empty, a value is not from the allowed list, a DOI/URL doesn't resolve, an author is verifiably misattributed, or a Tier A generic dependency (numpy, pandas, matplotlib, scipy, …) is listed under Field 29 or 30. Errors must be fixed.
+- **ERROR**: The metadata is demonstrably wrong, a mandatory field is missing/empty, a value is not from the allowed list, a DOI/URL doesn't resolve (confirm it is genuinely unreachable, not bot-blocked — see Phase 3), an author is verifiably misattributed, or a Tier A generic dependency (numpy, pandas, matplotlib, scipy, …) is listed under Field 29 or 30. Errors must be fixed.
 - **WARNING**: The metadata is likely incomplete or inaccurate but you can't fully prove it. Examples: an author appears in CITATION.cff but not in the metadata, a plausible software functionality seems missing, a version number seems stale.
 - **SUGGESTION**: The metadata is acceptable but could be improved. Examples: a "Not found" field that you found a partial answer for, a description that could be more precise, additional keywords that would improve discoverability.
 

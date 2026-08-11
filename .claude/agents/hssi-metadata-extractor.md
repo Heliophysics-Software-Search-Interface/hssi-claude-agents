@@ -184,6 +184,33 @@ See the `hssi-field-definitions` skill (Stage 3) for details on what fields SoME
 
 4. **If found**, extract all available PyHC metadata
 
+#### Step 1d: Literature Sources (when the repository is thin or absent)
+
+Some HSSI software has no source repository at all. A model or product page — a CCMC model page, a
+mission software page — is then the authoritative source and a valid Field 3. Extract what is
+discoverable and accept a thinner dossier; never invent a repository URL.
+
+When the repo cannot supply a field, the literature usually can:
+
+- **A publisher 402/403 is usually bot-blocking, not a paywall.** Open-access articles that refuse an
+  automated fetch often render fine in a browser tool, if one is available. Try that before recording
+  a field as unretrievable.
+- **A paper's Acknowledgments and Data Availability Statement are the best source for Fields 25/26,**
+  and are where code/data DOIs surface. See Field 25 in `hssi-field-definitions` for why they beat
+  Crossref's funding block.
+- **ADS/Sci-X needs no personal API token.** `GET https://scixplorer.org/v1/accounts/bootstrap`
+  returns an anonymous token, usable as `Authorization: Bearer <token>` against
+  `https://api.adsabs.harvard.edu/v1/search/query`. It supports `ack:` (acknowledgements section),
+  `body:`, `full:`, proximity (`"a b"~N`) and fuzzy (`word~`). If the bootstrap stops working, it was
+  a convenience route to full-text search — fall back to the publisher page in a browser.
+- **Semantic Scholar** (`api.semanticscholar.org/graph/v1`, no key) gives the citation graph, and its
+  citation `contexts`/`intents` separate substantive use from a passing mention — which is what
+  Fields 27 and 30 turn on. **OpenAlex** is open but its `grants` field is often null; don't rely on
+  it for funders.
+
+Searching the software's name alone misses artifacts that never name it. Award numbers, the PI's name,
+or a companion dataset title are often better queries.
+
 ---
 
 ### Step 2: Manual Repository Examination
@@ -331,4 +358,6 @@ Use papers, documentation, and README descriptions to understand the scientific 
 If you cannot find metadata for a field after thorough searching:
 - Mark it as "Not found"
 - Add a note if you have relevant context (e.g., "Not found — no LICENSE file in repository")
+- For a field that a publication could supply (Fields 14, 25, 26, 27), check the paper's
+  Acknowledgments and Data Availability Statement before concluding it isn't there — see Step 1d
 - Do NOT fabricate or guess metadata values
