@@ -4,19 +4,27 @@
 **Repository:** https://ccmc.gsfc.nasa.gov/models/ADELPHI~1/ (CCMC model page — authoritative source; ADELPHI has no source-code repository)
 **Source Revision:** Not applicable — website-only extraction, no version-controlled source is published. The CCMC model page carries its own "Last Updated: 08/10/2026" stamp, which is the closest available analogue to a pinned revision.
 **Extraction Date:** 2026-08-11
-**Validation Date:** Pending
-**Validation Status:** Pending
+**Validation Date:** 2026-08-11
+**Validation Status:** PASS
 
 ---
 
 **Scope note — this evidence is website-only.** ADELPHI is an IDL model hosted by NASA's Community
 Coordinated Modeling Center (CCMC). No source repository is published in any of the places searched:
 GitHub (both repository and code search), GitLab, Zenodo, DataCite and the NASA Software Catalog were
-each queried, and none returned an ADELPHI source repository. Every value below therefore derives from
-the CCMC model records, the peer-reviewed literature, SPASE, ORCID, ROR, Crossref, or NASA's Kamodo
-package (which contains a dedicated ADELPHI reader). There is no README, CITATION.cff, LICENSE, package manifest, CI configuration or commit
-history to draw on, so several fields that a repository-backed extraction would fill are correctly
-empty here rather than merely unresearched. Read each "Not found" as a documented omission with the
+each queried, and none returned an ADELPHI source repository. **This is confirmed by the authors
+themselves, not merely by failed searches:** the Data Availability Statements of the 2021 and 2018
+papers name only the datasets used — AMPERE, SuperMAG and Kyoto indices in 2021; AMPERE, TIMED/GUVI and
+Kyoto in 2018 — while the 2020 paper's *Acknowledgments* instead name Zenodo DOIs for a *collaborator's*
+conductance code and data (Fields 28 and 29). None of the three names an ADELPHI source release
+anywhere. Positive statements of what is available, which omit the model's own code while deliberately
+publishing a collaborator's, are considerably stronger evidence than search misses.
+
+Every value below therefore derives from the CCMC model records, the peer-reviewed literature, SPASE,
+ORCID, ROR, Crossref, or NASA's Kamodo package (which contains a dedicated ADELPHI reader). There is no
+README, CITATION.cff, LICENSE, package manifest, CI configuration or commit history to draw on, so
+several fields that a repository-backed extraction would fill are correctly empty here rather than
+merely unresearched. Read each "Not found" as a documented omission with the
 negative research recorded, not as a gap awaiting a guess.
 
 **How CCMC publishes this metadata, and which record holds what.** Beyond the rendered prose, CCMC
@@ -42,10 +50,19 @@ reading of the rendered page.
 ## Section 1: Basic Information
 
 ### 1. Submitter
-- **Submitter Name:** [To be filled by actual submitter]
-- **Submitter Email:** [To be filled by actual submitter]
+- **Submitter Name:** Determined at submission time
+- **Submitter Email:** Determined at submission time
 
-*Placeholder. MANDATORY at submission time; not derivable from the source material.*
+This field is mandatory on the HSSI form but is a property of the *act of submitting*, not of the
+software: it records who transmits the metadata, and it is supplied by that person when a submission is
+made. It is not derivable from ADELPHI's documentation or from any source examined, and it would be
+wrong to infer it — the model's developer and CCMC hosts (Field 6) are contacts for the software, not
+submitters of this record.
+
+No submission is planned at present; this dossier is a standalone description of ADELPHI's metadata.
+The absence of a submitter name here is therefore the correct and complete state of the field, not an
+outstanding gap. Should the entry later be submitted to HSSI, the submitting person's name and work
+email are filled in at that point and nothing else in this file changes.
 
 ### 2. Persistent Identifier (RECOMMENDED)
 **Not found** — ADELPHI has no DOI.
@@ -57,16 +74,24 @@ scoped, because the scoping matters:
   necessary rather than incidental: "ADELPHI" is a heavily overloaded string, and an unqualified query
   returns hundreds of irrelevant hits (Adelphi University, an Adelphi consultancy, "Edizione Adelphi"
   book reviews) with no way to spot a heliophysics record among them. Adding AMPERE is what makes the
-  result readable. The cost of that filter is real and is recorded here: it excludes the archived
-  ADELPHI **output** dataset now listed in Field 28, whose Zenodo metadata never mentions AMPERE. That
-  is not a contradiction — see the next paragraph.
-- **DataCite** returns only a University of Maryland text record (`10.13016/m28iyi-tcv3`, Shim,
-  Robinson, Garcia-Sage et al., on the Geospace Dynamics Constellation), which cites the model rather
-  than being the model.
+  result readable. The cost of that filter is real and is recorded here: it excludes both archived
+  ADELPHI **output** datasets now listed in Field 28 (datasets 2 and 3), neither of whose Zenodo
+  metadata mentions AMPERE. That is not a contradiction — see the next paragraph.
+- **DataCite**, filtered to `resource-type-id=software` with heliophysics qualifiers, returns **zero**
+  ADELPHI software records. The same query filtered to datasets returns only the output and provenance
+  deposits recorded in Field 28. An unfiltered DataCite query returns a University of Maryland text
+  record (`10.13016/m28iyi-tcv3`, Shim, Robinson, Garcia-Sage et al., on the Geospace Dynamics
+  Constellation), which cites the model rather than being the model, and which has since been
+  superseded by a journal article (Field 27).
+- **The papers' own Data Availability Statements name no ADELPHI code release** — see the scope note.
+  This is the strongest form of the negative available: the authors state what is available, and their
+  own model's source is not among it. Notably the 2020 paper *does* deposit a collaborator's code and
+  data on Zenodo with DOIs, which shows the group was willing and able to release software when it
+  chose to. ADELPHI itself was not released.
 
 **A dataset DOI is not a software DOI, so Field 28 and this field are not in tension.** Field 28 now
-records a Zenodo DOI for an archive of ADELPHI's model *output*. That DOI identifies a deposited data
-product; it does not identify, version or make citable the ADELPHI software itself, and Field 2 asks
+records Zenodo DOIs for archives of ADELPHI's model *output*. Those DOIs identify deposited data
+products; they do not identify, version or make citable the ADELPHI software itself, and Field 2 asks
 for a persistent identifier for the software. This is the same distinction already applied to the
 Maryland record above: a resource that involves ADELPHI is not thereby an identifier for ADELPHI.
 No software DOI, no Zenodo concept DOI for the code, and no DOI badge exists, because there is no
@@ -74,8 +99,8 @@ repository or software deposit to attach one to.
 
 CCMC does assign the model an internal SPASE Resource ID, `spase://CCMC/SimulationModel/ADELPHI/1`,
 carried in its catalogue record. This is deliberately **not** recorded as the Persistent Identifier:
-it is not a DOI, HSSI's field is a DataCite DOI lookup, and the identifier does not resolve —
-`https://spase-metadata.org/CCMC/SimulationModel/ADELPHI/1` returns 404, so CCMC's SimulationModel
+it is not a DOI, HSSI's field is a DataCite DOI lookup, and the identifier does not resolve: there is
+no record at `https://spase-metadata.org/CCMC/SimulationModel/ADELPHI/1`, so CCMC's SimulationModel
 namespace is not published to the SPASE registry. It is documented here because it is the only
 persistent identifier CCMC assigns to the model itself, and a future agent may want it if CCMC ever
 publishes that namespace or mints a DOI.
@@ -260,6 +285,41 @@ will encounter all three and should not "correct" the chosen form:
 3. "AMPERE Derived **Electrodynamics of the High Latitude Ionosphere**" — as written in Sur et al. 2025
    (`10.1029/2024SW004023`).
 
+A systematic full-text search of the literature for ADELPHI alongside each candidate wording surfaced no
+fourth variant, and supports the selected "Properties" form as the best attested. Two attestations of it
+are confirmed against primary text: the Kamodo journal paper (Ringuette et al. 2023) and Shim et al.
+2026, which renders it "AMPERE-derived electrodynamic properties of the high-latitude ionosphere
+(ADELPHI)" — matching CCMC's `fullName` in substance. The 2019 EGU abstract's own prose also describes
+the model as giving "global specification of electrodynamic **properties**", despite that abstract's
+title using "Parameters".
+
+**A caution about co-occurrence searching in this particular case, which a future agent repeating the
+search will otherwise fall into.** The phrase "auroral electrodynamic parameters" is common in this
+subfield and appears in the titles of both the ADELPHI reference publication ("Determination of Auroral
+Electrodynamic Parameters From AMPERE Field-Aligned Current Measurements") and Sur et al. 2025
+("Intercomparison of Model Determinations of Auroral Electrodynamic Parameters"). A full-text query for
+ADELPHI together with "Electrodynamic Parameters" therefore matches any paper that merely cites either
+of those titles, and cannot by itself distinguish an ADELPHI *expansion* from an ordinary use of the
+phrase. Sur et al. 2025 and Shim et al. 2026 both match that query, yet Sur's actual expansion is
+variant 3 above, not "Parameters". **The single confirmed attestation of the "Parameters" expansion is
+the 2019 EGU abstract title**, verified verbatim as "AMPERE-Derived Electrodynamic Parameters of the
+High Latitude Ionosphere (ADELPHI)", by Robinson, Anderson and Zanetti. Variant 2 rests on that title
+alone, which is genuine but singular.
+
+One further "Properties" attestation, recorded during extraction as an AGU Fall Meeting 2025 abstract
+("Assessing the Accuracy of GDC Measurements Using ADELPHI and Weimer 2005"), was found in the full-text
+index but could not be located again through Confex or general search. Its source type is also in doubt:
+Shim et al. 2026's own reference list carries a near-identically titled entry beginning "Code for
+assessing the accuracy of GDC measurements using ADELPHI and Weimer 2005", attributed to Shim (2025) and
+described in that paper as the code developed for the study — suggesting the record may be a software or
+data deposit rather than a conference abstract, which would explain why Confex never returned it. That
+identification could not be resolved to a DOI either, so neither characterization is confirmed. It is
+recorded as supporting rather than load-bearing, and a future agent should establish what it actually is
+before citing it. The
+conclusion does not depend on it: the CCMC model record is the authoritative publisher of this software
+entry, and the two confirmed primary-text attestations agree with it. The selected value should not be
+changed without something that outranks CCMC's own `fullName`.
+
 Note also that no expansion appears in the rendered body text of the CCMC page; it is carried only in
 the structured `fullName` field and the HTML meta description, which is why a casual read of the page
 finds the acronym undefined.
@@ -277,8 +337,8 @@ reference paper. That is when the model was *described* in the literature, and i
 Field 14, but the software itself was not obtainable by anyone until the CCMC deployment four years
 later. Field 10 asks for the date of first publication of the software, so the CCMC availability date
 is the accurate answer. The model page's "Last Updated: 08/10/2026" was also rejected — it is a
-content-management timestamp for the web page, and is one day before this extraction, so it plainly
-tracks page edits rather than the software.
+content-management timestamp for the web page, falling one day before the extraction date recorded in
+the header above, which shows it tracks page edits rather than the software.
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Community Coordinated Modeling Center
@@ -352,12 +412,11 @@ resulting publications, and contact the developers before publishing, and notes 
 request co-authorship. It states no software license and no redistribution terms. Attribution
 expectations are not a license, so this does not supply a value.
 
-**`Restricted` was considered and is a defensible alternative the user may prefer.** ADELPHI's source
-code is not distributed and cannot be obtained; only a hosted run service is offered, which is close to
-what "restricted" is meant to capture. It was not selected because selecting it would assert a licensing
-posture that CCMC has never stated. The honest reading is that CCMC simply never published license
-terms, which is an absence rather than an assertion of restriction. Flagging this for the user rather
-than deciding it silently.
+**`Restricted` was considered and rejected.** ADELPHI's source code is not distributed and cannot be
+obtained; only a hosted run service is offered, which is close to what "restricted" is meant to capture.
+It was not selected because doing so would assert a licensing posture CCMC has never stated. Leaving the
+field empty reflects an absence of terms; selecting `Restricted` would manufacture terms the publisher
+did not set. The field is therefore correctly empty rather than merely unfilled.
 
 ---
 
@@ -488,12 +547,12 @@ signal: a single version (1) with no successor, `changeLog: null`, no release no
 publication from 2021 with no subsequent model paper. CCMC continues to *support* the model through two
 named model hosts, which is exactly the "support provided as time allows" the definition anticipates.
 
-`Active` is the alternative and is not unreasonable — ADELPHI was newly deployed to Instant Run on
-2025-07-16, and the model page was edited on 2026-08-10. Both were weighed and judged to be evidence of
-CCMC's ongoing *curation and deployment*, not of ongoing development of the model code, which is what
-the field asks about. Flagging this as a judgment call: if the developer or CCMC confirms active code
-development, `Active` should replace this value. `Unsupported` was rejected outright, since named CCMC
-hosts and a reachable developer address contradict "authors have ceased work".
+`Active` was considered and rejected. ADELPHI was newly deployed to Instant Run on 2025-07-16 and the
+model page was edited on 2026-08-10, but both are evidence of CCMC's ongoing *curation and deployment*
+rather than of ongoing development of the model code, which is what this field asks about. Should the
+developer or CCMC later confirm active code development, `Active` would become correct; nothing
+currently available supports it. `Unsupported` was rejected outright, since named CCMC hosts and a
+reachable developer address contradict "authors have ceased work".
 
 ### 24. Documentation (RECOMMENDED)
 https://ccmc.gsfc.nasa.gov/models/ADELPHI~1/
@@ -519,55 +578,76 @@ hour and hemisphere, with no explanatory content.
 - **Organization:** National Aeronautics and Space Administration
 - **Funder Identifier:** https://ror.org/027ka1x80
 
-**Funder 2**
-- **Organization:** U.S. National Science Foundation
-- **Funder Identifier:** https://ror.org/021nxhr62
+The name is given in full per Field 25's instruction to avoid acronyms, and is the ROR display name.
 
-Both names are given in full per Field 25's instruction to avoid acronyms, and both are the ROR display
-names for their respective records — note that NSF's ROR display name carries the "U.S." prefix, which
-is reproduced exactly rather than normalised to "National Science Foundation".
+**Evidence.** The acknowledgments of the ADELPHI reference publication (Robinson et al. 2021) state
+verbatim: *"This work was supported at Goddard Space Flight Center by NASA Cooperative Agreement
+NNG11PL10A, the Community Coordinated Modeling Center, and the TIMED/GUVI Project (NASA grant
+NNX14AK74G). AMPERE development, data acquisition, and science processing at JHU/APL were supported by
+NSF awards ATM-0739864 and ATM-1420184."* The first sentence is what funded *this work*, and both of
+its awards are NASA.
 
-**Provenance and its limits.** These are the funders the publisher asserts for the ADELPHI reference
-publication (Robinson et al. 2021), as recorded in that paper's Crossref funding metadata. There is no
-software-specific funding statement — no repository, no acknowledgments file — so this is an inference
-from the funding of the work that produced the model to the funding of the model itself. The inference
-is reasonable, since the 2021 paper is the model's defining publication, but a future agent should know
-it is an inference. The paper's own acknowledgments text could not be read directly: the article is
-open access under CC BY-NC-ND, yet Wiley returns 402/403 to automated retrieval and no repository
-mirror, Europe PMC record or archived copy exists. Crossref's structured funding metadata was used
-instead.
+**The U.S. National Science Foundation (https://ror.org/021nxhr62) was previously listed here and has
+been removed, on that same evidence.** The acknowledgment divides the funding by sentence, and the NSF
+sentence scopes its awards explicitly to *AMPERE* development, data acquisition and science processing
+*at JHU/APL* — a different activity, at a different institution, funding the input mission rather than
+ADELPHI. A third group of awards (Field 26) funds SuperMAG, a validation service. Attributing a
+funder to ADELPHI because it funded ADELPHI's input data would make every upstream mission's sponsor a
+sponsor of every downstream model, which is not what Field 25 asks. NSF's real role is recorded here so
+a future agent does not re-add it from Crossref's flat funding block, which collapses all three tiers
+into one undifferentiated list and is the reason this field was previously over-broad.
 
-Crossref attributes several awards to "Goddard Space Flight Center" (https://ror.org/0171mag52) as a
-distinct funder record. GSFC is recorded here as the administering NASA center rather than as a
-separate funder entry, since listing both it and NASA would double-count the same agency.
+Crossref also attributes awards to "Goddard Space Flight Center" (https://ror.org/0171mag52) as a
+distinct funder record. GSFC is the administering NASA center — the acknowledgment says the work was
+supported "at Goddard Space Flight Center" — and is not listed separately, since that would
+double-count the same agency.
 
 ### 26. Award Title (OPTIONAL)
+
+**Award 1**
 - **Award Title:** Not found
-- **Award Numbers:**
-  - NNG11PL10A (National Aeronautics and Space Administration, administered through Goddard Space Flight Center)
-  - NNX14AK74G (National Aeronautics and Space Administration, administered through Goddard Space Flight Center)
-  - NNX08AM32G S03 (National Aeronautics and Space Administration)
-  - ATM-0739864 (U.S. National Science Foundation)
-  - ATM-1420184 (U.S. National Science Foundation)
-  - ATM-0646323 (U.S. National Science Foundation)
-  - AGS-1003580 (U.S. National Science Foundation)
+- **Award Number:** NNG11PL10A
 
-Award **titles** are genuinely unavailable: Crossref funding metadata carries award numbers without
-titles, and the paper's acknowledgments text could not be retrieved (see Field 25).
+**Award 2**
+- **Award Title:** TIMED/GUVI Project
+- **Award Number:** NNX14AK74G
 
-The award numbers above are every award the publisher asserts for Robinson et al. 2021, the ADELPHI
-reference publication. Two caveats a future agent should carry forward. First, the same provenance
-limit as Field 25 applies — these funded the research described in the paper, and no software-specific
-funding statement exists. Second, several of these awards also appear on the earlier Robinson papers
-(NNG11PL10A, NNX14AK74G, ATM-0739864 and ATM-1420184 recur on the 2020 and 2018 papers), so some of
-them plausibly supported the underlying PFISR conductance and GUVI energy-flux studies rather than
-ADELPHI's own implementation. They are listed in full rather than filtered by guesswork, but the set
-should be narrowed if the developer confirms which awards funded the code.
+Award 1 has no title in any source: the acknowledgment describes it only as a "NASA Cooperative
+Agreement", associated with the Community Coordinated Modeling Center, and gives no formal title.
 
-Crossref renders the four NSF numbers with a Unicode hyphen (U+2010) rather than ASCII `-`
-(`ATM‐0739864`); they are normalised here to a plain ASCII hyphen, which is the form the agencies
-themselves use. The NASA award numbers carry no hyphen-type separator, so only the NSF entries were
-affected; note that `NNX08AM32G S03` does contain a space, which is preserved as Crossref records it.
+Award 2's title is the project name the authors themselves give it — *"the TIMED/GUVI Project (NASA
+grant NNX14AK74G)"* — rather than a formal award title from a funder database, which was not located.
+It is recorded because it is directly attested and more informative than "Not found", but it should not
+be mistaken for the grant's official title.
+
+**What these two awards actually represent — read this before narrowing further or re-expanding.** The
+acknowledgment does not identify any award as funding ADELPHI's implementation specifically. These two
+are the **standing support under which Robinson's group produced this research line**: the first two
+sentences of the acknowledgments are near-identical across all three CCMC-listed papers (2018, 2020 and
+2021 — the 2018 one lacking only the CCMC clause), and the same two NASA awards recur in the fourth
+Robinson paper as well (Robinson & Zanetti 2021, Field 27), whose funding is *only* these two. That
+recurrence is evidence they are the group's block support, not per-paper line items. Listing them is
+correct; reading them as "the grants that paid for the ADELPHI code" would over-claim.
+
+**Five awards were removed from this field on evidence.** They were previously listed because
+Crossref's funding metadata presents all seven flat, without the distinctions the acknowledgment text
+makes. They fall into two tiers, neither of which funded ADELPHI:
+
+- **AMPERE's funding — `ATM-0739864` and `ATM-1420184` (NSF).** The acknowledgment assigns these
+  specifically to "AMPERE development, data acquisition, and science processing at JHU/APL". They fund
+  the instrument programme that produces ADELPHI's input, not ADELPHI.
+- **SuperMAG's funding — `ATM-0646323` (NSF), `AGS-1003580` (NSF) and `NNX08AM32G S03` (NASA).** These
+  appear only in the paper's *Data Availability Statement*, never in the acknowledgments, and solely to
+  credit the SuperMAG project: *"The SuperMAG project is supported by the National Science Foundation
+  (NSF) Grants NSF ATM-0646323 NSF AGS-1003580 and National Aeronautics and Space Administration (NASA)
+  grant NASA NNX08AM32G S03."* SuperMAG is a third-party service used only to validate ADELPHI's
+  modeled indices; ADELPHI does not read its data. Excluding its funders here is the same judgement
+  already applied in Field 31, which excludes the SuperMAG magnetometers as validation-only.
+
+A note on character normalisation, still relevant to the two retained NASA numbers' neighbours in any
+future re-derivation: Crossref renders the NSF numbers with a Unicode hyphen (U+2010) rather than ASCII
+`-` (`ATM‐0739864`). Where those numbers are quoted above they use a plain ASCII hyphen, the form the
+agencies themselves use. `NNX08AM32G S03` contains a genuine space, preserved as recorded.
 
 ---
 
@@ -577,6 +657,8 @@ affected; note that `NNX08AM32G S03` does contain a space, which is preserved as
 - https://doi.org/10.1029/2020JA028008 — Robinson, R. M., Kaeppler, S. R., Zanetti, L., Anderson, B., Vines, S. K., Korth, H., & Fitzmaurice, A. (2020). Statistical relations between auroral electrical conductances and field-aligned currents at high latitudes. *Journal of Geophysical Research: Space Physics*, 125, e2020JA028008.
 - https://doi.org/10.1029/2018GL078718 — Robinson, R. M., Zhang, Y., Anderson, B. J., Zanetti, L. J., Korth, H., & Fitzmaurice, A. (2018). Statistical relations between field-aligned currents and precipitating electron energy flux. *Geophysical Research Letters*, 45, 8738–8745.
 - https://doi.org/10.1029/2024SW004023 — Sur, D., et al. (2025). Intercomparison of Model Determinations of Auroral Electrodynamic Parameters. *Space Weather*.
+- https://doi.org/10.1029/2025JA034684 — Shim, J. S., Robinson, R. M., Garcia-Sage, K., Rowland, D. E., Di Mare, F., Klenzing, J., & Liu, G. (2026). Evaluating Multipoint Sampling of Global-Scale High-Latitude Electrodynamics by the Geospace Dynamics Constellation. *Journal of Geophysical Research: Space Physics*.
+- https://doi.org/10.1029/2020GL091527 — Robinson, R. M., & Zanetti, L. J. (2021). Auroral Energy Flux and Joule Heating Derived From Global Maps of Field-Aligned Currents. *Geophysical Research Letters*, 48, e2020GL091527.
 
 The first two are listed by CCMC as ADELPHI's other key references, and each supplies a specific
 empirical ingredient of the model rather than describing the model as a whole: the 2020 paper derives
@@ -589,21 +671,45 @@ Sur et al. 2025 is not a CCMC-listed reference but is included because it indepe
 ADELPHI: its abstract names "Active Magnetosphere and Planetary Electrodynamics Response Experiment
 (AMPERE) Derived Electrodynamics of the High Latitude Ionosphere (ADELPHI)" as one of the models
 compared for cross polar cap potential, hemispherically integrated Joule heating and hemispheric power
-input, under the COSPAR ISWAT AuroraPHILE activity. It is the best available independent assessment of
-the model's performance.
+input, under the COSPAR ISWAT AuroraPHILE activity. Its distinct value is that it is a formal
+multi-model benchmark: it places ADELPHI's outputs beside those of LFM-MIX, SWMF, OpenGGCM and Ovation
+Prime on common parameters, and against SuperDARN and DMSP observations.
 
-Considered and not included: Ringuette et al. 2022 (`10.3389/fspas.2022.1005977`), the Kamodo
-flythrough paper, which mentions ADELPHI only in a list of simulation outputs then being added to
-Kamodo — the relationship it documents is recorded under Field 30, where it belongs; and Shim,
-Robinson, Garcia-Sage et al., "Evaluating Multipoint Sampling of Global-Scale High-Latitude
-Electrodynamics by the Geospace Dynamics Constellation" (`10.13016/m28iyi-tcv3`), which surfaced in a
-DataCite search and uses ADELPHI-related work, but whose DOI resolves to a repository text record
-rather than the journal article, making it a poor citation to publish.
+Shim et al. 2026 is the most recent of these and complements Sur et al. rather than ranking against it:
+where Sur benchmarks ADELPHI's accuracy, Shim *relies* on it, using ADELPHI output as the "ground truth"
+electrodynamic state against which reconstructions by the planned Geospace Dynamics Constellation are
+evaluated across four storm events. That is a substantive use of the model's results, not a passing
+citation, and it is clear evidence that ADELPHI is trusted as a reference specification. Robinson, ADELPHI's author, is a co-author. Note that an
+earlier University of Maryland record for this work (`10.13016/m28iyi-tcv3`) was previously documented
+here as a poor citation because its DOI resolved to a repository text record; the journal version above
+supersedes it and is the DOI to cite.
+
+Robinson & Zanetti 2021 is included even though CCMC does not list it among the model's key references
+and its own text never uses the name "ADELPHI". It derives auroral energy flux and Joule heating — two
+of ADELPHI's headline outputs — from AMPERE field-aligned current maps by the model's own technique,
+and Shim et al. 2026 cites it as one of the ADELPHI reference set, "(Robinson & Zanetti, 2021; Robinson
+et al., 2018, 2020, 2021)". It is therefore part of the model's documentary record even though the
+CCMC page omits it.
+
+Considered and not included:
+
+- Ringuette et al. 2022 (`10.3389/fspas.2022.1005977`), the Kamodo flythrough paper, and Ringuette et
+  al. 2023 (`10.1016/j.asr.2023.03.033`), the Kamodo journal paper — both mention ADELPHI only as a
+  supported model output. The relationship they document is interoperability and is recorded in
+  Field 30, where it belongs.
+- Zhu et al. 2022, "Assessment of Using Field-Aligned Currents to Drive the Global Ionosphere
+  Thermosphere Model" (`10.1029/2022SW003170`). This one is worth recording explicitly because it looks
+  like a candidate and is not: it cites Robinson et al. 2021 substantively, but its citation contexts
+  show it discussing ADELPHI as *related work* — "Robinson et al. (2021) developed another technique to
+  calculate the high-latitude electric potential" — while driving GITM with its own conductance
+  treatment. It uses the published method's context, not the software.
 
 ### 28. Related Datasets (OPTIONAL)
 
-Two datasets, deliberately of two different kinds. **The distinction is load-bearing and should be
-preserved in any future edit: the first is what ADELPHI reads, the second is what ADELPHI produces.**
+Four datasets in **three distinct roles**. The distinction is load-bearing and should be preserved in
+any future edit: dataset 1 is what ADELPHI *reads*; datasets 2 and 3 are what ADELPHI *produces*;
+dataset 4 is what ADELPHI's empirical conductance relations were *derived from*. Conflating them would
+misrepresent the model's provenance.
 
 **Dataset 1 — the model's input.**
 Anderson, B. J., et al. Active Magnetosphere and Planetary Electrodynamics Response Experiment (AMPERE) field-aligned current data [Data set]. Johns Hopkins University Applied Physics Laboratory. https://ampere.jhuapl.edu/
@@ -617,6 +723,9 @@ page above, and a NASA HelioData mission page at `https://helio.data.nasa.gov/mi
 dataset DOI, and a DataCite search for the AMPERE Birkeland-current data returned only unrelated
 records. The JHU/APL URL was confirmed to resolve. The AMPERE home page is used rather than the
 HelioData page because it is the data provider's own canonical landing page.
+
+**Datasets 2 and 3 are both archives of the model's output**, and the reasoning for including output
+datasets at all is set out once, after both of them.
 
 **Dataset 2 — an archive of the model's output.**
 https://doi.org/10.5281/zenodo.14299925 — Sur, D., Robinson, R., & Garcia-Sage, K. (2024). *Intercomparison of model determinations of auroral electrodynamic parameters* [Data set]. Zenodo. Published 2024-12-08, CC BY 4.0.
@@ -640,38 +749,78 @@ Note that the deposit's `related_identifiers` field is empty, so its link to the
 rests on the description text and shared authorship rather than on a machine-readable relation; a
 future agent should not expect to traverse from the paper DOI to this dataset automatically.
 
-**Why an output dataset is listed here at all — the reasoning, so it is not relitigated.** Field 28
-asks for "datasets the software supports functionality for (e.g., analysis)", and the parenthetical
-example points toward datasets a package *reads*. ADELPHI does not read this one; it generated it. The
-argument against inclusion is therefore real and was weighed: this is a derived product covering only
-the specific days of a single intercomparison study (9 March 2012, 22 July 2004 and the other paper
-dates), not a general ADELPHI output archive.
+**Dataset 3 — a second archive of the model's output.**
+https://doi.org/10.5281/zenodo.17102377 — Robinson, R. M., & Shim, J. S. (2025). *Dataset Used for Evaluating Multipoint Sampling of Global-Scale High-Latitude Electrodynamics by the Geospace Dynamics Constellation* [Data set]. Zenodo. Published 2025-09-11, CC BY 4.0.
 
-It is included nonetheless, for three reasons that are specific to this software rather than generic:
+The companion deposit to Shim et al. 2026 (Field 27), described as containing "outputs from the ADELPHI
+and Weimer (2005) models used in the study". Recorded for the same reason as dataset 2, set out below.
+Its first creator is Robert Robinson with ORCID `0000-0002-7750-8326`, matching Field 6. As with
+dataset 2, the **concept** DOI is recorded (`10.5281/zenodo.17102377`), resolving to version record
+`10.5281/zenodo.17102378`.
+
+That two independent studies have each archived ADELPHI output under CC BY reinforces the reasoning
+that follows.
+
+**Why output datasets are listed here at all — the reasoning for datasets 2 and 3, so it is not
+relitigated.** Field 28 asks for "datasets the software supports functionality for (e.g., analysis)",
+and the parenthetical example points toward datasets a package *reads*. ADELPHI reads neither of these;
+it generated them. The argument against inclusion is therefore real and was weighed: both are derived
+products tied to a single study apiece, covering only that study's dates — the Sur intercomparison days
+(9 March 2012, 22 July 2004 and the others) and the four storm events of the Shim analysis — rather than
+being general ADELPHI output archives.
+
+They are included nonetheless, for three reasons specific to this software rather than generic:
 
 1. Field 28's definition does not restrict to inputs, and the field is named *Related* Datasets. A
    model's own published output is related to it in the most direct sense available.
 2. The value to a user is unusually high **because** ADELPHI is source-unavailable. The code is not
    distributed, and the only public access is an Instant Run form that returns plots for one date and
-   hemisphere at a time. This deposit is consequently the only citable, openly licensed archive of real
-   ADELPHI output identified anywhere — the sole way a prospective user can inspect the model's actual
-   numerical products, at both 1D and 2D levels, without requesting a run. For a repository-backed
-   package this entry would be marginal; here it does genuine work.
-3. It is co-created by ADELPHI's own developer, so it represents the model's output authoritatively.
+   hemisphere at a time. These two deposits are consequently the citable, openly licensed archives of
+   real ADELPHI output that are known to exist — between them, the practical route to inspecting the
+   model's actual numerical products, at both 1D and 2D levels, without requesting a run. For a
+   repository-backed package such entries would be marginal; here they do genuine work.
+3. Both are co-created by ADELPHI's own developer, so they represent the model's output
+   authoritatively.
 
-The two entries are labelled by role above precisely so that a reader does not mistake them for the
-same kind of relationship, and so that a future agent adding a third dataset knows which bucket it
+**Dataset 4 — the data the model's conductance relations were derived from.**
+https://doi.org/10.5281/zenodo.2610914 — Kaeppler, S. (2019). *PFISR-AMPERE Conductivities* [Data set]. Zenodo. Published 2019-03-27, CC BY 4.0.
+
+A third kind of relationship, and the reason the role labels above are needed. This deposit contains
+"the Hall and Pedersen conductances that were derived in support of an AMPERE-PFISR study" — that is,
+the conductance values underlying the statistical field-aligned-current-to-conductance relations of
+Robinson et al. 2020, which ADELPHI hard-codes as its conductance model. ADELPHI never reads this
+dataset at run time; it is upstream of the model's coefficients rather than of its execution.
+
+It is citable because the 2020 paper's acknowledgments name it explicitly, alongside the code that
+produced it: *"The code and raw data for calculating conductances from Poker Flat Incoherent Scatter
+Radar measurements are available at http://doi.org/10.5281/zenodo.2609955 and
+http://doi.org/10.5281/zenodo.2610915, respectively."* The **concept** DOI is recorded above, resolving
+to version record `10.5281/zenodo.2610915`. Its creator, Stephen Kaeppler, is a co-author of Robinson
+et al. 2020 (ORCID `0000-0003-1932-0330`, recorded in Field 6 among the co-authors not credited as
+software authors).
+
+**This does not contradict Field 31's exclusion of PFISR.** The two fields ask different questions.
+Field 31 asks whether ADELPHI is *designed to support* an instrument — whether it reads that
+instrument's data — and ADELPHI does not read PFISR data, so PFISR is correctly absent there. Field 28
+asks which datasets are related to the software, and the conductance dataset derived from PFISR
+measurements is genuinely part of ADELPHI's provenance. Both outcomes are correct simultaneously; a
+future agent should not "reconcile" them by adding PFISR to Field 31.
+
+The four entries are labelled by role above precisely so that a reader does not mistake them for the
+same kind of relationship, and so that a future agent adding another dataset knows which bucket it
 belongs in.
 
 ### 29. Related Software (OPTIONAL)
 - https://ccmc.gsfc.nasa.gov/models/AMGeO~3/ — AMGeO (Assimilative Mapping of Geospace Observations), version 3
 - https://ccmc.gsfc.nasa.gov/models/Ovation-Prime~2.3/ — Ovation-Prime, version 2.3
 - https://ccmc.gsfc.nasa.gov/models/Weimer~2005/ — Weimer Ionosphere Models, version 2005
+- https://doi.org/10.5281/zenodo.2609954 — PFISR-Conductivities (Kaeppler)
 
-Three genuinely similar-purpose tools: each specifies high-latitude ionospheric electrodynamic
-parameters, and each is a direct alternative a user choosing ADELPHI would weigh against it. CCMC
-catalogue URLs are used because these are CCMC-hosted models without software DOIs, which is the
-fallback Field 29 allows.
+The first three are genuinely similar-purpose tools: each specifies high-latitude ionospheric
+electrodynamic parameters, and each is a direct alternative a user choosing ADELPHI would weigh against
+it. CCMC catalogue URLs are used because these are CCMC-hosted models without software DOIs, which is
+the fallback Field 29 allows. The fourth is a different kind of entry — an upstream provenance
+dependency — and is justified separately below.
 
 Per-entry justification, since "similar" needs to be specific to be useful:
 
@@ -686,6 +835,27 @@ Per-entry justification, since "similar" needs to be specific to be useful:
 - **Weimer Ionosphere Models** specify the high-latitude ionospheric electric potential and cross polar
   cap potential empirically, the same primary quantity ADELPHI solves for, differing mainly in being
   driven by solar wind input rather than measured field-aligned currents.
+- **PFISR-Conductivities** is not a similar-purpose tool but a **predecessor in ADELPHI's provenance
+  chain**, which Field 29's scope ("software this work was forked from", "important software
+  dependencies", domain-specific dependencies) covers. It is the code that computed Hall and Pedersen
+  conductances from Poker Flat Incoherent Scatter Radar files — "a fast method for processing
+  quantifying the Hall and Pedersen conductance given Poker Flat Incoherent Scatter Radar h5 files" —
+  and it generated the conductance dataset (Field 28, dataset 4) from which Robinson et al. 2020 fitted
+  the field-aligned-current-to-conductance relations that ADELPHI hard-codes. It is named, with this
+  DOI, in that paper's acknowledgments. Recording it tells a reader something substantive and otherwise
+  undiscoverable: where ADELPHI's conductance model came from, and that its empirical basis is
+  independently citable and reproducible.
+
+  Practical notes for a future agent. The **concept** DOI is recorded above; it resolves to version
+  record `10.5281/zenodo.2609955`, tagged `srkaeppler/PFISR-Conductivities: v0.2` (2019-03-26). The
+  live repository is `https://github.com/srkaeppler/PFISR-Conductivities` (Jupyter Notebook, not
+  archived, last pushed 2022-05-28) and carries **no license file**, while the Zenodo deposit records
+  its licence as `other-at`; the author asks to be contacted before use. It is a genuine
+  runtime dependency of neither ADELPHI nor anything else here — the relationship is historical
+  derivation, which is why it sits in Field 29 rather than Field 30.
+
+  As with Field 28's dataset 4, this does **not** reopen Field 31: ADELPHI still reads no PFISR data,
+  and the instrument exclusion there stands.
 
 Considered and deliberately excluded:
 
@@ -719,12 +889,20 @@ rather than by ecosystem membership:
 - `tests/test_ADELPHI.py`, plus `Validation/Notebooks/ModelReaderTesting_ADELPHI.ipynb` and a timing
   notebook — a maintained test and validation path for that reader.
 
-Ringuette et al. 2022 documents the relationship in the literature as well, listing ADELPHI among the
-simulation outputs being added to Kamodo. This is precisely the "one's output can be imported into the
-other" exchange Field 30 asks for.
+The relationship is documented in the peer-reviewed literature as well. Ringuette et al. 2022
+(`10.3389/fspas.2022.1005977`) lists ADELPHI among the simulation outputs then being added to Kamodo,
+and the later Kamodo journal paper, Ringuette et al. 2023, "Kamodo: Simplifying model data access and
+utilization" (`10.1016/j.asr.2023.03.033`, *Advances in Space Research*), names ADELPHI among the model
+outputs Kamodo supports — by then as a delivered capability rather than a planned one. Semantic Scholar
+classifies that citation's intent as *methodology*, consistent with a functional dependency rather than
+a passing mention. This is precisely the "one's output can be imported into the other" exchange
+Field 30 asks for.
 
-Nothing else qualifies. ADELPHI has no dependency list to mine — it is unreleased IDL — so there was no
-opportunity to mistake generic infrastructure for interoperability here.
+No other package qualifies. ADELPHI has no dependency list to mine — it is unreleased IDL — so there
+was no opportunity to mistake generic infrastructure for interoperability here. The one near-miss worth
+recording is PFISR-Conductivities (Field 29): it is genuinely related software, but the relationship is
+historical derivation of ADELPHI's coefficients rather than any exchange between running programs, so it
+belongs there and not here.
 
 ### 31. Related Instruments (OPTIONAL)
 - **Instrument Name:** Birkeland Currents from IRIDIUM Data
