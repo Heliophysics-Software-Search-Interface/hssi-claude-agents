@@ -14,7 +14,12 @@ repos/**
 !repos/*/
 !repos/*/hssi_metadata.md
 !repos/*/*/
+repos/*/*/**
 !repos/*/*/hssi_metadata.md
+
+# Source-tree directories exposed by the two-level dossier exception above
+repos/asilib/tests/
+repos/solarsoft/lmco-SolarSoft/
 
 # Payloads — only track reference examples
 payloads/*
