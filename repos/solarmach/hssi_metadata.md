@@ -4,9 +4,8 @@
 **Repository:** https://github.com/jgieseler/solarmach
 **Source Revision:** dbafa3b06e021c651df7ed41dc31649b441c8909
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-07-28
+**Validation Date:** 2026-08-20
 **Validation Status:** PASS
-
 ---
 
 ## Section 1: Basic Information
@@ -65,10 +64,22 @@
   - **Author Identifier:** https://orcid.org/0000-0003-3903-4649
   - **Affiliation:** University of Turku
   - **Affiliation Identifier:** https://ror.org/05vghhr25
-- **Author:** Johan L. Freiherr von Forstner
-  - **Author Identifier:** Not found
+- **Author:** Johan Lauritz Freiherr von Forstner
+  (given name `Johan Lauritz`, family name `Freiherr von Forstner`)
+  - **Author Identifier:** https://orcid.org/0000-0002-1390-4776
+  - **Affiliation:** Institute of Experimental and Applied Physics, University of Kiel
+  - **Affiliation Identifier:** Not found
   - **Affiliation:** Paradox Cat GmbH
   - **Affiliation Identifier:** Not found
+
+**Name split and identifier.** An earlier revision of this file gave the given name
+"Johan L. Freiherr von", family "Forstner", with no identifier — a split that put the nobiliary particle
+chain "Freiherr von" in the given name. ORCID `0000-0002-1390-4776`, the author's own self-curated
+record, gives `given-names` = "Johan Lauritz" and `family-name` = "Freiherr von Forstner", and its
+**current** employment is "Paradox Cat, Machine Learning Engineer" — the very affiliation this entry
+already stored, which is what identifies the two HSSI rows as one person rather than a name coincidence.
+Both affiliations are retained: this author's record carries the union of the institutions any source
+attributes to him, and an affiliation is never dropped in favour of a newer one.
 - **Author:** Christian Palmroos
   - **Author Identifier:** https://orcid.org/0000-0002-7778-5454
   - **Affiliation:** University of Turku
@@ -81,7 +92,7 @@
   - **Author Identifier:** https://orcid.org/0000-0002-3298-2067
   - **Affiliation:** University of Turku
   - **Affiliation Identifier:** https://ror.org/05vghhr25
-- **Source:** Identity-aware union of the existing HSSI authors with the API-representable current software authors in `CITATION.cff`, `.zenodo.json`, and the Zenodo v0.5.3 record. The University of Turku ROR was confirmed through the localhost HSSI organization row and the ROR API. The public ORCID record confirms that https://orcid.org/0000-0003-2672-5491 belongs to Seve Nyberg. No ROR match was found for Paradox Cat GmbH. The one-token username-style release creator `drazerd` is authoritative source credit but is not emitted as an HSSI author because the schema requires non-empty given and family names and no non-invented split is available.
+- **Source:** Identity-aware union of the existing HSSI authors with the API-representable current software authors in `CITATION.cff`, `.zenodo.json`, and the Zenodo v0.5.3 record. The University of Turku ROR was confirmed through the live HSSI organization record and the ROR API. The public ORCID record confirms that https://orcid.org/0000-0003-2672-5491 belongs to Seve Nyberg. No ROR match was found for Paradox Cat GmbH. The one-token username-style release creator `drazerd` is authoritative source credit but is not emitted as an HSSI author because the schema requires non-empty given and family names and no non-invented split is available.
 
 ### 7. Software Name (MANDATORY)
 - **Software Name:** solarmach
@@ -168,7 +179,7 @@
 ### 20. Operating System (RECOMMENDED)
 - **Values:**
   - Operating System Independent
-- **Source:** Exact localhost HSSI controlled value, normalized from the `Operating System :: OS Independent` classifier in `pyproject.toml` and PyPI.
+- **Source:** Exact live HSSI controlled value, normalized from the `Operating System :: OS Independent` classifier in `pyproject.toml` and PyPI.
 
 ### 21. CPU Architecture (RECOMMENDED)
 - **Values:**
@@ -179,7 +190,7 @@
 - **Values:**
   - Solar Corona
   - Solar Wind
-- **Source:** Solar Corona and Solar Wind are exact localhost HSSI controlled values supported by the package's PFSS and solar-wind functionality. Interplanetary Magnetic Field and Parker Spiral are scientifically supported by the directly implemented and documented backmapping, but are not emitted because they are absent from localhost's pre-existing Phenomena vocabulary; that controlled vocabulary was not mutated.
+- **Source:** Solar Corona and Solar Wind are exact live HSSI controlled values supported by the package's PFSS and solar-wind functionality. Interplanetary Magnetic Field and Parker Spiral are scientifically supported by the directly implemented and documented backmapping, but are omitted because they are absent from the live Phenomena vocabulary.
 
 ### 23. Development Status (RECOMMENDED)
 - **Development Status:** Active
@@ -192,14 +203,14 @@
 ### 25. Funder (OPTIONAL)
 - **Organization:** European Commission
 - **Funder Identifier:** https://ror.org/00k4n6c32
-- **Source:** Preserved from the existing HSSI record and confirmed by the localhost HSSI organization row, Zenodo/DataCite funding metadata, README acknowledgements, and CORDIS project records. The repository says "European Union"; the existing HSSI/Zenodo identity `European Commission` is retained as the funding organization.
+- **Source:** Preserved from the existing HSSI record and confirmed by the live HSSI organization record, Zenodo/DataCite funding metadata, README acknowledgements, and CORDIS project records. The repository says "European Union"; the existing HSSI/Zenodo identity `European Commission` is retained as the funding organization.
 
 ### 26. Award Title (OPTIONAL)
 - **Award Title:** Solar EneRgetic ParticlE aNalysis plaTform for the INner hEliosphere (SERPENTINE)
   - **Award Number:** 101004159
 - **Award Title:** The Energetic Solar Eruptions: Data and Analysis Tools (SOLER)
   - **Award Number:** 101134999
-- **Source:** The existing HSSI award and Zenodo/DataCite metadata provide SERPENTINE; the README adds both grant numbers, and the European Commission CORDIS record supports SOLER. The SOLER label is reconciled to the exact existing localhost shared Award row matched by identifier `101134999`.
+- **Source:** The existing HSSI award and Zenodo/DataCite metadata provide SERPENTINE; the README adds both grant numbers, and the European Commission CORDIS record supports SOLER. The SOLER label is reconciled to the existing shared HSSI Award record matched by identifier `101134999`.
 
 ## Section 3: Additional Metadata
 
@@ -295,7 +306,7 @@
 - **Observatory Name:** Solar Dynamics Observatory
   - **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/SDO
 - **Source:** The repository's concrete `body_dict` supported-spacecraft list, mission-specific solar-wind dataset paths, GONG map retrieval, and HMI helper. The matched controlled-list row names are copied verbatim. SMWG rows are preferred over duplicate provider-specific representations except where an evidenced resource has only a CNES row or the exact AMDA `SolarOrbiter.SWAPAS` path selects the CNES Solar Orbiter row. Both BepiColombo and its explicitly aliased MPO spacecraft are included because the repository evidence names both.
-- **Note:** Europa Clipper, Psyche, and SOLAR-1/SWFO-L1 are explicitly supported by the source but have no defensible observatory row in the localhost SPASE-backed vocabulary; they are omitted rather than emitted as identifierless names. Planets and Lagrange points are also omitted because they are bodies/locations rather than observatories.
+- **Note:** Europa Clipper, Psyche, and SOLAR-1/SWFO-L1 are explicitly supported by the source but have no defensible observatory row in the live SPASE-backed vocabulary; they are omitted rather than emitted as identifierless names. Planets and Lagrange points are also omitted because they are bodies/locations rather than observatories.
 
 ### 33. Logo (OPTIONAL)
 - **Logo:** Not found

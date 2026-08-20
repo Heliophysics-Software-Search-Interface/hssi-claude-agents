@@ -4,9 +4,8 @@
 **Repository:** https://github.com/PlasmaPy/PlasmaPy
 **Source Revision:** 02d1c194a5b054516167b24503abe27b4e77825d
 **Extraction Date:** 2026-08-07
-**Validation Date:** 2026-08-10
+**Validation Date:** 2026-08-20
 **Validation Status:** PASS
-
 **Scope note — read the evidence with this in mind.** The pinned source revision is 97 commits ahead
 of the most recent release, `v2026.2.0` (2026-02-20). Some evidence cited below therefore comes from
 unreleased `main`: the `plasmapy.formulary.fusion` module and six `CITATION.cff` author entries do
@@ -429,6 +428,26 @@ therefore a conclusion about PlasmaPy rather than an unfinished search. Re-read 
 vocabulary during a future refresh so newly introduced values receive the same consideration.
 
 ### 6. Authors (MANDATORY)
+
+> **`PlasmaPy Community` identifier — intentionally retained.** The organizational author
+> `PlasmaPy Community` (author 1) stores
+> `https://github.com/PlasmaPy/PlasmaPy/blob/main/CITATION.cff` in its author-identifier field. That is a
+> source pointer rather than an ORCID/ROR-style entity identifier, and therefore not the cleanest
+> semantic use of the field. **It is deliberately kept.** It provides useful authoritative provenance for
+> this community author, and preserving it under HSSI's current Person-shaped representation of
+> organizational authors is the settled preference. A future audit must **not** re-propose removing it.
+>
+> Supporting facts for that decision: PlasmaPy is not a legal entity with a ROR, so no entity identifier
+> exists to substitute; across the whole catalogue only two identifier-bearing author records hold
+> neither an ORCID nor a ROR, this one and SunPy's equivalent; and the rule that this field carries an
+> ORCID applies to human authors, which this record is not. Organizational name and split normalization
+> is separately deferred.
+>
+> **Three authors here are also credited by other software under different name forms**, and this
+> project's entries are the canonical form in each case: Tien Vo, Pey Lian Lim and Andrew J. Leonard.
+> Recorded so a later refresh recognises the variants — "P. L. Lim" in CDFlib and
+> sunkit-image, "Drew Leonard" in sunkit-instruments, `Tien 'Vo` in PySPEDAS — instead of treating them
+> as separate people.
 
 `CITATION.cff` at the pinned revision lists **163** author entries, up from 157 at the `v2026.2.0`
 tag. The recommended group attribution is **PlasmaPy Community**, listed first, whose author

@@ -4,17 +4,8 @@
 **Repository:** https://github.com/AndrewAnnex/SpiceyPy
 **Source Revision:** 388c219808f5b0dc9ec10acee2ca1b3cbe3c6e47
 **Extraction Date:** 2026-07-29
-**Validation Date:** 2026-07-30
+**Validation Date:** 2026-08-20
 **Validation Status:** PASS
-
-**Extraction mode:** Seeded refresh from the live HSSI record retrieved 2026-07-29. No prior
-`hssi_metadata.md` existed for this entry. Every controlled-list value below was confirmed against
-the live HSSI vocabulary.
-
-**Provenance legend used in the notes below:**
-- `[HSSI]` — carried over from the existing live HSSI record (submitted value, preserved)
-- `[NEW]` — field was empty on HSSI; filled from repository/authoritative evidence
-- `[CHANGED]` — an existing HSSI value replaced or extended; every one carries its evidence
 
 ---
 
@@ -29,37 +20,37 @@ the live HSSI vocabulary.
 ### 2. Persistent Identifier (RECOMMENDED)
 https://doi.org/10.5281/zenodo.593914
 
-`[HSSI]` Unchanged. Confirmed independently: this is the Zenodo **concept** DOI
+This is the Zenodo **concept** DOI
 (`conceptdoi` / `conceptrecid` 593914 on the Zenodo record for v8.2.0) and it is listed in
 `CITATION.cff` under `identifiers` with description "Zenodo archive".
 
 ### 3. Code Repository (MANDATORY)
 https://github.com/AndrewAnnex/SpiceyPy
 
-`[HSSI]` Unchanged. Confirmed against `pyproject.toml` `[project.urls]` (Homepage / Repository /
+Confirmed by `pyproject.toml` `[project.urls]` (Homepage / Repository /
 Source), `CITATION.cff` `repository-code`, the PyHC community registry `code` field, and the live
 GitHub API (not archived, default branch `main`, last push 2026-07-26).
 
 ### 4. Software Functionality (MANDATORY)
 
-`[CHANGED]` HSSI currently stores only the bare parent `Coordinate Transforms`. Expanded to a
-comprehensive set below. All 12 values were confirmed to exist in the live `FunctionCategory`
-vocabulary (83 rows) with the exact parent→child pairings shown; no existing value is removed.
+The previous value contained only the bare parent `Coordinate Transforms`; the comprehensive set
+below replaces it. All 12 values match the live `FunctionCategory` vocabulary with the exact
+parent→child pairings shown.
 
-- **Coordinate Transforms** `[HSSI]`
-- **Coordinate Transforms > Mission-Specific** `[NEW]`
+- **Coordinate Transforms**
+- **Coordinate Transforms > Mission-Specific**
   Spacecraft- and instrument-fixed reference frames are the toolkit's signature capability:
   `pxform`, `sxform`, `pxfrm2`, `xfmsta` transform between any furnished frames; `ckgp`/`ckgpav`/
   `ckfrot`/`ckfxfm` return spacecraft/instrument pointing from C-kernels; `getfov` returns instrument
   field-of-view geometry from instrument kernels; `namfrm`/`frmnam`/`cidfrm`/`cnmfrm`/`ccifrm` resolve
   frame–body associations. The `software-functionality` skill maps `spiceypy` to this value directly.
-- **Coordinate Transforms > Planetary** `[NEW]`
+- **Coordinate Transforms > Planetary**
   Body-fixed planetary frames via PCK (`IAU_MARS`, `IAU_EARTH`, `ITRF93` — all documented in
   `docs/frames.rst`, `docs/pck.rst`, `docs/binary_pck.rst`), plus a full set of planetary coordinate
   conversions: `reclat`/`latrec`, `recgeo`/`georec` (geodetic), `recpgr`/`pgrrec` (planetographic),
   `recsph`/`sphrec`, `reccyl`/`cylrec`, `recrad`/`radrec`, `srfrec`, and the Jacobians
   `drdgeo`/`dgeodr`/`drdpgr`/`dpgrdr`.
-- **Coordinate Transforms > Heliospheric** `[NEW]`
+- **Coordinate Transforms > Heliospheric**
   Heliocentric ecliptic state computation is documented and worked end-to-end:
   `docs/insitu_sensing.rst` (lines 515–540) computes an interplanetary spacecraft's state **relative to
   the Sun** in the `ECLIPJ2000` ecliptic frame — `spkezr(target, et, "ECLIPJ2000", "NONE", "SUN")` —
@@ -77,18 +68,18 @@ vocabulary (83 rows) with the exact parent→child pairings shown; no existing v
   reading: the capability is genuinely present, and the completeness goal favors recording it. The
   earlier `IAU_SUN` justification has been withdrawn — it contradicted this file's own exclusion note
   that `IAU_SUN` is a body-fixed planetary-style frame already covered by `> Planetary`.
-- **Coordinate Transforms > Magnetospheric** `[NEW]`
+- **Coordinate Transforms > Magnetospheric**
   `docs/frames.rst` documents `GSE` and `GSM` as SPICE parameterized two-vector dynamic frames,
   including a complete worked GSE frame-kernel definition (appendix "Frame Definition Examples") and
   explicit examples `spkezr(moon, et, "GSE", "NONE", "EARTH")` and `sxform("GSE", "J2000", et)`.
-- **Data Processing and Analysis** `[NEW]`
+- **Data Processing and Analysis**
   Reads and writes the SPICE ancillary-data kernel family and queries the kernel pool: `furnsh`,
   `unload`, `kclear`, `ktotal`, `kdata`, `kinfo`, `getfat`; `bodvrd`/`bodvcd` and
   `gcpool`/`gdpool`/`gipool`/`stpool` for pool variables; DAF/DAS-level readers (`dafopr`, `dafbfs`,
   `dafgda`, `dasopr`, `dasrfr`); DSK topography readers (`dskd02`, `dski02`, `dskv02`, `dskp02`,
   `dskgd`, `dskobj`, `dsksrf`); and SQL-like queries over Event Kernels (`ekfind`, `ekgc`, `ekgd`,
   `ekgi`, `ekpsel`, `ekntab`, `ektnam`).
-- **Data Processing and Analysis > Analysis** `[NEW]`
+- **Data Processing and Analysis > Analysis**
   Derived-geometry science calculations: the full geometry-finder family (`gfoclt`, `gfdist`, `gfsep`,
   `gfrfov`, `gftfov`, `gfpa`, `gfposc`, `gfsubc`, `gfsntc`, `gfilum`, `gfevnt`, `gfudb`, `gfuds`) for
   occultation/distance/angular-separation/FOV/illumination event searches; surface intercepts and
@@ -97,27 +88,27 @@ vocabulary (83 rows) with the exact parent→child pairings shown; no existing v
   (`phaseq`), target separation (`trgsep`), local solar time (`et2lst`), sub-solar planetocentric
   longitude (`lspcn`, `subsol`); and interval/window set algebra over event results (`wnunid`,
   `wnintd`, `wndifd`, `wnfild`, `wnfltd`, `wnexpd`, `wncond`, `wnsumd`).
-- **Models and Simulations** `[NEW]`
+- **Models and Simulations**
   Provides physical/geometric models rather than only data reduction — see the two children.
-- **Models and Simulations > Physics-Based** `[NEW]`
+- **Models and Simulations > Physics-Based**
   Two-body/conic orbital propagation and element conversion (`prop2b`, `conics`, `oscelt`, `oscltx`);
   light-time and stellar-aberration corrected states (`spkltc`, `spkaps`, `spkapo`, `stelab`,
   `ltime`, and the `abcorr` model set documented in `docs/abcorr.rst`); triaxial-ellipsoid body shape
   models (`surfpt`, `surfnm`, `nearpt`, `dnearp`, `npedln`, `edlimb`, `inedpl`, `saelgv`); PCK-based
   body orientation models (`tipbod`, `tisbod`); and time-system models (`unitim`, `deltet`, `sce2c`,
   `sct2e`, `scs2e`, `sce2s`).
-- **Models and Simulations > Observatory/Instrument Models** `[NEW]`
+- **Models and Simulations > Observatory/Instrument Models**
   Instrument-kernel field-of-view models exposed to users: `getfov` returns an instrument's FOV shape,
   boresight and boundary vectors; `fovray`/`fovtrg` test whether a ray or target lies within a modeled
   FOV; `gfrfov`/`gftfov` search for FOV entry/exit intervals. `docs/remote_sensing.rst` documents FK/IK
   frame and instrument-FOV definitions as the model inputs.
-- **Mission-related** `[NEW]`
+- **Mission-related**
   SPICE is NASA/NAIF's ancillary-data system for space missions, and SpiceyPy is the Python interface
   to it: spacecraft ephemeris and attitude (SPK/CK), spacecraft-clock correlation (SCLK: `sce2c`,
   `sct2e`, `scs2e`, `sce2s`), instrument alignment (FK/IK), and kernel *writers* used by mission
   pipelines to produce ancillary products (`spkopn`/`spkw02`–`spkw20`, `ckopn`/`ckw01`–`ckw05`,
   `pckopn`/`pckw02`, `dskopn`/`dskw02`/`dskmi2`, `ekopn`/`ekops`/`ekifld`/`ekffld`/`ekacli`).
-- **Mission-related > Observatory/Instrument Models** `[NEW]`
+- **Mission-related > Observatory/Instrument Models**
   Same FOV/alignment/pointing model surface as above, in its mission-infrastructure role: instrument
   and structure frames come from mission FK/IK kernels and pointing from mission CKs.
 
@@ -142,22 +133,22 @@ vocabulary (83 rows) with the exact parent→child pairings shown; no existing v
 
 ### 5. Related Region (MANDATORY)
 
-`[CHANGED]` HSSI currently stores only `Interplanetary Space`. Kept, and extended using the curated
-PyHC registry classification (highest-priority source per the metadata-priority order). All values
-confirmed against the live `Region` vocabulary (24 rows).
+The previous value contained only `Interplanetary Space`. It is retained and extended using the curated
+PyHC registry classification (highest-priority source per the metadata-priority order). Every value
+matches the live `Region` vocabulary.
 
-- **Interplanetary Space** `[HSSI]` — SPICE's core domain: interplanetary spacecraft trajectory,
+- **Interplanetary Space** — SPICE's core domain: interplanetary spacecraft trajectory,
   pointing and observation geometry.
-- **Solar Environment** `[NEW]` — PyHC community registry lists keyword `solar` for SpiceyPy;
+- **Solar Environment** — PyHC community registry lists keyword `solar` for SpiceyPy;
   `IAU_SUN`/heliocentric frames and solar-direction geometry (`soldir`, `subsol`, `lspcn`) are
   documented capabilities.
-- **Earth Magnetosphere** `[NEW]` — PyHC keyword `magnetosphere`; `docs/frames.rst` documents the
+- **Earth Magnetosphere** — PyHC keyword `magnetosphere`; `docs/frames.rst` documents the
   geocentric solar-ecliptic (`GSE`) and geocentric solar-magnetospheric (`GSM`) frames with worked
   examples.
-- **Earth Ionosphere** `[NEW]` — PyHC keyword `ionosphere_thermosphere_mesosphere`; SpiceyPy provides
+- **Earth Ionosphere** — PyHC keyword `ionosphere_thermosphere_mesosphere`; SpiceyPy provides
   the geometry (position, pointing, geodetic/ITRF93 coordinates, local solar time) used with
   ionospheric-mission data.
-- **Earth Thermosphere** `[NEW]` — same PyHC `ionosphere_thermosphere_mesosphere` evidence and the
+- **Earth Thermosphere** — same PyHC `ionosphere_thermosphere_mesosphere` evidence and the
   same geometry basis.
 
 **Considered and excluded:** `Planetary Magnetospheres` and the per-planet magnetosphere rows
@@ -168,12 +159,10 @@ supporting evidence in the repository.
 
 ### 6. Authors (MANDATORY)
 
-`[HSSI]` **Identity-aware union — all 21 existing HSSI authors retained, none dropped, none added.**
-The union of HSSI's 21 people, `.zenodo.json` (21 creators), the DataCite concept-DOI creators
+**Canonical roster: 21 authors.** The union of HSSI's 21 people, `.zenodo.json` (21 creators), the DataCite concept-DOI creators
 (21, matched by ORCID), and `CITATION.cff` (15 authors, a subset) is exactly these 21 people. Matched
-by ORCID first, then normalized name. Affiliations are the union of the HSSI-stored organization and
-the `CITATION.cff` / `.zenodo.json` affiliation for each matched author (no author gains or loses an
-affiliation relative to HSSI).
+by ORCID first, then normalized name. Affiliations record the complete shared HSSI organization set
+for each person, reconciled against the `CITATION.cff` and `.zenodo.json` affiliations.
 
 | # | Name (HSSI stored form) | Identifier (ORCID) | Affiliation |
 |---|---|---|---|
@@ -182,7 +171,7 @@ affiliation relative to HSSI).
 | 3 | Kristin L. Berry | https://orcid.org/0000-0001-9757-9706 | USGS Astrogeology Science Center (https://ror.org/02623eb90) — see typo note below |
 | 4 | Brian T. Carcich | https://orcid.org/0000-0001-9211-6526 | Latchmoor Services, LLC |
 | 5 | Helge Eichhorn | https://orcid.org/0000-0003-0303-5199 | Planetary Transportation Systems GmbH |
-| 6 | Johan Freiherr von Forstner | https://orcid.org/0000-0002-1390-4776 | Institute of Experimental and Applied Physics, University of Kiel |
+| 6 | Johan Lauritz Freiherr von Forstner | https://orcid.org/0000-0002-1390-4776 | Institute of Experimental and Applied Physics, University of Kiel; Paradox Cat GmbH |
 | 7 | Lars Hinüber | https://orcid.org/0009-0004-7121-1021 | Not found |
 | 8 | Chris Jeppesen | Not found | Laboratory for Atmospheric and Space Physics (https://ror.org/01fcjzv38) |
 | 9 | Shankar Kulumani | https://orcid.org/0000-0002-7822-0471 | Collins Aerospace |
@@ -201,17 +190,23 @@ affiliation relative to HSSI).
 
 Notes on this field:
 - All 21 are people; there is no organization author, so no ROR is used as an author identifier.
-- **Affiliation-name correction completed 2026-07-30.** The shared organization previously read
+- **Previous affiliation name corrected.** The shared organization previously read
   **"USGS Astrogeology Science Centerlogy"**, a typo originating in `.zenodo.json` and propagated
   through DataCite. The corrected **"USGS Astrogeology Science Center"** matches `CITATION.cff`
   (lines 37 and 66); its existing ROR `https://ror.org/02623eb90` resolves to "Astrogeology Science
   Center". Kristin L. Berry and Jesse A. Mapel retain their existing affiliations to this
   organization.
+
+**Johan Lauritz Freiherr von Forstner — both affiliations, and why.** The Kiel institute is supported
+by this software's `CITATION.cff`; Paradox Cat GmbH is shared-record context rather than evidence from
+SpiceyPy. ORCID `0000-0002-1390-4776` gives Paradox Cat as his current employer, and `solarmach`
+independently credits the same person with that affiliation. The catalogue therefore retains both
+organizations on the shared person record; neither is discarded in favour of the other.
+
 - Non-actionable stylistic naming variants were intentionally **not** changed: `CITATION.cff` writes
-  "Andrew M. Annex" where HSSI
-  stores "Andrew Annex", and "Johan Lauritz Freiherr von Forstner" where HSSI stores "Johan Freiherr
-  von Forstner". `pyproject.toml` lower-cases the surname ("Andrew M. annex") and is not authoritative
-  for name form.
+  "Andrew M. Annex" where the shared HSSI record uses "Andrew Annex". The Johan Lauritz Freiherr von Forstner form
+  above follows the shared, ORCID-bearing HSSI person record. `pyproject.toml` lower-cases the surname
+  ("Andrew M. annex") and is not authoritative for name form.
 - **Andrew Annex's affiliation is point-in-time, not current.**
   All three static sources agree
   on Johns Hopkins University (HSSI, `CITATION.cff` line 10, `.zenodo.json`), and that is the value
@@ -227,7 +222,7 @@ Notes on this field:
 ### 7. Software Name (MANDATORY)
 SpiceyPy
 
-`[HSSI]` Unchanged. Matches the repository name, `README.rst` title, the PyHC registry `name`, and
+Matches the repository name, `README.rst` title, the PyHC registry `name`, and
 `CITATION.cff` title "SpiceyPy: a Pythonic Wrapper for the SPICE Toolkit". Editorial intent preserved.
 
 ### 8. Description (MANDATORY)
@@ -235,18 +230,18 @@ SpiceyPy is a python wrapper for the SPICE Toolkit. SPICE is an essential tool f
 
 IMPORTANT: The code is provided "as is", use at your own risk. However, the NAIF now distributes python "lessons" that use SpiceyPy as the python to spice interface.
 
-`[HSSI]` Unchanged. This is a faithful transcription of `README.rst` "Introduction" (lines 32–36),
-so it is both the submitted wording and the repository's own wording. No stylistic rewrite applied.
+This is a faithful transcription of `README.rst` "Introduction" (lines 32–36), so it is both the
+submitted wording and the repository's own wording.
 
 ### 9. Concise Description (OPTIONAL)
 SpiceyPy is a python wrapper for the SPICE Toolkit. SPICE is an essential tool for scientists and engineers alike in the planetary science field for Solar System Geometry.
 
-`[HSSI]` Unchanged (171 characters, within the 200-character limit).
+The text is 171 characters, within the 200-character limit.
 
 ### 10. Publication Date (RECOMMENDED)
 2016-03-27
 
-`[CHANGED]` HSSI previously stored **2025-10-27**, which is the release date of tag `v8.0.0`
+HSSI previously stored **2025-10-27**, which is the release date of tag `v8.0.0`
 (`git log -1 v8.0.0` → 2025-10-27) — i.e. a version date, not a first-publication date. Field 10 is
 defined as "Date of first broadcast/publication … Used for the initial version of the software."
 Evidence for 2016-03-27: the first PyPI distribution of `spiceypy` is 1.0.0, uploaded
@@ -259,7 +254,7 @@ is recorded here so the replacement remains auditable.
 - **Organization:** Zenodo
 - **Publisher Identifier:** https://zenodo.org
 
-`[HSSI]` Unchanged. Correct per the Field 11 guidance (DOI obtained through the GitHub–Zenodo
+Correct per the Field 11 guidance (DOI obtained through the GitHub–Zenodo
 workflow) and confirmed by DataCite `publisher: "Zenodo"` for the concept DOI.
 
 ### 12. Version (RECOMMENDED)
@@ -268,7 +263,7 @@ workflow) and confirmed by DataCite `publisher: "Zenodo"` for the concept DOI.
 - **Version Description:** Restored Python 3.10 wheel builds and corrected the PyPI classifier; faster wheel builds that compile CSPICE once per cibuildwheel job; CSPICE cached from a hash-verified mirror; documentation updated to the Pyodide 314.0.0 kernel; `cspice_flavor` now read via `c_int.in_dll`. Fixes: `spkaps` `accobs` corrected to a 3-vector (backwards compatible via truncation), `dskb02` vertex-bounds return shape corrected, `ctypes` argtype misspellings on `dafrs`, `gfilum`, `polyds`, `vnormg` and `vnorm` that silently disabled argument marshalling, erroneous double-byref calls, and a missing comma in `__all__` that merged "exceptions" and "stypes" and broke those imports.
 - **Version PID:** https://doi.org/10.5281/zenodo.21540077
 
-`[CHANGED]` HSSI stores `v8.0.0`. Superseded by objectively newer authoritative evidence: git tag
+The previous version was `v8.0.0`; it is superseded by objectively newer authoritative evidence: git tag
 `v8.2.0` (tag commit `c8b6da4f1370ba7b5cf9ad06829143f7fc055f2a`, 2026-07-24), `CHANGELOG.md`
 `## [8.2.0] - 2026-07-24`, PyPI `spiceypy` 8.2.0 uploaded 2026-07-24T21:37:59Z, and the Zenodo
 record for that release (`10.5281/zenodo.21540077`, `version: v8.2.0`,
@@ -278,14 +273,13 @@ prefix must never be written back. Version description condensed from the `CHANG
 section.
 
 ### 13. Programming Language (RECOMMENDED)
-- **Python 3.x** `[HSSI]`
-- **C** `[NEW]`
-- **Other** `[HSSI]`
+- **Python 3.x**
+- **C**
+- **Other**
+`Java` is deliberately absent from the list above. The previous value was unsupported: the final
+field value is exactly the three values shown.
 
-`Java` was **REMOVED** on 2026-07-30 and is deliberately absent from the list
-above. The final field value is exactly the three values shown.
-
-`[CHANGED]` All values confirmed against the live `ProgrammingLanguage` vocabulary (19 rows).
+All values match the live `ProgrammingLanguage` vocabulary.
 - `Python 3.x` — the package is Python-only at the API level; `requires-python = ">=3.10"`, wheels for
   CPython 3.10–3.14.
 - `C` added: SpiceyPy exists to bind the NAIF **C** SPICE toolkit. `src/spiceypy/utils/libspicehelper.py`
@@ -303,7 +297,7 @@ above. The final field value is exactly the three values shown.
 ### 14. Reference Publication (RECOMMENDED)
 https://doi.org/10.21105/joss.02050
 
-`[NEW]` Empty on HSSI. Annex et al., "SpiceyPy: a Pythonic Wrapper for the SPICE Toolkit", *Journal of
+Annex et al., "SpiceyPy: a Pythonic Wrapper for the SPICE Toolkit", *Journal of
 Open Source Software*, 5(46), 2050. Authoritative: `CITATION.cff` `preferred-citation` with
 `doi: 10.21105/joss.02050`, the README "Citing SpiceyPy" section, the JOSS badge in `README.rst`, and
 the `joss/` directory in the repository.
@@ -312,7 +306,7 @@ the `joss/` directory in the repository.
 - **License:** MIT License
 - **License URI:** https://spdx.org/licenses/MIT
 
-`[NEW]` Empty on HSSI. Evidence: `LICENSE` ("The MIT License (MIT)", Copyright (c) [2015-2024]
+Evidence: `LICENSE` ("The MIT License (MIT)", Copyright (c) [2015-2024]
 [Andrew Annex]), `pyproject.toml` `license = "MIT"` with `license-files = ["LICENSE"]`,
 `CITATION.cff` `license: MIT`, `.zenodo.json` `"license": "MIT"`, GitHub API license
 `"MIT License"`, and DataCite `rightsList` (`rightsIdentifier: mit`, SPDX scheme). `MIT License` is
@@ -324,14 +318,13 @@ the canonical live `License` row and the URI is that row's stored URL.
 
 ### 16. Keywords (OPTIONAL)
 
-`[CHANGED]` Set-union: all 13 existing HSSI keywords retained (stored lower-case; the view renders
-Title Case), plus 6 additions that reuse **existing** live `Keyword` rows (585 rows) rather than
-minting near-duplicates.
+The keyword set retains the 13 established HSSI terms (stored lower-case; the view renders Title
+Case) and adds six distinct terms that reuse existing HSSI vocabulary entries.
 
-Existing `[HSSI]`: `cspice`, `ephemeris`, `geometry`, `hacktoberfest`, `jpl`, `naif`, `nasa`,
+Retained: `cspice`, `ephemeris`, `geometry`, `hacktoberfest`, `jpl`, `naif`, `nasa`,
 `navigation`, `python`, `space`, `spice`, `spiceypy`, `toolkit`
 
-Added `[NEW]`: `planetary science`, `coordinate transformations`, `time`, `orbit`, `wrapper`, `pyhc`
+Additional values: `planetary science`, `coordinate transformations`, `time`, `orbit`, `wrapper`, `pyhc`
 
 Evidence for the additions — `planetary science`: README/description "essential tool … in the
 planetary science field"; `coordinate transformations`: the frame/coordinate conversion API (Field 4);
@@ -347,7 +340,7 @@ Current GitHub topics (`ephemeris`, `nasa`, `navigation`, `python`, `space`, `sp
 ### 17. Data Sources (OPTIONAL)
 Not found — intentionally left empty.
 
-`[NEW]` (still empty) SpiceyPy's public API reads SPICE kernels from the **local filesystem**
+SpiceyPy's public API reads SPICE kernels from the **local filesystem**
 (`furnsh` takes a path); it implements no archive client, no HTTP/FTP retrieval, and no
 observatory-specific data source. `src/spiceypy/tests/gettestkernels.py` downloads test kernels from
 `https://naif.jpl.nasa.gov/pub/naif/…`, but that is test-fixture infrastructure, not a user-facing
@@ -357,10 +350,9 @@ Field 32, which is (correctly) empty for this mission-agnostic toolkit. A docume
 the correct outcome here.
 
 ### 18. Input File Formats (RECOMMENDED)
-- **ascii** `[NEW]`
-- **Other** `[NEW]`
-
-`[NEW]` Both empty on HSSI; both confirmed in the live `FileFormat` vocabulary (11 rows).
+- **ascii**
+- **Other**
+Both names match the live `FileFormat` vocabulary.
 - `ascii` — SPICE **text** kernels are plain text and are read directly: meta-kernels/furnsh files,
   LSK (leapseconds), FK (frames), IK (instruments), text SCLK and text PCK. Wrapped readers:
   `furnsh`, `ldpool`, `lmpool`, `rdtext`, `getfat`.
@@ -369,10 +361,9 @@ the correct outcome here.
   `dskobj`/`dsksrf`/`dskd02`/`dski02`, `dafopr`/`dafgda`, `dasopr`/`dasrfr`, `ekopr`.
 
 ### 19. Output File Formats (RECOMMENDED)
-- **ascii** `[NEW]`
-- **Other** `[NEW]`
-
-`[NEW]` Both empty on HSSI.
+- **ascii**
+- **Other**
+Both formats are directly supported by the writer API.
 - `ascii` — text file creation and writing is wrapped: `txtopn` (open a new text file) and `writln`
   (write a line of text).
 - `Other` — SpiceyPy wraps the SPICE kernel **writers**, which produce binary kernels:
@@ -381,12 +372,11 @@ the correct outcome here.
   `ekopn`/`ekops`/`ekifld`/`ekffld`/`ekacli`.
 
 ### 20. Operating System (RECOMMENDED)
-- **Linux** `[NEW]`
-- **Mac** `[NEW]`
-- **Windows** `[NEW]`
-- **Other** `[NEW]`
-
-`[NEW]` Empty on HSSI. All four confirmed in the live `OperatingSystem` vocabulary (7 rows).
+- **Linux**
+- **Mac**
+- **Windows**
+- **Other**
+All four names match the live `OperatingSystem` vocabulary.
 `README.rst` "Known Working Environments": "SpiceyPy is compatible with modern Linux, Mac, and Windows
 environments … OS: OS X, Linux, Windows, FreeBSD". `pyproject.toml` classifiers cover
 `MacOS :: MacOS X`, `POSIX :: Linux`, `Microsoft :: Windows` and `POSIX :: BSD :: FreeBSD`.
@@ -397,12 +387,11 @@ wheels"), neither of which has a vocabulary row.
 `Operating System Independent` was rejected: the package ships compiled, platform-specific wheels.
 
 ### 21. CPU Architecture (RECOMMENDED)
-- **x86-64** `[NEW]`
-- **Apple Silicon arm64** `[NEW]`
-- **Linux aarch64 or arm64** `[NEW]`
-- **Other** `[NEW]`
-
-`[NEW]` Empty on HSSI. All four confirmed in the live `CpuArchitecture` vocabulary (9 rows).
+- **x86-64**
+- **Apple Silicon arm64**
+- **Linux aarch64 or arm64**
+- **Other**
+All four names match the live `CpuArchitecture` vocabulary.
 `README.rst`: "CPU: x64, arm" and "ARM support for Linux-aarch64 & osx-arm64". The publish workflow
 sets `CIBW_ARCHS_MACOS=arm64` / `x86_64` and `CIBW_ARCHS_LINUX=aarch64`; CI matrix includes
 `ubuntu-22.04-arm` (Linux arm64), `macos-15` (Apple Silicon), `macos-15-intel` and `windows-latest`
@@ -413,15 +402,15 @@ which has no vocabulary row.
 ### 22. Related Phenomena (OPTIONAL)
 Not found — intentionally left empty.
 
-`[NEW]` (still empty) The live `Phenomena` vocabulary has 7 rows (Coronal Heating, Coronal Mass
-Ejections, Geomagnetic Storms, Solar Corona, Solar Flares, Solar Wind, X-ray emission). SpiceyPy is a
+The available HSSI phenomena are Coronal Heating, Coronal Mass Ejections, Geomagnetic Storms, Solar
+Corona, Solar Flares, Solar Wind, and X-ray emission. SpiceyPy is a
 geometry/ancillary-data toolkit and supports none of these phenomena as a science function; the
 vocabulary is closed, so an unsupported term cannot be added. Documented empty value.
 
 ### 23. Development Status (RECOMMENDED)
 Active
 
-`[NEW]` Empty on HSSI. Confirmed in the live `RepoStatus` vocabulary (8 rows). Evidence:
+The value matches the live `RepoStatus` vocabulary. Evidence:
 `pyproject.toml` classifier `Development Status :: 5 - Production/Stable`; four releases in the last
 four months (8.1.0 2026-04-04, 8.1.1 and 8.1.2 2026-06-14, 8.2.0 2026-07-24); GitHub API
 `archived: false`, `disabled: false`, last push 2026-07-26; a scheduled weekly CI cron; and a funded
@@ -431,7 +420,7 @@ active development effort (the Cyice PDART work). Matches the repostatus.org def
 ### 24. Documentation (RECOMMENDED)
 https://spiceypy.readthedocs.io
 
-`[HSSI]` Unchanged. Confirmed by `pyproject.toml` `"Documentation"`, `CITATION.cff` `url`,
+Confirmed by `pyproject.toml` `"Documentation"`, `CITATION.cff` `url`,
 `.readthedocs.yaml`, the PyHC registry `docs` field, and the README documentation section. The URL
 resolves (README also links the equivalent `http://spiceypy.readthedocs.org` form). Installation
 instructions live at `docs/installation.rst` under the same site, satisfying the field's
@@ -441,7 +430,7 @@ instructions live at `docs/installation.rst` under the same site, satisfying the
 - **Organization:** National Aeronautics and Space Administration
 - **Funder Identifier:** https://ror.org/027ka1x80
 
-`[NEW]` Empty on HSSI. Evidence: `README.rst` "Acknowledgements" — "Supported in part through NASA
+Evidence: `README.rst` "Acknowledgements" — "Supported in part through NASA
 PDART23 80NSSC25K7040 FY24-FY27"; and `docs/cyice.rst` — "A recent NASA PDART grant award
 (80NSSC25K7040) has funded work to significantly enhance SpiceyPy". The acronym is expanded per the
 Field 25 instruction, and the name/ROR match the existing HSSI `Organization` row
@@ -451,10 +440,9 @@ identified by `https://ror.org/027ka1x80`.
 - **Award Title:** Improving SpiceyPy: the Python SPICE interface
 - **Award Number:** 80NSSC25K7040
 
-`[NEW]` Empty on HSSI. The **award number** is authoritative and directly stated in the repository
+The **award number** is authoritative and directly stated in the repository
 (`README.rst` Acknowledgements; `docs/cyice.rst`), which also names the program (NASA PDART, 2023
-call — "PDART23", period FY24–FY27). No live `Award` row exists for `80NSSC25K7040` (checked all 50
-rows), so this creates a new award entry.
+call — "PDART23", period FY24–FY27).
 The **title** is not stated in the repository. It is taken from the NASA ADS record for the matching
 PDART-2023 proposal by A. M. Annex, bibcode `2023pdar.prop...37A`, titled "Improving SpiceyPy: the
 Python SPICE interface." The author, program and cycle all align with the repository's
@@ -469,7 +457,7 @@ best-supported match to the repository's award number and program evidence.
 
 ### 27. Related Publications (OPTIONAL)
 
-`[NEW]` Empty on HSSI. Four publications the project itself prioritizes, all distinct from the Field 14
+Four publications the project itself prioritizes, all distinct from the Field 14
 reference publication.
 
 1. https://doi.org/10.1016/0032-0633(95)00107-7
@@ -493,13 +481,13 @@ reference publication.
 ### 28. Related Datasets (OPTIONAL)
 Not found.
 
-`[NEW]` (still empty) SpiceyPy operates on SPICE kernels, which are per-mission ancillary data
+SpiceyPy operates on SPICE kernels, which are per-mission ancillary data
 products archived at NAIF/PDS, but the repository identifies no specific dataset and no dataset DOI.
 The toolkit is deliberately dataset-agnostic. Documented empty value.
 
 ### 29. Related Software (OPTIONAL)
 
-`[NEW]` Empty on HSSI. Two entries pass the relevance gate.
+Two entries pass the relevance gate.
 
 1. **NAIF CSPICE Toolkit** — https://naif.jpl.nasa.gov/naif/toolkit_C.html
    *Evidence:* the defining relationship — SpiceyPy is a wrapper around this specific
@@ -534,7 +522,7 @@ The toolkit is deliberately dataset-agnostic. Documented empty value.
 ### 30. Interoperable Software (OPTIONAL)
 Not found — intentionally left empty.
 
-`[NEW]` (still empty) No package meets the demonstrated-exchange bar for this field. SpiceyPy exposes
+No package meets the demonstrated-exchange bar for this field. SpiceyPy exposes
 no adapter/converter API to another domain tool, defines no shared or convertible data model with a
 peer package, ships no plugin/extension relationship, and provides no cross-language bridge to a named
 domain tool. Its only runtime dependency is `numpy` (Tier A — being a dependency is not
@@ -547,7 +535,7 @@ correct outcome.
 ### 31. Related Instruments (OPTIONAL)
 None — no entries. Documented omission (SPASE ladder rule 5).
 
-`[NEW]` (still empty) **Determination: SpiceyPy is instrument-agnostic by design and supports no
+**Determination: SpiceyPy is instrument-agnostic by design and supports no
 specific instrument.** It provides generic geometry, time and reference-frame services for *whatever*
 kernels the user furnishes; every instrument-specific fact (FOV shape, boresight, alignment) lives in
 the mission's own IK/FK kernels, not in this software. It reads no instrument-specific data format,
@@ -568,7 +556,7 @@ fail the *relevance* gate rather than being related-but-unresolvable.
 ### 32. Related Observatories (OPTIONAL)
 None — no entries. Documented omission (SPASE ladder rule 5).
 
-`[NEW]` (still empty) **Determination: SpiceyPy is mission/observatory-agnostic.** Same reasoning as
+**Determination: SpiceyPy is mission/observatory-agnostic.** Same reasoning as
 Field 31 — mission identity is supplied entirely by the user's kernels (SPK/CK/SCLK), not by the
 software. SpiceyPy implements no mission's data conventions, is not a mission-team tool, and accesses
 no mission archive. The mission names in the repository (Cassini, Mars Express, Voyager, Galileo,
@@ -582,49 +570,8 @@ support, those entries should be resolved against the then-current SPASE-backed 
 ### 33. Logo (OPTIONAL)
 Not found.
 
-`[NEW]` (still empty) No logo exists. The repository's only image is
+No logo exists. The repository's only image is
 `docs/images/exampleoneplot_min.png` (a plot from the Cassini position example, not a logo); the
 README uses only shields.io status badges; the PyHC community-registry entry for SpiceyPy has no
 `logo` field (unlike several other PyHC entries); and `docs/conf.py` sets no Sphinx logo. The GitHub
 owner avatar is a personal account image, not a software logo, so it is not used.
-
----
-
-## Summary of changes relative to the live HSSI record
-
-**Newly filled (were empty):** Reference Publication (14), License (15), Input File Formats (18),
-Output File Formats (19), Operating System (20), CPU Architecture (21), Development Status (23),
-Funder (25), Award (26), Related Publications (27), Related Software (29).
-
-**Enriched (existing values kept, new ones added):** Software Functionality (4) — 1 value → 12;
-Related Region (5) — 1 value → 5; Keywords (16) — 13 → 19; Version (12) — v8.0.0 → v8.2.0 with date,
-description and version DOI added.
-
-**Corrected (a submitted value replaced or removed on authoritative evidence):**
-Publication Date (10) — 2025-10-27 → 2016-03-27; Programming Language (13) — `Java` removed and `C`
-added, leaving `Python 3.x`, `C`, `Other`.
-
-**Unchanged (submitted values respected):** Persistent Identifier (2), Code Repository (3),
-Authors (6, all 21 retained), Software Name (7), Description (8), Concise Description (9),
-Publisher (11), Documentation (24).
-
-**Documented empty (correct outcome, not a gap):** Data Sources (17), Related Phenomena (22),
-Related Datasets (28), Interoperable Software (30), Related Instruments (31),
-Related Observatories (32), Logo (33).
-
-## Notes on non-obvious values
-
-- Publication Date is the first PyPI publication date, not the date of the previously stored release.
-- Programming Language excludes unsupported `Java` and includes the wrapped C toolkit.
-- The ADS-derived PDART title is the best-supported match to award `80NSSC25K7040`.
-- `Coordinate Transforms > Heliospheric` is retained on demonstrated heliocentric ecliptic capability.
-- Andrew Annex retains the citation-time Johns Hopkins University affiliation rather than his current
-  employment.
-- `spiceminer` remains excluded because its historical acknowledgement does not establish a current
-  software relationship.
-
-## Final HSSI state (2026-07-30)
-
-Fields 2–33 match the final live record. Field 12 is stored as bare `v8.2.0`; the `SpiceyPy -`
-prefix is presentation only. The corrected shared USGS organization name applies to Kristin L. Berry
-and Jesse A. Mapel without changing either affiliation relationship.

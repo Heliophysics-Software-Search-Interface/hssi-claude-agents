@@ -3,6 +3,9 @@
 **Repository:** https://github.com/space-physics/NCAR-GLOW
 **Extraction Date:** 2025-12-03
 **DOI:** https://doi.org/10.5281/zenodo.3344536
+**HSSI Software ID:** 81ad4d3f-39de-43d3-b4ec-45953b21ec71
+**Validation Date:** Pending
+**Validation Status:** Pending
 
 ---
 
@@ -43,16 +46,31 @@
 
 **Author 1:**
 - **Name:** Michael Hirsch
-- **Author Identifier:** Not found
-- **Affiliation:** Not found
+- **Author Identifier:** https://orcid.org/0000-0002-1637-6526
+- **Affiliations:**
+  - Boston University — https://ror.org/05qwgg493
+  - Scivision, Inc. — identifier not found
 
 **Author 2:**
-- **Name:** Stan Solomon
-- **Author Identifier:** Not found
-- **Affiliation:** Not found
+- **Name:** Stanley C. Solomon
+- **Author Identifier:** https://orcid.org/0000-0002-5291-3034
+- **Affiliation:** NCAR High Altitude Observatory — https://ror.org/03773p874
 
 **Source:** DataCite API, Zenodo API, PyHC contact field
-**Note:** The DataCite API lists "Scivision" and "Solomon, Stan" as creators. The PyHC registry lists Michael Hirsch as the contact. ORCIDs were not found in the repository or metadata sources.
+**Note:** The DataCite API lists "Scivision" and "Solomon, Stan" as creators. The PyHC registry lists Michael Hirsch as the contact.
+
+**Stanley C. Solomon — identity and identifier.** An earlier revision of this file recorded
+"Stan Solomon" with no identifier or affiliation. ORCID `0000-0002-5291-3034` is Stanley Solomon, Scientist at the National
+Center for Atmospheric Research, and its **other-names list explicitly contains both "Stan Solomon" and
+"Stanley C. Solomon"** — the author's own record reconciles the two forms, so this is not an inference
+from a shared surname. GLOW is an NCAR model, matching the employment. The same person is an author of
+TIEGCM v3.0, and the catalogue holds one record for him rather than one per spelling.
+DataCite's "Solomon, Stan" is preserved here as this project's own creator string, so a future refresh
+reading DataCite recognises it rather than creating a second record.
+
+**"Scivision" is Michael Hirsch.** DataCite's other creator string is the GitHub handle `scivision`
+(account ID 10931741), whose ORCID is `https://orcid.org/0000-0002-1637-6526`. Recorded so the handle is
+not mistaken for a separate person or an organization.
 
 ### 7. Software Name (MANDATORY)
 **Value:** GLOW

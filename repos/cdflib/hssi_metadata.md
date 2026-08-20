@@ -4,13 +4,8 @@
 **Repository:** https://github.com/lasp/cdflib
 **Source Revision:** a5362441980ad8d740c647a77527b05c41195eed
 **Extraction Date:** 2026-07-29
-**Validation Date:** 2026-07-30
+**Validation Date:** 2026-08-20
 **Validation Status:** PASS
-**Final HSSI state:** Fields 2–33 match the validated values in this file.
-
-**Seed:** The existing HSSI record. No prior canonical `hssi_metadata.md` existed. Every field below
-is either a preserved submitted value or an evidence-backed correction. Controlled-list values were
-confirmed against the live HSSI vocabularies.
 
 ---
 
@@ -38,7 +33,7 @@ resolves to `10.5281/zenodo.7011489` (0.4.7). Consequently no version-specific D
 ### 3. Code Repository (MANDATORY)
 https://github.com/lasp/cdflib
 
-*CHANGED. Old: `https://github.com/MAVENSDC/cdflib`. Evidence: the old URL permanently redirects
+*Previous incorrect value: `https://github.com/MAVENSDC/cdflib`. Evidence: the old URL permanently redirects
 to `https://github.com/lasp/cdflib`; the GitHub API reports `full_name = lasp/cdflib`,
 `fork = false`, `archived = false`, default branch `main`; `pyproject.toml` declares
 `[project.urls] Homepage = "https://github.com/lasp/cdflib"`; `mkdocs.yml` declares
@@ -52,7 +47,7 @@ from MAVENSDC to lasp; the stored URL is the pre-move location.*
 - Data Processing and Analysis: File Format Conversion
 - Data Processing and Analysis: Processing
 
-*CHANGED (replacement). Old: `Servers and Environments: Distribution/Access` only. Every value above
+*The earlier value was replaced. Earlier value: `Servers and Environments: Distribution/Access` only. Every value above
 was confirmed byte-for-byte against the live `FunctionCategory` vocabulary, and every
 `Parent: Child` value has its bare parent top-level category present as its own separate entry.*
 
@@ -151,17 +146,17 @@ applicable` row to select.*
 ### 6. Authors (MANDATORY)
 The complete stored 15-author set is retained in its established order.
 
-1. **Sandy Antunes** — Identifier: Not found — Affiliation: Project Calliope (no ROR)
-2. **Julie Barnum** — Identifier: Not found — Affiliation: Not found
+1. **Alex Antunes** — https://orcid.org/0000-0002-3098-2602 — Affiliations: Johns Hopkins University Applied Physics Laboratory (https://ror.org/029pp9z10); Project Calliope (no ROR)
+2. **Julie Barnum** — https://orcid.org/0000-0001-8755-0694 — Affiliation: Laboratory for Atmospheric and Space Physics (https://ror.org/01fcjzv38)
 3. **Angeline Burrell** — https://orcid.org/0000-0001-8875-9326 — Affiliation: United States Naval Research Laboratory (https://ror.org/04d23a975)
 4. **Bryan Harter** — https://orcid.org/0000-0002-3908-9001 — Affiliation: Laboratory for Atmospheric and Space Physics (https://ror.org/01fcjzv38)
-5. **Htyeim** *(given name empty in HSSI)* — Identifier: Not found — Affiliation: Not found
+5. **htyeim (GitHub)** *(stored as givenName `htyeim`, familyName `(GitHub)`)* — Identifier: Not found — Affiliation: Not found
 6. **Jack Ireland** — https://orcid.org/0000-0002-2019-8881 — Affiliation: Goddard Space Flight Center (https://ror.org/0171mag52)
 7. **Alexis Jeandet** — https://orcid.org/0000-0003-2892-6924 — Affiliation: Laboratory of Plasma Physics (LPP/CNRS) (https://ror.org/05c95bg36)
 8. **Hugo van Kemenade** — https://orcid.org/0000-0001-5715-8632 — Affiliation: Nord Software (no ROR)
-9. **P. L. Lim** — Identifier: Not found — Affiliation: Space Telescope Science Institute (https://ror.org/036f5mx38)
-10. **Scivision** *(given name empty in HSSI)* — Identifier: Not found — Affiliation: Not found
-11. **Jonathon Smith** — Identifier: Not found — Affiliation: Not found
+9. **Pey Lian Lim** — https://orcid.org/0000-0003-0079-4114 — Affiliation: Space Telescope Science Institute (https://ror.org/036f5mx38)
+10. **Michael Hirsch** — https://orcid.org/0000-0002-1637-6526 — Affiliations: Boston University (https://ror.org/05qwgg493); Scivision, Inc. (no ROR)
+11. **Jonathon M. Smith** — https://orcid.org/0000-0002-8191-4765 — Affiliations: Catholic University of America (https://ror.org/047yk3s18); Goddard Space Flight Center (https://ror.org/0171mag52)
 12. **David Stansby** — https://orcid.org/0000-0002-1365-1908 — Affiliations: Advanced Research Computing Centre, University College London, UK (no ROR); Department of Mechanical Engineering, University College London (no ROR); Imperial College London (https://ror.org/041kmwe10); Mullard Space Science Laboratory, University College London (no ROR); University College London (https://ror.org/02jx3x895)
 13. **Supervised** *(given name empty in HSSI; not a personal name)* — Identifier: Not found — Affiliation: University of California, Los Angeles (https://ror.org/046rm7j60)
 14. **Jan Christoph Terasa** — Identifier: Not found — Affiliation: IEAP University Kiel (no ROR)
@@ -184,27 +179,57 @@ alternative `https://orcid.org/0000-0003-1845-9125` is **not a valid ORCID**: it
 ISO 7064 MOD 11-2 check digit (computed `X`, stored `5`) and the ORCID registry has no such record.
 The stored value is therefore retained.
 
-**Catalog identity note.** Three stored rows have an empty given name (`Htyeim`, `Scivision`) or are
-not personal names (`Supervised`). The organizational creator and identity enrichments below were
-not incorporated into this record; they belong to campaign-wide shared-identity reconciliation.
+**Catalogue identity notes.** Several of this project's Zenodo creator strings are handles, initials or
+alternate spellings of people the catalogue records under a canonical name. Each is resolved below, with
+this project's own creator string preserved so a future refresh reading Zenodo recognises it instead of
+creating a second record for the same person.
 
-*Catalog identity observations:*
-- **P. L. Lim** has a discoverable ORCID that HSSI records as absent: `https://orcid.org/0000-0003-0079-4114`
-  resolves to given name "Pey Lian", family name "Lim", with employment "Space Telescope Science
-  Institute" (Baltimore, MD, since 2007-10-01) — an exact match to the affiliation already stored for
-  this author. The identifier passes the ORCID ISO 7064 MOD 11-2 check digit.
-- **Julie Barnum** likewise: `https://orcid.org/0000-0001-8755-0694` resolves to given name "Julie",
+- **Author 1 — Alex Antunes**, credited by this project as "Sandy Antunes". ORCID
+  `0000-0002-3098-2602` resolves to "Alex Antunes" at Johns Hopkins University Applied Physics
+  Laboratory, and that person commits as `Sandy Antunes <sandy.antunes@jhuapl.edu>`; `spedas/pyspedas`
+  independently lists `Antunes, Sandy` with the JHU/APL affiliation, matching the ORCID's employment.
+  **The ORCID name alone would not have been sufficient** — that record publishes no "Sandy" alias — so a
+  future refresh must not read the name mismatch there as a contradiction. His record carries both
+  JHU/APL and the Project Calliope affiliation this project supplies; an affiliation is never dropped in
+  favour of a newer one.
+- **Author 2 — Julie Barnum.** `https://orcid.org/0000-0001-8755-0694` resolves to given name "Julie",
   family name "Barnum", institution "Laboratory for Atmospheric and Space Physics". An ORCID expanded
-  search for that name returns exactly this one record, so the match is unambiguous. Checksum valid.
-  HSSI currently stores neither an identifier nor an affiliation for her.
-- `Scivision` (blank given name) is the GitHub handle of **Michael Hirsch** (`scivision`, 34 commits,
-  third-largest contributor). Correct form: given "Michael", family "Hirsch".
-- `Htyeim` (blank given name) is the GitHub handle `htyeim` (1 commit). No real name published.
-- `Supervised` is not a name. Its HSSI affiliation is UCLA and its Zenodo affiliation is "UCLA
-  Institute of Geophysics and Planetary Physics"; the only UCLA IGPP committer is
-  `egrimes@igpp.ucla.edu` (**Eric Grimes**, GitHub `ericthewizard`), so this row is most likely a
-  mangled Zenodo entry for him. Not asserted as fact.
-- Affiliation strings that would benefit from acronym expansion if authors were ever patchable:
+  search for that name returns exactly this one record, so the match is unambiguous, and the checksum is
+  valid. An earlier revision of this file recorded neither the identifier nor the affiliation for her.
+- **Author 5 — `htyeim (GitHub)`.** A proven platform handle with no published human name, recorded in the
+  catalogue's convention of the exact handle as the given name and the platform in the family-name field.
+  This repository's git author is `htyeim <17849322+htyeim@users.noreply.github.com>`, and GitHub
+  attributes commit `75e8424f8c2a00c7137f2ababc8a8bab69e6a9d8` to account `htyeim`, ID 17849322. The
+  exact login is lower-case `htyeim`; an earlier revision of this file capitalised it. **No human name is
+  asserted, because none is published.**
+- **Author 9 — Pey Lian Lim**, credited by this project as "P. L. Lim".
+  `https://orcid.org/0000-0003-0079-4114` resolves to given name "Pey Lian", family name "Lim", with
+  employment "Space Telescope Science Institute" (Baltimore, MD, since 2007-10-01) — an exact match to the
+  affiliation this project already supplied. The identifier passes the ORCID ISO 7064 MOD 11-2 check
+  digit. `ndcube`'s git author `2090236+pllim@users.noreply.github.com` ties the same person to GitHub
+  account `pllim`.
+- **Author 10 — Michael Hirsch**, credited by this project as "Scivision". That is his GitHub handle
+  (`scivision`, 34 commits, third-largest contributor), and this repository's own git history records the
+  author as `Michael Hirsch, Ph.D <scivision@users.noreply.github.com>` — a legacy GitHub noreply address
+  encoding that login — so the handle and the name are the same contributor in this project's own record.
+  His ORCID is `0000-0002-1637-6526`. **The superficially similar `0000-0001-6183-6256` belongs to a
+  different Michael Hirsch** — a Senior Facility Scientist at the Science and Technology Facilities
+  Council's Central Laser Facility, with a Leipzig Ph.D. in Mathematics and twenty-nine works entirely in
+  single-molecule microscopy and receptor biophysics — and must never be used here.
+- **Author 11 — Jonathon M. Smith**, credited by this project as "Jonathon Smith". This repository's git
+  author is `Jonathon Smith <36175570+JonathonMSmith@users.noreply.github.com>`, GitHub account
+  `JonathonMSmith`; ORCID `0000-0002-8191-4765` resolves to "Jonathon Smith" at the Catholic University of
+  America. He is also an author of pysat and sami2py.
+- **Author 13 — `Supervised`** is not a personal name and no identity is asserted for it. Its affiliation
+  here is UCLA and its Zenodo affiliation is "UCLA Institute of Geophysics and Planetary Physics"; the
+  only UCLA IGPP committer is `egrimes@igpp.ucla.edu` (**Eric Grimes**, GitHub `ericthewizard`), so the
+  row is most likely a mangled Zenodo entry for him. **Not asserted as fact.** `spedas/pyspedas` does
+  carry a git author `supervised <egrimes@igpp.ucla.edu>`, which strengthens the hypothesis without
+  settling it, but **this repository's git history contains no `supervised` author at all** — only
+  `eric <egrimes@igpp.ucla.edu>` — so there is no repository-side evidence for this entry specifically.
+  Resolving it needs the Zenodo creator record for the affected version, or the author's confirmation.
+
+- Affiliation strings that would benefit from acronym expansion, recorded so a later correction can apply them:
   `IEAP University Kiel` -> Institute of Experimental and Applied Physics, University of Kiel;
   `Laboratory of Plasma Physics (LPP/CNRS)` -> Laboratoire de Physique des Plasmas.
 
@@ -213,10 +238,14 @@ contributors list include Mykhaylo Shumko, David Turner, Brad Trantham, Stuart M
 Ben Greiner, Maxine Hartnett, Eric Grimes, and several handle-only accounts who are not on the Zenodo
 creator list and are not declared authors anywhere in the repository. `pyproject.toml` declares only
 `Bryan Harter <harter@lasp.colorado.edu>`. Contributing is not authorship; the Zenodo creator list is
-the project's own author statement.
+the project's own author statement — as a statement about *this dossier's* author list. It is not a rule
+against consolidating shared `Person` records: HSSI maintains one Person per uniquely proven human, and
+where this project's creator string differs from the canonical person's stored name, the creator string
+is preserved in the rationale above rather than as a duplicate row.
 
 *Also checked and excluded:* the PyHC registry lists `contact: Bryan Harter, Michael Liu, David
-Stansby, Michael Hirsch`. The other three are accounted for above, but **Michael Liu** appears in no
+Stansby, Michael Hirsch`. Michael Hirsch is author 10 above (the `Scivision` handle). The other two are
+accounted for above, but **Michael Liu** appears in no
 authoritative source — not in `git log --all` authors, not in the Zenodo concept-DOI creator list
 (16 entries, none matching), and nowhere in the repository. PyHC's `contact` field lists community
 points of contact, which is not an authorship claim, so he is not treated as an author.
@@ -224,14 +253,14 @@ points of contact, which is not an authorship claim, so he is not treated as an 
 ### 7. Software Name (MANDATORY)
 CDFlib
 
-*PRESERVED from existing HSSI record. Corroborated: `README.md` heading is `# CDFlib`, and the PyHC
+*Retained from the existing HSSI record. Corroborated: `README.md` heading is `# CDFlib`, and the PyHC
 community registry lists the project as `name: CDFlib`. (The distribution/import name is the lowercase
 `cdflib`; the display name is not changed.)*
 
 ### 8. Description (MANDATORY)
 cdflib is a pure-Python implementation of NASA's Common Data Format (CDF) for reading and writing CDF files. It is not a set of bindings around the NASA CDF C library: the core depends only on NumPy, so there is nothing to compile and no external library to install. cdflib reads variables, global attributes and variable attributes from CDF version 2 and version 3 files held on local disk, behind an HTTP/HTTPS URL, or in an S3 bucket (including chunked byte-range reads), transparently decompressing GZIP- and RLE-compressed files and optionally validating their MD5 checksums. It writes CDF version 3 files, with optional per-variable and whole-file compression and checksums. Its cdfepoch module converts between the CDF time types (CDF_EPOCH, CDF_EPOCH16 and CDF_TT2000) and ISO 8601 strings, NumPy datetime64 values, Unix timestamps and broken-down date components, using a bundled leap-second table; an optional astropy backend exposes the same conversions as astropy Time formats. Optional xarray helpers convert a CDF file into an xarray Dataset and write an xarray Dataset back out as a CDF, checking and filling in ISTP-compliant metadata in both directions, which also makes netCDF-to-CDF conversion straightforward.
 
-*CHANGED — factual correction, not a stylistic rewrite. Old: "CDFlib provides Python bindings to read
+*Previous incorrect value — factual correction, not a stylistic rewrite. Old: "CDFlib provides Python bindings to read
 and write CDF (Common Data Format) files" (preserved here so nothing is silently discarded). The
 phrase "Python bindings" is contradicted by every primary source, and inverts the software's central
 selling point: `README.md` — "a python module to read/write CDF ... **without needing to install the
@@ -246,7 +275,7 @@ error and adding the substance Field 8 asks for (what it does, why to use it, it
 ### 9. Concise Description (OPTIONAL)
 Read or write CDF files in Python
 
-*PRESERVED from existing HSSI record — accurate and within the length limit, so left alone as
+*Retained from the existing HSSI record — accurate and within the length limit, so left alone as
 submitter wording. (A richer 200-character alternative such as "Read and write NASA CDF files in pure
 Python, with no need for the NASA CDF library" is noted only as an option; it is a stylistic
 preference, not a correction.)*
@@ -254,7 +283,7 @@ preference, not a correction.)*
 ### 10. Publication Date (RECOMMENDED)
 2017-09-11
 
-*PRESERVED from existing HSSI record, and independently corroborated: the first PyPI release
+*Retained from the existing HSSI record, and independently corroborated: the first PyPI release
 (`cdflib` 0.1.0) was uploaded 2017-09-11. (For context, the first commit is 2017-07-31 and the GitHub
 repository was created 2017-09-08 — the stored date is the first public release, which is the correct
 reading of "date of first publication.")*
@@ -263,7 +292,7 @@ reading of "date of first publication.")*
 - **Organization:** Zenodo
 - **Publisher Identifier:** https://zenodo.org
 
-*PRESERVED from existing HSSI record. Correct per Field 11: the DOI was obtained through the
+*Retained from the existing HSSI record. Correct per Field 11: the DOI was obtained through the
 GitHub-Zenodo workflow. Zenodo has no ROR, so the service URL is the appropriate identifier.*
 
 ### 12. Version (RECOMMENDED)
@@ -272,7 +301,7 @@ GitHub-Zenodo workflow. Zenodo has no ROR, so the service URL is the appropriate
 - **Version Description:** Bug-fix release. Invalid ISTP `DEPEND_N` attribute values encountered by `xarray_to_cdf` now respect the `terminate_on_warning` flag — they are reported through `_warn_or_except` instead of unconditionally raising `ValueError` — so writing a Dataset with a malformed DEPEND attribute warns by default rather than aborting.
 - **Version PID:** Not found
 
-*CHANGED. Old version number: `1.3.6` (stored bare; the view API renders it as "CDFlib - 1.3.6" —
+*Previous incorrect version number: `1.3.6` (stored bare; the view API renders it as "CDFlib - 1.3.6" —
 the rendered prefix is a display transform and is not part of the stored value). Evidence for
 `1.3.12`: git tag `1.3.12` is the extracted revision `a5362441980ad8d740c647a77527b05c41195eed`
 (committed 2026-06-01), the GitHub release `1.3.12` was published 2026-06-01, and PyPI reports
@@ -289,7 +318,7 @@ See the Field 2 note.*
 ### 13. Programming Language (RECOMMENDED)
 Python 3.x
 
-*`Python 3.x` PRESERVED from existing HSSI record, and correct: `requires-python = ">= 3.9"`,
+*`Python 3.x` retained from the existing HSSI record, and correct: `requires-python = ">= 3.9"`,
 classifiers `Programming Language :: Python :: 3 :: Only` and 3.9-3.13, and the GitHub language
 breakdown is Python plus a 222-byte `.devcontainer/Dockerfile`.*
 
@@ -307,7 +336,7 @@ repository, and neither the DataCite record nor the README names a reference pub
 ### 15. License (RECOMMENDED)
 MIT License
 
-*CHANGED (field was empty in HSSI). Evidence: `LICENSE` at the repository root contains the verbatim
+*This field was previously empty in HSSI. Evidence: `LICENSE` at the repository root contains the verbatim
 MIT License text, "Copyright (c) 2025 Regents of the University of Colorado"; `pyproject.toml`
 declares `license = { file = "LICENSE" }`; the GitHub API reports `license.spdx_id = MIT`; and the
 PyPI metadata carries the same MIT text. `MIT License` is a byte-identical row in the live `License`
@@ -329,7 +358,7 @@ vocabulary.*
 - pds
 - gsfc
 
-*CHANGED (additive). Old: `cdf` only (stored lowercase; the view API renders it Title Case as "Cdf").
+*The earlier value was retained and expanded. Earlier value: `cdf` only (stored lowercase; the view API renders it Title Case as "Cdf").
 Written lowercase to match the existing row's casing and avoid near-duplicates. `Keyword` is the one
 open vocabulary — `cdf`, `nasa cdf`, `istp`, `xarray`, `netcdf` and `maven` already exist as
 byte-identical live rows and are reused; `common data format`, `lasp`, `pds` and `gsfc` would be
@@ -352,7 +381,7 @@ generic to aid discovery.*
 - HTTP/HTTPS Directories
 - S3/Cloud-aware
 
-*CHANGED (field was empty in HSSI). Both values confirmed against the live `DataInput` vocabulary.*
+*This field was previously empty in HSSI. Both values confirmed against the live `DataInput` vocabulary.*
 
 *Evidence — `CDF.__init__` in `cdflib/cdfread.py` branches on the path scheme, so remote reading is a
 first-class documented parameter, not an internal detail:*
@@ -376,7 +405,7 @@ appears only as background prose in `.github/skills/istp-compliance/`, and the L
 - CDF
 - ISTP-Compliant
 
-*CHANGED (additive). Old: `CDF` only — preserved. Both confirmed against the live `FileFormat`
+*The earlier value was retained and expanded. Earlier value: `CDF` only — preserved. Both confirmed against the live `FileFormat`
 vocabulary.*
 
 - *`CDF` — `cdflib/cdfread.py` parses the CDF binary format directly, accepting both version 3
@@ -409,7 +438,7 @@ is accurate: keyword `netcdf` (Field 16) and `xarray` as interoperable software 
 - CDF
 - ISTP-Compliant
 
-*CHANGED (additive). Old: `CDF` only — preserved.*
+*The earlier value was retained and expanded. Earlier value: `CDF` only — preserved.*
 
 - *`CDF` — `cdflib/cdfwrite.py` writes CDF version 3 files (`write_globalattrs`,
   `write_variableattrs`, `write_var`), with optional GZIP compression and MD5 checksums.*
@@ -429,7 +458,7 @@ on Field 18 — cdflib neither reads nor writes netCDF in either direction.*
 - Mac
 - Windows
 
-*CHANGED (additive). Old: `Operating System Independent` only — preserved, and confirmed by the PyPI
+*The earlier value was retained and expanded. Earlier value: `Operating System Independent` only — preserved, and confirmed by the PyPI
 classifier `Operating System :: OS Independent` and the pure-Python `py3-none-any` wheel.*
 
 *`Linux`, `Mac` and `Windows` are backed by
@@ -441,7 +470,7 @@ not merely asserted.*
 ### 21. CPU Architecture (RECOMMENDED)
 CPU Independent
 
-*CHANGED (field was empty in HSSI). Evidence: cdflib is pure Python with no compiled extension, no
+*This field was previously empty in HSSI. Evidence: cdflib is pure Python with no compiled extension, no
 `ext_modules`, and no build-time compiler requirement — `README.md` states "The core of this package
 uses only numpy, with no complicated compiler requirements", `pyproject.toml` lists `numpy >= 1.21`
 as the sole runtime dependency, and PyPI ships a single architecture-independent `py3-none-any` wheel
@@ -459,7 +488,7 @@ repository, and inferring phenomena from the science content of test fixtures wo
 ### 23. Development Status (RECOMMENDED)
 Active
 
-*CHANGED (field was empty in HSSI). Evidence: PyPI classifier `Development Status :: 5 -
+*This field was previously empty in HSSI. Evidence: PyPI classifier `Development Status :: 5 -
 Production/Stable`; the GitHub API reports `archived = false` with `pushed_at = 2026-06-01`, under two
 months before extraction; four releases shipped in 2026 alone (1.3.9 on 2026-04-09, 1.3.10 on
 2026-04-29, 1.3.11 on 2026-05-21, 1.3.12 on 2026-06-01); CI runs a 12-cell matrix on every push and
@@ -469,7 +498,7 @@ pull request; and `.github/workflows/remote-tests.yaml` runs a scheduled weekly 
 ### 24. Documentation (RECOMMENDED)
 https://lasp.github.io/cdflib/
 
-*CHANGED. Old: `https://cdflib.readthedocs.io/en/latest/`. Evidence that the documentation moved:*
+*Previous incorrect value: `https://cdflib.readthedocs.io/en/latest/`. Evidence that the documentation moved:*
 - *`README.md` states "The full documentation can be found here" and links only
   `https://lasp.github.io/cdflib/`.*
 - *The repository has no `.readthedocs.yml`/`.readthedocs.yaml` and no `docs/conf.py`. Both were
@@ -643,43 +672,10 @@ avatar URL carrying `?s=460&v=4` sizing parameters on the legacy `avatars3.` sha
 "permanent place" Field 33 requires; and PyHC's entry for this project is demonstrably stale in its
 other URLs too.*
 
----
-
-## Extraction Summary
-
-**Changed versus the live HSSI record (all evidence-backed):**
-
-| Field | Old (live HSSI) | New | Basis |
-|---|---|---|---|
-| 3 Code Repository | `https://github.com/MAVENSDC/cdflib` | `https://github.com/lasp/cdflib` | permanent redirect + `pyproject.toml` + `mkdocs.yml` + README badges + git remote |
-| 4 Software Functionality | `Servers and Environments: Distribution/Access` | 4 `Data Processing and Analysis` values (bare parent included) | source-level analysis of read/write/epoch/xarray modules; old value removed as unsupported |
-| 5 Related Region | 3 values | *(cleared)* | no region-specific science functionality; stored trio was a legacy-vocabulary artifact |
-| 8 Description | "Python bindings" phrasing | corrected, expanded | factual error contradicted by README, docs, PyHC, packaging |
-| 12 Version | `1.3.6` | `1.3.12` (+ date, description) | git tag at HEAD, GitHub release, PyPI |
-| 13 Programming Language | `Python 3.x`, `Other` | `Python 3.x` | no non-Python source of any kind |
-| 15 License | *(empty)* | `MIT License` | `LICENSE`, GitHub `spdx_id`, PyPI |
-| 16 Keywords | `cdf` | 10 keywords | declared `pyproject.toml` keywords + documented features |
-| 17 Data Sources | *(empty)* | `HTTP/HTTPS Directories`, `S3/Cloud-aware` | `cdfread.py` scheme dispatch, `s3.py`, changelog |
-| 18 Input Formats | `CDF` | + `ISTP-Compliant` | ISTP-aware reader (`netCDF3/4` declined — cdflib parses no netCDF) |
-| 19 Output Formats | `CDF` | + `ISTP-Compliant` | `xarray_to_cdf(istp=True)` generates ISTP metadata |
-| 20 Operating System | `Operating System Independent` | + `Linux`, `Mac`, `Windows` | CI matrix tests all three |
-| 21 CPU Architecture | *(empty)* | `CPU Independent` | pure Python, `py3-none-any` wheel |
-| 23 Development Status | *(empty)* | `Active` | not archived, four 2026 releases, active CI |
-| 24 Documentation | `https://cdflib.readthedocs.io/en/latest/` | `https://lasp.github.io/cdflib/` | RTD config deleted in `6d3f966`; MkDocs deployed by `docs.yml`; README |
-| 29 Related Software | *(empty)* | NASA CDF library, SpacePy, pycdfpp | the library cdflib replaces, plus two same-purpose CDF peers |
-| 30 Interoperable Software | *(empty)* | xarray, astropy | `cdflib/xarray/` converters; astropy Time format subclasses |
-
-**Preserved unchanged:** 2 Persistent Identifier, 7 Software Name, 9 Concise Description,
-10 Publication Date, 11 Publisher, 22 Related Phenomena (empty), 25/26 Funder & Award (empty),
-27/28 Related Publications & Datasets (empty), 31/32 Related Instruments & Observatories (empty),
-33 Logo (empty).
-
 ## Durable catalog notes
 
-- Field 6 preserves the stored 15-author set. The MAVEN SDC organizational creator and the documented
-  identity enrichments remain campaign-wide shared-identity observations rather than changes to this
-  record. Hugo van Kemenade's stored ORCID is verified and correct.
+- Field 6 preserves the stored 15-author set. Its source-form variants and shared-identity evidence
+  are recorded with the relevant authors so they are not mistaken for distinct people in later
+  maintenance. Hugo van Kemenade's stored ORCID is verified and correct.
 - Fields 31 and 32 are empty because cdflib is mission-agnostic; mission and instrument names in tests
   and examples do not establish scientific support.
-- Replacing Field 12 naturally detached the previous `1.3.6` SoftwareVersion row. HSSI retains
-  unreferenced version rows as normal platform behaviour; no catalog cleanup is needed for this record.

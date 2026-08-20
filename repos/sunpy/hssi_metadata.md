@@ -4,9 +4,8 @@
 **Repository:** https://github.com/sunpy/sunpy
 **Source Revision:** ed70935fa156a05f81926e4a2f4a0ea25dc37f36
 **Extraction Date:** 2026-08-13
-**Validation Date:** 2026-08-15
+**Validation Date:** 2026-08-20
 **Validation Status:** PASS
-
 **Scope note.** sunpy is a general-purpose solar-physics library whose instrument coverage lives in
 data-driven subpackages (`sunpy/map/sources/`, `sunpy/timeseries/sources/`, `sunpy/net/`) rather than
 in the README. Read the instrument, data-source and functionality evidence below as coming from those
@@ -238,7 +237,16 @@ instrument's data *is*.
 43. **Samuel Bennett** | ORCID: https://orcid.org/0000-0001-6420-4422 | Aperio Software Ltd.
 44. **Yash Jain** | ORCID: https://orcid.org/0000-0001-5347-4734 | Indian Institute of Technology, Kharagpur
 45. **Lazar Zivadinovic** | ORCID: https://orcid.org/0000-0003-1349-1606
-46. **Ankit Baruah**
+46. **Ankit Baruah** | Workato Gmbh, Germany
+    - *Identity:* another project credits the same person under this identical name. The same commit address
+      `ankit.baruah1@gmail.com` appears in this repository (`.mailmap` maps
+      `abit2 <ankit.baruah1@gmail.com>` to the canonical `Ankit Baruah`) and in `ndcube`, so the two rows
+      are one person. Neither held an ORCID, so the surviving row was chosen on breadth of catalogue use:
+      the Workato Gmbh affiliation recorded here is the only affiliation any source gives him.
+      **Creator 134 (`Ankit`) is a different person** — a mononym contributor at
+      `emonstar333@gmail.com`, which this repository's `.mailmap` canonicalizes separately from
+      `abit2 <ankit.baruah1@gmail.com>`, and `.zenodo.json` lists the two as distinct creators. They must
+      not be conflated.
 47. **Quinn Arbolante** | ORCID: https://orcid.org/0000-0003-0260-453X | Lockheed Martin Solar and Astrophysics Laboratory
 48. **Trestan F. Simon** | ORCID: https://orcid.org/0009-0000-3029-8619
 49. **Michael Charlton**
@@ -253,7 +261,10 @@ instrument's data *is*.
 58. **Yash Sharma** | ORCID: https://orcid.org/0000-0002-7861-9677 | Indian Institute of Technology, Kharagpur
 59. **Akshit Tyagi** | ORCID: https://orcid.org/0009-0005-4804-9035 | Jaypee Institute of Information Technology
 60. **Aritra Sinha** | ORCID: https://orcid.org/0009-0008-2531-1012 | National Institute of Technology Karnataka, Surathkal
-61. **Naman9639**
+61. **Naman9639 (GitHub)** *(stored as givenName `Naman9639`, familyName `(GitHub)`)*
+    - *Identity:* a proven platform handle with no published human name. The git author is
+      `Naman9639 <31286078+Naman9639@users.noreply.github.com>`, whose noreply address encodes account ID 31286078 and
+      login `Naman9639`. Capitalization is preserved verbatim. **No human name is asserted.**
 62. **Monica Bobra** | ORCID: https://orcid.org/0000-0002-5662-9604
 63. **Jose Ivan Campos Rozo** | ORCID: https://orcid.org/0000-0001-8883-6790 | Institut für Physik/IGAM, Karl-Franzens-Universität Graz
 64. **Larry Manley**
@@ -264,7 +275,15 @@ instrument's data *is*.
 69. **Brett J Graham** | ORCID: https://orcid.org/0000-0001-6315-4507 | Space Telescope Science Institute
 70. **Jan Gieseler** | ORCID: https://orcid.org/0000-0003-1848-7067 | University of Turku
 71. **Jayraj Dulange** | ORCID: https://orcid.org/0009-0003-2993-7382 | Indian Institute of Technology Gandhinagar
-72. **Johan Lauritz Freiherr von Forstner** | ORCID: https://orcid.org/0000-0002-1390-4776 | Institut für Experimentelle und Angewandte Physik, University of Kiel  *(.zenodo.json roster form: Johan Freiherr von Forstner)*
+72. **Johan Lauritz Freiherr von Forstner** | ORCID: https://orcid.org/0000-0002-1390-4776 | Institute of Experimental and Applied Physics, University of Kiel; Paradox Cat GmbH  *(.zenodo.json roster form: Johan Freiherr von Forstner, affiliation given in German as "Institut für Experimentelle und Angewandte Physik")*
+    - *Both affiliations, and why:* Paradox Cat GmbH is not evidence drawn from this software. solarmach
+      credits this author under a name that splits the
+      author's name as given "Johan L. Freiherr von", family "Forstner" — putting the nobiliary particle
+      chain in the given name — and carried the Paradox Cat GmbH affiliation with no identifier; it was
+      solarmach's author 3. ORCID `0000-0002-1390-4776` confirms Paradox Cat as the author's **current**
+      employer and gives the authoritative split used here. Both affiliations are retained: his record
+      carries the union of the institutions its sources attribute to him, and an affiliation is never
+      dropped in favour of a newer one.
 73. **Juanjo Bazán** | ORCID: https://orcid.org/0000-0001-7699-3983 | CIEMAT Particle Physics Unit
 74. **Kris Akira Stern** | ORCID: https://orcid.org/0000-0003-1613-8947 | University of Hong Kong & University of London
 75. **Aryan Shukla** | ORCID: https://orcid.org/0009-0001-9467-4836 | Indian Institute of Technology Roorkee
@@ -272,7 +291,10 @@ instrument's data *is*.
 77. **Sarthak Jain**
 78. **Michael Malocha**
 79. **Sourav Ghosh** | ORCID: https://orcid.org/0000-0002-7259-5651 | Jadavpur University, Kolkata
-80. **Airmansmith97**
+80. **Airmansmith97 (GitHub)** *(stored as givenName `Airmansmith97`, familyName `(GitHub)`)*
+    - *Identity:* a proven platform handle with no published human name. The git author is
+      `Airmansmith97 <40273565+Airmansmith97@users.noreply.github.com>`, whose noreply address encodes account ID 40273565 and
+      login `Airmansmith97`. Capitalization is preserved verbatim. **No human name is asserted.**
 81. **Ankit Khushwaha** | ORCID: https://orcid.org/0009-0009-3953-4206 | Indian Institute Of Technology Dharwad (IIT-DH)
 82. **Dominik Stańczak** | ORCID: https://orcid.org/0000-0001-6291-8843 | University of Warsaw
 83. **Manit Singh** | ORCID: https://orcid.org/0009-0002-6031-3810 | Netaji Subhas University of Technology
@@ -304,6 +326,11 @@ instrument's data *is*.
 109. **Guntbert Reiter**
 110. **Jacob**
 111. **Mateo Inchaurrandieta**
+     - *Identity:* ndcube credits the same person under this identical name; the same commit
+       address `mateo.inchaurrandieta@gmail.com` appears here and in `ndcube` (as `mateoi`), so they are
+       one person, and the catalogue holds a single record for them. No source supplies an ORCID
+       or an affiliation for him. Recorded so a future refresh does not treat the two credits as two
+       people.
 112. **Piyush Sharma** | ORCID: https://orcid.org/0009-0005-1579-5787 | Indian Institute of Technology Roorkee
 113. **Sally Dacie** | ORCID: https://orcid.org/0000-0001-7572-2903 | Mullard Space Science Laboratory, University College London
 114. **Sanjeev Dubey**
@@ -327,6 +354,13 @@ instrument's data *is*.
 132. **André Chicrala** | ORCID: https://orcid.org/0000-0002-5230-4909 | Northumbria University
 133. **Aniket Mishra** | ORCID: https://orcid.org/0009-0008-4790-5604
 134. **Ankit**
+     - *A distinct contributor — do not conflate with creator 46.* This is a mononym contributor at
+       `emonstar333@gmail.com`; this repository's `.mailmap` canonicalizes that address to the mononym
+       `Ankit`, separately from `abit2 <ankit.baruah1@gmail.com>` → `Ankit Baruah` (creator 46), and
+       `.zenodo.json` lists the two as distinct creators. GitHub attributes this contributor's commit
+       `303d517715e60fbf297c066186d482eeacce73c3` to no account, so no platform identity is available and
+       the stored string carries no platform label. `github.com/ankit` belongs to an unrelated person and
+       must not be used as evidence here.
 135. **Chloé Guennou**
 136. **Daniel D'Avella**
 137. **Daniel Williams** | ORCID: https://orcid.org/0000-0003-3772-198X | School of Physics & Astronomy, University of Glasgow
@@ -351,7 +385,11 @@ instrument's data *is*.
 156. **Amarjit Singh Gaba** | ORCID: https://orcid.org/0000-0002-9505-0160 | School of Mathematics, Cardiff University
 157. **Andrew Hill**
 158. **Bernhard M. Wiedemann**
-159. **Carlos Molina** | ORCID: https://orcid.org/0000-0003-0300-4106
+159. **Carlos Molina** | ORCID: https://orcid.org/0000-0003-0300-4106 | SUGUS-GNULinux
+     - *Affiliation source:* SUGUS-GNULinux is not evidence drawn from this software.
+       `sunkit-instruments` credits the same person with that affiliation and no ORCID; the same commit
+       address `carlosmolina.ord@gmail.com` appears here and there (as `cmolinaord`), so they are one
+       person and his record carries the union of what both projects supply.
 160. **Diya Khetarpal** | ORCID: https://orcid.org/0009-0009-4729-6797
 161. **Duygu Keşkek**
 162. **Ishtyaq Habib**
@@ -387,7 +425,11 @@ instrument's data *is*.
 192. **Erik Tollerud**
 193. **Fionnlagh Mackenzie Dover** | ORCID: https://orcid.org/0000-0002-1984-7303 | SP2RC, School of Mathematics and Statistics, University of Sheffield
 194. **Freek Verstringe** | Royal Observatory of Belgium
-195. **FreyaJain**
+195. **FreyaJain (GitHub)** *(stored as givenName `FreyaJain`, familyName `(GitHub)`)*
+     - *Identity:* a proven platform handle. GitHub's commit API attributes commit
+       `97a50905a20e4c20c9964d7d7d5446a2a3a2c979` to account **`FreyaJain` (ID 150811763)**. The string
+       resembles a real name, but the account publishes none, so **no human name is asserted** — only the
+       handle and its platform are recorded.
 196. **Fu Yu** | Purple Mountain Observatory
 197. **Ghaith Kdimati** | ORCID: https://orcid.org/0009-0006-8851-7814 | Cairo University
 198. **Gulshan Kumar** | ORCID: https://orcid.org/0000-0001-8523-7223 | International Institute of Information Technology, Hyderabad
@@ -405,7 +447,16 @@ instrument's data *is*.
 210. **Kurt McKee** | ORCID: https://orcid.org/0000-0002-8547-8489 | University of Chicago
 211. **Manas Mangaonkar**
 212. **Manish Tiwari**
-213. **Mark Cheung**
+213. **Mark C. M. Cheung** | ORCID: https://orcid.org/0000-0003-2110-9753 | Lockheed Martin Solar and
+     Astrophysics Laboratory
+     - *Identity:* an earlier revision of this file recorded "Mark Cheung" with no identifier or
+       affiliation, matching
+       this project's `.zenodo.json` creator string. ORCID `0000-0003-2110-9753` carries **both** forms
+       itself: its primary name is "Mark Cheung" and its credit name is "Mark CM Cheung", with employment
+       at the Lockheed Martin Advanced Technology Center. The two HSSI rows — this one and aiapy's author
+       3 — are that one record's two published forms, so the catalogue holds a single record for him. The
+       roster form "Mark Cheung" is preserved in this note, so a refresh reading `.zenodo.json` recognises
+       it.
 214. **Matthew Mendero**
 215. **Megh Dedhia** | ORCID: https://orcid.org/0000-0002-5828-7679 | Dwarkadas Jivanlal Sanghvi College of Engineering, University of Mumbai
 216. **Mickaël Schoentgen** | ORCID: https://orcid.org/0000-0002-0106-4810
@@ -415,7 +466,10 @@ instrument's data *is*.
 220. **Nakul Shahdadpuri**
 221. **Naveen Srinivasan**
 222. **Norbert G Gyenge** | ORCID: https://orcid.org/0000-0003-0464-1537 | SP2RC, School of Mathematics and Statistics, University of Sheffield
-223. **OussCHE**
+223. **OussCHE (GitHub)** *(stored as givenName `OussCHE`, familyName `(GitHub)`)*
+     - *Identity:* a proven platform handle with no published human name. The git author is
+       `OussCHE <72355098+OussCHE@users.noreply.github.com>`, whose noreply address encodes account ID 72355098 and
+       login `OussCHE`. Capitalization is preserved verbatim. **No human name is asserted.**
 224. **Paul Wright** | ORCID: https://orcid.org/0000-0001-9021-611X | Dublin Institute for Advanced Studies  *(.zenodo.json roster form: Paul J. Wright)*
 225. **Prisha Sharma**
 226. **Raghav Agrawal** | ORCID: https://orcid.org/0009-0000-1788-2917 | Netaji Subhas University of Technology, New Delhi (NSUT New Delhi) and Indian Institute of Technology, Madras (IIT Madras)
@@ -447,11 +501,32 @@ instrument's data *is*.
 252. **William Setterberg** | ORCID: https://orcid.org/0000-0003-2165-8314 | University of Minnesota
 253. **Yudhik Agrawal** | ORCID: https://orcid.org/0000-0003-3827-6857 | International Institute of Information Technology, Hyderabad
 254. **_Gagan**
-255. **eebbaaf**
-256. **graham**
+255. **eebbaaf (GitHub)** *(stored as givenName `eebbaaf`, familyName `(GitHub)`)*
+     - *Identity:* a proven platform handle with no published human name. The git author is
+       `eebbaaf <147119367+eebbaaf@users.noreply.github.com>`, whose noreply address encodes account ID 147119367 and
+       login `eebbaaf`. Capitalization is preserved verbatim. **No human name is asserted.**
+256. **graham** *(unchanged — see note)*
+     - *A distinct contributor — do not conflate with creator 69.* GitHub's commit API attributes this
+       contributor's commit `1e2a628abe9c1f420bf7ae174ec1fc5433b2183b` to account **`grahamasam`
+       (ID 107145436)**, and the git address is `grahamasam@gmail.com`. This is **not** creator 69
+       (Brett J Graham, `brettgraham@gmail.com`, ORCID `0000-0001-6315-4507`): this repository's own
+       `.mailmap` aliases `Brett` and `Brett Graham` to `Brett J Graham` and deliberately declines to
+       alias `graham`, and `.zenodo.json` lists the two as separate creators. Because both are authors of
+       *this* software, merging them would additionally breach the one-author-per-software constraint and
+       lose a slot. The stored string is that account's display name, not the handle, so it carries no
+       platform label. **A future audit must not propose this merge.**
 257. **pradeep**
-258. **resakra**
-259. **yasintoda**
+258. **resakra (GitHub)** *(stored as givenName `resakra`, familyName `(GitHub)`)*
+     - *Identity:* a proven platform handle with no published human name. The git author is
+       `resakra <69106920+resakra@users.noreply.github.com>`, whose noreply address encodes account ID 69106920 and
+       login `resakra`. Capitalization is preserved verbatim. **No human name is asserted.**
+259. **yasintoda** *(unchanged — see note)*
+     - *No platform identity resolves.* Examined under both prongs of the platform-attribution standard
+       and neither is satisfied: `gh api users/yasintoda` returns 404, and GitHub's commit API attributes
+       commit `49abb2a9106bf3d7464de08d171b595f0b176447` to **no account**. The git address is
+       `yasintoda@riseup.net`, whose local part equals the string — suggestive of a username, but a
+       display name matching an email local part does not by itself prove handle status, and no platform
+       identity resolves. Retained exactly as stored, with **no label**, unless stronger evidence appears.
 260. **Raphael Attie** | ORCID: https://orcid.org/0000-0003-4312-6298
 261. **Sophie A. Murray** | ORCID: https://orcid.org/0000-0002-9378-5315
 262. **Jonas Sinjan** | ORCID: https://orcid.org/0000-0002-5387-636X | Max Planck Institute for Solar System Research
@@ -531,14 +606,28 @@ instrument's data *is*.
   public ORCID record for this person; it is recorded here because it is real and the roster's silence
   is simply an omission. A future refresh reading only the roster will not find it and must not delete
   it as unsourced. No affiliation is recorded for them, for the reason above.
-- **A standing hazard for any future author update.** Replacing this author list through the API
-  remains unsafe while sixteen of the stored author records — `Himanshu`, `Naman9639`, `Airmansmith97`,
-  `Jacob`, `Ankit`, `FreyaJain`, `Hardik`, `Mika`, `Nakshatra`, `OussCHE`, `_Gagan`, `eebbaaf`,
-  `graham`, `pradeep`, `resakra`, `yasintoda` — carry an empty stored given name: an author update
-  re-sends the entire list, the API rejects an empty given or family name, and the whole field fails.
-  Substituting a non-empty given name for those records is not a workaround and must not be tried —
-  they carry no identifier, so an author is matched by exact agreement on both name parts, and a
+- **A standing hazard for any future author update.** Replacing
+  this author list through the API is unsafe while any stored author record carries an empty given name:
+  an author update re-sends the entire list, the API rejects an empty given or family name, and the whole
+  field fails. **Ten** stored author records are in that state: `Himanshu`, `Jacob`, `Ankit`, `Hardik`,
+  `Mika`, `Nakshatra`, `graham`, `pradeep`, `yasintoda` and `_Gagan`. Six further creators whose strings
+  are proven platform handles — `Naman9639`, `Airmansmith97`, `OussCHE`, `eebbaaf`, `resakra` and
+  `FreyaJain` — carry that handle as their given name and so are not affected.
+
+  Those ten are deliberate, not unfinished work. Each stored string is the contributor's *display name*,
+  not a handle — GitHub's commit API names a different account for each (`himanshukgp`, `sudozer`,
+  no-account, `pythonicforge`, `tal66`, `naxatra2`, `grahamasam`, `gmrpr321`, no-account, `seika-afk`) —
+  and four of them are canonicalized to exactly these mononyms by this repository's own `.mailmap`
+  (`Himanshu`←`himanshukgp` at :86, `Jacob`←`sudozer` at :93, `Mika`←`tal66` at :138,
+  `Ankit`←`ankit` at :35). `_Gagan` cannot be a handle at all, since GitHub logins may not begin with an
+  underscore.
+
+  **Substituting an invented given name for any of the ten is still not a workaround and must not be
+  tried** — they carry no identifier, so an author is matched by exact agreement on both name parts, and a
   substituted name would silently create a duplicate person instead of matching the existing record.
+  **Substituting the *handle* is also wrong**: the handle is a different string from the stored display
+  name, so it would likewise fail to match, and it would misrepresent a person's chosen name as a
+  username. Fixing this properly needs the API-side change tracked in issue #68, not a metadata edit.
 
 ### 7. Software Name (MANDATORY)
 - **Name:** SunPy

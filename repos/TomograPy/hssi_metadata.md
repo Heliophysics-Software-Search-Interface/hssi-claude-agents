@@ -2,6 +2,9 @@
 
 **Repository:** https://github.com/nbarbey/TomograPy
 **Extraction Date:** 2025-12-02
+**HSSI Software ID:** 9da56adf-1252-4ca9-85cf-5fd8fb950cdf
+**Validation Date:** Pending
+**Validation Status:** Pending
 
 ---
 
@@ -48,7 +51,25 @@ https://github.com/nbarbey/TomograPy
 
 ### 6. Authors (MANDATORY)
 
-**Primary Author:**
+**Author 1:**
+- **Authors:** Frédéric Auchère
+- **Author Identifier:** https://orcid.org/0000-0003-0972-7022
+- **Affiliation:**
+  - **Organization:** Institut d'Astrophysique Spatiale, Université Paris-Sud
+  - **Affiliation Identifier:** Not found
+
+**Author identifier.** ORCID `0000-0003-0972-7022` resolves to given name
+"Frédéric", family name "Auchère", with a sole employment of **Institut d'Astrophysique Spatiale** — the
+exact institution already recorded for this author here. An ORCID surname search for "Auchère" returns
+only two records and the other is a different person (Françoise Auchère, Université Paris Cité), so the
+match is unambiguous; the identifier passes the ISO 7064 MOD 11-2 check digit. Corroborating identity
+evidence from elsewhere in the catalogue: `sunkit-image` credits the same author through the git handle
+`frederic-auchere` (GitHub account ID 43064172), whose public repositories are his own published work
+(`wow` — Wavelets Optimized Whitening, `awkward` — solar corona modelling, `wavelets`, `campfires`). That
+handle and this accented name denote one person, so the catalogue holds a single record for him; a future
+refresh encountering the bare handle must not create a second one.
+
+**Author 2:**
 - **Authors:** Nicolas Barbey
 - **Author Identifier:** Not found
 - **Affiliation:**
@@ -57,14 +78,8 @@ https://github.com/nbarbey/TomograPy
 
 **Note:** Two email addresses found for Nicolas Barbey: nicolas.barbey@cea.fr (in setup.py) and nicolas.a.barbey@gmail.com (in AUTHOR file).
 
-**Additional Contributors (Testing):**
+**Author 3:**
 - **Authors:** Chloé Guennou
-- **Author Identifier:** Not found
-- **Affiliation:**
-  - **Organization:** Institut d'Astrophysique Spatiale, Université Paris-Sud
-  - **Affiliation Identifier:** Not found
-
-- **Authors:** Frédéric Auchère
 - **Author Identifier:** Not found
 - **Affiliation:**
   - **Organization:** Institut d'Astrophysique Spatiale, Université Paris-Sud
