@@ -4,9 +4,8 @@
 **Repository:** https://github.com/johan12345/gcs_python/
 **Source Revision:** c8cc9cfc40f485c3bb4a37ff86896571bcd4104f
 **Extraction Date:** 2026-08-04
-**Validation Date:** 2026-08-04
+**Validation Date:** 2026-08-20
 **Validation Status:** PASS
-
 **Scope note.** This is a small, self-contained repository (16 tracked files), and the evidence below
 draws on all of it: `README.md`, `CITATION.cff`, `LICENSE`, `setup.py`, `requirements.txt`, the four
 Python modules under `gcs/`, the two sample scripts, and the shipped thesis excerpt
@@ -204,7 +203,16 @@ as a physical statement about those layers, and no photospheric or chromospheric
 - **Author Identifier:** https://orcid.org/0000-0002-1390-4776
 - **Affiliation:**
   - **Organization:** Institute of Experimental and Applied Physics, University of Kiel
-  - **Affiliation Identifier:** Not found
+    - **Affiliation Identifier:** Not found
+  - **Organization:** Paradox Cat GmbH
+    - **Affiliation Identifier:** Not found
+
+**Johan Lauritz Freiherr von Forstner — both affiliations, and why.** The Kiel institute is the
+affiliation under which this software was authored: `CITATION.cff`, the Zenodo and DataCite creator
+records, and `setup.py` all support it. Paradox Cat GmbH is shared-record context rather than evidence
+from this software. ORCID `0000-0002-1390-4776` gives Paradox Cat as his current employer, and
+`solarmach` independently credits the same person with that affiliation. The catalogue therefore
+retains both organizations on the shared person record; neither is discarded in favour of the other.
 
 Sole author. `CITATION.cff`, the Zenodo deposit, and the DataCite creator list all name exactly one
 creator, so the union of every authoritative source is this one person; nobody is dropped.
@@ -259,11 +267,12 @@ attached to this affiliation later on the grounds that a resolvable identifier i
 The question would only reopen if ROR were to register the Kiel institute itself, in which case that
 new record — not the parent university's — is the identifier to use.
 
-**ORCID employment — deliberately not used as the affiliation.** The only employment on the ORCID
-record is "Machine Learning Engineer, Paradox Cat, Munich, DE" from 2021-02 onward, with no
-disambiguated organization identifier. That post-dates the software and is consistent with the
-README's "I have since left the Heliophysics field"; it is not the affiliation under which this
-software was authored. The ORCID *education* entries (BSc, MSc and PhD at
+**Shared-record employment context.** The only employment on the ORCID record is "Machine Learning
+Engineer, Paradox Cat, Munich, DE" from 2021-02 onward, with no disambiguated organization
+identifier. That post-dates the software and is consistent with the README's "I have since left the
+Heliophysics field"; it is not the affiliation under which this software was authored, but it remains
+on the shared HSSI person record because another catalogued software source attributes it to the same
+person. The ORCID *education* entries (BSc, MSc and PhD at
 Christian-Albrechts-Universität zu Kiel, the PhD ending 2021-02) corroborate the Kiel affiliation
 for the period 2020–2021 when this software was written.
 

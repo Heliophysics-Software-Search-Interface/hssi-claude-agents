@@ -2,6 +2,9 @@
 
 **Repository:** https://github.com/sunpy/ndcube
 **Extraction Date:** 2025-12-02
+**HSSI Software ID:** 1744df14-f1f1-451b-a384-28e3a1beba7f
+**Validation Date:** Pending
+**Validation Status:** Pending
 
 ---
 
@@ -53,6 +56,38 @@
 **Source:** JOSS paper and PyHC keywords. ndcube is used extensively for solar missions (SDO/AIA, IRIS, Hinode, Solar Orbiter, DKIST, PUNCH) and heliospheric data analysis.
 
 ### 6. Authors (MANDATORY)
+
+> **Author identity notes.**
+>
+> **Dan Foreman-Mackey.** The git author line is
+> `Dan F-M <foreman.mackey@gmail.com>`, whose address supplies the surname; an earlier revision of this
+> file recorded the display name "Dan F-M". That string is this contributor's own long-standing display
+> name, not a username, so no platform label applies. **No identifier is recorded** — the ORCID-to-address
+> link is not independently established, so it is left absent rather than guessed.
+>
+> **Three authors here are also credited by other software under different name forms.** Their entries
+> below are the canonical form for each. Recorded so a later refresh recognises the variants instead of
+> treating them as separate people.
+> - **Ankit Baruah** is the same person SunPy credits as "Ankit Baruah": the same commit
+>   address `ankit.baruah1@gmail.com` appears in both projects, and `sunpy/.mailmap` maps
+>   `abit2 <ankit.baruah1@gmail.com>` to that canonical name. Neither project's source supplies an ORCID,
+>   so the identity rests on the shared address. The Workato Gmbh affiliation recorded here is the only
+>   affiliation any source gives him. **SunPy's separate creator `Ankit` is a different person**
+>   (`emonstar333@gmail.com`, which `sunpy/.mailmap` canonicalizes as a mononym) and must not be
+>   conflated with him.
+> - **Mateo Inchaurrandieta** is the same person SunPy credits under the identical name: the
+>   same commit address `mateo.inchaurrandieta@gmail.com` appears in both projects. No source supplies an
+>   ORCID or an affiliation for him.
+> - **Daniel F. Ryan** is the same person sunkit-instruments credits through the GitHub handle
+>   `DanRyanIrish`. `sunpy/.mailmap` maps both `Dan Ryan <ryand5@tcd.ie>` and
+>   `DanRyanIrish <ryand5@tcd.ie>` to the canonical `Daniel F. Ryan`. Splitting that handle on whitespace
+>   yields the given name "Dan Ryan" and the family name "Irish", which is wrong and should not be
+>   reproduced.
+>
+> **This repository's `.mailmap` is an authoritative identity source beyond ndcube itself.** It supplies
+> the canonical forms for `Ghaithq` → **Ghaith Kdimati**, `Brett Graham` → **Brett J Graham**, `ankit` →
+> **Ankit Baruah**, and `DanRyanIrish` → **Daniel F. Ryan**. A refresh of any of those authors, in this
+> project or another, should consult it rather than reasoning from name similarity.
 
 **Source:** .zenodo.json file
 
@@ -151,7 +186,7 @@
 
 27. **Author:** Sanvi Sharma
 
-28. **Author:** Dan F-M
+28. **Author:** Dan Foreman-Mackey
 
 29. **Author:** Kritika Ranjan
     **ORCID:** https://orcid.org/0000-0001-5638-016X

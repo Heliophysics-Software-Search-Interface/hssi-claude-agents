@@ -2,6 +2,9 @@
 
 **Repository:** https://github.com/space-physics/WMM2020
 **Extraction Date:** 2026-03-10
+**HSSI Software ID:** 9c1d2774-3eeb-4b72-bd48-fa7eb5c5e39e
+**Validation Date:** Pending
+**Validation Status:** Pending
 
 ---
 
@@ -34,9 +37,10 @@ https://github.com/space-physics/WMM2020
 
 ### 6. Authors (MANDATORY)
 - **Author 1:**
-  - **Name:** Michael Hirsch, Ph.D.
-  - **Author Identifier:** https://orcid.org/0000-0001-6183-6256
-  - **Affiliation:** SciVision, Inc.
+  - **Name:** Michael Hirsch
+  - **Author Identifier:** https://orcid.org/0000-0002-1637-6526
+  - **Affiliation:** Scivision, Inc.
+  - **Affiliation:** Boston University — https://ror.org/05qwgg493
 - **Author 2:**
   - **Name:** Aaron Nielsen
   - **Author Identifier:** Not found
@@ -46,11 +50,41 @@ https://github.com/space-physics/WMM2020
   - **Author Identifier:** Not found
   - **Affiliation:** Not found
 - **Author 4:**
-  - **Name:** Antoine T
+  - **Name:** Antoine Tavant
   - **Author Identifier:** Not found
   - **Affiliation:** Not found
 
-**Source notes:** Michael Hirsch from setup.cfg (24 commits, primary author). Aaron Nielsen (2 commits: transect function, error checking), Andrey Korzh (1 commit: build optimization), Antoine T (1 commit: wmm_point feature) identified from git shortlog as substantive contributors.
+**Source notes:** Michael Hirsch from setup.cfg (24 commits, primary author); his ORCID is sourced
+separately below, since neither `setup.cfg` nor `git shortlog` carries an ORCID. Aaron Nielsen (2
+commits: transect function, error checking), Andrey Korzh (1 commit: build optimization), Antoine Tavant
+(1 commit: wmm_point feature) identified from git shortlog as substantive contributors.
+
+**Michael Hirsch — author identity and identifier.** The identifier recorded here is
+`https://orcid.org/0000-0002-1637-6526`. Evidence: that ORCID's public record is Michael Hirsch,
+Research Scientist in Electrical and Computer Engineering at Boston University since 2018-08, with
+Boston University M.Eng. and Ph.D., and eighteen works including *PyMap3D: 3-D coordinate conversions
+for terrestrial and geospace environments* (10.21105/joss.00580), *h5fortran* (10.21105/joss.02842) and
+a series of auroral and ionospheric papers. `geospace-code/pymap3d`'s `CITATION.cff` pairs that exact
+ORCID with the author name "SciVision". This repository's git history records the author as
+`Michael Hirsch <10931741+scivision@users.noreply.github.com>`, and GitHub account ID 10931741 is the
+login `scivision`; `setup.cfg`/`pyproject.toml` give the author as "Michael Hirsch, Ph.D." and
+`space-physics/NEXRAD` gives `author_email = scivision@users.noreply.github.com`.
+
+*Rejected alternative — do not reintroduce it.* `https://orcid.org/0000-0001-6183-6256` was recorded
+for this author in an earlier revision of this file and is **wrong**. That ORCID belongs to a different person of the same name: a
+Senior Facility Scientist at the Science and Technology Facilities Council's Central Laser Facility, with
+a Leipzig University Ph.D. and Dipl. Math. in Mathematics, whose twenty-nine works are entirely
+single-molecule fluorescence microscopy, EGFR/HER3 receptor biophysics and EMCCD detector physics. That
+record contains no heliophysics, no geospace and no software. A future refresh that encounters the value
+must reject it rather than restore it.
+
+**Antoine Tavant — name completed.** An earlier revision of this file gave the given name "Antoine" and
+the family name "T".
+The git author line is `Antoine T <antoine.tavant@lpp.polytechnique.fr>`, whose address supplies the
+surname; "Antoine T" was a truncated display name, not a username. An ORCID search returns exactly one
+"Antoine Tavant" record, `https://orcid.org/0000-0003-0010-8073`, but nothing ties that record to this
+contributor, so **no identifier is recorded** — the name is corrected and the identifier left absent
+rather than guessed.
 
 ### 7. Software Name (MANDATORY)
 WMM2020

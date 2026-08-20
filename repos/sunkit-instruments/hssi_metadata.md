@@ -2,6 +2,9 @@
 
 **Repository:** https://github.com/sunpy/sunkit-instruments
 **Extraction Date:** 2025-10-09
+**HSSI Software ID:** db2bcb8a-c799-4233-9699-dea23b975972
+**Validation Date:** Pending
+**Validation Status:** Pending
 
 ---
 
@@ -42,13 +45,25 @@
 
 ### 6. Authors (MANDATORY)
 **Values:**
-1. **DanRyanIrish** (Dan Ryan)
+1. **Daniel F. Ryan** — https://orcid.org/0000-0001-8661-3825 — University College London
+   (https://ror.org/02jx3x895); University College London, Mullard Space Science Laboratory (UCL/MSSL)
+   - *Identity:* an earlier revision of this file recorded given "Dan Ryan", family "Irish" — a naive space-split of the
+     GitHub handle `DanRyanIrish`. `sunpy`'s `.mailmap` maps **both** `Dan Ryan <ryand5@tcd.ie>` and
+     `DanRyanIrish <ryand5@tcd.ie>` to the canonical `Daniel F. Ryan`, and `ndcube`'s `.mailmap` maps
+     `DanRyanIrish` the same way, so the catalogue records him under that canonical name. The upstream
+     handle form
+     `DanRyanIrish` is this project's own creator string and is preserved in this note.
 2. **Stuart Mumford**
    - Affiliation: Aperio Software
 3. **Nabil Freij**
    - Affiliation: SETI Institute & LMSAL
 4. **aringlis** (Andrew Inglis)
-5. **Drew Leonard**
+5. **Andrew J. Leonard** — https://orcid.org/0000-0001-5270-7487 — Aperio Software Ltd.
+   - *Identity:* an earlier revision of this file recorded "Drew Leonard" with no identifier. The same commit address
+     `andy.j.leonard@gmail.com` appears as "Drew Leonard" in both this repository and `sunpy`; ORCID
+     `0000-0001-5270-7487` resolves to "Andrew Leonard". The catalogue holds one record for him under the canonical name; he is also
+     an author of aiapy, DKIST User Tools, ndcube, PlasmaPy and SunPy. "Drew Leonard" is this project's
+     own creator string and is preserved in this note.
 6. **Steven Christe**
    - Affiliation: NASA Goddard Space Flight Center
 7. **vn-ki**
@@ -66,8 +81,21 @@
 15. **Larry Manley**
 16. **David Stansby**
     - Affiliation: UCL
-17. **Yash Jain**
-18. **Alex-Ian-Hamilton**
+17. **Yash Jain** — https://orcid.org/0000-0001-5347-4734 — Indian Institute of Technology, Kharagpur
+    (https://ror.org/03w5sq511)
+    - *Identity:* another project credits the same person under this identical name without an identifier. The same commit
+      address `yashjainjain1704@gmail.com` appears in this repository as `yash_jain` and in `sunpy` as
+      both `Yash Jain` and `yash_jain`, so they are one person, and the catalogue holds a single
+      record for them under the canonical name. Note `sunpy` separately lists **Sarthak Jain** and **Shubham Jain**, who are different
+      people.
+18. **Alex Hamilton**
+    - *Identity:* an earlier revision of this file recorded a blank given name with family name "Alex-Ian-Hamilton".
+      `sunpy`'s `.mailmap` canonicalizes the alias `Alex-Ian-Hamilton` to **Alex Hamilton**, and this
+      repository's git history shows `Alex`, `Alex Hamilton` and `Alex-Ian-Hamilton` all under
+      `Alex_Ian_Hamilton@hotmail.com`. SunPy credits him under the canonical name at its author 25.
+      Neither row holds an ORCID, so the survivor was chosen on the strength of the upstream-canonical
+      name form rather than on an identifier; **no identifier is asserted.** The handle form is this
+      project's own creator string and is preserved in this note.
 19. **derdon**
 20. **Will Barnes**
     - Affiliation: American University
@@ -79,16 +107,27 @@
 24. **Samuel Bennett**
     - Affiliation: University of Sheffield
 25. **Michael Charlton**
-26. **Pritish Chakraborty**
-27. **Carlos Molina**
-    - Affiliation: @SUGUS-GNULinux
+26. **Pritish Chakraborty** — https://orcid.org/0000-0001-8875-5819 — Manav Rachna University
+    (https://ror.org/0117a2k50)
+    - *Identity:* another project credits the same person under this identical name without an identifier. The same commit
+      address `chakrabortypritish@gmail.com` appears in this repository (as `VaticanCameos`) and in
+      `sunpy`, so they are one person, and the catalogue holds a single record for them under the canonical name.
+27. **Carlos Molina** — https://orcid.org/0000-0003-0300-4106
+    - Affiliation: SUGUS-GNULinux
+    - *Identity:* another project credits the same person under this identical name with the ORCID but no affiliation. The
+      same commit address `carlosmolina.ord@gmail.com` appears in this repository (as `cmolinaord`) and
+      in `sunpy`, so they are one person and the catalogue holds a single record for him. The
+      SUGUS-GNULinux affiliation this project supplies is retained on that record alongside anything other
+      sources give him — an affiliation is never dropped in favour of a newer one — so it is also visible
+      on SunPy's author 160.
 28. **Rishabh Sharma**
 
 **Primary Contact (from pyproject.toml):** The SunPy Community (sunpy@googlegroups.com)
 
 **Source:** DataCite API, Zenodo API
 
-**Note:** Author ORCID identifiers were not found in the available metadata sources (DataCite, repository files).
+**Note:** DataCite and the repository's original creator strings do not supply all of the ORCIDs above;
+the identity notes record the independent evidence used for those reconciliations.
 
 ### 7. Software Name (MANDATORY)
 **Value:** sunkit-instruments

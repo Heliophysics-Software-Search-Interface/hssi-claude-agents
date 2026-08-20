@@ -3,10 +3,9 @@
 **HSSI Software ID:** a7f6fd15-9b3c-4cae-a029-0da92222f465
 **Repository:** https://github.com/heliocloud-data/cloudcatalog
 **Source Revision:** 1c7b8dbbd150b6148ee683484c69d46e5b44f76d (branch `develop`, 2026-07-21)
-**Metadata Date:** 2026-07-31
-**Validation Date:** 2026-07-31
+**Extraction Date:** 2026-07-31
+**Validation Date:** 2026-08-20
 **Validation Status:** PASS
-
 ---
 
 ## Section 1: Basic Information
@@ -110,10 +109,20 @@ Author order is significant and is: Antunes, Jeschke, Shumate, Knowles.
 **1. Alex Antunes**
 - Author Identifier: https://orcid.org/0000-0002-3098-2602
 - Affiliation: Johns Hopkins University Applied Physics Laboratory — https://ror.org/029pp9z10
+- Affiliation: Project Calliope — identifier not found
 - Evidence: ORCID 0000-0002-3098-2602 resolves to "Alex Antunes", employment
   "Johns Hopkins University Applied Physics Laboratory" (ROR `029pp9z10`), dept SES/SRN.
   Commits as `Sandy Antunes <sandy.antunes@jhuapl.edu>` (72 commits) and `antunak1` (30);
   named contact in the PyHC registry and in `docs/CloudCatalog-Demo.ipynb`.
+- **Both affiliations, and why.** This author's record carries JHU/APL and Project Calliope together.
+  CDFlib and PySPEDAS credit the same person under the name "Sandy Antunes" with the affiliation Project
+  Calliope and no identifier; that is the same human, so the catalogue holds one record for him carrying
+  the union of the institutions its sources attribute to him. An affiliation is never dropped in favour
+  of a newer one. The identification rests on the commit chain recorded
+  above plus `spedas/pyspedas` `CITATION.cff`, which lists `Antunes, Sandy` with affiliation "Johns
+  Hopkins University Applied Physics Laboratory" — this ORCID's own employment. It does **not** rest on
+  the ORCID name: that record publishes no "Sandy" alias, so a name-only inference would not have been
+  sufficient.
 
 **2. Chris Jeschke**
 - Author Identifier: https://orcid.org/0009-0008-8557-6709
@@ -138,7 +147,7 @@ Author order is significant and is: Antunes, Jeschke, Shumate, Knowles.
   3. Zenodo 10.5281/zenodo.13887203 ("HelioCloud as a replicable open science architecture",
      Gateways 2024) lists creator "**Shumate**, Peter" alongside Antunes and Jeschke.
   No source anywhere spells it "Schumate".
-- **Completed correction:** this record previously held the misspelling **`Schumate`** with no
+- **Previous incorrect value:** this record previously held the misspelling **`Schumate`** with no
   identifier. Corrected to `Shumate` with the ORCID above, preserving the author's existing
   identity and position in the author order. The ORCID for Jeschke was added in the same
   correction, also to a pre-existing identity that carried none.
@@ -206,7 +215,7 @@ We also include command-line tools for creating and viewing the networked catalo
 
 The block above is the exact value, including the curly quotes U+2018/U+2019 in the bullets.
 
-**Completed correction — the first line.** This record previously opened with "Shared Cloud
+**Previous incorrect first line.** This record previously opened with "Shared Cloud
 Registry specification and API for providing and accessing cloud data", the *old* GitHub About
 text using the project's abandoned name. The current GitHub About wording is
 "CloudCatalog specification and API for providing and accessing cloud data". The rename is
@@ -304,7 +313,7 @@ Evidence, and the traps avoided:
   prose is presentation only and forms no part of the value.
 - **Version PID:** no per-version DOI exists (see Field 2).
 
-**Completed correction:** this record previously held version `1.1.0` dated 2025-09-04. That date
+**Previous incorrect version:** this record previously held version `1.1.0` dated 2025-09-04. That date
 also disagreed with PyPI, which published 1.1.0 on 2025-06-02.
 
 ---
@@ -738,26 +747,3 @@ the *specification* (a document). Three things defeat it:
   (cloudcatalog) specification…" is the second line of the description and stays there. Nothing is
   lost by removing "API" from the name; the software/specification distinction is stated more
   precisely in prose than a two-word title could manage.
-
----
-
-## Completed corrections
-
-Five values in this record were wrong or stale and have been corrected against the evidence cited
-in their fields:
-
-| Field | Was | Now |
-|---|---|---|
-| 7 Software Name | `CloudCatalog API` | `CloudCatalog` |
-| 6 Authors | `Peter Schumate`, no identifier | `Peter Shumate`, ORCID `0009-0003-6088-5437` |
-| 6 Authors | `Chris Jeschke`, no identifier | ORCID `0009-0008-8557-6709` added |
-| 12 Version | `1.1.0`, dated 2025-09-04 | `1.2.1`, dated 2026-03-31 |
-| 8 Description | opened with the abandoned "Shared Cloud Registry" name | opens with the current wording |
-
-Both author corrections preserved the existing author identities and their positions in the author
-order. Lisa Knowles was added as a fourth author, and JHUAPL affiliations were added to Jeschke,
-Shumate and Knowles. Sixteen fields that were previously empty are now populated: 9, 11, 14, 15,
-16, 17, 18, 19, 20, 21, 23, 24, 27, 28, 29 and 30, plus the version date and description in 12.
-
-Fields deliberately left empty, each with its reasoning recorded in the field: 2 (no software DOI
-exists), 22, 25, 26, 31, 32, 33.

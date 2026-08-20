@@ -4,9 +4,8 @@
 **Repository:** https://github.com/DKISTDC/dkist
 **Source Revision:** 8ce3cc9b34116e4d58211ed2824629f2828c3e0f
 **Extraction Date:** 2026-07-30
-**Validation Date:** 2026-07-31
+**Validation Date:** 2026-08-20
 **Validation Status:** PASS
-
 Metadata for the DKIST User Tools (`dkist`) Python package, derived from the repository at the source
 revision above (tag `v1.18.0` plus 8 commits) together with the project's own Zenodo/DataCite release
 metadata, PyPI, conda-forge, ror.org and ORCID. Every field carries its evidence. Controlled-list
@@ -139,7 +138,7 @@ listed together with its parent category.
   `curve_fit`, `.fit(`) returns nothing outside tests. The value is kept because someone searching for
   DKIST mission analysis tooling should find this package.
 
-**Corrected — two previously recorded values removed**
+**Earlier unsupported values**
 
 An earlier record carried four `Mission-related:*` children, two of which are not supported by the
 source. Both were removed; the reasons are recorded here so the omission is not read as a gap.
@@ -264,10 +263,21 @@ Freij's third affiliation, Bay Area Environmental Research Institute).
      comparing this entry against the DKIST release metadata can see why the names differ.
    - He is the second-largest contributor to the repository by commit count (`git shortlog -sne --all`:
      112 commits, behind only Mumford), so the credit is substantial.
-4. **Brett Graham** — identifier Not found
-   - *Evidence:* Zenodo/DataCite creator. No affiliation given. Eight distinct ORCID records share this
-     name and none is corroborated by a DKIST or solar-physics signal, so no ORCID is asserted and
-     none should be guessed.
+4. **Brett J Graham** — https://orcid.org/0000-0001-6315-4507
+   - *Affiliation:* Space Telescope Science Institute — https://ror.org/036f5mx38
+   - *Evidence:* an earlier revision of this file recorded "Brett Graham" with no identifier, reasoning
+     that eight ORCID records share the name and none was corroborated. The corroboration does exist, and
+     it comes from upstream rather than from name matching. This repository's git author is
+     `Brett Graham <brettgraham@gmail.com>`, and **both** `sunpy/.mailmap` and `ndcube/.mailmap` map that
+     exact address to the canonical form `Brett J Graham`, whose `sunpy/.zenodo.json` creator entry (#72)
+     carries ORCID `0000-0001-6315-4507`. That ORCID's employment is Software Engineer at the Space
+     Telescope Science Institute. The catalogue therefore holds one record for him under that canonical
+     name, not one per project spelling.
+   - *Not a catalogue-wide "Graham" merge.* SunPy separately lists a creator `graham`, which is a
+     **different person**: GitHub's commit API attributes SunPy commit
+     `1e2a628abe9c1f420bf7ae174ec1fc5433b2183b` to account `grahamasam` (ID 107145436), and
+     `sunpy/.mailmap` aliases `Brett` and `Brett Graham` to Brett J Graham while deliberately declining to
+     alias `graham`. Those two rows must stay separate.
 5. **Erik Johansson** — identifier Not found
    - Affiliation: National Solar Observatory — https://ror.org/00b9pg524
    - *Evidence:* Zenodo/DataCite creator with affiliation "National Solar Observatory"; his commits are
@@ -847,39 +857,3 @@ https://raw.githubusercontent.com/DKISTDC/dkist/main/docs/logo/icon_square.jpg
   `dkist-sphinx-theme`
   (`https://docs.dkist.nso.edu/projects/python-tools/en/stable/_static/img/dkist-logo-v5-blue-text.png`);
   the in-repository asset is preferred because it belongs to this package rather than to the theme.
-
----
-
-## Corrections to earlier recorded metadata
-
-Recorded so a reader can see why these values differ from an earlier version of this record. The
-reasoning for each sits with its field above.
-
-- **Field 2** — a Zenodo version-record URL for v1.17.0 stood where the field asks for the concept DOI
-  covering all versions.
-- **Field 4** — `Mission-related: Calibration` and `Mission-related: Science Data Processing` were
-  removed as unsupported by the source; the `Mission-related` parent was added alongside its children,
-  and 16 further values were added.
-- **Field 6** — the author list held a single name; the project's own release metadata credits 14.
-- **Field 8** — the description was a three-part newline concatenation of the repository description,
-  the `README.rst` title line and the README's Code of Conduct sentence.
-- **Field 10** — the repository creation date stood in place of the first released version.
-- **Field 11** — a Zenodo version-record URL was used as the publisher organization name.
-- **Field 12** — the version lagged at 1.17.0.
-- **Fields 15 and 23** — license and development status were empty.
-- **Fields 5, 16–22, 29, 30 and 33** — empty or sparse, now populated from repository evidence.
-- **Field 32** — the observatory was recorded under the `.html` duplicate of its SPASE identifier.
-
-Unchanged from the earlier record: Fields 3 (Code Repository), 7 (Software Name), 9 (Concise
-Description), 13 (Programming Language) and 24 (Documentation).
-
-Genuinely empty, with reasons recorded in place: Fields 14 (Reference Publication), 25 (Funder),
-26 (Award Title), 27 (Related Publications), 28 (Related Datasets) and 31 (Related Instruments —
-carried to Field 32).
-
-No value here exceeds an HSSI field length limit: the longest URL is 78 characters against a
-200-character limit, and the concise description is exactly at its 200-character limit.
-
-*PyHC:* all three PyHC registry files (`projects_core.yml`, `projects.yml`,
-`projects_unevaluated.yml`) were read in full; `dkist` appears in none of them, by package name,
-repository URL or description, so no curated PyHC metadata was available for this record.

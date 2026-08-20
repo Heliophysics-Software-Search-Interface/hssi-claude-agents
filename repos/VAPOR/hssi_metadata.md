@@ -4,9 +4,8 @@
 **Repository:** https://github.com/NCAR/VAPOR
 **Source Revision:** 9250664aec645aadab5b5cc29fdbf670a7d4f080
 **Extraction Date:** 2026-07-23
-**Validation Date:** 2026-07-23
+**Validation Date:** 2026-08-20
 **Validation Status:** PASS
-
 ---
 
 ## Section 1: Basic Information
@@ -59,7 +58,7 @@ https://github.com/NCAR/VAPOR
 2. **John Clyne**
    - **Author Identifier:** Not found
    - **Affiliation:** NSF National Center for Atmospheric Research — https://ror.org/05cvfcr44
-3. **CoreCode**
+3. **core-code (GitHub)** *(stored as givenName `core-code`, familyName `(GitHub)`)*
    - **Author Identifier:** Not found
    - **Affiliation:** CoreCode — identifier not found
 4. **Joel Daves**
@@ -109,6 +108,20 @@ https://github.com/NCAR/VAPOR
 
 - **Source note:** Seeded authors were retained and identity-aware merges replaced the aliases clyne, sgpearse, and StasJ with full names supported by the current README, Zenodo creators, and the cited publication. Scott Pearse now has the NCAR affiliation supplied by the latest Zenodo version. Kenny Gruchalla, Niklas Roeber, and Pamela Gillman were added from the authoritative README project-member list. Alan Norton was added from repeated VAPOR source-header authorship credits and assigned the source-supported NSF National Center for Atmospheric Research affiliation; John Clyne received the same source-supported affiliation. Samuel Li’s verified ORCID was added from the reference-publication, repository-identity, and ORCID evidence resolved in validation. Affiliation acronyms were expanded and identifiers resolved with the ROR API. CoreCode remains represented as a personal creator because current DataCite classifies it as Personal; the similarly named ROR result was not assigned because identity is uncertain.
 
+**core-code — username representation.** This creator is recorded as given name `core-code`, family name
+`(GitHub)`: the catalogue's convention for a proven platform handle whose holder has published no human
+name. An earlier revision of this file recorded a blank given name with the family name "CoreCode". The
+form asserts a handle and its platform, and deliberately **not** a personal name. Evidence: this repository's git author is `CoreCode <core-code@users.noreply.github.com>`, a legacy
+GitHub noreply address that encodes the login directly, and GitHub's commit API attributes commit
+`38389bc9a67e04481cfe3ec1c4448ae3a26f89aa` to account **`core-code`, ID 1261954**. "CoreCode" was that
+account's profile display name; `core-code` is the exact login, and handle capitalization is preserved
+verbatim.
+
+*Trap recorded so it is not repeated:* `github.com/corecode` — the same string without the hyphen — is a
+**different account** (ID 177979, profile name "Simon Schubert"). It must never be substituted here, and
+no real name may be inferred from it. The uncertainty noted above about this creator's human identity is
+unchanged; only the handle representation is now exact.
+
 ### 7. Software Name (MANDATORY)
 NCAR/VAPOR
 
@@ -130,12 +143,12 @@ Project homepage and binary releases can be found at https://www.vapor.ucar.edu/
 ### 9. Concise Description (OPTIONAL)
 VAPOR is the Visualization and Analysis Platform for Ocean, Atmosphere, and Solar Researchers, providing interactive 3D visualization, animations, still images, and ad hoc Python analysis.
 
-- **Source note:** Proposed replacement for the seeded 200-character value, which ended mid-word at “still fra”. This complete 188-character summary preserves the submitted meaning and is supported by the README.
+- **Source note:** This complete 188-character summary replaces the earlier 200-character value, which ended mid-word at “still fra”; it preserves the submitted meaning and is supported by the README.
 
 ### 10. Publication Date (RECOMMENDED)
 2017-06-14
 
-- **Source note:** **User decision:** 2017-06-14 is the earliest verifiable public GitHub repository date and is used as a proxy because VAPOR source evidence predates it and no authoritative initial-release date was found. This replaces the clearly semantically incorrect rolling Weekly release date previously used in Field 10; that release date is retained only as the Field 12 Version Date.
+- **Source note:** 2017-06-14 is the earliest verifiable public GitHub repository date and is used as a proxy because VAPOR source evidence predates it and no authoritative initial-release date was found. This replaces the clearly semantically incorrect rolling Weekly release date previously used in Field 10; that release date is retained only as the Field 12 Version Date.
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
@@ -163,7 +176,7 @@ VAPOR is the Visualization and Analysis Platform for Ocean, Atmosphere, and Sola
 - Rust
 - SQL
 
-- **Source note:** Set-union policy retains every existing HSSI value. Current GitHub/SoMEF language analysis directly confirms C++, C, Python, IDL, and JavaScript; Other covers substantial GLSL, NCL, CMake, Shell, Perl, Objective-C++, and related code. **Uncertainty for Validator:** current GitHub language statistics do not substantiate the seeded Java, MATLAB, Rust, or SQL values, but extraction did not remove them.
+- **Source note:** Set-union policy retains every existing HSSI value. Current GitHub/SoMEF language analysis directly confirms C++, C, Python, IDL, and JavaScript; Other covers substantial GLSL, NCL, CMake, Shell, Perl, Objective-C++, and related code. The carried-over Java, MATLAB, Rust, and SQL values are not substantiated by current GitHub language statistics and should be re-examined during the next full refresh rather than silently treated as newly evidenced.
 
 ### 14. Reference Publication (RECOMMENDED)
 https://doi.org/10.3390/atmos10090488
@@ -267,7 +280,7 @@ https://ncar.github.io/VaporDocumentationWebsite/
 3. **Award Title:** SI2-SSE: Wavelet Enabled Progressive Data Access and Storage Protocol (WASP)
    - **Award Number:** ACI-14-40412
 
-- **Source note:** The National Science Foundation award numbers were retained in the README formatting. Exact award titles were added from NSF Awards API records 0325934, 0906379, and 1440412 after resolving the repository number formatting. For award 09-06379, the exact original official NSF title is `Enabling Transformational Science and Engineering Through Integrated Collaborative Visualization and Data Analysis for the National User Community`. The canonical payload title was shortened because HSSI's `Award.name` database column is `varchar(128)`, while the official title is 146 characters; the shortened title preserves the award's core meaning and fits the limit.
+- **Source note:** The National Science Foundation award numbers were retained in the README formatting. Exact award titles were added from NSF Awards API records 0325934, 0906379, and 1440412 after resolving the repository number formatting. For award 09-06379, the exact original official NSF title is `Enabling Transformational Science and Engineering Through Integrated Collaborative Visualization and Data Analysis for the National User Community`. The stored title is shortened because HSSI's `Award.name` database column is `varchar(128)`, while the official title is 146 characters; the shortened form preserves the award's core meaning and fits the limit.
 
 ---
 
@@ -307,9 +320,9 @@ Not found
 ### 32. Related Observatories (OPTIONAL)
 Not found
 
-- **Source note:** VAPOR is not designed for a specific mission or observatory. Generic solar use and simulation-model support do not pass the relevance gate. The HSSI target vocabulary was fetched, but no observatory candidate was applicable.
+- **Source note:** VAPOR is not designed for a specific mission or observatory. Generic solar use and simulation-model support do not pass the relevance gate, so no observatory candidate is applicable.
 
 ### 33. Logo (OPTIONAL)
 https://raw.githubusercontent.com/NCAR/VAPOR/9250664aec645aadab5b5cc29fdbf670a7d4f080/share/images/vapor_banner.png
 
-- **Source note:** Proposed replacement for the seeded CircleCI status badge, which is not a software logo. The replacement is the VAPOR banner embedded by the current README and pinned to the extracted source revision.
+- **Source note:** This VAPOR banner replaces the earlier CircleCI status badge, which is not a software logo. The banner is embedded by the current README and pinned to the extracted source revision.

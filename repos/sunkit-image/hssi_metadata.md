@@ -2,6 +2,9 @@
 
 **Repository:** https://github.com/sunpy/sunkit-image
 **Extraction Date:** 2025-10-09
+**HSSI Software ID:** 110491fc-f060-4b9d-ab2c-bb0806824948
+**Validation Date:** Pending
+**Validation Status:** Pending
 
 ---
 
@@ -65,14 +68,28 @@
 7. **Jayraj Dulange**
    - Affiliation: Not provided in DataCite
 
-8. **Dr. Gilly**
-   - Affiliation: Southwest Research Institute
+8. **Chris R. Gilly**
+   - Author Identifier: https://orcid.org/0000-0003-0021-9056
+   - Affiliation: Southwest Research Institute — https://ror.org/03tghng59
+   - *Identity:* an earlier revision of this file gave the given name "Dr." and the family name "Gilly"
+     — an honorific in the given-name
+     field. This repository's git history records the same contributor under three name forms,
+     `C. R. Gilly`, `Chris R. Gilly` and `Dr. Gilly`, all under the single address `gilly@swri.org`, and
+     SunPy credits the same person as "Chris R. Gilly" with the same SwRI affiliation, so the catalogue
+     holds one record for him under that canonical name.
 
 9. **Laura Hayes**
    - Affiliation: Not provided in DataCite
 
-10. **Ghaithq**
-    - Affiliation: Not provided in DataCite
+10. **Ghaith Kdimati**
+    - Author Identifier: https://orcid.org/0009-0006-8851-7814
+    - Affiliation: Cairo University — https://ror.org/03q21mh05
+    - *Identity:* an earlier revision of this file recorded a blank given name with the family name
+      "Ghaithq". `ndcube`'s
+      `.mailmap` maps the alias `Ghaithq` to the canonical **Ghaith Kdimati**, and `sunpy`'s
+      `.zenodo.json` creator entry for that name carries ORCID `0009-0006-8851-7814`. The handle row was
+      recorded under that personal name rather than as a handle, because a real identity is proven; the
+      handle-plus-platform convention applies only where no human name is published.
 
 11. **Abinash Mahapatra**
     - Affiliation: Not provided in DataCite
@@ -83,8 +100,18 @@
 13. **Saksham Alok**
     - Affiliation: Not provided in DataCite
 
-14. **frederic-auchere**
-    - Affiliation: Not provided in DataCite
+14. **Frédéric Auchère**
+    - Author Identifier: https://orcid.org/0000-0003-0972-7022
+    - Affiliation: Institut d'Astrophysique Spatiale, Université Paris-Sud — https://ror.org/014p8mr66
+    - *Identity:* an earlier revision of this file recorded a blank given name with the family name
+      "frederic-auchere". The git author here is
+      `43064172+frederic-auchere@users.noreply.github.com`; that GitHub account's public repositories are
+      this author's own published work (`wow` — Wavelets Optimized Whitening, `awkward` — solar corona
+      modelling, `wavelets`, `campfires`). TomograPy credits the same person under the accented name with
+      the IAS affiliation, so the catalogue holds one record for him under that form. His ORCID is
+      `0000-0003-0972-7022`, which resolves to "Frédéric Auchère" with a sole employment of Institut
+      d'Astrophysique Spatiale, matching the stored affiliation exactly, and an ORCID surname search
+      returns only two records, the other being a different person (Françoise Auchère).
 
 15. **Jeffrey Aaron Paul**
     - Affiliation: Not provided in DataCite
@@ -92,8 +119,15 @@
 16. **Matt Wentzel-Long**
     - Affiliation: Not provided in DataCite
 
-17. **P. L. Lim**
-    - Affiliation: Space Telescope Science Institute
+17. **Pey Lian Lim**
+    - Author Identifier: https://orcid.org/0000-0003-0079-4114
+    - Affiliation: Space Telescope Science Institute — https://ror.org/036f5mx38
+    - *Identity:* an earlier revision of this file recorded "P. L. Lim" with no identifier. `ndcube`'s
+      git author
+      `2090236+pllim@users.noreply.github.com` is GitHub account `pllim`; ORCID `0000-0003-0079-4114`
+      resolves to "Pey Lian Lim" with employment at the Space Telescope Science Institute — the
+      affiliation this project already supplied. The initials form is this project's and CDFlib's own
+      creator string and is preserved in this note, so a refresh reading either source recognises it.
 
 18. **Samuel Bennett**
     - Affiliation: University of Sheffield

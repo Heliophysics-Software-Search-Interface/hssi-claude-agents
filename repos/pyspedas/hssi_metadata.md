@@ -4,9 +4,8 @@
 **Repository:** https://github.com/spedas/pyspedas
 **Source Revision:** bbfdd632a0eb42953a8c83a489c140b13c508927
 **Extraction Date:** 2026-08-11
-**Validation Date:** 2026-08-11
+**Validation Date:** 2026-08-20
 **Validation Status:** PASS
-
 > **Scope note.** PySPEDAS is a multi-mission framework: the `pyspedas/projects/` tree carries 37
 > per-project subpackages, and the analysis, coordinate-transform, particle, geopack and plotting
 > capabilities are shared across all of them. Several fields below (notably Software Functionality,
@@ -286,30 +285,102 @@ nine additions below each rest on repository evidence, and none of the five was 
 9. **James McTiernan** | ORCID: https://orcid.org/0000-0002-3038-176X | Space Sciences Laboratory, University of California, Berkeley; University of California, Berkeley
 10. **Daniel Carpenter** | University of California, Los Angeles
 11. **Julie Barnum** | ORCID: https://orcid.org/0000-0001-8755-0694 | Laboratory for Atmospheric and Space Physics
+
+> **`family-names: GithubUser` is this project's own upstream convention, not an HSSI defect.** Seven
+> entries in `CITATION.cff` (lines 50, 63, 68, 86, 93, 110, 112) use the literal family name
+> `GithubUser` with the contributor's handle as the given name. HSSI reproduced that verbatim. Each
+> of the seven is resolved individually below against a platform-native attribution standard —
+> a GitHub noreply address encoding the account, or GitHub's commit API returning the account's login and
+> ID. The outcomes differ per entry and are recorded on each: three resolved to a real person (13, 19,
+> 34), two to an exact handle labelled `(GitHub)` (25, 28), one to `(Username)` because no account exists
+> (35), and one to a mononym because the stored string was a display name rather than a handle (17). The
+> upstream strings are preserved in those notes; a future refresh reading `CITATION.cff` must not
+> reintroduce `GithubUser` as a family name.
 12. **Ayris Narock** | ORCID: https://orcid.org/0000-0001-6746-7455 | Adnet Systems (United States)
-13. **Beforerr GithubUser**
+13. **Zijin Zhang**
+    - *Identity:* an earlier revision of this file recorded given "Beforerr", family "GithubUser". The git author is
+      `Beforerr <58776897+Beforerr@users.noreply.github.com>`, and GitHub account ID 58776897 is login
+      `Beforerr`, whose **profile publishes the name "Zijin Zhang"**. A real identity is proven, so the
+      record is canonicalized to the person rather than labelled as a handle. **No identifier recorded:**
+      thirteen ORCID records exist for this name; `0000-0002-9968-067X` (University of California, Los
+      Angeles + USTC) is the only plausible one for a PySPEDAS contributor, but institutional similarity
+      is not proof, so it was left unassigned.
 14. **Marc Pulupa** | ORCID: https://orcid.org/0000-0002-1573-7457 | University of California, Berkeley
 15. **Xiangning Chu** | ORCID: https://orcid.org/0000-0003-4109-0770 | University of Colorado Boulder
 16. **Brent Smith** | Johns Hopkins University Applied Physics Laboratory
-17. **Tiger GithubUser**
+17. **Tiger** *(stored as an empty given name with family name `Tiger`)*
+    - *Identity:* the `GithubUser` family name this project's roster uses is factually wrong here. GitHub's
+      commit API attributes commit `c9accb2834003df8eadcde33dd3e5fbbd232a23d` to account `tiger2017`
+      (ID 11709762) — so the stored string "Tiger" is **not** the handle, it is that account's own profile
+      display name. This is therefore a mononym, preserved without any platform label. The mononym is
+      held in the family-name field, matching how every other incomplete personal name in the catalogue is
+      stored and keeping the invariant that no record has an empty family name.
 18. **Austin Norris** | University of California, Los Angeles
-19. **Kiril B GithubUser**
+19. **Kiril Bourakov**
+    - *Identity:* an earlier revision of this file recorded given "Kiril B", family "GithubUser". GitHub's commit API
+      attributes commit `713c9a605dcf0e692f8b9bb51e9a6269ae808f80` to account **`KirilBourakov`
+      (ID 86131959)**, whose profile publishes the name **"Kiril Bourakov"**; that account has eight
+      commits in this repository. A real identity is proven, so the record is canonicalized to the person.
+      "Kiril B" was a given name plus a surname initial, not a username. **No identifier recorded:** an
+      ORCID surname search for "Bourakov" returns zero records.
 20. **Samuel T. Badman** | ORCID: https://orcid.org/0000-0002-6145-436X | Center for Astrophysics Harvard & Smithsonian
 21. **Anansa Keaton-Ashanti** | The University of Texas at Austin
 22. **Tomo Hori** | Nagoya University
 23. **Takanobu Amano** | ORCID: https://orcid.org/0000-0002-2140-6961
 24. **Warren Rexroad** | University of California, Berkeley
-25. **krvidal GithubUser**
+25. **krvidal (GitHub)** *(stored as givenName `krvidal`, familyName `(GitHub)`)*
+    - *Identity:* a proven platform handle with no published human name. The git author is
+      `krvidal <92814757+krvidal@users.noreply.github.com>`, whose noreply address encodes account ID
+      92814757 and login `krvidal`. The upstream `GithubUser` family name is replaced by the platform
+      label `(GitHub)`; **no human name is asserted.**
 26. **Shuji Onosawa**
 27. **Luke Powell** | Southwest Research Institute
-28. **thigli GithubUser**
+28. **ThiGli (GitHub)** *(stored as givenName `ThiGli`, familyName `(GitHub)`)*
+    - *Identity:* a proven platform handle. GitHub's commit API attributes commit
+      `d95f877d1c3acb05fd86f3f475d1b61962e8e3fe` to account **`ThiGli` (ID 98546855)**. Note the
+      **capitalization correction**: the exact login is `ThiGli`, not the lower-case `thigli` this roster
+      uses. Handle capitalization is preserved verbatim. **No human name is asserted** — the account
+      publishes none, though the commit address `t.glissmann@protonmail.com` is consistent with the
+      login.
 29. **Mykhaylo Shumko** | ORCID: https://orcid.org/0000-0002-0437-7521 | Johns Hopkins University Applied Physics Laboratory
 30. **Qusai Al Shidi** | ORCID: https://orcid.org/0000-0003-0426-038X | West Virginia University
-31. **Sandy Antunes** | Project Calliope
+31. **Alex Antunes** | ORCID: https://orcid.org/0000-0002-3098-2602 | Johns Hopkins University Applied
+    Physics Laboratory; Project Calliope
+    - *Identity:* an earlier revision of this file recorded "Sandy Antunes" with the Project Calliope affiliation and no
+      identifier. ORCID `0000-0002-3098-2602` resolves to "Alex Antunes" at JHU/APL, and that person
+      commits as `Sandy Antunes <sandy.antunes@jhuapl.edu>`. **This project's own `CITATION.cff` is part
+      of the proof**: it lists `Antunes, Sandy` with affiliation "Johns Hopkins University Applied Physics
+      Laboratory" — the ORCID's employment. The name alone would not have sufficed; that ORCID record
+      publishes no "Sandy" alias, so a refresh must not read that as a contradiction. The Project
+      Calliope affiliation this project supplies is retained on his record alongside JHU/APL.
 32. **Sean A. Q. Young** | Johns Hopkins University Applied Physics Laboratory
-33. **Tien 'Vo**
-34. **donglai96 GithubUser**
-35. **rale8469 GithubUser**
+33. **Tien Vo** | ORCID: https://orcid.org/0000-0002-8335-1441 | Laboratory for Atmospheric and Space
+    Physics (https://ror.org/01fcjzv38)
+    - *Identity:* an earlier revision of this file carried a stray leading apostrophe in the family name
+      (`'Vo`). **The
+      apostrophe is this project's own upstream typo, and it is still live:** `CITATION.cff` line 108
+      reads `family-names: '''Vo'`, whose YAML single-quote escaping yields `'Vo`. This repository's git
+      history has the correct form, `Tien Vo <tienrvo@gmail.com>`. ORCID `0000-0002-8335-1441` resolves to
+      "Tien Vo", now a postdoctoral scholar at UCLA and previously a graduate research assistant at LASP,
+      CU Boulder, which is the affiliation recorded for the same person as PlasmaPy's author 139. A
+      future refresh reading `CITATION.cff` must not restore the apostrophe. Note PlasmaPy separately
+      lists **Anthony Vo**, a different person.
+34. **Donglai Ma**
+    - *Identity:* an earlier revision of this file recorded given "donglai96", family "GithubUser". GitHub's commit API
+      attributes commit `bcff2ef5a231744635b84b87f06e122e30efcbc9` to account **`donglai96`
+      (ID 29682557)**, whose profile publishes the name **"Donglai Ma"** and the company UCLA; the commit
+      address `donglaima96@gmail.com` reconciles login and name. A real identity is proven, so the record
+      is canonicalized to the person. **No identifier recorded:** six ORCID records exist for this name
+      and none publishes an institution, so none could be matched.
+35. **rale8469 (Username)** *(stored as givenName `rale8469`, familyName `(Username)`)*
+    - *Identity:* a proven username whose platform cannot be established, so the platform-specific
+      label is **not** used. GitHub's commit API attributes commit
+      `31c47718cba9c8d574a983adf94e163d7415dadd` to **no account** (`author: null`), and no
+      `github.com/rale8469` exists — so this roster's `GithubUser` classification is factually
+      unsupported and must not be carried forward. The string is nonetheless certainly a username: the git
+      address is `rale8469@macl63.lasp.colorado.edu`, a LASP machine-local address whose local part is the
+      handle itself, and this project's own `CITATION.cff` classifies it as a user handle. Hence
+      `(Username)` rather than `(GitHub)`.
 36. **Benjamin Short** | ORCID: https://orcid.org/0000-0003-3945-6577
 37. **Elysia Lucas** | Laboratory for Atmospheric and Space Physics
 
@@ -320,17 +391,17 @@ nine additions below each rest on repository evidence, and none of the five was 
   raw `CITATION.cff` strings; the two differ in punctuation for several organizations, for example
   `Center for Astrophysics Harvard & Smithsonian` (stored) versus
   `Center for Astrophysics | Harvard & Smithsonian` (`CITATION.cff`).
-- **`GithubUser` is not a defect.** Seven entries carry the family name `GithubUser`
-  (`Beforerr`, `Tiger`, `Kiril B`, `krvidal`, `thigli`, `donglai96`, `rale8469`). That is the
-  placeholder `CITATION.cff` itself uses for pseudonymous contributors who supplied only a GitHub
-  handle, so these names are faithful to the authoritative upstream source. They have been
-  investigated before and should not be "corrected" on the assumption that they are extraction
-  errors.
+- **The upstream `GithubUser` convention is resolved, not copied.** Seven `CITATION.cff` entries use
+  that placeholder, but each has been evaluated independently. The author entries and identity notes
+  above preserve the upstream strings while recording the evidence-backed result: a proven person,
+  a platform handle, an unassigned username, or a mononym. A later refresh must not restore the
+  literal `GithubUser` family name merely because it reappears in `CITATION.cff`.
 - **Divergences between `CITATION.cff` and the stored affiliations, deliberately not applied.**
   `CITATION.cff` gives Nick Hatzigeorgiu's affiliation as University of California, Los Angeles,
   whereas the stored record has Space Sciences Laboratory, University of California, Berkeley plus
   University of California, Berkeley; it gives Sandy Antunes as Johns Hopkins University Applied
-  Physics Laboratory, whereas the stored record has Project Calliope; it lists no affiliation for
+  Physics Laboratory, while the shared stored record carries both that organization and Project
+  Calliope; it lists no affiliation for
   Mykhaylo Shumko, whereas the stored record has Johns Hopkins University Applied Physics
   Laboratory; it likewise lists no affiliation for Cindy Russell, whereas the stored record gives
   her the same University of California, Los Angeles organization that Angelopoulos, Wu, Drozdov,
@@ -340,7 +411,7 @@ nine additions below each rest on repository evidence, and none of the five was 
   University of California, Los Angeles; and it gives Jim Lewis and James McTiernan only University
   of California, Berkeley, whereas the stored record additionally carries Space Sciences Laboratory,
   University of California, Berkeley for each of them. These were reconciled deliberately when the
-  roster was merged: the stored values were preserved rather than overwritten by `CITATION.cff`.
+  roster was reconciled: the stored values were preserved rather than overwritten by `CITATION.cff`.
   They are recorded here so a future refresh recognises them as known, settled divergences rather
   than fresh drift.
 - **Durable platform limitation.** An author *name* correction is not expressible through a routine
