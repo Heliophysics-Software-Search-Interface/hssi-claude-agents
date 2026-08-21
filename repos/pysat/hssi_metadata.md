@@ -284,8 +284,8 @@
 ### 25. Funder (OPTIONAL)
 
 #### Funder 1:
-- **Organization:** The Catholic University of America
-- **Funder Identifier:** Not found
+- **Organization:** Catholic University of America
+- **Funder Identifier:** https://ror.org/047yk3s18
 
 #### Funder 2:
 - **Organization:** Cosmic Studio

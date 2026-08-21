@@ -4,7 +4,7 @@
 **Repository:** https://github.com/PlasmaPy/PlasmaPy
 **Source Revision:** 02d1c194a5b054516167b24503abe27b4e77825d
 **Extraction Date:** 2026-08-07
-**Validation Date:** 2026-08-20
+**Validation Date:** 2026-08-21
 **Validation Status:** PASS
 **Scope note — read the evidence with this in mind.** The pinned source revision is 97 commits ahead
 of the most recent release, `v2026.2.0` (2026-02-20). Some evidence cited below therefore comes from
@@ -729,7 +729,7 @@ Silva).**
   - *Affiliation:* Aperio Software Ltd.
 
 - **Author:** Nicolas Lequette
-  - *Affiliation:* Laboratoire de Physique des Plasmas
+  - *Affiliation:* Laboratory of Plasma Physics (LPP/CNRS) — https://ror.org/05c95bg36
 
 - **Author:** Pey Lian Lim
   - *Author Identifier:* https://orcid.org/0000-0003-0079-4114
@@ -888,7 +888,7 @@ Silva).**
 
 - **Author:** Antoine Tavant
   - *Author Identifier:* https://orcid.org/0000-0003-0010-8073
-  - *Affiliation:* Laboratoire de Physique des Plasmas, Ecole Polytechnique
+  - *Affiliation:* Laboratory of Plasma Physics (LPP/CNRS) — https://ror.org/05c95bg36
   - *Affiliation:* Centre Spatial de l'École Polytechnique
 
 - **Author:** Veronica Tranquilino
@@ -973,6 +973,23 @@ identifiers are shown after an em dash where one is stored or was newly resolved
 - **Steve Richardson** — the affiliation was previously written `U.S. Naval Research Laboratory`. The
   stored value is `United States Naval Research Laboratory` (`https://ror.org/04d23a975`), which is
   also the acronym-expanded form this metadata calls for, and is what is recorded now.
+- **Nicolas Lequette and Antoine Tavant** — Lequette's affiliation was previously written
+  `Laboratoire de Physique des Plasmas`, and Tavant's `Laboratoire de Physique des Plasmas, Ecole
+  Polytechnique`. Both name one and the same laboratory: LPP (UMR 7648) in Palaiseau, registered
+  under `https://ror.org/05c95bg36`. That ROR record carries `Laboratoire de Physique des
+  Plasmas` as its display name, `Laboratory of Plasma Physics` as its English alias, the acronyms
+  `LPP` and `LPTP`, and `UMR 7648`; it lists CNRS (`https://ror.org/02feahw73`) and École
+  Polytechnique (`https://ror.org/05hy3tk52`) among its parents, which is why both of the earlier
+  spellings resolve to this single laboratory. Both authors are therefore recorded under the
+  identifier-bearing name `Laboratory of Plasma Physics (LPP/CNRS)`, matching what this record
+  already carries for Alexis Jeandet. `CITATION.cff` still writes the French display name; adopting
+  it, or the `, Ecole Polytechnique` variant, would split one laboratory across identifierless
+  organization rows alongside the ROR-backed one, and should not be proposed.
+- **Antoine Tavant's second affiliation stands on its own.** `Centre Spatial de l'École
+  Polytechnique` is a different organization from LPP — an École Polytechnique space centre
+  rather than the plasma-physics laboratory — and Tavant genuinely holds both. It is recorded
+  alongside LPP and must not be folded into it on the strength of the shared École Polytechnique
+  parentage.
 
 **Known divergence between HSSI and `CITATION.cff` that cannot be fixed by a metadata update.** For
 four contributors, `CITATION.cff` gives a fuller or more current name than HSSI stores:
