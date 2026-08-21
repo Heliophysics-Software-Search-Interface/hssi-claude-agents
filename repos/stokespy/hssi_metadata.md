@@ -4,7 +4,7 @@
 **Repository:** https://github.com/NCAR/stokespy
 **Source Revision:** 830d14398eceaee1c8bae70f11a6183d5a9054cb
 **Extraction Date:** 2026-08-12
-**Validation Date:** 2026-08-12
+**Validation Date:** 2026-08-21
 **Validation Status:** PASS
 
 ---
@@ -92,8 +92,7 @@ The existing HSSI record carried only `Data Processing and Analysis`. That singl
 is far from complete: it omits the package's entire visualization layer (the whole of `plotting.py`, 433
 lines, plus a `plot()` method on five of the six public classes), its coordinate handling, and the specific
 processing operations it performs. The values below are each tied to concrete code. Every subcategory's
-parent top-level category is also listed, as the taxonomy requires. All 14 strings were confirmed to exist
-as rows in the live `FunctionCategory` vocabulary.
+parent top-level category is also listed, as the taxonomy requires.
 
 **Selected values (14):**
 
@@ -263,8 +262,6 @@ vocabulary is fine-grained enough to reward specificity over the broad value:
 - `MagVectorCube` holds field strength, inclination and azimuth from those photospheric inversions
   (`stokespy.py:595–658`).
 
-Both selected strings were confirmed against the live `Region` vocabulary.
-
 **Considered and rejected:** `Chromosphere`. `docs/index.rst` speaks generally of "the inferred solar
 atmosphere," and the package aspires to serve "the various spectropolarimetric datasets and inversion codes
 in the community," but every loader shipped in 0.5.0 targets a photospheric line, and no chromospheric
@@ -292,8 +289,8 @@ which stokespy was written. HSSI's stored record was missing it for both of them
 knowing: **neither author's ORCID record contains it.** Egeland's lists no pre-JSC employment at all, and
 Dima's lists NSO and CIRES but no NCAR appointment. The original HSSI record derived its affiliations from
 ORCID, so the gap was inherited from that source rather than introduced by whoever entered the record — and a
-future refresh consulting only ORCID will reproduce it. Every affiliation the stored record already held is
-retained; none was displaced by this one.
+future refresh consulting only ORCID will reproduce it. It is an addition alongside every affiliation the
+record already held, not a replacement for any of them.
 
 #### Author 1: Gabriel Dima
 - **Identifier:** https://orcid.org/0000-0002-6003-4646
@@ -359,12 +356,13 @@ lines. Egeland's CV, which settles the question for Egeland, says nothing about 
 #### Author 2: Ricky Egeland
 - **Identifier:** https://orcid.org/0000-0002-4996-0753
 - **Affiliations (2):**
-  - Johnson Space Flight Center — https://ror.org/04xx4z452
+  - Johnson Space Center — https://ror.org/04xx4z452
   - NCAR High Altitude Observatory — https://ror.org/03773p874
 
-**The stored "Johnson Space Flight Center" is not an error, contrary to how it looks.** It was flagged for
-scrutiny because a NASA human-spaceflight centre is a surprising affiliation for a solar physicist, but the
-whole ORCID employment entry is internally consistent and identifies the right organization:
+**Egeland's Johnson Space Center affiliation is genuine, and its ROR has always been correct; what was wrong
+was the name recorded for the organization.** A NASA human-spaceflight centre is a surprising affiliation for
+a solar physicist, and invites suspicion of a mis-entered value — but the ORCID employment entry it comes
+from is internally consistent and identifies the right organization:
 
 - Organization name: "National Aeronautics and Space Administration Johnson Space Flight Center"
 - Department: "Human Health and Performance Directorate, Space Medicine Operations Division, Mission
@@ -374,21 +372,26 @@ whole ORCID employment entry is internally consistent and identifies the right o
 - Disambiguation identifier: ROR `https://ror.org/04xx4z452`
 - Dates: 2021-07-19 → present (his only ORCID employment entry)
 
-The disambiguation identifier is *not* mis-selected here: ROR `04xx4z452` resolves to Johnson Space Center,
-located in Houston, a child of the National Aeronautics and Space Administration — matching the entry's own
-organization name and city. Egeland genuinely changed fields; ADS confirms the transition independently, with
-his affiliation appearing as "NASA Johnson Space Center, 2101 E NASA Pkwy, Houston, TX 77058" on
-`2023AdSpR..72.5161W` and `2023BAAS...55c.333R`, "NASA JSC SRAG" on `2023shin.confE.205W`, and
-"NASA Johnson Space Center" on `2021plat.confE..20S`. The value is therefore **retained**, and no future
-refresh should treat it as drift to correct.
+The disambiguation identifier is not mis-selected: ROR `04xx4z452` resolves to Johnson Space Center, located
+in Houston, a child of the National Aeronautics and Space Administration — matching the entry's own
+department, role and city, and the NASA centre its organization-name string was plainly reaching for. Egeland genuinely changed fields; ADS confirms the transition
+independently, with his affiliation appearing as "NASA Johnson Space Center, 2101 E NASA Pkwy, Houston,
+TX 77058" on `2023AdSpR..72.5161W` and `2023BAAS...55c.333R`, "NASA JSC SRAG" on `2023shin.confE.205W`, and
+"NASA Johnson Space Center" on `2021plat.confE..20S`. The affiliation itself is sound and must not be read as
+drift to remove.
 
-One durable naming caveat, recorded because it cannot be fixed through a metadata update: the HSSI
-organization row is named `Johnson Space Flight Center`, whereas ROR's display name for `04xx4z452` is
-`Johnson Space Center` and NASA's official name is `Lyndon B. Johnson Space Center` (ROR alias). "Johnson
-Space Flight Center" appears to be inherited from ORCID's own label for that organization. Since the row is
-identified by the correct ROR and is shared with any other HSSI record that references it, renaming it is
-not a change this software's metadata can or should drive; it would need investigating across its other
-references first.
+**The name is `Johnson Space Center`, ROR's own display name for `04xx4z452`.** The organization was formerly
+labelled `Johnson Space Flight Center` in this record, and that string is wrong twice over. It is not among
+ROR's registered names for `04xx4z452` — those are `Johnson Space Center` (the display name),
+`Lyndon B. Johnson Space Center` (NASA's official name, carried by ROR as an alias),
+`Centro Espacial Lyndon B. Johnson`, the historical `Manned Spacecraft Center`, and the acronyms `JSC` and
+`MSC` — and it names no real institution: it conflates Johnson Space Center in Houston with Goddard Space
+Flight Center, a distinct NASA centre carrying its own ROR (https://ror.org/0171mag52). The likely origin of
+the bad label is the ORCID organization-name string quoted verbatim above, which itself reads "National
+Aeronautics and Space Administration Johnson Space Flight Center"; that quotation is kept here as evidence of
+what ORCID's record says, not as a name to copy. Anyone taking an organization name straight from that ORCID
+entry will regenerate the error. **Do not reintroduce "Johnson Space Flight Center", and do not read the two
+forms as two different organizations — they share one ROR and one institution.**
 
 **Why NCAR High Altitude Observatory is added — decided by Egeland's own CV.** His ORCID lists no pre-JSC
 employment at all, so ORCID alone cannot supply this affiliation. His CV supplies it directly. Its
@@ -514,7 +517,7 @@ blurbs joined by a newline, reproduced byte-for-byte:
    `description` field, verbatim.
 2. `Open-source (future) SunPy affiliated package for the visualization and analyis of solar spectropolarimetric data and inversion results.` — line 8 of `README.rst`, verbatim.
 
-Programmatic comparison confirms `stored == github_description + "\n" + readme_line_8` is exactly true.
+The stored value is exactly `github_description + "\n" + readme_line_8`, byte for byte.
 
 **The typo is verbatim in the source, in four places.** `analyis` (for `analysis`) appears in `README.rst`
 line 8 at byte offset 367, in `setup.cfg:8` (`description = …`), in `.sunpy-template.yml:4`
@@ -577,8 +580,8 @@ supplied because the first 200 characters of the Field 8 description end mid-sen
 data model, it provides co"), which is the exact circumstance Field 9 exists for: a truncated Field 8 would
 cut off before naming what the package actually holds. This field says it in one sentence, naming the two
 data-model families (Stokes cubes, vector magnetograms) that distinguish this package from a generic solar
-image library. Field 8 was subsequently shortened (see that field), but not below 200 characters, so this
-field still does work rather than merely restating an already-short description.
+image library. Field 8's description still runs well past 200 characters, so this field does real work
+rather than merely restating an already-short description.
 
 ---
 
@@ -684,9 +687,8 @@ Carried over unchanged from the existing HSSI record and confirmed: the package 
 `.sunpy-template.yml` sets `minimum_python_version: 3.8` and `use_compiled_extensions: n`;
 `tox.ini` declares `envlist = py{36,37,38}`; GitHub reports `language: Python`. Every source file in the
 repository is `.py`, `.rst`, `.yml`/`.yaml`, `.cfg`, `.toml`, `.in`, `.bat`, `.sh`, or a Makefile — no C,
-Cython, Fortran, or IDL source exists, so `Python 3.x` alone is complete rather than merely primary. The
-value was confirmed against the live `ProgrammingLanguage` vocabulary, where the exact row name is
-`Python 3.x`.
+Cython, Fortran, or IDL source exists, so `Python 3.x` alone is complete rather than merely primary.
+`Python 3.x` is the exact spelling the controlled vocabulary uses.
 
 ---
 
@@ -721,9 +723,9 @@ license"; `setup.cfg:5–6` sets `license = BSD 3-Clause` and `license_file = LI
 license detection reports `spdx_id: BSD-3-Clause`, `name: BSD 3-Clause "New" or "Revised" License`.
 `stokespy/__init__.py:1` also carries the SPDX-style header comment.
 
-The stored string is byte-identical to the canonical live `License` row, and is the canonical name rather
-than the legacy duplicate `New BSD license` (which is absent from this target's vocabulary). No
-change needed. One wrinkle to note in passing rather than act on: `LICENSE.rst`'s third clause names "the
+The recorded string is the canonical controlled-vocabulary name rather than the legacy duplicate
+`New BSD license`, which survives in some HSSI license vocabularies but is not the canonical form for this
+license. One wrinkle to note in passing rather than act on: `LICENSE.rst`'s third clause names "the
 Astropy Team" as the entity whose name may not be used for endorsement — an artifact of the OpenAstronomy
 packaging guide the project was derived from (`README.rst:14–17`). It does not change the license identity.
 
@@ -742,12 +744,11 @@ packaging guide the project was derived from (`README.rst:14–17`). It does not
 - magnetic field
 - solar physics
 
-No keywords were stored previously (the HSSI view response omitted the field entirely, which is how it
-represents an empty keyword set). The nine above were chosen against the live `Keyword` vocabulary, which is
+No keywords were stored previously. The nine above were chosen against the `Keyword` vocabulary, which is
 the only open vocabulary in the form: seven (`polarimetry`, `polarization`, `photosphere`, `magnetogram`,
 `spectral inversion`, `magnetic field`, `solar physics`) already existed and were reused verbatim so no
-near-duplicate was minted; two (`spectropolarimetry`, `stokes parameters`) were introduced by this refresh.
-Both new terms were checked against the existing rows before being introduced — the vocabulary contained
+near-duplicate was minted; two (`spectropolarimetry`, `stokes parameters`) did not exist and are newly
+minted terms. Both were checked against the existing entries first — the vocabulary contained
 `spectral imaging`, `spectral inversion`, `spectrogram plots`, `spectrograms`, `spectrograph`,
 `spectrometer` and `spectroscopy`, but nothing containing "spectropolarim" or "stokes". They are worth
 creating: `spectropolarimetry` is the single term that most precisely names this software's domain, and
@@ -772,9 +773,8 @@ Operations Center, SDO's own mission archive, reached through sunpy's JSOC clien
 `attrs.jsoc.Notify(user_email)`, `Fido.search`, `Fido.fetch` (`stokespy/instload.py:78–104`, `:216–242`).
 `parse_folder`'s `repo` parameter defaults to `'JSOC'` (`:11–12`, `:35`). A mission-specific archive is
 exactly what `Observatory/Mission-specific` denotes, and Field 17's instruction to cross-list the mission in
-Related Observatory is honoured in Field 32 (Solar Dynamics Observatory). The value was confirmed against
-the live `DataInput` vocabulary; note that the string is `Observatory/Mission-specific` with that exact
-capitalization and no space around the slash.
+Related Observatory is honoured in Field 32 (Solar Dynamics Observatory). The controlled-vocabulary string
+is `Observatory/Mission-specific`, with that exact capitalization and no space around the slash.
 
 **Considered and not selected — `The Virtual Solar Observatory.`** (the live row name ends in a period).
 `parse_folder` accepts `repo='VSO'`, which changes the local-filename tokenizer from splitting on `.` to
@@ -802,8 +802,7 @@ paths: `astropy.io.fits.open()` for Hinode SP Level 1 and Level 2 files
 "since it provides the correct observer frame of reference" (`:132`, `:139`, `:286`). Format is asserted
 explicitly at `:341` (`if file.endswith(".fits")`) and `:109`/`:247` (`ext='fits'`). No CDF, netCDF, HDF5,
 ascii, csv, JSON, Zarr, or IDL save-file reader exists anywhere in the package — `cdflib`, `h5py`,
-`netCDF4`, and `scipy.io` are absent from both the imports and `setup.cfg`'s `install_requires`. The value
-was confirmed against the live `FileFormat` vocabulary, where the exact row name is `FITS`.
+`netCDF4`, and `scipy.io` are absent from both the imports and `setup.cfg`'s `install_requires`.
 
 ---
 
@@ -829,8 +828,7 @@ unenumerated output format is supported. An explicit, documented emptiness is th
 Nothing was stored previously. All three are demonstrated by the release-era CI matrix in
 `azure-pipelines.yml:35–44`, which ran the test suite on `macos: py36`, `windows: py37`, and `linux: py38`,
 and gated wheel/sdist publication on all three passing (`dependsOn: py36_test, py37_test, py38_test`).
-`.circleci/config.yml` additionally builds and twine-checks the distribution on Linux. All three strings
-were confirmed against the live `OperatingSystem` vocabulary.
+`.circleci/config.yml` additionally builds and twine-checks the distribution on Linux.
 
 **Considered and not selected — `Operating System Independent`.** It is arguably true (the package is pure
 Python with `use_compiled_extensions: n`), but nothing in the project asserts it: PyPI's `classifiers` list
@@ -849,8 +847,7 @@ Nothing was stored previously. stokespy is pure Python with no compiled componen
 `.sunpy-template.yml:11` sets `use_compiled_extensions: n`; `MANIFEST.in`'s
 `recursive-include stokespy *.pyx *.c *.pxd` and `recursive-include cextern *` lines match nothing in the
 tree (there is no `cextern/` directory and no `.pyx`/`.c`/`.pxd` file); and the only artifact ever published
-to PyPI is an sdist, with no architecture-specific wheel. The value was confirmed against the live
-`CpuArchitecture` vocabulary.
+to PyPI is an sdist, with no architecture-specific wheel.
 
 **Considered and not selected:** `x86-64` and `Apple Silicon arm64`. `azure-pipelines.yml` does declare
 `CIBW_BUILD: cp36-* cp37-* cp38-*`, `CIBW_SKIP: "*-win32 *-manylinux1_i686"`, and
@@ -911,8 +908,8 @@ no longer actively developed; support provided as time allows," and stokespy mat
 - `Moved` — ruled out in Field 3; no fork or successor is newer.
 - `Suspended` — would assert the authors intend to resume; no such statement exists.
 
-The value was confirmed against the live `RepoStatus` vocabulary, where the bare term `Inactive` is the row
-name (the repostatus descriptions are not part of the value).
+The controlled-vocabulary name is the bare term `Inactive`; the repostatus.org wording quoted above
+describes it but is not part of the value.
 
 ---
 
@@ -1361,10 +1358,11 @@ file structure, its `XCEN`/`YCEN`/`XSCALE`/`YSCALE` header keywords, and the Lev
 Fields 31–32 is unresolved: each carries a single, specific SPASE identifier rather than a
 `NEEDS MANUAL RESOLUTION` placeholder or a bare name.
 
-**Vocabulary guard.** Every row returned by the live `InstrumentObservatory` list passed the
-`identifier.startswith("https://spase-metadata.org/")` check, with zero failures. No non-SPASE or
-identifierless row was encountered, so no upstream drift needs reporting. This is a dated observation, not
-an invariant: a future refresh must re-run the guard rather than assume it.
+**Vocabulary guard.** Fields 31–32 are SPASE-only: every value must carry an
+`https://spase-metadata.org/` identifier, and both entries above do. A candidate row that fails that test
+signals upstream drift and must be reported rather than used. That the vocabulary satisfies the guard is a
+property of it at a moment in time and not an invariant, so the check has to be repeated rather than
+assumed.
 
 **Considered and rejected:**
 - **Atmospheric Imaging Assembly (AIA)** — rows exist
@@ -1472,10 +1470,9 @@ work around, and every one of them will still be there for the next refresh:
   every HTTPS connection for a period, then serve the same pages in a fraction of a second. Treat a timeout
   here as an outage to retry, not as a blocked or missing source.
 
-**PyHC registry — stokespy is not registered.** All three registry files were fetched and read in full:
-`projects_core.yml` (100 lines), `projects.yml` (770 lines) and `projects_unevaluated.yml` (184 lines).
-Neither `stokespy` nor `StokesPy` appears in any of them, by package name, by repository URL, or by
-description.
+**PyHC registry — stokespy is not registered.** All three registry files — `projects_core.yml`,
+`projects.yml` and `projects_unevaluated.yml` — were read in full. Neither `stokespy` nor `StokesPy` appears
+in any of them, by package name, by repository URL, or by description.
 
 **Do not confuse the PyHC meeting talk with PyHC registration.** Egeland presented "StokesPy: An
 Introduction" at the Python in Heliophysics Spring 2020 Meeting (Fields 10 and 27). Presenting at a PyHC
