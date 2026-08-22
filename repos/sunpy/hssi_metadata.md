@@ -306,7 +306,7 @@ instrument's data *is*.
 89. **Arib Alam**
 90. **Dumindu Buddhika**
 91. **Hannah Collier** | ORCID: https://orcid.org/0000-0001-5592-8023 | University of Applied Sciences Northwestern Switzerland & ETH Zürich
-92. **Haruhisa Iijima** | ORCID: https://orcid.org/0000-0002-1007-181X | Nagoya University
+92. **Haruhisa Iijima** | ORCID: https://orcid.org/0000-0002-1007-181X | Nagoya University (https://ror.org/04chrp450)
 93. **Himanshu Pathak** | ORCID: https://orcid.org/0000-0001-9387-4492 | Shri Siddhi Vinayak Institute of Technology
 94. **Jai Ram Rideout** | ORCID: https://orcid.org/0000-0003-2587-1454 | Dogfox Software LLC
 95. **Swapnil Sharma**
@@ -532,7 +532,7 @@ instrument's data *is*.
 262. **Jonas Sinjan** | ORCID: https://orcid.org/0000-0002-5387-636X | Max Planck Institute for Solar System Research
 263. **Herman le Roux** | ORCID: https://orcid.org/0000-0002-1805-0706 | Dublin Institute for Advanced Studies & Technological University of the Shannon: Midlands Midwest
 264. **Aleksandr Burtovoi** | ORCID: https://orcid.org/0000-0002-8734-808X | University of Florence
-265. **Yaocheng Chen** | ORCID: https://orcid.org/0000-0002-8967-4911 | Korea Astronomy and Space Science Institute & Universidade de São Paulo
+265. **Yaocheng Chen** | ORCID: https://orcid.org/0000-0002-8967-4911 | Korea Astronomy and Space Science Institute (https://ror.org/04g2pxh42) & Universidade de São Paulo
 266. **Giovanna Jerse**
 267. **Daragh M. Hollman** | ORCID: https://orcid.org/0009-0004-8128-2384 | Dublin Institute for Advanced Studies
 268. **Kumar Amityush** | ORCID: https://orcid.org/0009-0002-7950-0886 | Indian Institute of Technology Madras
@@ -598,9 +598,11 @@ instrument's data *is*.
     `https://ror.org/03w5sq511`, displays the name without one ("Indian Institute of Technology
     Kharagpur"). The comma-bearing form is the spelling the catalogue holds and the one this file
     records; the difference is punctuation inside a single institution's identity, not a second
-    institution, and it is not a correction waiting to be made. The ROR is cited as evidence only —
-    affiliations in this list are written as bare institution names, the identifiers on these lines
-    being the authors' own ORCIDs and, for the group author, its citation file.
+    institution, and it is not a correction waiting to be made. The Kharagpur ROR is cited here as
+    evidence for the spelling only, not as a recorded affiliation identifier. Affiliations in this
+    list are written as bare institution names except where a ROR is given in parentheses directly
+    after the name; the other identifiers on these lines are the authors' own ORCIDs and, for the
+    group author, its citation file.
   - *MSSL is a sub-unit of University College London, not a synonym for it.* The laboratory has no
     ROR record of its own, so an identifierless entry is its correct and complete form; do not invent
     an identifier for it. Neither should it be folded into University College London

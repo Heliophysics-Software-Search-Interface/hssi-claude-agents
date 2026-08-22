@@ -519,7 +519,7 @@ Silva).**
 
 - **Author:** David Schaffner
   - *Author Identifier:* https://orcid.org/0000-0002-9180-6565
-  - *Affiliation:* Bryn Mawr College
+  - *Affiliation:* Bryn Mawr College — https://ror.org/05sjwtp51
 
 - **Author:** Steve Vincena
   - *Author Identifier:* https://orcid.org/0000-0002-6468-5710
@@ -532,18 +532,18 @@ Silva).**
 
 - **Author:** Paula Valentina Alarcon
   - *Author Identifier:* https://orcid.org/0000-0002-7860-9567
-  - *Affiliation:* North Carolina State University
+  - *Affiliation:* North Carolina State University — https://ror.org/04tj63d06
 
 - **Author:** Benjamin Antognetti
   - *Author Identifier:* https://orcid.org/0000-0002-1444-9680
-  - *Affiliation:* University of Wisconsin–Madison
+  - *Affiliation:* University of Wisconsin–Madison — https://ror.org/01y2jtd41
 
 - **Author:** Ataf Fazledin Ahamed
   - *Affiliation:* OpenRefactory Inc.
 
 - **Author:** Christoper Arran
   - *Author Identifier:* https://orcid.org/0000-0002-8644-8118
-  - *Affiliation:* University of York
+  - *Affiliation:* University of York — https://ror.org/04m01e293
 
 - **Author:** Haman Bagherianlemraski
   - *Author Identifier:* https://orcid.org/0000-0001-7381-1996
@@ -574,7 +574,7 @@ Silva).**
 
 - **Author:** Carlos Cartagena-Sanchez
   - *Author Identifier:* https://orcid.org/0000-0002-0486-1292
-  - *Affiliation:* Beloit College
+  - *Affiliation:* Beloit College — https://ror.org/009yr1d55
 
 - **Author:** Sarthak Choudhary
 
@@ -596,7 +596,7 @@ Silva).**
 
 - **Author:** Gregor Decristoforo
   - *Author Identifier:* https://orcid.org/0000-0002-7616-0946
-  - *Affiliation:* UiT The Arctic University of Norway
+  - *Affiliation:* UiT The Arctic University of Norway — https://ror.org/00wge5k78
 
 - **Author:** Diego Diaz
 
@@ -608,7 +608,7 @@ Silva).**
 
 - **Author:** Tiger Du
   - *Author Identifier:* https://orcid.org/0000-0002-8676-1710
-  - *Affiliation:* Vanderbilt University
+  - *Affiliation:* Vanderbilt University — https://ror.org/02vm5rt34
 
 - **Author:** Leah Einhorn
 
@@ -640,13 +640,21 @@ Silva).**
 
 - **Author:** Seth Gerow
   - *Author Identifier:* https://orcid.org/0009-0008-3588-0497
-  - *Affiliation:* Embry-Riddle Aeronautical University
+  - *Affiliation:* Embry-Riddle Aeronautical University — https://ror.org/010jskt71
+    - *Note:* The identity of this affiliation is carried by the ROR, not by the spelling. The
+      hyphen-minus form recorded here is the institution's own official usage: erau.edu titles
+      itself `Embry-Riddle Aeronautical University` with a plain hyphen, which predominates
+      across the site; the remaining occurrences there use a non-breaking hyphen (U+2011), and
+      none use an en dash. ROR's display name renders the same institution with an en dash
+      (`Embry–Riddle Aeronautical University`, U+2013), which is registry typography rather than
+      a different name, and is deliberately not adopted here. Do not "correct" the hyphen to an
+      en dash.
 
 - **Author:** Mahlet Getahun
-  - *Affiliation:* Marietta College
+  - *Affiliation:* Marietta College — https://ror.org/03apb0g70
 
 - **Author:** Jessica Gonzalez
-  - *Affiliation:* California Institute of Technology
+  - *Affiliation:* California Institute of Technology — https://ror.org/05dxps055
 
 - **Author:** Brian Goodall
 
@@ -671,7 +679,7 @@ Silva).**
 - **Author:** Raymon Skjørten Hansen
 
 - **Author:** Mohammed Haque
-  - *Affiliation:* Columbia University
+  - *Affiliation:* Columbia University — https://ror.org/00hj8s172
 
 - **Author:** Julien Hillairet
   - *Author Identifier:* https://orcid.org/0000-0002-1073-6383
@@ -699,7 +707,7 @@ Silva).**
 
 - **Author:** Marcin Kastek
   - *Author Identifier:* https://orcid.org/0009-0002-5918-4652
-  - *Affiliation:* Institute of Plasma Physics and Laser Microfusion
+  - *Affiliation:* Institute of Plasma Physics and Laser Microfusion — https://ror.org/0452jaa17
 
 - **Author:** James Kent
 
@@ -708,7 +716,7 @@ Silva).**
 
 - **Author:** Alf Köhn-Seemann
   - *Author Identifier:* https://orcid.org/0000-0002-1192-2057
-  - *Affiliation:* University of Stuttgart
+  - *Affiliation:* University of Stuttgart — https://ror.org/04vnq7t77
 
 - **Author:** Siddharth Kulshrestha
 
@@ -759,7 +767,7 @@ Silva).**
 - **Author:** Joshua Munn
 
 - **Author:** Leo Murphy
-  - *Affiliation:* College of William & Mary
+  - *Affiliation:* William & Mary — https://ror.org/03hsf0573
 
 - **Author:** Bao Nguyen
   - *Author Identifier:* https://orcid.org/0000-0002-1753-4223
@@ -768,7 +776,7 @@ Silva).**
 - **Author:** Suzanne Nie
 
 - **Author:** Carlos Ortiz
-  - *Affiliation:* University of Wisconsin–Madison
+  - *Affiliation:* University of Wisconsin–Madison — https://ror.org/01y2jtd41
 
 - **Author:** Shivam Panda
 
@@ -816,7 +824,7 @@ Silva).**
 
 - **Author:** Shanshan Rodriguez
   - *Author Identifier:* https://orcid.org/0000-0003-2944-0424
-  - *Affiliation:* Grinnell College
+  - *Affiliation:* Grinnell College — https://ror.org/04tmmky42
 
 - **Author:** Reynaldo Rojas Zelaya
 
@@ -840,7 +848,7 @@ Silva).**
 
 - **Author:** Luciano Silvestri
   - *Author Identifier:* https://orcid.org/0000-0003-3530-7910
-  - *Affiliation:* Michigan State University
+  - *Affiliation:* Michigan State University — https://ror.org/05hs6h993
 
 - **Author:** Trestan F. Simon
   - *Author Identifier:* https://orcid.org/0009-0000-3029-8619
@@ -863,7 +871,7 @@ Silva).**
 
 - **Author:** Joseph Smith
   - *Author Identifier:* https://orcid.org/0000-0002-5978-6840
-  - *Affiliation:* Marietta College
+  - *Affiliation:* Marietta College — https://ror.org/03apb0g70
 
 - **Author:** Stuart Sobeske
   - *Affiliation:* University of Michigan — https://ror.org/00jmfr291
@@ -882,7 +890,7 @@ Silva).**
 
 - **Author:** Shelley Sugiharto
   - *Author Identifier:* https://orcid.org/0009-0003-3159-0541
-  - *Affiliation:* Texas A&M University
+  - *Affiliation:* Texas A&M University — https://ror.org/01f5ytq51
 
 - **Author:** Michaela Švancarová
 
@@ -928,7 +936,15 @@ Silva).**
 
 - **Author:** Yaocheng Chen
   - *Author Identifier:* https://orcid.org/0000-0002-8967-4911
-  - *Affiliation:* Korea Astronomy and Space Science Institute
+  - *Affiliation:* Korea Astronomy and Space Science Institute — https://ror.org/04g2pxh42
+  - *Affiliation:* Universidade de São Paulo — https://ror.org/036rp1748
+    - *Note:* Both affiliations are kept because this author's affiliation set is unioned with
+      the stored shared record, which is this field's stated convention. ORCID corroborates both
+      employments — Korea Astronomy and Space Science Institute through June 2026, and
+      Universidade de São Paulo (which ORCID lists under its English name) from July 2026 — so
+      they are consecutive and current, not a duplicate or a stale leftover. The shared Person
+      record is linked to more than one software entry, so both affiliations appear wherever
+      that person is credited.
 
 - **Author:** Anthony Vo
 
@@ -1066,13 +1082,16 @@ for the reason given above.
   Richardson's stored affiliations with the single shorter one `CITATION.cff` now lists.* In each
   case the stored set is a superset or an expanded form of the upstream string.
 
-**Durable limitation worth knowing.** Many stored affiliation rows in this record carry no ROR
-(`Bryn Mawr College`, `North Carolina State University`, `University of Wisconsin–Madison`,
-`Beloit College`, `Marietta College`, `Aperio Software Ltd.`, and others), even though ROR records
-exist for several of them. HSSI's API cannot backfill an identifier onto an existing Organization
-row — organization attributes are not editable through a metadata update, only through a direct
-database change. Adding a ROR to these is therefore not an achievable metadata improvement and
-should not be proposed as one.
+**Durable limitation worth knowing.** `Bryn Mawr College`, `North Carolina State University`,
+`University of Wisconsin–Madison`, `Beloit College` and `Marietta College` were previously stored
+without an identifier. Their ROR is now attached to the shared organization row and is recorded
+above, so none of them is an identifierless row any longer. Other rows in this record still hold no
+identifier, among them `Aperio Software Ltd.` and `Centre Spatial de l'École Polytechnique`. The
+constraint behind that is unchanged and is the part worth remembering: an identifier cannot be
+backfilled onto an existing Organization row through a metadata update, because organization
+attributes are not editable that way — only a direct change to the shared organization catalogue can
+add one. Attaching a ROR to a row that still lacks one is therefore not an achievable improvement
+from this record, and should not be proposed as one.
 
 ### 7. Software Name (MANDATORY)
 PlasmaPy

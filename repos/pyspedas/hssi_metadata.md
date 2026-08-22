@@ -324,8 +324,8 @@ nine additions below each rest on repository evidence, and none of the five was 
       "Kiril B" was a given name plus a surname initial, not a username. **No identifier recorded:** an
       ORCID surname search for "Bourakov" returns zero records.
 20. **Samuel T. Badman** | ORCID: https://orcid.org/0000-0002-6145-436X | Center for Astrophysics Harvard & Smithsonian
-21. **Anansa Keaton-Ashanti** | The University of Texas at Austin
-22. **Tomo Hori** | Nagoya University
+21. **Anansa Keaton-Ashanti** | The University of Texas at Austin (https://ror.org/00hj54h04)
+22. **Tomo Hori** | Nagoya University (https://ror.org/04chrp450)
 23. **Takanobu Amano** | ORCID: https://orcid.org/0000-0002-2140-6961
 24. **Warren Rexroad** | University of California, Berkeley
 25. **krvidal (GitHub)** *(stored as givenName `krvidal`, familyName `(GitHub)`)*

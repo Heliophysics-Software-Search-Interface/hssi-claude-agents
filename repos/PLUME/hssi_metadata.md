@@ -332,8 +332,8 @@ that a later refresh presented with new evidence does not have to redo the resea
   git email `rogerio.jorge@ist.utl.pt` is a stale Instituto Superior Técnico address from a post he
   left on 2023-12-31. Note the spelling trap: ORCID writes the institution with a plain hyphen,
   while ROR's display name and the organization row HSSI already carries both use an **en-dash**
-  (U+2013). That row currently holds **no** ROR, so the en-dash spelling is the one that matches by
-  name and the ROR above is what identifies the organization.)
+  (U+2013). That row carries the ROR `https://ror.org/01y2jtd41`, so the organization is identified
+  directly by that ROR rather than by matching the en-dash spelling by name.)
 
 *Evidence that was weighed in favour.* He is a credited creator on the Zenodo record for v.1.2.0
 (`10.5281/zenodo.17148711`), the version HSSI currently stores in Field 12, and he is a genuine git

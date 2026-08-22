@@ -185,8 +185,8 @@ for each person, reconciled against the `CITATION.cff` and `.zenodo.json` affili
 | 17 | Jorge Diaz del Rio | Not found | ODC Space |
 | 18 | Alfonso Sánchez Rodríguez | https://orcid.org/0000-0003-1889-6696 | Not found |
 | 19 | Benoît Seignovert | https://orcid.org/0000-0001-6533-275X | Jet Propulsion Laboratory (https://ror.org/027k65916) |
-| 20 | Marcel Stefko | https://orcid.org/0000-0002-7736-2611 | ETH Zurich |
-| 21 | Miguel de Val-Borro | https://orcid.org/0000-0002-0455-9384 | Planetary Science Institute |
+| 20 | Marcel Stefko | https://orcid.org/0000-0002-7736-2611 | ETH Zurich (https://ror.org/05a28rw58) |
+| 21 | Miguel de Val-Borro | https://orcid.org/0000-0002-0455-9384 | Planetary Science Institute (https://ror.org/05vvg9554) |
 
 Notes on this field:
 - All 21 are people; there is no organization author, so no ROR is used as an author identifier.
