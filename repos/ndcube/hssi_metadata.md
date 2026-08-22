@@ -93,7 +93,7 @@
 
 1. **Author:** Daniel F. Ryan
    **ORCID:** https://orcid.org/0000-0001-8661-3825
-   **Affiliation:** University College London, Mullard Space Science Laboratory (UCL/MSSL)
+   **Affiliation:** Mullard Space Science Laboratory, University College London
 
 2. **Author:** Stuart J. Mumford
    **ORCID:** https://orcid.org/0000-0003-4217-4642

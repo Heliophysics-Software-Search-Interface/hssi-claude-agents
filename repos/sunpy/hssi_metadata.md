@@ -4,7 +4,7 @@
 **Repository:** https://github.com/sunpy/sunpy
 **Source Revision:** ed70935fa156a05f81926e4a2f4a0ea25dc37f36
 **Extraction Date:** 2026-08-13
-**Validation Date:** 2026-08-20
+**Validation Date:** 2026-08-21
 **Validation Status:** PASS
 **Scope note.** sunpy is a general-purpose solar-physics library whose instrument coverage lives in
 data-driven subpackages (`sunpy/map/sources/`, `sunpy/timeseries/sources/`, `sunpy/net/`) rather than
@@ -200,7 +200,7 @@ instrument's data *is*.
 6. **Jack Ireland** | ORCID: https://orcid.org/0000-0002-2019-8881 | NASA Goddard Space Flight Center
 7. **Florian Mayer**
 8. **Keith Hughitt** | ORCID: https://orcid.org/0000-0003-0787-9559 | Center for Cancer Research, National Cancer Institute  *(.zenodo.json roster form: V. Keith Hughitt)*
-9. **Daniel F. Ryan** | ORCID: https://orcid.org/0000-0001-8661-3825 | University College London, Mullard Space Science Laboratory (UCL/MSSL)
+9. **Daniel F. Ryan** | ORCID: https://orcid.org/0000-0001-8661-3825 | Mullard Space Science Laboratory, University College London
 10. **Simon Liedtke**
 11. **Will Barnes** | ORCID: https://orcid.org/0000-0001-9642-6089 | Department of Physics, American University & NASA Goddard Space Flight Center
 12. **Laura Hayes** | ORCID: https://orcid.org/0000-0002-6835-2390 | Dublin Institute for Advanced Studies
@@ -462,7 +462,7 @@ instrument's data *is*.
 216. **Mickaël Schoentgen** | ORCID: https://orcid.org/0000-0002-0106-4810
 217. **Mika**
 218. **Mouloudi Mohamed Lyes**
-219. **Nakshatra** | IIT Kharagpur
+219. **Nakshatra** | Indian Institute of Technology, Kharagpur
 220. **Nakul Shahdadpuri**
 221. **Naveen Srinivasan**
 222. **Norbert G Gyenge** | ORCID: https://orcid.org/0000-0003-0464-1537 | SP2RC, School of Mathematics and Statistics, University of Sheffield
@@ -580,9 +580,33 @@ instrument's data *is*.
   of the Shannon" for Herman le Roux, whose second institution is recorded under its full official
   name, "Technological University of the Shannon: Midlands Midwest". Departments, postal addresses and
   country suffixes are not part of these institutions' identities; do not restore the roster wording
-  over any of the six. This is specific to these six entries; the general rule below governs the rest
-  of the roster, where the `.zenodo.json` wording stands even when HSSI's organization row is named
-  differently.
+  over any of the six. This is specific to these six entries; two further entries are covered by the
+  next note, and the general rule below governs the remainder of the roster, where the
+  `.zenodo.json` wording stands even when HSSI's organization row is named differently.
+- **Two further affiliations are recorded under their canonical institution names rather than the
+  `.zenodo.json` wording, because the roster strings are alternate wordings of institutions this same
+  author list already names in full.** Daniel F. Ryan's roster affiliation reads "University College
+  London, Mullard Space Science Laboratory (UCL/MSSL)" and Nakshatra's reads "IIT Kharagpur" — an
+  inverted word order carrying a parenthetical acronym, and a bare acronym. They are recorded here as
+  **Mullard Space Science Laboratory, University College London** and **Indian Institute of
+  Technology, Kharagpur**, the forms other entries in this list already carry: Sally Dacie (number
+  113) takes the MSSL wording straight from `.zenodo.json`, and Yash Jain, Yash Sharma and Kaustubh
+  Hiware (numbers 44, 58 and 208) take the comma-bearing Kharagpur form. Recording the acronym
+  variants instead would assert two additional institutions that have no separate existence. Do not
+  restore either roster string.
+  - *The Kharagpur spelling keeps its comma.* The institute's ROR record,
+    `https://ror.org/03w5sq511`, displays the name without one ("Indian Institute of Technology
+    Kharagpur"). The comma-bearing form is the spelling the catalogue holds and the one this file
+    records; the difference is punctuation inside a single institution's identity, not a second
+    institution, and it is not a correction waiting to be made. The ROR is cited as evidence only —
+    affiliations in this list are written as bare institution names, the identifiers on these lines
+    being the authors' own ORCIDs and, for the group author, its citation file.
+  - *MSSL is a sub-unit of University College London, not a synonym for it.* The laboratory has no
+    ROR record of its own, so an identifierless entry is its correct and complete form; do not invent
+    an identifier for it. Neither should it be folded into University College London
+    (`https://ror.org/02jx3x895`), which David Stansby (number 3) and David Pérez-Suárez (number 13)
+    carry in its own right. The laboratory and the university are distinct affiliations and both are
+    legitimate.
 - **Affiliations here are sunpy's own attribution, and a difference from HSSI's stored value is not
   drift.** HSSI person records are shared across software entries, so the affiliations HSSI holds for
   an author are the union of every entry that credits them — additional organizations, and sometimes

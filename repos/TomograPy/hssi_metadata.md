@@ -73,8 +73,8 @@ refresh encountering the bare handle must not create a second one.
 - **Authors:** Nicolas Barbey
 - **Author Identifier:** Not found
 - **Affiliation:**
-  - **Organization:** Commissariat à l'Énergie Atomique (CEA)
-  - **Affiliation Identifier:** Not found
+  - **Organization:** Commissariat à l'Énergie Atomique et aux Énergies Alternatives
+  - **Affiliation Identifier:** https://ror.org/00jjx8s55
 
 **Note:** Two email addresses found for Nicolas Barbey: nicolas.barbey@cea.fr (in setup.py) and nicolas.a.barbey@gmail.com (in AUTHOR file).
 

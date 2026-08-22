@@ -4,7 +4,7 @@
 **Repository:** https://github.com/lasp/cdflib
 **Source Revision:** a5362441980ad8d740c647a77527b05c41195eed
 **Extraction Date:** 2026-07-29
-**Validation Date:** 2026-08-20
+**Validation Date:** 2026-08-21
 **Validation Status:** PASS
 
 ---
@@ -159,7 +159,7 @@ The complete stored 15-author set is retained in its established order.
 11. **Jonathon M. Smith** — https://orcid.org/0000-0002-8191-4765 — Affiliations: Catholic University of America (https://ror.org/047yk3s18); Goddard Space Flight Center (https://ror.org/0171mag52)
 12. **David Stansby** — https://orcid.org/0000-0002-1365-1908 — Affiliations: Advanced Research Computing Centre, University College London, UK (no ROR); Department of Mechanical Engineering, University College London (no ROR); Imperial College London (https://ror.org/041kmwe10); Mullard Space Science Laboratory, University College London (no ROR); University College London (https://ror.org/02jx3x895)
 13. **Supervised** *(given name empty in HSSI; not a personal name)* — Identifier: Not found — Affiliation: University of California, Los Angeles (https://ror.org/046rm7j60)
-14. **Jan Christoph Terasa** — Identifier: Not found — Affiliation: IEAP University Kiel (no ROR)
+14. **Jan Christoph Terasa** — Identifier: Not found — Affiliation: Institute of Experimental and Applied Physics, University of Kiel (no ROR)
 15. **Andreas J. Weiss** — Identifier: Not found — Affiliation: Not found
 
 *All 15 entries preserve the stored given/family names, identifiers and affiliation organizations.*
@@ -229,9 +229,21 @@ creating a second record for the same person.
   `eric <egrimes@igpp.ucla.edu>` — so there is no repository-side evidence for this entry specifically.
   Resolving it needs the Zenodo creator record for the affected version, or the author's confirmation.
 
-- Affiliation strings that would benefit from acronym expansion, recorded so a later correction can apply them:
-  `IEAP University Kiel` -> Institute of Experimental and Applied Physics, University of Kiel;
-  `Laboratory of Plasma Physics (LPP/CNRS)` -> Laboratoire de Physique des Plasmas.
+- **Affiliation naming — Jan Christoph Terasa.** The institute is recorded under its expanded name,
+  `Institute of Experimental and Applied Physics, University of Kiel`. `IEAP University Kiel` is a
+  superseded label for that same institute and should not be reintroduced: Kiel University's Section of
+  Physics states that the section comprises "IEAP - Institut für Experimentelle und Angewandte Physik"
+  and "ITAP - Institut für Theoretische Physik und Astrophysik", and the institute's own site titles
+  itself "Institut für Experimentelle und Angewandte Physik der Christian-Albrechts-Universität zu
+  Kiel" — so the acronym string and the expanded string denote one organization. No ROR record exists
+  for the institute (a ROR v2 search for it returns nothing), so the expanded name is correctly
+  identifierless and no identifier should be invented or attached to it.
+- **Affiliation naming — Alexis Jeandet.** The stored English form
+  `Laboratory of Plasma Physics (LPP/CNRS)` is kept. ROR's own display name for the same organization,
+  `Laboratoire de Physique des Plasmas` (`https://ror.org/05c95bg36`), was considered as an expansion
+  and not adopted: the ROR identifier already fixes the organization's identity, and the stored
+  English-plus-acronym label was deliberately retained rather than replaced by the French display
+  name. This is a rejected alternative, not an outstanding acronym expansion.
 
 *Git contributors not treated as authors:* `git shortlog -sne` and the GitHub
 contributors list include Mykhaylo Shumko, David Turner, Brad Trantham, Stuart Mumford, Warrick Ball,

@@ -55,8 +55,8 @@
 - **Name:** Daniel Kastinen
 - **Author Identifier:** Not found
 - **Affiliation:**
-  - **Organization:** Institutet för rymdfysik
-  - **Affiliation Identifier:** Not found
+  - **Organization:** Swedish Institute of Space Physics
+  - **Affiliation Identifier:** https://ror.org/043kppn11
 - **Source:** DataCite API, Zenodo API
 
 #### Primary Contact:

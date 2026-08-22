@@ -46,7 +46,7 @@
 ### 6. Authors (MANDATORY)
 **Values:**
 1. **Daniel F. Ryan** — https://orcid.org/0000-0001-8661-3825 — University College London
-   (https://ror.org/02jx3x895); University College London, Mullard Space Science Laboratory (UCL/MSSL)
+   (https://ror.org/02jx3x895); Mullard Space Science Laboratory, University College London
    - *Identity:* an earlier revision of this file recorded given "Dan Ryan", family "Irish" — a naive space-split of the
      GitHub handle `DanRyanIrish`. `sunpy`'s `.mailmap` maps **both** `Dan Ryan <ryand5@tcd.ie>` and
      `DanRyanIrish <ryand5@tcd.ie>` to the canonical `Daniel F. Ryan`, and `ndcube`'s `.mailmap` maps
