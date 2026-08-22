@@ -4,7 +4,7 @@
 **Repository:** https://github.com/PlasmaPy/PlasmaPy
 **Source Revision:** 02d1c194a5b054516167b24503abe27b4e77825d
 **Extraction Date:** 2026-08-07
-**Validation Date:** 2026-08-21
+**Validation Date:** 2026-08-22
 **Validation Status:** PASS
 **Scope note — read the evidence with this in mind.** The pinned source revision is 97 commits ahead
 of the most recent release, `v2026.2.0` (2026-02-20). Some evidence cited below therefore comes from
@@ -238,10 +238,11 @@ each one without re-deriving it, and so the two are not treated as a single deci
 
 - *Coordinate Transforms* (and all six children) — the nearest thing to a coordinate transform in the
   package is `_coerce_to_cartesian_si`, a private helper in `charged_particle_radiography` that
-  converts Cartesian/cylindrical/spherical *position* tuples to metres. Searching `src/` at this
-  revision for `GSE`, `GSM`, `SM`, `Carrington`, `Stonyhurst`, `helioprojective`, `AACGM`, `MLT`, and
-  `heliographic` returns no match, so there is no user-facing transform between heliophysics reference
-  frames.
+  converts Cartesian/cylindrical/spherical *position* tuples to metres. Searching the source text
+  under `src/` at this revision for `GSE`, `GSM`, `SM`, `Carrington`, `Stonyhurst`, `helioprojective`,
+  `AACGM`, `MLT`, and `heliographic` returns no match (a raw byte search does hit `GSE` and `MLT`
+  inside one binary HDF5 test fixture, `data00000100.h5`, which contains no transform code), so there
+  is no user-facing transform between heliophysics reference frames.
 - *Data Processing and Analysis: 3D Particle Distribution Processing* — `plasmapy.formulary.distribution`
   evaluates analytic Maxwellian and kappa distribution functions (including `Maxwellian_velocity_3D`
   and `kappa_velocity_3D`), which is model evaluation rather than processing of a measured 3D
@@ -438,10 +439,10 @@ vocabulary during a future refresh so newly introduced values receive the same c
 > organizational authors is the settled preference. A future audit must **not** re-propose removing it.
 >
 > Supporting facts for that decision: PlasmaPy is not a legal entity with a ROR, so no entity identifier
-> exists to substitute; across the whole catalogue only two identifier-bearing author records hold
-> neither an ORCID nor a ROR, this one and SunPy's equivalent; and the rule that this field carries an
-> ORCID applies to human authors, which this record is not. Organizational name and split normalization
-> is separately deferred.
+> exists to substitute; SunPy's equivalent community author is represented the same way, carrying its own
+> `https://github.com/sunpy/sunpy/blob/main/CITATION.cff` in the identifier field, so this is an
+> established convention for community authors rather than a one-off defect; and the rule that this
+> field carries an ORCID applies to human authors, which this record is not.
 >
 > **Three authors here are also credited by other software under different name forms**, and this
 > project's entries are the canonical form in each case: Tien Vo, Pey Lian Lim and Andrew J. Leonard.
@@ -1433,9 +1434,18 @@ DataCite description. Neither carries an award number or a specific title in any
 Smithsonian appears as a funder in Field 25 and the Tools and Methods grant is captured concretely
 as 80NSSC25K0360 above.*
 
-*Note on how these are stored: HSSI's award rows for this record carry the award title and number but
-are not linked to a funder organization. That is how the entries were created and is not itself an
-error; the funder relationships are carried by Field 25.*
+**Which funder issued which award.** HSSI's award records carry their funder organization directly,
+and the pairings below are the stored state. But neither Field 25 nor Field 26 expresses the
+correspondence — the submission form has no per-award funder sub-field, and the view API returns
+awards as titles alone — so a refresh working only from those surfaces should take the pairing from
+this note rather than treating it as unrecorded. The pairings are: the four CSSI
+awards `1931388`, `1931393`, `1931429` and `1931435` are U.S. National Science Foundation;
+`DE-SC0016363` is the United States Department of Energy; and `80NSSC20K0174` (HDEE) and
+`80NSSC25K0360` are National Aeronautics and Space Administration. For the four NSF awards and the
+DOE award that attribution is carried directly in the version DOI's DataCite `fundingReferences`, so
+it is verifiable rather than inferred; for the two NASA awards it comes from
+`docs/about/credits.rst`, quoted above. The Smithsonian Institution is a Field 25 funder with no
+award of its own, for the reason given in the preceding note.
 
 ---
 

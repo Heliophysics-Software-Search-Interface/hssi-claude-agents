@@ -4,7 +4,7 @@
 **Repository:** https://github.com/fmihpc/rhybrid
 **Source Revision:** 2df55d510629504a7c654d189031c6f9d598fda6
 **Extraction Date:** 2026-08-10
-**Validation Date:** 2026-08-11
+**Validation Date:** 2026-08-22
 **Validation Status:** PASS
 
 ---
@@ -699,8 +699,8 @@ the only open vocabulary in the form, so the live Keyword vocabulary was checked
 reuse existing rows rather than mint near-duplicates. No row count is quoted here on purpose: this
 list grows whenever anyone submits a new keyword, so any number recorded would be stale by the next
 check — re-derive any existing/new split against the live list rather than trusting a figure.
-Nineteen of these reused rows that already existed; the seven marked *(new row)* did not exist and
-were created by this record's submission.
+The terms marked *(new row)* had no row on the live list when they were resolved and were minted
+for this record; the rest reuse rows that already existed.
 
 `plasma` · `space plasma` · `plasma physics` · `space physics` · `space weather` · `solar wind` ·
 `magnetosphere` · `magnetosheath` · `planetary magnetospheres` · `induced magnetosphere` *(new row)* ·
@@ -992,8 +992,9 @@ limit that would otherwise fail the write.
 The record previously pointed at a blank award row — no name, no identifier, no funder — which
 carried no information and was not a value worth preserving. It was unlinked from this software and
 the ERC/MEOW award recorded above took its place. That blank row still exists in HSSI and is still
-referenced by other software records, so nothing was orphaned by unlinking it here, and it should not
-be treated as deletable debris by a later cleanup.
+referenced by another software record, so nothing was orphaned by unlinking it here, and it should
+not be treated as deletable debris by a later cleanup. Identifying what the blank row is meant to
+represent belongs to the record that still holds it, not to this one.
 
 ---
 
@@ -1188,8 +1189,9 @@ RHybrid is designed to support no specific instrument, and the resolution ladder
 because nothing passes the relevance gate.
 
 - **No instrument is named anywhere in the repository.** Not in the README, `INSTALL`, `pubs.txt`, the
-  sixteen example configurations, the source, or the tools. The one place spacecraft appear at all is
-  two configuration-file comment headers (`examples/mars_agufm2015_run1.cfg`, "Mars 25.01.2015 12:20
+  sixteen example configurations, the source, or the tools. Outside the publication titles carried by
+  the README's main reference and by `pubs.txt`, the one place spacecraft appear is two
+  configuration-file comment headers (`examples/mars_agufm2015_run1.cfg`, "Mars 25.01.2015 12:20
   (Run1, MAVEN inbound)", and `run2.cfg`, "(Run2, Mars Express inbound)"), which identify observation
   intervals, not instruments.
 - **No instrument data is read, parsed, calibrated or processed.** RHybrid ingests only configuration
@@ -1220,10 +1222,11 @@ resolve or to flag as ambiguous.
 ### 32. Related Observatories (OPTIONAL)
 Four entries, each bound to a single row of the live `InstrumentObservatory` vocabulary with
 `type = 2`, with that row's `name` copied character for character. No row count is quoted, because
-this vocabulary can grow whenever a submission supplies an unresolved name. What matters and was
-re-checked rather than assumed is the guard: no row fails
-`identifier.startswith("https://spase-metadata.org/")`, so the vocabulary remains entirely
-SPASE-backed, consistent with the PR #54 backfill. A row that ever fails that guard is upstream drift
+this vocabulary can grow whenever a submission supplies an unresolved name. What matters is the
+guard: every row recorded below satisfies
+`identifier.startswith("https://spase-metadata.org/")`, and no row in the vocabulary failed it when
+these four were resolved, consistent with the PR #54 backfill — a dated observation about a shared
+vocabulary rather than a standing property of it. A row that ever fails that guard is upstream drift
 or an agent-created artifact and must be reported, never used.
 
 1. **`Mars Atmosphere and Volatile EvolutioN`**

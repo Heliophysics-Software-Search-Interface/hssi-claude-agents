@@ -4,7 +4,7 @@
 **Repository:** https://github.com/DanBrandt/EUVpy
 **Source Revision:** 52f72d874a616f4e75b2d2f37424b0c2e6de9eac
 **Extraction Date:** 2026-08-03
-**Validation Date:** 2026-08-03
+**Validation Date:** 2026-08-22
 **Validation Status:** PASS
 
 ---
@@ -186,7 +186,9 @@ Considered and rejected, with reasons:
   `build/lib/EUVpy/tools/processIndices.py:377`, but that is the stale committed build artefact
   described in the scope note and must not be read as a live call site. The package's entire
   ML-adjacent surface is that one unreachable function: `sklearn.impute`,
-  `sklearn.gaussian_process` and `pygam` appear nowhere else under `src/`, and the only other
+  `sklearn.gaussian_process` and `pygam` appear in no other code under `src/` (the name `pygam`
+  also occurs in the generated `src/EUVpy.egg-info` dependency listing, a packaging artefact, not
+  an import), and the only other
   scikit-learn import is `sklearn.metrics.mean_squared_error` (`toolbox.py:20`), used once at
   `toolbox.py:629` with `squared=False` to compute an RMSE. Substantively, NEUVAC is a least-squares
   parameterization of F10.7 predictors against FISM2 irradiance (`neuvac.neuvacFit()` calling
@@ -707,7 +709,8 @@ metadata field:
 - **FTP/FTPS Directories** — `tools/processIndices.py:getCLSF107` retrieves
   `ftp://ftpsedr.cls.fr/pub/previsol/solarflux/observation/radio_flux_adjusted_observation.txt` with
   `urllib.request.urlretrieve`. This is the default F10.7 path in every documented example and in
-  four of the eight tests.
+  seven of the eight tests - every test module except the empty `tests/AETHER/test_aether.py` stub
+  discussed in Field 30.
 - **OMNIWeb** — `tools/processIndices.py:getF107` posts an `omni2` hourly retrieval request to
   `https://omniweb.gsfc.nasa.gov/cgi/nx1.cgi`, and `readOMNI()` parses the resulting OMNIWeb
   listing plus its `.fmt` header file.
@@ -934,7 +937,9 @@ which is the reason the generic form is used; if a future refresh finds the fund
 replacing the title would be an improvement - subject to Field 26's 128-character limit on the award
 title, which any replacement has to respect.
 
-Field 26 records no funder link of its own, so the NASA funding relationship is carried by Field 25.
+This record's single funder and single award correspond directly: `80NSSC20K1581` is the National
+Aeronautics and Space Administration grant named in the Field 25 acknowledgment. Field 26 has no
+per-award funder sub-field of its own, so Field 25 is where the organization is named.
 
 ## Section 3: Additional Metadata
 
@@ -1101,8 +1106,9 @@ well evidenced, and the difference is spelled out immediately after the two entr
   GITM's wavelength scheme. Recorded as the repository URL; GITM has no DOI.
 - **Aether** — `NEUVAC/neuvac.py:aetherFile()` rewrites the NEUVAC coefficient table into Aether's
   `euv_59` CSV form, emitting Aether's own row labels (`NEUV_S1`, `NEUV_S2`, `NEUV_S3`, `NEUV_l1`,
-  `NEUV_P1`, `NEUV_P2`) so that "Aether can use [it] to implement the model", using
-  `data/euv_59_reference.csv` as the template and producing `data/euv_59_aether.csv`. The primary
+  `NEUV_P1`, `NEUV_P2`) so that, in the words of `docs/source/examples.rst`, "Aether can use [it]
+  to implement the model", using `data/euv_59_reference.csv` as the template and producing
+  `data/euv_59_aether.csv`. The primary
   documentary evidence is the dedicated, runnable "Aether" section of `docs/source/examples.rst`,
   which gives `out = neuvac.aetherFile()` as the single line needed and explains the exchange from
   Aether's side - "Aether actually has machinery for computing irradiances directly, but it requires
@@ -1247,10 +1253,12 @@ Considered and rejected:
   Canada: https://www.spaceweather.gc.ca/forecast-prevision/solar-solaire/solarflux/sx-5-en.php")
   along with the observed-versus-1 AU-adjusted distinction specific to that product. The README
   describes the `solarIndices` folder as containing "F10.7 solar index data, from both OMNIWeb and
-  Penticton", and `F107filter`'s own plot title reads "Penticton F10.7 and Filtered Penticton F10.7".
+  Penticton", and `F107filter` carries a diagnostic plot - commented out in the pinned tree, at
+  `tools/processIndices.py:412` - titled "Penticton F10.7 and Filtered Penticton F10.7 (81-day
+  2$\sigma$ criterion)".
 
   It is nonetheless excluded, because the relationship is one hop removed from the observatory. The
-  default F10.7 path in every documented example and in four of the eight tests is `getCLSF107()`,
+  default F10.7 path in every documented example and in seven of the eight tests is `getCLSF107()`,
   which retrieves a Collecte Localisation Satellites *redistribution* of the index - flare-corrected
   and Sun-Earth-distance-adjusted by CLS - rather than anything DRAO serves. EUVpy therefore consumes
   a third-party redistribution of a DRAO measurement, not DRAO's own data products, and "designed to

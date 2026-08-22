@@ -517,7 +517,7 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
   archive landing pages. No dataset identifiers appear in the repository or DOI metadata.
 
 ### 29. Related Software (OPTIONAL)
-- **Related Software:** https://github.com/CCSDSPy/ccsdspy
+- **Related Software:** https://github.com/ccsdspy/ccsdspy
 - **Change:** NEW — the stored field was empty.
 - **Source:** CCSDSPy is the other Python library for decoding CCSDS space packets, i.e. software that
   performs a similar task, and this repository engages with it concretely rather than generically:
@@ -526,6 +526,12 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
   `tests/test_data/jpss/ccsdspy_jpss1_geolocation.csv` is a CCSDSPy-format definition kept as a test fixture.
   The repository URL is given because it is the code location for the software; CCSDSPy's JOSS paper is a
   publication and therefore not recorded here.
+- **Note on the URL's casing (settled).** The owner segment is lower-case `ccsdspy`, matching the
+  form CCSDSPy's own HSSI record stores as its Code Repository and the form its canonical dossier
+  uses. GitHub resolves either casing, but related-item identifiers are matched as exact strings, so
+  the two spellings occupy two separate catalogue entries; aligning with the subject software's own
+  record is what keeps them one. A later refresh that reads the owner name as displayed on GitHub
+  should not "correct" this to `CCSDSPy`.
 - **Note (considered and not selected):** `lxml`, `click`, `rich`, `hatchling` (declared dependencies),
   `numpy`, `matplotlib`, `pytest`/`pytest-benchmark`/`ruff`/`pre-commit` (test and tooling extras), and
   `pyodide` (documentation demo runtime) are all generic infrastructure — XML parsing, CLI plumbing, terminal

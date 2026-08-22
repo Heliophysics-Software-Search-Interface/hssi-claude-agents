@@ -180,7 +180,7 @@ Not found
 **Source:** The model includes empirical coefficient data files but no external dataset DOIs or references.
 
 ### 29. Related Software (OPTIONAL)
-- https://numpy.org - required dependency
+- https://numpy.org/ - required dependency
 - https://xarray.dev - required dependency
 - https://matplotlib.org - optional dependency for plotting
 - http://download.hao.ucar.edu/pub/stans/iri/iri90.f - original IRI-90 Fortran code referenced in README.md

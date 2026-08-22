@@ -4,7 +4,7 @@
 **Repository:** https://github.com/spacepy/spacepy
 **Source Revision:** cb983af96e06265dc35463e0d725a11eaf0682a6
 **Extraction Date:** 2026-08-12
-**Validation Date:** 2026-08-12
+**Validation Date:** 2026-08-22
 **Validation Status:** PASS
 
 **Scope note.** Evidence below is drawn from the pinned source revision (authored 2026-03-15, the
@@ -1060,7 +1060,7 @@ dependency is not, by itself, a relationship worth recording.
 - https://github.com/SWMFsoftware/SWMF — Space Weather Modeling Framework
 - https://github.com/lanl/RAM-SCB — Ring current-Atmosphere interactions Model with Self-Consistent
   magnetic field
-- https://autoplot.org — Autoplot
+- https://autoplot.org/ — Autoplot
 
 This field once held Matplotlib, pandas, SciPy, Astropy, h5py and NumPy. Those were removed on the
 grounds that they are generic runtime dependencies rather than software SpacePy exchanges data with,
@@ -1088,6 +1088,12 @@ The three entries above are of a different kind, each backed by a specific, name
   `Doc/source/quickstart.rst` calls the format "RBSP/AutoPlot-compatible". SpacePy's output is
   therefore directly loadable by Autoplot. This is the weakest of the three entries, resting on two
   documentation statements rather than on code, and is recorded with that qualification.
+
+*The trailing slash on the Autoplot URL is deliberate and must be preserved.* Related-item
+identifiers are matched as exact strings, so `https://autoplot.org` and `https://autoplot.org/`
+resolve to the same page but occupy two separate catalogue entries. The slashed form is the one this
+record holds; rewriting it without the slash on a later refresh re-splits the entry rather than
+correcting it.
 
 **Considered and not selected.** AE9/AP9 — `spacepy.ae9ap9` reads its output, which would qualify,
 but AE9/AP9 is distributed through a restricted United States Air Force channel with no public

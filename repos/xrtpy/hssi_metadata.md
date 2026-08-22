@@ -4,10 +4,10 @@
 **Repository:** https://github.com/HinodeXRT/xrtpy
 **Source Revision:** 0ef8e3636bde9c619dbcb1f74519f31829f238ad (branch `main`, 2026-07-22)
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-08-19
+**Validation Date:** 2026-08-22
 **Validation Status:** PASS
 
-Some of the content recorded here is deliberately not stored by HSSI — the three items listed under
+Some of the content recorded here is deliberately not stored by HSSI — the two items listed under
 "What this file records that HSSI does not store."
 
 **Seeded refresh.** This file is a seeded refresh of the 2025-10-09 canonical extraction, not a
@@ -710,8 +710,8 @@ repository, so neither rests on that duplicate submission alone.
 > - **Precedent.** HSSI already labels title-less awards by the mission served rather than by the
 >   contract's legal scope — `MMS` / `NNG04EB99C` and `THEMIS` / `NAS5-02099`. The award name serves
 >   as a display label; the award number is the authoritative value.
-> - **No collision.** No existing HSSI award carries the number `NNM07AB07C`, so this is a new record
->   rather than a relabelling of a shared one.
+> - **No collision.** No other HSSI award carried the number `NNM07AB07C` when this row was created,
+>   so it is a new record rather than a relabelling of a shared one.
 
 **Award 2:**
 - **Award Title:** Collaborative Research: Frameworks: An open source software ecosystem for plasma physics
@@ -727,10 +727,14 @@ repository, so neither rests on that duplicate submission alone.
   that supports N. A. Murphy. The 2025-10-09 canonical file recorded the number with
   "Award Title: Not found"; that gap is now closed.
 
-**Per-award funder attribution is not recorded by HSSI.** The pairings above — NASA ↔ `NNM07AB07C`
-and NSF ↔ `1931388` — are durable, correct metadata, but HSSI does not associate a funder with an
-individual award. Field 25 carries both organizations, which is how HSSI represents who funded this
-software. The pairings are retained here as file-only metadata.
+**Per-award funder attribution, and where it can and cannot be read.** The pairings are
+NASA ↔ `NNM07AB07C` and U.S. National Science Foundation ↔ `1931388`, each stated in the
+Acknowledgements sources cited above. Neither Field 25 nor Field 26 expresses that correspondence:
+Field 25 carries the two organizations as a flat list, Field 26 carries the two awards as another,
+the submission form has no per-award funder sub-field, and the view API returns awards as titles
+alone. A refresh working only from the API will therefore see two funders and two awards with
+nothing tying one to the other, and should take the pairing from this file rather than treating it
+as unrecorded.
 
 ---
 
@@ -1073,7 +1077,6 @@ future reader mistakes file content for HSSI content.
 |---|---|
 | 27 / 28 | The APA citation prose. HSSI stores only the DOI or permanent link for Related Publications and Related Datasets; the citation text lives here alone. |
 | 12 | Formatting. The inline-code backticks around version numbers in this file are **presentation only** — HSSI stores plain text, and any markup submitted would be stored literally. |
-| 26 | Per-award funder attribution (NASA ↔ `NNM07AB07C`, NSF ↔ `1931388`). HSSI records funders at the software level, in Field 25. |
 
 ### Field 31 vocabulary ambiguity
 

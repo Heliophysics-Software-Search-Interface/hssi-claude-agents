@@ -4,7 +4,7 @@
 **Repository:** https://github.com/spacepy/dbprocessing
 **Source Revision:** dcaa21b614cf49ed4cdb5b290b4cd7d303fd80bd
 **Extraction Date:** 2026-08-12
-**Validation Date:** 2026-08-12
+**Validation Date:** 2026-08-22
 **Validation Status:** PASS
 
 ---
@@ -669,8 +669,8 @@ identifies a file by matching its **name** against a product's format string
 (`dbprocessing/DBstrings.py`, `dbprocessing/inspector.py`) and takes a SHA-1 digest of its bytes
 (`dbprocessing/Diskfile.py:159-171`). Content-level metadata extraction is delegated to inspectors,
 which are user-supplied Python modules — `docs/README.rst:24-26`: *"Support for a file format
-requires about 30 lines of Python to identify the product and extract required metadata."* In that
-sense dbprocessing supports *every* format and none.
+requires about 30 lines of Python to identify the product and extract required metadata, which can
+support many different products"*. In that sense dbprocessing supports *every* format and none.
 
 The two values recorded are the formats the project itself demonstrably handles:
 
@@ -810,7 +810,7 @@ Considered and rejected:
 - **`WIP`** — its definition requires "no stable, usable public release yet", which is false: 0.1.0
   is packaged and published. This was a genuine candidate because `docs/README.rst:37-40` calls the
   project *"an early beta state … not currently suitable for use without developer support"* and
-  `setup.py:42` classifies it `Development Status :: 4 - Beta`. But beta maturity is not the same as
+  `setup.py:40` classifies it `Development Status :: 4 - Beta`. But beta maturity is not the same as
   having no release, and `Inactive` captures the situation more accurately.
 - **`Unsupported`** — requires that the authors have ceased work and want a new maintainer. Nothing
   states that; the support channels are still advertised.
@@ -826,9 +826,9 @@ Considered and rejected:
 *Source note.* Previously empty. This is the project's declared homepage and documentation site:
 `setup.py:63` sets `'url': 'https://spacepy.github.io/dbprocessing/'`, `docs/README.rst:9` says
 *"Documentation is available at <https://spacepy.github.io/dbprocessing/>"*, and
-`docs/SUPPORT.rst:12` repeats it. It resolves directly, without redirect, to the built Sphinx site,
-whose page title is "dbprocessing documentation — dbprocessing v0.1.0 manual". It is published from
-the repository's `gh-pages` branch.
+`docs/SUPPORT.rst:12` gives the same site without the trailing slash. The URL resolves directly,
+without redirect, to the built Sphinx site, whose page title is "dbprocessing documentation —
+dbprocessing v0.1.0 manual". It is published from the repository's `gh-pages` branch.
 
 The site includes installation instructions (`docs/getting_started.rst`, rendered as "Getting
 Started"), which is what this field asks for. The PyHC registry lists the same URL without the
@@ -861,12 +861,16 @@ organisations are already represented in HSSI under these RORs.
 
 **Which funder issued which award.** HSSI records funders at the software level and awards as
 separate entries, and the link between a particular award and the agency that issued it is not
-expressible through its update interface, so that correspondence survives only in this dossier:
-`80NSSC21K0307` is the NASA grant made directly for dbprocessing; `967399` (Van Allen Probes
-RBSP-ECT) and `136435` (Parker Solar Probe IS☉IS) are the two JHU/APL subcontracts, each let under a
-NASA prime contract — `NAS5-01072` and `NNN06AA01C` respectively. Read back from HSSI alone, Fields
-25 and 26 show two funders and three awards with nothing tying one to the other; this paragraph is
-that tie.
+expressible through the submission or update interface — there is no per-award funder sub-field,
+and the view API returns awards as titles alone. The correspondence is: `80NSSC21K0307` is the NASA
+grant made directly for dbprocessing; `967399` (Van Allen Probes RBSP-ECT) and `136435` (Parker
+Solar Probe IS☉IS) are the two JHU/APL subcontracts, each let under a NASA prime contract —
+`NAS5-01072` and `NNN06AA01C` respectively. The two subcontracts are attributed to Johns Hopkins
+University Applied Physics Laboratory rather than to NASA because APL is the entity that issued
+them; NASA's role in those two is as prime sponsor, which is what the prime-contract numbers record.
+Neither prime-contract number appears in any of this record's field values; they survive only here.
+A refresh reading Fields 25 and 26 alone will see two funders and three awards with no link between
+them, and should take the attribution from this paragraph.
 
 **Considered and not selected: the United States Department of Energy / National Nuclear Security
 Administration.** There are two independent traces of DOE involvement, and neither is a statement
@@ -914,9 +918,9 @@ dbprocessing team was actually funded (967399 and 136435). Each sits under a NAS
 names but which funded the missions as a whole rather than this software specifically; those prime
 numbers are recorded here in prose so the relationship is not lost, but the subcontract is the award
 that supported dbprocessing. Which agency issued each of the three awards is recorded under Field
-25, because HSSI itself cannot express that link. Titles are the acknowledgement's own phrasing with
-the leading article and contract clause trimmed; both stay comfortably within the 128-character
-limit that HSSI's award name field imposes.
+25. Titles are the acknowledgement's own phrasing with the leading article and contract clause
+trimmed; both stay comfortably within the 128-character limit that HSSI's award name field
+imposes.
 
 Considered and not selected: contract `89233218CNA000001` and contract `AC52-06NA25396`, for the
 reasons set out under Field 25.
