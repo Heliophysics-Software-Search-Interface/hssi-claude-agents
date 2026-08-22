@@ -77,12 +77,12 @@
 **Author 7:**
 - **Name:** Achim Morschhauser
 - **Author Identifier:** https://orcid.org/0000-0001-7955-4441
-- **Affiliation:** GFZ German Research Centre for Geosciences
+- **Affiliation:** GFZ Helmholtz Centre for Geosciences
 
 **Author 8:**
 - **Name:** Ingo Michaelis
 - **Author Identifier:** https://orcid.org/0000-0001-9741-4063
-- **Affiliation:** GFZ German Research Centre for Geosciences
+- **Affiliation:** GFZ Helmholtz Centre for Geosciences
 
 **Author 9:**
 - **Name:** Jeff Klenzing

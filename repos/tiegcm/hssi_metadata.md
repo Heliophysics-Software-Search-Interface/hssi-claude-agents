@@ -3,14 +3,11 @@
 **HSSI Software ID:** 52d61c70-77fd-4c4a-aae8-f4e24dde6de8
 **Repository:** https://github.com/NCAR/tiegcm
 **Source Revision:** cedd16dfe6bdb745cb6a0f6163e7831bf84db95b (tag `TIEGCM-3.0.1`, branch `master`, 2026-05-07)
-**HSSI Target:** http://localhost
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-07-29
+**Validation Date:** 2026-08-21
 **Validation Status:** PASS
 
-**Applied to HSSI:** Fields 2-33 below match the live `http://localhost` record.
-
-**Seed:** Live HSSI metadata for `52d61c70-...` (stored + rendered), read 2026-07-28. No prior canonical `hssi_metadata.md` existed; this is the first one. The live record populated 12 of 33 fields.
+No prior canonical `hssi_metadata.md` existed; this is the first one.
 
 **Field numbering:** canonical `hssi-field-definitions` numbering (1-33). Note for cross-reading with issue #57 notes: Authors = Field 6, Version = Field 12, Programming Language = Field 13, Reference Publication = Field 14, License = Field 15.
 
@@ -93,96 +90,96 @@ https://github.com/NCAR/tiegcm
 
 *IDENTITY-AWARE SET UNION. The final list = the 24 named `CITATION.cff` authors (each with an ORCID and an affiliation) **plus** the pre-existing organizational author, which is PRESERVED with its ROR. No author is dropped. Matching was done by ORCID first, then normalized name; the organizational author matched nothing among the 24 named authors (it has a ROR, not an ORCID), so it is an additional entry rather than a duplicate.*
 
-*Affiliation convention used: the most specific organization named in the `CITATION.cff` affiliation string, expressed with the name HSSI already uses for that ROR so no duplicate organization is created. Example: ROR `https://ror.org/03773p874` is stored in HSSI as "NCAR High Altitude Observatory", so that spelling is used rather than the ROR display form. Where the most specific organization has no ROR, its parent institution is added as a second affiliation entry so at least one resolvable identifier is present. Two of the nine affiliation organizations below were new to HSSI and were created by this refresh: "The University of Texas at Arlington" (ROR `https://ror.org/019kgqr73`) and "Space Weather Technology Research and Education Center" (no identifier exists for it).*
+*Affiliation convention used: the most specific organization named in the `CITATION.cff` affiliation string, expressed with the name HSSI already uses for that ROR so no duplicate organization is created. Example: the organization carrying ROR `https://ror.org/03773p874` is named "NSF NCAR High Altitude Observatory" -- the `ror_display` form ROR registers for it -- so that spelling is used. An earlier constructed spelling of the same organization, "NCAR High Altitude Observatory", is not among the three names ROR registers for `03773p874` (acronym "HAO", alias "High Altitude Observatory", display "NSF NCAR High Altitude Observatory"); the registered display form is the settled name here, and the constructed form should not be restored. Where the most specific organization has no ROR, its parent institution is added as a second affiliation entry so at least one resolvable identifier is present. Two of the nine affiliation organizations below were new to HSSI and were created by this refresh: "The University of Texas at Arlington" (ROR `https://ror.org/019kgqr73`) and "Space Weather Technology Research and Education Center" (no identifier exists for it).*
 
-*Six of the 24 named authors already existed in HSSI, previously affiliated with NSF National Center for Atmospheric Research (ROR `https://ror.org/05cvfcr44`). Because HSSI only ever adds affiliations and never removes them, those six now carry both that affiliation and the NCAR High Altitude Observatory affiliation asserted here. Both are correct -- HAO is a laboratory within NSF NCAR -- so the affiliations listed below should be read as "at least these", not "exactly these".*
+*Six of the 24 named authors already existed in HSSI, previously affiliated with NSF National Center for Atmospheric Research (ROR `https://ror.org/05cvfcr44`). Because HSSI only ever adds affiliations and never removes them, those six now carry both that affiliation and the NSF NCAR High Altitude Observatory affiliation asserted here. Both are correct -- HAO (ROR `https://ror.org/03773p874`) is a laboratory within its parent NSF NCAR (ROR `https://ror.org/05cvfcr44`), and the two are separate organizations with separate RORs, neither one a variant spelling of the other -- so the affiliations listed below should be read as "at least these", not "exactly these".*
 
 *Author order below follows `CITATION.cff` (credit order); HSSI does not treat author order as authoritative.*
 
 - **Author:** Haonan Wu
   - **Author Identifier:** https://orcid.org/0000-0002-3272-8106
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Wenbin Wang
   - **Author Identifier:** https://orcid.org/0000-0002-6287-4542
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Kevin H. Pham
   - **Author Identifier:** https://orcid.org/0000-0001-5031-5519
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Dong Lin
   - **Author Identifier:** https://orcid.org/0000-0003-2894-6677
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Nikhil Rao
   - **Author Identifier:** https://orcid.org/0000-0003-2639-9892
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Michael J. Wiltberger
   - **Author Identifier:** https://orcid.org/0000-0002-4844-3148
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Gang Lu
   - **Author Identifier:** https://orcid.org/0000-0001-5350-2889
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Qian Wu
   - **Author Identifier:** https://orcid.org/0000-0002-7508-3803
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Hanli Liu
   - **Author Identifier:** https://orcid.org/0000-0002-6370-0704
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Liying Qian
   - **Author Identifier:** https://orcid.org/0000-0003-2430-1388
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Chih-Ting Hsu
   - **Author Identifier:** https://orcid.org/0000-0002-8789-1277
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Nicholas M. Pedatella
   - **Author Identifier:** https://orcid.org/0000-0002-8878-5126
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Jordi Vila-Pérez
   - **Author Identifier:** https://orcid.org/0000-0003-3164-0863
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Joseph M. McInerney
   - **Author Identifier:** https://orcid.org/0000-0002-6103-3311
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Arthur D. Richmond
   - **Author Identifier:** https://orcid.org/0000-0002-6708-1023
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Alan G. Burns
   - **Author Identifier:** https://orcid.org/0000-0001-6024-0020
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Stanley C. Solomon
   - **Author Identifier:** https://orcid.org/0000-0002-5291-3034
   - **Affiliation:**
-    - **Organization:** NCAR High Altitude Observatory
+    - **Organization:** NSF NCAR High Altitude Observatory
       - **Affiliation Identifier:** https://ror.org/03773p874
 - **Author:** Astrid Maute
   - **Author Identifier:** https://orcid.org/0000-0003-3393-0987
@@ -229,13 +226,15 @@ https://github.com/NCAR/tiegcm
   - **Author Identifier:** https://ror.org/03773p874
   - **Affiliation:** None recorded (none present in the source DOI record)
 
+*The organizational author above deliberately keeps the name "NCAR High Altitude Observatory", while every affiliation entry naming the same institution reads "NSF NCAR High Altitude Observatory". The difference is intentional, not drift, and must not be "reconciled" by renaming the author. Both records carry the same identifier, ROR `https://ror.org/03773p874`, and that ROR -- not the name string -- is what identifies the institution in either place. They are nonetheless two different records: HSSI can attach an author only through a person-shaped record, so an organization credited as an author is stored as one, separately from the organization record that affiliations point at. Person-shaped storage of an organizational author is a platform representation limitation rather than a data error; the record is shared with other software (see the correction note below), and its name is not changeable by a routine metadata update in any case. Renaming it to match the affiliation spelling is therefore not the remedy for the apparent mismatch -- there is nothing to remedy.*
+
 *Sources: the 24 named authors and their ORCIDs/affiliations are from `CITATION.cff` lines 8-104 at revision `cedd16df` (the same 24 also appear as the `preferred-citation` authors, and Crossref reports 24 authors for DOI 10.1029/2025JA034219). The organizational author is from the existing HSSI record and is corroborated by DataCite, which gives the sole creator as `{"name": "High Altitude Observatory", "nameType": "Organizational", "nameIdentifiers": [ROR 03773p874, ISNI 0000 0000 8976 9350]}`. ROR `03773p874` is active; `ror_display` = "NSF NCAR High Altitude Observatory", alias "High Altitude Observatory", acronym "HAO", parents University Corporation for Atmospheric Research and NSF National Center for Atmospheric Research.*
 
 #### Completed correction -- three author names (2026-07-29)
 
 Three author names were corrected in HSSI's shared author records, which HSSI's API cannot rename: `High Altitude` / `Observatory` became `NCAR High Altitude Observatory` in a single name component with the given name empty; `Kevin` became `Kevin H.`; `Michael` became `Michael J.` Identifiers were unchanged throughout, and the records remain shared with **Kaiju**, where the same two personal names are now likewise correct.
 
-The organizational author needed the fix because HSSI author relationships can only reference person records, so an organization must be stored as one -- a schema limitation, not a data error -- and DataCite supplies the creator as the single unstructured string `"High Altitude Observatory"` (`nameType: "Organizational"`), which was split on the last word boundary into a person-shaped pair. Keeping the whole organization name in one component matches how HSSI's own organization records name this same ROR; the durable key is the ROR identifier, not the string. The two personal names restore the middle initials given in `CITATION.cff` at revision `cedd16df`.
+The organizational author needed the fix because HSSI author relationships can only reference person records, so an organization must be stored as one -- a schema limitation, not a data error -- and DataCite supplies the creator as the single unstructured string `"High Altitude Observatory"` (`nameType: "Organizational"`), which was split on the last word boundary into a person-shaped pair. Keeping the whole organization name in one component is what lets the record read as an organization rather than a person; the durable key is the ROR identifier, not the string, so this author record's spelling is not required to track the spelling of the organization record that shares the same ROR. The two personal names restore the middle initials given in `CITATION.cff` at revision `cedd16df`.
 
 Scope was these three records only. The other organizational-author records noted in issue #57's Future work report were deliberately left alone.
 
@@ -275,7 +274,7 @@ First-principles three-dimensional model of Earth's coupled thermosphere and ion
 - **Organization:** Zenodo
 - **Publisher Identifier:** https://zenodo.org
 
-*KEPT UNCHANGED. Source: existing HSSI record (Organization `ee990b81-8115-4ab4-8a7f-68a4d0bb345d`); consistent with DataCite `publisher: "Zenodo"` and with Field 11's guidance that Zenodo is correct when the DOI was obtained through Zenodo. That the deposit was made by a third party does not change who published the DOI.*
+*KEPT UNCHANGED. Source: existing HSSI record; consistent with DataCite `publisher: "Zenodo"` and with Field 11's guidance that Zenodo is correct when the DOI was obtained through Zenodo. That the deposit was made by a third party does not change who published the DOI.*
 
 ### 12. Version (RECOMMENDED)
 
@@ -377,7 +376,7 @@ https://doi.org/10.1029/2025JA034219
 
 *Transparency caveat: the software contains **no network client** (no `wget`/`curl`/`requests`/`urllib` anywhere in the tree); every read is from a local file. The values above describe where the supported input data comes from and how the documentation instructs users to obtain it, which is the normal reading of this field for a model.*
 
-*Considered and EXCLUDED: **CDAWeb** and **OMNIWeb** -- `doc/userguide/namelist.rst` documents that the `IMF_NCFILE` driver files were **derived by HAO** from 1-minute OMNI data obtained from CDAWeb (gap-filling, 15-minute trailing average lagged 5 minutes, 5-minute sampling, quality mask). That is the provenance of a pre-built input file, not a source the software can query; a user searching HSSI for `CDAWeb` should not get TIEGCM back. Recorded here so the user can add them if they read the field more broadly. Also excluded: HAPI, das2, SSCWeb, TAP, VirES, The Virtual Solar Observatory, S3/Cloud-aware -- no evidence of any.*
+*Considered and EXCLUDED: **CDAWeb** and **OMNIWeb** -- `doc/userguide/namelist.rst` documents that the `IMF_NCFILE` driver files were **derived by HAO** from 1-minute OMNI data obtained from CDAWeb (gap-filling, 15-minute trailing average lagged 5 minutes, 5-minute sampling, quality mask). That is the provenance of a pre-built input file, not a source the software can query; a user searching HSSI for `CDAWeb` should not get TIEGCM back. They are therefore recorded as evidence of that provenance rather than as values of this field. Also excluded: HAPI, das2, SSCWeb, TAP, VirES, The Virtual Solar Observatory, S3/Cloud-aware -- no evidence of any.*
 
 ### 18. Input File Formats (RECOMMENDED)
 - netCDF3/4
@@ -447,15 +446,17 @@ https://tiegcm-docs.readthedocs.io/en/latest/
 ### 25. Funder (OPTIONAL)
 - **Organization:** National Aeronautics and Space Administration
   - **Funder Identifier:** https://ror.org/027ka1x80
-- **Organization:** National Science Foundation
+- **Organization:** U.S. National Science Foundation
   - **Funder Identifier:** https://ror.org/021nxhr62
 
-*NEW -- the stored list was empty. Source: structured funding metadata on the reference publication (Crossref record for DOI 10.1029/2025JA034219), which lists exactly two funders -- National Aeronautics and Space Administration (Funder Registry DOI 10.13039/100000104, 14 awards) and National Science Foundation (10.13039/100000001, 6 awards). Both names are given in full without acronyms, and both already exist in HSSI under these RORs, so no new organizations are created. Consistent institutional context: TIEGCM is developed at the NSF NCAR High Altitude Observatory, an NSF-funded center, and the MAGE coupling work is NASA DRIVE-funded.*
+*NEW -- the stored list was empty. Source: structured funding metadata on the reference publication (Crossref record for DOI 10.1029/2025JA034219), which lists exactly two funders -- National Aeronautics and Space Administration (Funder Registry DOI 10.13039/100000104, 14 awards) and National Science Foundation (10.13039/100000001, 6 awards). Both names are given in full without acronyms, and the two funders are the organizations HSSI holds under ROR `https://ror.org/027ka1x80` and ROR `https://ror.org/021nxhr62`, so no new organizations are created. Consistent institutional context: TIEGCM is developed at the NSF NCAR High Altitude Observatory, an NSF-funded center, and the MAGE coupling work is NASA DRIVE-funded.*
+
+*Naming convention, the same rule Field 6 applies to affiliations: the funder carrying ROR `https://ror.org/021nxhr62` is named "U.S. National Science Foundation" -- the `label` / `ror_display` form ROR registers for it -- so that spelling is used. "National Science Foundation" is registered only as an alias, alongside the acronym "NSF" and a second alias "United States National Science Foundation"; the registered display form is the settled name here, and the bare alias should not be restored. Nothing was renamed -- the alias had simply been recorded where the display form belongs. The NASA entry needs no such correction: "National Aeronautics and Space Administration" is already the `ror_display` form registered for ROR `https://ror.org/027ka1x80`.*
 
 ### 26. Award Title (OPTIONAL)
 Not found -- no award title or number is asserted anywhere in the repository (no funding statement in `README.md`, `CITATION.cff` or `LICENSE`; DataCite `fundingReferences` for the DOI is empty).
 
-*Deliberate non-population, with the raw material recorded so the user can decide. The reference publication's Crossref record does carry 20 award numbers, but no award **titles**, and they are the acknowledgements of a 24-author paper -- attributing all 20 to this software would over-claim, and creating 20 title-less Award rows in a shared table would degrade rather than improve the record. The numbers, with their Crossref funder attribution, are:*
+*Deliberate non-population, with the raw material kept as evidence for why no defensible title exists. The reference publication's Crossref record does carry 20 award numbers, but no award **titles**, and they are the acknowledgements of a 24-author paper -- attributing all 20 to this software would over-claim, and creating 20 title-less Award rows in a shared table would degrade rather than improve the record. The numbers, with their Crossref funder attribution, are:*
 
 - *National Aeronautics and Space Administration: 80NSSC22M0163, 80NSSC21K1315, 80NSSC21K0008, 80NSSC23K1055, 80NSSC22K1635, 80NSSC21K1677, 80NSSC20K1784, 80NSSC21K1673, 80NSSC23K1123, NNG12FA45C, 80NSSC22K0018, NNX17AG10G, 80NSSC22K1010, 80NSSCK19K0810*
 - *National Science Foundation: 1852977, 2223931, 2431688, 2149695, 1753214, 2437053*
@@ -498,7 +499,7 @@ Not found -- no dataset DOI or persistent dataset identifier appears anywhere in
 - ***GEOPACK-2008*** *-- vendored **inside** this repository as `src/geopack.F`, so it is part of the source rather than a related package; and HSSI's existing "geopack" entry is a different, Python implementation, so pointing at it would misidentify the dependency.*
 - ***Heelis / Weimer 2001 and 2005 / GSWM / CTMT / Roble-Ridley aurora / APL SAPS models*** *-- embedded model components (`src/heelis.F`, `src/wei05sc.F`, `src/gswm.F`, `src/ctmt.F`, `src/aurora.F`, `src/subaur.F90`), not separately distributed software packages with repositories or DOIs. Their describing publications were considered for Field 27 and excluded there too.*
 - ***AMIE / AMGeO*** *-- TIEGCM reads AMIE output files (`src/amie.F`, namelist `AMIENH` / `AMIESH`, obtained by contacting the AMIE author), but the HAO AMIE procedure is not a published software package, and HSSI's `AMGeO` entry is a distinct successor package with no demonstrated file-level or API-level exchange with TIEGCM.*
-- ***CESM / WACCM-X*** *-- an obvious peer NCAR upper-atmosphere model, and `gcmprocpy` post-processes both, but there is **no** reference to WACCM-X or CESM anywhere in this repository and no demonstrated exchange, so asserting the link would rest on domain intuition rather than evidence. Flagged here in case the user wants it added as a "performs similar tasks" entry.*
+- ***CESM / WACCM-X*** *-- an obvious peer NCAR upper-atmosphere model, and `gcmprocpy` post-processes both, but there is **no** reference to WACCM-X or CESM anywhere in this repository and no demonstrated exchange, so asserting the link would rest on domain intuition rather than evidence. It is recorded here as a considered-and-rejected "performs similar tasks" candidate, so that it is not re-proposed without new evidence.*
 - ***tgcmproc_f90 / tgcmproc_idl / utproc*** *-- HAO post-processors named in `doc/userguide/postproc.rst`, but that page is legacy 2.0 documentation, the tools are distributed only from an HAO download page with no repository or DOI, and the v3.0-era replacement (`gcmprocpy`) is recorded in Field 30 instead.*
 
 ### 30. Interoperable Software (OPTIONAL)
@@ -509,12 +510,12 @@ Not found -- no dataset DOI or persistent dataset identifier appears anywhere in
 
 *NEW -- the stored list was empty. Four entries, each with a specific demonstrated exchange rather than shared-ecosystem membership. Each corresponds to an existing HSSI entry, so no orphan targets are created.*
 
-1. ***gcmprocpy*** *(`https://github.com/NCAR/gcmprocpy`; HSSI entry `65364bdd-6a19-404a-9a87-c1aa123017d3`; no DOI exists, so the repository URL is used). Companion post-processing and visualization package for this model's output, documented in both directions: `README.md` "Utility Tools" -- "Tiegcmpy is a Python tool ([GCMProcpy github]) that is used for post processing and data visualization of TIEGCM outputs" -- and the `TIEGCM-3.0.1` release notes link it as "Post-processing (gcmprocpy)"; gcmprocpy's own README describes itself as "a post-processing and plot generation tool for TIE-GCM and WACCM-X NetCDF output", and its PyHC community-registry entry reads "A Python package for post processing and analysis of TIE-GCM and WACCM-X outputs". The exchange object is the netCDF history file written by `src/nchist.F`.*
-2. ***Kaiju*** *(`https://doi.org/10.5281/zenodo.16818620`; HSSI entry `aebd4757-...`). Kaiju contains the MAGE components GAMERA and REMIX, and TIEGCM is MAGE's ionosphere-thermosphere component. Two concrete exchanges: (a) in-memory two-way **MPI field exchange** -- `src/mage_coupling.F` ("Module for MPI coupling TIEGCM with GAMERA and REMIX (MAGE)") sends REMIX the TIEGCM grid and exchanges potential, auroral energy and number flux, and Pedersen/Hall conductances; (b) **file-level one-way coupling** -- `src/mage_oneway.F` reads REMIX's `msphere.mix.h5` output (namelist `ONEWAY` / `MIXFILE`: "Enable one-way coupling from remix to TIEGCM. Read remix h5 file"). Confirmed from the other side: Kaiju ships `src/remix/tgcm.F90` and `docs/source/makeitso/engage_template/{derecho,aitken,pleiades}/tiegcmrun_input.json`, and this repository's `tiegcmrun/engage_solver.py` maps GAMERA grid types to TIEGCM resolutions for coupled ("engage") runs.*
-3. ***GLOW*** *(`https://doi.org/10.5281/zenodo.3344536`; HSSI entry `81ad4d3f-...`, repository `https://github.com/space-physics/NCAR-GLOW`). The GLOW airglow/auroral emission model consumes TIEGCM history files directly: that repository contains `src/ncarglow/fortran/readtgcm.f90` (subroutines `read_tgcm`, `read_tgcm_coords`, `find_mtimes`) and the driver namelist `fortran/in.namelist.tgcm`, and its `glowdriver.f90` documents "For definitions of TGCM input variables see module READTGCM". The exchange object is again the TIEGCM netCDF history file.*
-4. ***The CCMC Kamodo Analysis Suite*** *(`https://github.com/nasa/Kamodo`; HSSI entry `13659e76-...`; no DOI stored). Kamodo ships a dedicated TIEGCM reader -- `kamodo_ccmc/readers/tiegcm_4D.py` and `kamodo_ccmc/readers/tiegcm_tocdf.py` -- which ingests TIEGCM output into Kamodo's functionalized data model for interpolation, satellite flythrough and model-data comparison.*
+1. ***gcmprocpy*** *(`https://github.com/NCAR/gcmprocpy`; no DOI exists, so the repository URL is used). Companion post-processing and visualization package for this model's output, documented in both directions: `README.md` "Utility Tools" -- "Tiegcmpy is a Python tool ([GCMProcpy github]) that is used for post processing and data visualization of TIEGCM outputs" -- and the `TIEGCM-3.0.1` release notes link it as "Post-processing (gcmprocpy)"; gcmprocpy's own README describes itself as "a post-processing and plot generation tool for TIE-GCM and WACCM-X NetCDF output", and its PyHC community-registry entry reads "A Python package for post processing and analysis of TIE-GCM and WACCM-X outputs". The exchange object is the netCDF history file written by `src/nchist.F`.*
+2. ***Kaiju*** *(`https://doi.org/10.5281/zenodo.16818620`). Kaiju contains the MAGE components GAMERA and REMIX, and TIEGCM is MAGE's ionosphere-thermosphere component. Two concrete exchanges: (a) in-memory two-way **MPI field exchange** -- `src/mage_coupling.F` ("Module for MPI coupling TIEGCM with GAMERA and REMIX (MAGE)") sends REMIX the TIEGCM grid and exchanges potential, auroral energy and number flux, and Pedersen/Hall conductances; (b) **file-level one-way coupling** -- `src/mage_oneway.F` reads REMIX's `msphere.mix.h5` output (namelist `ONEWAY` / `MIXFILE`: "Enable one-way coupling from remix to TIEGCM. Read remix h5 file"). Confirmed from the other side: Kaiju ships `src/remix/tgcm.F90` and `docs/source/makeitso/engage_template/{derecho,aitken,pleiades}/tiegcmrun_input.json`, and this repository's `tiegcmrun/engage_solver.py` maps GAMERA grid types to TIEGCM resolutions for coupled ("engage") runs.*
+3. ***GLOW*** *(`https://doi.org/10.5281/zenodo.3344536`; repository `https://github.com/space-physics/NCAR-GLOW`). The GLOW airglow/auroral emission model consumes TIEGCM history files directly: that repository contains `src/ncarglow/fortran/readtgcm.f90` (subroutines `read_tgcm`, `read_tgcm_coords`, `find_mtimes`) and the driver namelist `fortran/in.namelist.tgcm`, and its `glowdriver.f90` documents "For definitions of TGCM input variables see module READTGCM". The exchange object is again the TIEGCM netCDF history file.*
+4. ***The CCMC Kamodo Analysis Suite*** *(`https://github.com/nasa/Kamodo`; no DOI stored). Kamodo ships a dedicated TIEGCM reader -- `kamodo_ccmc/readers/tiegcm_4D.py` and `kamodo_ccmc/readers/tiegcm_tocdf.py` -- which ingests TIEGCM output into Kamodo's functionalized data model for interpolation, satellite flythrough and model-data comparison.*
 
-*Considered and EXCLUDED: **Kaipy** (HSSI entry `e2069dd1-...`) -- plausible by association as the Python toolkit for Kaiju/MAGE, but its repository tree contains **no** TIEGCM-related path, so there is no demonstrated exchange with TIEGCM specifically; the coupling evidence points at Kaiju/REMIX, which is recorded above. **CESM / WACCM-X** -- see Field 29. **xarray / netCDF4 / numpy / MPI / ESMF** -- dependencies, not peer tools; ESMF is recorded in Field 29 for a different reason. No entry here rests on "part of the scientific Python ecosystem" or "shares a runtime".*
+*Considered and EXCLUDED: **Kaipy** -- plausible by association as the Python toolkit for Kaiju/MAGE, but its repository tree contains **no** TIEGCM-related path, so there is no demonstrated exchange with TIEGCM specifically; the coupling evidence points at Kaiju/REMIX, which is recorded above. **CESM / WACCM-X** -- see Field 29. **xarray / netCDF4 / numpy / MPI / ESMF** -- dependencies, not peer tools; ESMF is recorded in Field 29 for a different reason. No entry here rests on "part of the scientific Python ecosystem" or "shares a runtime".*
 
 *VALIDATOR FOLLOW-UP (HIDRA / RCM investigated to a conclusion, 2026-07-28) -- surfaced by `src/mpi.F:34`, an MPI application-ID registry: `TIEGCM = 57, GAMERA = 45, HIDRA = 40, REMIX = 69, VOLTRON = 116, RCM = 34`. Neither clears the Field 30 gate, for different reasons:*
 - ***RCM*** *-- every call site resolves to the literal, unimplemented string "T not coupling to RCM yet": four occurrences in `src/mage_coupling.F` (lines 100, 399, 444, 475) are Fortran comments (`!write(*,*)...`), and the one live (non-commented) call site, `src/mpi.F:309`, executes but prints exactly that message. The code itself documents that no exchange exists yet. Fails "demonstrated exchange" outright.*
@@ -566,25 +567,3 @@ Not found -- the repository contains no logo image, `doc/userguide/conf.py` and 
 **SoMEF (v0.9.11, `-t 0.7`) run against the repository.** Useful and consistent results: `full_title` "TIEGCM v3.0" (supports Field 7); the full license text confirming the custom NCAR agreement (Field 15); languages Fortran/Python/Shell/Perl/Makefile (Field 13); documentation URLs for both ReadTheDocs sites (Fields 24, 30); `requirements` numpy/netCDF4/xarray/jinja2 (Fields 29/30 exclusions); and `date_updated` 2026-07-27 (Field 23). It found **no** identifier/DOI, no keywords and no logo in the repository, corroborating that the Zenodo DOI is external to the repo. Its `description` results are README fragments and its `installation` result ("Various minor bug fixes.") is spurious -- neither was used.
 
 **View-layer normalization applied when recording stored values:** Field 12's version number is recorded **bare** (`3.0.1`), never with the `TIEGCM v3.0 - ` prefix the view adds. Field 16 keywords are recorded with the **exact stored case of existing vocabulary rows**, which are mixed-case rather than uniformly lowercase (see Field 16). Fields 31/32 names are recorded **bare**, without any `name (abbreviation)` decoration the view may add, and always paired with the SPASE identifier as the de-duplication key.
-
-**Summary of changes relative to the live HSSI record**
-- *Previously empty, now populated (20 fields):* 9, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 27, 29, 30, 31, 32 -- plus enrichment of 4 (1 -> 14 values), 5 (1 -> 2 values) and 6 (1 -> 25 authors).
-- *Still empty, with documented reasons:* 26 (Award Title), 28 (Related Datasets), 33 (Logo).
-- *Kept unchanged:* 2, 3, 7, 10, 11, 13, 24, and the Publisher and organizational-author records.
-- *Materially changed, **user-approved 2026-07-28**:* Field 8 (description replaced -- see the reasoning under that field) and Field 12 (version set to `3.0.1`; the stale `v1.0.0` entry **removed**, an explicitly approved exception to union-never-drop).
-- *Corrected in HSSI's shared author records:* the three author names recorded under Field 6.
-
-**User decisions incorporated (2026-07-28)**
-1. Field 12 -- drop `v1.0.0`; keep `3.0.1` as the sole version. APPLIED.
-2. Field 8 -- approve the description replacement. APPLIED.
-3. Fields 31/32 -- keep the three TIMED instruments and the TIMED observatory (rather than the stricter "a GCM lists no instruments" reading). APPLIED, no change needed.
-4. Field 16 -- approve all six new keyword vocabulary rows. APPLIED (18 existing + 6 new = 24).
-5. Field 22 -- **do NOT expand the 7-row Phenomena vocabulary.** `Solar Eclipses` and the other four candidates are declined; Field 22 stays at Geomagnetic Storms + Solar Flares. APPLIED as a closed decision.
-6. Field 6 -- correct the organizational author's name representation. APPLIED, together with two personal-name corrections.
-7. Left as-is by decision: Field 7 name `TIEGCM v3.0`; Field 10 date `2025-04-14`; Field 26 `Not found`.
-
-**New shared records this refresh introduced (deliberate, disclosed):** 18 people, 8 related items, 6 keywords, 2 organizations -- "The University of Texas at Arlington" (ROR `https://ror.org/019kgqr73`) and "Space Weather Technology Research and Education Center" (no identifier exists for it) -- and 1 version record. No new phenomena, instrument/observatory, or award records. One existing related item was reused (Kaiju, `https://doi.org/10.5281/zenodo.16818620`). The superseded `v1.0.0` version record was unlinked from this software, not deleted.
-
-**Applied to HSSI:** Fields 2-33 above match the live `http://localhost` record, including the three corrected author names recorded under Field 6.
-
-No seed CSV was edited during this refresh; seed reconciliation happens later at campaign scope.

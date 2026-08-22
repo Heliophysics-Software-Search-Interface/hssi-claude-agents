@@ -284,7 +284,7 @@ complete. There is no `CITATION.cff`, `AUTHORS`, or `CONTRIBUTORS` file to recon
 Neither author is an organization: both carry ORCIDs, and no organizational author (team, consortium,
 collaboration) is credited anywhere in the repository. No ROR-identified author entry applies.
 
-**Both authors carry `NCAR High Altitude Observatory` (https://ror.org/03773p874)** — the institution under
+**Both authors carry `NSF NCAR High Altitude Observatory` (https://ror.org/03773p874)** — the institution under
 which stokespy was written. HSSI's stored record was missing it for both of them, and the reason is worth
 knowing: **neither author's ORCID record contains it.** Egeland's lists no pre-JSC employment at all, and
 Dima's lists NSO and CIRES but no NCAR appointment. The original HSSI record derived its affiliations from
@@ -299,7 +299,7 @@ record already held, not a replacement for any of them.
   - National Solar Observatory — https://ror.org/00b9pg524
   - University of Cambridge — https://ror.org/013meh722
   - University of Hawaii at Manoa — https://ror.org/01wspgy28
-  - NCAR High Altitude Observatory — https://ror.org/03773p874
+  - NSF NCAR High Altitude Observatory — https://ror.org/03773p874
 
 All four stored affiliations were verified against ORCID 0000-0002-6003-4646 and are genuine; none should be
 dropped. Each traces to a specific entry in that ORCID record:
@@ -329,7 +329,7 @@ Three findings worth carrying forward:
    "University of Hawaii at Manoa" is a registered ROR *alias*; the stored HSSI form is therefore an
    accepted name for the right organization and needs no change.
 
-**Why NCAR High Altitude Observatory is added:** the affiliation under which Dima actually wrote stokespy
+**Why NSF NCAR High Altitude Observatory is added:** the affiliation under which Dima actually wrote stokespy
 was absent from both his ORCID record and the stored HSSI record. Evidence that he held it:
 
 - `setup.cfg:4` and `.sunpy-template.yml:6` record his contact address as `gdima@ucar.edu`, and PyPI's
@@ -342,8 +342,8 @@ was absent from both his ORCID record and the stored HSSI record. Evidence that 
 - The repository itself lives in the `NCAR` GitHub organization, and its Azure Pipelines build URL is
   `https://dev.azure.com/NCAR/stokespy/...` (`azure-pipelines.yml:5`).
 
-`NCAR High Altitude Observatory` (https://ror.org/03773p874) already exists as an HSSI organization row, so
-this is an addition of an existing organization rather than the creation of a new one.
+`NSF NCAR High Altitude Observatory` (https://ror.org/03773p874) already exists as an HSSI organization
+row, so this is an addition of an existing organization rather than the creation of a new one.
 
 **Considered and rejected for Dima: `University Corporation for Atmospheric Research`**
 (https://ror.org/04zhhyn23), which also exists as a row. UCAR is the employer of record for NCAR staff, and
@@ -357,7 +357,7 @@ lines. Egeland's CV, which settles the question for Egeland, says nothing about 
 - **Identifier:** https://orcid.org/0000-0002-4996-0753
 - **Affiliations (2):**
   - Johnson Space Center — https://ror.org/04xx4z452
-  - NCAR High Altitude Observatory — https://ror.org/03773p874
+  - NSF NCAR High Altitude Observatory — https://ror.org/03773p874
 
 **Egeland's Johnson Space Center affiliation is genuine, and its ROR has always been correct; what was wrong
 was the name recorded for the organization.** A NASA human-spaceflight centre is a surprising affiliation for
@@ -393,7 +393,7 @@ what ORCID's record says, not as a name to copy. Anyone taking an organization n
 entry will regenerate the error. **Do not reintroduce "Johnson Space Flight Center", and do not read the two
 forms as two different organizations — they share one ROR and one institution.**
 
-**Why NCAR High Altitude Observatory is added — decided by Egeland's own CV.** His ORCID lists no pre-JSC
+**Why NSF NCAR High Altitude Observatory is added — decided by Egeland's own CV.** His ORCID lists no pre-JSC
 employment at all, so ORCID alone cannot supply this affiliation. His CV supplies it directly. Its
 **Appointments** section reads, verbatim:
 
@@ -418,12 +418,13 @@ Three things this settles:
    is stronger corroboration than an affiliation line on a co-authored paper. The CV's **Observing** section
    independently reinforces the Hinode connection within the development window: `"HOP 393: Cycle 24/25
    equatorial transition"; PI, Hinode spacecraft (Dec 2020–Dec 2021)`.
-3. **`NCAR High Altitude Observatory` appears verbatim in the CV**, matching the existing HSSI organization
-   row name exactly. To be precise about where: that exact string is the institution line of the `2017–2019`
-   and `2014–2017` appointments. The stokespy-window `2019–now` entry uses the other word order,
-   "High Altitude Observatory/NCAR". Both denote the same laboratory, and the HSSI row's ROR
-   (https://ror.org/03773p874, ROR display name "NSF NCAR High Altitude Observatory", alias "High Altitude
-   Observatory") is the right organization either way.
+3. **The laboratory is named in the CV, verbatim.** `NCAR High Altitude Observatory` is the institution
+   line of the `2017–2019` and `2014–2017` appointments; the stokespy-window `2019–now` entry uses the other
+   word order, "High Altitude Observatory/NCAR". Neither form is the name recorded in Field 6, which is
+   `NSF NCAR High Altitude Observatory` — ROR's own display name for https://ror.org/03773p874, whose
+   registered variants include the acronym "HAO" and the alias "High Altitude Observatory". All denote the
+   one laboratory, so neither the CV's word order nor its lack of the "NSF" prefix should be read as naming
+   a different institution or as grounds to relabel the organization.
 
 Independent supporting evidence, consistent with the CV:
 
@@ -626,7 +627,7 @@ Field 2 establishes that stokespy has no DOI. The repository is hosted on GitHub
 because GitHub has no applicable ROR.
 
 **Alternatives considered and not selected:** *Zenodo* — inapplicable, there is no Zenodo record.
-*NSF National Center for Atmospheric Research* (https://ror.org/05cvfcr44) or *NCAR High Altitude
+*NSF National Center for Atmospheric Research* (https://ror.org/05cvfcr44) or *NSF NCAR High Altitude
 Observatory* (https://ror.org/03773p874) — defensible on the grounds that the repository lives in the
 `NCAR` GitHub organization and the work was NCAR/HAO work, but Field 11 asks for the publishing *entity* of
 the artifact and, absent a DOI, directs that to the repository host. *Python Package Index* — stokespy 0.5.0

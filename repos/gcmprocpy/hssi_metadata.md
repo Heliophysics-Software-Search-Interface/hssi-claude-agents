@@ -4,7 +4,7 @@
 **Repository:** https://github.com/NCAR/gcmprocpy
 **Source Revision:** 456398e8c76f9b341b279e0a592c1d12b6a8cf32
 **Extraction Date:** 2026-08-04
-**Validation Date:** 2026-08-04
+**Validation Date:** 2026-08-21
 **Validation Status:** PASS
 
 ---
@@ -251,10 +251,10 @@ Considered and rejected:
 
 **Author 1: Nikhil Rao**
 - **Author Identifier:** https://orcid.org/0000-0003-2639-9892
-- **Affiliation 1:** NCAR High Altitude Observatory — https://ror.org/03773p874
+- **Affiliation 1:** NSF NCAR High Altitude Observatory — https://ror.org/03773p874
 - **Affiliation 2:** NSF National Center for Atmospheric Research — https://ror.org/05cvfcr44
 
-Carried over unchanged from the existing HSSI record, and independently corroborated on every
+Carried over from the existing HSSI record, and independently corroborated on every
 element. `gcmprocpy/pyproject.toml` and `gcmprocpy/setup.py` name `Nikhil Rao <nikhilr@ucar.edu>` as
 sole author; `docs/source/conf.py` sets `author = 'Nikhil Rao'`; the PyHC community registry lists
 Nikhil Rao as contact; and the LICENSE closes with "This software was written by Nikhil Rao for US
@@ -271,12 +271,14 @@ No second author is added. Git history shows three committer identities, all the
 `AnonNick <nikhilrao8@gmail.com>` (2). There are no other contributors, no `AUTHORS` or
 `CONTRIBUTORS` file, and no co-authored commits.
 
-The stored affiliation name "NCAR High Altitude Observatory" contains an unexpanded acronym, which
-the field guidance discourages; the ROR display name is "NSF NCAR High Altitude Observatory". It is
-deliberately left as stored — the ROR unambiguously identifies the organization, and the affiliation
-name is a shared value that other records also use, so correcting its wording is not a change this
-record can make on its own. Should that shared value ever be corrected to match the ROR display
-name, this affiliation should follow it.
+The affiliation name recorded here, "NSF NCAR High Altitude Observatory", is ROR's display name for
+03773p874. An earlier form, "NCAR High Altitude Observatory", is superseded and should not be
+reintroduced: ROR registers no such name for this organization — only the display name, the acronym
+HAO and the alias "High Altitude Observatory" — and it leaves the NCAR acronym unexpanded, which the
+field guidance discourages. The ROR remains the stable identifier for this affiliation and is
+unaffected by the wording. Note that the organization name is a value shared with other HSSI
+records, so any future question about its wording is a question about that shared organization
+rather than about this record alone.
 
 ### 7. Software Name (MANDATORY)
 GCMprocpy

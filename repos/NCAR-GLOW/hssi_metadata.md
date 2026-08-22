@@ -54,7 +54,7 @@
 **Author 2:**
 - **Name:** Stanley C. Solomon
 - **Author Identifier:** https://orcid.org/0000-0002-5291-3034
-- **Affiliation:** NCAR High Altitude Observatory — https://ror.org/03773p874
+- **Affiliation:** NSF NCAR High Altitude Observatory — https://ror.org/03773p874
 
 **Source:** DataCite API, Zenodo API, PyHC contact field
 **Note:** The DataCite API lists "Scivision" and "Solomon, Stan" as creators. The PyHC registry lists Michael Hirsch as the contact.

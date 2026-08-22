@@ -4,7 +4,7 @@
 **Repository:** https://github.com/nasa/Kamodo
 **Source Revision:** 6706989574997795ce1b16b75af31c382eba0611
 **Extraction Date:** 2026-08-13
-**Validation Date:** 2026-08-15
+**Validation Date:** 2026-08-21
 **Validation Status:** PASS
 
 **Scope note.** The GitHub repository `nasa/Kamodo` ships the CCMC *analysis suite* (`kamodo_ccmc`).
@@ -275,9 +275,13 @@ Frontiers papers corroborate each one.
 **Author 5:**
 - **Name:** Darren De Zeeuw
 - **Author Identifier:** https://orcid.org/0000-0002-4313-5998
-- **Affiliation - Organization:** Calvin College (https://ror.org/05r0q9p84); Goddard Space Flight
+- **Affiliation - Organization:** Calvin University (https://ror.org/05r0q9p84); Goddard Space Flight
   Center (https://ror.org/0171mag52); National Aeronautics and Space Administration
   (https://ror.org/027ka1x80); University of Michigan (https://ror.org/00jmfr291)
+- **Affiliation name.** The institution is recorded as Calvin University, the display name ROR
+  gives for https://ror.org/05r0q9p84; that record registers the former name Calvin College as an
+  alias, so an older source using it names the same institution and is not grounds to restore the
+  earlier value.
 - **Corrected name split.** HSSI previously stored this author as given name "Darren de" and
   family name "Zeeuw", which rendered as "Darren de Zeeuw". That split was wrong. The correct form
   is given name "Darren", family name "De Zeeuw", with a capital D, and first-party sources agree
