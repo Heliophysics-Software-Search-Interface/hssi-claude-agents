@@ -4,7 +4,7 @@
 **Repository:** https://github.com/lasp/maven_iuvs
 **Source Revision:** 1759ab562d379f177a61ed85aed26542b2b82894
 **Extraction Date:** 2026-08-06
-**Validation Date:** 2026-08-07
+**Validation Date:** 2026-08-23
 **Validation Status:** PASS
 
 ---
@@ -1153,8 +1153,8 @@ point at.
 
 ### 31. Related Instruments (OPTIONAL)
 
-1. **MAVEN Imaging Ultraviolet Spectrograph (IUVS)**
-   - Instrument Identifier: https://spase-metadata.org/SMWG/Instrument/MAVEN/IUVS.html
+1. **MAVEN Imaging Ultraviolet Spectrograph, IUVS, Instrument**
+   - Instrument Identifier: https://spase-metadata.org/SMWG/Instrument/MAVEN/IUVS
 2. **MAVEN Langmuir Probe and Waves, LPW, Extreme Ultraviolet Monitor, EUV, Instrument**
    - Instrument Identifier: https://spase-metadata.org/SMWG/Instrument/MAVEN/LPW/EUV
 
@@ -1164,19 +1164,13 @@ rows, and both identifiers are `https://spase-metadata.org/` SPASE Resource IDs.
 **IUVS** is carried over from the existing HSSI record. It is the instrument this software exists
 for, so the relevance gate is met trivially.
 
-*Duplicate-row note, recorded so it is not rediscovered.* The vocabulary contains two SMWG rows for
-the same SPASE resource, whose identifiers differ only by the `.html` suffix:
-
-| Row name | Identifier |
-|---|---|
-| `MAVEN Imaging Ultraviolet Spectrograph (IUVS)` | `https://spase-metadata.org/SMWG/Instrument/MAVEN/IUVS.html` |
-| `MAVEN Imaging Ultraviolet Spectrograph, IUVS, Instrument` | `https://spase-metadata.org/SMWG/Instrument/MAVEN/IUVS` |
-
-The `.html` row is the one recorded, because it was already the stored association, it is
-SPASE-backed, and it resolves to the same SPASE resource; swapping it would be a lateral change to an
-already-correct association that gains nothing scientific. The resolution guidance's general
-preference for the bare (non-`.html`) form is noted here, and the bare row above is its exact
-equivalent — normalizing to it would be an optional cleanup, not the repair of a defect.
+*Identifier-form note, recorded so it is not rediscovered.* This instrument was previously recorded
+as `MAVEN Imaging Ultraviolet Spectrograph (IUVS)` under
+`https://spase-metadata.org/SMWG/Instrument/MAVEN/IUVS.html`. The `.html` form is not a registered
+SPASE identifier — it was an artifact of a SPASE landing-page URL entering through the submission
+path, and no `.html` identifier exists in the maintained upstream registry. The bare identifier
+above is the registered, maintained form and is the durable half of the entry; the name is
+upstream's own comma-styled display form. The `.html` variant should not be reintroduced.
 
 **MAVEN LPW/EUV (the EUV Monitor, "EUVM")** is recorded. Evidence that the software is designed to
 support it, not merely to mention it: `download.sync_euvm_l2b` is a dedicated function that

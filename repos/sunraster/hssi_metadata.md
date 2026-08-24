@@ -205,8 +205,8 @@ Based on the SunPy ecosystem and dependencies:
 ### 31. Related Instruments (OPTIONAL)
 
 **Primary:**
-- **Instrument Name:** SPICE (Spectral Imaging of the Coronal Environment)
-- **Instrument Identifier:** Not found
+- **Instrument Name:** Spectral Imaging of the Coronal Environment
+- **Instrument Identifier:** https://spase-metadata.org/SMWG/Instrument/SolarOrbiter/SPICE
 - **Mission:** Solar Orbiter (ESA)
 - **Note:** Full reader implementation in instr/spice.py
 

@@ -587,29 +587,30 @@ and that is captured in Field 32.
   SPASE vocabulary would not permit a clean WFI entry anyway: `Wide Field Imager` / abbreviation `WFI`
   matches three type-1 rows (`.../NASA/Instrument/PUNCH/WFI/1`, `/2`, `/3`) — an unresolved collision, which
   per the resolution ladder means omit and document rather than guess. `Narrow Field Imager` does resolve
-  uniquely (`https://spase-metadata.org/NASA/Instrument/PUNCH/NFI`, with a `.html` duplicate), but listing
+  uniquely (`https://spase-metadata.org/NASA/Instrument/PUNCH/NFI`), but listing
   NFI alone while omitting its three WFI siblings would misrepresent the package as NFI-specific.
 - **"DASH"** (`tests/data/compressed_dash.fits`) — a test fixture filename only, never described or
   supported as an instrument in the repository, and absent from the SPASE vocabulary (zero type-1 or type-2
   rows named or abbreviated `DASH`). Test-data name-drops are excluded by the relevance gate.
 
 ### 32. Related Observatories (OPTIONAL)
-- **Observatory Name:** Polarimeter to Unify the Corona and Heliosphere (PUNCH)
-- **Observatory Identifier:** https://spase-metadata.org/NASA/Observatory/PUNCH.html
+- **Observatory Name:** PUNCH Mission
+- **Observatory Identifier:** https://spase-metadata.org/NASA/Observatory/PUNCH
 
-**Source:** PRESERVED exactly as bound on the live HSSI record (row `d882f614-6240-4f53-a423-295236b5c27b`);
-name copied verbatim from the controlled `InstrumentObservatory` vocabulary (type 2, SPASE-backed).
+**Source:** Bound on the live HSSI record; name copied verbatim from the controlled
+`InstrumentObservatory` vocabulary (type 2, SPASE-backed).
 Passes the relevance gate: `docs/source/index.rst` — "It was originally developed for the PUNCH mission";
 LICENSE — "Copyright (c) 2024 PUNCH Science Operations Center"; the repository lives in the
 `punch-mission` GitHub organization; and PUNCH's operational calibration pipeline `punchbowl` calls this
 package to build and apply its Level-1 PSF transform. A scientist working with PUNCH data would expect this
 package back.
 
-**Note:** the vocabulary also contains a bare-identifier near-duplicate of this resource,
-`PUNCH Mission` → `https://spase-metadata.org/NASA/Observatory/PUNCH` (the resolution ladder normally
-prefers the non-`.html` form). The live record is already bound to the `.html` row, and re-pointing it would
-risk creating a second observatory link on the record for the same resource, so the existing binding is kept
-deliberately. The mission-level row is also preferred over the four platform-level rows (`PUNCH-NFI`,
+**Note:** this field previously recorded the same observatory under the identifier
+`https://spase-metadata.org/NASA/Observatory/PUNCH.html`, named
+`Polarimeter to Unify the Corona and Heliosphere (PUNCH)`. HSSI's vocabulary is consolidated onto the
+maintained upstream SPASE registry, in which no `.html` identifiers exist — those forms were
+submission-path artifacts, and the bare identifier above is the registered, maintained form for this
+observatory. The mission-level row is preferred over the four platform-level rows (`PUNCH-NFI`,
 `PUNCH-WFI-1/2/3`), which would over-specify a package that supports the mission generally.
 
 ### 33. Logo (OPTIONAL)
@@ -640,7 +641,7 @@ figures, not marks. The PyHC registry entry for regularizePSF has no `logo` fiel
 8. **SoMEF 0.7** — GitHub topics, description, documentation URL, license text, release 1.2.1, no logo.
 9. **HSSI controlled vocabularies** (localhost) — `FunctionCategory`, `RepoStatus`, `Phenomena`,
    `DataInput`, `OperatingSystem`, `CpuArchitecture`, `Keyword`, and the cached
-   `InstrumentObservatory` list (7,648 rows, filtered locally).
+   `InstrumentObservatory` list (7,648 rows at the time, since consolidated; filtered locally).
 10. **Repository at 8bd926e1** — README.md, CITATION.cff, LICENSE, pyproject.toml, CHANGELOG.rst,
     `regularizepsf/*.py` (all 8 modules), `tests/*.py`, `docs/source/*`, `.github/workflows/*`, git tags.
 11. **punchbowl** (`punch-mission/punchbowl`) — `pyproject.toml` and `punchbowl/level1/psf.py`, for the
@@ -673,7 +674,7 @@ figures, not marks. The PyHC registry entry for regularizePSF has no `logo` fiel
   validator and the inference is already disclosed in-field.
 - Curator decisions taken alongside: Field 16 `plotting` added; Field 21 reduced to the live
   "CPU Independent" alone; Field 5 left at "Solar Environment" (Interplanetary Space not added); Field 32
-  left bound to the existing `.html` SPASE row.
+  left at the mission-level PUNCH observatory row.
 
 ### Completeness
 - All 33 fields present: **yes**

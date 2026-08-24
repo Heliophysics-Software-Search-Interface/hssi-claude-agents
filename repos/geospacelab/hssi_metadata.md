@@ -508,12 +508,11 @@ One award number per entry, because the live schema (`GET /api/models/structures
 ## Section 3: Additional Metadata
 
 ### 31. Related Instruments (OPTIONAL)
-**Values (17 — all 2 live values retained, 15 added). Every entry carries a verified SPASE identifier.**
+**Values (16 — 1 of the 2 live values retained here, 15 added; the AMPERE association belongs in Field 32). Every entry carries a verified SPASE identifier.**
 
 | Name (verbatim from controlled list) | SPASE Identifier | Status |
 |---|---|---|
-| Active Magnetosphere and Planetary Electrodynamics Response Experiment (AMPERE) | https://spase-metadata.org/SMWG/Observatory/AMPERE.html | Live, retained |
-| Millstone Hill ISR | https://spase-metadata.org/SMWG/Instrument/MEASURE/Millstone.Hill/ISR.html | Live, retained |
+| Incoherent Scatter Radar | https://spase-metadata.org/SMWG/Instrument/MEASURE/Millstone.Hill/ISR | Live, retained |
 | SuperMAG Magnetometers | https://spase-metadata.org/SMWG/Instrument/SuperMAG/Magnetometers | **ADDED** |
 | Tromso UHF | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/EISCAT/UHF | **ADDED** |
 | Tromso VHF | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/EISCAT/VHF | **ADDED** |
@@ -530,10 +529,9 @@ One award number per entry, because the live schema (`GET /api/models/structures
 | Absolute Scalar Magnetometer / Vector Field Magnetometer | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-C/MAG | **ADDED** (Swarm-C) |
 | Global Navigation Satellite System | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-C/GNSS | **ADDED** (Swarm-C) |
 
-**Resolution:** every value is resolved against the HSSI instrument/observatory controlled vocabulary. Each name is copied verbatim from the matched record, each is the unique name-and-type match, and **every identifier resolves (HTTP 200)** in the exact `.html`-or-bare shape recorded.
+**Resolution:** every value is resolved against the HSSI instrument/observatory controlled vocabulary. Each name is copied verbatim from the matched record. For the twelve Swarm-satellite rows the name+type pair is not unique — the four instrument names each appear on three rows, one per satellite, and disambiguation is by the SPASE identifier's satellite-specific path segment (see the Swarm instrument evidence below); the remaining four rows are unique name-and-type matches. **Every identifier resolves (HTTP 200)** in the exact shape recorded.
 
 **Notes on the retained rows:**
-- **AMPERE** is stored under Related *Instruments* while carrying a SPASE *Observatory* identifier. This is the documented observatory-fallback pattern and is pre-existing in live HSSI; it is kept unchanged. GeospaceLAB reads the JHUAPL AMPERE fitted field-aligned-current product (`sources/jhuapl/ampere/{fitted,grd}`).
 - **Millstone Hill ISR** — `sources/madrigal/isr/millstonehill` plus the `MillstoneHillISRDashboard` express quicklook.
 
 **Evidence for the addition:**
@@ -569,24 +567,25 @@ One award number per entry, because the live schema (`GET /api/models/structures
 *Note for HSSI maintainers:* rendered HSSI output lists related instruments by name only. Because the Swarm instrument records share a name across the three satellites, the four instrument names will each appear three times with no indication of the satellite. The stored identifiers are distinct and unambiguous; this is a display characteristic only.
 
 ### 32. Related Observatories (OPTIONAL)
-**Values (12 — all 7 live values retained, 5 added). Every entry carries a verified SPASE identifier.**
+**Values (13 — all 7 live values retained, 5 added, plus AMPERE, which belongs here rather than in Field 31). Every entry carries a verified SPASE identifier.**
 
 | Name (verbatim from controlled list) | SPASE Identifier | Status |
 |---|---|---|
+| Active Magnetosphere and Planetary Electrodynamics Response Experiment | https://spase-metadata.org/SMWG/Observatory/AMPERE | Live, retained |
 | CHAMP | https://spase-metadata.org/SMWG/Observatory/CHAMP | Live, retained |
 | Defense Meteorological Satellite Program | https://spase-metadata.org/SMWG/Observatory/DMSP | Live, retained |
-| European Incoherent SCATter (EISCAT) | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/EISCAT.html | Live, retained |
-| Gravity Field and Steady-State Ocean Circulation Explorer (GOCE) | https://spase-metadata.org/SMWG/Observatory/GOCE.html | Live, retained |
-| Gravity Recovery and Climate Experiment (GRACE) | https://spase-metadata.org/SMWG/Observatory/GRACE.html | Live, retained |
+| European Incoherent Scatter Scientific Association | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/EISCAT | Live, retained |
+| Gravity Field and Steady-State Ocean Circulation Explorer | https://spase-metadata.org/SMWG/Observatory/GOCE | Live, retained |
+| Gravity Recovery and Climate Experiment | https://spase-metadata.org/SMWG/Observatory/GRACE | Live, retained |
 | International Monitor for Auroral Geomagnetic Effects | https://spase-metadata.org/SMWG/Observatory/Ground/IMAGE | **ADDED** |
 | SuperDARN | https://spase-metadata.org/SMWG/Observatory/SuperDARN | Live, retained |
 | SuperMAG | https://spase-metadata.org/SMWG/Observatory/SuperMAG | **ADDED** |
-| Swarm | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM.html | Live, retained |
+| Swarm : ESA mission | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM | Live, retained |
 | Swarm Alpha | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM-A | **ADDED** |
 | Swarm Bravo | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM-B | **ADDED** |
 | Swarm Charlie | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM-C | **ADDED** |
 
-**Resolution:** as for Field 31 — resolved against the HSSI instrument/observatory controlled vocabulary, names copied verbatim, and **all twelve identifiers resolve (HTTP 200)** in the exact shape recorded. Records are matched by SPASE identifier rather than by name, so the `.html` shapes are preserved exactly.
+**Resolution:** as for Field 31 — resolved against the HSSI instrument/observatory controlled vocabulary, names copied verbatim, and **all thirteen identifiers resolve (HTTP 200)** in the exact shape recorded. Records are matched by SPASE identifier rather than by name.
 
 **Evidence for the additions:**
 - **Swarm Alpha / Bravo / Charlie** — `datahub/sources/tud/downloader.py` enumerates and asserts the complete constellation for the TU Delft accelerometer and precise-orbit-determination products: `_validate_sat_id()` line 155 sets `valid_sat_ids = ['A', 'B', 'C']` followed by `assert self.sat_id in valid_sat_ids`, and `_validate_product()` line 141 gates on `self.mission == 'Swarm' and self.sat_id in ['A', 'B', 'C']`. Per-satellite data is downloaded for each. The Swarm test suite makes 60 per-satellite instantiations (`sat_id='A'` ×39, `sat_id='C'` ×21), and the dual-satellite products `fac_tms_dual` / `fac_lls_dual` hard-code `sat_id='AC'`. These three records also carry the only per-satellite distinction visible in rendered HSSI output, since the Field 31 instrument records share names across satellites; and the Swarm accelerometer (`l2daily/dns_acc`, declared `'instrument': 'ACC'`) has no SPASE instrument record, so that support is representable only here.
@@ -594,6 +593,8 @@ One award number per entry, because the live schema (`GET /api/models/structures
 - **International Monitor for Auroral Geomagnetic Effects** — `sources/fmi/image/ie/` (downloader, loader, `variable_config`) retrieves the IMAGE magnetometer network's electrojet (IE/IL/IU) indices from FMI. Unique row. Note the vocabulary also contains a same-acronym but entirely different mission, "Imager for Magnetopause-to-Aurora Global Exploration" (`SMWG/Observatory/IMAGE`); the two full names are wholly distinct, so recording the full name plus identifier removes any ambiguity. The NASA IMAGE mission is **not** supported by this software and is not listed.
 
 **Notes on the retained rows:**
+- **AMPERE** is recorded here, not in Field 31. AMPERE is an observatory-class entity — a network experiment, not an instrument — and its SPASE identity is an Observatory path, `https://spase-metadata.org/SMWG/Observatory/AMPERE`; the association therefore belongs in Related Observatories. It was previously carried in Field 31 against a row that had been mis-typed as an instrument, which put the association in the wrong field. GeospaceLAB reads the JHUAPL AMPERE fitted field-aligned-current product (`sources/jhuapl/ampere/{fitted,grd}`).
+- **Swarm** — the record's stored display name is `Swarm : ESA mission`, which is how the upstream SPASE registry names it. The odd punctuation is upstream-faithful and deliberately kept; the identifier `https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM` is the durable half of the value.
 - **CHAMP** is the only retained value whose `name` is not unique in the vocabulary (two rows: `SMWG/Observatory/CHAMP` and `IUGONET/Observatory/RISH/CHAMP/CHAMP`). Because live HSSI already binds it to a specific identifier and that identifier is carried through unchanged, no collision arises. Evidence: `sources/tud/champ/{dns_acc,wnd_acc}`.
 - **GRACE** — `sources/tud/grace/{dns_acc,wnd_acc}`. **GOCE** — `sources/tud/goce/{dns_acc,wnd_acc,dns_wnd_acc_v01}`. **SuperDARN** — `sources/superdarn/potmap`. **DMSP** — mission-level record covering the SSUSI, SSJ, SSIES and SSM products (see Field 31). **EISCAT** — umbrella record covering the Tromsø and Svalbard radars (see Field 31).
 
@@ -631,8 +632,8 @@ One award number per entry, because the live schema (`GET /api/models/structures
 - Field 17 Data Sources — 8 → 11
 - Field 18 Input File Formats — 7 → 7 (`JSON` added, `IDL.sav` removed)
 - Field 29 Related Software — 4 → 6
-- Field 31 Related Instruments — 2 → 17
-- Field 32 Related Observatories — 7 → 12
+- Field 31 Related Instruments — 2 → 16
+- Field 32 Related Observatories — 7 → 13
 
 **Field 8 Description** — the original curator text is retained verbatim with one sentence appended covering the v0.14 Swarm coverage, orbit-sector gridding and binning, conjunction search, and HAPI/VirES access.
 

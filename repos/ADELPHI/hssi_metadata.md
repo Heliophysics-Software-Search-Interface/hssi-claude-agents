@@ -4,7 +4,7 @@
 **Repository:** https://ccmc.gsfc.nasa.gov/models/ADELPHI~1/ (CCMC model page — authoritative source; ADELPHI has no source-code repository)
 **Source Revision:** Not applicable — website-only extraction, no version-controlled source is published, and CCMC exposes no per-model revision or edit timestamp. The "Last Updated" stamp shown at the top of the ADELPHI page is **not** a page-specific edit date and is deliberately not quoted here — see "The 'Last Updated' date on the model page is a trap" below. The nearest durable anchors are CCMC's own `version` value for the model (`1`) and the record content transcribed field by field here.
 **Extraction Date:** 2026-08-15
-**Validation Date:** 2026-08-15
+**Validation Date:** 2026-08-23
 **Validation Status:** PASS
 
 ---
@@ -1157,10 +1157,11 @@ investigator and a co-author of all three ADELPHI papers. A user searching for s
 Birkeland-current measurements from Iridium should find ADELPHI, since converting exactly those
 measurements into electrodynamic parameters is the model's entire purpose.
 
-**Do not use the AMPERE row typed as an instrument.** The vocabulary contains
-`Active Magnetosphere and Planetary Electrodynamics Response Experiment (AMPERE)` with `type` 1
-(instrument) and identifier `https://spase-metadata.org/SMWG/Observatory/AMPERE.html`. That is the
-`.html` duplicate of the observatory record, mis-typed as an instrument; the identifier path itself
+**Do not use an AMPERE row typed as an instrument.** The vocabulary formerly contained a duplicate
+row, `Active Magnetosphere and Planetary Electrodynamics Response Experiment (AMPERE)`, with `type` 1
+(instrument) and identifier `https://spase-metadata.org/SMWG/Observatory/AMPERE.html` — since retired
+in HSSI's bare-vs-`.html` vocabulary consolidation. That was the `.html` duplicate of the observatory
+record, mis-typed as an instrument; the identifier path itself
 says `Observatory`. Under the normalisation rule the bare and `.html` identifiers are one resource, and
 the correct row is the observatory one recorded in Field 32. Recording the `.html` row here would
 double-list AMPERE across Fields 31 and 32 under two identifiers for the same thing.
@@ -1177,7 +1178,8 @@ Considered and omitted, with reasons, so these are not re-proposed:
   radar row — the Poker Flat rows are magnetometers, all-sky imagers, an MF radar and auroral cameras —
   but it *does* carry an observatory-level row for the radar family PFISR belongs to,
   `Advanced Modular Incoherent Scatter Radar` (`https://spase-metadata.org/SMWG/Observatory/AMISR`,
-  which also appears in an `.html` duplicate form). Under the observatory-substitution rule that row
+  whose former `.html` duplicate has been retired in the vocabulary consolidation). Under the
+  observatory-substitution rule that row
   would be the correct fallback **if** PFISR were a related instrument. It is not, so the row is
   deliberately left unrecorded. Also present but equally inapplicable are Millstone Hill's ISR rows and
   the EISCAT observatory rows.

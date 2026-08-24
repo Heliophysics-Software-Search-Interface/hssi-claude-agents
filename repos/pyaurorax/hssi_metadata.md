@@ -272,26 +272,31 @@
 ### 31. Related Instruments (OPTIONAL)
 
 **Instrument Networks Supported:**
-- THEMIS All-Sky Imager (ASI)
-- TREx RGB ASI
-- TREx NIR ASI
-- TREx Blue ASI
-- TREx Spectrograph
-- REGO (Redline Emission Geospace Observatory)
-- SMILE (Suomi-NPP Magnetometer, Ionosphere, Lithosphere Explorer) ASI
+- THEMIS All-Sky Imager (ASI) — stored in HSSI as 24 per-station SPASE instrument rows named
+  "THEMIS Ground <Station> All Sky Imager" (SMWG/Instrument/THEMIS/Ground/CANMAG/<station>/ASI);
+  the per-station enumeration is deferred to a full refresh, and this aggregate label must not be
+  re-resolved into a new identifierless row
+- **Red-Green-Blue All Sky Imager** (https://spase-metadata.org/SMWG/Instrument/TREX/RBGASI) - TREx RGB ASI
+- **Near Infrared All Sky Imager** (https://spase-metadata.org/SMWG/Instrument/TREX/NIRASI) - TREx NIR ASI
+- **Blue All Sky Imager** (https://spase-metadata.org/SMWG/Instrument/TREX/BLUEASI) - TREx Blue ASI
+- **Proton Aurora Meridian Imaging Spectrograph** (https://spase-metadata.org/SMWG/Instrument/TREX/PAMIS) - TREx Spectrograph
 
-**Source:** README.md explicitly lists these ASI networks; code structure has specific modules for each instrument type.
+**Source:** README.md explicitly lists these ASI networks; code structure has specific modules for each instrument type. The four TREx imagers are recorded under the names and bare SPASE identifiers upstream registers them with. Those names carry no "TREx" prefix, so the TREx affiliation shows only in the TREX/ segment of each identifier; the README wording each one replaces is given after the identifier above.
+
+**Note - SMILE ASI is deliberately omitted, not overlooked.** PyAuroraX reads the University of Calgary ground-based SMILE all-sky imager network (pyaurorax.data.ucalgary.read.read_smile, instrument_array "smile_asi"), and no SPASE record exists for that network - the SPASE-backed vocabulary holds no Calgary or UCalgary ground-imager entry to bind to - so the ground imager cannot be recorded as an instrument. The mission association is carried at observatory level instead (Field 32). This entry was previously written as "SMILE (Suomi-NPP Magnetometer, Ionosphere, Lithosphere Explorer) ASI" and resolved to https://spase-metadata.org/SMWG/Instrument/SMILE/SXI; both halves were wrong. That expansion is fabricated - SMILE is the Solar wind Magnetosphere Ionosphere Link Explorer, an ESA/CAS mission, and no entity anywhere is named "Suomi-NPP Magnetometer, Ionosphere, Lithosphere Explorer" - and the SXI row denotes that mission's spaceborne Soft X-ray Imager, which PyAuroraX does not support. Should upstream ever register the UCalgary ground-based SMILE ASI network, this omission is worth revisiting; until then it should not be re-proposed.
 
 ### 32. Related Observatories (OPTIONAL)
 
 **Observatory Networks:**
 - THEMIS
-- TREx
-- REGO
-- SMILE
+- **Transition Region Explorer** (https://spase-metadata.org/SMWG/Observatory/TREX) - vocabulary abbreviation TREx
+- **Redline Emission Geospace Observatory** (https://spase-metadata.org/SMWG/Observatory/REGO) - vocabulary abbreviation rEGO
+- **Solar wind-Magnetosphere-Ionosphere Link Explorer** (https://spase-metadata.org/SMWG/Observatory/SMILE) - vocabulary abbreviation SMILE
 - UCalgary auroral observatories
 
-**Source:** README.md, software specifically supports multi-network ASI observatories across Canada and North America.
+**Source:** README.md, software specifically supports multi-network ASI observatories across Canada and North America. Names and bare SPASE identifiers are the registered upstream forms. The abbreviation is a separate field of each row that HSSI appends when it renders a name, so a displayed "Transition Region Explorer (TREx)" is that rendering and not a differently-named value; REGO's abbreviation really is the lowercase-initial rEGO upstream, which is faithful and not a typo to correct. SMILE is recorded here under its true expansion, the Solar wind-Magnetosphere-Ionosphere Link Explorer.
+
+**Note - REGO is an observatory, not an instrument.** REGO's SPASE identity is the imager network itself, so it belongs in Field 32; it was previously listed among the Field 31 instruments and has been moved here.
 
 ### 33. Logo (OPTIONAL)
 - **Value:** https://raw.githubusercontent.com/aurorax-space/pyaurorax/main/logo.svg
@@ -375,7 +380,7 @@
 
 **Medium Confidence:**
 - Interoperable software (inferred from PyHC package similarities)
-- Related instruments/observatories (explicitly mentioned but no formal identifiers)
+- Related instruments/observatories (network names taken from the README; the TREx imagers and all four named observatories are bound to SPASE identifiers, the THEMIS instrument aggregate resolves to 24 per-station rows enumerated at the next full refresh, and only the generic UCalgary network label remains a documented omission)
 
 **Needs Verification:**
 - University of Calgary ROR ID (03waa3d44) - verified against ROR database

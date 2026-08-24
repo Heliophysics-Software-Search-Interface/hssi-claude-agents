@@ -4,7 +4,7 @@
 **Repository:** https://www.lmsal.com/solarsoft/
 **Source Revision:** Not applicable — SolarSoft has no version control, tags, or releases. See the source-currency note below.
 **Extraction Date:** 2026-08-11
-**Validation Date:** 2026-08-11
+**Validation Date:** 2026-08-23
 **Validation Status:** PASS
 
 ## Scope note — how to read the evidence in this file
@@ -1369,10 +1369,10 @@ four libraries SSW's description names as its foundation.
 | Solar Optical Telescope | https://spase-metadata.org/SMWG/Instrument/Hinode/SOT |
 | X-Ray Telescope | https://spase-metadata.org/SMWG/Instrument/Hinode/XRT |
 
-*Hinode XRT normalisation:* three rows describe this instrument —
+*Hinode XRT normalisation:* three rows once described this instrument —
 `X-Ray Telescope` (bare), and `Hinode X-ray Telescope` and `X-Ray Telescope (XRT)` (both on the
-`.html` identifier). Per the `.html` normalisation rule they are one resource and the bare row is
-preferred, which is what is recorded.
+`.html` identifier). Per the `.html` normalisation rule they were one resource and the bare row is
+what is recorded; the `.html` twins have since been retired in the vocabulary-wide consolidation.
 
 **Solar Orbiter** — `SSW_SO_INSTR "so/stix so/spice so/solohi"`; the `so/stix` branch was modified
 2026-07-13, making it one of the most actively maintained parts of the tree.
@@ -1385,8 +1385,8 @@ preferred, which is what is recorded.
 | Extreme Ultraviolet Imager | https://spase-metadata.org/ESA/Instrument/SolarOrbiter/EUI |
 | Polarimetric and Helioseismic Imager | https://spase-metadata.org/ESA/Instrument/SolarOrbiter/PHI |
 
-*SPICE normalisation:* the bare row `Spectral Imaging of the Coronal Environment` is preferred over
-`SPICE (Spectral Imaging of the Coronal Environment)` on the `.html` identifier.
+*SPICE normalisation:* the bare row `Spectral Imaging of the Coronal Environment` was preferred over
+the since-retired `SPICE (Spectral Imaging of the Coronal Environment)` twin on the `.html` identifier.
 
 *EUI and PHI — scope of support, stated plainly so a reviewer can judge it.* SolarSoft has no data
 branch for either instrument. They are included because `gen/idl/sunglobe/` — an observation-planning
@@ -1414,17 +1414,14 @@ rather than competing candidates; SSW's branch supports WISPR as a whole.
 | Name | SPASE identifier |
 |---|---|
 | Proba 2 Sun Watcher using APS detectors and Image Processing | https://spase-metadata.org/SMWG/Instrument/PROBA2/SWAP |
-| Proba 2 Large Yield RAdiometer (LYRA) | https://spase-metadata.org/SMWG/Instrument/PROBA2/LYRA.html |
+| Sun Watcher using APS detectors and image Processing | https://spase-metadata.org/SMWG/Instrument/PROBA2/LYRA |
 
-*Upstream vocabulary defect affecting LYRA — read this before "correcting" the entry.* The bare
-identifier `https://spase-metadata.org/SMWG/Instrument/PROBA2/LYRA` is present in HSSI's vocabulary
-but its `name` is **`Sun Watcher using APS detectors and image Processing`** — that is SWAP's name,
-not LYRA's, and it duplicates the name of the genuine SWAP row at `.../PROBA2/SWAP`. The usual
-normalisation rule (prefer the bare row over its `.html` twin) would therefore write a wrong,
-user-visible instrument name into this record and make SSW appear to support SWAP twice while never
-naming LYRA. The `.html` row is recorded instead because its name correctly identifies the
-instrument. This is a defect in the imported vocabulary, not in this record; if the bare row's name
-is ever corrected upstream, the preference should flip back to it.
+*The LYRA row's display name is upstream's, not a local error:* its stored name
+`Sun Watcher using APS detectors and image Processing` is the expansion of SWAP — a different
+PROBA 2 instrument — apparently misassigned in the upstream registry's record for LYRA, so the
+identifier `.../SMWG/Instrument/PROBA2/LYRA` is the correct and durable half of this entry, and a
+future refresh should neither "correct" that identifier to match the name nor read the name as
+corruption of this record — a local rename would only be transient.
 
 **STEREO** — `SSW_STEREO_INSTR "stereo/impact stereo/plastic stereo/secchi stereo/swaves stereo/ssc"`.
 Each instrument is recorded for both spacecraft, which is the evidence-backed expansion the resolution
@@ -1665,7 +1662,8 @@ stored because the row name must match exactly; a future agent should not "fix" 
 `GOES 12` or `Coriolis`, which would fail to match.
 
 **Duplicate-row choices.** SOHO has both an `SMWG` and a `CNES/Observatory/CDPP-AMDA` row; RHESSI,
-LOFAR and DKIST each have a bare and an `.html` row; STEREO has SMWG, `CDPP-AMDA` and `CDPP-Archive`
+LOFAR and DKIST each had a bare and an `.html` row (the `.html` twins have since been retired in the
+vocabulary-wide consolidation); STEREO has SMWG, `CDPP-AMDA` and `CDPP-Archive`
 variants for the mission and both spacecraft. In every case the bare `SMWG` (or, where no SMWG row
 exists, the single applicable) row was taken, per the normalisation and tie-breaker rules.
 

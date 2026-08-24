@@ -4,7 +4,7 @@
 **Repository:** https://github.com/sunpy/sunpy
 **Source Revision:** ed70935fa156a05f81926e4a2f4a0ea25dc37f36
 **Extraction Date:** 2026-08-13
-**Validation Date:** 2026-08-21
+**Validation Date:** 2026-08-23
 **Validation Status:** PASS
 **Scope note.** sunpy is a general-purpose solar-physics library whose instrument coverage lives in
 data-driven subpackages (`sunpy/map/sources/`, `sunpy/timeseries/sources/`, `sunpy/net/`) rather than
@@ -1137,7 +1137,7 @@ identifier is the de-duplication key. Grouped by platform, with the code evidenc
 - **Solar X-ray Sensor on GOES** — SPASE: https://spase-metadata.org/SMWG/Instrument/GOES/14/XRS
 - **Solar X-ray Sensor on GOES** — SPASE: https://spase-metadata.org/SMWG/Instrument/GOES/15/XRS
 
-**Hinode — `sunpy/map/sources/hinode.py` defines `XRTMap` and `SOTMap`. XRT has both a bare and a `.html` identifier; the bare row is used per the normalization rule.**
+**Hinode — `sunpy/map/sources/hinode.py` defines `XRTMap` and `SOTMap`. XRT formerly had both a bare and a `.html` identifier; the bare row was already the one recorded here, and the `.html` twin has since been retired in the vocabulary consolidation.**
 - **X-Ray Telescope** — SPASE: https://spase-metadata.org/SMWG/Instrument/Hinode/XRT
 - **Solar Optical Telescope** — SPASE: https://spase-metadata.org/SMWG/Instrument/Hinode/SOT
 
@@ -1156,9 +1156,9 @@ identifier is the de-duplication key. Grouped by platform, with the code evidenc
 - **The Solar Orbiter Heliospheric Imager** — SPASE: https://spase-metadata.org/NASA/Instrument/SolarOrbiter/SoloHI
 - **Energetic Particle Detector** — SPASE: https://spase-metadata.org/ESA/Instrument/SolarOrbiter/EPD
 
-**PROBA2 — `sunpy/map/sources/proba2.py` (`SWAPMap`) for SWAP imagery, and `sunpy/timeseries/sources/lyra.py` (`LYRATimeSeries`) plus the `LYRAClient` in `sunpy/net/dataretriever/sources/lyra.py` for LYRA radiometry. Exactly one row carries the `.../PROBA2/SWAP` identifier. The LYRA entry uses the `.html` identifier for the reason recorded below the list — this is the one place in this field where the bare identifier is deliberately not preferred.**
+**PROBA2 — `sunpy/map/sources/proba2.py` (`SWAPMap`) for SWAP imagery, and `sunpy/timeseries/sources/lyra.py` (`LYRATimeSeries`) plus the `LYRAClient` in `sunpy/net/dataretriever/sources/lyra.py` for LYRA radiometry. Exactly one row carries the `.../PROBA2/SWAP` identifier. The LYRA entry's display name is addressed in the caveat below the list.**
 - **Proba 2 Sun Watcher using APS detectors and Image Processing** — SPASE: https://spase-metadata.org/SMWG/Instrument/PROBA2/SWAP
-- **Proba 2 Large Yield RAdiometer (LYRA)** — SPASE: https://spase-metadata.org/SMWG/Instrument/PROBA2/LYRA.html
+- **Sun Watcher using APS detectors and image Processing** — SPASE: https://spase-metadata.org/SMWG/Instrument/PROBA2/LYRA
 
 **TRACE — `sunpy/map/sources/trace.py` (`TRACEMap`) and eight `trace*` colour tables. The mission has one imaging-telescope instrument row.**
 - **TRACE Imaging Telescope on TRACE** — SPASE: https://spase-metadata.org/SMWG/Instrument/TRACE/Telescope
@@ -1169,29 +1169,25 @@ identifier is the de-duplication key. Grouped by platform, with the code evidenc
 **RHESSI — `sunpy/map/sources/rhessi.py` (`RHESSIMap`), `sunpy/timeseries/sources/rhessi.py` (`RHESSISummaryTimeSeries`) and the `RHESSIClient`. The vocabulary names the instrument by its pre-launch designation, HESSI.**
 - **High-Energy Solar Spectroscopic Imager** — SPASE: https://spase-metadata.org/SMWG/Instrument/RHESSI/HESSI
 
-**Fermi GBM — `sunpy/timeseries/sources/fermi_gbm.py` (`GBMSummaryTimeSeries`) and the `GBMClient`. The bare row is used in preference to the `.html` duplicate.**
+**Fermi GBM — `sunpy/timeseries/sources/fermi_gbm.py` (`GBMSummaryTimeSeries`) and the `GBMClient`. The bare row was preferred over a since-retired `.html` duplicate.**
 - **Fermi Gamma-ray Burst Monitor** — SPASE: https://spase-metadata.org/SMWG/Instrument/FERMI/GBM
 
 **MLSO K-Cor — `sunpy/map/sources/mlso.py` (`KCorMap`) and the `kcor` colour table.**
 - **MLSO K-Coronagraph** — SPASE: https://spase-metadata.org/NSF/Instrument/Ground/MLSO/K-Cor
 
-**PUNCH — `sunpy/map/sources/punch.py` (`PUNCHMap`) and the `punch` colour table. The class docstring names the constellation's instrument complement exactly: "three Wide Field Imagers (WFIs) and one Near Field Imager (NFI)", which is the in-repo evidence selecting these four rows. The three WFI rows share the name `Wide Field Imager` and differ by identifier; the NFI bare row is used in preference to its `.html` duplicate.**
+**PUNCH — `sunpy/map/sources/punch.py` (`PUNCHMap`) and the `punch` colour table. The class docstring names the constellation's instrument complement exactly: "three Wide Field Imagers (WFIs) and one Near Field Imager (NFI)", which is the in-repo evidence selecting these four rows. The three WFI rows share the name `Wide Field Imager` and differ by identifier; the NFI bare row was preferred over a since-retired `.html` duplicate.**
 - **Narrow Field Imager** — SPASE: https://spase-metadata.org/NASA/Instrument/PUNCH/NFI
 - **Wide Field Imager** — SPASE: https://spase-metadata.org/NASA/Instrument/PUNCH/WFI/1
 - **Wide Field Imager** — SPASE: https://spase-metadata.org/NASA/Instrument/PUNCH/WFI/2
 - **Wide Field Imager** — SPASE: https://spase-metadata.org/NASA/Instrument/PUNCH/WFI/3
 
-**Why PROBA2 LYRA uses the `.html` identifier — a rejected alternative that must not be re-proposed.**
-Two vocabulary rows exist for LYRA, and the bare one is mislabelled upstream:
-- `https://spase-metadata.org/SMWG/Instrument/PROBA2/LYRA` — name `Sun Watcher using APS detectors and image Processing`
-- `https://spase-metadata.org/SMWG/Instrument/PROBA2/LYRA.html` — name `Proba 2 Large Yield RAdiometer (LYRA)`
-
-The bare identifier, which the `.html` normalization rule would normally select, carries SWAP's
-description as its name — SWAP is a different PROBA2 instrument, with its own row at
-`.../PROBA2/SWAP`. Recording the bare row would therefore store a SWAP name against the LYRA
-identifier and misrepresent both instruments. The `.html` row is the only one whose name and
-identifier agree, so it is the value recorded above. A future agent applying the prefer-bare rule
-mechanically will be tempted to swap it back; that is the rejected alternative, and it is wrong here.
+**A caveat on the LYRA entry's display name — recorded so it is not "corrected".**
+The row at `https://spase-metadata.org/SMWG/Instrument/PROBA2/LYRA` stores the display name `Sun
+Watcher using APS detectors and image Processing`, which is the expansion of SWAP — a different
+PROBA2 instrument, with its own row at `.../PROBA2/SWAP` — apparently misassigned in the upstream
+registry's LYRA record; the identifier is correct and is the durable half of the entry, so a future
+refresh should neither change the identifier nor read the mismatched name as evidence that the wrong
+instrument was recorded, and a local rename would be transient against the upstream registry.
 
 **Omitted, with reasons — these are correct outcomes, not gaps.**
 - *Aditya-L1 / SUIT* — `sunpy/map/sources/suit.py` (`SUITMap`) and eleven `suit_*` colour tables give
@@ -1237,9 +1233,9 @@ notes after the list cover the entries whose resolution required a choice.
 - **Parker Solar Probe** — SPASE: https://spase-metadata.org/SMWG/Observatory/ParkerSolarProbe
 - **Solar Orbiter** — SPASE: https://spase-metadata.org/ESA/Observatory/SolarOrbiter
 - **PROBA 2** — SPASE: https://spase-metadata.org/SMWG/Observatory/PROBA2
-- **Polarimeter to Unify the Corona and Heliosphere (PUNCH)** — SPASE: https://spase-metadata.org/NASA/Observatory/PUNCH.html
-- **Ramaty High Energy Solar Spectroscopic Imager (RHESSI)** — SPASE: https://spase-metadata.org/SMWG/Observatory/RHESSI.html
-- **Fermi Gamma-ray Space Telescope** — SPASE: https://spase-metadata.org/SMWG/Observatory/FERMI.html
+- **PUNCH Mission** — SPASE: https://spase-metadata.org/NASA/Observatory/PUNCH
+- **Reuven Ramaty High Energy Solar Spectroscope Imager** — SPASE: https://spase-metadata.org/SMWG/Observatory/RHESSI
+- **Fermi Gamma-ray Space Telescope** — SPASE: https://spase-metadata.org/SMWG/Observatory/FERMI
 - **Solar Terrestrial Relations Observatory A** — SPASE: https://spase-metadata.org/SMWG/Observatory/STEREO-A
 - **Solar Terrestrial Relations Observatory B** — SPASE: https://spase-metadata.org/SMWG/Observatory/STEREO-B
 - **Interface Region Imaging Spectrograph** — SPASE: https://spase-metadata.org/SMWG/Observatory/IRIS
@@ -1271,11 +1267,12 @@ notes after the list cover the entries whose resolution required a choice.
   tie-breaker for same-name duplicates.
 
 **Settled choices, recorded so they are not revisited.**
-- *Three stored rows use `.html` identifiers* — PUNCH, RHESSI and Fermi. Bare equivalents exist
-  (`NASA/Observatory/PUNCH` "PUNCH Mission", `SMWG/Observatory/RHESSI` "Reuven Ramaty High Energy
-  Solar Spectroscope Imager", `SMWG/Observatory/FERMI` "Fermi Gamma-ray Space Telescope"). They are
-  the same SPASE resources, so swapping them would churn stored values for no factual gain, and the
-  stored `.html` rows are kept. A future tidy-up could switch them, but it is cosmetic.
+- *PUNCH, RHESSI and Fermi carry the upstream registry's identifiers* —
+  `NASA/Observatory/PUNCH` "PUNCH Mission", `SMWG/Observatory/RHESSI` "Reuven Ramaty High Energy
+  Solar Spectroscope Imager" and `SMWG/Observatory/FERMI` "Fermi Gamma-ray Space Telescope", each
+  name copied verbatim from its row. Earlier versions of this file recorded `.html` variants of
+  these three identifiers; those were submission-path artifacts rather than upstream resources, so
+  the identifiers above are the correct values and reverting them is not an open question.
 - *Per-satellite GOES observatory rows are not enumerated.* The umbrella
   `SMWG/Observatory/GOES` is kept. Rows exist for GOES 1–19, but GOES 5–12 are named by COSPAR
   designation (`1981-049A`, `1983-041A`, `1987-022A`, `1994-022A`, `1995-025A`, `1997-019A`,

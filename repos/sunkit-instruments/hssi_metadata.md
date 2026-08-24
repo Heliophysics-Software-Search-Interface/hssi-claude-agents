@@ -298,8 +298,8 @@ the identity notes record the independent evidence used for those reconciliation
 ### 31. Related Instruments (OPTIONAL)
 **Values:**
 1. **GOES X-Ray Sensor (XRS)** - Geostationary Operational Environmental Satellite X-ray Sensor (GOES 8-19)
-2. **Fermi Gamma-ray Burst Monitor (GBM)** - Fermi spacecraft
-3. **PROBA2/LYRA** - Large Yield Radiometer on PROBA2
+2. **Fermi Gamma-ray Burst Monitor** (https://spase-metadata.org/SMWG/Instrument/FERMI/GBM) - Fermi spacecraft
+3. **Sun Watcher using APS detectors and image Processing** (https://spase-metadata.org/SMWG/Instrument/PROBA2/LYRA) - Large Yield Radiometer (LYRA) on PROBA2 (the SPASE row's stored name is a SWAP expansion; the identifier is the reliable half)
 4. **RHESSI** - Reuven Ramaty High Energy Solar Spectroscopic Imager
 5. **SUVI** - Solar Ultraviolet Imager on GOES-R series (GOES 16-19)
 
@@ -308,9 +308,9 @@ the identity notes record the independent evidence used for those reconciliation
 ### 32. Related Observatories (OPTIONAL)
 **Values:**
 1. **GOES (Geostationary Operational Environmental Satellite)** - GOES 8-19
-2. **Fermi Gamma-ray Space Telescope**
+2. **Fermi Gamma-ray Space Telescope** (https://spase-metadata.org/SMWG/Observatory/FERMI)
 3. **PROBA2 (Project for On-Board Autonomy 2)**
-4. **RHESSI (Reuven Ramaty High Energy Solar Spectroscopic Imager)**
+4. **Reuven Ramaty High Energy Solar Spectroscope Imager** (https://spase-metadata.org/SMWG/Observatory/RHESSI)
 
 **Source:** Code analysis and instrument documentation
 

@@ -4,7 +4,7 @@
 **Repository:** https://github.com/spedas/pyspedas
 **Source Revision:** bbfdd632a0eb42953a8c83a489c140b13c508927
 **Extraction Date:** 2026-08-11
-**Validation Date:** 2026-08-20
+**Validation Date:** 2026-08-23
 **Validation Status:** PASS
 > **Scope note.** PySPEDAS is a multi-mission framework: the `pyspedas/projects/` tree carries 37
 > per-project subpackages, and the analysis, coordinate-transform, particle, geopack and plotting
@@ -1186,7 +1186,7 @@ reasoning so a later refresh does not re-propose them without new evidence.
   latter pair both correctly named `Space Environmental Monitor-2` even though the `MetOp/B`
   observatory row is not — so this is a boundary exclusion, not a resolution failure.
 - **MAVEN IUVS.** `projects/maven/read_iuvs_file.py` is a substantial bespoke parser for the IUVS
-  key-parameter blocks, and rows exist (`SMWG/Instrument/MAVEN/IUVS`, with an `.html` twin). It is
+  key-parameter blocks, and a row exists (`SMWG/Instrument/MAVEN/IUVS`). It is
   excluded because a bespoke format reader is still a load path, however long, rather than
   scientific processing of the measurement. The same reasoning excludes
   `projects/akebono/rdm_postprocessing.py`, which parses a fixed-column RDM text file and assigns
@@ -1229,7 +1229,7 @@ reasoning so a later refresh does not re-propose them without new evidence.
   A file named `*_postprocessing.py` must be opened before it is counted.
 
 **Identifier form.** All 65 identifiers above are `https://spase-metadata.org/` identifiers of
-instrument type, each in the bare form rather than an `.html` twin. That is a property of the rows
+instrument type, each in the bare registered form. That is a property of the rows
 used here, not a guarantee about the vocabulary: a row that fails any of those three tests indicates
 upstream drift or a row wrongly created by a submission, and must be reported rather than used.
 
@@ -1262,7 +1262,7 @@ nothing is removed.
 | Deep Space Climate Observatory, DSCOVR | https://spase-metadata.org/SMWG/Observatory/DSCOVR |
 | Electron Losses and Fields Investigation A, CubeSat | https://spase-metadata.org/SMWG/Observatory/ELFIN/A |
 | Electron Losses and Fields Investigation B, CubeSat | https://spase-metadata.org/SMWG/Observatory/ELFIN/B |
-| Exploration of energization and Radiation in Geospace (ERG), now known as Arase | https://spase-metadata.org/SMWG/Observatory/ARASE.html |
+| Exploration of energization and Radiation in Geospace | https://spase-metadata.org/SMWG/Observatory/ARASE |
 | Fast Auroral Snapshot | https://spase-metadata.org/SMWG/Observatory/FAST |
 | Geomagnetic Tail Lab | https://spase-metadata.org/SMWG/Observatory/Geotail |
 | Geostationary Operational Environmental Satellites | https://spase-metadata.org/SMWG/Observatory/GOES |
@@ -1270,17 +1270,17 @@ nothing is removed.
 | International Solar Polar Mission | https://spase-metadata.org/SMWG/Observatory/Ulysses |
 | Ionospheric Connection | https://spase-metadata.org/SMWG/Observatory/ICON |
 | ISTP/Wind | https://spase-metadata.org/SMWG/Observatory/Wind |
-| KOMPSAT | https://spase-metadata.org/SMWG/Observatory/KOMPSAT1.html |
-| Magnetosphere-Ionosphere Coupling in the Alfvén resonator (MICA) mission | https://spase-metadata.org/SMWG/Observatory/MICA.html |
+| Korean Multi-Purpose Satellite | https://spase-metadata.org/SMWG/Observatory/KOMPSAT1 |
+| Magnetosphere-Ionosphere Coupling in the Alfvén resonator | https://spase-metadata.org/SMWG/Observatory/MICA |
 | Magnetospheric Multiscale | https://spase-metadata.org/SMWG/Observatory/MMS |
 | Mars Atmosphere and Volatile EvolutioN | https://spase-metadata.org/SMWG/Observatory/MAVEN |
 | Parker Solar Probe | https://spase-metadata.org/SMWG/Observatory/ParkerSolarProbe |
-| Polar-orbiting Operational Environmental Satellite (POES) | https://spase-metadata.org/SMWG/Observatory/POES.html |
+| Polar-orbiting Operational Environmental Satellite | https://spase-metadata.org/SMWG/Observatory/POES |
 | Solar and Heliospheric Observatory | https://spase-metadata.org/SMWG/Observatory/SOHO |
 | Solar Orbiter | https://spase-metadata.org/ESA/Observatory/SolarOrbiter |
 | Solar-Terrestrial Relations Observatory | https://spase-metadata.org/SMWG/Observatory/STEREO |
 | SuperMAG | https://spase-metadata.org/SMWG/Observatory/SuperMAG |
-| Swarm | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM.html |
+| Swarm : ESA mission | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM |
 | Time History of Events and Macroscale Interactions during Substorms | https://spase-metadata.org/SMWG/Observatory/THEMIS |
 | Van Allen Probes | https://spase-metadata.org/SMWG/Observatory/RBSP |
 
@@ -1297,14 +1297,16 @@ Notes on the stored set:
 - ELFIN correctly appears as two entries because the vocabulary has no mission-level ELFIN row, only
   the per-spacecraft A and B rows. That is not inconsistent with the mission-level granularity used
   elsewhere; it is the only option the vocabulary offers.
-- Five entries use an identifier ending in `.html` that has a bare twin naming the same resource:
-  `ARASE.html` / `ARASE` ("Exploration of energization and Radiation in Geospace"),
-  `KOMPSAT1.html` / `KOMPSAT1` ("Korean Multi-Purpose Satellite"), `MICA.html` / `MICA`,
-  `POES.html` / `POES`, and `CDPP-AMDA/SWARM.html` / `CDPP-AMDA/SWARM` ("Swarm : ESA mission"). The
-  convention is to prefer the bare form, so these are duplicates worth consolidating in the
-  vocabulary itself. The five `.html` identifiers are nevertheless the ones recorded here, because
-  swapping them for their twins would mean removing settled associations to gain nothing
-  functionally.
+- Five of these entries — ARASE, KOMPSAT1, MICA, POES and CDPP-AMDA/SWARM — previously recorded an
+  identifier ending in `.html`. Those `.html` forms were artifacts of the submission path, which
+  captured SPASE landing-page URLs; the bare identifier is the registered, maintained form, and no
+  `.html` identifier exists upstream. The bare identifiers above are therefore the durable half of
+  each entry, and an `.html` variant is not an alternative to them. The names carried by the bare
+  rows are recorded upstream-faithfully even where they read oddly: the ARASE row is named
+  "Exploration of energization and Radiation in Geospace" without the "now known as Arase" gloss,
+  KOMPSAT1 is named "Korean Multi-Purpose Satellite" without its KOMPSAT abbreviation, and the Swarm
+  row is named "Swarm : ESA mission" with a spaced colon. Those spellings are deliberate and must not
+  be tidied; the identifier, not the display name, is what links the record.
 - Swarm resolves through a CNES/AMDA row rather than an SMWG one because no `SMWG/Observatory/Swarm`
   row exists. A single non-SMWG match is a correct outcome.
 

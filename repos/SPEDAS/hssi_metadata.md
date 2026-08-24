@@ -19,7 +19,7 @@ the downloads-page archive and the DOI-citable deposit are the same bytes. The e
 `spedas_version.txt`, `.project`, `external/`, `general/`, `projects/`, `spedas_gui/`.
 
 **Extraction Date:** 2026-08-12
-**Validation Date:** 2026-08-12
+**Validation Date:** 2026-08-23
 **Validation Status:** PASS
 
 ---
@@ -2134,21 +2134,21 @@ Stored and retained (27), with their resolved SPASE identifiers:
 - `Deep Space Climate Observatory, DSCOVR` — `https://spase-metadata.org/SMWG/Observatory/DSCOVR`
 - `Electron Losses and Fields Investigation A, CubeSat` — `https://spase-metadata.org/SMWG/Observatory/ELFIN/A`
 - `Electron Losses and Fields Investigation B, CubeSat` — `https://spase-metadata.org/SMWG/Observatory/ELFIN/B`
-- `Emirates Mars Mission (EMM)` — `https://spase-metadata.org/SMWG/Observatory/EMM.html`
-- `Exploration of energization and Radiation in Geospace (ERG), now known as Arase` — `https://spase-metadata.org/SMWG/Observatory/ARASE.html`
+- `Emirates Mars Mission` — `https://spase-metadata.org/SMWG/Observatory/EMM`
+- `Exploration of energization and Radiation in Geospace` — `https://spase-metadata.org/SMWG/Observatory/ARASE`
 - `Fast Auroral Snapshot` — `https://spase-metadata.org/SMWG/Observatory/FAST`
 - `Geomagnetic Tail Lab` — `https://spase-metadata.org/SMWG/Observatory/Geotail`
 - `Geostationary Operational Environmental Satellites` — `https://spase-metadata.org/SMWG/Observatory/GOES`
-- `Heliophysics Environmental and Radiation Measurement Experiment Suite (HERMES)` — `https://spase-metadata.org/SMWG/Observatory/HERMES.html`
+- `Heliophysics Environmental and Radiation Measurement Experiment Suite` — `https://spase-metadata.org/SMWG/Observatory/HERMES`
 - `Ionospheric Connection` — `https://spase-metadata.org/SMWG/Observatory/ICON`
 - `ISTP/Wind` — `https://spase-metadata.org/SMWG/Observatory/Wind`
-- `Kaguya (SELENE - Selenological and Engineering Explorer)` — `https://spase-metadata.org/SMWG/Observatory/KAGUYA.html`
-- `Magnetosphere-Ionosphere Coupling in the Alfvén resonator (MICA) mission` — `https://spase-metadata.org/SMWG/Observatory/MICA.html`
+- `Kaguya` — `https://spase-metadata.org/SMWG/Observatory/KAGUYA`
+- `Magnetosphere-Ionosphere Coupling in the Alfvén resonator` — `https://spase-metadata.org/SMWG/Observatory/MICA`
 - `Magnetospheric Multiscale` — `https://spase-metadata.org/SMWG/Observatory/MMS`
 - `Mars Atmosphere and Volatile EvolutioN` — `https://spase-metadata.org/SMWG/Observatory/MAVEN`
 - `Mars Express` — `https://spase-metadata.org/SMWG/Observatory/MarsExpress`
 - `Parker Solar Probe` — `https://spase-metadata.org/SMWG/Observatory/ParkerSolarProbe`
-- `Polar-orbiting Operational Environmental Satellite (POES)` — `https://spase-metadata.org/SMWG/Observatory/POES.html`
+- `Polar-orbiting Operational Environmental Satellite` — `https://spase-metadata.org/SMWG/Observatory/POES`
 - `Solar-Terrestrial Relations Observatory` — `https://spase-metadata.org/SMWG/Observatory/STEREO`
 - `Time History of Events and Macroscale Interactions during Substorms` — `https://spase-metadata.org/SMWG/Observatory/THEMIS`
 - `Van Allen Probes` — `https://spase-metadata.org/SMWG/Observatory/RBSP`
@@ -2160,23 +2160,29 @@ relevance grounds — the single removal, `KOMPSAT`, was a wrong-entity mis-reso
 irrelevant mission. Two further matters are durable: an identifier-form observation about six of the
 retained rows, and the rationale for that one removal.
 
-**Six retained rows use the `.html` identifier variant when a bare-form row also exists** — EMM,
-ARASE, HERMES, KAGUYA, MICA and POES. (KOMPSAT1 was a seventh, but it is removed outright below on
-wrong-entity grounds, which is a separate question from identifier form.) The two forms are the same
-SPASE resource, and the resolution ladder prefers the bare one, but they are *different HSSI rows with
-different display names*
+**Six retained rows once used the `.html` identifier variant while a bare-form row also existed** —
+EMM, ARASE, HERMES, KAGUYA, MICA and POES — and all six are recorded above under the bare form.
+(KOMPSAT1 was a seventh, but it is removed outright below on wrong-entity grounds, which is a separate
+question from identifier form.) The two forms were the same SPASE resource, and the resolution ladder
+prefers the bare one, but they were *different HSSI rows with different display names*
 (`Emirates Mars Mission` vs `Emirates Mars Mission (EMM)`; `Exploration of energization and
 Radiation in Geospace` with abbreviation `ERG` vs the long "now known as Arase" form;
 `Polar-orbiting Operational Environmental Satellite` vs the same with `(POES)` appended).
 
-**Normalizing them was considered and declined.** Normalization would be a removal-plus-addition that
-changes user-visible display names while gaining nothing evidentially — the association is identical
-either way, since both forms denote one SPASE resource. It was declined rather than deferred, so a
-later refresh should not treat it as outstanding work.
+**Normalizing them was once considered and declined; that decision is superseded.** The reasoning then
+was that normalization would be a removal-plus-addition changing user-visible display names while
+gaining nothing evidentially, since both forms denote one SPASE resource. What that reasoning did not
+weigh is that the `.html` form was never a registered identifier: the maintained upstream registry
+publishes **no `.html` identifier at all**, for any instrument or observatory, so those rows were
+landing-page URL artifacts rather than a second legitimate form of the identifier. HSSI's vocabulary
+has since been consolidated onto the upstream identifiers, retiring the `.html` rows, so these six
+entries now carry the surviving bare rows with those rows' stored names copied verbatim. The six name
+changes are a consequence of that consolidation, not an unevidenced rename.
 
 The durable warning is the reason this is recorded at all: **a future agent resolving these six
-missions from scratch will land on the bare-form rows, and must not read the difference from the
-stored `.html` rows as drift.** It is the same resource under two HSSI rows, not a stale value.
+missions from scratch will land on the bare-form rows, which is exactly what is recorded above.** The
+older display names quoted in this note are history rather than an alternative to re-adopt, and the
+`.html` form should not be reintroduced.
 
 **`KOMPSAT` was removed as a wrong-entity mis-resolution.** The stored row was
 `SMWG/Observatory/KOMPSAT1.html`, whose bare form is named "Korean Multi-Purpose Satellite" with
@@ -2188,10 +2194,11 @@ URLs request `spase://SSA/NumericalData/GEO-KOMPSAT-2A/esa_gk2a_sosmag_recalib`.
 therefore associated SPEDAS with a spacecraft it does not support, so it is gone.
 
 **The durable part is that GEO-KOMPSAT-2A has no row, so this must not be "fixed" by re-adding
-KOMPSAT.** Searching the vocabulary for `KOMPSAT`, `GK2A`, `GEO-KOMPSAT` and `SOSMAG` returns exactly
-two rows, and they are the `.html`/bare pair for one SPASE resource: `SMWG/Observatory/KOMPSAT1.html`
+KOMPSAT.** Searching the vocabulary for `KOMPSAT`, `GK2A`, `GEO-KOMPSAT` and `SOSMAG` at the time
+returned exactly two rows — the `.html`/bare pair for one SPASE resource, `SMWG/Observatory/KOMPSAT1.html`
 (display name `KOMPSAT`, the row that was stored) and `SMWG/Observatory/KOMPSAT1` (display name
-`Korean Multi-Purpose Satellite`, abbreviation `KOMPSAT-1`). There is no GEO-KOMPSAT-2A row at any
+`Korean Multi-Purpose Satellite`, abbreviation `KOMPSAT-1`) — and only the bare row survives the
+vocabulary consolidation. There is no GEO-KOMPSAT-2A row at any
 level under any of those four terms. A correct fresh resolution is a documented omission, and it stays
 one until an upstream heliophysics.net/SPASE refresh creates a GK2A row — at which point the
 association becomes recordable at last. The project's own interest in the mission survives regardless
@@ -2225,7 +2232,7 @@ Additions (27):
 - `Geostationary Operational Environmental Satellite 15` — `https://spase-metadata.org/SMWG/Observatory/GOES/15`
 - `Geostationary Operational Environmental Satellite 16` — `https://spase-metadata.org/SMWG/Observatory/GOES/16`
 - `Geostationary Operational Environmental Satellite 17` — `https://spase-metadata.org/SMWG/Observatory/GOES/17`
-- `Canadian Auroral Network for the OPEN` — `https://spase-metadata.org/SMWG/Observatory/Ground/CARISMA`
+- `Canadian Array for Realtime Investigations of Magnetic Activity` — `https://spase-metadata.org/SMWG/Observatory/Ground/CARISMA`
 - `British Antarctic Survey` — `https://spase-metadata.org/SMWG/Observatory/Ground/BAS`
 
 Evidence for each addition:
@@ -2281,7 +2288,7 @@ Evidence for each addition:
   broad `Geostationary Operational Environmental Satellites` row already stored is retained
   alongside them.
 
-- **`Canadian Auroral Network for the OPEN`** (CARISMA) —
+- **`Canadian Array for Realtime Investigations of Magnetic Activity`** (CARISMA) —
   `projects/themis/ground/thm_load_carisma_gmag.pro` is dedicated support for the Canadian Array for
   Realtime Investigations of Magnetic Activity, with its own 23-site station list (`anna back cont
   daws eski fchp fchu gull isll lgrr mcmu mstk norm osak oxfo pols rabb sach talo thrf vulc weyb
@@ -2321,27 +2328,39 @@ Applied to the two cases:
   and a new identifier, so the only exposure was recording a stale identifier, never the wrong entity.
 
 **A durable upstream/ingest defect behind the CARISMA collision — recorded because it will look like a
-data error to a future reader.** The three CARISMA-family rows collide in HSSI only because of an
+data error to a future reader.** The three CARISMA-family rows collided in HSSI only because of an
 ingest artifact, not because SPASE is ambiguous. `Ground/CARISMA`'s SPASE record carries
 `ResourceName = CARISMA` plus three `AlternateName` elements, the third being
 `Canadian Auroral Network for the OPEN (Origins of Plasmas in Earth°s Neighborhood) Program Unified
 Study`. HSSI ingested that **third alternate name instead of `ResourceName`**, splitting it on the
 parenthesis into a name (`Canadian Auroral Network for the OPEN`) plus an abbreviation
 (`Origins of Plasmas in Earth°s Neighborhood`) and dropping the trailing `Program Unified Study`.
-Because all three rows carry that same alternate name, all three display CANOPUS's formal name — which
-is what made them look indistinguishable.
+Because all three rows carried that same alternate name, all three displayed CANOPUS's formal name —
+which is what made them look indistinguishable.
 
-Three consequences worth carrying forward. The SPEDAS entry will **display** as
-`Canadian Auroral Network for the OPEN`, which is cosmetically wrong for CARISMA but is the correct
-association. The canonical relationship must retain the vocabulary row's exact name and SPASE
-identifier rather than substituting the free text `CARISMA`. Correcting the display requires a
-catalogue vocabulary refresh from upstream SPASE metadata; the relationship recorded here should not
-change.
+Three consequences worth carrying forward. The SPEDAS entry **displayed** as
+`Canadian Auroral Network for the OPEN` for as long as the row carried that name — a name that was not
+merely cosmetically wrong but named the wrong network, CANOPUS being CARISMA's predecessor, while the
+association itself was correct throughout. The canonical relationship must retain the vocabulary row's
+exact name and SPASE identifier rather than substituting the free text `CARISMA`. Correcting the
+display required a catalogue vocabulary refresh from upstream SPASE metadata, and that refresh has
+since happened: the row now carries the correct expansion of CARISMA,
+`Canadian Array for Realtime Investigations of Magnetic Activity`, with abbreviation `CARISMA`, and
+that is the name recorded in Field 32 above. The relationship itself never changed — same row, same
+`Ground/CARISMA` identifier, same evidence.
+
+**One caveat outlives the correction.** The maintained upstream registry's own `long_name` for this
+observatory still carries the defective CANOPUS-fragment form, so a future vocabulary refresh may
+transiently reinstate `Canadian Auroral Network for the OPEN` on this row until the upstream record is
+fixed. The identifier `https://spase-metadata.org/SMWG/Observatory/Ground/CARISMA` and the reasoning
+recorded here are the durable halves of this entry; the stored name is the fragile half. If the wrong
+name reappears it should be re-corrected against the SPASE record's `ResourceName` and
+`AlternateNames`, not re-adopted as though it were the row's true name.
 
 One trap inside that trap: the `Earth°s` mojibake is **upstream in SPASE itself** — the
 `Ground/CARISMA` and `Ground/CANOPUS` XML literally contain `Earth°s` — not an HSSI transcription
 error. The superseded bare `Observatory/CARISMA` record happens to carry the correctly-typeset
-`Earth’s` in the same alternate name, and its HSSI row reflects that faithfully. That cosmetic
+`Earth’s` in the same alternate name, and its HSSI row reflected that faithfully. That cosmetic
 advantage is **not** a reason to prefer the superseded row: `PriorID` governs, and HSSI transcribed
 both records accurately.
 

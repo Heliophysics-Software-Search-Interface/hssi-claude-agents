@@ -4,7 +4,7 @@
 **Repository:** https://github.com/HinodeXRT/xrtpy
 **Source Revision:** 0ef8e3636bde9c619dbcb1f74519f31829f238ad (branch `main`, 2026-07-22)
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-08-22
+**Validation Date:** 2026-08-23
 **Validation Status:** PASS
 
 Some of the content recorded here is deliberately not stored by HSSI — the two items listed under
@@ -954,24 +954,36 @@ sunpy exchange (entry 4) is the only one demonstrated in XRTpy's own code.
 
 **Asserted value set (1):**
 
-- **Instrument Name:** `Hinode X-ray Telescope`
-- **Instrument Identifier:** `https://spase-metadata.org/SMWG/Instrument/Hinode/XRT.html`
-- Live HSSI `a74cb76b` is already linked to the vocabulary entry carrying exactly this name and
-  SPASE identifier. The value is SPASE-backed and correct.
+- **Instrument Name:** `X-Ray Telescope`
+- **Instrument Identifier:** `https://spase-metadata.org/SMWG/Instrument/Hinode/XRT`
+- Live HSSI `a74cb76b` is linked to the vocabulary entry carrying exactly this name and SPASE
+  identifier. The value is SPASE-backed and correct.
 - **Relevance gate:** passes decisively. XRTpy is purpose-built by the XRT instrument team to read,
   calibrate, model and analyze Hinode/XRT data specifically — instrument name in the software title,
   XRT channel/filter/CCD models, XRT effective area and temperature response, XRT PSF deconvolution,
   XRT light-leak correction, XRT archive path resolution.
-- **Verified SPASE resolution (instrument):** HSSI's instrument vocabulary carries **three** distinct
-  entries for this one SPASE resource — `X-Ray Telescope` under the bare identifier
-  `.../SMWG/Instrument/Hinode/XRT`, and both `Hinode X-ray Telescope` (the value stored on this
-  entry) and `X-Ray Telescope (XRT)` under `.../SMWG/Instrument/Hinode/XRT.html`.
-- **Ambiguity caveat for future maintenance.** Two of those three vocabulary entries carry the
-  identical `.html` identifier, and HSSI distinguishes instruments by identifier alone — so that
-  identifier does not uniquely determine which of the two labels an entry resolves to. This entry's
-  stored value is correct and SPASE-backed and should be left as it stands. Normalizing to the bare
-  identifier is declined: HSSI shows no convention favouring bare over `.html`, and many entries
-  deliberately use `.html`.
+- **Verified SPASE resolution (instrument):** exactly **one** vocabulary entry represents this SPASE
+  resource — name `X-Ray Telescope`, identifier `https://spase-metadata.org/SMWG/Instrument/Hinode/XRT`.
+  Name copied verbatim from the matched row. That row's abbreviation column is empty, and a rendered
+  parenthetical abbreviation suffix is drawn only from that column, so the label to expect and to
+  record is the bare `X-Ray Telescope` — never `X-Ray Telescope (XRT)`.
+- **Bare identifier adopted; the earlier decision declining it is superseded.** The vocabulary once
+  held **three** distinct entries for this one SPASE resource — `X-Ray Telescope` under the bare
+  identifier, and both `Hinode X-ray Telescope` (formerly stored on this entry) and
+  `X-Ray Telescope (XRT)` under `.../SMWG/Instrument/Hinode/XRT.html`. Because HSSI distinguishes
+  instruments by identifier alone, that duplicated `.html` identifier did not determine which of its
+  two labels an entry resolved to. HSSI's instrument/observatory vocabulary has since been
+  consolidated onto the identifiers registered in the maintained upstream vocabulary
+  (api.heliophysics.net), in which **no `.html` identifier exists at all**: the `.html` forms were
+  copy-paste artifacts of SPASE landing-page URLs created by the submission path, and the bare
+  identifier is the maintained form. Exactly one row per canonical identifier now exists, so both the
+  duplication and the label ambiguity are gone, and the labels `Hinode X-ray Telescope` and
+  `X-Ray Telescope (XRT)` no longer exist as separate entries. An earlier revision of this file
+  declined bare normalization on the premise that HSSI showed no convention favouring bare over
+  `.html` and that "many entries deliberately use `.html`"; that decision was taken without comparing
+  HSSI's vocabulary against the maintained upstream one, and the comparison falsifies its premise.
+  The bare identifier recorded above is the correct value, and
+  `https://spase-metadata.org/SMWG/Instrument/Hinode/XRT.html` should not be re-proposed.
 - **Correction vs. the 2025-10-09 canonical file:** that file recorded
   `Instrument Name: X-Ray Telescope (XRT)` with `Instrument Identifier: Not found`. Both are
   superseded — the identifier exists, and the bare name `X-Ray Telescope (XRT)` would resolve to the
@@ -1001,7 +1013,8 @@ sunpy exchange (entry 4) is the only one demonstrated in XRTpy's own code.
   observatory vocabulary and against SPASE itself.
 - **Verified SPASE resolution (observatory):** exactly **one** matching vocabulary entry, name
   `Hinode`, identifier `https://spase-metadata.org/SMWG/Observatory/Hinode`. There is **no `.html`
-  twin** and no same-name duplicate, so this is unambiguous and safe to set — unlike Field 31. The
+  twin** and no same-name duplicate, so this is unambiguous and safe to set — unlike Field 31's
+  since-resolved pre-consolidation state. The
   SPASE record itself confirms `ResourceID = spase://SMWG/Observatory/Hinode`,
   `ResourceName = Hinode`.
   Name copied verbatim from the matched row.
@@ -1078,9 +1091,12 @@ future reader mistakes file content for HSSI content.
 | 27 / 28 | The APA citation prose. HSSI stores only the DOI or permanent link for Related Publications and Related Datasets; the citation text lives here alone. |
 | 12 | Formatting. The inline-code backticks around version numbers in this file are **presentation only** — HSSI stores plain text, and any markup submitted would be stored literally. |
 
-### Field 31 vocabulary ambiguity
+### Field 31 vocabulary ambiguity, resolved
 
-**Related Instruments is correct as stored and should be left as it stands.** HSSI's instrument
-vocabulary holds two distinct entries under the identical `.html` identifier for Hinode/XRT, and
-instruments are distinguished by identifier alone — so that identifier does not uniquely determine
-which of the two labels applies. Field 32 has no such ambiguity.
+**Related Instruments is unambiguous.** HSSI's instrument vocabulary once held two distinct entries
+under an identical `.../SMWG/Instrument/Hinode/XRT.html` identifier for Hinode/XRT, and instruments
+are distinguished by identifier alone — so that identifier did not determine which of the two labels
+applied. The vocabulary has since been consolidated onto the maintained upstream identifiers, which
+contain no `.html` form, and exactly one entry — `X-Ray Telescope` under the bare identifier — now
+represents this resource. Field 31 records that entry, so nothing here needs manual resolution.
+Field 32 never carried the ambiguity.

@@ -4,7 +4,7 @@
 **Repository:** https://github.com/SNU-sunday/fisspy
 **Source Revision:** 8e7770420123e79b899de484db045dbdb919cfd6
 **Extraction Date:** 2026-08-03
-**Validation Date:** 2026-08-04
+**Validation Date:** 2026-08-23
 **Validation Status:** PASS
 
 ---
@@ -1260,11 +1260,11 @@ becomes a correct entry and this note should be revisited.
 
 ### 31. Related Instruments (OPTIONAL)
 
-**Fast Imaging Solar Spectrograph (FISS)**
+**Fast Imaging Solar Spectrograph**
 
-- **Instrument Identifier:** `https://spase-metadata.org/SMWG/Instrument/BBSO/FISS.html`
+- **Instrument Identifier:** `https://spase-metadata.org/SMWG/Instrument/BBSO/FISS`
 
-Carried over from the existing HSSI record, name and identifier byte for byte. The value is genuinely
+Name and identifier are the registered upstream SPASE forms. The value is genuinely
 SPASE-backed — its identifier sits under `https://spase-metadata.org/`, the test that separates a real
 SPASE resource from an unidentified name — and it denotes an instrument, which is what Field 31
 requires.
@@ -1276,21 +1276,15 @@ definitions (Hα, Ca II 8542), its grating optics (79 grooves/mm, 63.4° blaze),
 packaging for its data catalogue. The package name, the repository description ("python for GST/FISS
 instrument") and every module docstring say so.
 
-**One instrument, two controlled identifiers for the same SPASE resource.** This is not an ambiguous
-match between different instruments, so nothing here needs manual resolution; the controlled vocabulary
-simply offers this one instrument under two identifier forms:
-
-| name | identifier |
-|---|---|
-| `Fast Imaging Solar Spectrograph` | `https://spase-metadata.org/SMWG/Instrument/BBSO/FISS` |
-| `Fast Imaging Solar Spectrograph (FISS)` | `https://spase-metadata.org/SMWG/Instrument/BBSO/FISS.html` (recorded) |
-
-Both identifiers denote the same SPASE resource, differing only in the bare versus `.html` form. The
-general preference is for the bare identifier, but **the submitted `.html` identifier is retained
-because it denotes the same SPASE resource as the bare form, so changing it would add no metadata.**
-This is a considered decision, not an oversight; a later agent should not "fix" it to the bare form.
-Both alternatives are enumerated above precisely so that encountering the other form later is not
-mistaken for drift.
+**The `.html` form is a superseded spelling, not an alternative.** This instrument was previously
+recorded as `Fast Imaging Solar Spectrograph (FISS)` under
+`https://spase-metadata.org/SMWG/Instrument/BBSO/FISS.html`. That suffixed identifier was an artifact
+of a SPASE landing-page URL taken through the submission path; the maintained upstream registry
+carries no `.html` identifiers, and the bare identifier above is the registered form for this
+instrument. Only that one row denotes FISS, so this is not an ambiguous match between different
+instruments and nothing here needs manual resolution. A later agent meeting the `.html` form in an
+older artifact should read it as the superseded spelling of this same resource rather than as a
+second instrument or as drift.
 
 **No other instrument is listed, and this was checked rather than assumed.** Searching the full
 source and the entire `docs/` tree for other instrument and telescope names — AIA, HMI, SDO, IRIS,
@@ -1304,33 +1298,36 @@ IRIS is deliberately omitted.
 
 ### 32. Related Observatories (OPTIONAL)
 
-**Big Bear Solar Observatory (BBSO)**
+**Big Bear Solar Observatory**
 
-- **Observatory Identifier:** `https://spase-metadata.org/SMWG/Observatory/BBSO.html`
+- **Observatory Identifier:** `https://spase-metadata.org/SMWG/Observatory/BBSO`
 
-Carried over from the existing HSSI record, name and identifier byte for byte. SPASE-backed, and it
-denotes an observatory, which is what Field 32 requires.
+Name and identifier are the registered upstream SPASE forms. SPASE-backed, and it denotes an
+observatory, which is what Field 32 requires. The row carries the abbreviation `BBSO`, which HSSI
+appends when it renders the name, so a displayed `Big Bear Solar Observatory (BBSO)` is that
+rendering rather than a differently-named value.
 
 **Relevance.** FISS is installed in the Coudé room of the 1.6 m Goode Solar Telescope at Big Bear
 Solar Observatory; every data product fisspy reads originates there. The instrument paper's title
 names BBSO, the SPASE identifier path is `.../Instrument/BBSO/FISS`, and BBSO is one of the two
 partner institutions on the project website.
 
-**One observatory, three controlled identifiers for the one place.** The controlled vocabulary offers
-Big Bear under three identifiers:
+**One observatory, two controlled identifiers for the one place.** The controlled vocabulary offers
+Big Bear under two identifiers:
 
 | name | abbreviation | identifier |
 |---|---|---|
-| `Big Bear Solar Observatory` | `BBSO` | `https://spase-metadata.org/SMWG/Observatory/BBSO` |
+| `Big Bear Solar Observatory` | `BBSO` | `https://spase-metadata.org/SMWG/Observatory/BBSO` (recorded) |
 | `Big Bear Solar Observatory` | — | `https://spase-metadata.org/SMWG/Observatory/Ground/BBSO` |
-| `Big Bear Solar Observatory (BBSO)` | — | `https://spase-metadata.org/SMWG/Observatory/BBSO.html` (recorded) |
 
-The third is the `.html` form of the first — the same resource — and the second is a `Ground/`-prefixed
-path for the same real observatory. All three denote the one observatory, so this is not an ambiguous
-match between different places and nothing here needs manual resolution. **The submitted `.html`
-identifier is retained because it denotes the same SPASE resource as the bare form, so changing it
-would add no metadata** — the same reasoning as in Field 31. All three alternatives are enumerated
-above precisely so that encountering another form later is not mistaken for drift.
+The second is a `Ground/`-prefixed path for the same real observatory. Both denote the one
+observatory, so this is not an ambiguous match between different places and nothing here needs manual
+resolution; the recorded row is the one carrying the `BBSO` abbreviation. This observatory was
+previously recorded as `Big Bear Solar Observatory (BBSO)` under
+`https://spase-metadata.org/SMWG/Observatory/BBSO.html` — a superseded landing-page spelling of the
+recorded row, for the same reason given in Field 31. Both remaining alternatives are enumerated above,
+and the retired `.html` form named here, precisely so that encountering another form later is not
+mistaken for drift.
 
 **The Goode Solar Telescope resolves to BBSO.** GST (formerly the New Solar Telescope, NST) is the
 telescope FISS is mounted on, and it is named throughout the project's materials. It has **no canonical
