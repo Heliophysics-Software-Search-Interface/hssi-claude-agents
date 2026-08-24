@@ -221,12 +221,13 @@
 ### 22. Related Phenomena (OPTIONAL)
 **Values:**
 - Solar Wind
+- Geomagnetic Storms
 
 **Source:**
 - Solar wind data analysis through OMNI database support
-- DST index forecasting related to geomagnetic storms
+- DST index forecasting related to geomagnetic storms (the basis for `Geomagnetic Storms`, added 2026-08-24)
 
-**Corrected 2026-08-24:** `Coronal Holes` was removed from this field — it has never been a row in the HSSI Phenomena controlled vocabulary (it appeared only in a stale documentation list) and no AIDApy record stores it; do not re-propose it here. The coronal-hole science is real (examples/04_coronal_holes, "Coronal hole detection from SDO") and is carried by the `coronal holes` keyword in Field 16 and the Field 5 rationale. `Geomagnetic Storms` IS a valid controlled row and is supported by the DST-forecasting evidence above; it was deliberately not added at this correction and is a candidate for a future full refresh of this file, once AIDApy's duplicate-record consolidation settles which record survives.
+**Corrected 2026-08-24:** `Coronal Holes` was removed from this field — it has never been a row in the HSSI Phenomena controlled vocabulary (it appeared only in a stale documentation list) and no AIDApy record stores it; do not re-propose it here. The coronal-hole science is real (examples/04_coronal_holes, "Coronal hole detection from SDO") and is carried by the `coronal holes` keyword in Field 16 and the Field 5 rationale. `Geomagnetic Storms` was added later the same day, user-approved on the DST-forecasting evidence above, once AIDApy's duplicate-record consolidation settled which record survives — the visible, award-bearing record this file describes.
 
 ### 23. Development Status (RECOMMENDED)
 **Value:** WIP

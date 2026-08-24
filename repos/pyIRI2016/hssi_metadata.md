@@ -285,9 +285,11 @@
 - IGRF — `source/igrf.for`; `data/igrf/dgrf1945…igrf2015s.dat`; optional `pyigrf` integration
 - thermosphere — `source/cira.for` (NRLMSIS-00) neutral densities O, O₂, N₂, He, H, N, Ar exposed via `LatVsFL()`
 
-*Dropped by user decision 2026-07-27 (build tooling, not science keywords — never submitted to HSSI, so this removes nothing published):*
+*Dropped by user decision 2026-07-27 (build tooling, not science keywords — never submitted to HSSI from this record, so dropping them removed nothing published here):*
 - ~~CMake~~
 - ~~scikit-build-core~~
+
+*Scope note (2026-08-24): both strings did exist as published keywords elsewhere in the catalogue — on the retired duplicate record `IRI-2016`, which carried them from its own submission. That duplicate was retired 2026-08-24, completing the 2026-07-27 decision catalogue-wide; the keyword rows it orphaned are inert and were deliberately left in place.*
 
 **Note on the seven published keywords:** the prior canonical file also listed `atmospheric-modelling`, `f2py`, `fortran`, `ionosphere`, `ionosphere-modeling`, `python`, `standard` — these are the raw GitHub repository topics, i.e. lowercase/hyphenated **variants of the same seven concepts** already published in HSSI in Title Case. They have been normalised into the published forms rather than listed twice, so HSSI does not acquire duplicate keyword rows. No concept is lost.
 
