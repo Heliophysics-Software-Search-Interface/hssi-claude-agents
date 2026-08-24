@@ -4,9 +4,9 @@
 **Repository:** https://github.com/rilma/pyIRI2016
 **Source Revision:** 1a47c6018aae8be93349fb2487c1911e95c1f99f
 **Extraction Date:** 2026-07-26
-**Validation Date:** 2026-07-27
+**Validation Date:** 2026-08-24
 **Validation Status:** PASS
-**Applied to HSSI:** 2026-07-27 — `PATCH http://localhost/api/data/software/a53ebbd1-0f08-4bf6-aeaa-90067a3b1312/` returned HTTP 200 updating 16 fields; every changed field and every omitted field was roundtrip-verified against `GET /api/view/software/<uid>/`. Fields 2–33 below reflect the live, verified state.
+**Applied to HSSI:** 2026-07-27 — `PATCH http://localhost/api/data/software/a53ebbd1-0f08-4bf6-aeaa-90067a3b1312/` returned HTTP 200 updating 16 fields; every changed field and every omitted field was roundtrip-verified against `GET /api/view/software/<uid>/`. Field 22 (`Geomagnetic Storms`) was additionally applied and roundtrip-verified 2026-08-24. Fields 2–33 below reflect the live, verified state.
 
 **Seeded from:** live HSSI record (`GET http://localhost/api/view/software/a53ebbd1-0f08-4bf6-aeaa-90067a3b1312/`) + prior canonical `hssi_metadata.md` (extracted 2025-12-03, validated 2026-04-24), then verified against the repository at HEAD (`main`, commit dated 2026-02-21).
 
@@ -352,13 +352,15 @@
 **Source:** `[FILE]` `[REPO]` pyproject.toml; CMakeLists.txt; .devcontainer/devcontainer.json; .devcontainer/Dockerfile; repository source files
 
 ### 22. Related Phenomena (OPTIONAL)
-- **Not found**
+- **Geomagnetic Storms**
 
-**Status:** UNCHANGED (live HSSI empty; prior file "Not found in controlled vocabularies").
+**Status:** CHANGED 2026-08-24 (was empty; live HSSI was empty before this addition — ENRICHMENT to HSSI).
 
-**Note:** the HSSI controlled vocabulary for this field is entirely solar (Coronal Heating, Coronal Holes, Coronal Mass Ejections, Solar Corona, Solar Flares, X-ray emission). None applies to a terrestrial ionospheric model.
+**Note:** an earlier version of this note called the controlled vocabulary "entirely solar" and enumerated a stale six-value documentation list (which included a `Coronal Holes` phantom that has never been a row, and omitted the vocabulary's two geospace rows, `Geomagnetic Storms` and `Solar Wind`). That description was wrong: the vocabulary is not entirely solar, and `Geomagnetic Storms` applies directly to this terrestrial ionospheric model.
 
-**USER DECISION 2026-07-27 — custom terms considered and DECLINED. Stick to the HSSI controlled vocabulary.** No custom free-text phenomena will be added; Field 22 remains empty. The candidate analysis below is retained purely as an audit trail so a future extraction does not silently rediscover and re-propose these terms.
+**USER DECISION 2026-08-24 — `Geomagnetic Storms` (a controlled row) ADDED.** The reachability audit below had already established the science: the foF2 and foE ionospheric-storm models (`jf[26-1]`, `jf[35-1]`) are both switched on, and ionospheric storms are the ionospheric signature of geomagnetic storms. The value was previously excluded only because the stale documentation list hid the row. This is consistent with, not a reversal of, the 2026-07-27 decision below: that decision declined free-text terms and directed "stick to the HSSI controlled vocabulary" — which is exactly what selecting this controlled row does.
+
+**USER DECISION 2026-07-27 — custom terms considered and DECLINED. Stick to the HSSI controlled vocabulary.** No custom free-text phenomena will be added. The candidate analysis below is retained purely as an audit trail so a future extraction does not silently rediscover and re-propose these terms as free text; "equatorial F-region vertical drift" still has no controlled row and stays out.
 
 **Candidate custom terms (the field does allow custom entries) — DECLINED, not proposed.** Only phenomena that this wrapper actually computes were considered, following a reachability audit of `pyiri2016/__init__.py` `Switches()`:
 
@@ -372,7 +374,7 @@
 
 Neither `IRI2016.IRI()`, `IRI2016Profile.__init__`, nor any path in `iri2016prof2D.py` exposes a mechanism to override an individual `jf` switch — the only conditional block (`IRI()` lines 114-126) touches solely `jf[17,25,26,27,32,35]`. So spread F and auroral boundary describe dormant Fortran capability, not behaviour of this package, and were dropped from the candidate list on evidence grounds before the user decision was taken.
 
-Injecting custom free-text terms into a controlled vocabulary is a curation decision, and the user declined it: the two remaining live candidates (ionospheric storms, equatorial vertical drift) are **not** being submitted.
+Injecting custom free-text terms into a controlled vocabulary is a curation decision, and the user declined it: neither remaining live candidate (ionospheric storms, equatorial vertical drift) is submitted **as free text**. The ionospheric-storm science is instead represented by the controlled row `Geomagnetic Storms` (added 2026-08-24, above); equatorial vertical drift has no controlled row and remains unrepresented.
 
 **Source:** `[FILE]` `[REPO]` pyiri2016/__init__.py `Switches()`; examples/iri1DExample08.py
 
@@ -544,7 +546,7 @@ All changes below were approved by the user and applied in a single PATCH (HTTP 
 
 **Enrichments (fields currently empty on HSSI):** Software Functionality (+11 values), License, Keywords (+12), Data Sources, Input File Formats, Output File Formats, Operating System, CPU Architecture, Development Status, Documentation, Related Software (3 entries), Interoperable Software (2 entries), Version date/description/PID.
 
-**Deliberately left empty (user decision 2026-07-27):** Related Phenomena (no custom free-text terms — controlled vocabulary only), Related Publications (the inferred Bilitza et al. 2017 model paper was declined as uncited and definitionally ill-fitting).
+**Deliberately left empty (user decision 2026-07-27):** Related Publications (the inferred Bilitza et al. 2017 model paper was declined as uncited and definitionally ill-fitting). Related Phenomena was also left empty at that decision, but only because a stale documentation list hid the vocabulary's geospace rows; the controlled row `Geomagnetic Storms` was added 2026-08-24 (see Field 22) — the ban on custom free-text terms stands.
 
 **Confirmed unchanged:** Persistent Identifier, Code Repository, Related Region, Author (name reverted to the live HSSI form), Author affiliation, Concise Description, Publication Date, Publisher.
 
@@ -561,7 +563,7 @@ No open questions remain. All twelve were put to the user and answered.
 | 5 | 13 | Retain `Other` for build tooling? | **Remove** — every language actually present is now named |
 | 6 | 16 | Drop `CMake` / `scikit-build-core` keywords? | **Drop** — build tooling, not science keywords; never published to HSSI |
 | 7 | 20 | `Operating System Independent` or `Linux` only? | **Operating System Independent** — documented cross-platform design intent; Linux-only CI recorded as a caveat |
-| 8 | 22 | Add custom phenomena terms? | **No — stick to the HSSI controlled vocabulary.** Field 22 stays empty; see Field 22 for the declined candidates |
+| 8 | 22 | Add custom phenomena terms? | **No — stick to the HSSI controlled vocabulary.** Free-text terms declined; see Field 22 for the declined candidates. (Field 22 was empty at this decision only because a stale documentation list hid the geospace rows; the controlled row `Geomagnetic Storms` was added by user decision 2026-08-24 — consistent with this ruling, not a reversal) |
 | 9 | 27 | Confirm the inferred Bilitza et al. (2017) IRI-2016 paper? | **No — do not include.** Uncited in the repo and fits neither Field 14's nor Field 27's definition; Field 27 stays empty |
 | 10 | 9 | Keep the published concise description? | **Keep** — it is exactly the first sentence of Field 8, which is what a preview should be |
 | 11 | 29 | Keep `TimeUtilities`? | **Keep** — companion package by the same author, README-named, declared dependency, vendored fallback |
@@ -585,7 +587,7 @@ The prior canonical file recorded "Official HSSI Software Name: IRI-2016 … Fie
 ### Completeness assessment
 - **MANDATORY fields:** all populated (Submitter is the expected placeholder)
 - **RECOMMENDED fields:** all populated except Reference Publication (genuinely absent — no software paper) and the v1.2.0 Version PID (genuinely absent — not archived to Zenodo)
-- **OPTIONAL fields:** populated wherever evidence exists; Related Phenomena, Related Datasets, Funder, Award Title, Related Instruments, Related Observatories and Logo are `Not found` with documented reasoning
+- **OPTIONAL fields:** populated wherever evidence exists; Related Phenomena carries `Geomagnetic Storms` (added 2026-08-24); Related Datasets, Funder, Award Title, Related Instruments, Related Observatories and Logo are `Not found` with documented reasoning
 
 ---
 

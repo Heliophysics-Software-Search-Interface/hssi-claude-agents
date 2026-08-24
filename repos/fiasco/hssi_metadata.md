@@ -4,7 +4,7 @@
 **Repository:** https://github.com/wtbarnes/fiasco
 **Source Revision:** 1a1965066b192360bdc3681e128dec91d1a4ead0
 **Extraction Date:** 2026-07-26
-**Validation Date:** 2026-07-27
+**Validation Date:** 2026-08-24
 **Validation Status:** PASS
 
 ---
@@ -196,7 +196,7 @@ fiasco provides a Python interface to the CHIANTI, an atomic database used prima
 - Solar Flares
 - X-ray emission
 - **Source:** Current CHIANTI/fiasco documentation covers solar-coronal abundances, ultraviolet/X-ray spectroscopy, emission spectra, and ionization calculations. The documented non-equilibrium-ionization example directly models a rapid coronal heating and cooling episode using fiasco rates, and the public API computes radiative losses used in coronal-heating modeling. The repository's developer-maintained works-citing list demonstrates fiasco use for coronal-mass-ejection charge-state modeling and solar-flare studies.
-- **Note:** Coronal Holes was considered but not selected because the repository does not establish it as a direct fiasco science target.
+- **Note:** `Coronal Holes` was weighed during extraction and not selected because the repository does not establish it as a direct fiasco science target — but it was never actually available: it appeared only in a stale documentation list and has never been a row in the HSSI Phenomena vocabulary (noted 2026-08-24), so it must not be re-proposed as a value here regardless of evidence.
 
 ### 23. Development Status (RECOMMENDED)
 - Active

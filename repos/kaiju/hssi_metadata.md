@@ -4,7 +4,7 @@
 **Repository:** https://github.com/JHUAPL/kaiju
 **Source Revision:** 9e19bfc61a63206e7e74340b5dbf0b7537afa8a7
 **Extraction Date:** 2026-07-24
-**Validation Date:** 2026-07-24
+**Validation Date:** 2026-08-24
 **Validation Status:** PASS
 
 ---
@@ -285,8 +285,10 @@ https://doi.org/10.3847/1538-4365/ab3a4c
 
 ### 22. Related Phenomena (OPTIONAL)
 - Coronal Mass Ejections
+- Geomagnetic Storms
+- Solar Wind
 
-*Source: README.md lines 122-133 and GAMERA-helio documentation discuss CME modeling. Other central phenomena such as geomagnetic storms, substorms, aurora, ring current, and solar wind are recorded as keywords because they are not in the current HSSI Related Phenomena controlled list.*
+*Source: the README citation list and GAMERA-helio documentation discuss CME modeling — Provornikova et al. 2024, "MHD Modeling of a Geoeffective Interplanetary Coronal Mass Ejection…" (README lines 130-136 at revision 3382b1f2), and docs/source/_obsolete/heliosphere/helio-cme.rst documents the embedded Gibson-Low flux-rope CME model. Geomagnetic Storms and Solar Wind (added 2026-08-24, user-approved): MAGE, Kaiju's primary application, is developed by the Center for Geospace Storms (README lines 5-7), the README describes modeling of "planetary magnetospheres and the solar wind" (line 9), and the citation list includes storm-time case studies (Sorathia et al. 2023 dawnside-current-wedge; Pham et al. 2022 August-2005-storm thermospheric response) alongside the geoeffective-ICME study — geomagnetic storms and solar-wind coupling are the central science of the MAGE/GAMERA geospace models, not incidental. An earlier note excluded both values in the belief that they were absent from the HSSI Related Phenomena controlled vocabulary; that belief came from a stale six-value documentation list, and both are in fact controlled rows. Substorms, aurora, and ring current remain excluded correctly — they have no controlled row (the earlier note's claim that all five terms were "recorded as keywords" was also inexact: of the five, only solar wind appears in Field 16, alongside coronal mass ejections).*
 
 ### 23. Development Status (RECOMMENDED)
 Active

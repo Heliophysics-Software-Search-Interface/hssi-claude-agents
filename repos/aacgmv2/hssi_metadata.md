@@ -4,7 +4,7 @@
 **Repository:** https://github.com/aburrell/aacgmv2
 **Source Revision:** 5f855791f04f4071f7ee12c4f901915b6a1d6b98
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-07-29
+**Validation Date:** 2026-08-24
 **Validation Status:** PASS
 
 **Applied to HSSI:** 2026-07-29. **Every field in this file, including Field 6 (Authors), has been applied
@@ -458,12 +458,15 @@ compiled C extension).*
 ### 22. Related Phenomena (OPTIONAL)
 Not found — no applicable value.
 
-*Reasoning: the controlled vocabulary for this field is entirely solar-atmosphere phenomena (Coronal
-Heating, Coronal Holes, Coronal Mass Ejections, Solar Corona, Solar Flares, X-ray emission), none of
-which this package addresses. The software is also phenomenon-agnostic by design: it is a coordinate
-transformation library that supports any study performed in magnetic coordinates rather than any
-particular phenomenon. Custom entries are permitted by the field, but inventing one (e.g. "aurora")
-would over-claim a scientific scope the code does not implement. Left empty, matching live HSSI.*
+*Reasoning: the software is phenomenon-agnostic by design: it is a coordinate transformation library
+that supports any study performed in magnetic coordinates rather than any particular phenomenon, so
+no value from the controlled vocabulary applies — including its geospace rows (`Geomagnetic Storms`,
+`Solar Wind`). An earlier version of this note instead called the vocabulary "entirely
+solar-atmosphere phenomena" and enumerated a stale six-value documentation list (which included a
+`Coronal Holes` phantom and omitted the two geospace rows); that description of the vocabulary was
+wrong (corrected 2026-08-24), but the emptiness conclusion stands on the phenomenon-agnostic
+rationale. Custom entries are permitted by the field, but inventing one (e.g. "aurora") would
+over-claim a scientific scope the code does not implement. Left empty, matching live HSSI.*
 
 ### 23. Development Status (RECOMMENDED)
 Active
