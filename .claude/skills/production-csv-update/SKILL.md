@@ -79,7 +79,7 @@ The existing **`update-api-spec`** skill is the precedent/mechanism for re-synci
 - **Docker:** the host uses **legacy Compose v1**, so the command is **`docker-compose`** (hyphen), not
   `docker compose`. Containers: `HSSI` (app) and `website_db` (Postgres, persistent volume — survives
   redeploys). `git pull` / redeploy do **not** import the CSVs; the DB persists untouched.
-- **Disk is tight** (~1.2 GB free) — keep DB dumps small and gzipped.
+- **Disk headroom** (12 GB free of 24 GB as of 2026-08-26; was ~1.2 GB before mid-2026 cleanup) — keep DB dumps gzipped anyway.
 - **Prod URL:** `https://hssi.hsdcloud.org`.
 - **Automated DB backups:** a nightly cron on prod runs `pg_dumpall` and commits gzipped
   daily/weekly/monthly snapshots to the **private** repo
