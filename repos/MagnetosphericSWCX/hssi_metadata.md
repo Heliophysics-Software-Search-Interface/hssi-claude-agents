@@ -4,7 +4,7 @@
 **Repository:** https://github.com/rebeccaringuette/MagnetosphericSWCX/tree/MSWCX
 **Source Revision:** adf9ff435acb9fc36dc21e16d7bf538bd97df5ef (tag `MSWCX`)
 **Extraction Date:** 2026-08-06
-**Validation Date:** 2026-08-07
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
 
 ---
@@ -217,14 +217,15 @@ its parent top-level category listed alongside it.
 
 ### 5. Related Region (MANDATORY)
 
-**Value (4 entries):**
+**Value (5 entries):**
 
 - Earth Magnetosphere
 - Interplanetary Space
 - Earth Magnetosheath
 - Earth Magnetotail
+- Solar Wind
 
-All four are live values in the `Region` vocabulary. The set is a union: neither value HSSI already
+All five are live values in the `Region` vocabulary. The set is a union: neither value HSSI already
 held was dropped.
 
 **Evidence for Earth Magnetosheath and Earth Magnetotail.** The repository names both regions directly rather than by
@@ -238,16 +239,19 @@ and the heliosphere," and that the emission "is mostly limited to the subsolar a
 the magnetosheath and the polar cusps." Field 5's guidance prefers the most specific applicable
 region, and these two are the specific regions the observations sample.
 
+**Evidence and settled rationale for Solar Wind.** Solar-wind charge exchange is the phenomenon the
+software exists to measure, and `HSWCXOlderCode/HSWCX1_indfit_v71.py:704` derives the fitted O VIII
+line ratio used as a solar-wind composition parameter. `Solar Wind` was originally omitted because
+`Interplanetary Space` was thought to cover the heliospheric component, even though the dossier
+already conceded that the evidence supported the finer value. That premise was falsified on
+2026-08-25: the Region vocabulary is flat, so neither value implies the other. `Solar Wind` was
+therefore added by user approval while `Interplanetary Space` was retained.
+
 **Considered and not selected:**
 
 - **Earth Outer Magnetosphere** — defensible, since the flank and tail lines of sight sample the
   outer magnetosphere. Not selected because `Earth Magnetosheath` and `Earth Magnetotail` are the
   terms the repository itself uses and are more specific.
-- **Solar Wind** — a row in the vocabulary, and SWCX is by definition solar-wind driven. Not
-  selected because the retained `Interplanetary Space` already covers the heliospheric component,
-  and `Solar Wind` is captured as a keyword (Field 16) and a phenomenon (Field 22). The evidence
-  would support adding it, so a later pass that judges `Interplanetary Space` too coarse has
-  grounds to.
 - **Earth Atmosphere** — the reference publication analyzes possible atmospheric contamination of
   the signal, and magnetospheric SWCX involves exospheric neutral hydrogen. Not selected because the
   software treats the atmosphere as a background to rule out rather than a region it supports

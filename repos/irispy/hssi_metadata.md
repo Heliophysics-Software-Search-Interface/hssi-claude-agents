@@ -4,12 +4,8 @@
 **Repository:** https://github.com/LM-SAL/irispy
 **Source Revision:** cd8ad59083e883d5a1db661ef56ab81856bf81eb
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-07-29
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
-
-**State:** All of Fields 2–33 match live HSSI and are verified as of 2026-07-29. Fields 25 and 26 are intentionally empty by user decision. Field 6 required two corrections to shared Person and Organization records before it could be completed; those, and the resulting author additions, are applied and verified.
-
-**Seeding:** Pre-populated from the live HSSI record for this UUID (no prior canonical `hssi_metadata.md` existed). All multi-valued fields are identity-aware unions of the live HSSI values and newly extracted repository/API evidence; nothing submitted has been silently dropped. Values that differ from live HSSI are marked **CHANGE** or **ADDED**, each with its authoritative evidence and rationale. The one field whose live values were reduced rather than added to (Field 13) records the removal, its evidence, and the user's approval.
 
 ---
 
@@ -24,16 +20,14 @@
 ### 2. Persistent Identifier (RECOMMENDED)
 https://doi.org/10.5281/zenodo.10443678
 
-*Source note: unchanged from live HSSI. Verified as the Zenodo **concept** DOI — `zenodo.org/api/records/20073073` reports `conceptdoi: 10.5281/zenodo.10443678` and `conceptrecid: 10443678`. Correct value for this field.*
+*Source note: the Zenodo record identifies this as the **concept** DOI — `zenodo.org/api/records/20073073` reports `conceptdoi: 10.5281/zenodo.10443678` and `conceptrecid: 10443678`.*
 
 ### 3. Code Repository (MANDATORY)
 https://github.com/LM-SAL/irispy
 
-*Source note: unchanged from live HSSI. Confirmed current by `git remote -v`, `pyproject.toml` (`urls."Source Code"`), PyPI `project_urls`, and Zenodo `custom["code:codeRepository"]`. Note: the repository was renamed from `LM-SAL/irispy-lmsal` (that path now 301-redirects here), and the PyHC registry still lists the old URL — this value is the current one.*
+*Source note: confirmed by `git remote -v`, `pyproject.toml` (`urls."Source Code"`), PyPI `project_urls`, and Zenodo `custom["code:codeRepository"]`. The repository was renamed from `LM-SAL/irispy-lmsal` (that path now redirects here), and the PyHC registry still lists the old URL, so the value above is the current repository.*
 
 ### 4. Software Functionality (MANDATORY)
-
-Live HSSI: **empty**. All 31 values below are **ADDED**, each backed by specific code or documentation evidence. Every selected subcategory has its parent top-level category included.
 
 **Coordinate Transforms**
 - `Coordinate Transforms` — parent of the two entries below.
@@ -87,15 +81,17 @@ Live HSSI: **empty**. All 31 values below are **ADDED**, each backed by specific
 
 ### 5. Related Region (MANDATORY)
 - Solar Environment
+- Chromosphere
+- Corona
 
-*Source note: unchanged from live HSSI, and confirmed correct. `docs/iris.rst`: IRIS observes "the chromosphere and transition region including light coverage of the corona"; all functionality is solar. No other region applies.*
-*Note for user: the live target's Region vocabulary also contains the more specific rows `Chromosphere`, `Photosphere`, `Corona` and `Solar Interior`, which would describe IRIS's targets more precisely, but these are outside the 5-value list documented for this form field. Left unchanged; raise if HSSI wants the finer terms.*
+*Source note: `Solar Environment` is retained because all irispy functionality is solar. `Chromosphere` is supported directly by the IRIS mission statement and passband description: `docs/iris.rst:11` says the mission studies mass and energy flow through the chromosphere and transition region, and `docs/iris.rst:14` says the passbands are focused on those regions. `Corona` is supported by the same passband description, which explicitly includes light coverage of the corona (`docs/iris.rst:14`), and by the documented 4,500 K to 10 MK spectral-line coverage (`docs/iris.rst:42,52`).*
+*The finer Region values were previously deferred solely because the agent documentation exposed only a five-value list, even though the dossier already recognized that they described IRIS more precisely. That procedural premise was falsified on 2026-08-25: the Region vocabulary is flat, so `Solar Environment` does not imply the finer rows, and the user approved adding `Chromosphere` and `Corona`. `Photosphere` remains considered and declined because the evidence identifies photospheric wavelength-calibration lines (`docs/tutorial/calibration.rst:12`) and a Mg II wing passband (`docs/iris.rst:69`), not the photosphere as an IRIS science target. `Solar Interior` remains excluded because no repository source supports sub-photospheric diagnostics.*
 
 ### 6. Authors (MANDATORY)
 
-Union of the three live HSSI authors (matched by ORCID, then normalized name) with repository, Zenodo/DataCite and ORCID evidence. No author dropped. Affiliations unioned by ROR, then normalized organization name.
+The author list is supported by repository, Zenodo/DataCite and ORCID evidence, with identities matched by ORCID and affiliations resolved by ROR.
 
-> **Completed corrections, 2026-07-29.** Field 6 matches live HSSI.
+> **Author identity history.**
 >
 > - The author previously recorded only as `juanms` is **Juan Martínez-Sykora**, now carrying ORCID `https://orcid.org/0000-0002-0333-5717`, with his Lockheed Martin Solar and Astrophysics Laboratory and Bay Area Environmental Research Institute affiliations recorded.
 > - The Rosseland Centre for Solar Physics, University of Oslo affiliation now carries its verified ROR `https://ror.org/01xtthb56`. This organization is shared with the SunPy entry, which is correctly identified by the same ROR.
@@ -110,60 +106,57 @@ Union of the three live HSSI authors (matched by ORCID, then normalized name) wi
   - Lockheed Martin Solar and Astrophysics Laboratory — *(no ROR record exists; searched ror.org for "Lockheed Martin Solar and Astrophysics Laboratory" — only generic Lockheed Martin country entities returned)*
   - SETI Institute — https://ror.org/02dxgk712
 
-*Source note: all unchanged from live HSSI. Corroborated by `pyproject.toml` authors, 187 of 213 commits (`nabil.freij@gmail.com`, `freij@baeri.org`), GitHub profile `nabobalis` ("Research Scientist in Solar Physics", company "SETI Institute & LMSAL (@LM-SAL)"), and Zenodo/DataCite creator affiliation "SETI Institute & LMSAL (@LM-SAL)".*
+*Source note: corroborated by `pyproject.toml` authors, 187 of 213 commits (`nabil.freij@gmail.com`, `freij@baeri.org`), GitHub profile `nabobalis` ("Research Scientist in Solar Physics", company "SETI Institute & LMSAL (@LM-SAL)"), and Zenodo/DataCite creator affiliation "SETI Institute & LMSAL (@LM-SAL)".*
 
-**Author 2 — Juan Martínez-Sykora** — **CHANGE (identity resolution)**
-- **Author Identifier:** https://orcid.org/0000-0002-0333-5717 — **ADDED**
+**Author 2 — Juan Martínez-Sykora**
+- **Author Identifier:** https://orcid.org/0000-0002-0333-5717
 - **Affiliation:**
-  - Lockheed Martin Solar and Astrophysics Laboratory — *(no ROR record; see above)* — **ADDED**
-  - Bay Area Environmental Research Institute — https://ror.org/024tt5x58 — **ADDED**
+  - Lockheed Martin Solar and Astrophysics Laboratory — *(no ROR record; see above)*
+  - Bay Area Environmental Research Institute — https://ror.org/024tt5x58
 
 *Source note / rationale: this author was previously recorded only as `juanms`, which is a GitHub display name rather than a personal name. Resolution chain: Zenodo/DataCite creator `juanms` → the only matching repository contributor is GitHub login `jumasy` (4 commits, matching the 4 commits authored by `Juan Martinez Sykora <jumasy1980@gmail.com>` in `git log`), and the GitHub profile of `jumasy` has display name exactly `juanms` — which is what Zenodo's GitHub integration harvested. ORCID `0000-0002-0333-5717` is Juan Martínez-Sykora, confirmed as the solar physicist by 52 works on solar chromosphere/transition-region MHD (e.g. "Shock-induced magnetic reconnection driving Ellerman bomb emission and a spicule"). Affiliations confirmed as Lockheed Martin Solar & Astrophysics Laboratory (Palo Alto) and Bay Area Environmental Research Institute (NASA Research Park) across his 2018–2023 ApJ papers.*
-*Corrected 2026-07-29: this author's name, ORCID, and both affiliations above are recorded in HSSI.*
-
 **Author 3 — Tiago M. D. Pereira**
 - **Author Identifier:** https://orcid.org/0000-0003-4747-4329
 - **Affiliation:**
   - Rosseland Centre for Solar Physics, University of Oslo — https://ror.org/01xtthb56
 
-*Source note: name and ORCID unchanged from live HSSI. The affiliation organization name is also unchanged; its **Affiliation Identifier `https://ror.org/01xtthb56` was added on 2026-07-29**, having previously been absent. The Rosseland Centre for Solar Physics has no ROR record of its own, so the parent institution's ROR (University of Oslo) is supplied, corroborated by this author's ORCID employment record. Author identity corroborated by Zenodo/DataCite creator "Tiago M. D. Pereira" and GitHub contributor `tiagopereira` (display name "Tiago M. D. Pereira", "Astrophysicist").*
+*Source note: the affiliation previously lacked an identifier. The Rosseland Centre for Solar Physics has no ROR record of its own, so the parent institution's ROR (University of Oslo) is supplied, corroborated by this author's ORCID employment record. Author identity is corroborated by Zenodo/DataCite creator "Tiago M. D. Pereira" and GitHub contributor `tiagopereira` (display name "Tiago M. D. Pereira", "Astrophysicist").*
 
-**Author 4 — IRIS Instrument Team @ LMSAL (organization author)** — **ADDED (user-approved 2026-07-29)**
+**Author 4 — IRIS Instrument Team @ LMSAL (organization author)**
 - **Author Identifier:** Not found
 - **Affiliation:** Not found
 
-*Source note / rationale: listed as the **first** author in `pyproject.toml` (`{ name = "IRIS Instrument Team  @ LMSAL" }`), holds the copyright in `licenses/LICENSE.rst` ("Copyright (c) 2020-2025, IRIS Instrument Team @ LMSAL"), and is the templated author in `.cruft.json` (`author_name: "IRIS Instrument Team"`, `author_email: https://iris.lmsal.com/contact.html`). SoMEF also extracts it as an author. It is absent from Zenodo/DataCite (whose creator list is auto-derived from GitHub contributors) and from live HSSI.*
-*Decision record (user-approved 2026-07-29): recorded **verbatim** as `IRIS Instrument Team @ LMSAL`, matching the copyright holder in `licenses/LICENSE.rst` and the templated author name in `.cruft.json`. (`pyproject.toml` carries the same string with a double space — `"IRIS Instrument Team  @ LMSAL"` — so the single-spaced LICENSE form is used as the canonical spelling.) Although `pyproject.toml` lists the team first, it is placed last here by curatorial decision, preserving the established order of the human authors while still crediting the team. No ROR exists for either "IRIS Instrument Team" or its parent Lockheed Martin Solar and Astrophysics Laboratory (ror.org searched for both), so it is recorded without an identifier. An expanded form — "Interface Region Imaging Spectrograph Instrument Team at the Lockheed Martin Solar and Astrophysics Laboratory" — was considered and rejected because it is not a name the project itself uses.*
+*Source note / rationale: listed as the **first** author in `pyproject.toml` (`{ name = "IRIS Instrument Team  @ LMSAL" }`), holds the copyright in `licenses/LICENSE.rst` ("Copyright (c) 2020-2025, IRIS Instrument Team @ LMSAL"), and is the templated author in `.cruft.json` (`author_name: "IRIS Instrument Team"`, `author_email: https://iris.lmsal.com/contact.html`). SoMEF also extracts it as an author. Zenodo/DataCite omit the team because their creator list is derived from GitHub contributors. The canonical spelling `IRIS Instrument Team @ LMSAL` matches the copyright holder in `licenses/LICENSE.rst`; `pyproject.toml` carries the same string with a double space, so the single-spaced LICENSE form is used. Although `pyproject.toml` lists the team first, it is placed last by the settled curatorial decision to preserve the established order of the human authors while still crediting the team. No ROR exists for either "IRIS Instrument Team" or its parent Lockheed Martin Solar and Astrophysics Laboratory, so it is recorded without an identifier. An expanded form — "Interface Region Imaging Spectrograph Instrument Team at the Lockheed Martin Solar and Astrophysics Laboratory" — was considered and rejected because it is not a name the project itself uses.*
 
 ### 7. Software Name (MANDATORY)
 irispy
 
-*Source note: unchanged from live HSSI; editorial intent preserved. Matches the repository name, `README.rst` ("``irispy`` is a library…"), `docs/index.rst`, and `pyproject.toml` `[tool.setuptools] provides = ["irispy"]`. The PyPI/conda-forge **distribution** name is `irispy-lmsal` (to avoid a name clash), but README and docs state the package "is imported as ``irispy`` and is referred to as ``irispy`` in the documentation". `irispy` is therefore the correct software name; the distribution name is recorded in the Description instead.*
+*Source note: matches the repository name, `README.rst` ("``irispy`` is a library…"), `docs/index.rst`, and `pyproject.toml` `[tool.setuptools] provides = ["irispy"]`. The PyPI/conda-forge **distribution** name is `irispy-lmsal` (to avoid a name clash), but README and docs state the package "is imported as ``irispy`` and is referred to as ``irispy`` in the documentation". `irispy` is therefore the correct software name; the distribution name is recorded in the Description instead.*
 
-### 8. Description (MANDATORY) — **CHANGE (extended, seeded wording preserved verbatim as the opening sentence)**
+### 8. Description (MANDATORY)
 
 irispy is a library that provides the tools to read in and analyze data from Interface Region Imaging Spectrograph (IRIS). IRIS is a NASA Small Explorer satellite whose 20 cm telescope feeds a high-frame-rate ultraviolet imaging spectrograph, observing the solar chromosphere and transition region (with lighter coverage of the corona) in far-ultraviolet and near-ultraviolet passbands at about 0.33 arcsecond spatial resolution and roughly 1 second cadence. irispy provides classes for handling both IRIS slit-jaw imager (SJI) images and spectrograph (SG) raster observations, linking each observation to its measurement uncertainties, physical units, a mask marking unreliable or unphysical pixels, World Coordinate System transformations describing position, wavelength and time, and the full IRIS metadata. It reads IRIS level 2 SJI and raster FITS files, including gzipped files, _raster.tar.gz archives and the IRIS-aligned SDO/AIA data cubes distributed with each observation by the IRIS team, and can load an entire observation with a single call. Analysis and calibration capabilities include exposure-time correction and radiometric calibration between data number, photons and physical radiance units using the time-dependent IRIS effective-area response, cosmic-ray and dust-artefact removal, spectral moment maps, red-blue asymmetry maps, electron-density diagnostics from line ratios, decoding of IRIS OBS IDs into human-readable observing descriptions, IRIS-specific plotting and animation, and wobble movie generation. The package assumes the IRIS level 2 data products, which are the recommended science product; level 1 data must first be processed with the SolarSoft IDL calibration routines. Note that the package is distributed on PyPI and conda-forge as irispy-lmsal to avoid a name clash, but is imported and referred to as irispy.
 
 *Source note / rationale: the live HSSI description is a single 121-character sentence identical to the concise description, which does not meet this field's stated purpose ("sufficiently detailed to provide the potential user with information to determine if the software is useful to their work… what the software does, why to use it, assumptions it makes"). The submitted sentence is preserved verbatim as the opening; everything appended is drawn from primary sources: `docs/index.rst` (classes, uncertainties/units/mask/WCS/metadata, calibration routines), `docs/iris.rst` (mission, telescope, passbands, resolution/cadence, level definitions and the level 1 caveat), `README.rst` (NASA-funded Small Explorer, the `irispy-lmsal` naming warning), `irispy/io/utils.py::read_files` (whole-observation reading, tar and SDO archive handling), `CHANGELOG.rst` 0.7.0 and the corresponding modules (`utils/moments.py`, `utils/red_blue.py`, `utils/density.py`, `utils/cosmic_rays.py`, `utils/dust.py`, `utils/spectrograph.py`, `utils/response.py`, `utils/wobble.py`, `obsid.py`). This is an evidence-backed completeness improvement, not a stylistic rewrite.*
-*Formatting note: written as plain text with no markdown inline-code backticks. HSSI stores `description` as a plain text field with no markdown rendering, and none of the 121 live software descriptions contains a backtick, so backticks would display literally on the site.*
+*Formatting note: written as plain text with no markdown inline-code backticks because HSSI stores `description` as a plain-text field and would display the backticks literally.*
 
 ### 9. Concise Description (OPTIONAL)
 irispy is a library that provides the tools to read in and analyze data from Interface Region Imaging Spectrograph (IRIS).
 
-*Source note: unchanged from live HSSI (121 characters, within the 200-character limit). This is also the first line of `README.rst`, so it is both the submitter's wording and the project's own summary — kept verbatim as the preview.*
+*Source note: 121 characters, within the 200-character limit. This is also the first line of `README.rst`, so it is both the original submitter's wording and the project's own summary, kept verbatim as the preview.*
 
-### 10. Publication Date (RECOMMENDED) — **CHANGE (user-approved 2026-07-29)**
+### 10. Publication Date (RECOMMENDED)
 2022-01-21
 
-*Source note / rationale: live HSSI has 2025-08-28, which is exactly the release date of v0.4.0 (the version that was current when the entry was created) rather than the date of first publication. This field is defined as "Date of first broadcast/publication… Used for the initial version of the software". The first public release is v0.1.0: git tag `v0.1.0` dated 2022-01-21 ("Releasing version v0.1.0") and PyPI `irispy-lmsal` 0.1.0 uploaded 2022-01-21T18:09:22Z. (A pre-release, 0.1.0rc1, was uploaded 2021-11-09; the first non-prerelease publication is used here, since a release candidate is not normally considered published.) User-approved 2026-07-29 as a deliberate, user-visible correction of a stale submitted value.*
+*Source note / rationale: the previous HSSI value, 2025-08-28, is exactly the release date of v0.4.0 rather than the date of first publication. This field is defined as "Date of first broadcast/publication… Used for the initial version of the software". The first public release is v0.1.0: git tag `v0.1.0` dated 2022-01-21 ("Releasing version v0.1.0") and PyPI `irispy-lmsal` 0.1.0 uploaded 2022-01-21T18:09:22Z. A pre-release, 0.1.0rc1, was uploaded 2021-11-09; the first non-prerelease publication is used because a release candidate is not normally considered published.*
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
 - **Publisher Identifier:** https://zenodo.org
 
-*Source note: unchanged from live HSSI, and correct — the persistent identifier is a Zenodo concept DOI obtained through the GitHub–Zenodo workflow; DataCite reports `publisher: "Zenodo"`.*
+*Source note: the persistent identifier is a Zenodo concept DOI obtained through the GitHub–Zenodo workflow; DataCite reports `publisher: "Zenodo"`.*
 
-### 12. Version (RECOMMENDED) — **CHANGE**
+### 12. Version (RECOMMENDED)
 - **Version Number:** v0.7.0
 - **Version Date:** 2026-05-07
 - **Version Description:** New features: irispy.utils.dust.remove_dust and SJICube.remove_dust to repair dust-darkened pixels in IRIS slit-jaw images; remove_cosmic_rays methods for SJI and raster cubes with rsliding and astroscrappy backends; spectral moment calculation for spectrogram cubes; red-blue asymmetry maps; and IRIS density diagnostics from line ratios (irispy.utils.density.density_diagnostic, map_ratio_to_quantity). Bug fixes include gWCS timestamp handling, preservation of basic_wcs when slicing SJICube, radiometric calibration of sliced raster cubes, raster file-list reading, and edge cases in coordinate preservation, bad-pixel masking and memory use. Documentation adds an ITN26-style tutorial and new examples for astroscrappy spike removal, dust removal, and double-Gaussian Mg II k fitting.
@@ -176,18 +169,18 @@ irispy is a library that provides the tools to read in and analyze data from Int
 
 *Source note: Python 3.x is correct and overwhelmingly dominant — GitHub linguist reports Python 334,565 bytes, Shell 673 bytes, IDL 594 bytes; `pyproject.toml` requires Python >= 3.12 with classifiers for 3.12/3.13/3.14, and `.cruft.json` records `use_compiled_extensions: "n"` (pure Python, `py3-none-any` wheel).*
 
-*__REMOVALS APPLIED (user-approved 2026-07-29):__ `IDL` and `Other` were present in live HSSI and have been removed. Evidence: the only IDL in the repository is the single 594-byte SolarSoft test-data generator `irispy/data/test/get_cali_test_data.pro`, which is neither shipped nor executed by the package; "Other" corresponds to the two CircleCI shell scripts (`.circleci/codecov_upload.sh`, `.circleci/early_exit.sh`, 673 bytes combined), which are CI plumbing rather than software functionality. Field 13 asks for "the most important languages for the software," and neither meets that bar against 334,565 bytes of pure Python. The SSWIDL calibration lineage that motivated the original `IDL` value is preserved where it belongs — Field 29 records the SolarSoft IRIS package as Related Software, and Fields 4/18 record the IDL-artifact reading (`scipy.io.readsav`) irispy performs.*
+*Previous values `IDL` and `Other` are deliberately excluded. The only IDL in the repository is the single 594-byte SolarSoft test-data generator `irispy/data/test/get_cali_test_data.pro`, which is neither shipped nor executed by the package; "Other" corresponded to two CircleCI shell scripts (`.circleci/codecov_upload.sh`, `.circleci/early_exit.sh`, 673 bytes combined), which are CI plumbing rather than software functionality. Field 13 asks for "the most important languages for the software," and neither meets that bar against 334,565 bytes of pure Python. The SSWIDL calibration lineage that motivated the original `IDL` value is preserved where it belongs — Field 29 records the SolarSoft IRIS package as Related Software, and Fields 4/18 record the IDL-artifact reading (`scipy.io.readsav`) irispy performs.*
 
 ### 14. Reference Publication (RECOMMENDED)
 Not found
 
-*Source note: unchanged from live HSSI (null). There is no software paper for irispy — no JOSS submission, no CITATION.cff, no `codemeta.json`, and no "how to cite" section in `README.rst` or the documentation. The IRIS **instrument** paper is recorded under Related Publications (Field 27) instead, since it describes the instrument rather than the software.*
+*Source note: there is no software paper for irispy — no JOSS submission, no CITATION.cff, no `codemeta.json`, and no "how to cite" section in `README.rst` or the documentation. The IRIS **instrument** paper is recorded under Related Publications (Field 27) instead, since it describes the instrument rather than the software.*
 
 ### 15. License (RECOMMENDED)
 - **License:** BSD 3-Clause "New" or "Revised" License
 - **License URI:** https://spdx.org/licenses/BSD-3-Clause.html
 
-*Source note: license name unchanged from live HSSI and confirmed by `licenses/LICENSE.rst` (three-clause BSD text, "Copyright (c) 2020-2025, IRIS Instrument Team @ LMSAL"), `pyproject.toml` (`license-files = ["licenses/LICENSE.rst"]`, classifier "License :: OSI Approved :: BSD License"), and `.cruft.json` (`license: "BSD 3-Clause"`). License URI **ADDED** (SPDX BSD-3-Clause, verified to resolve).*
+*Source note: the license name is confirmed by `licenses/LICENSE.rst` (three-clause BSD text, "Copyright (c) 2020-2025, IRIS Instrument Team @ LMSAL"), `pyproject.toml` (`license-files = ["licenses/LICENSE.rst"]`, classifier "License :: OSI Approved :: BSD License"), and `.cruft.json` (`license: "BSD 3-Clause"). The URI is the SPDX BSD-3-Clause identifier.*
 *Conflict noted and deliberately rejected: DataCite/Zenodo report `rightsList` "Creative Commons Attribution 4.0 International" (`cc-by-4.0`) for this DOI. That is a Zenodo deposit default and contradicts the repository's own LICENSE; the repository license is authoritative. Do not autofill the license from the DOI for this entry.*
 
 ---
@@ -196,9 +189,8 @@ Not found
 
 ### 16. Keywords (OPTIONAL)
 
-Compared and unioned on normalized lowercase identity (HSSI stores keywords lowercase and renders them Title Case, so the live view's `Iris`, `Lmsal`, `Nasa`, `Science`, `Solar`, `Solar Physics`, `Spectra` are the stored `iris`, `lmsal`, `nasa`, `science`, `solar`, `solar physics`, `spectra` — no false additions).
+The keywords use their stored lowercase forms; HSSI renders those forms in title case when displaying them.
 
-Retained from live HSSI:
 - iris
 - lmsal
 - nasa
@@ -207,7 +199,6 @@ Retained from live HSSI:
 - solar physics
 - spectra
 
-**ADDED:**
 - chromosphere — `docs/iris.rst`: IRIS is "focused on the chromosphere and transition region"; `docs/index.rst`.
 - transition region — same source.
 - ultraviolet — `README.rst` "high-frame-rate ultraviolet imaging spectrometer"; `docs/iris.rst` FUV1/FUV2/NUV passbands. (The existing vocabulary term `extreme ultraviolet` is deliberately *not* used: IRIS observes FUV/NUV, not EUV.)
@@ -216,22 +207,18 @@ Retained from live HSSI:
 - calibration — existing HSSI vocabulary term; `irispy/utils/spectrograph.py::radiometric_calibration`, `irispy/utils/response.py`.
 - slit-jaw imaging — `irispy/sji.py`, `irispy/io/sji.py`, `docs/iris.rst` Table 2 (SJI channels).
 
-*Source note: the seven retained keywords come from `pyproject.toml` `keywords = ["iris", "lmsal", "NASA", "science", "solar", "solar physics", "spectra"]` (confirmed by SoMEF). The additions are science keywords drawn from the package's own documentation; where an equivalent term already exists in the live HSSI Keyword vocabulary (561 rows, checked) that exact term is used to avoid near-duplicates.*
+*Source note: `iris`, `lmsal`, `nasa`, `science`, `solar`, `solar physics`, and `spectra` come from `pyproject.toml` `keywords`. The remaining science keywords are drawn from the package's own documentation; existing controlled terms are reused where available to avoid near-duplicates.*
 *PyHC note: irispy is a PyHC **community** package, registered in `_data/projects.yml` as `irispy-lmsal` with PyHC facet keywords `["solar", "specific", "data_analysis", "spectra", "fits", "time", "coordinates", "plotting", "multidimensional"]`. These are PyHC's internal facets rather than science keywords, so they are used to corroborate other fields (functionality, formats) rather than copied here. The PyHC entry's `code` (`github.com/LM-SAL/irispy-lmsal`) and `docs` (`irispy-lmsal.readthedocs.io`) URLs are stale relative to the current repository and documentation URLs used in Fields 3 and 24.*
 
 ### 17. Data Sources (OPTIONAL)
 
-Live HSSI: **empty**. All three **ADDED**.
-
 - HTTP/HTTPS Directories — `irispy/data/_sample.py` downloads IRIS sample data over HTTPS from three mirrors (`github.com/sunpy/data/raw/main/irispy-lmsal/`, `github.com/sunpy/sample-data/raw/master/irispy-lmsal/`, `data.sunpy.org/irispy-lmsal/`); every gallery example retrieves level-2 files by direct URL from `www.lmsal.com/solarsoft/irisa/data/level2_compressed/...` via `pooch.retrieve`.
 - Observatory/Mission-specific — the primary documented source is the IRIS mission's own archive and search tool: `docs/tutorial/acquiring_data.rst` "IRIS data search website" (`iris.lmsal.com/search/`), `README.rst` "The data is publicly available" (`iris.lmsal.com/data.html`), and the `www.lmsal.com/solarsoft/irisa/data/level2_compressed/` level-2 tree used throughout the examples. Cross-listed with Related Observatories per this field's instructions.
-- The Virtual Solar Observatory. — *(the trailing period is part of the value as HSSI's Data Sources vocabulary spells it, and is required for the value to match)* — `docs/tutorial/acquiring_data.rst` devotes a section to searching and fetching IRIS data through `sunpy.net.Fido` with `a.Instrument.iris`, with worked `VSOClient` output. *Flagged for validator/user judgment: irispy documents and depends on this acquisition path (sunpy is a hard dependency) but does not implement a VSO client itself.*
+- The Virtual Solar Observatory. — *(the trailing period is part of the controlled value)* — `docs/tutorial/acquiring_data.rst` devotes a section to searching and fetching IRIS data through `sunpy.net.Fido` with `a.Instrument.iris`, with worked `VSOClient` output. The value is included because irispy documents this as a supported acquisition path and depends on SunPy, even though irispy does not implement its own VSO client.
 
 **Considered and excluded:** CDAWeb, OMNIWeb, SSCWeb, HAPI, das2, TAP, VirES, S3/Cloud-aware, FTP/FTPS Directories — no client, URL, or documentation reference for any of these.
 
 ### 18. Input File Formats (RECOMMENDED)
-
-Live HSSI: **empty**. All four **ADDED**.
 
 - FITS — `astropy.io.fits` throughout `irispy/io/sji.py`, `irispy/io/spectrograph.py`, `irispy/io/utils.py` (`fits_info`, `_get_simple_metadata`), `irispy/utils/wobble.py`; IRIS level-2 SJI and raster FITS are the package's primary input.
 - IDL.sav — `irispy/utils/response.py` reads the shipped IRIS response file with `scipy.io.readsav(ROOTDIR / "iris_sra_c_20231106.geny", python_dict=True)`; tests read `.sav` files (`fit_iris_xput_input.sav`, `input_calibration.sav`, `iris_response_2025_08_05T22_25_04_723.sav`) through the same IDL SAVE reader.
@@ -242,15 +229,11 @@ Live HSSI: **empty**. All four **ADDED**.
 
 ### 19. Output File Formats (RECOMMENDED)
 
-Live HSSI: **empty**. **ADDED**.
-
 - Other — MP4 (H.264) video files written by `irispy/utils/wobble.py::generate_wobble_movie` via `matplotlib.animation.FFMpegWriter` (filename pattern `{TDESC1}_{date}_wobble.mp4`). This is the only user-facing file output in the package.
 
 *Source note / audit trail: FITS is deliberately **not** listed as an output. The only `fits.writeto` calls are in test infrastructure (`irispy/conftest.py` fake-data fixtures and `irispy/data/test/compress.py`, a maintainer script for shrinking test files), not in the public API. Figures are returned as matplotlib axes for the user to save, not written by irispy.*
 
 ### 20. Operating System (RECOMMENDED)
-
-Live HSSI: **empty**. All three **ADDED**.
 
 - Linux
 - Mac
@@ -259,8 +242,6 @@ Live HSSI: **empty**. All three **ADDED**.
 *Source note: `.github/workflows/ci.yml` runs the test matrix on `windows: py312`, `macos: py313`, `linux: py312-oldestdeps`, `linux: py314-devdeps` plus `linux: py314` core, with ffmpeg installed via choco/brew/apt respectively. `docs/tutorial/installation.rst` gives per-platform install instructions for Linux, Windows and Mac. `pyproject.toml` also carries the classifier "Operating System :: OS Independent" and `platforms = ["any"]`; the three concrete CI-verified platforms are recorded rather than the generic value.*
 
 ### 21. CPU Architecture (RECOMMENDED)
-
-Live HSSI: **empty**. All four **ADDED**.
 
 - x86-64
 - Apple Silicon arm64
@@ -271,28 +252,26 @@ Live HSSI: **empty**. All four **ADDED**.
 
 ### 22. Related Phenomena (OPTIONAL)
 
-Live HSSI: **empty**. All three **ADDED** (verified against the live target's Phenomena vocabulary, 7 rows).
-
 - Solar Flares — `docs/iris.rst`: "IRIS data is also used for a wide range of other science topics including: solar flares…"; the spectral lines "cover temperatures from 4,500 K to 10 MK… possibly 10 MK under flaring conditions"; `irispy/obsid.py` decodes IRIS flare observing programs ("Flare linelist 1").
 - Solar Corona — `docs/iris.rst`: IRIS observations include "light coverage of the corona"; FUV1 covers log T 3.7–7.0 (`docs/iris.rst` Table 1).
 - Coronal Heating — the IRIS mission statement quoted in `docs/iris.rst`: "to understand how the solar atmosphere is energized and to understand how mass and energy flows through the chromosphere and transition region".
 
 **Considered and excluded:** X-ray emission (IRIS is a UV instrument); Coronal Mass Ejections, Solar Wind, Geomagnetic Storms (no supporting functionality or documentation claim — the docs mention prominences, sunspots, coronal rain and spicules, none of which are in the vocabulary).
 
-### 23. Development Status (RECOMMENDED) — **ADDED**
+### 23. Development Status (RECOMMENDED)
 Active
 
-*Source note / rationale: live HSSI is null. repostatus.org "Active" = "reached a stable, usable state and is being actively developed". Evidence: four releases in the 12 months before extraction (v0.5.0 2025-10-06, v0.6.0 2026-01-26, v0.7.0 2026-05-07, plus v0.4.0 2025-08-28), most recent commit 2026-07-10 on `main`, 213 commits total, weekly scheduled CI (`cron: '0 7 * * 3'`), active towncrier changelog fragments in `changelog/`, published on PyPI and conda-forge with stable Read the Docs. Note: `pyproject.toml` carries the PyPI trove classifier "Development Status :: 3 - Alpha", which is a distinct vocabulary from repostatus and is not the value HSSI asks for here; the repository's activity clearly maps to Active.*
+*Source note / rationale: repostatus.org "Active" = "reached a stable, usable state and is being actively developed". Evidence: four releases in the 12 months before extraction (v0.5.0 2025-10-06, v0.6.0 2026-01-26, v0.7.0 2026-05-07, plus v0.4.0 2025-08-28), most recent commit 2026-07-10 on `main`, 213 commits total, weekly scheduled CI (`cron: '0 7 * * 3'`), active towncrier changelog fragments in `changelog/`, and publication on PyPI and conda-forge with stable Read the Docs. `pyproject.toml` carries the PyPI trove classifier "Development Status :: 3 - Alpha", which is a distinct vocabulary from repostatus and does not override the repository activity evidence for `Active`.*
 
 ### 24. Documentation (RECOMMENDED)
 https://irispy.readthedocs.io/en/stable/
 
-*Source note: unchanged from live HSSI and confirmed current — `pyproject.toml` `urls.Documentation`, PyPI `project_urls.Documentation`, `README.rst` ("Documentation is hosted on Read the Docs"), SoMEF, and verified to resolve. Installation instructions live under this URL at `docs/tutorial/installation.rst`. (The PyHC registry's `irispy-lmsal.readthedocs.io` is stale.)*
+*Source note: confirmed by `pyproject.toml` `urls.Documentation`, PyPI `project_urls.Documentation`, `README.rst` ("Documentation is hosted on Read the Docs"), and SoMEF. Installation instructions live under this URL at `docs/tutorial/installation.rst`. The PyHC registry's `irispy-lmsal.readthedocs.io` value is stale.*
 
 ### 25. Funder (OPTIONAL)
 Not found
 
-*Source note: live HSSI is empty, and this field is deliberately left empty. The repository contains no package-level funding acknowledgement — no funding section in `README.rst`, the documentation, or `pyproject.toml`, and the Zenodo/DataCite record's `fundingReferences` is empty.*
+*Source note: this field is deliberately left empty. The repository contains no package-level funding acknowledgement — no funding section in `README.rst`, the documentation, or `pyproject.toml`, and the Zenodo/DataCite record's `fundingReferences` is empty.*
 
 *__DECISION RECORD (user-approved 2026-07-29): NASA was considered and deliberately NOT added.__ A NASA funder row (`National Aeronautics and Space Administration`, `https://ror.org/027ka1x80`) was proposed on the strength of irispy being the IRIS instrument team's own library for a NASA-funded mission (`README.rst` "IRIS is a NASA-funded Small Explorer…"; `docs/iris.rst` "IRIS is a NASA Small Explorer (SMEX) satellite"; `pyproject.toml` author "IRIS Instrument Team  @ LMSAL" and keyword `NASA`), and cross-entry precedent does exist — live HSSI's aiapy entry records that exact ROR alongside `Science and Technology Facilities Council`. The user's decision is that mission-level funding is too indirect to attribute to the software library itself: the available evidence funds the IRIS mission and its instrument team, not this package. Recorded here so the reasoning is not re-litigated on a future refresh, and so the empty value is understood as a considered choice rather than a gap in extraction.*
 
@@ -300,7 +279,7 @@ Not found
 - **Award Title:** Not found
 - **Award Number:** Not found
 
-*Source note: no award title or grant number appears anywhere in the repository, documentation, PyPI metadata, or the Zenodo/DataCite record (`fundingReferences` is empty). Live HSSI is also empty.*
+*Source note: no award title or grant number appears anywhere in the repository, documentation, PyPI metadata, or the Zenodo/DataCite record (`fundingReferences` is empty).*
 
 *__DECISION RECORD (user-approved 2026-07-29): an evidenced award candidate was considered and deliberately NOT added__, consistent with the Field 25 decision to omit mission-level funding. The IRIS instrument paper cited in Field 27 (De Pontieu et al. 2014, `10.1007/s11207-014-0485-y`) states verbatim in its Acknowledgements, verified directly against the Springer article of record: "This work is supported by NASA under contract **NNG09FA40C** and the Lockheed Martin Independent Research Program." That is a real, numbered NASA contract, and it would have supported an award entry ("NASA contract for the Interface Region Imaging Spectrograph (IRIS) mission", number `NNG09FA40C`) had mission-level funding been accepted. It funds the IRIS mission, not this software package, so it is omitted along with the Field 25 funder. Recorded here — including the contract number — so the evidence is preserved for any future refresh that revisits the mission-vs-package question.*
 
@@ -311,8 +290,6 @@ Not found
 ## Section 3: Additional Metadata
 
 ### 27. Related Publications (OPTIONAL)
-
-Live HSSI: **empty**. All four **ADDED**.
 
 - https://doi.org/10.1007/s11207-014-0485-y — De Pontieu, B., Title, A. M., Lemen, J. R., Kushner, G. D., Akin, D. J., et al. (2014). The Interface Region Imaging Spectrograph (IRIS). *Solar Physics*, 289, 2733–2779.
   *Source note: the IRIS instrument paper, linked prominently from `README.rst` ("For more information see the instrument paper which is available online for free") and cited directly in the code as the source of the detector constants irispy applies — `irispy/utils/constants.py`: "Source: IRIS instrument paper (https://link.springer.com/article/10.1007/s11207-014-0485-y)" for `DETECTOR_GAIN`, `DETECTOR_YIELD`, `READOUT_NOISE`. It describes the instrument rather than the software, which is why it is here rather than in Field 14; it is the reference any user of irispy's calibrated output needs.*
@@ -327,8 +304,6 @@ Live HSSI: **empty**. All four **ADDED**.
 
 ### 28. Related Datasets (OPTIONAL)
 
-Live HSSI: **empty**. Both **ADDED**.
-
 - https://doi.org/10.48322/k079-z133 — IRIS Level 2 Calibrated Images and Spectra Data (`spase://NASA/NumericalData/IRIS/Level_2/PT1S`).
   *Source note: the dataset irispy is built to read. `irispy/io/sji.py::read_sji_lvl2` and `irispy/io/spectrograph.py::read_spectrograph_lvl2` parse exactly these level-2 SJI and raster products; `docs/iris.rst` "we strongly recommend that everyone use the Level 2 data products".*
 - https://doi.org/10.48322/agkq-fv14 — Co-aligned Interface Region Imaging Spectrograph (IRIS) and Solar Dynamics Observatory (SDO) Atmospheric Imaging Assembly (AIA) Observations (`spase://NASA/NumericalData/IRIS/Level_2/IRIS_SDO`).
@@ -337,8 +312,6 @@ Live HSSI: **empty**. Both **ADDED**.
 **Considered and excluded (audit trail):** IRIS Level 1 data (https://doi.org/10.48322/gdjv-sn12) — irispy does not read level 1; `docs/iris.rst` states level 1 "**MUST** be passed through the calibration routines `iris_prep.pro`" first. Co-aligned IRIS + Hinode (https://doi.org/10.48322/55gv-bg80) and coordinated IRIS + SST (https://doi.org/10.48322/1mf1-nb89) — mentioned in `docs/tutorial/acquiring_data.rst` as searchable co-aligned products, but `read_files` only recognises IRIS/SJI/AIA `INSTRUME` values and `SDO.tar.gz` archives, so these are not supported.
 
 ### 29. Related Software (OPTIONAL)
-
-Live HSSI: **empty**. **ADDED**.
 
 - https://hesperia.gsfc.nasa.gov/ssw/iris/idl/ — SolarSoft (SSWIDL) IRIS analysis package.
   *Source note: the predecessor and functional counterpart irispy is explicitly written against. `irispy/utils/response.py`: "Goal is to replicate the base functionality of the IDL routine ``iris_get_response.pro`` in the SSWIDL package" and "…``fit_iris_xput.pro``… but without the optional keyword argument"; `irispy/utils/spectrograph.py`: "designed to do the same as `iris2/iris_calib_spectrum.pro`… The calibration output has been confirmed to provide the same results as those provided by the SolarSoft IDL routine `IRIS_CALIB`"; `docs/iris.rst` points to `iris_prep.pro` for level 1 → 1.5 processing; the shipped `irispy/data/test/get_cali_test_data.pro` generates the IDL reference data used to validate irispy's calibration against SSWIDL. No DOI or public VCS repository; the linked SSW IRIS IDL tree is the location cited by irispy itself.*
@@ -353,8 +326,6 @@ Live HSSI: **empty**. **ADDED**.
 - Packages that met the Field 30 bar (sunpy, ndcube, sunraster, astropy, gwcs, dkist, fiasco, aiapy, sunkit-image, astroscrappy) are listed there rather than duplicated here.
 
 ### 30. Interoperable Software (OPTIONAL)
-
-Live HSSI: **empty**. All ten **ADDED**, each with a specific demonstrated exchange rather than mere dependency presence.
 
 - https://github.com/sunpy/sunpy — `irispy.sji.SJICube.to_maps()` converts IRIS cubes into `sunpy.map.Map` / `MapSequence` objects (documented adapter API, used in `examples/coalign/01_coalign_iris_aia.py`); readers construct headers with `sunpy.map.header_helper.make_fitswcs_header` and coordinate frames with `sunpy.coordinates` (`Helioprojective`, `HeliographicStonyhurst`, `SphericalScreen`, `get_body_heliographic_stonyhurst`); SJI colour tables come from `sunpy.visualization.colormaps.color_tables.iris_sji_color_table`; sample data uses `sunpy.util.parfive_helpers.Downloader`.
 - https://github.com/sunpy/ndcube — shared NDCube data model: `irispy.spectrograph.RasterCollection` subclasses `ndcube.NDCollection`, `read_files` returns an `NDCollection`, `irispy.visualization.IRISPlotter` subclasses `ndcube.visualization.mpl_plotter.MatplotlibPlotter`, and `SpectrogramCube._fits_wcs` uses `ndcube.wcs.tools.unwrap_wcs_to_fitswcs`.
@@ -371,7 +342,7 @@ Live HSSI: **empty**. All ten **ADDED**, each with a specific demonstrated excha
 
 ### 31. Related Instruments (OPTIONAL)
 
-Live HSSI: **empty**. Both **ADDED**. Resolved against HSSI's instrument vocabulary, and every identifier below was fetched and confirmed to resolve to a SPASE Resource Description.
+Each instrument is supported directly by the package and carries its canonical SPASE identifier.
 
 - **Instrument Name:** Interface Region Imaging Spectrograph
   **Instrument Identifier:** https://spase-metadata.org/SMWG/Instrument/IRIS/IRIS
@@ -387,11 +358,9 @@ Live HSSI: **empty**. Both **ADDED**. Resolved against HSSI's instrument vocabul
 - SDO/HMI and SDO/EVE — present in the vocabulary but never referenced by irispy. Excluded.
 - FITS generally → Field 18 (Input File Formats), not an instrument.
 
-*Every instrument in this field resolves to exactly one SPASE record; none is unresolved or ambiguous.*
-
 ### 32. Related Observatories (OPTIONAL)
 
-Live HSSI: **empty**. Both **ADDED**. Resolved against HSSI's observatory vocabulary; both identifiers were fetched and confirmed to resolve.
+Each observatory is supported directly by the package and carries its canonical SPASE identifier.
 
 - **Observatory Name:** Interface Region Imaging Spectrograph
   **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/IRIS
@@ -404,44 +373,7 @@ Live HSSI: **empty**. Both **ADDED**. Resolved against HSSI's observatory vocabu
 **Considered and excluded (audit trail):**
 - Hinode and the Swedish 1 m Solar Telescope — documentation mentions co-aligned/coordinated data products and format lineage only; no reader. Excluded (see Field 31).
 - The Virtual Solar Observatory and CDAWeb-style archives — data sources, recorded in Field 17, not observatories.
-- No IRIS or SDO entry required a fallback from instrument to platform level, and nothing was dropped for being unresolvable.
-
-*Every observatory in this field resolves to exactly one SPASE record; none is unresolved or ambiguous.*
-
 ### 33. Logo (OPTIONAL)
 Not found
 
-*Source note: the repository contains no software logo. `docs/_static/images/` holds only `iris_spacecraft.jpg` and `iris_instrument.jpg` (schematic diagrams of the satellite and its optical paths), and the PyHC registry entry for `irispy-lmsal` has no `logo` field. Live HSSI is also empty, so this is unchanged.*
-*Candidate for user decision (not recorded as a value): `https://raw.githubusercontent.com/LM-SAL/irispy/refs/heads/main/iris_full.jpg` is the banner image at the top of `README.rst` and is the project's de-facto visual identity, but it is a photograph of the IRIS spacecraft rather than a logo for the software. Recommend leaving this field empty unless HSSI wants a representative image.*
-
----
-
-## Summary of Differences From Live HSSI
-
-All user decisions on this file were made and recorded on 2026-07-29; the values below are final.
-
-**Changed (evidence-backed corrections — user-approved):**
-| Field | Live HSSI | Final | Evidence |
-|---|---|---|---|
-| 8 Description | one 121-char sentence | extended (seed sentence kept verbatim as opening) | `docs/index.rst`, `docs/iris.rst`, `README.rst`, `CHANGELOG.rst` 0.7.0, module APIs |
-| 10 Publication Date | 2025-08-28 (= v0.4.0 release) | 2022-01-21 (first release v0.1.0) | git tag `v0.1.0` 2022-01-21; PyPI 0.1.0 2022-01-21T18:09:22Z |
-| 12 Version | v0.4.0 | v0.7.0 (+ date, description, version DOI) | git tag `v0.7.0` 2026-05-07; PyPI 0.7.0 2026-05-07T18:20:53Z; Zenodo 20073073; DataCite |
-| 6 Author `juanms` | family name `juanms`, no ORCID, no affiliation | Juan Martínez-Sykora, ORCID `0000-0002-0333-5717`, LMSAL + BAERI | GitHub `jumasy` display name `juanms`; `git log` `Juan Martinez Sykora <jumasy1980@gmail.com>`; ORCID works; 2018–2023 ApJ affiliations |
-
-**Added (previously empty):** Fields 4 (31 functionality values), 17, 18, 19, 20, 21, 22, 23, 27 (4 publications), 28, 29, 30, 31, 32; License URI in Field 15; seven keywords in Field 16; one organization author in Field 6 (`IRIS Instrument Team @ LMSAL`, user-approved); the University of Oslo affiliation ROR (`https://ror.org/01xtthb56`) for Author 3.
-
-**Removals applied (user-approved):** Field 13 `IDL` and `Other` — both were live HSSI values and are deliberately dropped, leaving only `Python 3.x`. This is the only field where live values are removed rather than added to, so it requires an explicit M2M replacement rather than a union.
-
-**Considered and deliberately left empty (user-approved, not extraction gaps):** Field 25 Funder and Field 26 Award Title — a NASA funder row (`https://ror.org/027ka1x80`) and the verified IRIS mission contract `NNG09FA40C` were both evidenced and available, but were rejected because the funding is mission-level rather than package-level. See those fields' decision records.
-
-**Unchanged:** Fields 2, 3, 5, 7, 9, 11, 14, 24, 33; existing values in 15, 16, and the two retained authors in 6. (Fields 25 and 26 are also unchanged in effect — both remain empty — but are listed above under the considered-and-rejected category so their decision rationale carries forward.)
-
-**Rejected external metadata:** DataCite/Zenodo `rightsList` "Creative Commons Attribution 4.0 International" (Zenodo deposit default) contradicts `licenses/LICENSE.rst`; the repository BSD 3-Clause license stands.
-
----
-
-## Current State Against Live HSSI (2026-07-29)
-
-**Fields 2–5 and 7–33 match live HSSI and are verified**, including the values most exposed to presentation transforms: Version stores the bare version number (the site displays it prefixed with the software name); Keywords are stored lowercase (displayed Title Case); and Related Instruments store bare names bound to their SPASE identifiers (displayed with abbreviations). Field 13's reduction to `Python 3.x` took effect, and the `IDL` and `Other` vocabulary entries remain available to other software that uses them.
-
-**Field 6 (Authors) also matches**, completed 2026-07-29 after two corrections to shared Person and Organization records; see the notice in that field. All of Fields 2–33 are now verified against live HSSI.
+*Source note: the repository contains no software logo. `docs/_static/images/` holds only `iris_spacecraft.jpg` and `iris_instrument.jpg` (schematic diagrams of the satellite and its optical paths), and the PyHC registry entry for `irispy-lmsal` has no `logo` field. The banner image at `https://raw.githubusercontent.com/LM-SAL/irispy/refs/heads/main/iris_full.jpg` is deliberately excluded: it is a photograph of the IRIS spacecraft rather than a logo for the software.*

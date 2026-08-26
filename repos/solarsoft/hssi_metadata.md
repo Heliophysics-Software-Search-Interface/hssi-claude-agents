@@ -4,7 +4,7 @@
 **Repository:** https://www.lmsal.com/solarsoft/
 **Source Revision:** Not applicable — SolarSoft has no version control, tags, or releases. See the source-currency note below.
 **Extraction Date:** 2026-08-11
-**Validation Date:** 2026-08-23
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
 
 ## Scope note — how to read the evidence in this file
@@ -66,9 +66,8 @@ DOI-specific validation at the write layer**, so `https://ascl.net/1208.013` —
 24 characters — stores without error. The DOI expectation belongs to the submission form's *autofill
 convenience*, which uses a supplied DOI to pre-populate other fields from DataCite; a non-DOI value
 simply enriches nothing. That distinction matters: a future agent should not remove this value on the
-theory that it will be rejected, because it will not be. Recording it is a judgement that a real,
-citable, globally unique software identifier is more useful to an HSSI reader than an empty field; a
-user who prefers Field 2 to hold only DOIs can empty it, but should not substitute something else.
+theory that it will be rejected, because it will not be. The settled choice is to record this real,
+citable, globally unique software identifier rather than leave the field empty.
 
 *Considered and rejected:* a Zenodo or other DataCite DOI. Searches of the official project pages,
 the master distribution tree, and DataCite found no DOI minted for SolarSoft itself, which is
@@ -176,9 +175,8 @@ is recorded in Field 24's note so the browsable tree is not lost to a future rea
 - Servers and Environments: Data servers processing and handling
 - Servers and Environments: Distribution/Access
 
-*Source note:* The existing HSSI record carried the single value `Data Processing and Analysis`,
-which is true but describes a small fraction of what SSW is. Every value above is backed by named
-routines or directories; all six parent categories are present for their children. Code paths cited
+*Source note:* Every value above is backed by named routines or directories; all six parent
+categories are present for their children. Code paths cited
 are from the `gen/` library (read in the 2024 `lmco/SolarSoft` snapshot and cross-checked against
 the live master tree) unless a mission or package branch is named.
 
@@ -279,9 +277,8 @@ Solar Physics".
 
 **Values:** Solar Environment; Photosphere; Chromosphere; Corona; Solar Wind; Interplanetary Space
 
-*Source note:* `Solar Environment` is carried over from the existing HSSI record and retained. The
-five additions are more specific and reflect the observational domains SSW's instrument branches
-actually serve:
+*Source note:* `Solar Environment` is the broad region for the package. The five more-specific
+values reflect the observational domains SSW's instrument branches actually serve:
 
 - **Photosphere** — magnetograph and continuum support (SOHO/MDI, SDO/HMI, Hinode/SOT, ASO-S/FMG),
   active-region utilities (`get_nar.pro`, `decode_nar.pro`, `oplot_nar.pro`), limb fitting and
@@ -336,9 +333,8 @@ magnetospheric science; the geomagnetic aspect is captured in Field 22 instead.
 - Identifier: Not found
 - Affiliation: Goddard Space Flight Center (https://ror.org/0171mag52)
 
-*Source note — reconciliation.* Authors 1 and 2 are carried over unchanged from the existing HSSI
-record; nothing recorded there was dropped. Authors 3–7 are additions, each with primary-source
-evidence:
+*Source note.* Authors 1 and 2 are established authors of the record. Authors 3–7 each have
+primary-source evidence:
 
 - **B. N. Handy** — the ASCL record `ascl:1208.013` credits the *software* to "Freeland, S. L.;
   Handy, B. N.", and he is co-author of the reference publication. The Montana State affiliation is
@@ -379,14 +375,14 @@ authors, and a future agent should not add them:
   integrated into the SSW distribution"), but as the author of an *external* package that SSW
   integrates. CHIANTI is recorded in Field 29, not here.
 
-*Further substantial contributors, documented as candidates rather than recorded.* Header analysis
+*Further substantial contributors considered and not recorded.* Header analysis
 of the `gen/` snapshot also shows large, coherent contributions from **Mons Morrison** (Yohkoh-era
 foundations), **Stein Vidar Hagfors Haugan** (University of Oslo; `gen/idl/fitting/` CFIT family),
 **Liyun Wang** (`image_tool`), **C. D. Pike** (Rutherford Appleton Laboratory; CDS-era utilities)
 and **Nariaki Nitta**. They are not recorded because the list above is intended to capture the
 system's architects and principal library authors, not to approximate a contributor census that a
-consortium project of this size cannot support. Adding any of them would be defensible; a future
-agent proposing one should say which subsystem the person authored.
+consortium project of this size cannot support. They should not be added without stronger evidence
+that identifies the person as a principal author of SolarSoft rather than a subsystem contributor.
 
 *Negative research on identifiers.* ORCID's public search was queried for each recorded person
 (by family name, by family + given name, and by affiliation-scoped variants), and for the reference
@@ -461,7 +457,7 @@ the name change or treating the slug as drift to correct.
 
 ### 8. Description (MANDATORY)
 
-**Value:** unchanged from the existing HSSI record (the full multi-paragraph text beginning "The
+**Value:** the full multi-paragraph source description beginning "The
 SolarSoft system is a set of integrated software libraries, data bases, and system utilities which
 provide a common programming and data analysis environment for Solar Physics." and ending "…is now
 fully integrated into the SSW distribution and analysis environment for UV/EUV emission line
@@ -490,7 +486,7 @@ would be an editorial substitution rather than a correction.
 
 **Value:** `The SolarSoft system is a set of integrated software libraries, data bases, and system utilities which provide a common programming and data analysis environment for Solar Physics.`
 
-*Source note:* Unchanged. It is the opening sentence of the project's own description document and
+*Source note:* This is the opening sentence of the project's own description document and
 is under the 200-character guidance. Lockheed Martin used the same core sentence as the GitHub
 description of `lmco/SolarSoft`, reframed as a noun phrase — "A set of integrated software libraries,
 data bases, and system utilities which provide a common programming and data analysis environment
@@ -556,7 +552,7 @@ publisher supplied with an identifier is looked up by that identifier alone, and
 therefore not label the laboratory — it would mint a second "Lockheed Martin Solar and Astrophysics
 Laboratory", splitting this record's publisher away from the row every affiliation points at. There is
 no path through HSSI's normal write layer that attaches an identifier to an already-named
-organisation, so this is not a gap waiting to be filled by a more careful payload.
+organisation, so this is not an evidence gap that a later metadata review can fill.
 
 The second ground is substantive and would hold even if the mechanism allowed it.
 `https://www.lmsal.com/solarsoft/` identifies *SolarSoft*, not the laboratory. It is this record's
@@ -598,28 +594,18 @@ no releases, no tags, no `CHANGELOG` and no `NEWS`. The system is architecturall
   `gen/setup/setup.ssw_env.20250210`, `setup.ssw.20230620`, `radio/nrh.20240710`,
   `so/stix.20220218`. That convention is itself evidence that no version numbering exists.
 
-**Recommendation: leave Field 12 empty.** The stored HSSI version row holds an empty string, which
-the view API renders as `Solar Soft - ` only because it prepends the software name; the stored value
-is blank. Leaving it blank is the correct state. Two things must not be done here:
+**Field 12 remains empty.** HSSI renders an empty value with the software-name prefix because the
+view prepends that name; the prefix is presentation only. Leaving the version blank is the correct
+state. Two alternatives were considered and rejected:
 
 1. **Do not record the `ssw_info_map.dat` timestamp as a version.** It changes every day, so any
    value derived from it is stale before it is published, and it describes a mirror sync rather than
    a state of the software.
-2. **Do not write the rendered prefix into Field 12.** The view composes what it displays as
-   `<software name> - <version number>`; the prefix is never stored. Because Field 7 now reads
-   `SolarSoft`, that display shifts from `Solar Soft - ` to `SolarSoft - ` purely as a rendering
-   consequence of the rename — the stored value is unchanged and still blank. **A prefix seen in the
-   view is a rendering artifact in either spelling, and copying one back into storage would corrupt
-   the record.** Field 12 stores a bare version number and nothing else.
+2. **Do not treat the rendered software-name prefix as a version.** Field 12 represents a bare
+   version number, and the display prefix is not part of that metadata.
 
-*A quiet benefit of leaving Field 12 empty.* Because no version is written, the blank
-`SoftwareVersion` row already attached to this record stays attached and is not replaced. Writing a
-version to this field replaces the row rather than editing it, leaving the previous row orphaned; by
-holding the field empty on the evidence above, this record avoids that entirely. That is a further
-reason not to invent a version merely to populate the field.
-
-If a future refresh finds that SolarSoft has adopted releases, this note is the baseline that
-establishes it is a genuine change rather than a value previously missed.
+If SolarSoft later adopts releases, the evidence above establishes that this would be a genuine
+change rather than a version value previously missed.
 
 ---
 
@@ -627,13 +613,13 @@ establishes it is a genuine change rather than a value previously missed.
 
 **Values:** IDL; C; Java
 
-*Source note:* `IDL` is carried over from the existing HSSI record and is unquestionably the primary
+*Source note:* `IDL` is unquestionably the primary
 language — the description says so ("It is primarily an IDL based system, although some instrument
 teams integrate executables written in other languages"), and the 2024 `gen/` snapshot contains 3,975
 `.pro` files against 27 Perl, 18 C, 8 Python, 4 Fortran and a dozen Java sources.
 
-The additions are the languages with real, verifiable presence in the distributed tree and a matching
-vocabulary row:
+`C` and `Java` also have real, verifiable presence in the distributed tree and matching vocabulary
+rows:
 
 - **C** — `gen/idl/dlm/` and the shared libraries and `call_external` interfaces those `.c` sources
   build (for example the cfitsio shared library that `punch/idl/read_punch.pro` calls through
@@ -749,7 +735,7 @@ DOI metadata.
 ### 17. Data Sources (OPTIONAL)
 
 **Values:** The Virtual Solar Observatory.; Observatory/Mission-specific; HTTP/HTTPS Directories;
-FTP/FTPS Directories
+FTP/FTPS Directories; WDC
 
 *Source note:* The field was empty in HSSI.
 
@@ -770,12 +756,17 @@ FTP/FTPS Directories
 - **`FTP/FTPS Directories`** — `gen/idl/objects/ftp__define.pro`, `gen/idl/sockets/is_ftp.pro` and
   `sock_dir_ftp.pro`; the installation form still offers "FTP", "Passive FTP" and "Passive FTP + No
   Extended Passive (Mac/Darwin for example)" as transfer protocols.
+- **`WDC`** — `gen/idl/ssw_util/ssw_getdst.pro:59,81` hard-codes the World Data Center for
+  Geomagnetism, Kyoto host `swdcdb.kugi.kyoto-u.ac.jp`, and `ssw_kyoto2dst.pro:40` fetches and parses
+  those pages. These are the same live retrieval routines that support `Geomagnetic Storms` in
+  Field 22.
 
 *Searched and not found:* **CDAWeb** and **OMNIWeb** — a case-insensitive search of the `gen/`
 library for both names returned nothing, so neither was recorded. **HAPI**, **das2**, **AMDA**,
-**SSCWeb**, **Madrigal**, **VirES**, **GFZ**, **WDC**, **TAP** and **S3/Cloud-aware** likewise have
-no supporting code in the material examined. This negative research is recorded so a later refresh
-does not re-add them speculatively from the software's breadth.
+**SSCWeb**, **Madrigal**, **VirES**, **GFZ**, **TAP** and **S3/Cloud-aware** likewise have no
+supporting code in the material examined. The earlier negative-research list also named `WDC`, but
+that conclusion was corrected on 2026-08-25 by the cited Kyoto retrieval path; the other nine
+negative findings were rechecked and stand.
 
 *Belonging to other fields:* the HEK (Heliophysics Event Knowledgebase), CoSEC, EGSO, HELIO and the
 Ontology library are event/service layers rather than rows in this vocabulary; the mission archives
@@ -917,10 +908,8 @@ arm64` — no evidence.
 **Values:** Solar Flares; Solar Corona; Coronal Mass Ejections; X-ray emission; Solar Wind;
 Coronal Heating; Geomagnetic Storms
 
-*Source note:* The field was empty in HSSI. This is the whole of the live seven-row `Phenomena`
-vocabulary, which is an unusual outcome and is justified here only because SolarSoft is a
-general-purpose environment for an entire discipline rather than a single-purpose tool. Each value
-has its own evidence:
+*Source note:* SolarSoft is a general-purpose environment for an entire discipline rather than a
+single-purpose tool. Each selected phenomenon has its own evidence:
 
 - **Solar Flares** — GOES event handling (`decode_gev.pro`, `get_gev.pro`, `list_gev.pro`,
   `find_goes_events.pro`, `goes_make_yearly_eventlist.pro`, `ssw_flare_locator.pro`,
@@ -942,8 +931,9 @@ has its own evidence:
   `ssw_getdst.pro`, `ssw_kyoto2dst.pro`, `ssw_getapkp.pro`, `ssw_apkpbar.pro`, `get_swpc.pro`,
   `get_solar_indices.pro`. This is the weakest of the seven — the support is ancillary index
   retrieval rather than magnetospheric modelling — and is recorded because a scientist correlating
-  flare/CME events with geomagnetic response would reach for exactly these routines. A reviewer who
-  judges that too thin should drop this one value; the other six do not depend on it.
+  flare/CME events with geomagnetic response would reach for exactly these routines. This ancillary
+  retrieval and correlation support is sufficient for the settled inclusion, while the note records
+  its narrower basis than the other six phenomena.
 
 *Note:* `Coronal Holes` is **not** a row in this vocabulary and would be rejected. SSW does support
 coronal-hole work (for example through the `catch` package), and that support is represented via
@@ -1170,11 +1160,8 @@ from the same institution, which is consistent with NAS5-38099 being the NASA co
 Lockheed Martin performed its TRACE-era solar work. That is background, **not** a title: a plausible
 expansion such as "TRACE" or a programme name must not be substituted into the label above.
 
-*What the recorded award replaced.* This record previously pointed at a blank award row — a row with
-an empty name, carrying no information. That row is **shared with other records**, so recording a real
-award here detaches this record from it and leaves it in place for the others; nothing about those
-other records changes. A future agent should not read the blank row's continued existence elsewhere in
-HSSI as a sign that this record's award failed to apply.
+*What the recorded award replaced.* The previous award value was blank and carried no information.
+The supported `NASA contract NAS5-38099` value supersedes that empty placeholder.
 
 *Scope caveat.* This is the funding of the 1998 paper that describes SolarSoft. SolarSoft has been
 developed continuously for a further quarter-century under funding that no source consulted
@@ -1388,16 +1375,16 @@ what is recorded; the `.html` twins have since been retired in the vocabulary-wi
 *SPICE normalisation:* the bare row `Spectral Imaging of the Coronal Environment` was preferred over
 the since-retired `SPICE (Spectral Imaging of the Coronal Environment)` twin on the `.html` identifier.
 
-*EUI and PHI — scope of support, stated plainly so a reviewer can judge it.* SolarSoft has no data
+*EUI and PHI — scope of support.* SolarSoft has no data
 branch for either instrument. They are included because `gen/idl/sunglobe/` — an observation-planning
 tool built by the Solar Orbiter SPICE team ("Project : ORBITER - SPICE ... 3D Sun pointing tool") —
 implements named, instrument-specific field-of-view classes for them:
 `sunglobe_eui_euv_fov__define.pro` and `sunglobe_eui_euv_config_fov.pro` for EUI's EUV channels,
 `sunglobe_eui_lya_fov__define.pro` and `sunglobe_eui_lya_config_fov.pro` for its Lyman-α channel, and
 `sunglobe_phi_fov__define.pro` with `sunglobe_phi_config_fov.pro` for PHI. That is instrument-specific
-geometry code written by a mission team, not a tutorial name-drop — but it is planning support, not
-data reduction. A reviewer who reads Field 31 strictly as data support should drop these two; no
-other entry depends on them.
+geometry code written by a mission team, not a tutorial name-drop. The settled inclusion treats this
+dedicated observation-planning support as designed-to-support evidence while preserving the caveat
+that it is not data-reduction support.
 
 **Parker Solar Probe** — the `psp/wispr` branch; WISPR is selectable on the installation form.
 
@@ -1478,7 +1465,7 @@ support covers it by the same evidence.
 as stored. **Do not normalise GOES 5 to "Solar X-ray Sensor on GOES" for consistency**: the row name
 must match what is stored, and the four rows are distinguished by identifier in any case.
 
-**Where the extraction stopped, and why:** no XRS rows exist for GOES 1–4, 6–12 or 16–19, so the
+**Vocabulary limitation:** no XRS rows exist for GOES 1–4, 6–12 or 16–19, so the
 remainder of SSW's GOES X-ray support is carried at platform level in Field 32 rather than expanded
 here.
 
@@ -1672,17 +1659,17 @@ exists, the single applicable) row was taken, per the normalisation and tie-brea
   are more specific and match how SSW's instrument support is organised; adding the mission row too
   would be redundant.
 - **GOES 1–11** — observatory rows exist for all of them and `goes_sat.pro` will read their XRS data,
-  so listing them would be defensible. The line was drawn at GOES-12 because that is where SSW has
+  but they remain excluded. The line was drawn at GOES-12 because that is where SSW has
   *dedicated instrument branches* (`goes/sxig12` onward), which is the criterion used for Field 32.
-  A future refresh that prefers data-readability as the criterion could extend downward; this note
-  records that the choice was deliberate rather than an oversight.
+  The broader data-readability criterion was considered and declined so that the observatory list
+  remains tied to dedicated branches rather than every platform whose data a generic routine can read.
 
   **Note the deliberate asymmetry with Field 31**, so it is not read as an error: GOES 5 *does* appear
   there, as the instrument row `Solar X-ray Monitor on GOES 5`, while GOES 5 has no entry here. The
   two fields are populated by different rules. Field 31 records every instrument SSW supports for
   which a SPASE instrument row exists, and one exists for GOES 5's XRS; Field 32 records the platforms
-  SSW serves through a dedicated branch, and there is no GOES-5-specific branch. Adding the GOES 5
-  observatory row would be a reasonable extension, not a correction.
+  SSW serves through a dedicated branch, and there is no GOES-5-specific branch. The GOES 5
+  observatory row is therefore deliberately excluded.
 - **Nançay Radioheliograph at observatory level was omitted in an earlier state of this record, and
   that omission was wrong.** The reasoning then was that two observatory rows share the display name
   `Nancay Radioheliograph` — `.../SMWG/Observatory/SRN/NRH` and `.../SMWG/Observatory/SRN/NRT` — and

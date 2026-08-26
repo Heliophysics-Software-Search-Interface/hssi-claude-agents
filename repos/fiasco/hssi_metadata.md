@@ -4,7 +4,7 @@
 **Repository:** https://github.com/wtbarnes/fiasco
 **Source Revision:** 1a1965066b192360bdc3681e128dec91d1a4ead0
 **Extraction Date:** 2026-07-26
-**Validation Date:** 2026-08-24
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
 
 ---
@@ -41,7 +41,11 @@
 - Solar Environment
 - Earth Atmosphere
 - Interplanetary Space
+- Corona
+- Solar Wind
 - **Source:** Identity-aware union retaining the existing HSSI `Solar Environment` value. The curated PyHC record additionally classifies fiasco for `ionosphere_thermosphere_mesosphere`, supporting Earth Atmosphere. The repository's developer-maintained works-citing list demonstrates use for solar-wind and coronal-mass-ejection charge-state modeling in interplanetary space.
+- **Evidence, Corona:** Every `fiasco.Ion` defaults to the Feldman solar-coronal abundance set (`fiasco/ions.py:65`), and the AIA response guide explicitly uses coronal abundances while calculating a solar EUV response (`examples/user_guide/aia_response.py:44`).
+- **Evidence, Solar Wind:** The developer-maintained citing bibliography includes Rivera et al. (2025), “Differentiating the Acceleration Mechanisms in the Slow and Alfvénic Slow Solar Wind” (`docs/works_citing.bib:80`), the same curated usage source already used in this dossier to support interplanetary-space charge-state modeling.
 
 ### 6. Authors (MANDATORY)
 - **Author:** Will Barnes
@@ -194,8 +198,9 @@ fiasco provides a Python interface to the CHIANTI, an atomic database used prima
 - Coronal Mass Ejections
 - Solar Corona
 - Solar Flares
+- Solar Wind
 - X-ray emission
-- **Source:** Current CHIANTI/fiasco documentation covers solar-coronal abundances, ultraviolet/X-ray spectroscopy, emission spectra, and ionization calculations. The documented non-equilibrium-ionization example directly models a rapid coronal heating and cooling episode using fiasco rates, and the public API computes radiative losses used in coronal-heating modeling. The repository's developer-maintained works-citing list demonstrates fiasco use for coronal-mass-ejection charge-state modeling and solar-flare studies.
+- **Source:** Current CHIANTI/fiasco documentation covers solar-coronal abundances, ultraviolet/X-ray spectroscopy, emission spectra, and ionization calculations. The documented non-equilibrium-ionization example directly models a rapid coronal heating and cooling episode using fiasco rates, and the public API computes radiative losses used in coronal-heating modeling. The repository's developer-maintained works-citing list demonstrates fiasco use for coronal-mass-ejection charge-state modeling, solar-flare studies, and slow-solar-wind charge-state work (`docs/works_citing.bib:80`).
 - **Note:** `Coronal Holes` was weighed during extraction and not selected because the repository does not establish it as a direct fiasco science target — but it was never actually available: it appeared only in a stale documentation list and has never been a row in the HSSI Phenomena vocabulary (noted 2026-08-24), so it must not be re-proposed as a value here regardless of evidence.
 
 ### 23. Development Status (RECOMMENDED)

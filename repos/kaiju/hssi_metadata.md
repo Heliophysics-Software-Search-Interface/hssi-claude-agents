@@ -4,7 +4,7 @@
 **Repository:** https://github.com/JHUAPL/kaiju
 **Source Revision:** 9e19bfc61a63206e7e74340b5dbf0b7537afa8a7
 **Extraction Date:** 2026-07-24
-**Validation Date:** 2026-08-24
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
 
 ---
@@ -18,12 +18,12 @@
 ### 2. Persistent Identifier (RECOMMENDED)
 https://doi.org/10.5281/zenodo.16818620
 
-*Source: Seeded from existing HSSI record and confirmed by CITATION.cff line 6, DataCite concept DOI metadata, and Zenodo concept record. This is the all-versions concept DOI; the latest version DOI is recorded in Field 12.*
+*Source: CITATION.cff line 6, DataCite concept DOI metadata, and the Zenodo concept record. This is the all-versions concept DOI; the latest version DOI is recorded in Field 12.*
 
 ### 3. Code Repository (MANDATORY)
 https://github.com/JHUAPL/kaiju
 
-*Source: Seeded from existing HSSI record and confirmed by git remote origin, CITATION.cff line 7, and docs/source/building/index.rst lines 27-32.*
+*Source: git remote origin, CITATION.cff line 7, and docs/source/building/index.rst lines 27-32.*
 
 ### 4. Software Functionality (MANDATORY)
 - Coordinate Transforms
@@ -50,7 +50,7 @@ https://github.com/JHUAPL/kaiju
 - Servers and Environments:High Performance Computing
 - Servers and Environments:Software or Environment Container
 
-*Source: Seeded HSSI record had only Models and Simulations; repository evidence supports a fuller set. README.md lines 5-25 identify MAGE, GAMERA-helio, GAMERA, RAIJU, Dragon King, REMIX, and TIEGCM. CMakeLists.txt lines 122-274 builds CHIMP, GAMERA, Dragon King, REMIX, RAIJU, VOLTRON, GAMERA-helio, and MPI variants. Coordinate transforms are supported by src/base/kai2geo.F90 and src/base/defs/mixdefs.F90 for SM/GEO/GSM/APEX transforms and by src/chimp/gridloc.F90 for LFM and heliospheric spherical coordinates. Data access/retrieval and file conversion are supported by docs/source/running/geoGRQuickStart.rst lines 76-107 and scripts/makeitso/makeitso.py lines 848-855 for CDAWeb solar-wind retrieval and HDF5 conversion; docs/source/running/helioQuickStart.rst lines 54-87 and scripts/makeitso-gamhelio/makeitso-gamhelio.py lines 227-256 support WSA FITS input. Field-line tracing and analysis tools are built in CMakeLists.txt lines 130-143 and documented in docs/source/tools. 2D slice extraction is documented in docs/source/tools/slice.rst, and particle distribution/PSD processing is implemented in src/chimp/psdio.F90. RAIJU moments and precipitation outputs are in src/raiju/raijuIO.F90. Container and HPC support are documented in docs/source/building/index.rst lines 17-48 and containers/containerization.md lines 95-168, 220-228. Standalone visualization, mission-operations support, and observatory/instrument model categories were considered but not selected because visualization is delegated to companion Kaipy/quicklook workflows, CCMC/HPC packaging does not make the software mission-specific, and WSA/TIEGCM coupling does not establish instrument or observatory model support.*
+*Source: README.md lines 5-25 identify MAGE, GAMERA-helio, GAMERA, RAIJU, Dragon King, REMIX, and TIEGCM. CMakeLists.txt lines 122-274 builds CHIMP, GAMERA, Dragon King, REMIX, RAIJU, VOLTRON, GAMERA-helio, and MPI variants. Coordinate transforms are supported by src/base/kai2geo.F90 and src/base/defs/mixdefs.F90 for SM/GEO/GSM/APEX transforms and by src/chimp/gridloc.F90 for LFM and heliospheric spherical coordinates. Data access/retrieval and file conversion are supported by docs/source/running/geoGRQuickStart.rst lines 76-107 and scripts/makeitso/makeitso.py lines 848-855 for CDAWeb solar-wind retrieval and HDF5 conversion; docs/source/running/helioQuickStart.rst lines 54-87 and scripts/makeitso-gamhelio/makeitso-gamhelio.py lines 227-256 support WSA FITS input. Field-line tracing and analysis tools are built in CMakeLists.txt lines 130-143 and documented in docs/source/tools. 2D slice extraction is documented in docs/source/tools/slice.rst, and particle distribution/PSD processing is implemented in src/chimp/psdio.F90. RAIJU moments and precipitation outputs are in src/raiju/raijuIO.F90. Container and HPC support are documented in docs/source/building/index.rst lines 17-48 and containers/containerization.md lines 95-168, 220-228. Standalone visualization, mission-operations support, and observatory/instrument model categories were considered but not selected because visualization is delegated to companion Kaipy/quicklook workflows, CCMC/HPC packaging does not make the software mission-specific, and WSA/TIEGCM coupling does not establish instrument or observatory model support.*
 
 ### 5. Related Region (MANDATORY)
 - Earth Atmosphere
@@ -58,8 +58,32 @@ https://github.com/JHUAPL/kaiju
 - Interplanetary Space
 - Planetary Magnetospheres
 - Solar Environment
+- Earth Inner Magnetosphere
+- Earth Ionosphere
+- Earth Thermosphere
+- Earth Magnetotail
+- Earth Auroral Subregion
+- Solar Wind
+- Jupiter Magnetosphere
+- Saturn Magnetosphere
 
-*Source: Seeded from existing HSSI record and enriched with Interplanetary Space. README.md lines 5-25 and docs/source/index.rst lines 4-11 describe geospace, inner heliosphere, planetary magnetospheres, solar wind, ionosphere, and thermosphere support.*
+*Source: README.md lines 5-25 and docs/source/index.rst lines 4-11 describe geospace, inner heliosphere, planetary magnetospheres, solar wind, ionosphere, and thermosphere support.*
+
+*Source for `Earth Inner Magnetosphere`: `README.md:18-20` identifies RAIJU as the inner-magnetosphere model, corroborated by `src/voltron/innermagsphere.F90:1` and `src/base/imaghelper.F90:1`.*
+
+*Source for `Earth Ionosphere`: `README.md:22-25` identifies the REMIX ionospheric-electrodynamics module and TIEGCM ionosphere-thermosphere model; `src/raiju/raijuGrids.F90:352` explicitly maps onto a spherical grid in the ionosphere.*
+
+*Source for `Earth Thermosphere`: `README.md:24-25` identifies the TIEGCM ionosphere-thermosphere model, and `docs/source/building/buildAitken_GTR.rst:119` describes the coupled thermosphere and ionosphere system.*
+
+*Source for `Earth Magnetotail`: `docs/source/tools/slice.rst:140-142` and `docs/source/tools/chop.rst:138-140` document the `xTail` option as including magnetotail cells in the model domain.*
+
+*Source for `Earth Auroral Subregion`: `src/dragonking/auroralhelper.F90:1` identifies auroral-conductance routines, while `src/remix/mixconductance.F90:49,180` describes auroral precipitation and conductance and implements `conductance_aurora`.*
+
+*Source for `Solar Wind`: `README.md:8-9` identifies solar-wind simulation as a supported environment, and `src/gamera/apps/wind.F90:1` identifies utilities for solar-wind boundary conditions.*
+
+*Source for `Jupiter Magnetosphere`: `src/base/planethelper.F90:55-60` defines Jupiter-specific planetary and magnetospheric parameters used by the magnetosphere setup in `src/gamera/apps/msphutils.F90:80-82`.*
+
+*Source for `Saturn Magnetosphere`: `src/base/planethelper.F90:48-54` defines Saturn-specific planetary and magnetospheric parameters; `docs/source/_obsolete/magnetosphere/exoOuterPlanets/exoOuterPlanets.rst:4,59` documents non-Earth planetary-magnetosphere runs and names Saturn among the planets with defined parameters.*
 
 ### 6. Authors (MANDATORY)
 - **Author:** Slava Merkin
@@ -157,17 +181,17 @@ https://github.com/JHUAPL/kaiju
     - **Organization:** NSF National Center for Atmospheric Research
       - **Affiliation Identifier:** https://ror.org/05cvfcr44
 
-*Source: Live HSSI record contained only three incomplete author entries. Replaced with the complete DOI/CITATION.cff creator set from CITATION.cff lines 10-86 and DataCite/Zenodo metadata. The CITATION.cff/Zenodo spelling "Haonon Wu" conflicts with the ORCID public record for https://orcid.org/0000-0002-3272-8106, which gives "Haonan Wu"; the ORCID-backed spelling is used. ROR identifiers resolved through the ROR API for JHU/APL, NSF NCAR, and Rice University. No ROR found for Gamera Consulting.*
+*Source: An earlier HSSI record contained only three incomplete author entries. The complete creator set comes from CITATION.cff lines 10-86 and DataCite/Zenodo metadata. The CITATION.cff/Zenodo spelling "Haonon Wu" conflicts with the ORCID public record for https://orcid.org/0000-0002-3272-8106, which gives "Haonan Wu"; the ORCID-backed spelling is used. ROR identifiers for JHU/APL, NSF NCAR, and Rice University come from ROR; no ROR was found for Gamera Consulting.*
 
 ### 7. Software Name (MANDATORY)
 Kaiju
 
-*Source: Seeded from existing HSSI record and confirmed by README.md line 1 and repository name. CITATION.cff line 3 titles the DOI record as MAGE because MAGE is a primary application within Kaiju.*
+*Source: README.md line 1 and the repository name. CITATION.cff line 3 titles the DOI record as MAGE because MAGE is a primary application within Kaiju.*
 
 ### 8. Description (MANDATORY)
 Kaiju software includes the Multiscale Atmosphere-Geospace Environment (MAGE) model developed by the Center for Geospace Storms (CGS) as well as other scientific software for simulation of heliospheric environments such as planetary magnetospheres and the solar wind. Currently supported applications include MAGE (version 1.25) and GAMERA-helio, the geospace and inner heliosphere applications of the Kaiju software. MAGE 1.25 includes the GAMERA global magnetosphere model, RAIJU inner-magnetosphere model, Dragon King energetic-precipitation model, REMIX ionospheric electrodynamics module, and TIEGCM ionosphere-thermosphere coupling. Kaiju also includes CHIMP analysis tools for field-line tracing, test-particle calculations, slices, and ground/space magnetic perturbation calculations. The software is primarily modern Fortran with Python run-preparation tooling, uses HDF5 and related input conversion workflows, and is built for serial and MPI/OpenMP high-performance computing runs. Users are encouraged to use the companion Kaipy package for analysis and visualization of Kaiju simulations.
 
-*Source: Seeded HSSI description, streamlined without changing factual scope; confirmed by README.md lines 5-53, CMakeLists.txt lines 122-274, docs/source/building/index.rst lines 17-48, and docs/source/running/geoGRQuickStart.rst lines 76-131.*
+*Source: README.md lines 5-53, CMakeLists.txt lines 122-274, docs/source/building/index.rst lines 17-48, and docs/source/running/geoGRQuickStart.rst lines 76-131.*
 
 ### 9. Concise Description (OPTIONAL)
 HPC space-physics modeling framework for MAGE coupled geospace simulations and GAMERA-helio inner-heliosphere simulations, built around the GAMERA MHD solver.
@@ -210,7 +234,7 @@ https://doi.org/10.3847/1538-4365/ab3a4c
 - **License:** BSD 3-Clause "New" or "Revised" License
 - **License URI:** https://spdx.org/licenses/BSD-3-Clause.html
 
-*Source: Seeded from existing HSSI record and confirmed by README.md lines 136-139, CITATION.cff line 8, GitHub/SoMEF license metadata, and LICENSE.md lines 6-19.*
+*Source: README.md lines 136-139, CITATION.cff line 8, GitHub/SoMEF license metadata, and LICENSE.md lines 6-19.*
 
 ---
 
@@ -288,7 +312,7 @@ https://doi.org/10.3847/1538-4365/ab3a4c
 - Geomagnetic Storms
 - Solar Wind
 
-*Source: the README citation list and GAMERA-helio documentation discuss CME modeling — Provornikova et al. 2024, "MHD Modeling of a Geoeffective Interplanetary Coronal Mass Ejection…" (README lines 130-136 at revision 3382b1f2), and docs/source/_obsolete/heliosphere/helio-cme.rst documents the embedded Gibson-Low flux-rope CME model. Geomagnetic Storms and Solar Wind (added 2026-08-24, user-approved): MAGE, Kaiju's primary application, is developed by the Center for Geospace Storms (README lines 5-7), the README describes modeling of "planetary magnetospheres and the solar wind" (line 9), and the citation list includes storm-time case studies (Sorathia et al. 2023 dawnside-current-wedge; Pham et al. 2022 August-2005-storm thermospheric response) alongside the geoeffective-ICME study — geomagnetic storms and solar-wind coupling are the central science of the MAGE/GAMERA geospace models, not incidental. An earlier note excluded both values in the belief that they were absent from the HSSI Related Phenomena controlled vocabulary; that belief came from a stale six-value documentation list, and both are in fact controlled rows. Substorms, aurora, and ring current remain excluded correctly — they have no controlled row (the earlier note's claim that all five terms were "recorded as keywords" was also inexact: of the five, only solar wind appears in Field 16, alongside coronal mass ejections).*
+*Source: the README citation list and GAMERA-helio documentation discuss CME modeling — Provornikova et al. 2024, "MHD Modeling of a Geoeffective Interplanetary Coronal Mass Ejection…" (README lines 130-136 at revision 3382b1f2), and docs/source/_obsolete/heliosphere/helio-cme.rst documents the embedded Gibson-Low flux-rope CME model. Geomagnetic Storms and Solar Wind are included because MAGE, Kaiju's primary application, is developed by the Center for Geospace Storms (README lines 5-7), the README describes modeling of "planetary magnetospheres and the solar wind" (line 9), and the citation list includes storm-time case studies (Sorathia et al. 2023 dawnside-current-wedge; Pham et al. 2022 August-2005-storm thermospheric response) alongside the geoeffective-ICME study — geomagnetic storms and solar-wind coupling are the central science of the MAGE/GAMERA geospace models, not incidental. An earlier note excluded both values in the belief that they were absent from the HSSI Related Phenomena controlled vocabulary; that belief came from a stale six-value documentation list, and both are in fact controlled rows. Substorms, aurora, and ring current remain excluded correctly — they have no controlled row (the earlier note's claim that all five terms were "recorded as keywords" was also inexact: of the five, only solar wind appears in Field 16, alongside coronal mass ejections).*
 
 ### 23. Development Status (RECOMMENDED)
 Active
@@ -298,7 +322,7 @@ Active
 ### 24. Documentation (RECOMMENDED)
 https://kaiju-docs.readthedocs.io/en/latest/
 
-*Source: README.md lines 45-48 and docs/source/index.rst. URL returned HTTP 200 on 2026-07-24. This broad documentation landing page supersedes the narrower seeded HSSI rules-of-road URL.*
+*Source: README.md lines 45-48 and docs/source/index.rst. This broad documentation landing page supersedes the narrower earlier HSSI rules-of-road URL.*
 
 ### 25. Funder (OPTIONAL)
 Not found

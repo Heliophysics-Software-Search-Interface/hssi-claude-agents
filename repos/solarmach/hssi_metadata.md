@@ -4,7 +4,7 @@
 **Repository:** https://github.com/jgieseler/solarmach
 **Source Revision:** dbafa3b06e021c651df7ed41dc31649b441c8909
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-08-20
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
 ---
 
@@ -53,7 +53,13 @@
 - **Values:**
   - Interplanetary Space
   - Solar Environment
-- **Source:** Preserved from the existing HSSI record and confirmed by the repository's heliospheric Parker-spiral and solar-coronal PFSS functionality.
+  - Corona
+  - Photosphere
+  - Solar Wind
+- **Source:** Interplanetary Space and Solar Environment are preserved from the existing HSSI record and confirmed by the repository's heliospheric Parker-spiral and solar-coronal PFSS functionality.
+- **Evidence, Corona:** The documented PFSS extension explicitly "connects the heliospheric magnetic field (HMF) to the solar corona" (`examples/example.ipynb:58640`).
+- **Evidence, Photosphere:** `plot_pfss` tracks an open field line to the photosphere (`solarmach/__init__.py:1227`), `trace_field_line` documents the same endpoint (`solarmach/pfss_utilities.py:303-306`), and the user-facing results table labels its output as a magnetic footpoint at the photosphere (`solarmach/__init__.py:1822`).
+- **Evidence, Solar Wind:** `get_sw_speed` retrieves measured solar-wind bulk speed (`solarmach/__init__.py:93`), which parameterizes the Parker-spiral model (`solarmach/__init__.py:428-431,669,675`). Solar Wind therefore describes a medium that the software measures and models, not merely one crossed by a connectivity line.
 
 ### 6. Authors (MANDATORY)
 - **Author:** Jan Gieseler
@@ -158,10 +164,11 @@ attributes to him, and an affiliation is never dropped in favour of a newer one.
 ### 17. Data Sources (OPTIONAL)
 - **Values:**
   - CDAWeb
+  - AMDA
   - Observatory/Mission-specific
   - Other
 - **Other Data Sources:** AMDA through Speasy, JPL Horizons, and GONG synoptic-map access through SunPy Fido.
-- **Source:** `get_sw_speed`, `SolarMACH.__init__`, and `get_gong_map` in the source. Observatory/Mission-specific is selected because the package directly retrieves named mission/instrument data products; those relationships are resolved in Fields 31–32.
+- **Source:** `get_sw_speed`, `SolarMACH.__init__`, and `get_gong_map` in the source. `solarmach/__init__.py:133` binds the Speasy AMDA inventory, lines 138-142 select AMDA parameter paths for multiple missions, and line 169 dispatches those datasets to `spz.get_data`, so AMDA is a direct data backend. Observatory/Mission-specific is selected because the package directly retrieves named mission/instrument data products; those relationships are resolved in Fields 31–32. Other remains supported by JPL Horizons and GONG access through SunPy Fido.
 
 ### 18. Input File Formats (RECOMMENDED)
 - **Values:**

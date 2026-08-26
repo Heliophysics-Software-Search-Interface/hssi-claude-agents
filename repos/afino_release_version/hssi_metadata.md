@@ -4,7 +4,7 @@
 **Repository:** https://github.com/aringlis/afino_release_version
 **Source Revision:** 6aceac9518fc8056052807e666da9d0c8bebb010
 **Extraction Date:** 2026-07-23
-**Validation Date:** 2026-07-23
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
 
 ---
@@ -39,13 +39,14 @@ https://github.com/aringlis/afino_release_version
 - Models and Simulations:Empirical
 - Models and Simulations:Forward-Fitting
 
-- **Source note:** Set-union retains the submitted parent category. Repository code applies Hanning-window preprocessing, computes Fourier power spectra, fits empirical power-law, broken-power-law, and Gaussian-bump models with SciPy optimization, compares likelihood, BIC, and goodness of fit, and creates static time-series and power-spectrum line plots. Parent categories are included for every selected subcategory. Data Guided is included because AFINO fits empirical spectral models to caller-provided observational time series. A Fourier power spectrum is not a time-frequency spectrogram, so Spectrogram was not selected.
+- **Source note:** Repository code applies Hanning-window preprocessing, computes Fourier power spectra, fits empirical power-law, broken-power-law, and Gaussian-bump models with SciPy optimization, compares likelihood, BIC, and goodness of fit, and creates static time-series and power-spectrum line plots. `Data Processing and Analysis` is independently supported as the parent of those processing and analysis capabilities, and every selected subcategory includes its required parent. Data Guided is included because AFINO fits empirical spectral models to caller-provided observational time series. A Fourier power spectrum is not a time-frequency spectrogram, so Spectrogram was not selected.
 
 ### 5. Related Region (MANDATORY)
+- Earth Inner Magnetosphere
 - Earth Magnetosphere
 - Solar Environment
 
-- **Source note:** The set-union retains Solar Environment from the existing HSSI record and adds Earth Magnetosphere based on peer-reviewed AFINO applications to inner-magnetospheric ultralow-frequency waves. The documentation says AFINO was originally developed to study solar flare oscillations, although the implementation now accepts generic time series.
+- **Source note:** `Solar Environment` is supported by the documentation's statement that AFINO was originally developed to study solar flare oscillations (`docs/index.rst:6-9`), although the implementation now accepts generic time series. `Earth Magnetosphere` and the more precise `Earth Inner Magnetosphere` are both supported by peer-reviewed AFINO applications to inner-magnetospheric ultralow-frequency-wave observations: https://doi.org/10.1029/2020JA027887 explicitly applies AFINO to GOES-15 observations in a study of inner-magnetospheric ULF waves, while https://doi.org/10.1029/2017JA024877 applies it to ULF-wave activity in the inner magnetosphere and outer radiation belt during geomagnetic storms. The finer value is recorded separately because the Region vocabulary is flat; the coarse magnetosphere value does not imply it.
 
 ### 6. Authors (MANDATORY)
 - **Author:** Andrew Inglis
@@ -135,7 +136,7 @@ Not found.
 - JSON
 - FITS
 
-- **Source note:** `restore_json_save_file` reads AFINO JSON result files. The included `afino_test_script.py` opens a FITS flare time-series file with Astropy and passes its time and flux columns to AFINO. FITS support is example-level rather than a file-path argument in the main API and should be confirmed during validation.
+- **Source note:** `restore_json_save_file` reads AFINO JSON result files. The included `afino_test_script.py` opens a FITS flare time-series file with Astropy and passes its time and flux columns to AFINO. FITS is included on this example-level evidence; the main API itself accepts arrays rather than a file-path argument.
 
 ### 19. Output File Formats (RECOMMENDED)
 - JSON
@@ -151,7 +152,7 @@ Not found.
 ### 21. CPU Architecture (RECOMMENDED)
 - CPU Independent
 
-- **Source note:** The Python implementation contains no architecture-specific code or accelerator requirement. This is an evidence-based inference from the source and dependencies and should be confirmed during validation.
+- **Source note:** The Python implementation contains no architecture-specific code or accelerator requirement, so `CPU Independent` is the source-supported classification.
 
 ### 22. Related Phenomena (OPTIONAL)
 - Solar Flares

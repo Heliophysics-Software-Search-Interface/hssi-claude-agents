@@ -4,10 +4,8 @@
 **Repository:** https://github.com/punch-mission/punchbowl
 **Source Revision:** 527b32adf325ab23367925516117df67f4bf717f
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-08-21
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
-
-**Seed:** the live HSSI record for this software. No prior canonical `hssi_metadata.md` existed. Every field below was pre-populated from that record first, then gap-filled / corrected from the repository at revision `527b32ad`, PyPI, Zenodo/DataCite, ORCID, ROR, SPASE, and the PyHC registries.
 
 ---
 
@@ -159,6 +157,8 @@ https://github.com/punch-mission/punchbowl
 ### 5. Related Region (MANDATORY)
 - Solar Environment — *From the existing HSSI record. Evidence: `docs/intro.rst` — PUNCH studies "how the mass and energy of the Sun's corona become the solar wind"; the L1–L3 products are coronal/heliospheric brightness images; NFI is a coronagraph observing the inner corona.*
 - Interplanetary Space — *Evidence: `docs/data/access.rst`, "Data Projections" — "The PUNCH WFI instruments extend their field of view out to around 45-degrees from the Sun, creating a meshed virtual observatory extending to a diameter of nearly 180 solar radii"; `docs/intro.rst` — PUNCH images "the entire inner solar system"; `punchbowl/level3/velocity.py` `track_velocity` derives solar-wind flow across that heliospheric field of view (L3 "VAM" product, `docs/data/data_overview.rst`).*
+- Corona — *Evidence: the data overview identifies the corona as a direct imaging target and says the Level 3 products are usable as coronal images (`docs/data/data_overview.rst:4,70`); the Level 3 flow-tracking documentation explicitly computes outflow velocities in the solar corona (`docs/pipeline/level3/velocity.rst:4`).*
+- Solar Wind — *Evidence: PUNCH is designed to study how coronal mass and energy become the solar wind (`docs/intro.rst:6-7`), and its Level 3 products are directly usable as solar-wind images (`docs/data/data_overview.rst:70`), including the implemented VAM derived solar-wind-motion product.*
 
 *Considered and rejected:* `Earth Atmosphere` — `punchbowl/level2/bright_structure.py` detects "high-altitude aurora" transients, but only to **flag them as artifacts** in the quality mask, not to support atmospheric science. `Earth Magnetosphere` / `Planetary Magnetospheres` — no supporting functionality (the GSE/GEI transforms in `level0.py` are spacecraft-ephemeris bookkeeping only).
 
@@ -206,7 +206,7 @@ https://github.com/punch-mission/punchbowl
    - Identifier: https://orcid.org/0000-0003-4312-6298
    - Affiliation: George Mason University — https://ror.org/02jqj7156
    - Affiliation: Goddard Space Flight Center — https://ror.org/0171mag52
-   - *Source: `CITATION.cff` lines 36-38 (`family-names: "Attié"`); Zenodo/DataCite creator `Attié, Raphael`. Both existing HSSI affiliations preserved. HSSI stored the unaccented "Attie"; the HSSI API cannot rename a `Person`, so the diacritic was corrected directly in the shared database on 2026-07-28.*
+   - *Source: `CITATION.cff` lines 36-38 (`family-names: "Attié"`); Zenodo/DataCite creator `Attié, Raphael`. Both existing HSSI affiliations are preserved. The earlier HSSI spelling "Attie" was incorrect; the repository and Zenodo evidence support the accented family name recorded here.*
 10. **Samuel T. Badman**
     - Identifier: https://orcid.org/0000-0002-6145-436X
     - Affiliation: Center for Astrophysics Harvard & Smithsonian — https://ror.org/03c3r2d17
@@ -214,7 +214,7 @@ https://github.com/punch-mission/punchbowl
 11. **Sarah Kovac**
     - Identifier: https://orcid.org/0000-0003-1714-5970
     - Affiliation: NSF NCAR High Altitude Observatory — https://ror.org/03773p874
-    - *Source: `CITATION.cff` lines 44-46 (`family-names: "Kovac"`); Zenodo/DataCite creator `Kovac, Sarah`; `pyproject.toml` `{ name = "Sarah Kovac" }`. Existing HSSI affiliation preserved. HSSI stored the misspelling "Kovak"; the HSSI API cannot rename a `Person`, so the spelling was corrected directly in the shared database on 2026-07-28.*
+   - *Source: `CITATION.cff` lines 44-46 (`family-names: "Kovac"`); Zenodo/DataCite creator `Kovac, Sarah`; `pyproject.toml` `{ name = "Sarah Kovac" }`. The existing HSSI affiliation is preserved. The earlier HSSI spelling "Kovak" was incorrect; all repository and publication evidence supports `Kovac`.*
 12. **Joseph Plowman**
     - Identifier: https://orcid.org/0000-0001-7016-7226
     - Affiliation: Southwest Research Institute — https://ror.org/03tghng59
@@ -232,7 +232,7 @@ https://github.com/punch-mission/punchbowl
     - Affiliation: Southwest Research Institute — https://ror.org/03tghng59
     - *Source: existing HSSI record; `CITATION.cff` lines 60-62; `pyproject.toml` (`daniel.seaton@swri.org`).*
 
-*Platform limitation, now resolved: the HSSI API silently no-ops `Person` renames, so items 9 (Attié) and 11 (Kovac) could not be corrected through the API and were fixed directly in the shared database on 2026-07-28, as item 2 (Van Kooten) had been. Because every author is matched by ORCID, the corrections carried no risk of creating duplicate author records. Every name in this field now matches the shared rows exactly.*
+*Shared-author identity constraint: HSSI author identities are shared across software entries and keyed by ORCID, with no per-entry name override. This dossier therefore records the settled shared forms for Van Kooten, Attié, Kovac, Murphy, and Badman, while preserving the repository variants and correction evidence above so future refreshes do not reintroduce the earlier spellings.*
 
 ---
 
@@ -312,7 +312,6 @@ Not found
 ## Section 2: Additional Data
 
 ### 16. Keywords (OPTIONAL)
-*Terms marked (in HSSI vocabulary) already exist in the HSSI Keyword vocabulary; the two marked (new term) would create new vocabulary rows — the field explicitly allows custom entries.*
 
 Carried over from the existing HSSI record:
 - Calibration — *existing HSSI record; `pyproject.toml` `keywords`.*
@@ -331,9 +330,9 @@ From repository evidence:
 - coronagraph (in HSSI vocabulary) — *NFI is PUNCH's coronagraph; `docs/data/access.rst`, `punchbowl/level1/vignette.py` `generate_vignetting_calibration_nfi`.*
 - heliosphere (in HSSI vocabulary) — *"Polarimeter to UNify the Corona and Heliosphere"; WFI field of view spans ~180 solar radii (`docs/data/access.rst`).*
 - image processing (in HSSI vocabulary) — *`punchbowl/level1/despike.py`, `destreak.py`, `deficient_pixel.py`, `level2/resample.py`.*
-- photometry (new term) — *`punchbowl/level1/quartic_fit.py` `photometric_calibration`; products are "floating-point values in mean-solar-brightness units" (`docs/data/data_overview.rst`, Level 1).*
+- photometry — *`punchbowl/level1/quartic_fit.py` `photometric_calibration`; products are "floating-point values in mean-solar-brightness units" (`docs/data/data_overview.rst`, Level 1).*
 - point spread function (in HSSI vocabulary) — *`punchbowl/level1/psf.py` with `regularizepsf.ArrayPSFTransform`.*
-- polarimetry (new term) — *PUNCH is a polarimeter; `punchbowl/level2/polarization.py`, `level3/polarization.py`, and the B/pB/pB′ and M,Z,P systems in `docs/data/data_overview.rst`.*
+- polarimetry — *PUNCH is a polarimeter; `punchbowl/level2/polarization.py`, `level3/polarization.py`, and the B/pB/pB′ and M,Z,P systems in `docs/data/data_overview.rst`.*
 - solar imaging (in HSSI vocabulary) — *`docs/data/data_overview.rst`: "PUNCH is an imaging mission and most data from the mission are images."*
 - space weather (in HSSI vocabulary) — *`docs/data/data_overview.rst`, Level Q: "intended to be useful for space weather forecasting … produced for NOAA's space weather forecasting infrastructure".*
 - telemetry (in HSSI vocabulary) — *`punchbowl/auto/flows/level0.py` ingests spacecraft TLM files (`TLMFiles`, `PacketHistory`).*
@@ -348,7 +347,7 @@ From repository evidence:
 - The Virtual Solar Observatory. — *Source: existing HSSI record; `docs/data/access.rst` — "stored and accessible through the Solar Data Analysis Center (SDAC) - a portal for hosting through tools such as the Virtual Solar Observatory (VSO). From here PUNCH data products can be queried and requested for download"; `examples/querying_data.py` — "how to query PUNCH data from the SDAC / VSO using Python tools". The trailing period is part of the controlled value, not sentence punctuation: the stored `DataInput` vocabulary row is named `The Virtual Solar Observatory.`, and the bare form without it matches no row.*
 - HTTP/HTTPS Directories — *Source: `punchbowl/data/fido/client.py:22-23` — `fits_rootdir = "https://umbra.nascom.nasa.gov/punch"`, `jp2_rootdir = "https://umbra.nascom.nasa.gov/punch/L"`, scraped with `sunpy.net.scraper.Scraper` over a dated directory `pattern`; `docs/data/access.rst` documents the equivalent `wget -r -l1 --no-parent … https://umbra.nascom.nasa.gov/punch/3/CAM/2025/09/21/`; `punchbowl/data/sample.py:19` downloads sample files from `https://data.boulder.swri.edu/lowder/PUNCH/sample/`.*
 
-*Considered and rejected:* `S3/Cloud-aware` — `punchbowl/auto/flows/levelq.py:602-609` uploads QuickPUNCH products **to** a NOAA S3 bucket, but this field is defined as "the data **input** source the software supports" and punchbowl never reads from S3. Flagged for reviewer awareness.
+*Considered and rejected:* `S3/Cloud-aware` — `punchbowl/auto/flows/levelq.py:602-609` uploads QuickPUNCH products **to** a NOAA S3 bucket, but this field is defined as "the data **input** source the software supports" and punchbowl never reads from S3.
 
 ---
 
@@ -392,7 +391,7 @@ From repository evidence:
 - Solar Corona — *Source: existing HSSI record; `docs/intro.rst`; L3 products are "intended to be usable directly as coronal and solar-wind images" (`docs/data/data_overview.rst`).*
 - Solar Wind — *Source: existing HSSI record; `punchbowl/level3/velocity.py` `track_velocity` produces the L3 VAM "derived solar-wind motion" product.*
 
-*Considered and rejected:* an "F-corona" / zodiacal-light term would be well evidenced (`punchbowl/level3/f_corona_model.py`, `docs/pipeline/level3/f_corona.rst`), but the HSSI Phenomena vocabulary currently holds only 7 rows (`http://localhost/api/models/Phenomena/rows/all/`: Coronal Heating, Coronal Mass Ejections, Geomagnetic Storms, Solar Corona, Solar Flares, Solar Wind, X-ray emission) and adding it would create a new controlled-vocabulary row. It was considered and deliberately not added, so this field carries only the three vocabulary terms above.
+*Considered and rejected:* an "F-corona" / zodiacal-light term would be well evidenced (`punchbowl/level3/f_corona_model.py`, `docs/pipeline/level3/f_corona.rst`), but the HSSI Phenomena vocabulary holds only Coronal Heating, Coronal Mass Ejections, Geomagnetic Storms, Solar Corona, Solar Flares, Solar Wind and X-ray emission, none of which expresses it, and adding it would create a new controlled-vocabulary row. It was considered and deliberately not added, so this field carries only the three vocabulary terms above.
 
 ---
 
@@ -424,11 +423,9 @@ https://punchbowl.readthedocs.io/en/latest/
 
 *Award Title source: existing HSSI record; the mission name is confirmed in `docs/intro.rst` and `punchbowl/data/fido/client.py` — `a.Source: [("PUNCH", "Polarimeter to UNify the Corona and Heliosphere")]`.*
 
-*Award Number `80GSFC18C0014` was at one point recorded here as "Not found" because the HSSI software view does not render award numbers — the same situation as the Field 15 License URI, whose value is likewise held in HSSI but not shown in that view. Exactly one Award record in HSSI carries the name `Polarimeter to UNify the Corona and Heliosphere (PUNCH)` and the identifier `80GSFC18C0014`, and punchbowl's record shows exactly that award title (`"award": ["Polarimeter to UNify the Corona and Heliosphere (PUNCH)"]`), so punchbowl is already linked to it.*
+*Award Number `80GSFC18C0014` was previously recorded here as "Not found" because the HSSI software view does not render award numbers. The existing HSSI association pairs that number with the PUNCH award title, so the value is retained rather than discarded.*
 
 ***External corroboration — partial, and honestly qualified.** The number could not be tied to the PUNCH award by any punchbowl-side source: the repository contains no funding-acknowledgement file, and DataCite reports an empty `fundingReferences` list for the punchbowl DOIs. A targeted web search did, however, establish that `80GSFC18C0014` is a **real NASA contract number**: NASA NTRS record `20220017302` ("The Coronal Veil", Malanushenko, Cheung, **DeForest**, Klimchuk & Rempel) lists `CONTRACT_GRANT: 80GSFC18C0014`, and C. E. DeForest is both a punchbowl author and the PUNCH principal investigator at Southwest Research Institute. That corroborates the number's existence and its association with DeForest/SwRI solar work, but **not** that it is specifically the PUNCH SMEX award; a second search against SwRI/PUNCH mission pages returned no acknowledgement text containing it. The value is therefore recorded as a **pre-existing HSSI value we are surfacing, not introducing or endorsing**.*
-
-*Do not patch this field: the backend discards a submitted award `name` when the submitted `identifier` matches an existing row, so the award title is fixed regardless of what is sent, and both values already match the database.*
 
 ---
 
@@ -444,7 +441,7 @@ https://punchbowl.readthedocs.io/en/latest/
 ---
 
 ### 28. Related Datasets (OPTIONAL)
-*This field lists the **complete set of 43** Solar Data Analysis Center PUNCH dataset DOIs — the 4 already held in HSSI plus 39 more, recorded in full at the reviewer's explicit decision to maximise comprehensiveness. Enumerated on 2026-07-28 by paging the DataCite API (`https://api.datacite.org/dois?prefix=10.48322&query=titles.title:PUNCH&page[size]=100`), which reported `meta.total = 43`; 43 unique DOIs were collected. **No DOI suffix was pattern-generated** — every one comes from the API response. Each was independently verified twice: `GET https://api.datacite.org/dois/<doi>` returned HTTP 200 with a title matching verbatim (43/43), and `https://doi.org/<doi>` resolved HTTP 200 (43/43), redirecting to the corresponding `https://spase-metadata.org/NASA/NumericalData/PUNCH/...` record. Titles below are reproduced **verbatim from DataCite**, including the registry's own typos ("puls 60", the double space in "Level 3  Low-noise").*
+*This field lists the **complete set of 43** Solar Data Analysis Center PUNCH dataset DOIs: the four collection DOIs plus 39 product DOIs. They were enumerated from the DataCite query `https://api.datacite.org/dois?prefix=10.48322&query=titles.title:PUNCH&page[size]=100`; no DOI suffix was pattern-generated. Titles below are reproduced **verbatim from DataCite**, including the registry's own typos ("puls 60", the double space in "Level 3  Low-noise").*
 
 **Collection DOIs already held in HSSI (4)**
 - https://doi.org/10.48322/5k49-bh56 — PUNCH NFI-WFI Level 0 Science images — *existing HSSI record; DataCite publisher "Solar Data Analysis Center", 2025.*
@@ -501,34 +498,32 @@ https://punchbowl.readthedocs.io/en/latest/
 - https://doi.org/10.48322/n8x9-5v15 — PUNCH WFI3 Level 1 Science images in the puls 60 degree polarization state
 - https://doi.org/10.48322/2gry-kg12 — PUNCH WFI3 Level 1 Science images in the zero degree polarization state
 
-*Note on completeness (supersedes the earlier "deliberately omitted" note):* the per-spacecraft, per-polarization Level 0 and Level 1 children are listed here **alongside** their `PUNCH NFI-WFI Level 0/1 Science images` collection DOIs by explicit reviewer decision — the collections are retained because they are the seeded HSSI values and must not be dropped, and the children are added because punchbowl produces and reads each one individually. The counts are asymmetric because that is what SDAC has registered: Level 0 has 15 children (NFI has only clear, minus-60 and zero states registered — there is no Level 0 NFI plus-60 DOI in DataCite) while Level 1 has 16. 4 + 2 + 6 + 15 + 16 = **43**, matching DataCite's reported total exactly.
+*Completeness rationale:* the per-spacecraft, per-polarization Level 0 and Level 1 children are listed **alongside** their `PUNCH NFI-WFI Level 0/1 Science images` collection DOIs. The collections remain useful aggregate identifiers, while punchbowl produces and reads each child individually. The counts are asymmetric because that is what SDAC has registered: Level 0 has 15 children (NFI has only clear, minus-60 and zero states registered — there is no Level 0 NFI plus-60 DOI in DataCite) while Level 1 has 16. Together with the four collection, two Level 2, and six Level 3 DOIs, these make the 43 DataCite-registered PUNCH datasets.
 
 ---
 
 ### 29. Related Software (OPTIONAL)
-*Relevance gate applied before any DOI lookup.*
 
-- https://doi.org/10.5281/zenodo.17873783 — **punchpipe** — *Carried over from the existing HSSI record. **Gate: PASSES.** This DOI resolves (via `https://api.datacite.org/dois/10.5281/zenodo.17873783`) to the Zenodo concept record for `punch-mission/punchpipe`, "Pipeline automation for PUNCH mission" (latest version 0.0.14). It is punchbowl's direct predecessor/companion, not generic infrastructure: `CHANGELOG.rst:221` records "Moves punchpipe into punchbowl auto subpackage. (#771)", `pyproject.toml` still ships the console script `punchpipe = "punchbowl.auto.cli:main"`, `docs/automation/index.rst` says "This section is about what we used to call 'punchpipe'", and `https://api.github.com/repos/punch-mission/punchpipe` reports `"archived": true` (last push 2026-02-13). Field 29 explicitly covers predecessors and companions, so it is retained unchanged.*
-- https://doi.org/10.5281/zenodo.10076326 — **solpolpy** — *Gate: PASSES (domain-specific companion, PUNCH-team solar polarization resolver). Evidence: `punchbowl/level2/polarization.py:3,37`, `punchbowl/level3/polarization.py:6`, `punchbowl/level3/stellar.py:21-22`; `README.md` line 68 instructs contributors to set up pre-commit "in the punchbowl, solpolpy, and/or regularizepsf repositories". Concept DOI from `punch-mission/solpolpy` `CITATION.cff`.*
-- https://doi.org/10.5281/zenodo.7392170 — **regularizepsf** — *Gate: PASSES (domain-specific companion, PUNCH-team variable-PSF package, PyHC community package). Evidence: `punchbowl/level1/psf.py`, `punchbowl/level1/alignment.py:18`, `punchbowl/auto/control/cache_layer/psf.py:3` (`from regularizepsf import ArrayPSFTransform`); `README.md` line 68. Concept DOI from `punch-mission/regularizepsf` `CITATION.cff`.*
-- https://github.com/punch-mission/simpunch — **simpunch** — *Gate: PASSES (companion PUNCH data simulator by the same team). Evidence: `punchbowl/auto/flows/simulate.py:11` `from simpunch.flow import generate_flow`; `pyproject.toml` `[dependency-groups] pipe` and `[tool.uv.sources] simpunch = { path = "../simpunch", editable = true }`; `scripts/auto/generate_batch_of_simpunch.py`. No DOI published, so the repository URL is used as the form permits.*
-- https://github.com/svank/remove_starfield — **remove_starfield** — *Gate: PASSES (domain-specific dependency written by punchbowl co-author Samuel Van Kooten, specifically for heliospheric-imager starfield removal). Evidence: `punchbowl/level3/stellar.py:8,15-16,295,317`. No DOI published; repository URL used.*
-- https://github.com/ccsdspy/ccsdspy — **CCSDSPy** — *Gate: PASSES as a **domain-specific dependency** (spacecraft CCSDS packet reader; a PyHC community package per `_data/projects.yml`) whose presence characterises punchbowl as a mission telemetry-ingest pipeline. Evidence: `punchbowl/auto/flows/level0.py:16,24-25,229,274`. Concept DOI 10.5281/zenodo.7819990 also exists; the repository URL is given as the primary link. Deliberately **not** listed under Field 30 — punchbowl passes it packet definitions and receives arrays, which is ordinary library use rather than a peer-tool exchange.*
+- https://doi.org/10.5281/zenodo.17873783 — **punchpipe** — *This DOI is the Zenodo concept record for `punch-mission/punchpipe`, "Pipeline automation for PUNCH mission". It is punchbowl's direct predecessor/companion, not generic infrastructure: `CHANGELOG.rst:221` records "Moves punchpipe into punchbowl auto subpackage. (#771)", `pyproject.toml` still ships the console script `punchpipe = "punchbowl.auto.cli:main"`, and `docs/automation/index.rst` says "This section is about what we used to call 'punchpipe'".*
+- https://doi.org/10.5281/zenodo.10076326 — **solpolpy** — *Domain-specific PUNCH companion and solar-polarization resolver. Evidence: `punchbowl/level2/polarization.py:3,37`, `punchbowl/level3/polarization.py:6`, `punchbowl/level3/stellar.py:21-22`; `README.md` line 68 instructs contributors to set up pre-commit "in the punchbowl, solpolpy, and/or regularizepsf repositories". Concept DOI from `punch-mission/solpolpy` `CITATION.cff`.*
+- https://doi.org/10.5281/zenodo.7392170 — **regularizepsf** — *Domain-specific PUNCH companion and variable-PSF package. Evidence: `punchbowl/level1/psf.py`, `punchbowl/level1/alignment.py:18`, `punchbowl/auto/control/cache_layer/psf.py:3` (`from regularizepsf import ArrayPSFTransform`); `README.md` line 68. Concept DOI from `punch-mission/regularizepsf` `CITATION.cff`.*
+- https://github.com/punch-mission/simpunch — **simpunch** — *Companion PUNCH data simulator by the same team. Evidence: `punchbowl/auto/flows/simulate.py:11` `from simpunch.flow import generate_flow`; `pyproject.toml` `[dependency-groups] pipe` and `[tool.uv.sources] simpunch = { path = "../simpunch", editable = true }`; `scripts/auto/generate_batch_of_simpunch.py`.*
+- https://github.com/svank/remove_starfield — **remove_starfield** — *Domain-specific dependency written by punchbowl co-author Samuel Van Kooten for heliospheric-imager starfield removal. Evidence: `punchbowl/level3/stellar.py:8,15-16,295,317`.*
+- https://github.com/ccsdspy/ccsdspy — **CCSDSPy** — *Domain-specific spacecraft CCSDS packet reader whose presence characterises punchbowl as a mission telemetry-ingest pipeline. Evidence: `punchbowl/auto/flows/level0.py:16,24-25,229,274`. It is deliberately not listed under Field 30: punchbowl passes it packet definitions and receives arrays, which is ordinary library use rather than a peer-tool exchange.*
 
 ---
 
 ### 30. Interoperable Software (OPTIONAL)
-*Every entry names the specific adapter, subclass, or documented exchange that satisfies the gate.*
 
-- https://doi.org/10.5281/zenodo.17873783 — **punchpipe** — *Carried over from the existing HSSI record. **Gate: PASSES.** Identified above as `punch-mission/punchpipe`. Demonstrated exchange: punchpipe was built to import and drive punchbowl's core flows as the SOC orchestration layer, and that code now lives inside punchbowl as `punchbowl/auto/` while retaining the `punchpipe` entry point (`pyproject.toml [project.scripts]`). It is a heliophysics mission-pipeline peer tool, not generic infrastructure, so there is no authoritative evidence that it fails the gate and it is preserved. **Scope note:** because punchpipe is now archived and merged in, the interoperability recorded here is partly historical; it is nevertheless kept in both Field 29 and Field 30, since punchpipe remains punchbowl's direct predecessor and the exchange described above really happened.*
-- https://doi.org/10.5281/zenodo.10076326 — **solpolpy** — *Gate: PASSES — shared data-model exchange. `punchbowl/data/punch_io.py:563` `remix_collection` builds an `ndcube.NDCollection` "primarily used for solpolpy", which `punchbowl/level2/polarization.py:37` hands to `solpolpy.resolve(data_collection, outsys)` and reads back as resolved cubes; `punchbowl/level3/stellar.py:22` additionally consumes `solpolpy.util.solnorth_from_wcs`. Version provenance is even recorded in the output metadata (`punchbowl/auto/control/processor.py:118-119`, `result.meta['SPPYVRSN'] = solpolpy.__version__`).*
-- https://doi.org/10.5281/zenodo.7392170 — **regularizepsf** — *Gate: PASSES — object exchange through a documented API. `punchbowl/level1/psf.py` `build_psf_transform` constructs `regularizepsf` PSF models from PUNCH images and `correct_psf` applies `ArrayPSFTransform` objects loaded by `punchbowl/auto/control/cache_layer/psf.py`; output provenance records `result.meta['RPSFVRSN']`-style version stamping in `punchbowl/auto/control/processor.py:122`.*
-- https://github.com/svank/remove_starfield — **remove_starfield** — *Gate: PASSES — plugin/extension relationship. `punchbowl/level3/stellar.py:132` defines `class PUNCHImageProcessor(ImageProcessor)`, implementing remove_starfield's extension interface, plus `class LoggingProgressIndicator` (line 220) "implementing remove_starfield's interface for progress indications"; punchbowl then calls `remove_starfield.build_starfield_estimate(...)` (lines 295, 317) with `BlockMasker`/`GaussianReducer` and subtracts the returned `Starfield`. Version stamped at `punchbowl/auto/control/processor.py:126-127`.*
-- https://github.com/punch-mission/simpunch — **simpunch** — *Gate: PASSES — bidirectional companion exchange. `punchbowl/auto/flows/simulate.py:11,129` calls `simpunch.flow.generate_flow` from inside a punchbowl Prefect flow; simpunch emits synthetic PUNCH FITS products that are then fed straight back through punchbowl's own L0→L3 flows (`scripts/auto/clear_files_for_pending_simpunch_flows.py`, `generate_batch_of_simpunch.py`).*
-- https://github.com/sunpy/sunpy — **SunPy** — *Gate: PASSES (Tier-B-style, with cited evidence) — plugin/extension relationship with a named domain tool. `punchbowl/data/fido/client.py:19` registers `class PUNCHClient(GenericClient)` with sunpy's Fido, and `punchbowl/data/fido/attrs.py` registers a `punch` attrs module (`_attrs_module` returns `("punch", "punchbowl.data.fido.attrs")`), so `Fido.search(a.Time(...), a.punch.ProductCode.ca, a.Level.three, ...)` works after `import punchbowl` — demonstrated in `examples/querying_data.py` ("Note that this import is needed to register PUNCH fido tools"). PUNCH products additionally load directly as `sunpy.map.Map` (`examples/PUNCH-InSitu-Connection.py`), and `docs/intro.rst` states the pipeline and query tools are built on "the SunPy and Astropy software libraries".*
-- https://github.com/sunpy/ndcube — **ndcube** — *Gate: PASSES (Tier-B-style, with cited evidence) — shared data model as the documented interchange format. `punchbowl/data/punchcube.py:13` defines `class PUNCHCube(NDCube)`; the public loader `punchbowl/data/punch_io.py:395` `load_ndcube_from_fits` returns it and `write_ndcube_to_fits` consumes it; `punchbowl/data/punch_io.py:27` uses `ndcube.NDCollection` as the interchange container; and `docs/data/access.rst`, "Reading Data", documents to users that "These data can also be bundled together as an NDCube object … using some of the bundled IO tools within punchbowl", with a `load_ndcube_from_fits` example.*
+- https://doi.org/10.5281/zenodo.17873783 — **punchpipe** — *Punchpipe was built to import and drive punchbowl's core flows as the SOC orchestration layer, and that code now lives inside punchbowl as `punchbowl/auto/` while retaining the `punchpipe` entry point (`pyproject.toml [project.scripts]`). Because punchpipe is now archived and merged in, the interoperability is partly historical; it remains in both Field 29 and Field 30 as punchbowl's direct predecessor and an evidenced exchange.*
+- https://doi.org/10.5281/zenodo.10076326 — **solpolpy** — *Shared data-model exchange. `punchbowl/data/punch_io.py:563` `remix_collection` builds an `ndcube.NDCollection` "primarily used for solpolpy", which `punchbowl/level2/polarization.py:37` hands to `solpolpy.resolve(data_collection, outsys)` and reads back as resolved cubes; `punchbowl/level3/stellar.py:22` additionally consumes `solpolpy.util.solnorth_from_wcs`. Version provenance is recorded in the output metadata (`punchbowl/auto/control/processor.py:118-119`, `result.meta['SPPYVRSN'] = solpolpy.__version__`).*
+- https://doi.org/10.5281/zenodo.7392170 — **regularizepsf** — *Object exchange through a documented API. `punchbowl/level1/psf.py` `build_psf_transform` constructs `regularizepsf` PSF models from PUNCH images and `correct_psf` applies `ArrayPSFTransform` objects loaded by `punchbowl/auto/control/cache_layer/psf.py`; output provenance records the regularizepsf version in `punchbowl/auto/control/processor.py:122`.*
+- https://github.com/svank/remove_starfield — **remove_starfield** — *Plugin/extension relationship. `punchbowl/level3/stellar.py:132` defines `class PUNCHImageProcessor(ImageProcessor)`, implementing remove_starfield's extension interface, plus `class LoggingProgressIndicator` (line 220); punchbowl then calls `remove_starfield.build_starfield_estimate(...)` (lines 295, 317) with `BlockMasker`/`GaussianReducer` and subtracts the returned `Starfield`.*
+- https://github.com/punch-mission/simpunch — **simpunch** — *Bidirectional companion exchange. `punchbowl/auto/flows/simulate.py:11,129` calls `simpunch.flow.generate_flow` from inside a punchbowl Prefect flow; simpunch emits synthetic PUNCH FITS products that are then fed straight back through punchbowl's own L0→L3 flows (`scripts/auto/clear_files_for_pending_simpunch_flows.py`, `generate_batch_of_simpunch.py`).*
+- https://github.com/sunpy/sunpy — **SunPy** — *Plugin/extension relationship with a named domain tool. `punchbowl/data/fido/client.py:19` registers `class PUNCHClient(GenericClient)` with sunpy's Fido, and `punchbowl/data/fido/attrs.py` registers a `punch` attrs module, so `Fido.search(a.Time(...), a.punch.ProductCode.ca, a.Level.three, ...)` works after `import punchbowl` — demonstrated in `examples/querying_data.py`. PUNCH products additionally load directly as `sunpy.map.Map` (`examples/PUNCH-InSitu-Connection.py`), and `docs/intro.rst` states the pipeline and query tools are built on "the SunPy and Astropy software libraries".*
+- https://github.com/sunpy/ndcube — **ndcube** — *Shared data model as the documented interchange format. `punchbowl/data/punchcube.py:13` defines `class PUNCHCube(NDCube)`; the public loader `punchbowl/data/punch_io.py:395` `load_ndcube_from_fits` returns it and `write_ndcube_to_fits` consumes it; `punchbowl/data/punch_io.py:27` uses `ndcube.NDCollection` as the interchange container; and `docs/data/access.rst` documents NDCube as a supported user-facing data container.*
 
-- https://doi.org/10.5281/zenodo.4670728 — **Astropy** — *Gate: PASSES (Tier B, with cited evidence) — punchbowl extends astropy's own APIs rather than merely consuming them, meeting the same bar already accepted for `ndcube` and `SunPy`. `punchbowl/data/wcs.py:460` defines `class GCRSWCS(WCS)`, subclassing `astropy.wcs.WCS` so that a PUNCH WCS "accepts and returns GCRS SkyCoords" — the same subclassing justification used for `PUNCHCube(NDCube)`, and this object is exposed to users as `PUNCHCube.celestial_wcs` (CHANGELOG 0.0.24, PR #964). `punchbowl/data/wcs.py:36` calls `custom_stokes_symbol_mapping({10: StokesSymbol("pB", "polarized brightness"), 11: StokesSymbol("B", "total brightness")})` (imported from `astropy.coordinates`, lines 15-25) to register PUNCH's `pB`/`B` symbols into astropy's own polarization-frame API — a documented astropy extension point, not passive dependency use. `docs/intro.rst:38` states "The pipeline and tools for querying / loading PUNCH data use the Python language, along with the SunPy and Astropy software libraries." Identifier is the **Concept DOI** declared authoritatively in astropy's own `CITATION.cff` (`identifiers: - type: doi, description: Concept DOI, value: "10.5281/zenodo.4670728"`), chosen the same way as solpolpy and regularizepsf; verified to resolve HTTP 200 (redirects to `https://zenodo.org/records/21262391`; `https://api.datacite.org/dois/10.5281/zenodo.4670728` returns HTTP 200, title "Astropy", publisher Zenodo). Added to Field 30 only — **not** to Field 29 — per the reviewer's decision.*
+- https://doi.org/10.5281/zenodo.4670728 — **Astropy** — *Punchbowl extends Astropy's APIs rather than merely consuming them. `punchbowl/data/wcs.py:460` defines `class GCRSWCS(WCS)`, subclassing `astropy.wcs.WCS` so that a PUNCH WCS accepts and returns GCRS SkyCoords, and this object is exposed as `PUNCHCube.celestial_wcs` (CHANGELOG 0.0.24, PR #964). `punchbowl/data/wcs.py:36` registers PUNCH's `pB`/`B` symbols through Astropy's polarization-frame extension API. The identifier is the concept DOI declared in Astropy's `CITATION.cff`. Astropy belongs in Field 30 for this evidenced exchange, but not in Field 29.*
 
 *Considered and rejected — Tier A generic infrastructure (would be equally at home in a web app, finance model, or biology pipeline):* numpy, scipy, pandas, matplotlib, plotly, dash / dash-bootstrap-components, requests, python-dateutil, PyYAML, click, tqdm, setuptools, pytest (+ plugins), ruff/pre-commit/codespell, sqlalchemy / pymysql, fastapi, gunicorn, psutil, networkx, numexpr, threadpoolctl, coolname, freezegun, hypothesis, xlrd, lxml, toml, numpy-quaternion.
 *Considered and rejected — domain-adjacent but no demonstrated peer exchange:* `reproject`, `photutils`, `sep`, `astrometry`, `lmfit`, `scikit-image`, `scikit-learn`, `numba`, `cupy`, `glymur`, `pylibjpeg`, `prefect` / `prefect-dask` / `prefect-sqlalchemy`, `dask`, `jupyter`.
@@ -548,7 +543,7 @@ https://punchbowl.readthedocs.io/en/latest/
   - Instrument Identifier: https://spase-metadata.org/NASA/Instrument/PUNCH/WFI/2
 - **Wide Field Imager** (PUNCH spacecraft 3)
   - Instrument Identifier: https://spase-metadata.org/NASA/Instrument/PUNCH/WFI/3
-  - *The three WFI rows share the identical vocabulary name "Wide Field Imager" (abbreviation "WFI") and are distinguished only by their SPASE identifiers. This is **ladder step 2**, not an ambiguity: the repository supplies concrete evidence selecting all three. `docs/data/data_overview.rst` — "WFI1, WFI2, and WFI3 are assigned the numbers 1-3"; `punchbowl/cli.py` — "For WFIs, use 1, 2, or 3"; `punchbowl/data/fido/client.py` registers `("WFI-1", "Wide Field Imager 1")`, `("WFI-2", "Wide Field Imager 2")`, `("WFI-3", "Wide Field Imager 3")`; `punchbowl/level1/vignette.py:157` `generate_vignetting_calibration_wfi`; `punchbowl/level1/dynamic_stray_light.py` builds per-WFI stray-light models; CHANGELOG 0.0.24 PR #979 fixes labelling of "WFI-3" in `plot_punch`. **Submitter note:** because the three names are byte-identical, the SPASE identifier must be the de-duplication key on submission — do not submit these by name.*
+  - *The three WFI rows share the identical vocabulary name "Wide Field Imager" (abbreviation "WFI") and are distinguished by their SPASE identifiers. This is **ladder step 2**, not an ambiguity: the repository supplies concrete evidence selecting all three. `docs/data/data_overview.rst` — "WFI1, WFI2, and WFI3 are assigned the numbers 1-3"; `punchbowl/cli.py` — "For WFIs, use 1, 2, or 3"; `punchbowl/data/fido/client.py` registers `("WFI-1", "Wide Field Imager 1")`, `("WFI-2", "Wide Field Imager 2")`, `("WFI-3", "Wide Field Imager 3")`; `punchbowl/level1/vignette.py:157` `generate_vignetting_calibration_wfi`; `punchbowl/level1/dynamic_stray_light.py` builds per-WFI stray-light models; CHANGELOG 0.0.24 PR #979 fixes labelling of "WFI-3" in `plot_punch`.*
 
 *Considered and rejected (audit trail):* `WISPR Inner/Outer Telescope` — the substring search matched `Parker Solar Probe … Wide-field Imager for Solar Probe, WISPR …` rows, but punchbowl only mentions "wispr" once (`punchbowl/level1/alignment.py:88`, in a comment about a distortion-model technique) and reads no WISPR data. `SOHO/LASCO` and `STEREO/COR2` (`punchbowl/level1/stray_light.py:869-870`) and `STEREO` (`punchbowl/level2/bright_structure.py:38`) are prose about algorithmic heritage only. Gaia — `punchbowl/level1/alignment.py` reads a Gaia star catalog as an astrometric reference, but punchbowl processes no Gaia data products and a user searching for Gaia software would not expect punchbowl; there is also no Gaia row in the `type: 1` vocabulary.
 
@@ -572,8 +567,6 @@ https://punchbowl.readthedocs.io/en/latest/
 
 *Considered and rejected (audit trail):* Parker Solar Probe and Solar Orbiter — mentioned only in the documentation example `examples/PUNCH-InSitu-Connection.py`, which overplots their JPL Horizons trajectories on a PUNCH image using `sunpy.coordinates.get_horizons_coord`; punchbowl reads no PSP or Solar Orbiter data (an explicit tutorial/demo exclusion). SOHO / STEREO — heritage prose only, see Field 31. The Solar Data Analysis Center / `umbra.nascom.nasa.gov` and the Virtual Solar Observatory are **archives**, correctly recorded under Field 17 (Data Sources), not here.
 
-**No hard blockers:** every instrument and observatory resolved to exactly one SPASE row (or, for WFI, to three rows each individually evidenced). Nothing required a `NEEDS MANUAL RESOLUTION` marking, and no name is emitted without a `https://spase-metadata.org/` identifier.
-
 ---
 
 ### 33. Logo (OPTIONAL)
@@ -583,53 +576,13 @@ https://punch.space.swri.edu/images/punch-logo_240w.png
 
 ---
 
-## Open questions for the reviewer — RESOLVED
+## Cross-cutting negative research
 
-All 8 items raised at extraction were reviewed by the user on 2026-07-28. The decision trail is preserved below; each item records the original question and the resolution actually applied to this file.
+Recorded so a later refresh does not repeat the work:
 
-1. **Field 30 / punchpipe.** *Question:* punchpipe is archived and merged into `punchbowl.auto`; keep it in Field 30 (Interoperable Software) as well as Field 29, or Field 29 only? — **RESOLVED: keep punchpipe in BOTH Fields 29 and 30.** No change made; https://doi.org/10.5281/zenodo.17873783 remains in both fields.
-2. **Field 30 / astropy.** *Question:* astropy was excluded under the Tier B "cited evidence" rule despite the `GCRSWCS(WCS)` subclass and the `custom_stokes_symbol_mapping` registration; add it? — **RESOLVED: ADD astropy to Field 30 only, NOT to Field 29.** Applied: https://doi.org/10.5281/zenodo.4670728 (astropy's own `CITATION.cff` Concept DOI, verified HTTP 200) is recorded as a Field 30 entry, and it is deliberately absent from that field's "domain-adjacent but no demonstrated peer exchange" rejected list so the two no longer contradict each other. Field 29 is untouched.
-3. **Field 22 / F-corona.** *Question:* add a custom "F-corona" phenomenon, absent from HSSI's 7-row Phenomena vocabulary? — **RESOLVED: do NOT add.** No change made; Field 22 remains Coronal Mass Ejections, Solar Corona, Solar Wind.
-4. **Field 20 / Windows.** *Question:* `README.md` gives Windows venv activation instructions, but CI is Linux-only and the `super_user` extra pulls in POSIX-only `astrometry`/`sep`; add Windows? — **RESOLVED: do NOT add Windows.** No change made; Field 20 remains Linux, Mac.
-5. **Field 6 / Courtney Peck's affiliation.** *Question:* repository e-mail says `@swri.org`, but her ORCID currently lists Laboratory for Atmospheric and Space Physics and Cooperative Institute for Research in Environmental Sciences. — **RESOLVED: keep Southwest Research Institute.** No change made; the ORCID discrepancy is noted under Field 6 but deliberately not applied.
-6. **Field 14 / Reference Publication.** *Question:* promote https://doi.org/10.5281/zenodo.8412310 ("Interoperability of PUNCH software in the Python ecosystem") from Related Publications to Reference Publication? — **RESOLVED: no.** No change made; Field 14 stays "Not found" and the DOI remains under Field 27.
-7. **Field 28 / dataset breadth.** *Question:* only 8 of the 39 non-seeded SDAC PUNCH dataset DOIs were added; add the remaining 31 per-spacecraft, per-polarization L0/L1 children? — **RESOLVED: add ALL of them — maximum comprehensiveness.** Applied: the DataCite query was re-run with paging on 2026-07-28 and reported `meta.total = 43`, matching the earlier count; all 43 DOIs are now listed in Field 28 (4 already held in HSSI + 39 added), every one enumerated from the API rather than pattern-generated, and every one verified HTTP 200 both at `api.datacite.org` and at `doi.org`. The previous "deliberately omitted" note has been replaced by a completeness note.
-8. **PyHC.** *Question / finding:* punchbowl is **not** registered in any PyHC list — all three registry files (`projects_core.yml` 7 entries, `projects.yml` 57, `projects_unevaluated.yml` 29) were fetched and parsed in full on 2026-07-28 with no punchbowl entry; two of its companions (regularizePSF, CCSDSPy) are PyHC community packages. — **RESOLVED: informational only, no action.** No PyHC-curated metadata was available to override other sources, and none was invented.
-
-**Additional validator findings resolved by the user as NO-ACTION (recorded for the trail; no field changed):** do not add Jeffrey Hedlund to Field 6 Authors; renaming the shared "NCAR High Altitude Observatory" organization was not pursued on punchbowl's behalf, though that decision has since been overtaken — the organization now carries **`NSF NCAR High Altitude Observatory`**, the ROR canonical display name for https://ror.org/03773p874, and Field 6 records that form; Field 15 License stays "GNU Lesser General Public License v3.0 only".
-
-### Later decisions (2026-07-28)
-
-9. **Field 6 / Van Kooten's given name.** *Question:* record the `CITATION.cff` variant `Samuel J.` / `Van Kooten`, or the shared live HSSI form `Sam` / `Van Kooten`? — **RESOLVED: follow the shared live identity, `Sam` / `Van Kooten`.**
-
-10. **Field 26 / Award Number.** *Question:* Field 26 said "Not found", but the value exists in HSSI. — **RESOLVED: record `80GSFC18C0014` as an already-present HSSI value, not as a proposed change.** Exactly one Award record in HSSI carries the name `Polarimeter to UNify the Corona and Heliosphere (PUNCH)` and the identifier `80GSFC18C0014`, and punchbowl's record already carries that award title. The value must not be patched: the backend discards a submitted award `name` when the `identifier` matches an existing row. External corroboration is partial and qualified — NASA NTRS record `20220017302` ("The Coronal Veil", Malanushenko, Cheung, DeForest, Klimchuk & Rempel) lists `CONTRACT_GRANT: 80GSFC18C0014`, and DeForest is a punchbowl author and the PUNCH PI at SwRI, which confirms the number is a real NASA contract associated with DeForest/SwRI but **not** that it is specifically the PUNCH SMEX award; no punchbowl-side source (repository, DataCite `fundingReferences`) mentions it. Field 26 records that qualified corroboration rather than either "not found" or an unqualified endorsement.
-
----
-## Shared-record corrections and platform limitations
-
-### Corrections that the API cannot express
-
-Three author-identity corrections were applied directly to the HSSI database because `PATCH /api/data/software/<uid>/` cannot make them — it matches a `Person` by ORCID and will not overwrite a name that is already set, and it only ever adds affiliations. Anyone re-deriving this entry from the API alone will not reproduce them.
-
-| Correction | Also affects |
-|---|---|
-| `Raphael Attie` → **`Raphael Attié`** (ORCID 0000-0003-4312-6298) | SunPy |
-| `Sarah Kovak` → **`Sarah Kovac`** (ORCID 0000-0003-1714-5970) | solpolpy |
-| Samuel T. Badman reduced to his single correct affiliation | PySPEDAS, SunPy |
-
-`Person` and `Organization` are shared entities, so these corrections apply to every entry referencing them.
-
-The Badman defect arose because two `Organization` rows shared ROR `https://ror.org/03c3r2d17`. Those rows were merged, leaving one named **`Center for Astrophysics Harvard & Smithsonian`** — the ROR canonical display name, and the form recorded in Field 6. A duplicate, ORCID-less `Raphael Attie` person record that held no references was also removed.
-
-Two further names are deliberately recorded in their fuller live HSSI form rather than the shorter `CITATION.cff` form, since HSSI has no per-entry override: **`Nicholas A. Murphy`** (`CITATION.cff`: "Nick") and **`Samuel T. Badman`** (`CITATION.cff`: "Samuel"). `Sam Van Kooten` likewise matches the shared row.
-
-### Values recorded here that the HSSI software view does not display
-
-- **Field 15 License URI** `https://spdx.org/licenses/LGPL-3.0-only.html` — held on the shared `License` row.
-- **Field 26 Award Number** `80GSFC18C0014` — held on the linked `Award` row.
-
-Both are already correct in HSSI and require no update.
-
-### Note for the local-database export
-
-The shared-record corrections above were made directly in the database, not through seed CSVs. The export/reconciliation workflow must capture them, or a wipe-and-replace re-import will reintroduce the duplicate `Organization` row and the misspelled names.
+- **PyHC registry — punchbowl is not a registered package.** All three registry files
+  (`projects_core.yml`, `projects.yml`, `projects_unevaluated.yml`) were read in full and none
+  contains a punchbowl entry, so no PyHC-curated keywords, logo or description were available to
+  weigh against the other sources. Two of its companions, regularizePSF and CCSDSPy, *are* PyHC
+  community packages, so the absence is specific to punchbowl rather than to the PUNCH software
+  family, and it is not a quality signal.

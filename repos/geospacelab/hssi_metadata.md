@@ -4,19 +4,8 @@
 **Repository:** https://github.com/JouleCai/geospacelab
 **Source Revision:** 213bbc22d47a5254584581b06692cb7e2cb65d76
 **Extraction Date:** 2026-07-29
-**Validation Date:** 2026-07-29
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
-
-**State:** Fields 2–33 of this file match the live HSSI record as of 2026-07-29.
-
-**Sources of record (this is a seeded refresh, not a blank-slate extraction):**
-1. Live HSSI entry for UUID `91f97996-69a3-43b8-bdfc-20895502415f` on `http://localhost`, fetched 2026-07-29 (resolved to *stored* values, not view-rendered).
-2. Prior canonical `hssi_metadata.md` in this repository, dated 2025-10-09.
-
-**Reconciliation rule:** the live HSSI record is the baseline. A live value is superseded only
-where primary repository or registry evidence shows it stale, incorrect, or materially
-incomplete, and each such case records that evidence. Multi-valued fields are merged by
-identity-aware union (SPASE identifier, ORCID/ROR, normalized lowercase name).
 
 > **Field 12 is a bare version number.** The stored value is `v0.14.15`. Rendered HSSI output
 > prefixes it with the software name (`GeospaceLAB - v0.14.15`); that prefix is presentation
@@ -30,21 +19,20 @@ identity-aware union (SPASE identifier, ORCID/ROR, normalized lowercase name).
 - **Submitter Name:** [To be filled by actual submitter]
 - **Submitter Email:** [To be filled by actual submitter]
 
-**Note:** Not stored in the software record; supplied at submission/update time.
+**Note:** The original submitter is not part of the published metadata, so the placeholder is retained.
 
 ### 2. Persistent Identifier (RECOMMENDED)
 **Value:** https://doi.org/10.5281/zenodo.5377318
 
-**Source:** Live HSSI (unchanged); confirmed against CITATION.cff, repo `datacite.json`, and the Zenodo API (`conceptdoi` of record 20439561 is `10.5281/zenodo.5377318`).
-**Note:** Concept DOI covering all versions. Resolves HTTP 200.
+**Source:** Confirmed against CITATION.cff, repo `datacite.json`, and the Zenodo API (`conceptdoi` of record 20439561 is `10.5281/zenodo.5377318`). This is the concept DOI covering all versions.
 
 ### 3. Code Repository (MANDATORY)
 **Value:** https://github.com/JouleCai/geospacelab
 
-**Source:** Live HSSI (unchanged); confirmed against CITATION.cff, `setup.py` (`url=`), PyPI `home_page`, Zenodo `custom_fields["code:codeRepository"]`, and PyHC `code`.
+**Source:** Confirmed against CITATION.cff, `setup.py` (`url=`), PyPI `home_page`, Zenodo `custom_fields["code:codeRepository"]`, and PyHC `code`.
 
 ### 4. Software Functionality (MANDATORY)
-**Values (25 — all 15 live values retained, 10 added):**
+**Values:**
 - Coordinate Transforms
 - Coordinate Transforms:Ionospheric
 - Coordinate Transforms:Magnetospheric
@@ -71,9 +59,9 @@ identity-aware union (SPASE identifier, ORCID/ROR, normalized lowercase name).
 - Models and Simulations:Empirical
 - Models and Simulations:Field-line Tracing
 
-**Source:** Direct analysis of the packaged code at revision `213bbc2` (437 Python modules), plus README, docs, and the test suite. Every value is an exact member of the live `FunctionCategory` controlled list. Every child value has its parent category present.
+**Source:** Direct analysis of the packaged code at revision `213bbc2` (437 Python modules), plus README, docs, and the test suite. Every child value has its parent category present.
 
-**Evidence — values retained from live HSSI:**
+**Evidence:**
 - *Coordinate Transforms* (+ *Ionospheric*, *Magnetospheric*): `geospacelab/cs/` defines `GEO`, `GEOD`, `GEOC` (spherical/Cartesian), `LENU` (local east-north-up), `AACGM`, `APEX`, dispatched by the public `cs.set_cs()`. Ionospheric: `_aacgm.py`, `_apex.py`, `Dataset.convert_to_APEX()` / `convert_to_AACGM()`, MLT/MLON mapping in the polar map panels. Magnetospheric: `geospacelab/wrapper/geopack/geopack.py` exposes `geogsm`, `gsmgse`, `smgsm`, `magsm`, `geomag`, `geigeo`, `gswgsm`, `geodgeo`, `sphcar` (GEO/GEI/MAG/SM/GSM/GSE).
 - *Data Processing and Analysis:Data Access and Retrieval*: 14 backend directories under `geospacelab/datahub/sources/`, of which 13 are active (cdaweb, esa_eo, fmi, gfz, isee, jhuapl, madrigal, ncei, nipr, superdarn, supermag, tud, wdc), each with `downloader.py` + `loader.py`, driven by `DataHub.dock()`. The fourteenth, `noaa`, contains only empty placeholder `__init__.py` files and is excluded throughout this record.
 - *Analysis*: `observatory/orbit/conjunction.py` (`conjunction_leo_to_site`, `calc_big_circle_distance`, `calc_el`, `calc_az`), `Dataset.get_conjunction_with_site()` (see `test/test_swarm/test_conjuctions.py`), `observatory/orbit/utilities.py::LEOToolbox.search_orbit_nodes` / `group_by_sector` / `trajectory_local_unit_vector`.
@@ -83,13 +71,13 @@ identity-aware union (SPASE identifier, ORCID/ROR, normalized lowercase name).
 - *Data Processing and Analysis:2D Slices*: 2D field extraction and regridding via `toolbox/utilities/numpyarray.py::regridding_2d_xgaps` and `data_resample_2d`, producing the fixed-altitude 2D arrays that the polar map then renders. (Weakest of the retained values — see Notes.)
 - *Data Visualization* (+ *2D Graphics*, *Line Plots*, *Orbit Plots*): `visualization/mpl/` — `TSPanel.overlay_line` / `overlay_bar` / `overlay_pcolormesh`, `geomap/geopanels.py::PolarMapPanel.overlay_pcolormesh` / `overlay_contour` / `overlay_gridlines` / `overlay_coastlines` / `overlay_lands`; orbit: `overlay_sc_trajectory`, `overlay_cross_track_vector`, `overlay_sc_coloured_line`, `overlay_vectors`.
 
-**Evidence — values ADDED in this refresh:**
+**Further per-value evidence:**
 - *Data Processing and Analysis:Data Reduction* — `toolbox/utilities/binning.py` (`binning1d`, `binning1d_moving`), `numpyarray.py` (`data_resample`, `data_resample_2d`, `regridding_2d_xgaps`), `LEOToolbox.griddata_by_sector` / `griddata_by_sector_v2`, and the public `Dataset.gridding(...)` API with `along_track_binning_method='mean'`, `along_track_binning_step`, `y_grid_res`. Exercised end-to-end by `test/test_swarm/test_gridding.py` (`test_gridding_binning_FAC_TMS`, `test_gridding_interpolation_DNS_POD`). This is one of the capabilities added in the v0.12–v0.14 series.
 - *Data Processing and Analysis:Energy Spectra* — DMSP SSJ precipitating-particle products: `datahub/sources/madrigal/satellites/dmsp/e/loader.py` derives the energy-channel grid, and `variable_config.py` defines `JE_e`/`JE_i` ("Integrated energy flux of electrons/ions") and `E_e_MEAN`/`E_i_MEAN` ("Mean energy of electrons/ions"), plotted by `express/dmsp_dashboard.py`.
 - *Data Processing and Analysis:Field-line Tracing* — `wrapper/geopack/geopack.py::trace(xi, yi, zi, dir, rlim, r0, parmod, exname, inname)` with `step`/`rhand` RK integration, tracing through an external model (`t89`/`t96`/`t01`/`t04`) plus an internal IGRF field.
 - *Data Processing and Analysis:File Format Conversion* — downloaders retrieve one format and persist another: WDC Dst/AE/ASY-SYM fetch IAGA2002 ASCII then `save_to_netcdf()` (`datahub/sources/wdc/*/downloader.py`); the same ASCII-to-netCDF conversion is implemented for GFZ Kp/Ap, Hpo and SNF107, SuperDARN POTMAP, and SuperMAG indices/magnetometer.
 - *Data Processing and Analysis:Image Processing* — `datahub/sources/nipr/asc/tro_wmi/loader.py` reads all-sky camera JPG frames with `plt.imread` and extracts the 558 nm monochromatic channel; `tro_wmi/__init__.py::calc_lat_lon()` geolocates every image pixel by converting azimuth/elevation/range through `LENUSpherical` into GEO and then AACGM/APEX. DMSP SSUSI auroral images are gridded and regridded for map overlay (`overlay_pcolormesh(..., regridding=...)`).
-- *Data Visualization:2D Slices* — the processing-side value was already present, but the *rendering* of those slices is a distinct capability with its own vocabulary row: `visualization/mpl/geomap/geopanels.py::PolarMapPanel.overlay_pcolormesh` / `overlay_contour` display a fixed-altitude 2D cut of the ionosphere on a polar projection (README Example 4 renders the SSUSI LBHS slice this way), and `PolarSectorPanel` does the same for a longitude/MLT sector. The live `FunctionCategory` vocabulary carries two distinct `2D Slices` rows, one parented to *Data Processing and Analysis* (already held) and one to *Data Visualization* (added here).
+- *Data Visualization:2D Slices* — the *rendering* of those slices is a distinct capability with its own vocabulary row: `visualization/mpl/geomap/geopanels.py::PolarMapPanel.overlay_pcolormesh` / `overlay_contour` display a fixed-altitude 2D cut of the ionosphere on a polar projection (README Example 4 renders the SSUSI LBHS slice this way), and `PolarSectorPanel` does the same for a longitude/MLT sector. The `FunctionCategory` vocabulary carries two distinct `2D Slices` rows, one parented to *Data Processing and Analysis* and one to *Data Visualization*.
 - *Data Visualization:Mission-Specific* — `geospacelab/express/` provides curated per-instrument quicklook layouts: `EISCATDashboard.quicklook()` (explicitly reproducing the official EISCAT online quicklook format, per README Example 2), `DMSPTSDashboard.quicklook()`, `MillstoneHillISRDashboard.quicklook()`, `OMNIDashboard.quicklook()`.
 - *Models and Simulations* + *Models and Simulations:Empirical* — `geospacelab/wrapper/geopack/` bundles the Tsyganenko empirical external magnetospheric field models `t89.py`, `t96.py`, `t01.py`, `t04.py`, the IGRF internal field (`init_igrf`, `load_igrf`, `igrf_gsm`, `igrf_geo`, `igrf_gsw`, `dip`), and the Shue et al. and T96 empirical magnetopause models (`shuetal_mgnp`, `t96_mgnp`).
 - *Models and Simulations:Field-line Tracing* — the same `trace()` entry point, tracing within those model fields rather than within observational data.
@@ -106,7 +94,7 @@ identity-aware union (SPASE identifier, ORCID/ROR, normalized lowercase name).
 - *Servers and Environments* (all subcategories) — no Dockerfile, no MPI/`mpi4py`, no server or HPC job code.
 
 ### 5. Related Region (MANDATORY)
-**Values (7 — all 3 live values retained, 4 added):**
+**Values:**
 - Earth Atmosphere
 - Earth Auroral Subregion
 - Earth Ionosphere
@@ -115,15 +103,15 @@ identity-aware union (SPASE identifier, ORCID/ROR, normalized lowercase name).
 - Interplanetary Space
 - Solar Wind
 
-**Source:** Live HSSI (first three) + repository evidence. All seven are exact members of the HSSI `Region` controlled vocabulary.
+**Source:** Repository evidence below supports all seven values.
 **Evidence:**
-- **Earth Atmosphere** (live) — umbrella for the neutral/ionised upper atmosphere products below.
-- **Earth Magnetosphere** (live) — AMPERE field-aligned currents, Swarm FAC/AOB_FAC/PPI_FAC, SuperDARN convection, Dst/AE/ASY-SYM/Kp indices, Tsyganenko magnetospheric field models.
-- **Interplanetary Space** (live) — CDAWeb/OMNI solar wind and IMF.
-- **Earth Ionosphere** (ADDED) — EISCAT/Millstone Hill/PFISR/RISR-N incoherent scatter `n_e`, `T_e`, `T_i`, `v_i_los`; Madrigal and ISEE GNSS TEC maps; Swarm `EFI_LP_HM`, `EFI_TCT02/16`, `IBI_TMS`, `IPD_IRR`, `MIT_LP`, `MIT_TEC`, `TEC_TMS`.
-- **Earth Thermosphere** (ADDED) — TU Delft neutral density and neutral wind from accelerometer/GPS for CHAMP, GRACE, GRACE-FO, GOCE and Swarm (`tud/*/dns_acc`, `dns_pod`, `wnd_acc`); Swarm `DNS_ACC`/`DNS_POD`.
-- **Earth Auroral Subregion** (ADDED) — DMSP/SSUSI auroral emission (`EDR_AUR`, LBHS/LBHL bands), DMSP SSJ auroral precipitation energy flux, Swarm auroral oval boundary (`AOB_FAC_2F`) and auroral electrojet products (`AEJ_LPL`, `AEJ_LPS`, `AEJ_PBL`, `AEJ_PBS`), FMI IMAGE electrojet indices, NIPR Tromsø all-sky auroral imager.
-- **Solar Wind** (ADDED) — the CDAWeb/OMNI backend is a core built-in capability and its variables are solar-wind plasma and interplanetary magnetic field quantities in the strict sense: `sources/cdaweb/omni/variable_config.py` defines `v_sw` (line 162, `fullname = 'Solar wind speed'`), `n_p` (proton density, line 184) and `p_dyn` (dynamic pressure, line 208); `omni/loader.py:49-51` derives the IMF components `B_x_GSM`, `B_T_GSM` and `B_TOTAL`; `omni/__init__.py:42-45` places `SC_ID_IMF`, `IMF_PTS`, `B_x_GSM`, `B_y_GSM`, `B_z_GSM`, `B_T_GSM` in the default variable set; and `omni/__init__.py:222` exposes the IMF clock-angle helper `add_IMF_CA()` (with `add_IMF_AZ()` and `add_IMF_EL()` alongside). Surfaced through the `OMNIDashboard` express quicklook (README Example 3) and `test/test_omni.py`.
+- **Earth Atmosphere** — umbrella for the neutral/ionised upper atmosphere products below.
+- **Earth Magnetosphere** — AMPERE field-aligned currents, Swarm FAC/AOB_FAC/PPI_FAC, SuperDARN convection, Dst/AE/ASY-SYM/Kp indices, Tsyganenko magnetospheric field models.
+- **Interplanetary Space** — CDAWeb/OMNI solar wind and IMF.
+- **Earth Ionosphere** — EISCAT/Millstone Hill/PFISR/RISR-N incoherent scatter `n_e`, `T_e`, `T_i`, `v_i_los`; Madrigal and ISEE GNSS TEC maps; Swarm `EFI_LP_HM`, `EFI_TCT02/16`, `IBI_TMS`, `IPD_IRR`, `MIT_LP`, `MIT_TEC`, `TEC_TMS`.
+- **Earth Thermosphere** — TU Delft neutral density and neutral wind from accelerometer/GPS for CHAMP, GRACE, GRACE-FO, GOCE and Swarm (`tud/*/dns_acc`, `dns_pod`, `wnd_acc`); Swarm `DNS_ACC`/`DNS_POD`.
+- **Earth Auroral Subregion** — DMSP/SSUSI auroral emission (`EDR_AUR`, LBHS/LBHL bands), DMSP SSJ auroral precipitation energy flux, Swarm auroral oval boundary (`AOB_FAC_2F`) and auroral electrojet products (`AEJ_LPL`, `AEJ_LPS`, `AEJ_PBL`, `AEJ_PBS`), FMI IMAGE electrojet indices, NIPR Tromsø all-sky auroral imager.
+- **Solar Wind** — the CDAWeb/OMNI backend is a core built-in capability and its variables are solar-wind plasma and interplanetary magnetic field quantities in the strict sense: `sources/cdaweb/omni/variable_config.py` defines `v_sw` (line 162, `fullname = 'Solar wind speed'`), `n_p` (proton density, line 184) and `p_dyn` (dynamic pressure, line 208); `omni/loader.py:49-51` derives the IMF components `B_x_GSM`, `B_T_GSM` and `B_TOTAL`; `omni/__init__.py:42-45` places `SC_ID_IMF`, `IMF_PTS`, `B_x_GSM`, `B_y_GSM`, `B_z_GSM`, `B_T_GSM` in the default variable set; and `omni/__init__.py:222` exposes the IMF clock-angle helper `add_IMF_CA()` (with `add_IMF_AZ()` and `add_IMF_EL()` alongside). Surfaced through the `OMNIDashboard` express quicklook (README Example 3) and `test/test_omni.py`.
   `Solar Wind` is the more specific region for these measurements; `Interplanetary Space` is retained alongside it, as `Earth Atmosphere` is retained alongside the finer Earth regions.
 
 **Considered and excluded:** *Solar Environment* — the NOAA/SWPC `goesxray` and `solarwind` modules are empty placeholder `__init__.py` files (0 bytes); GFZ F10.7 and sunspot number are ingested only as geospace drivers, not as solar-region science functionality. *Planetary Magnetospheres* — all coordinate systems and models are Earth-specific.
@@ -144,7 +132,7 @@ identity-aware union (SPASE identifier, ORCID/ROR, normalized lowercase name).
 ### 7. Software Name (MANDATORY)
 **Value:** GeospaceLAB
 
-**Source:** Live HSSI (unchanged); matches CITATION.cff `title`, Zenodo/DataCite title, PyHC `name`, and the README heading. Editorial wording preserved.
+**Source:** Matches CITATION.cff `title`, Zenodo/DataCite title, PyHC `name`, and the README heading. Editorial wording preserved.
 
 ### 8. Description (MANDATORY)
 **Value:** GeospaceLAB provides a framework of data access, analysis, and visualization for researchers in space physics and space weather. It features a class-based data manager (DataHub, Dataset, Variable), extendable architecture for adding new data sources, comprehensive visualization tools for time series and map projections (including polar views with AACGM coordinates), space coordinate system transformations, and built-in support for numerous data sources including CDAWeb/OMNI, Madrigal/EISCAT, DMSP/SSUSI, ESA SWARM, AMPERE, SuperDARN, and various geomagnetic indices. More recent releases add extensive coverage of the ESA Swarm mission with around thirty supported data products, gridding and binning of satellite measurements by orbit sector, satellite-to-ground conjunction search, and data retrieval through the HAPI and VirES interfaces.
@@ -155,13 +143,12 @@ identity-aware union (SPASE identifier, ORCID/ROR, normalized lowercase name).
 ### 9. Concise Description (OPTIONAL)
 **Value:** A Python framework for managing and visualizing data in space physics, with built-in support for numerous data sources including EISCAT, DMSP, SWARM, OMNI, and geomagnetic indices.
 
-**Source:** Live HSSI, retained verbatim (180 characters, within the 200-character limit). Still accurate; editorial wording preserved.
+**Source:** Retained verbatim from the established record (180 characters, within the 200-character limit). Still accurate; editorial wording preserved.
 
 ### 10. Publication Date (RECOMMENDED)
 **Value:** 2021-03-13
 
-**Source:** Live HSSI (unchanged) — GitHub repository creation date.
-**Note:** The first Zenodo-archived release followed on 2021-09-02. Live value retained as the date of first publication of the initial version.
+**Source:** GitHub repository creation date. The first Zenodo-archived release followed on 2021-09-02; the earlier date is retained as the date of first publication of the initial version.
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
@@ -193,21 +180,21 @@ The version description follows the Zenodo/DataCite release abstract for v0.14.1
 **Values:**
 - Python 3.x
 
-**Source:** Live HSSI (unchanged). Confirmed: 437 `.py` files and no other source-language files in the package tree (`find geospacelab -type f | sed 's/.*\.//' | sort | uniq -c` yields only `py`, plus data/doc assets). `setup.py` declares `python_requires='>=3.12'` with classifiers for Python 3.12, 3.13 and 3.14.
+**Source:** Confirmed by 437 `.py` files and no other source-language files in the package tree (`find geospacelab -type f | sed 's/.*\.//' | sort | uniq -c` yields only `py`, plus data/doc assets). `setup.py` declares `python_requires='>=3.12'` with classifiers for Python 3.12, 3.13 and 3.14.
 **Note:** The minimum Python has risen from `>=3.7` (recorded in the 2025-10-09 file) to `>=3.12`. This does not change the HSSI field value, which has no minor-version granularity.
 
 ### 14. Reference Publication (RECOMMENDED)
 **Value:** https://doi.org/10.3389/fspas.2022.1023163
 
-**Source:** Live HSSI (stored RelatedItem `2c157bb3-d29a-48ea-babc-f207cd0d079a`, type 3), unchanged. Confirmed against README "Citation" section, `docs/citation.rst`, and Crossref.
+**Source:** Confirmed against the README "Citation" section, `docs/citation.rst`, and Crossref.
 **Full citation:** Cai, L., Aikio, A., Kullen, A., Deng, Y., Zhang, Y., Zhang, S.-R., Virtanen, I., & Vanhamäki, H. (2022). GeospaceLAB: Python package for managing and visualizing data in space physics. *Frontiers in Astronomy and Space Sciences*, 9, 1023163.
-**Note:** The stored RelatedItem `name` is the placeholder `UNKNOWN`. This is a known HSSI storage artifact that is never user-visible; it is not treated as a defect and no rename is proposed.
+**Note:** HSSI may associate a placeholder display name `UNKNOWN` with this DOI internally; the DOI is the durable identity and no separate name correction is needed.
 
 ### 15. License (RECOMMENDED)
 - **License:** BSD 3-Clause "New" or "Revised" License
 - **License URI:** https://opensource.org/licenses/BSD-3-Clause
 
-**Source:** Live HSSI (stored License `d7f050b7-b557-445d-a0c5-1d89918a915e`), unchanged. Byte-for-byte match with DataCite `rightsList[0].rights` for the v0.14.15 DOI, which also supplies `rightsIdentifier: bsd-3-clause` under the SPDX scheme. Corroborated by the repository `LICENSE` file and `setup.py` (`license='BSD 3-Clause License'`).
+**Source:** DataCite `rightsList[0].rights` for the v0.14.15 DOI supplies this license and `rightsIdentifier: bsd-3-clause` under the SPDX scheme. Corroborated by the repository `LICENSE` file and `setup.py` (`license='BSD 3-Clause License'`).
 **SPDX Identifier:** BSD-3-Clause
 
 ---
@@ -215,7 +202,7 @@ The version description follows the Zenodo/DataCite release abstract for v0.14.1
 ## Section 2: Additional Data
 
 ### 16. Keywords (OPTIONAL)
-**Values (36 — all 21 live values retained, 15 added):**
+**Values:**
 - all-sky imager
 - ampere
 - analysis
@@ -253,29 +240,30 @@ The version description follows the Zenodo/DataCite release abstract for v0.14.1
 - vires
 - visualization
 
-**Source:** Live HSSI (21, stored lowercase) unioned by normalized-lowercase comparison with repository-derived terms. Compared against the HSSI `Keyword` vocabulary so that additions reuse existing rows wherever they exist.
+**Source:** Repository metadata and capabilities support the terms below; lowercase spelling preserves canonical keyword identity and avoids near-duplicates.
 
-**Evidence for additions:**
-- `magnetosphere` — `setup.py` `keywords` list and PyHC `keywords`; present in the 2025-10-09 file but absent from live HSSI. Existing vocabulary row.
-- `superdarn` — `datahub/sources/superdarn/potmap/`. Existing row.
-- `supermag` — `datahub/sources/supermag/{indices,magnetometer}/`. New row.
-- `ampere` — `datahub/sources/jhuapl/ampere/`. New row.
-- `field-aligned currents` — AMPERE fitted FAC, Swarm `fac_tms`, `fac_tms_dual`, `fac_lls_dual`, `aob_fac`, `ppi_fac`. New row.
-- `aurora` — DMSP/SSUSI `EDR_AUR`, Swarm auroral oval boundary, NIPR all-sky imager. Existing row.
-- `auroral electrojet` — WDC/AE, FMI IMAGE IE indices, Swarm `aej_*`. Existing row.
-- `thermosphere` — TU Delft neutral density/wind products. Existing row.
-- `total electron content` — Madrigal and ISEE GNSS TEC maps, Swarm `tec_tms`, `mit_tec`. Existing row.
-- `gnss` — GNSS TEC maps and Swarm GNSS/POD-derived products. Existing row.
-- `magnetometer` — ground and space-borne magnetometer data are read directly: `sources/supermag/magnetometer/` (SuperMAG ground stations, with the `SuperMAG_stations.dat` station table), `sources/ncei/dmsp/ssm_mfr/` (DMSP SSM magnetometer), and Swarm `l1b/mag_lr` and `l1b/mag_hr` (VFM/ASM). The WDC and FMI IMAGE index series ingested by `sources/wdc/*` and `sources/fmi/image/ie/` are likewise magnetometer-derived. Existing row.
-- `all-sky imager` — `datahub/sources/nipr/asc/tro_wmi/`. Existing row.
-- `coordinate transformation` — `geospacelab/cs/` and the geopack transform wrappers. Existing row.
-- `hapi`, `vires` — `datahub/sources/esa_eo/swarm/loader.py::load_from_HAPI` / `load_from_VirES`. Existing rows.
+**Evidence:**
+- `magnetosphere` — `setup.py` `keywords` list and PyHC `keywords`.
+- `superdarn` — `datahub/sources/superdarn/potmap/`.
+- `supermag` — `datahub/sources/supermag/{indices,magnetometer}/`.
+- `ampere` — `datahub/sources/jhuapl/ampere/`.
+- `field-aligned currents` — AMPERE fitted FAC, Swarm `fac_tms`, `fac_tms_dual`, `fac_lls_dual`, `aob_fac`, `ppi_fac`.
+- `aurora` — DMSP/SSUSI `EDR_AUR`, Swarm auroral oval boundary, NIPR all-sky imager.
+- `auroral electrojet` — WDC/AE, FMI IMAGE IE indices, Swarm `aej_*`.
+- `thermosphere` — TU Delft neutral density/wind products.
+- `total electron content` — Madrigal and ISEE GNSS TEC maps, Swarm `tec_tms`, `mit_tec`.
+- `gnss` — GNSS TEC maps and Swarm GNSS/POD-derived products.
+- `magnetometer` — ground and space-borne magnetometer data are read directly: `sources/supermag/magnetometer/` (SuperMAG ground stations, with the `SuperMAG_stations.dat` station table), `sources/ncei/dmsp/ssm_mfr/` (DMSP SSM magnetometer), and Swarm `l1b/mag_lr` and `l1b/mag_hr` (VFM/ASM). The WDC and FMI IMAGE index series ingested by `sources/wdc/*` and `sources/fmi/image/ie/` are likewise magnetometer-derived.
+- `all-sky imager` — `datahub/sources/nipr/asc/tro_wmi/`.
+- `coordinate transformation` — `geospacelab/cs/` and the geopack transform wrappers.
+- `hapi`, `vires` — `datahub/sources/esa_eo/swarm/loader.py::load_from_HAPI` / `load_from_VirES`.
 
 **Dropped from the 2025-10-09 file (with reason):** `spaceweather` — a near-duplicate of the live keyword `space weather`, which is already present. Adding it would create a redundant vocabulary row.
 
 ### 17. Data Sources (OPTIONAL)
-**Values (11 — all 8 live values retained, 3 added):**
+**Values:**
 - CDAWeb
+- FTP/FTPS Directories
 - GFZ
 - HAPI
 - HTTP/HTTPS Directories
@@ -287,17 +275,22 @@ The version description follows the Zenodo/DataCite release abstract for v0.14.1
 - VirES
 - WDC
 
-**Source:** Live HSSI plus repository evidence. All 11 are exact members of the HSSI `DataInput` controlled vocabulary, which includes site-specific values such as `GFZ`, `Madrigal` and `WDC` alongside the generic ones.
+**Source:** Repository evidence below supports all 12 sources, including site-specific values such as `GFZ`, `Madrigal` and `WDC` alongside the generic ones.
 
-**Evidence for additions:**
-- **HAPI** (ADDED) — `datahub/sources/esa_eo/swarm/loader.py::load_from_HAPI(server="https://vires.services/hapi", dataset=..., parameters=...)` calls `hapiclient.hapi()` and maps the returned record array into GeospaceLAB `Variable` objects. Dispatched from `swarm/dataset.py` via the `from_HAPI` flag; implemented for the Swarm `l1b/mag_lr` product.
-- **VirES** (ADDED) — `swarm/loader.py::load_from_VirES(collection, kwargs_products)` builds a `viresclient.SwarmRequest`, sets the collection and products, and ingests `request.get_between(...)`. Dispatched via the `from_VirES` flag; implemented for `l1b/mag_lr`.
-- **SSCWeb** (ADDED) — `observatory/orbit/sc_orbit.py::OrbitPosition_SSCWS` uses `from sscws.sscws import SscWs` and `sscws.coordinates` to query NASA's Satellite Situation Center for orbit positions ("Searching the orbit data from NASA/SscWs ..."), including `list_satellites()`, `get_sat_info()`, `list_stations()`.
+**Evidence:**
+- **FTP/FTPS Directories** — `datahub/sources/gfz/downloader.py:45` selects
+  `ftp.gfz-potsdam.de`, and `:58-79` connects, logs in, changes directory and retrieves the requested
+  file over FTP. The GFZ Kp/Ap and Hpo downloaders call this path directly from their constructors
+  (`datahub/sources/gfz/kpap/downloader.py:42`;
+  `datahub/sources/gfz/hpo/downloader.py:46`).
+- **HAPI** — `datahub/sources/esa_eo/swarm/loader.py::load_from_HAPI(server="https://vires.services/hapi", dataset=..., parameters=...)` calls `hapiclient.hapi()` and maps the returned record array into GeospaceLAB `Variable` objects. Dispatched from `swarm/dataset.py` via the `from_HAPI` flag; implemented for the Swarm `l1b/mag_lr` product.
+- **VirES** — `swarm/loader.py::load_from_VirES(collection, kwargs_products)` builds a `viresclient.SwarmRequest`, sets the collection and products, and ingests `request.get_between(...)`. Dispatched via the `from_VirES` flag; implemented for `l1b/mag_lr`.
+- **SSCWeb** — `observatory/orbit/sc_orbit.py::OrbitPosition_SSCWS` uses `from sscws.sscws import SscWs` and `sscws.coordinates` to query NASA's Satellite Situation Center for orbit positions ("Searching the orbit data from NASA/SscWs ..."), including `list_satellites()`, `get_sat_info()`, `list_stations()`.
 
-**Retained live values, re-confirmed:** CDAWeb (`sources/cdaweb/{omni,dmsp/ssusi}`), GFZ (`sources/gfz/{kpap,hpo,snf107}`), Madrigal (`sources/madrigal/{isr,satellites,gnss}` via `madrigalWeb`), WDC (`sources/wdc/{dst,ae,asysym}`), OMNIWeb (CDAWeb/OMNI products), HTTP/HTTPS Directories (`requests` + `BeautifulSoup` directory scraping in most downloaders), Observatory/Mission-specific (ESA Swarm, JHUAPL/AMPERE, TU Delft, NCEI, NIPR, ISEE, FMI, SuperDARN, SuperMAG endpoints — cross-listed with Fields 31/32 as the form directs), Other (SuperMAG web API, EISCAT schedule portal).
+**Further evidence:** CDAWeb (`sources/cdaweb/{omni,dmsp/ssusi}`), GFZ (`sources/gfz/{kpap,hpo,snf107}`), Madrigal (`sources/madrigal/{isr,satellites,gnss}` via `madrigalWeb`), WDC (`sources/wdc/{dst,ae,asysym}`), OMNIWeb (CDAWeb/OMNI products), HTTP/HTTPS Directories (`requests` + `BeautifulSoup` directory scraping in most downloaders), Observatory/Mission-specific (ESA Swarm, JHUAPL/AMPERE, TU Delft, NCEI, NIPR, ISEE, FMI, SuperDARN, SuperMAG endpoints — cross-listed with Fields 31/32 as the form directs), Other (SuperMAG web API, EISCAT schedule portal).
 
 ### 18. Input File Formats (RECOMMENDED)
-**Values (7 — 6 of the 7 live values retained, 1 added, 1 removed):**
+**Values:**
 - ascii
 - CDF
 - HDF5
@@ -308,18 +301,18 @@ The version description follows the Zenodo/DataCite release abstract for v0.14.1
 
 **Source:** The readers actually present in the code: `h5py.File` (30 call sites — EISCAT/Madrigal HDF5, DMSP s1/s4/e, GNSS TEC), `netCDF4.Dataset` / `nc.Dataset` (33 call sites — SSUSI, AMPERE, Swarm, SuperDARN, and all locally-cached products), `cdflib.CDF` (CDAWeb OMNI and Swarm CDF, ISTP-compliant), `np.loadtxt` and IAGA2002/ASCII parsers (WDC, GFZ, TU Delft, SuperDARN POTMAP), and `plt.imread` for all-sky camera JPG frames (covered by *Other*, along with the `EISCAT-hdf5` / `Madrigal-hdf5` dialects).
 
-**Evidence for the addition — `JSON`:** the SuperMAG web API is consumed as JSON. `sources/supermag/supermag_api.py::sm_GetUrl(fetchurl, fetch='json')` parses the response with `json.loads(longstring)` (line 244), and both SuperMAG entry points request that path unconditionally — `SuperMAGGetIndices()` at line 310 and `SuperMAGGetData()` at line 338 each call `sm_GetUrl(urlstr, 'json')`. Both are reached from **production** downloader code, not from a demo: `sources/supermag/indices/downloader.py:135` and `sources/supermag/magnetometer/downloader.py:100`. `JSON` is an exact member of the live `FileFormat` list.
+**Evidence for `JSON`:** the SuperMAG web API is consumed as JSON. `sources/supermag/supermag_api.py::sm_GetUrl(fetchurl, fetch='json')` parses the response with `json.loads(longstring)` (line 244), and both SuperMAG entry points request that path unconditionally — `SuperMAGGetIndices()` at line 310 and `SuperMAGGetData()` at line 338 each call `sm_GetUrl(urlstr, 'json')`. Both are reached from **production** downloader code, not from a demo: `sources/supermag/indices/downloader.py:135` and `sources/supermag/magnetometer/downloader.py:100`. `JSON` is an exact member of the `FileFormat` vocabulary.
 
 **Omitted because no reader exists — `IDL.sav`:** there is no IDL save-file reader anywhere in the package — no `readsav`, no `scipy.io` import, no `.sav` handling. There is no GITM module (`find . -iname "*gitm*"` returns nothing), and `git log --all --diff-filter=A '*gitm*'` shows GITM has never been present in tracked history. The README's built-in-data-sources table (rows 77–78) advertises `UTA/GITM/2DALL` and `UTA/GITM/3DALL` with formats *binary* and *IDL-sav*, but both rows are marked **`beta`** with **`Downloadable: False`** — documentation for a module that was never shipped.
 
 **Omitted because no reader exists — `csv`, `FITS`, `Zarr`:** the only `pd.read_csv` occurrence (`supermag_api.py:461`) sits inside `supermag_testing(userid)`, a vendored demonstration helper defined at line 404 and never called from anywhere in the package; it is dead code. No FITS or Zarr readers exist.
 
 ### 19. Output File Formats (RECOMMENDED)
-**Values (2 — live HSSI was EMPTY; this is new enrichment):**
+**Values:**
 - ascii
 - netCDF3/4
 
-**Source:** Repository code analysis. Live HSSI stored `[]`; the 2025-10-09 file recorded "Not explicitly documented". Both are superseded by direct code evidence.
+**Source:** Direct repository code evidence supersedes the earlier "Not explicitly documented" conclusion.
 
 **Evidence:**
 - **netCDF3/4** — the software converts and persists downloaded data as netCDF in at least eight modules, each opening a writable handle (`nc.Dataset(fp, 'w')`) and populating dimensions/variables: `wdc/dst/downloader.py::save_to_netcdf`, `wdc/ae`, `wdc/asysym`, `gfz/downloader.py::save_to_netcdf` with `gfz/kpap`, `gfz/kpap/nowcast`, `gfz/hpo`, `gfz/hpo/nowcast`, `superdarn/potmap/downloader.py::save_to_netcdf` and `potmap/loader.py::save_to_nc`, `supermag/indices/downloader.py::save_to_nc`, `supermag/magnetometer/downloader.py::save_to_nc`, and `observatory/orbit/sc_orbit.py::save_to_netcdf` (writing SSCWeb orbit data).
@@ -328,21 +321,21 @@ The version description follows the Zenodo/DataCite release abstract for v0.14.1
 **Considered and excluded:** `CDF` — `datahub/__init__.py::save_to_cdf()` exists but its body is `pass` (an unimplemented stub), as is `save_to_pickle()`. Claiming CDF output would be wrong. Figure output (PNG/PDF via `save_figure()`) is image rendering, not a data file format, and has no corresponding value in the `FileFormat` list.
 
 ### 20. Operating System (RECOMMENDED)
-**Values (3 — unchanged from live HSSI):**
+**Values:**
 - Linux
 - Mac
 - Operating System Independent
 
-**Source:** Live HSSI, retained. Re-confirmed: README §1 states the package was tested "under **Ubuntu 20.04** and **MacOS Big Sur**"; `.github/workflows/pyhc-actions.yml` runs on `ubuntu-latest`; `.readthedocs.yaml` builds on `ubuntu-22.04`. The package is pure Python with no compiled extensions of its own.
+**Source:** README §1 states the package was tested "under **Ubuntu 20.04** and **MacOS Big Sur**"; `.github/workflows/pyhc-actions.yml` runs on `ubuntu-latest`; `.readthedocs.yaml` builds on `ubuntu-22.04`. The package is pure Python with no compiled extensions of its own.
 **Note:** No Windows evidence exists (no Windows CI job, no Windows mention in the install docs), so `Windows` is not added.
 
 ### 21. CPU Architecture (RECOMMENDED)
 **Value:** CPU Independent
 
-**Source:** Live HSSI, retained. Pure-Python package (437 `.py` files, no `.pyx`, `.c`, or `.f` sources); architecture dependence would come only from third-party wheels.
+**Source:** Pure-Python package (437 `.py` files, no `.pyx`, `.c`, or `.f` sources); architecture dependence would come only from third-party wheels.
 
 ### 22. Related Phenomena (OPTIONAL)
-**Values (2 — live HSSI was EMPTY; this is new enrichment):**
+**Values:**
 - Geomagnetic Storms
 - Solar Wind
 
@@ -357,7 +350,7 @@ The version description follows the Zenodo/DataCite release abstract for v0.14.1
 ### 23. Development Status (RECOMMENDED)
 **Value:** Active
 
-**Source:** Repository, registry and PyHC evidence. **Live HSSI stored `null` (missing); this fills the gap.** Exact match to the live `RepoStatus` controlled list (Abandoned, Active, Concept, Inactive, Moved, Suspended, Unsupported, WIP).
+**Source:** Repository, registry and PyHC evidence supports `Active` under the repostatus.org definition.
 
 **Evidence:**
 - **Release cadence** — six releases in the eight months preceding this extraction: v0.12.0 (2026-01-30), v0.13.0 (2026-02-20), v0.14.0 (2026-05-18), v0.14.13 (2026-05-28), v0.14.14 and v0.14.15 (2026-05-29); 77 releases on PyPI in total. The most recent commit on `master` is `213bbc2`, dated 2026-06-30.
@@ -369,11 +362,11 @@ Per repostatus.org, "Active" = *reached a stable, usable state and is being acti
 ### 24. Documentation (RECOMMENDED)
 **Value:** https://geospacelab.readthedocs.io/en/latest/
 
-**Source:** Live HSSI, retained. Re-verified as live (HTTP 200) and confirmed by README, `.readthedocs.yaml`, `docs/`, and PyHC `docs`.
-**Note:** Field 24 accepts a single URL. Two further documentation resources exist and are recorded here rather than replacing the main link: the Swarm-specific documentation at https://geospacelab-swarm.readthedocs.io/en/latest/ (new in the v0.14 series, also HTTP 200) and the GitHub wiki at https://github.com/JouleCai/geospacelab/wiki.
+**Source:** Confirmed by README, `.readthedocs.yaml`, `docs/`, and PyHC `docs`.
+**Note:** Field 24 accepts a single URL. Two further documentation resources exist and are recorded here rather than replacing the main link: the Swarm-specific documentation at https://geospacelab-swarm.readthedocs.io/en/latest/ and the GitHub wiki at https://github.com/JouleCai/geospacelab/wiki.
 
 ### 25. Funder (OPTIONAL)
-**Values (7 — live HSSI was EMPTY; this is new enrichment):**
+**Values:**
 
 1. **Organization:** University of Oulu
    **Funder Identifier:** https://ror.org/03yj89h83
@@ -397,9 +390,9 @@ Every organization name is the ROR display name — full institutional names, ac
 **Also checked and found empty:** DataCite `fundingReferences` for both the concept DOI and the v0.14.15 DOI, the Zenodo record's `grants` field, the repository `datacite.json` (`fundingReferences: []`), README, and `docs/citation.rst` — none of these carries funding metadata, which is why the field was previously empty.
 
 ### 26. Award Title (OPTIONAL)
-**Values (10 — live HSSI was EMPTY; this is new enrichment):**
+**Values:**
 
-One award number per entry, because the live schema (`GET /api/models/structures/` → `SubmissionFormAward`) declares `awardNumber` with `"multi": false` while `awardTitle` is `"multi": true`. The three NASA numbers and the two NSF numbers are therefore recorded as separate Award entries rather than as comma-joined strings.
+One award number is recorded per entry because an award title may have only one award number. The three NASA numbers and the two NSF numbers are therefore separate Award entries rather than comma-joined strings.
 
 1. **Award Title:** Kvantum Institute funding for the development of GeospaceLAB, University of Oulu
    **Award Number:** Not found
@@ -436,7 +429,7 @@ One award number per entry, because the live schema (`GET /api/models/structures
 **Scope of the funding statement:** the publication states these grants in the aggregate for the paper's authors — the Kvantum Institute funding is the one explicitly tied to GeospaceLAB development, while the remaining awards supported contributing co-authors. Award *titles* are descriptive reconstructions (the article gives agency and number, not formal grant titles); only the numbers are verbatim.
 
 ### 27. Related Publications (OPTIONAL)
-**Values (1 — live HSSI was EMPTY; this is new enrichment):**
+**Values:**
 - https://doi.org/10.1029/2020JA028808
 
 **Source:** README "Example 4" and the 2025-10-09 file; DOI verified against Crossref.
@@ -445,7 +438,7 @@ One award number per entry, because the live schema (`GET /api/models/structures
 **Also searched, nothing further found:** `docs/citation.rst`, `docs/index.rst`, `docs/user/`, `docs/dev/`, the `examples/` tree, DataCite `relatedIdentifiers` for both DOIs (only `IsVersionOf` and `IsSupplementTo` to the GitHub tag), and the Zenodo record's `related_identifiers`.
 
 ### 28. Related Datasets (OPTIONAL)
-**Values (7 — live HSSI was EMPTY; this is new enrichment):**
+**Values:**
 - https://doi.org/10.1029/2004JA010649 — OMNI (CDAWeb/OMNI solar wind and IMF)
 - https://doi.org/10.1016/0021-9169(95)00047-X — EISCAT incoherent scatter analysed data (GUISDAP)
 - https://doi.org/10.1186/BF03351933 — ESA Swarm mission data products
@@ -463,22 +456,22 @@ One award number per entry, because the live schema (`GET /api/models/structures
 - `10.1029/2012JA017683` — Gjerloev (2012), *The SuperMAG data processing technique*, JGR Space Physics → SuperMAG indices and magnetometer data (`sources/supermag`).
 - `10.1029/2008JA013682` — Tanskanen (2009), *A comprehensive high-throughput analysis of substorms observed by IMAGE magnetometer network*, JGR Space Physics → the FMI IMAGE electrojet indices (`sources/fmi/image/ie`).
 
-**Considered but not included:** a dataset-describing DOI for DMSP/SSUSI could not be verified with confidence within this extraction and is therefore omitted rather than guessed; likewise for the TU Delft thermosphere density/wind products, the Madrigal GNSS TEC maps, and the GFZ and WDC index series. The 2025-10-09 file listed ten dataset *names* with no identifiers at all; those names are superseded by the seven verified DOIs above, and the remaining ones are recorded here as unresolved.
+**Considered but not included:** a dataset-describing DOI for DMSP/SSUSI could not be verified with confidence and is therefore omitted rather than guessed; likewise for the TU Delft thermosphere density/wind products, the Madrigal GNSS TEC maps, and the GFZ and WDC index series. The 2025-10-09 file listed ten dataset *names* with no identifiers at all; those names are superseded by the seven verified DOIs above, while the unsupported remainder stays omitted.
 
 ### 29. Related Software (OPTIONAL)
-**Values (6 — all 4 live values retained, 2 added):**
+**Values:**
 - https://doi.org/10.5281/zenodo.3598705 — aacgmv2 (Altitude-Adjusted Corrected Geomagnetic coordinates)
 - https://doi.org/10.5281/zenodo.1214206 — apexpy (Apex / Quasi-Dipole geomagnetic coordinates)
 - https://doi.org/10.5281/zenodo.1481144 — cdflib (CDF file reading)
 - https://doi.org/10.5281/zenodo.15110786 — geopack (Tsyganenko models in Python)
-- https://github.com/MITHaystack/madrigalWeb — madrigalWeb (Madrigal database client) **[ADDED]**
-- https://berniegsfc.github.io/sscws/REST/ — sscws (NASA Satellite Situation Center web-services client) **[ADDED]**
+- https://github.com/MITHaystack/madrigalWeb — madrigalWeb (Madrigal database client)
+- https://berniegsfc.github.io/sscws/REST/ — sscws (NASA Satellite Situation Center web-services client)
 
-**Source:** Live HSSI stores the first four as RelatedItem rows (type 1); each DOI was resolved against DataCite to confirm what it is (`aburrell/aacgmv2: Version 2.6.0`, `apexpy`, `MAVENSDC/cdflib`, `tsssss/geopack: v1.0.12`) — the stored `UNKNOWN` names are known placeholders and were not allowed to influence this decision. All four pass the Field 29 gate as *domain-specific* dependencies that characterise the software, so all four are retained.
+**Source:** DataCite confirms the identities of the first four DOIs (`aburrell/aacgmv2: Version 2.6.0`, `apexpy`, `MAVENSDC/cdflib`, `tsssss/geopack: v1.0.12`). Placeholder display names do not override the DOI identities. All four pass the Field 29 gate as *domain-specific* dependencies that characterise the software.
 
-**Why the two additions pass the gate:**
-- **madrigalWeb** — a heliophysics-specific client for the Madrigal distributed database. It is imported directly (`import madrigalWeb.madrigalWeb as madrigalweb`) and is the access layer for a large fraction of GeospaceLAB's built-in sources (EISCAT, Millstone Hill, PFISR, RISR-N, DMSP s1/s4/e, GNSS TEC). It fails the "equally at home in a web app, a finance model, or a biology pipeline" test outright. Repository URL verified HTTP 200; no software DOI found.
-- **sscws** — NASA's Satellite Situation Center web-services client, also domain-specific. Imported as `from sscws.sscws import SscWs` and `from sscws.coordinates import ...` in `observatory/orbit/sc_orbit.py`, where it supplies spacecraft orbit positions. PyPI lists no repository, so its documentation home is given, as Field 29 permits ("link where users can find more information"); verified HTTP 200.
+**Why madrigalWeb and sscws pass the gate:**
+- **madrigalWeb** — a heliophysics-specific client for the Madrigal distributed database. It is imported directly (`import madrigalWeb.madrigalWeb as madrigalweb`) and is the access layer for a large fraction of GeospaceLAB's built-in sources (EISCAT, Millstone Hill, PFISR, RISR-N, DMSP s1/s4/e, GNSS TEC). It fails the "equally at home in a web app, a finance model, or a biology pipeline" test outright. No software DOI was found, so the repository URL is used.
+- **sscws** — NASA's Satellite Situation Center web-services client, also domain-specific. Imported as `from sscws.sscws import SscWs` and `from sscws.coordinates import ...` in `observatory/orbit/sc_orbit.py`, where it supplies spacecraft orbit positions. PyPI lists no repository, so its documentation home is given, as Field 29 permits ("link where users can find more information").
 
 **Not listed, and why:**
 - **cartopy** — proposed by the 2025-10-09 file. Tier A generic infrastructure (map projection/plotting); would be equally at home outside heliophysics. Excluded from both Fields 29 and 30.
@@ -486,7 +479,7 @@ One award number per entry, because the live schema (`GET /api/models/structures
 - A rejected Field 30 candidate was **not** relocated here; the same exclusion applies to both fields.
 
 ### 30. Interoperable Software (OPTIONAL)
-**Values (2 — live HSSI was EMPTY; this is new enrichment):**
+**Values:**
 - https://doi.org/10.5281/zenodo.2554162 — viresclient (ESA VirES for Swarm Python client)
 - https://github.com/hapi-server/client-python — hapiclient (HAPI server Python client)
 
@@ -494,7 +487,7 @@ One award number per entry, because the live schema (`GET /api/models/structures
 
 **Evidence — specific exchange, not ecosystem membership:**
 - **viresclient** — `geospacelab/datahub/sources/esa_eo/swarm/loader.py::load_from_VirES(collection, kwargs_products)` executes `from viresclient import SwarmRequest`, constructs a `SwarmRequest`, calls `set_collection()` / `set_products()` / `get_between(start_time, end_time)`, and hands the returned object back to the GeospaceLAB loader. `swarm/dataset.py` exposes this as the `from_VirES` / `kwargs_VirES` constructor flags and dispatches through `_load_from_VirES()`; `swarm/l1b/mag_lr/loader.py` implements the concrete mapping. Zenodo concept DOI `10.5281/zenodo.2554162` (ESA-VirES/VirES-Python-Client) is used in preference to the repository URL, per the field's "ideally, enter the DOI" instruction.
-- **hapiclient** — `swarm/loader.py::load_from_HAPI(server="https://vires.services/hapi", dataset, parameters)` executes `from hapiclient import hapi`, calls `hapi(server, dataset, parameters, start_iso, stop_iso)`, and then `swarm/l1b/mag_lr/loader.py` walks `data.dtype.names` and maps each HAPI parameter name onto a GeospaceLAB `Variable` through `self.variable_name_dict` — an explicit data-model conversion between the two packages. Dispatched via the `from_HAPI` flag and `_load_from_HAPI()`. No software DOI located; repository URL verified HTTP 200.
+- **hapiclient** — `swarm/loader.py::load_from_HAPI(server="https://vires.services/hapi", dataset, parameters)` executes `from hapiclient import hapi`, calls `hapi(server, dataset, parameters, start_iso, stop_iso)`, and then `swarm/l1b/mag_lr/loader.py` walks `data.dtype.names` and maps each HAPI parameter name onto a GeospaceLAB `Variable` through `self.variable_name_dict` — an explicit data-model conversion between the two packages. Dispatched via the `from_HAPI` flag and `_load_from_HAPI()`. No software DOI was found, so the repository URL is used.
 
 **Not listed, and why:**
 - **Tier A, always excluded** — numpy, scipy, pandas, matplotlib, cartopy, requests, beautifulsoup4, tqdm, natsort, toml, keyring, palettable, cython. Being a dependency is not interoperability.
@@ -508,34 +501,34 @@ One award number per entry, because the live schema (`GET /api/models/structures
 ## Section 3: Additional Metadata
 
 ### 31. Related Instruments (OPTIONAL)
-**Values (16 — 1 of the 2 live values retained here, 15 added; the AMPERE association belongs in Field 32). Every entry carries a verified SPASE identifier.**
+**Values:**
 
-| Name (verbatim from controlled list) | SPASE Identifier | Status |
-|---|---|---|
-| Incoherent Scatter Radar | https://spase-metadata.org/SMWG/Instrument/MEASURE/Millstone.Hill/ISR | Live, retained |
-| SuperMAG Magnetometers | https://spase-metadata.org/SMWG/Instrument/SuperMAG/Magnetometers | **ADDED** |
-| Tromso UHF | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/EISCAT/UHF | **ADDED** |
-| Tromso VHF | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/EISCAT/VHF | **ADDED** |
-| Electric Field Instrument : Langmuir Probe | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-A/LP | **ADDED** (Swarm-A) |
-| Electric Field Instrument : Thermal Ion Imager | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-A/TII | **ADDED** (Swarm-A) |
-| Absolute Scalar Magnetometer / Vector Field Magnetometer | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-A/MAG | **ADDED** (Swarm-A) |
-| Global Navigation Satellite System | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-A/GNSS | **ADDED** (Swarm-A) |
-| Electric Field Instrument : Langmuir Probe | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-B/LP | **ADDED** (Swarm-B) |
-| Electric Field Instrument : Thermal Ion Imager | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-B/TII | **ADDED** (Swarm-B) |
-| Absolute Scalar Magnetometer / Vector Field Magnetometer | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-B/MAG | **ADDED** (Swarm-B) |
-| Global Navigation Satellite System | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-B/GNSS | **ADDED** (Swarm-B) |
-| Electric Field Instrument : Langmuir Probe | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-C/LP | **ADDED** (Swarm-C) |
-| Electric Field Instrument : Thermal Ion Imager | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-C/TII | **ADDED** (Swarm-C) |
-| Absolute Scalar Magnetometer / Vector Field Magnetometer | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-C/MAG | **ADDED** (Swarm-C) |
-| Global Navigation Satellite System | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-C/GNSS | **ADDED** (Swarm-C) |
+| Name (verbatim from controlled list) | SPASE Identifier |
+|---|---|
+| Incoherent Scatter Radar | https://spase-metadata.org/SMWG/Instrument/MEASURE/Millstone.Hill/ISR |
+| SuperMAG Magnetometers | https://spase-metadata.org/SMWG/Instrument/SuperMAG/Magnetometers |
+| Tromso UHF | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/EISCAT/UHF |
+| Tromso VHF | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/EISCAT/VHF |
+| Electric Field Instrument : Langmuir Probe | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-A/LP |
+| Electric Field Instrument : Thermal Ion Imager | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-A/TII |
+| Absolute Scalar Magnetometer / Vector Field Magnetometer | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-A/MAG |
+| Global Navigation Satellite System | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-A/GNSS |
+| Electric Field Instrument : Langmuir Probe | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-B/LP |
+| Electric Field Instrument : Thermal Ion Imager | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-B/TII |
+| Absolute Scalar Magnetometer / Vector Field Magnetometer | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-B/MAG |
+| Global Navigation Satellite System | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-B/GNSS |
+| Electric Field Instrument : Langmuir Probe | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-C/LP |
+| Electric Field Instrument : Thermal Ion Imager | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-C/TII |
+| Absolute Scalar Magnetometer / Vector Field Magnetometer | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-C/MAG |
+| Global Navigation Satellite System | https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/SWARM-C/GNSS |
 
-**Resolution:** every value is resolved against the HSSI instrument/observatory controlled vocabulary. Each name is copied verbatim from the matched record. For the twelve Swarm-satellite rows the name+type pair is not unique — the four instrument names each appear on three rows, one per satellite, and disambiguation is by the SPASE identifier's satellite-specific path segment (see the Swarm instrument evidence below); the remaining four rows are unique name-and-type matches. **Every identifier resolves (HTTP 200)** in the exact shape recorded.
+**Resolution:** Each name is copied verbatim from its matched SPASE-backed record. For the twelve Swarm-satellite rows the name+type pair is not unique — the four instrument names each appear on three rows, one per satellite, and disambiguation is by the SPASE identifier's satellite-specific path segment (see the Swarm instrument evidence below); the remaining four rows are unique name-and-type matches.
 
 **Notes on the retained rows:**
 - **Millstone Hill ISR** — `sources/madrigal/isr/millstonehill` plus the `MillstoneHillISRDashboard` express quicklook.
 
-**Evidence for the addition:**
-- **SuperMAG Magnetometers** — `sources/supermag/magnetometer/` (loader, downloader, `variable_config`, `SuperMAG_stations.dat` station table) and `sources/supermag/indices/` read SuperMAG ground magnetometer data and derived indices through the SuperMAG web API. Unique instrument-type row, unique name, identifier HTTP 200.
+**Further evidence:**
+- **SuperMAG Magnetometers** — `sources/supermag/magnetometer/` (loader, downloader, `variable_config`, `SuperMAG_stations.dat` station table) and `sources/supermag/indices/` read SuperMAG ground magnetometer data and derived indices through the SuperMAG web API. Unique instrument-type row and unique name.
 
 **Omitted, and why:**
 - **Tromsø all-sky imager (NIPR WMI)** — supported (`sources/nipr/asc/tro_wmi`), but the module reads the 558 nm monochromatic channel, whereas the two candidate SPASE records at Tromsø (`IUGONET/Instrument/NIPR/EISCAT/TRO/AWI_whitelight` and `.../TRO/NWI_whitelight`) both describe **white-light** imagers. Neither matches the instrument this module reads.
@@ -567,27 +560,27 @@ One award number per entry, because the live schema (`GET /api/models/structures
 *Note for HSSI maintainers:* rendered HSSI output lists related instruments by name only. Because the Swarm instrument records share a name across the three satellites, the four instrument names will each appear three times with no indication of the satellite. The stored identifiers are distinct and unambiguous; this is a display characteristic only.
 
 ### 32. Related Observatories (OPTIONAL)
-**Values (13 — all 7 live values retained, 5 added, plus AMPERE, which belongs here rather than in Field 31). Every entry carries a verified SPASE identifier.**
+**Values:**
 
-| Name (verbatim from controlled list) | SPASE Identifier | Status |
-|---|---|---|
-| Active Magnetosphere and Planetary Electrodynamics Response Experiment | https://spase-metadata.org/SMWG/Observatory/AMPERE | Live, retained |
-| CHAMP | https://spase-metadata.org/SMWG/Observatory/CHAMP | Live, retained |
-| Defense Meteorological Satellite Program | https://spase-metadata.org/SMWG/Observatory/DMSP | Live, retained |
-| European Incoherent Scatter Scientific Association | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/EISCAT | Live, retained |
-| Gravity Field and Steady-State Ocean Circulation Explorer | https://spase-metadata.org/SMWG/Observatory/GOCE | Live, retained |
-| Gravity Recovery and Climate Experiment | https://spase-metadata.org/SMWG/Observatory/GRACE | Live, retained |
-| International Monitor for Auroral Geomagnetic Effects | https://spase-metadata.org/SMWG/Observatory/Ground/IMAGE | **ADDED** |
-| SuperDARN | https://spase-metadata.org/SMWG/Observatory/SuperDARN | Live, retained |
-| SuperMAG | https://spase-metadata.org/SMWG/Observatory/SuperMAG | **ADDED** |
-| Swarm : ESA mission | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM | Live, retained |
-| Swarm Alpha | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM-A | **ADDED** |
-| Swarm Bravo | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM-B | **ADDED** |
-| Swarm Charlie | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM-C | **ADDED** |
+| Name (verbatim from controlled list) | SPASE Identifier |
+|---|---|
+| Active Magnetosphere and Planetary Electrodynamics Response Experiment | https://spase-metadata.org/SMWG/Observatory/AMPERE |
+| CHAMP | https://spase-metadata.org/SMWG/Observatory/CHAMP |
+| Defense Meteorological Satellite Program | https://spase-metadata.org/SMWG/Observatory/DMSP |
+| European Incoherent Scatter Scientific Association | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/EISCAT |
+| Gravity Field and Steady-State Ocean Circulation Explorer | https://spase-metadata.org/SMWG/Observatory/GOCE |
+| Gravity Recovery and Climate Experiment | https://spase-metadata.org/SMWG/Observatory/GRACE |
+| International Monitor for Auroral Geomagnetic Effects | https://spase-metadata.org/SMWG/Observatory/Ground/IMAGE |
+| SuperDARN | https://spase-metadata.org/SMWG/Observatory/SuperDARN |
+| SuperMAG | https://spase-metadata.org/SMWG/Observatory/SuperMAG |
+| Swarm : ESA mission | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM |
+| Swarm Alpha | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM-A |
+| Swarm Bravo | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM-B |
+| Swarm Charlie | https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/SWARM-C |
 
-**Resolution:** as for Field 31 — resolved against the HSSI instrument/observatory controlled vocabulary, names copied verbatim, and **all thirteen identifiers resolve (HTTP 200)** in the exact shape recorded. Records are matched by SPASE identifier rather than by name.
+**Resolution:** As for Field 31, names are copied verbatim and records are matched by SPASE identifier rather than by name.
 
-**Evidence for the additions:**
+**Per-value evidence:**
 - **Swarm Alpha / Bravo / Charlie** — `datahub/sources/tud/downloader.py` enumerates and asserts the complete constellation for the TU Delft accelerometer and precise-orbit-determination products: `_validate_sat_id()` line 155 sets `valid_sat_ids = ['A', 'B', 'C']` followed by `assert self.sat_id in valid_sat_ids`, and `_validate_product()` line 141 gates on `self.mission == 'Swarm' and self.sat_id in ['A', 'B', 'C']`. Per-satellite data is downloaded for each. The Swarm test suite makes 60 per-satellite instantiations (`sat_id='A'` ×39, `sat_id='C'` ×21), and the dual-satellite products `fac_tms_dual` / `fac_lls_dual` hard-code `sat_id='AC'`. These three records also carry the only per-satellite distinction visible in rendered HSSI output, since the Field 31 instrument records share names across satellites; and the Swarm accelerometer (`l2daily/dns_acc`, declared `'instrument': 'ACC'`) has no SPASE instrument record, so that support is representable only here.
 - **SuperMAG** — `sources/supermag/{indices,magnetometer}` with `supermag_api.py`, `utilities.py` and the `SuperMAG_stations.dat` station list. Unique row.
 - **International Monitor for Auroral Geomagnetic Effects** — `sources/fmi/image/ie/` (downloader, loader, `variable_config`) retrieves the IMAGE magnetometer network's electrojet (IE/IL/IU) indices from FMI. Unique row. Note the vocabulary also contains a same-acronym but entirely different mission, "Imager for Magnetopause-to-Aurora Global Exploration" (`SMWG/Observatory/IMAGE`); the two full names are wholly distinct, so recording the full name plus identifier removes any ambiguity. The NASA IMAGE mission is **not** supported by this software and is not listed.
@@ -607,39 +600,9 @@ One award number per entry, because the live schema (`GET /api/models/structures
 ### 33. Logo (OPTIONAL)
 **Value:** https://github.com/JouleCai/geospacelab/blob/master/docs/images/logo_v1_landscape_accent_colors.png
 
-**Source:** Live HSSI, retained. Confirmed identical to the PyHC registry `logo` value and to the image referenced at the top of README.md. Verified HTTP 200.
+**Source:** Identical to the PyHC registry `logo` value and to the image referenced at the top of README.md.
 
 ---
-
-## Summary of changes from the 2025-10-09 record
-
-**Version updated:** Field 12 — `v0.11.0` (2025-06-13) → `v0.14.15` (2026-05-29, PID `https://doi.org/10.5281/zenodo.20439561`), with a release description where none was previously recorded. Confirmed independently by Zenodo, DataCite, PyPI and the repository's git tags and `__version__`.
-
-**Fields populated that were previously empty: 8**
-- Field 19 Output File Formats — 2 values
-- Field 22 Related Phenomena — 2 values
-- Field 23 Development Status — `Active`
-- Field 25 Funder — 7 organizations with RORs
-- Field 26 Award Title — 10 award entries, one award number each
-- Field 27 Related Publications — 1 DOI
-- Field 28 Related Datasets — 7 verified DOIs
-- Field 30 Interoperable Software — 2 entries
-
-**Fields expanded: 8**
-- Field 4 Software Functionality — 15 → 25
-- Field 5 Related Region — 3 → 7
-- Field 16 Keywords — 21 → 36
-- Field 17 Data Sources — 8 → 11
-- Field 18 Input File Formats — 7 → 7 (`JSON` added, `IDL.sav` removed)
-- Field 29 Related Software — 4 → 6
-- Field 31 Related Instruments — 2 → 16
-- Field 32 Related Observatories — 7 → 13
-
-**Field 8 Description** — the original curator text is retained verbatim with one sentence appended covering the v0.14 Swarm coverage, orbit-sector gridding and binning, conjunction search, and HAPI/VirES access.
-
-**Fields unchanged: 2, 3, 6, 7, 9, 10, 11, 13, 14, 15, 20, 21, 24, 33** (14 fields)
-
-`IDL.sav` (Field 18) is the only value removed from any field; the evidence is recorded in that field.
 
 ## Upstream follow-ups
 

@@ -4,12 +4,8 @@
 **Repository:** https://github.com/tsssss/geopack
 **Source Revision:** ab7efdc824b6613036648e21c18ee2ea413cf080
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-07-29
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
-
-**Scope:** Full metadata refresh (issue #57), seeded from this entry's existing HSSI record. Every field
-below is either carried over from that record unchanged, or changed and filled with the cited evidence.
-Values here match the entry's current state.
 
 ---
 
@@ -19,21 +15,21 @@ Values here match the entry's current state.
 - **Submitter Name:** [To be filled by actual submitter]
 - **Submitter Email:** [To be filled by actual submitter]
 
-*This is a refresh of an existing entry; the original submitter is retained unchanged.*
+*The original submitter is not identified in the repository, so the required placeholder is retained.*
 
 ### 2. Persistent Identifier (RECOMMENDED)
 https://doi.org/10.5281/zenodo.15110786
 
-*Unchanged. Independently confirmed as the Zenodo **concept** (all-versions) DOI for this software,
+*This is the Zenodo **concept** (all-versions) DOI for this software,
 rather than a single version's DOI. Also cited in `README.md:34` and `CITATION.cff`.*
 
 ### 3. Code Repository (MANDATORY)
 https://github.com/tsssss/geopack
 
-*Unchanged. From existing HSSI record; matches `setup.py` `url=`, the PyPI `Homepage` project URL, the
+*Matches `setup.py` `url=`, the PyPI `Homepage` project URL, the
 PyHC registry `code:` field, and the Zenodo `code:codeRepository` custom field.*
 
-### 4. Software Functionality (MANDATORY) — **CHANGED (enriched: 2 -> 11 values)**
+### 4. Software Functionality (MANDATORY)
 - Coordinate Transforms
 - Coordinate Transforms: Magnetospheric
 - Data Processing and Analysis
@@ -46,22 +42,21 @@ PyHC registry `code:` field, and the Zenodo `code:codeRepository` custom field.*
 - Models and Simulations: Field-line Tracing
 - Models and Simulations: Physics-Based
 
-*Identity-aware set-union: both existing values (`Models and Simulations`, `Data Processing and
-Analysis: Field-line Tracing`) are retained. Nine values added. Code evidence per value:*
+*Code evidence per value:*
 
-| Value | Status | Evidence |
-|---|---|---|
-| Coordinate Transforms | ADDED | Seven user-facing transform functions in `geopack/geopack.py`: `geomag` (707), `geigeo` (739), `magsm` (771), `gsmgse` (803), `smgsm` (831), `geogsm` (863), `gswgsm` (680), plus `geodgeo` (896) geodetic<->geocentric and `sphcar`/`bspcar`/`bcarsp` (961/1000/1024). Documented as a first-class capability in `README.md:292-325`. |
-| Coordinate Transforms: Magnetospheric | ADDED | The supported systems are exactly the magnetospheric set — GEO, GEI, MAG, GSM, GSE, SM (`README.md:294`) plus GSW from geopack08 (`README.md:15,40`). Matches the `software-functionality` skill's explicit mapping (`geopack` -> Coordinate Transforms:Magnetospheric). |
-| Data Processing and Analysis | ADDED | **Required parent** of the pre-existing `Data Processing and Analysis: Field-line Tracing`; selecting a subcategory does not auto-add the parent. Its absence was a validation defect in the live record. |
-| Data Processing and Analysis: Analysis | ADDED | `shuetal_mgnp` (`geopack.py:1266`) and `t96_mgnp` (`geopack.py:1355`) compute derived physical quantities from a model: the GSM magnetopause boundary point, the observation point's distance to the boundary, and an inside/outside classification flag. |
-| Data Processing and Analysis: Data Access and Retrieval | ADDED | `update_igrf(local_dir)` (`geopack.py:11-47`) scrapes the NOAA/NGDC IAGA coefficient directory `http://www.ngdc.noaa.gov/IAGA/vmod/coeffs/` over HTTP (`urlopen`), selects files matching `igrf*coeffs.txt`, and downloads them to a local cache. `init_igrf(version=None)` (`geopack.py:53`) invokes it and selects the newest available generation. This is a user-facing retrieval capability and is the headline feature of release v1.0.12. |
-| Data Processing and Analysis: Field-line Tracing | EXISTING | `trace(...)` (`geopack.py:1157`) with the adaptive `step`/`rhand` integrator (`geopack.py:1077-1156`). Retained unchanged. |
-| Models and Simulations | EXISTING | Retained unchanged. |
-| Models and Simulations: Data Guided | ADDED | `shuetal_mgnp` (`geopack.py:1266`) and `t96_mgnp` (`geopack.py:1355`) compute the magnetopause boundary *shape* as an explicit function of real-time solar wind pressure and IMF Bz — data-driven model boundaries, the subcategory's canonical case. The external field models are likewise driven by observational inputs: `t89` takes a Kp-index bin (`README.md:234-236`); `t96`/`t01`/`t04` take solar wind dynamic pressure, Dst, and IMF By/Bz, plus the observationally derived G1/G2 (T01) and W1-W6 (T04) indices (`README.md:250-285`). `init_igrf` retrieves observationally derived IGRF coefficients at run time. |
-| Models and Simulations: Empirical | ADDED | T89/T96/T01/T04 are data-based empirical models fitted to spacecraft observations — `t96.py:8` "Data-based model calibrated by ..."; `t89.py:9,13` notes the model was fitted to the IMP-HEOS and ISEE-1/2 datasets. IGRF is likewise an empirical reference field. |
-| Models and Simulations: Field-line Tracing | ADDED | `trace` integrates field lines through the *model* field, dispatching to a chosen internal model (`dipole`/`igrf`) and external model (`t89`/`t96`/`t01`/`t04`) via `call_internal_model`/`call_external_model` (`geopack.py:1057-1076`). This is model-space tracing, complementing the existing data-processing classification. |
-| Models and Simulations: Physics-Based | ADDED | The models are semi-empirical with physically motivated structure: shielded magnetopause current systems, warped tail current sheet, Birkeland current systems, and ring current (`t04.py:735-736`, `t04.py:1463`, `t96.py:412-414`, `t96.py:567`). IGRF is a spherical-harmonic potential-field expansion (`igrf_geo`, `geopack.py:200`). Magnetopause shape derives from the Chapman-Ferraro problem (`geopack.py:1396`). |
+| Value | Evidence |
+|---|---|
+| Coordinate Transforms | Seven user-facing transform functions in `geopack/geopack.py`: `geomag` (707), `geigeo` (739), `magsm` (771), `gsmgse` (803), `smgsm` (831), `geogsm` (863), `gswgsm` (680), plus `geodgeo` (896) geodetic<->geocentric and `sphcar`/`bspcar`/`bcarsp` (961/1000/1024). Documented as a first-class capability in `README.md:292-325`. |
+| Coordinate Transforms: Magnetospheric | The supported systems are exactly the magnetospheric set — GEO, GEI, MAG, GSM, GSE, SM (`README.md:294`) plus GSW from geopack08 (`README.md:15,40`). Matches the `software-functionality` skill's explicit mapping (`geopack` -> Coordinate Transforms:Magnetospheric). |
+| Data Processing and Analysis | Required parent of `Data Processing and Analysis: Field-line Tracing`; selecting a subcategory does not auto-add the parent. |
+| Data Processing and Analysis: Analysis | `shuetal_mgnp` (`geopack.py:1266`) and `t96_mgnp` (`geopack.py:1355`) compute derived physical quantities from a model: the GSM magnetopause boundary point, the observation point's distance to the boundary, and an inside/outside classification flag. |
+| Data Processing and Analysis: Data Access and Retrieval | `update_igrf(local_dir)` (`geopack.py:11-47`) scrapes the NOAA/NGDC IAGA coefficient directory `http://www.ngdc.noaa.gov/IAGA/vmod/coeffs/` over HTTP (`urlopen`), selects files matching `igrf*coeffs.txt`, and downloads them to a local cache. `init_igrf(version=None)` (`geopack.py:53`) invokes it and selects the newest available generation. This is a user-facing retrieval capability and is the headline feature of release v1.0.12. |
+| Data Processing and Analysis: Field-line Tracing | `trace(...)` (`geopack.py:1157`) with the adaptive `step`/`rhand` integrator (`geopack.py:1077-1156`). |
+| Models and Simulations | Parent category for the model subcategories below. |
+| Models and Simulations: Data Guided | `shuetal_mgnp` (`geopack.py:1266`) and `t96_mgnp` (`geopack.py:1355`) compute the magnetopause boundary *shape* as an explicit function of real-time solar wind pressure and IMF Bz — data-driven model boundaries, the subcategory's canonical case. The external field models are likewise driven by observational inputs: `t89` takes a Kp-index bin (`README.md:234-236`); `t96`/`t01`/`t04` take solar wind dynamic pressure, Dst, and IMF By/Bz, plus the observationally derived G1/G2 (T01) and W1-W6 (T04) indices (`README.md:250-285`). `init_igrf` retrieves observationally derived IGRF coefficients at run time. |
+| Models and Simulations: Empirical | T89/T96/T01/T04 are data-based empirical models fitted to spacecraft observations — `t96.py:8` "Data-based model calibrated by ..."; `t89.py:9,13` notes the model was fitted to the IMP-HEOS and ISEE-1/2 datasets. IGRF is likewise an empirical reference field. |
+| Models and Simulations: Field-line Tracing | `trace` integrates field lines through the *model* field, dispatching to a chosen internal model (`dipole`/`igrf`) and external model (`t89`/`t96`/`t01`/`t04`) via `call_internal_model`/`call_external_model` (`geopack.py:1057-1076`). This is model-space tracing, complementing the data-processing classification. |
+| Models and Simulations: Physics-Based | The models are semi-empirical with physically motivated structure: shielded magnetopause current systems, warped tail current sheet, Birkeland current systems, and ring current (`t04.py:735-736`, `t04.py:1463`, `t96.py:412-414`, `t96.py:567`). IGRF is a spherical-harmonic potential-field expansion (`igrf_geo`, `geopack.py:200`). Magnetopause shape derives from the Chapman-Ferraro problem (`geopack.py:1396`). |
 
 *Considered and rejected, with reason:*
 - **Data Visualization** (and all subcategories) — the package exposes **no** plotting API. `matplotlib`
@@ -81,14 +76,17 @@ Analysis: Field-line Tracing`) are retained. Nine values added. Code evidence pe
 - **Mission-related** (all) — not part of any mission ground system or pipeline.
 - **Servers and Environments** (all) — no server, container, or HPC/parallel component.
 
-### 5. Related Region (MANDATORY) — **CHANGED (added Earth Atmosphere)**
+### 5. Related Region (MANDATORY)
 - Earth Magnetosphere
 - Earth Atmosphere
+- Earth Magnetotail
+- Earth Inner Magnetosphere
+- Earth Ionosphere
 
-*`Earth Magnetosphere` retained unchanged from the existing HSSI record (T89/T96/T01/T04 are
-magnetospheric field models; magnetopause models bound the magnetosphere).*
+*`Earth Magnetosphere`: T89/T96/T01/T04 are magnetospheric field models, and the magnetopause models
+bound the magnetosphere.*
 
-*`Earth Atmosphere` ADDED — evidence: `igrf_geo(r, theta, phi)` (`geopack.py:200`) evaluates the main
+*`Earth Atmosphere`: `igrf_geo(r, theta, phi)` (`geopack.py:200`) evaluates the main
 geomagnetic field at arbitrary geocentric radius including at and near the surface; `geodgeo`
 (`geopack.py:896`) converts geodetic altitude in km and geodetic latitude to geocentric coordinates —
 an explicitly ground/upper-atmosphere-referenced conversion; `trace(..., r0=1)` (`geopack.py:1157-1165`,
@@ -96,16 +94,36 @@ docstring "Traces a field line from an arbitrary point of space to the earth's s
 magnetospheric field lines to their ionospheric footpoints; and the repository's only bundled example
 (`notebooks/Field Line Trace Demo.ipynb`, cells 5-10) converts a **ground magnetic observatory** location
 (Antarctic AGO P2) from geodetic lat/lon to GSM and traces its field line — i.e. ground/ionosphere-to-
-magnetosphere mapping is the demonstrated use case. In HSSI's coarse region taxonomy the
-ionosphere/thermosphere falls under Earth Atmosphere (no separate option exists).
+magnetosphere mapping is the demonstrated use case. The original rationale also used `Earth
+Atmosphere` as the coarse representation of the package's ionospheric-footpoint work because it
+stated that no separate ionosphere option existed. That premise was falsified on 2026-08-25:
+`Earth Ionosphere` is a separate controlled value, and the flat region vocabulary means a coarse
+value does not imply a finer one. `Earth Atmosphere` remains supported independently by the
+ground/upper-atmosphere coordinate and field-line functionality above.*
 
+*`Earth Magnetotail`: the tail current sheet is a separately selectable model component. `geopack/t89.py:26`
+identifies the implemented model as a magnetospheric field model with a warped tail current sheet,
+and `geopack/t89.py:95,192,233` documents the tail-current contribution and sheet shape. The T04
+model interface exposes a tail-only mode at `geopack/t04.py:61-73`, with `taildisk()` documented at
+`geopack/t04.py:732-737`. T04 is limited sunward of -15 Re (`geopack/t04.py:24`), so that model's evidence is for the
+near tail; the T89 tail-current-sheet implementation carries no such stated limit.*
+
+*`Earth Inner Magnetosphere`: the T04 references explicitly describe storm-time distortion and
+dynamics of the inner magnetosphere (`geopack/t04.py:30-33`), and its model interface offers a ring-current-
+only mode (`geopack/t04.py:61-81`). T01 likewise describes its model change in the inner magnetosphere at
+`geopack/t01.py:12`.*
+
+*`Earth Ionosphere`: `geopack/t01.py:1051` and `geopack/t04.py:987` parameterize the field-aligned-current oval at
+ionospheric altitude, while `geopack/geopack.py:1157-1159,1229-1249` traces field lines to Earth's surface and
+interpolates their footpoints. The settled 2026-08-25 correction adds this value after the earlier
+"no separate option exists" premise was falsified; it had never appeared in the field's explicit rejection list.*
 
 *Considered and rejected:* **Interplanetary Space** — solar wind velocity, dynamic pressure and IMF
 By/Bz are model *inputs* only (`recalc`, `geopack.py:360`; `README.md:250-285`); the package models no
 interplanetary region. **Solar Environment** — `sun()` is an internal ephemeris helper, not solar
 science. **Planetary Magnetospheres** — Earth only; all models are Earth-specific.
 
-### 6. Authors (MANDATORY) — **CHANGED (two malformed names corrected; order preserved)**
+### 6. Authors (MANDATORY)
 
 Author order is preserved exactly as recorded. Affiliations are given with their ROR identifiers.
 
@@ -120,16 +138,16 @@ Scranton — matching the recorded affiliation. Corroborated by Zenodo record 15
 ("Nathaniel Frissell", University of Scranton) and by 5 commits from
 `Nathaniel A. Frissell <nathaniel.a.frissell@njit.edu>` (GitHub login `w2naf`).*
 
-*Correction completed 2026-07-29: the verified ORCID was added to this author's existing identity, which
-previously carried no identifier. The name and affiliation were already correct and are unchanged.*
+*The verified ORCID corrects an earlier omission from this author's identity. The name and affiliation
+were already correct.*
 
-**Author 2 — Lei Cai** *(CORRECTED)*
+**Author 2 — Lei Cai**
 - Given name: `Lei`
 - Family name: `Cai`
 - Author Identifier: https://orcid.org/0000-0003-0127-7303
 - Affiliation: University of Oulu — https://ror.org/03yj89h83
 
-*Correction completed 2026-07-29. This author was previously recorded with given name `" Ph.D."` and
+*This author was previously recorded with given name `" Ph.D."` and
 family name `"Lei Cai"` — an inverted, mis-split name with a leading space, produced by splitting the
 Zenodo creator string "Lei Cai, Ph. D." on its comma. Evidence for the corrected form: (a) commit
 `f5dd49a` (2023-02-13) is authored by `Lei Cai, Ph.D <lei.cai@oulu.fi>`, merged via PR #15 from
@@ -147,7 +165,7 @@ of GeospaceLAB, so the corrected entry resolves to that established identity rat
   - Space Sciences Laboratory, University of California, Berkeley — https://ror.org/048400679
   - University of California, Berkeley — https://ror.org/01an7q238
 
-*Unchanged. Corroborated by 6 commits from `Jim Lewis` / `jameswilburlewis <jwl@ssl.berkeley.edu>` and by
+*Corroborated by 6 commits from `Jim Lewis` / `jameswilburlewis <jwl@ssl.berkeley.edu>` and by
 Zenodo creator 4 ("Jim Lewis", UC Berkeley Space Sciences Lab). This author identity is shared with
 PySPEDAS and SPEDAS and is preserved exactly as recorded.*
 
@@ -158,14 +176,14 @@ PySPEDAS and SPEDAS and is preserved exactly as recorded.*
   people. Deliberately left blank rather than guessed.
 - Affiliations:
   - University of California, Los Angeles — https://ror.org/046rm7j60
-  - University of Minnesota — https://ror.org/017zqws13 *(ADDED — see record below)*
+  - University of Minnesota — https://ror.org/017zqws13
 
-*Name and identifier unchanged. Sheng Tian is the principal author — **109 of the repository's 125
+*Sheng Tian is the principal author — **109 of the repository's 125
 commits (~87%)**, across eight git identities — and is the `setup.py` `author`/`author_email`
 (`ts0110@atmos.ucla.edu`). UCLA affiliation confirmed by `CITATION.cff` ("Department of Atmospheric and
 Oceanic Sciences, University of California, Los Angeles"), Zenodo creator 1, and `README.md:2`.*
 
-*University of Minnesota added 2026-07-29 as a **second** affiliation alongside UCLA; nothing was removed.
+*University of Minnesota is a **second** affiliation alongside UCLA.
 26 commits come from `tianx138@umn.edu` and `shengtian@m472e.space.umn.edu`, and the pattern is
 long-standing and current rather than incidental — the `umn.edu` address first appears **2016-05-18**, two
 years before geopack's first public release, and authored the **latest commit in the repository**
@@ -175,13 +193,13 @@ identities are therefore real and concurrent. The institutional significance of 
 further resolvable from the repository, so it is recorded as a sustained parallel affiliation, **not** as a
 move.*
 
-**Author 5 — Rachel Frissell** *(CORRECTED)*
+**Author 5 — Rachel Frissell**
 - Given name: `Rachel`
 - Family name: `Frissell`
 - Author Identifier: *(none)* — deliberately blank; see below.
 - Affiliation: *(none — no evidence found)*
 
-*Correction completed 2026-07-29. This author was previously recorded with an empty given name and the
+*This author was previously recorded with an empty given name and the
 family name `"w2ruf"` — a GitHub handle rather than a name, inherited from the Zenodo creator list.
 Evidence that `w2ruf` is **Rachel Frissell, a distinct person and a genuine credited contributor**, not a
 duplicate of Nathaniel Frissell: the GitHub account `w2ruf` has exactly 4 commits to this repository
@@ -199,27 +217,27 @@ identifier is left blank rather than guessed.*
 ### 7. Software Name (MANDATORY)
 geopack
 
-*Unchanged. From existing HSSI record; matches `setup.py` `name='geopack'`, the PyPI project name, and
+*Matches `setup.py` `name='geopack'`, the PyPI project name, and
 the PyHC registry entry name. Editorial intent respected — the lowercase form is what the project uses.*
 
-### 8. Description (MANDATORY) — **CHANGED (expanded; original opening sentence preserved verbatim)**
+### 8. Description (MANDATORY)
 
 The geopack package provides a Python translation of several of Tsyganenko's Earth magnetic field models (originally implemented in FORTRAN). It integrates two modules originally written in Fortran — the geopack coordinate-transformation and internal-field library, and the Tsyganenko external magnetospheric field models T89, T96, T01 and T04 — and is compatible with both geopack05 and geopack08. The package evaluates the internal geomagnetic field from the IGRF and dipole models in GEO, GSM and GSW coordinates; converts cartesian vectors among the GEO, GEI, MAG, GSM, GSE, SM and GSW systems and between geodetic and geocentric coordinates; traces model field lines from an arbitrary point to the Earth's surface or to an outer boundary using any combination of internal and external model; and locates the magnetopause using the Shue et al. (1998) and T96 boundary models. IGRF coefficients are downloaded automatically from NOAA, are represented as time series at millisecond cadence, and are extrapolated outside the tabulated epoch range. All routines take their inputs as arguments and return their outputs, rather than communicating through the shared common blocks of the Fortran and IDL versions. Note that the G parameters of T01 and the W parameters of T04 are not computed by the package and must be supplied by the user; support for T07d is under development.
 
-*The existing HSSI description was the single first sentence above. It is factually correct but
+*The earlier HSSI description was the single first sentence above. It is factually correct but
 **materially incomplete**: it describes only the Tsyganenko models and omits the geopack
 coordinate-transform library (half of what `README.md:3` says the package integrates), the IGRF and
-dipole internal field models, field-line tracing, and the magnetopause models. The submitted sentence
-is preserved **verbatim as the opening**; everything appended is sourced from `README.md:3-15,39-46,
+dipole internal field models, field-line tracing, and the magnetopause models. That sentence
+is preserved **verbatim as the opening**; the added detail is sourced from `README.md:3-15,39-46,
 136-343` and the code.*
 
 ### 9. Concise Description (OPTIONAL)
 Pure Python implementation of Tsyganenko's Earth magnetic field models
 
-*Unchanged — kept deliberately. This is the original editorial wording for a 150-200 character preview,
+*This is the original editorial wording for a 150-200 character preview,
 and a preview is legitimately lossy; it is not replaced merely because a longer phrasing exists.*
 
-### 10. Publication Date (RECOMMENDED) — **CHANGED: 2025-03-31 -> 2018-07-22**
+### 10. Publication Date (RECOMMENDED)
 2018-07-22
 
 *The field is defined as "Date of first broadcast/publication ... Used for the initial version of the
@@ -236,10 +254,10 @@ and predate the Python package.)*
 - **Organization:** Zenodo
 - **Publisher Identifier:** https://zenodo.org
 
-*Unchanged. From existing HSSI record; correct per the field guidance (DOI obtained through the
+*Correct per the field guidance (DOI obtained through the
 GitHub-Zenodo workflow). Confirmed by DataCite `publisher: "Zenodo"`.*
 
-### 12. Version (RECOMMENDED) — **CHANGED (v1.0.12 -> v1.0.13)**
+### 12. Version (RECOMMENDED)
 - **Version Number:** `v1.0.13`
 - **Version Date:** `2026-05-16`
 - **Version Description:** Fixes the interplanetary magnetic field clock angle calculation in the T01 model (pull request #25).
@@ -263,7 +281,7 @@ than carrying v1.0.12's DOI, which would misattribute it. The concept DOI in Fie
 ### 13. Programming Language (RECOMMENDED)
 - Python 3.x
 
-*Unchanged. From existing HSSI record. Confirmed: all source is Python 3 (`geopack/*.py`, 8,334 lines);
+*All source is Python 3 (`geopack/*.py`, 8,334 lines);
 `setup.py` classifier `Programming Language :: Python :: 3`. SoMEF additionally reports
 "Jupyter Notebook" purely from the byte size of the one demo notebook — that is not a programming
 language for this field and is excluded.*
@@ -276,7 +294,7 @@ Not found
 Hapgood and Shue papers describe the *models implemented*, not the Python package, so they are recorded
 under Field 27 (Related Publications) instead. Left empty rather than filled with a model paper.*
 
-### 15. License (RECOMMENDED) — **NEWLY FILLED (was empty)**
+### 15. License (RECOMMENDED)
 - **License:** MIT License
 - **License URI:** https://spdx.org/licenses/MIT
 
@@ -290,29 +308,39 @@ PyHC registry license rating "Good".*
 
 ## Section 2: Additional Data
 
-### 16. Keywords (OPTIONAL) — **CHANGED (enriched: 6 -> 16 values)**
+### 16. Keywords (OPTIONAL)
+- geopack
+- physics
+- python
+- python 3
+- space physics
+- tsyganenko model
+- coordinate transformation
+- empirical model
+- field line tracing
+- geomagnetic field
+- heliosphere
+- igrf
+- magnetic field models
+- magnetosphere
+- shue
+- tsyganenko
 
-Existing, retained: `geopack`, `physics`, `python`, `python 3`, `space physics`, `tsyganenko model`
-
-Added: `coordinate transformation`, `empirical model`, `field line tracing`, `geomagnetic field`,
-`heliosphere`, `igrf`, `magnetic field models`, `magnetosphere`, `shue`, `tsyganenko`
-
-*Identity-aware set-union; nothing dropped. Every added term already existed in HSSI's keyword
-vocabulary, so no new vocabulary was introduced. Sources:
+*Sources:
 `magnetosphere` and `heliosphere` are the PyHC registry's own curated keywords for this exact package
 (`projects.yml` geopack entry) — PyHC is the highest-priority curated source; `igrf` and
 `geomagnetic field` from `igrf_geo`/`igrf_gsm`/`igrf_gsw` and the NOAA coefficient loader;
 `coordinate transformation` from the seven transform functions; `field line tracing` from `trace`;
 `magnetic field models` and `empirical model` from T89/T96/T01/T04; `shue` from `shuetal_mgnp`
 (`geopack.py:1266`, Shue et al. 1998 magnetopause); `tsyganenko` as the unqualified companion to the
-existing `tsyganenko model`. The six existing keywords are the GitHub repository topics, which SoMEF
+existing `tsyganenko model`. The first six keywords are the GitHub repository topics, which SoMEF
 independently reports as `geopack, physics, python, python3, space-physics, tsyganenko-model` — the
-current record is confirmed, not superseded.*
+recorded spellings align with the existing keyword vocabulary.*
 
 *Note: `heliosphere` rests solely on PyHC's curation of this package and sits oddly beside an
 Earth-magnetosphere scope. Retained because PyHC is the authoritative curated source.*
 
-### 17. Data Sources (OPTIONAL) — **NEWLY FILLED (was empty)**
+### 17. Data Sources (OPTIONAL)
 - HTTP/HTTPS Directories
 
 *`update_igrf` (`geopack/geopack.py:11-47`) opens the NOAA/NGDC IAGA directory listing
@@ -323,7 +351,7 @@ for files matching `igrf*coeffs.txt`, and downloads each one — a textbook HTTP
 an observatory product), `CDAWeb`, `HAPI`, `OMNIWeb`, `SSCWeb`, `S3/Cloud-aware`, `das2`, `TAP`,
 `VirES`, `FTP/FTPS Directories`, `Other` — none appear anywhere in the code.*
 
-### 18. Input File Formats (RECOMMENDED) — **NEWLY FILLED (was empty)**
+### 18. Input File Formats (RECOMMENDED)
 - ascii
 
 *The only files the package reads are the IGRF Gauss-coefficient tables `igrf<NN>coeffs.txt`, parsed as
@@ -343,15 +371,14 @@ file, not a generated data product, so the field is left empty.*
 ### 20. Operating System (RECOMMENDED)
 - Operating System Independent
 
-*Unchanged, deliberately. The existing value is well supported: the package is pure Python 3 with only
+*The package is pure Python 3 with only
 `numpy` and `scipy` as dependencies (`setup.py` `install_requires`), contains no compiled extension, no
 platform-specific code, and no OS-conditional imports. `setup.py` declares `platforms=['Mac OS']` and
 the classifier `Operating System :: MacOS`, and `README.md:19` says "I've only tested the Python
 geopack on Mac OS in Python 3.6" — but those record the author's **testing scope**, not a restriction,
-and adding a redundant `Mac` value alongside `Operating System Independent` would only muddy the record.
-Left alone.*
+and adding a redundant `Mac` value alongside `Operating System Independent` would only muddy the record.*
 
-### 21. CPU Architecture (RECOMMENDED) — **NEWLY FILLED (was empty)**
+### 21. CPU Architecture (RECOMMENDED)
 - CPU Independent
 
 *Pure interpreted Python: no C/Fortran/Cython extension modules, no build step beyond
@@ -359,11 +386,9 @@ Left alone.*
 compiled wheels (PyPI ships a single pure-Python `bdist_wheel` plus an sdist). The only dependencies,
 numpy and scipy, are available on all major architectures.*
 
-### 22. Related Phenomena (OPTIONAL) — **NEWLY FILLED (was empty)**
+### 22. Related Phenomena (OPTIONAL)
 - Geomagnetic Storms
 - Solar Wind
-
-*Both terms already existed in HSSI's phenomena vocabulary.*
 
 *`Geomagnetic Storms` — unambiguous. The T04 model implemented in `geopack/t04.py` is published as
 "Modeling the dynamics of the inner magnetosphere during **strong geomagnetic storms**"
@@ -377,7 +402,7 @@ solar-wind/magnetosphere coupling as a primary output; `recalc(ut, vxgse, vygse,
 (`geopack.py:360`) takes the solar wind velocity in GSE to define the GSW frame; T96/T01/T04 take
 Pdyn and IMF By/Bz.*
 
-### 23. Development Status (RECOMMENDED) — **NEWLY FILLED (was empty)**
+### 23. Development Status (RECOMMENDED)
 Active
 
 *repostatus.org "Active": reached a stable, usable state and being actively developed. Evidence: 12
@@ -390,7 +415,7 @@ python3 support "Good".*
 classifier has never been updated since the project's early days and is contradicted by eight years of
 stable releases and by PyHC's own maturity assessment; it is treated as stale rather than authoritative.*
 
-### 24. Documentation (RECOMMENDED) — **NEWLY FILLED (was empty)**
+### 24. Documentation (RECOMMENDED)
 https://github.com/tsssss/geopack/blob/master/README.md
 
 *This is the PyHC registry's curated `docs:` value for the geopack entry (`projects.yml`) — PyHC is the
@@ -418,10 +443,9 @@ record.*
 
 ## Section 3: Additional Metadata
 
-### 27. Related Publications (OPTIONAL) — **NEWLY FILLED (was empty)**
+### 27. Related Publications (OPTIONAL)
 
-The publications the repository itself cites as the references for the models it implements. Every DOI
-below was independently verified to resolve to the cited work via the Crossref API.
+The publications the repository itself cites as the references for the models it implements.
 
 - https://doi.org/10.1016/0032-0633(92)90012-D — Hapgood, M. A. (1992). Space physics coordinate
   transformations: A user guide. *Planetary and Space Science*, 40(5), 711-717.
@@ -451,7 +475,7 @@ below was independently verified to resolve to the cited work via the Crossref A
   Research*, 110(A3), A03208. *(`README.md:353` and `geopack/t04.py:32-33`, reference (3); the T04
   model and the definition of its W1-W6 parameters.)*
 
-### 28. Related Datasets (OPTIONAL) — **NEWLY FILLED (was empty)**
+### 28. Related Datasets (OPTIONAL)
 - International Association of Geomagnetism and Aeronomy, Working Group V-MOD. International
   Geomagnetic Reference Field (IGRF) Gauss coefficient files [Data set]. NOAA National Centers for
   Environmental Information. https://www.ngdc.noaa.gov/IAGA/vmod/coeffs/
@@ -472,13 +496,13 @@ explicitly states "The Python version does not support the calculations of the G
 the link is a courtesy pointer to where a user can obtain values the package deliberately does not
 handle. Not a supported dataset.
 
-### 29. Related Software (OPTIONAL) — **NEWLY FILLED (was empty)**
+### 29. Related Software (OPTIONAL)
 
 - https://geo.phys.spbu.ru/~tsyganenko/Geopack-2008.html — **Geopack-2008** (Fortran, N. A. Tsyganenko).
   The upstream software this package is a translation of. `README.md:4` names it directly as the origin
   ("The Fortran `geopack05` is available at ... and `geopack08` is available at ..."), and
-  `README.md:6,39-40` describe maintaining behavioural compatibility with it and adding `gswgsm` to
-  support its new GSW coordinate.
+`README.md:6,39-40` describe maintaining behavioural compatibility with it and adding `gswgsm` to
+support its new GSW coordinate.
 - https://geo.phys.spbu.ru/~tsyganenko/empirical-models/ — **Tsyganenko empirical magnetospheric
   magnetic field models** (Fortran, N. A. Tsyganenko). The second of the two upstream Fortran modules
   this package integrates (`README.md:3`, "has integrated two modules originally written in Fortran:
@@ -521,7 +545,7 @@ is covered by the first entry.*
 - **IDL SPEDAS** — considered as the distributor of the IDL Geopack DLM; the DLM itself is the precise
   and correctly attributed entry, so SPEDAS is not listed separately here (PySPEDAS is Field 30).
 
-### 30. Interoperable Software (OPTIONAL) — **NEWLY FILLED (was empty)**
+### 30. Interoperable Software (OPTIONAL)
 - https://github.com/spedas/pyspedas — **PySPEDAS**
 
 *Passes the relevance gate on specific, cited evidence of a demonstrated exchange — not on dependency
@@ -558,10 +582,8 @@ Python ecosystem" or "PyHC member" claim is used.*
 Not found — empty by design, after applying the relevance gate.
 
 *geopack is an **instrument-agnostic** package: it implements global empirical field models and
-coordinate transforms and reads no instrument's data. The SPASE resolution ladder was not exercised
-because no candidate cleared the "designed to support" gate — an empty, documented result is the
-legitimate outcome for a model package, and no association was manufactured. No name is recorded without
-a `https://spase-metadata.org/` identifier, and no candidate was left ambiguous.*
+coordinate transforms and reads no instrument's data. No candidate cleared the "designed to support"
+gate, so no instrument association is recorded.*
 
 *Considered and rejected, with reason:*
 - **ISEE-1, ISEE-2, IMP, HEOS** (`geopack/t89.py:9,13` — "and ISEE-1 and -2 spacecraft data set",
@@ -579,42 +601,13 @@ Not found — empty by design, after applying the relevance gate.
 *Same reasoning and the same rejection set as Field 31: geopack is observatory-agnostic, works with no
 mission's data products, implements no mission data convention, and is not a mission-team tool. The
 Antarctic AGO ground-station coordinates in `notebooks/Field Line Trace Demo.ipynb` (cell 3, sourced
-from `polar.umd.edu`) are demonstration input for a tutorial, which the gate excludes explicitly. No
-name is recorded without a `https://spase-metadata.org/` identifier, and no candidate was left
-ambiguous.*
+from `polar.umd.edu`) are demonstration input for a tutorial, which the gate excludes explicitly.*
 
 ### 33. Logo (OPTIONAL)
 Not found
 
 *No logo in the repository, no logo in the PyHC registry entry (the entry has no `logo:` key), no image
 in `README.md` other than the PayPal donate button, and SoMEF reports no `logo` result.*
-
----
-
-## Summary of Changes vs. Live HSSI State
-
-**Newly filled (12 previously empty fields):** License (15), Keywords enriched (16), Data Sources (17),
-Input File Formats (18), CPU Architecture (21), Related Phenomena (22), Development Status (23),
-Documentation (24), Related Publications (27), Related Datasets (28), Related Software (29),
-Interoperable Software (30).
-
-**Changed:** Software Functionality (4, 2 -> 11 values), Related Region (5, added Earth Atmosphere),
-Authors (6, two malformed names corrected + a second affiliation added for Sheng Tian), Description
-(8, expanded), Publication Date (10, 2025-03-31 -> 2018-07-22), Version (12, v1.0.12 -> v1.0.13 with new
-date, description, and PID removal).
-
-All changes above are applied and verified against the live entry as of 2026-07-29.
-
-**Deliberately left unchanged:** Persistent Identifier (2), Code Repository (3), Software Name (7),
-Concise Description (9), Publisher (11), Programming Language (13), Operating System (20).
-
-**Deliberately left empty:** Reference Publication (14), Output File Formats (19), Funder (25),
-Award Title (26), Related Instruments (31), Related Observatories (32), Logo (33).
-
-**Still empty and intentionally so:** `relatedInstruments`, `relatedObservatories`, `logo`, `funder`,
-`award`, `referencePublication`, `outputFormats` — each with negative evidence recorded above.
-
----
 
 ## Notes on Non-Obvious Values
 
@@ -638,7 +631,7 @@ therefore not what this field denotes. Note also that the `v1.0.13` git tag is n
 **Version PID — deliberately empty.** Recorded under Field 12: no Zenodo DOI exists for v1.0.13, and
 carrying v1.0.12's DOI forward would misattribute it.
 
-**Software Functionality — the parent category `Data Processing and Analysis` was missing.** Selecting a
+**Software Functionality — the parent category `Data Processing and Analysis` was previously missing.** Selecting a
 subcategory does not imply its parent, so the entry previously carried
 `Data Processing and Analysis: Field-line Tracing` without its required parent. That is corrected here,
 alongside eight further values evidenced by specific code.
@@ -654,39 +647,12 @@ global empirical field models and coordinate transforms and reads no instrument'
 the "designed to support" threshold, and no association was manufactured. Rejected candidates and the
 reason for each are recorded under those fields.
 
----
-
-## Sources Consulted
-
-- This entry's existing HSSI record — the authoritative baseline for pre-existing values
-- **Repository at `ab7efdc824b6613036648e21c18ee2ea413cf080`**: `README.md`, `setup.py`, `LICENSE`,
-  `CITATION.cff`, `MANIFEST.in`, `geopack/geopack.py` (1,446 lines), `geopack/t89.py`, `t96.py`,
-  `t01.py`, `t04.py`, `geopack/test_geopack1.py`, `notebooks/Field Line Trace Demo.ipynb`, and git
-  history including full commit attribution across all contributor identities
-- **Zenodo**: record 15110786 (concept DOI) and record 15110787 (v1.0.12) — DOI structure, creator list
-  and affiliations, license, single-version confirmation
-- **DataCite**: metadata for the concept DOI — license, publisher, issued date, creators; `subjects` and
-  `fundingReferences` both empty
-- **PyPI**: `geopack` (12 releases, 2018-07-22 to 2026-05-12; license, classifiers, dependencies) and
-  `pyspedas` (dependency pin `geopack>=1.0.13`)
-- **GitHub**: releases with dates and notes, contributor and commit attribution, and the
-  `spedas/pyspedas` sources used as interoperability evidence
-- **PyHC project registry**: geopack is a **PyHC community package** — curated documentation URL,
-  keywords, contact, and quality ratings; absent from the core and unevaluated project lists
-- **ORCID** public records, **Crossref** (all eight Field 27 DOIs verified to resolve and match), and
-  **ROR** (all affiliation identifiers)
-- **SoMEF 0.9.11** automated extraction, used only to corroborate name, license/SPDX, repository topics,
-  creation date, and releases
-- HSSI's controlled vocabularies, to keep every value within existing terms
-- Every URL written into this file was confirmed to resolve; three dead `README.md` links are documented
-  under Field 29
-
 ## Known Repository Data-Quality Issues (not HSSI metadata; recorded for the maintainer)
 
 1. **`CITATION.cff` is malformed.** `cff-version: 1.0.12` is the *software* version, not a CFF
    specification version (valid values are `1.1.0` / `1.2.0`). The file also lists only one of the five
-   Zenodo creators and lacks `title`, `version`, and `date-released`. It is therefore **not** used as an
-   author source in this extraction; Zenodo record 15110787 plus git history are used instead.
+   Zenodo creators and lacks `title`, `version`, and `date-released`. It is therefore not reliable as an
+   author source; Zenodo record 15110787 plus git history support the author list instead.
 2. **The `v1.0.13` git tag is misplaced.** Tag `v1.0.13` points at `8c5f0e0` (2026-03-06), where
    `setup.py` still reads `version='1.0.12'`; the bump to `1.0.13` landed later in `ab7efdc`
    (2026-06-25). The tag date is consequently **not** the release date.

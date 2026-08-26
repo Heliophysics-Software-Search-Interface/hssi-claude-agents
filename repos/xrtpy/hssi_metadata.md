@@ -4,32 +4,8 @@
 **Repository:** https://github.com/HinodeXRT/xrtpy
 **Source Revision:** 0ef8e3636bde9c619dbcb1f74519f31829f238ad (branch `main`, 2026-07-22)
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-08-23
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
-
-Some of the content recorded here is deliberately not stored by HSSI — the two items listed under
-"What this file records that HSSI does not store."
-
-**Seeded refresh.** This file is a seeded refresh of the 2025-10-09 canonical extraction, not a
-blank-slate extraction. Sources, in priority order:
-
-1. **Live HSSI record `a74cb76b`** (the Joy Velasquez submission) — authoritative wherever it
-   conflicts with the older 2025-10-09 canonical file. Curated 2026 wording is preserved verbatim.
-2. **An earlier duplicate HSSI submission of the same software** (submitted by Shawn A. Polson) — a
-   second record for this software that no longer exists in the catalogue, used only as supplemental
-   evidence so this entry lost nothing. Values taken from it are identified per field as carried from
-   the earlier duplicate HSSI submission, to keep them distinguishable from values evidenced by the
-   repository itself.
-3. **Source repository at the revision above** — used to fill gaps and to supersede stale values.
-4. **Prior 2025-10-09 canonical file** — supported file-only additions retained.
-
-Exact controlled-list spellings are noted per field, because HSSI binds a controlled value only on
-an exact name match.
-
-**Multi-valued (M2M) fields** state an explicit **asserted value set** =
-live HSSI ∪ repo evidence ∪ supported evidence from the earlier duplicate submission, using
-identity rules: keywords by lowercase string, instruments/observatories by SPASE identifier,
-authors by ORCID then normalized name, organizations by ROR then normalized name.
 
 ---
 
@@ -38,9 +14,7 @@ authors by ORCID then normalized name, organizations by ROR then normalized name
 ### 1. Submitter (MANDATORY)
 - **Submitter Name:** Joy Velasquez
 - **Submitter Email:** joy.velasquez@cfa.harvard.edu
-- **Source:** Submitter of record on live HSSI entry `a74cb76b` (ORCID 0009-0005-4804-0946). This is
-  a refresh of an existing entry, not a new submission, so the original submitter is retained rather
-  than a placeholder.
+- **Source:** Submitter of record in HSSI (ORCID 0009-0005-4804-0946).
 - **Note:** The earlier duplicate HSSI submission of the same software was made by Shawn A. Polson
   (shawn.polson@lasp.colorado.edu); the submitter of record for this entry is unchanged.
 
@@ -58,45 +32,33 @@ authors by ORCID then normalized name, organizations by ROR then normalized name
 
 ### 4. Software Functionality (MANDATORY)
 
-This entry carried **no** Software Functionality before the 2026-07-28 extraction — the single
-largest gap in the record, now populated. The set below is built from a direct audit of `xrtpy/`
+The set below is supported by a direct audit of `xrtpy/`
 (`response/`, `image_correction/`, `util/`, `response/tools/`), the shipped sphinx-gallery examples
 (`examples/`, wired in via `docs/conf.py` `examples_dirs = ../examples`), the docs, and the JOSS
-paper. It supersedes and extends the 11 values carried from the earlier duplicate HSSI submission.
+paper. Eleven of the values were also present in an earlier duplicate HSSI submission of the same
+software.
 
-**Asserted value set (19 values):**
+- Data Processing and Analysis
+- Data Processing and Analysis:Analysis
+- Data Processing and Analysis:Calibration
+- Data Processing and Analysis:Image Processing
+- Data Processing and Analysis:Data Access and Retrieval
+- Data Processing and Analysis:Data Reduction
+- Data Visualization
+- Data Visualization:2D Graphics
+- Data Visualization:Line Plots
+- Mission-related
+- Mission-related:Analysis
+- Mission-related:Calibration
+- Mission-related:Instrument Response
+- Mission-related:Instrumentation
+- Mission-related:Science Data Processing
+- Models and Simulations
+- Models and Simulations:Instrument Response
+- Models and Simulations:Observatory/Instrument Models
+- Models and Simulations:Physics-Based
 
-| # | Value | Origin |
-|---|---|---|
-| 1 | Data Processing and Analysis | earlier duplicate HSSI submission (required bare parent) |
-| 2 | Data Processing and Analysis:Analysis | earlier duplicate HSSI submission |
-| 3 | Data Processing and Analysis:Calibration | earlier duplicate HSSI submission |
-| 4 | Data Processing and Analysis:Image Processing | earlier duplicate HSSI submission |
-| 5 | Data Processing and Analysis:Data Access and Retrieval | **NEW — repo evidence** |
-| 6 | Data Processing and Analysis:Data Reduction | **NEW — repo evidence** |
-| 7 | Data Visualization | earlier duplicate HSSI submission (required bare parent) |
-| 8 | Data Visualization:2D Graphics | earlier duplicate HSSI submission |
-| 9 | Data Visualization:Line Plots | **NEW — repo evidence** |
-| 10 | Mission-related | earlier duplicate HSSI submission (required bare parent) |
-| 11 | Mission-related:Analysis | earlier duplicate HSSI submission |
-| 12 | Mission-related:Calibration | earlier duplicate HSSI submission |
-| 13 | Mission-related:Instrument Response | earlier duplicate HSSI submission |
-| 14 | Mission-related:Instrumentation | earlier duplicate HSSI submission |
-| 15 | Mission-related:Science Data Processing | **NEW — repo evidence** |
-| 16 | Models and Simulations | **NEW — required bare parent for 17–19** |
-| 17 | Models and Simulations:Instrument Response | **NEW — repo evidence** |
-| 18 | Models and Simulations:Observatory/Instrument Models | **NEW — repo evidence** |
-| 19 | Models and Simulations:Physics-Based | **NEW — repo evidence** |
-
-**Source:** 11 values carried from the earlier duplicate HSSI submission of the same software; 8
-added from direct code/doc audit at revision `0ef8e363`. All four bare parents are present, and
-every `Parent:Child` value has its bare parent listed.
-
-**Controlled-list note:** In the live `FunctionCategory` model each subcategory is stored as a bare
-child name (e.g. `Calibration`) linked to its parent by id; the view layer renders `Parent: Child`
-with a space. The `Parent:Child` form above is the submission-form notation. The six bare parents in
-the live list are exactly `Coordinate Transforms`, `Data Processing and Analysis`,
-`Data Visualization`, `Mission-related`, `Models and Simulations`, `Servers and Environments`.
+All four required bare parents are present.
 
 **Per-value justification:**
 
@@ -137,7 +99,7 @@ the live list are exactly `Coordinate Transforms`, `Data Processing and Analysis
 9. **Data Visualization:Line Plots** — `examples/effective_area.py` plots effective area versus
    wavelength for multiple dates; `examples/temperature_response.py` plots temperature response
    versus log10(T); `examples/channels.py` plots channel properties. These are the package's
-   headline scientific figures (JOSS Figures 1 and 2). **NEW** — absent from both HSSI records.
+   headline scientific figures (JOSS Figures 1 and 2).
 10. **Mission-related** — required bare parent for values 11–15. XRTpy is a Hinode/XRT
     mission-instrument tool authored by the XRT team at the Center for Astrophysics, not a
     general-purpose utility that happens to read XRT files.
@@ -156,9 +118,8 @@ the live list are exactly `Coordinate Transforms`, `Data Processing and Analysis
 15. **Mission-related:Science Data Processing** — XRTpy consumes Hinode/XRT Level 1 images and
     Level 2 synoptic composites and produces higher-level derived science products (temperature,
     emission measure and uncertainty maps; deconvolved images; light-leak-corrected images), each
-    returned as an `XRTMap` with updated FITS `HISTORY` provenance. **NEW**
-16. **Models and Simulations** — required bare parent for values 17–19. **NEW parent**; neither
-    HSSI record has any Models and Simulations value, which understates the package.
+    returned as an `XRTMap` with updated FITS `HISTORY` provenance.
+16. **Models and Simulations** — required bare parent for values 17–19.
 17. **Models and Simulations:Instrument Response** — the effective area and temperature response
     are *forward-modeled* from component physics rather than read from a lookup table:
     `_transmission_equation` builds a complex refractive index `(1-delta) + i*beta` from
@@ -166,15 +127,15 @@ the live list are exactly `Coordinate Transforms`, `Data Processing and Analysis
     `_filter_contamination_angular_wavenumber` from the graze angle and wavelength, and folds
     mirror reflectivity, filter transmission and CCD response together; `TemperatureResponseFundamental`
     then folds that with CHIANTI emission spectra (`integration`). `deconvolve` additionally uses
-    the XRT mirror-model PSF. **NEW**
+    the XRT mirror-model PSF.
 18. **Models and Simulations:Observatory/Instrument Models** — the `Geometry`/`EntranceFilter`/
     `Mirror`/`Filter`/`CCD`/`Channel` class hierarchy is a reusable model of the XRT instrument,
-    parameterized by the SolarSoft GENX channel model version 17. **NEW**
+    parameterized by the SolarSoft GENX channel model version 17.
 19. **Models and Simulations:Physics-Based** — temperature response is computed from a physical
     emission model: CHIANTI v10 atomic emission spectra (coronal, hybrid, photospheric abundance
     sets in `xrtpy/response/data/chianti_emission_models/`) integrated against effective area, solid
     angle per pixel and CCD quantum conversion, using `astropy.constants` (`h`, `c`) and explicit
-    astropy units throughout. **NEW**
+    astropy units throughout.
 
 **Considered and deliberately excluded** (audit trail):
 - `Coordinate Transforms` / `Coordinate Transforms:Solar` — `temperature_from_filter_ratio` does
@@ -206,31 +167,26 @@ the live list are exactly `Coordinate Transforms`, `Data Processing and Analysis
 
 ### 5. Related Region (MANDATORY)
 - **Value:** Solar Environment
+- **Value:** Corona
 - **Source:** Live HSSI; the earlier duplicate HSSI submission carried the identical value.
-  Supported by the repo: XRT observes the solar corona at 1–10 MK (`docs/about_xrt.rst`), and
-  XRTpy's products are coronal temperature and emission measure.
-- **Controlled-list spelling:** `Solar Environment` (verified present in the live `Region` list).
-- **`Corona` considered and deliberately declined.** The live `Region` list is richer than the
-  submission form's five values and contains both `Corona` and `Photosphere`. `Corona` is
-  evidence-supported (the live description says XRT "observes the Sun’s atmosphere from the
-  photosphere to the corona"), but it was **declined**: narrowing a correct submitted region buys no
-  discoverability, because `Solar Environment` already encompasses the corona. `Photosphere` was
-  never a candidate — XRT images the corona, and the photosphere-to-corona span belongs to the
-  Hinode mission as a whole, not to XRTpy. Field 5 therefore remains `Solar Environment` only.
+  `Corona` is supported directly by `docs/about_xrt.rst:32`, which describes XRT as observing the
+  solar corona at 1–10 MK; `docs/index.rst:15` and `joss/paper.md:50` independently describe
+  XRTpy's coronal observations and temperature diagnostics.
+- **Controlled-list spellings:** `Solar Environment` and `Corona`.
+- **Settled rationale for `Corona`:** It was originally declined because `Solar Environment` was
+  thought to encompass it. That premise was falsified on 2026-08-25: the Region vocabulary is flat,
+  so the broad value does not imply the finer one and a `Corona` filter would otherwise miss this
+  entry. The domain evidence was never in dispute, and `Corona` was added by user approval while
+  retaining `Solar Environment`.
+- **`Photosphere` considered and deliberately declined.** The photosphere-to-corona span in
+  `docs/about_xrt.rst:17` and `joss/paper.md:50` belongs to Hinode's three instruments collectively,
+  not XRTpy. Its only photosphere-capable XRT channel is G-band, which XRTpy explicitly does not
+  support (`docs/getting_started.rst:203`; `docs/about_xrt.rst:67`).
 
 ### 6. Authors (MANDATORY)
 
-**Asserted author set: 8 authors** — the 6 previously recorded authors, unchanged, plus Authors 7
-and 8. No author is dropped and no existing author name is altered.
-
-The project's standing rule is to reconcile authors by **union** across live HSSI, the metadata file,
-and the in-repo author lists, and never to drop anyone. Both additions appear in `pyproject.toml`
-`[project] authors` and both bind to **existing** HSSI Person rows by ORCID, so neither creates a new
-row.
-
-Identity rule applied: ORCID first, then normalized name. Affiliations are unioned by ROR, then by
-normalized organization name — the live HSSI affiliation sets are *richer* than the 2025-10-09
-canonical file's, so live is retained in full.
+**Author set: 8 authors.** Authors 7 and 8 are supported by the repository's explicit
+`pyproject.toml` authorship declaration in addition to their contribution history.
 
 **Author 1: Will Barnes**
 - **Author Identifier:** https://orcid.org/0000-0001-9642-6089
@@ -240,11 +196,11 @@ canonical file's, so live is retained in full.
   - Goddard Space Flight Center — https://ror.org/0171mag52
   - United States Naval Research Laboratory — https://ror.org/04d23a975
 - **Source:** Live HSSI (4 affiliations). The 2025-10-09 canonical file had only 2 (American
-  University, Goddard Space Flight Center); live is a superset and is retained. The fourth
-  affiliation binds by ROR `https://ror.org/04d23a975`, which exactly one organization row carries,
-  so the shorter form `Naval Research Laboratory` is not a separate organization.
-- **Note:** `joss/paper.md` gives the fuller form "Will T. Barnes". Not applied — the HSSI API
-  cannot rename an existing Person row, and the live name is not wrong.
+  University, Goddard Space Flight Center). ROR `https://ror.org/04d23a975` supports the
+  `United States Naval Research Laboratory` affiliation rather than the shorter form
+  `Naval Research Laboratory`.
+- **Note:** `joss/paper.md` gives the fuller form "Will T. Barnes". Not applied because the HSSI
+  name is not wrong, and the fuller form is not necessary to distinguish the author.
 
 **Author 2: Nicholas A. Murphy**
 - **Author Identifier:** https://orcid.org/0000-0001-6628-8033
@@ -291,32 +247,30 @@ canonical file's, so live is retained in full.
 
 **Author 7: Nabil Freij**
 - **Author Identifier:** https://orcid.org/0000-0002-6253-082X
-- **Affiliations (existing HSSI Person row):**
+- **Affiliations:**
   - Bay Area Environmental Research Institute — https://ror.org/024tt5x58
   - Lockheed Martin Solar and Astrophysics Laboratory — (no ROR)
   - SETI Institute — https://ror.org/02dxgk712
 - **Source:** `pyproject.toml` `[project] authors` lists `Nabil Freij <nabil.freij@gmail.com>`;
   `git shortlog` at revision `0ef8e363` shows 35 commits, the 5th-largest contribution to the
   repository after identity-merging contributors who commit under multiple git configs (Joy
-  Velasquez 243, Nicholas Murphy 120, Jonathan Slavin 75, Nicolas Trueba 36). The Person row
-  already exists in HSSI with this ORCID and these affiliations, so the addition binds cleanly
-  without creating a new row.
+  Velasquez 243, Nicholas Murphy 120, Jonathan Slavin 75, Nicolas Trueba 36). HSSI records this
+  ORCID with the affiliations above.
 - **Note:** Not present in the Zenodo/DataCite creator list or the JOSS author list. Added under the
   union rule on the strength of `pyproject.toml` authorship plus sustained contribution.
 
 **Author 8: Stuart J. Mumford**
 - **Author Identifier:** https://orcid.org/0000-0003-4217-4642
-- **Affiliations (existing HSSI Person row):**
+- **Affiliations:**
   - Aperio Software Ltd. — (no ROR)
   - University of Sheffield — https://ror.org/05krs5044
 - **Source:** `pyproject.toml` `[project] authors` lists `Stuart Mumford`; `git shortlog` shows 1
   commit (`Stuart Mumford <stuart@cadair.com>`).
-- **Note — binding-critical spelling.** Assert the existing HSSI spelling **`Stuart J. Mumford`**
-  (with middle initial), **not** the bare `Stuart Mumford` in `pyproject.toml`. The API cannot rename
-  Person rows, so the exact existing spelling is required to bind to the existing row rather than
-  create a near-duplicate. Contribution evidence is thinner than Author 7's (1 commit), but
+- **Name rationale.** Retain the existing HSSI spelling **`Stuart J. Mumford`** (with middle
+  initial), **not** the bare `Stuart Mumford` in `pyproject.toml`; the ORCID confirms that these
+  names identify the same person. Contribution evidence is thinner than Author 7's (1 commit), but
   `pyproject.toml` `[project] authors` is an explicit authorship declaration by the maintainers, so
-  the union rule applies.
+  the author is included.
 
 **Considered and deliberately excluded — Nicolas Trueba** (audit trail): 36 merged commits across
 five git configs at revision `0ef8e363`, more than either of Authors 7 and 8. Excluded because he is
@@ -334,11 +288,11 @@ a decision rather than an oversight.
   submitted editorial choice and because it matches the citable publication.
 
 ### 8. Description (MANDATORY)
-- **Value (retain verbatim, 820 characters):**
+- **Value (820 characters):**
 
 > XRTpy is a modern, open-source Python package for working with data from the X-Ray Telescope (XRT) aboard the Hinode spacecraft - that observes the Sun’s atmosphere from the photosphere to the corona. The package provides a complete set of tools for modeling the XRT instrument, computing effective areas and temperature responses, calibrating images, correcting instrumental effects such as light leaks, and improving image quality. It enables scientists to estimate key physical properties of the solar corona and to analyze XRT observations within a reproducible, Python-based workflow that integrates naturally with the broader heliophysics software ecosystem. XRTpy is designed to replace and modernize legacy IDL routines, making advanced XRT data analysis more accessible and easier to maintain for the community.
 
-- **Source:** Live HSSI (2026-curated). Retained verbatim as editorial intent, including the
+- **Source:** Live HSSI (2026-curated). The wording is retained as editorial intent, including the
   U+2019 right single quotation mark in "Sun’s".
 - **Supersedes:** the 2025-10-09 canonical file, which carried the 2024 Zenodo/DataCite abstract
   ("The XRTpy Python package is a specialized tool developed for the analysis of observations…").
@@ -346,7 +300,7 @@ a decision rather than an oversight.
   abstract was also the text the earlier duplicate HSSI submission carried.
 
 ### 9. Concise Description (OPTIONAL)
-- **Value (retain verbatim, 188 characters):**
+- **Value (188 characters):**
 
 > XRTpy is an open-source Python package for analyzing solar X-ray data from the Hinode X-Ray Telescope, providing modern, reproducible tools for instrument modeling and coronal diagnostics.
 
@@ -393,7 +347,7 @@ the stored string. **Never copy a displayed version string (or its `<softwareNam
 into a stored value.** The malformed stored literal came straight from Zenodo/DataCite, whose
 `version` field for record 13157914 is itself the string `version 0.4.1`.
 
-**Release evidence (verified, not re-derived):**
+**Release evidence:**
 
 | Tag | Date | Commit | Status |
 |---|---|---|---|
@@ -424,10 +378,10 @@ v0.4.1 and would be factually wrong attached to v0.5.1. The v0.4.1 version DOI i
 this file's Field 2 note, and the concept DOI stays in Field 2 itself, so no identifier is lost.
 
 ### 13. Programming Language (RECOMMENDED)
-- **Asserted value:** `Python 3.x`
+- **Value:** `Python 3.x`
 - **Source:** Live HSSI; the earlier duplicate HSSI submission carried the identical value;
   `pyproject.toml` `requires-python = ">=3.11"` and `Programming Language :: Python :: 3 :: Only`.
-- **Controlled-list spelling:** `Python 3.x` (verified present in the live `ProgrammingLanguage` list).
+- **Controlled-list spelling:** `Python 3.x`.
 - **Supported Python versions (repo detail, updated):** 3.11, 3.12, 3.13, **3.14**. Source:
   `pyproject.toml` classifiers plus the `.github/workflows/ci.yml` test matrix (3.14/Ubuntu,
   3.13/Ubuntu, 3.12/macOS with coverage, 3.11/Windows lowest-direct-dependencies). This supersedes
@@ -464,50 +418,41 @@ this file's Field 2 note, and the concept DOI stays in Field 2 itself, so no ide
 
 ### 16. Keywords (OPTIONAL)
 
-**Asserted value set (9) — live ∪ earlier duplicate submission ∪ repo, identity by lowercase string:**
+**Values:**
 
-| Keyword (stored lowercase) | Origin |
-|---|---|
-| `heliophysics` | live HSSI |
-| `hinode spacecraft` | live HSSI |
-| `open source software` | live HSSI |
-| `python` | live HSSI |
-| `solar physics` | live HSSI |
-| `x ray telescope (xrt)` | live HSSI |
-| `data analysis` | **earlier duplicate HSSI submission** |
-| `solar` | **earlier duplicate HSSI submission** |
-| `solar imaging` | **ADDED — repo evidence** |
+- `heliophysics`
+- `hinode spacecraft`
+- `open source software`
+- `python`
+- `solar physics`
+- `x ray telescope (xrt)`
+- `data analysis`
+- `solar`
+- `solar imaging`
 
 - **Source:** Live HSSI's six derive from DataCite `subjects` (`Solar Physics`,
   `Hinode Spacecraft`, `Python`, `Heliophysics`, `open source software`,
   `X-Ray Telescope (XRT)`). The two additions come from the earlier duplicate HSSI submission and
   are independently corroborated by the PyHC community registry entry for XRTpy
   (`keywords: solar, specific, data_analysis, hinode`).
-- **Normalization note:** keywords are stored lowercase and rendered Title Case (live renders
-  `X Ray Telescope (Xrt)`). All nine exist as rows in the live `Keyword` list, so all bind without
-  creating new rows.
+- **Normalization note:** keywords are stored lowercase and rendered Title Case (HSSI renders
+  `X Ray Telescope (Xrt)`).
 - **Deliberately not added:** `hinode`, `x-ray`, `xrt` (from `pyproject.toml` `keywords`) — they are
   near-duplicates of the existing `hinode spacecraft` and `x ray telescope (xrt)` and would only add
   vocabulary noise. `data_analysis` (the PyHC token form from the 2025-10-09 canonical file) is
   superseded by the live vocabulary's clean `data analysis`.
-- **`solar imaging` — ADDED.** `docs/index.rst` frames the package around "the world of X-ray
-  solar imaging", and XRT imaging is what every XRTpy product is derived from. Verified present in
-  the live `Keyword` list, so it binds to an existing row.
+- **`solar imaging`.** `docs/index.rst` frames the package around "the world of X-ray solar
+  imaging", and XRT imaging is what every XRTpy product is derived from.
 
 ### 17. Data Sources (OPTIONAL)
 
-**Asserted value set (3):**
+**Values:**
 
-| Value | Origin |
-|---|---|
-| `Observatory/Mission-specific` | **earlier duplicate HSSI submission** |
-| `HTTP/HTTPS Directories` | **NEW — repo evidence** |
-| `The Virtual Solar Observatory.` | **ADDED — documented gallery workflow** |
+- `Observatory/Mission-specific`
+- `HTTP/HTTPS Directories`
+- `The Virtual Solar Observatory.`
 
-**Controlled-list spellings:** all three are present as rows in the live `DataInput` list. Note the
-**trailing period** in
-`The Virtual Solar Observatory.` — that is the only spelling in the live list; there is no
-period-less variant, so omitting it would create a duplicate row.
+**Controlled-list spelling:** retain the trailing period in `The Virtual Solar Observatory.`.
 
 **Corrected 2026-07-29:** the former controlled-list value
 `Other - https://xrt.cfa.harvard.edu/level1/` no longer exists in the Data Sources vocabulary and is
@@ -517,12 +462,12 @@ re-proposed.
 
 - **`Observatory/Mission-specific`** — the CfA XRT archive is Hinode/XRT-specific. Per Field 17's
   instruction, the observatory is cross-listed in Field 32 (`Hinode`).
-- **`HTTP/HTTPS Directories`** — **NEW.** `filename2repo_path` constructs `https://` archive
+- **`HTTP/HTTPS Directories`.** `filename2repo_path` constructs `https://` archive
   directory URLs; `make_exposure_map` retrieves them with `astropy.utils.data.download_file`; and
   `xrtpy.util.SSW_MIRRORS` = (`https://sohoftp.nascom.nasa.gov/solarsoft/`,
   `https://hesperia.gsfc.nasa.gov/ssw/`) are HTTPS directory trees from which `deconvolve` and
   `remove_lightleak` fetch PSF and light-leak calibration files via `sunpy.data.manager`.
-- **`The Virtual Solar Observatory.` — ADDED.** The shipped gallery documents VSO as the
+- **`The Virtual Solar Observatory.`.** The shipped gallery documents VSO as the
   recommended way to obtain XRT input data: `examples/sorting_data.py`,
   `examples/deconvolving.py` and `examples/temperature_from_filter_ratios.py` all query it via
   `sunpy.net.Fido.search(a.Instrument("xrt"))`, and `examples/sorting_data.py` states outright that
@@ -533,18 +478,16 @@ re-proposed.
 
 ### 18. Input File Formats (RECOMMENDED)
 
-**Asserted value set (2):**
+**Values:**
 
-| Value | Origin |
-|---|---|
-| `FITS` | live HSSI |
-| `IDL.sav` | **NEW — repo evidence** |
+- `FITS`
+- `IDL.sav`
 
 - **`FITS`** — live HSSI and the earlier duplicate HSSI submission agreed. XRT Level 1 / Level 2
   data are read as `sunpy.map.Map` (`XRTMap`) objects; `xrtpy/util/make_exposure_map.py` uses
   `astropy.io.fits` (`fits.getheader`, `fits.getval`, `fits.open`) directly; PSF and light-leak
   calibration files are FITS.
-- **`IDL.sav`** — **NEW.** Reading SolarSoft IDL save-format files is a defining capability, since
+- **`IDL.sav`.** Reading SolarSoft IDL save-format files is a defining capability, since
   XRTpy's whole design goal is reproducing the IDL routines' numbers:
   `xrtpy/response/channel.py` reads `xrt_channels_v0017.genx` via
   `sunpy.io.special.genx.read_genx`; `xrtpy/response/effective_area.py` reads
@@ -552,7 +495,7 @@ re-proposed.
   `xrtpy/response/temperature_response.py` reads the three CHIANTI emission models
   (`XRT_emiss_model.default_CHIANTI*.geny`) via `scipy.io.readsav`. `scipy.io.readsav` is the IDL
   SAVE-file reader, and GENX is a SolarSoft IDL save format.
-- **Controlled-list spellings:** `FITS`, `IDL.sav` (both verified present in the live `FileFormat` list).
+- **Controlled-list spellings:** `FITS`, `IDL.sav`.
 - **`ascii` — considered and deliberately excluded.** `xrtpy/response/effective_area.py`
   (`n_DEHP_attributes`) reads the plain-text table `xrtpy/response/data/n_DEHP.txt` line by line,
   but that is a small bundled constants table, not a format users can supply data in. Field 18 is
@@ -560,7 +503,6 @@ re-proposed.
 
 ### 19. Output File Formats (RECOMMENDED)
 - **Value:** `FITS`
-- **Origin:** Added at the 2026-07-28 extraction; this entry held no output file format beforehand.
 - **Source / evidence:** `make_results_maps` in `xrtpy/response/temperature_from_filter_ratio.py`
   constructs complete FITS/WCS headers for every derived product — copying and repairing `NAXIS`,
   `NAXIS1/2`, `CRPIX1/2`, `CRVAL1/2`, `CDELT1/2`, `CUNIT1/2`, `CTYPE1/2`, `CROTA1/2`, `DSUN_OBS`,
@@ -571,51 +513,43 @@ re-proposed.
 - **Caveat (stated honestly):** XRTpy itself never calls a file writer — no `writeto`, `Map.save`,
   `savetxt` or equivalent appears anywhere in `xrtpy/`. FITS is the format of the generated
   products, produced by the caller invoking `Map.save()`. No other output format has any support.
-- **Controlled-list spelling:** `FITS` (verified present in the live `FileFormat` list).
+- **Controlled-list spelling:** `FITS`.
 
 ### 20. Operating System (RECOMMENDED)
 
-**Asserted value set (4):**
+**Values:**
 
-| Value | Origin |
-|---|---|
-| `Linux` | live HSSI |
-| `Mac` | live HSSI |
-| `Windows` | live HSSI |
-| `Operating System Independent` | **earlier duplicate HSSI submission** |
+- `Linux`
+- `Mac`
+- `Windows`
+- `Operating System Independent`
 
 - **Source:** `.github/workflows/ci.yml` runs the test matrix on `ubuntu-latest`, `macos-latest` and
   `windows-latest` at every commit; `pyproject.toml` declares
   `Operating System :: OS Independent`.
-- **Controlled-list correction:** the live `OperatingSystem` list contains **no** `OS Independent`
-  row — the only OS-agnostic value is `Operating System Independent`. The 2025-10-09 canonical file
-  listed `OS Independent`, which would not bind. Corrected here.
-- **Controlled-list spellings:** `Linux`, `Mac`, `Windows`, `Operating System Independent`
-  (all four verified present in the live `OperatingSystem` list).
+- **Controlled-list correction:** the valid OS-agnostic value is `Operating System Independent`,
+  not `OS Independent` as listed in the 2025-10-09 canonical file.
+- **Controlled-list spellings:** `Linux`, `Mac`, `Windows`, `Operating System Independent`.
 
 ### 21. CPU Architecture (RECOMMENDED)
 - **Value:** `CPU Independent`
-- **Origin:** Carried from the earlier duplicate HSSI submission of the same software — this entry
-  held no CPU architecture of its own beforehand.
 - **Source / evidence:** XRTpy is pure Python with no compiled extensions — PyPI publishes only
   `xrtpy-0.5.1-py3-none-any.whl` (universal `py3-none-any` wheel) plus an sdist, and
   `pyproject.toml` declares no build extensions. CI additionally passes on x86-64 Linux/Windows and
   Apple Silicon macOS runners.
-- **Controlled-list spelling:** `CPU Independent` (verified present in the live `CPUArchitecture` list).
+- **Controlled-list spelling:** `CPU Independent`.
 - **Deliberately not added:** `x86-64` and `Apple Silicon arm64`, although both are CI-verified —
   `CPU Independent` already asserts the stronger, accurate claim, and listing specific architectures
   alongside it is redundant.
 
 ### 22. Related Phenomena (OPTIONAL)
 
-**Asserted value set (4):**
+**Values:**
 
-| Value | Origin |
-|---|---|
-| `Coronal Heating` | live HSSI |
-| `Solar Corona` | live HSSI |
-| `Solar Flares` | live HSSI |
-| `X-ray emission` | live HSSI |
+- `Coronal Heating`
+- `Solar Corona`
+- `Solar Flares`
+- `X-ray emission`
 
 - The stored set was already a strict superset of the set the earlier duplicate HSSI submission
   carried, which lacked `X-ray emission`.
@@ -623,19 +557,16 @@ re-proposed.
   `docs/getting_started.rst` (coronal temperature and emission measure diagnostics);
   `joss/paper.md` ("diagnosing coronal temperatures from less than 1 MK to more than 10 MK");
   the bibliography's flare and X-ray references (`Guidoni:2015`, `Fludra:1999`).
-- **Controlled-list spellings:** all four verified present in the live `Phenomena` list. Nothing
-  further in that list applies (`Coronal Mass Ejections`, `Geomagnetic Storms`, `Solar Wind` are not
-  XRTpy functionality; `Coronal Holes` does not exist as a live row).
+- **Considered and deliberately excluded:** `Coronal Mass Ejections`, `Geomagnetic Storms`, and
+  `Solar Wind` are not XRTpy functionality. `Coronal Holes` is not an available value.
 
 ### 23. Development Status (RECOMMENDED)
 - **Value:** `Active`
-- **Origin:** Added at the 2026-07-28 extraction; this entry held no development status beforehand.
 - **Source / evidence:** repostatus.org's `Active` = "reached a stable, usable state and is being
   actively developed". XRTpy has stable releases on PyPI (v0.5.1, 2026-04-22), a published JOSS
   paper, and continuing development at the extraction revision (`v0.5.2-pre` tagged 2026-07-22,
   Python 3.14 support added, DEM solver announced for v0.6.0 in the GitHub release notes).
-- **Controlled-list spelling:** `Active` — verified against the live `RepoStatus` list, whose eight
-  rows are `Abandoned`, `Active`, `Concept`, `Inactive`, `Moved`, `Suspended`, `Unsupported`, `WIP`.
+- **Controlled-list spelling:** `Active`.
 - **Note:** `pyproject.toml` carries the trove classifier `Development Status :: 4 - Beta`. That is a
   different taxonomy and does not map to repostatus `WIP`, which requires "no stable, usable public
   release yet" — false for XRTpy.
@@ -652,9 +583,7 @@ re-proposed.
 
 ### 25. Funder (OPTIONAL)
 
-**Asserted value set (2). Origin: carried from the earlier duplicate HSSI submission of the same
-software** — this entry held no funder beforehand. Both are independently corroborated by the
-repository, so neither rests on that duplicate submission alone.
+Both funders are corroborated by the repository.
 
 **Funder 1:**
 - **Organization:** National Aeronautics and Space Administration
@@ -662,8 +591,7 @@ repository, so neither rests on that duplicate submission alone.
 - **Source:** `README.md` — "The development of XRTpy is supported by NASA contract **NNM07AB07C**
   to the Smithsonian Astrophysical Observatory"; `joss/paper.md` Acknowledgements, same wording.
   ROR `027ka1x80` display name is confirmed as `National Aeronautics and Space Administration`
-  (acronym `NASA`), which is also the existing HSSI Organization row name — the acronym is fully
-  expanded as the form requires.
+  (acronym `NASA`); the acronym is fully expanded as the form requires.
 
 **Funder 2:**
 - **Organization:** U.S. National Science Foundation
@@ -671,17 +599,11 @@ repository, so neither rests on that duplicate submission alone.
 - **Source:** `joss/paper.md` Acknowledgements — "N.A.M. acknowledges support from NSF CSSI award
   1931388". Confirmed against NSF Award 1931388 (see Field 26), whose awardee is the Smithsonian
   Institution Astrophysical Observatory.
-- **Naming note (settled).** The shared HSSI Organization row for this funder was renamed to the
-  ROR record's display name, `U.S. National Science Foundation`, which is the name recorded above.
-  Exactly one organization row carries ROR `https://ror.org/021nxhr62`; the rename created no second
-  row for the same ROR, and the association is held by row identity and ROR rather than by name, so
-  the rename did not disturb it. An earlier revision of this file recorded the row's former name,
-  `National Science Foundation` — same ROR, same entity, acronym fully expanded either way. A future
-  maintainer should not read that older name as evidence of a separate organization.
+- **Naming note.** The ROR record's display name is `U.S. National Science Foundation`, which is
+  the name recorded above. An earlier revision used `National Science Foundation`; the shared ROR
+  shows that these names refer to the same entity, not separate organizations.
 
 ### 26. Award Title (OPTIONAL)
-
-**Asserted value set (2). This entry held no award before the 2026-07-28 extraction.**
 
 **Award 1:**
 - **Award Title:** Hinode X-Ray Telescope — **curatorial display label, not an official award title.
@@ -691,8 +613,8 @@ repository, so neither rests on that duplicate submission alone.
 - **Source (award number):** `README.md` Acknowledgements; `joss/paper.md` Acknowledgements. NASA
   contract to the Smithsonian Astrophysical Observatory.
 - **Source (award title):** none — the title is a curatorial display label, not extracted metadata.
-- **Origin:** award number carried forward from the 2025-10-09 canonical file, re-verified against the
-  current README at revision `0ef8e363`. Title added at the 2026-07-28 extraction by user decision.
+- **Rationale:** The award number appeared in the 2025-10-09 canonical file and remains supported
+  by the README at revision `0ef8e363`. The title is a user-approved curatorial display label.
 
 > **The Award 1 title is a curatorial display label, not extracted metadata.**
 >
@@ -710,18 +632,15 @@ repository, so neither rests on that duplicate submission alone.
 > - **Precedent.** HSSI already labels title-less awards by the mission served rather than by the
 >   contract's legal scope — `MMS` / `NNG04EB99C` and `THEMIS` / `NAS5-02099`. The award name serves
 >   as a display label; the award number is the authoritative value.
-> - **No collision.** No other HSSI award carried the number `NNM07AB07C` when this row was created,
->   so it is a new record rather than a relabelling of a shared one.
 
 **Award 2:**
 - **Award Title:** Collaborative Research: Frameworks: An open source software ecosystem for plasma physics
 - **Award Number:** 1931388
 - **Funder:** U.S. National Science Foundation
-- **Binding note:** this award already exists in HSSI under a byte-identical title. Three sibling
-  awards share that title under different numbers (1931393 / 1931429 / 1931435) — the award number is
-  what distinguishes them, so it must always accompany the title.
-- **Source:** `joss/paper.md` Acknowledgements gives the award number; the **title is new** as of
-  the 2026-07-28 extraction, resolved from the NSF award record for ID 1931388 (Directorate for Computer &
+- **Identification note:** three sibling awards share this title under different numbers
+  (1931393 / 1931429 / 1931435), so award number 1931388 must accompany the title.
+- **Source:** `joss/paper.md` Acknowledgements gives the award number; the title is resolved from
+  the NSF award record for ID 1931388 (Directorate for Computer &
   Information Science & Engineering / Office of Advanced Cyberinfrastructure; awardee "Smithsonian
   Institution Astrophysical Observatory"; 2019-10-01 to 2025-09-30). This is the PlasmaPy CSSI award
   that supports N. A. Murphy. The 2025-10-09 canonical file recorded the number with
@@ -729,12 +648,8 @@ repository, so neither rests on that duplicate submission alone.
 
 **Per-award funder attribution, and where it can and cannot be read.** The pairings are
 NASA ↔ `NNM07AB07C` and U.S. National Science Foundation ↔ `1931388`, each stated in the
-Acknowledgements sources cited above. Neither Field 25 nor Field 26 expresses that correspondence:
-Field 25 carries the two organizations as a flat list, Field 26 carries the two awards as another,
-the submission form has no per-award funder sub-field, and the view API returns awards as titles
-alone. A refresh working only from the API will therefore see two funders and two awards with
-nothing tying one to the other, and should take the pairing from this file rather than treating it
-as unrecorded.
+Acknowledgements sources cited above. HSSI stores the two organizations and the two awards as flat
+lists without a per-award funder relationship, so the pairings are recorded here for future use.
 
 ---
 
@@ -742,11 +657,8 @@ as unrecorded.
 
 ### 27. Related Publications (OPTIONAL)
 
-**Asserted value set (8). This entry held no related publications before the 2026-07-28
-extraction.**
-Entries 1–4 are retained from the
-2025-10-09 canonical file (evidence re-verified); entries 5–8 are new. Every DOI below was
-independently confirmed to resolve to the stated article via Crossref.
+Entries 1–4 were present in the 2025-10-09 canonical file; entries 5–8 extend that set. Every DOI
+below resolves to the stated article via Crossref.
 
 These are the instrument, mission, calibration and atomic-physics papers that XRTpy directly
 implements or cites as the basis of its computations — they are distinct from the Field 14 reference
@@ -769,19 +681,19 @@ publication (the JOSS paper), which is not repeated here.
 5. **Takeda, A., Yoshimura, K., & Saar, S. H. (2016).** The Hinode/XRT Full-Sun Image Corrections
    and the Improved Synoptic Composite Image Archive. *Solar Physics*, 291, 317–333.
    https://doi.org/10.1007/s11207-015-0823-8
-   *Evidence:* **NEW.** Cited directly in the code — `xrtpy/image_correction/remove_lightleak.py`
+   *Evidence:* Cited directly in the code — `xrtpy/image_correction/remove_lightleak.py`
    docstring cites `Takeda:2016`, p. 317 as the basis of the light-leak correction.
 6. **Feldman, U. (1992).** Elemental abundances in the upper solar atmosphere. *Physica Scripta*,
    46(3), 202–220. https://doi.org/10.1088/0031-8949/46/3/002
-   *Evidence:* **NEW.** XRTpy's default CHIANTI **coronal** abundance model; cited twice in
+   *Evidence:* XRTpy's default CHIANTI **coronal** abundance model; cited twice in
    `docs/getting_started.rst` (`feldman:1992`).
 7. **Grevesse, N., Asplund, M., & Sauval, A. J. (2007).** The Solar Chemical Composition.
    *Space Science Reviews*, 130(1–4), 105–114. https://doi.org/10.1007/s11214-007-9173-7
-   *Evidence:* **NEW.** Basis of XRTpy's `"photospheric"` abundance option; cited in
+   *Evidence:* Basis of XRTpy's `"photospheric"` abundance option; cited in
    `docs/getting_started.rst` (`Grevesse:2007`).
 8. **Dere, K. P. et al. (1997).** CHIANTI — an atomic database for emission lines.
    *Astronomy and Astrophysics Supplement Series*, 125, 149–173. https://doi.org/10.1051/aas:1997368
-   *Evidence:* **NEW.** The atomic database underpinning every temperature response computation
+   *Evidence:* The atomic database underpinning every temperature response computation
    (`xrtpy/response/data/chianti_emission_models/`, CHIANTI v10.0); cited in `joss/paper.md`.
 
 **Considered and deliberately excluded** (both lack a DOI in any primary repository source, which
@@ -804,7 +716,6 @@ JOSS Figure 3, so it is not proposed for Field 27.
 
 ### 28. Related Datasets (OPTIONAL)
 
-**Asserted value set (2). This entry held no related datasets before the 2026-07-28 extraction.**
 **No DOI exists for Hinode/XRT data
 products** — neither the CfA XRT archive, DARTS, nor SPASE publishes a dataset DOI for XRT Level 1
 or Level 2 Synoptics. The form explicitly permits an APA citation with a permanent link in that
@@ -835,12 +746,10 @@ products XRTpy is built to read.
 
 ### 29. Related Software (OPTIONAL)
 
-**Asserted value set (2) — one value carried forward, one added:**
+**Values:**
 
-| Value | Package | Origin |
-|---|---|---|
-| https://doi.org/10.5281/zenodo.591887 | sunpy | live HSSI (concept DOI confirmed) |
-| https://www.lmsal.com/solarsoft/ | SolarSoft | **ADDED** — predecessor software |
+- sunpy — https://doi.org/10.5281/zenodo.591887
+- SolarSoft — https://www.lmsal.com/solarsoft/
 
 - **sunpy — https://doi.org/10.5281/zenodo.591887**
   - **Concept DOI confirmed:** Zenodo reports `conceptdoi = 10.5281/zenodo.591887` /
@@ -855,7 +764,7 @@ products XRTpy is built to read.
     the SunPy framework, XRTpy effectively utilizes the `Map` object for handling Hinode/XRT image
     data."
 
-- **SolarSoft (the SolarSoft XRT IDL analysis routines) — https://www.lmsal.com/solarsoft/ — ADDED**
+- **SolarSoft (the SolarSoft XRT IDL analysis routines) — https://www.lmsal.com/solarsoft/**
   - **Relevance:** SolarSoft is XRTpy's direct **predecessor**, and replacing it is the package's
     stated reason for existing. The live description says XRTpy "is designed to replace and modernize
     legacy IDL routines"; `joss/paper.md` says XRTpy "has been carefully written to ensure the
@@ -897,14 +806,12 @@ dependency block here; those entries are dropped:
 
 ### 30. Interoperable Software (OPTIONAL)
 
-**Asserted value set (4) — two values carried forward, one corrected, one added:**
+**Values:**
 
-| Value | Package | Origin |
-|---|---|---|
-| https://doi.org/10.5281/zenodo.7949515 | EISPAC | live HSSI (concept DOI confirmed) |
-| https://doi.org/10.5281/zenodo.10064346 | aiapy | live HSSI (concept DOI confirmed) |
-| https://doi.org/10.5281/zenodo.10443678 | irispy | **CORRECTED** from a version DOI |
-| https://doi.org/10.5281/zenodo.591887 | sunpy | **ADDED** (also listed in Field 29) |
+- EISPAC — https://doi.org/10.5281/zenodo.7949515
+- aiapy — https://doi.org/10.5281/zenodo.10064346
+- irispy — https://doi.org/10.5281/zenodo.10443678
+- sunpy — https://doi.org/10.5281/zenodo.591887
 
 1. **EISPAC — https://doi.org/10.5281/zenodo.7949515** — **Concept DOI confirmed:**
    `conceptdoi = 10.5281/zenodo.7949515` / `conceptrecid = 7949515`, currently
@@ -919,14 +826,14 @@ dependency block here; those entries are dropped:
    developers as interoperability collaborators for combined XRT + SDO/AIA analysis; the two
    packages are structural analogues (instrument response and calibration built on the same sunpy
    `Map` model) and share the author Will Barnes.
-3. **irispy — https://doi.org/10.5281/zenodo.10443678** — **CORRECTION.** The value this replaced,
+3. **irispy — https://doi.org/10.5281/zenodo.10443678.** The value this replaced,
    `https://doi.org/10.5281/zenodo.16989847`, was a **version** DOI: Zenodo record 16989847 is
    `LM-SAL/irispy: v0.4.0` (2025-08-28), whose `conceptdoi` is `10.5281/zenodo.10443678`. The concept
    DOI currently resolves to v0.7.0 (2026-05-07). Recording the concept DOI rather than that version
    DOI keeps the link valid as irispy releases and is what the "prefer concept DOIs" rule requires.
    **Relevance:** `joss/paper.md` names irispy-lmsal (now `LM-SAL/irispy`) as an interoperability
    collaborator for combined XRT + IRIS analysis.
-4. **sunpy — https://doi.org/10.5281/zenodo.591887 — ADDED.** Concept DOI, already verified under
+4. **sunpy — https://doi.org/10.5281/zenodo.591887.** Concept DOI, also documented under
    Field 29. sunpy satisfies Field 30's *demonstrated exchange* bar in the strongest possible form:
    XRTpy's public API both **accepts and returns** sunpy's data model.
    `temperature_from_filter_ratio(map1, map2)` is documented to take
@@ -952,21 +859,15 @@ sunpy exchange (entry 4) is the only one demonstrated in XRTpy's own code.
 
 ### 31. Related Instruments (OPTIONAL)
 
-**Asserted value set (1):**
-
 - **Instrument Name:** `X-Ray Telescope`
 - **Instrument Identifier:** `https://spase-metadata.org/SMWG/Instrument/Hinode/XRT`
-- Live HSSI `a74cb76b` is linked to the vocabulary entry carrying exactly this name and SPASE
-  identifier. The value is SPASE-backed and correct.
 - **Relevance gate:** passes decisively. XRTpy is purpose-built by the XRT instrument team to read,
   calibrate, model and analyze Hinode/XRT data specifically — instrument name in the software title,
   XRT channel/filter/CCD models, XRT effective area and temperature response, XRT PSF deconvolution,
   XRT light-leak correction, XRT archive path resolution.
-- **Verified SPASE resolution (instrument):** exactly **one** vocabulary entry represents this SPASE
+- **SPASE resolution:** exactly **one** vocabulary entry represents this SPASE
   resource — name `X-Ray Telescope`, identifier `https://spase-metadata.org/SMWG/Instrument/Hinode/XRT`.
-  Name copied verbatim from the matched row. That row's abbreviation column is empty, and a rendered
-  parenthetical abbreviation suffix is drawn only from that column, so the label to expect and to
-  record is the bare `X-Ray Telescope` — never `X-Ray Telescope (XRT)`.
+  The canonical label is the bare `X-Ray Telescope`, never `X-Ray Telescope (XRT)`.
 - **Bare identifier adopted; the earlier decision declining it is superseded.** The vocabulary once
   held **three** distinct entries for this one SPASE resource — `X-Ray Telescope` under the bare
   identifier, and both `Hinode X-ray Telescope` (formerly stored on this entry) and
@@ -999,32 +900,23 @@ sunpy exchange (entry 4) is the only one demonstrated in XRTpy's own code.
     Yohkoh data.
   - FITS and the IDL GENX/`.sav` formats → Fields 18/19, not here (they are multi-instrument or
     generic formats).
-- **No unresolved ambiguity.** Exactly one row is bound, with an identifier. Nothing in this field
-  requires manual resolution.
 
 ### 32. Related Observatories (OPTIONAL)
 
-**Asserted value set (1):**
-
 - **Observatory Name:** `Hinode`
 - **Observatory Identifier:** `https://spase-metadata.org/SMWG/Observatory/Hinode`
-- **Origin:** Carried from the earlier duplicate HSSI submission of the same software — this entry
-  held no observatory beforehand. Independently re-verified against the controlled instrument and
-  observatory vocabulary and against SPASE itself.
-- **Verified SPASE resolution (observatory):** exactly **one** matching vocabulary entry, name
+- **Source:** Earlier HSSI metadata for this software, confirmed against SPASE.
+- **SPASE resolution:** exactly **one** matching vocabulary entry, name
   `Hinode`, identifier `https://spase-metadata.org/SMWG/Observatory/Hinode`. There is **no `.html`
-  twin** and no same-name duplicate, so this is unambiguous and safe to set — unlike Field 31's
-  since-resolved pre-consolidation state. The
+  twin** and no same-name duplicate, unlike Field 31's since-resolved pre-consolidation state. The
   SPASE record itself confirms `ResourceID = spase://SMWG/Observatory/Hinode`,
   `ResourceName = Hinode`.
-  Name copied verbatim from the matched row.
 - **Relevance gate:** passes. XRTpy works exclusively with Hinode mission data products, reads the
   mission's own CfA archive (Field 17/28), and implements Hinode/XRT data conventions. Cross-listed
   with `Observatory/Mission-specific` in Field 17 as Field 17 instructs.
 - **Considered and excluded** (`Note:` for the audit trail): `Solar Dynamics Observatory`, `IRIS`
   and `Yohkoh` — all present in the controlled list, all excluded because they appear only as
   interoperability or heritage context, never as data XRTpy reads.
-- **No unresolved ambiguity.** Exactly one row, one identifier. Nothing requires manual resolution.
 
 ### 33. Logo (OPTIONAL)
 - **Value:** https://raw.githubusercontent.com/HinodeXRT/xrtpy/main/docs/_static/images/XRTpy_logo.png
@@ -1058,45 +950,3 @@ First public release v0.1.0 (2022-09-26); v0.4.0 (2023-12-05); v0.4.1 (2024-07-3
 submission release and the only Zenodo deposit); v0.5.0 (2025-04-08); v0.5.1 (2026-04-22, current
 stable); v0.5.2-pre (2026-07-22, pre-release at the extraction revision). The GitHub release notes
 for both v0.5.1 and v0.5.2-pre announce that v0.6.0 will add a DEM solver.
-
----
-
-## Field Completeness
-
-All 33 fields carry an asserted value. Every value below is settled — this file contains no open
-decisions.
-
-**MANDATORY (7):** Submitter · Code Repository · Software Functionality · Related Region ·
-Authors · Software Name · Description.
-
-**RECOMMENDED (13):** Persistent Identifier · Publication Date · Publisher · Version ·
-Programming Language · Reference Publication · License · Input File Formats ·
-Output File Formats · Operating System · CPU Architecture · Development Status · Documentation.
-
-**OPTIONAL (13):** Concise Description · Keywords · Data Sources · Related Phenomena · Funder ·
-Award Title · Related Publications · Related Datasets · Related Software ·
-Interoperable Software · Related Instruments · Related Observatories · Logo.
-
-**One genuine unavailability** with a stated cause: the Field 12 Version PID (Zenodo GitHub archiving
-stopped after the v0.4.1 deposit, so no v0.5.1 DOI was ever minted). The Field 26 Award 1 title is
-also genuinely unpublished, but is now carried as a curatorial display label rather than left empty.
-
-### What this file records that HSSI does not store
-
-These values are correct and durable metadata, but HSSI has nowhere to keep them. Recorded so no
-future reader mistakes file content for HSSI content.
-
-| Field | Not stored in HSSI |
-|---|---|
-| 27 / 28 | The APA citation prose. HSSI stores only the DOI or permanent link for Related Publications and Related Datasets; the citation text lives here alone. |
-| 12 | Formatting. The inline-code backticks around version numbers in this file are **presentation only** — HSSI stores plain text, and any markup submitted would be stored literally. |
-
-### Field 31 vocabulary ambiguity, resolved
-
-**Related Instruments is unambiguous.** HSSI's instrument vocabulary once held two distinct entries
-under an identical `.../SMWG/Instrument/Hinode/XRT.html` identifier for Hinode/XRT, and instruments
-are distinguished by identifier alone — so that identifier did not determine which of the two labels
-applied. The vocabulary has since been consolidated onto the maintained upstream identifiers, which
-contain no `.html` form, and exactly one entry — `X-Ray Telescope` under the bare identifier — now
-represents this resource. Field 31 records that entry, so nothing here needs manual resolution.
-Field 32 never carried the ambiguity.

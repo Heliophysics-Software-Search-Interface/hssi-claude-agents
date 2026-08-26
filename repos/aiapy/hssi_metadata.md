@@ -4,7 +4,7 @@
 **Repository:** https://github.com/LM-SAL/aiapy
 **Source Revision:** afc3db737a2f140ec8069126371866cec9e14be5
 **Extraction Date:** 2026-07-27
-**Validation Date:** 2026-07-28
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
 
 ---
@@ -46,7 +46,9 @@
 
 ### 5. Related Region (MANDATORY)
 - Solar Environment
-- **Source:** Preserved from the existing HSSI record and confirmed by the repository description, PyHC registry, package keywords, and JOSS paper.
+- Corona
+- **Source:** `Solar Environment` is confirmed by the repository description, PyHC registry, package keywords, and JOSS paper. `Corona` is supported directly by the project's JOSS paper: `487a257^:joss/paper.md:73` identifies the corona as AIA's target for quiescent-heating studies, and `487a257^:joss/paper.md:80` scopes aiapy to analysis of calibrated AIA EUV imaging data. The current documentation independently confirms its EUV wavelength-response capability (`docs/index.rst:9`), and Field 22 records `Solar Corona` and `Coronal Heating` from the same project evidence.
+- **How to re-read the JOSS paper evidence.** `joss/paper.md` is **not present at the extracted source revision**: it was deleted by commit `487a257` ("Package overhaul", 2023-11-02). The citations above therefore address `487a257^`, the parent commit, which is the last revision containing the file — retrieve it with `git show 487a257^:joss/paper.md`. A future agent should not read the file's absence from the current tree as evidence that these citations are wrong; the published JOSS article at `https://doi.org/10.21105/joss.02801` (Field 14) carries the same text.
 
 ### 6. Authors (MANDATORY)
 - **Author:** Will Barnes
@@ -146,7 +148,7 @@
   - **Author Identifier:** https://orcid.org/0000-0001-8067-6788
   - **Affiliation:** Princeton University
     - **Affiliation Identifier:** https://ror.org/00hx57361
-- **Source:** Identity-aware union of every API-representable author and affiliation in the existing HSSI record, the current v0.12.1 Zenodo/DataCite creators, the repository history, and the project JOSS paper/archived Zenodo metadata. Existing ORCIDs and affiliations are preserved. JOSS supplies the missing ORCIDs and full names for Mark C. M. Cheung, Georgios Chintzoglou, and Nina Shirman; repository history maps the submitted handles `gchintzo`, `mkocher56`, and `nsshirman` to Georgios Chintzoglou, Manan Kocher, and Nina Shirman. Shared HSSI labels are retained for Will Barnes, Monica Bobra, Laura Hayes, Paul Wright, and Andrew J. Leonard. Laura Hayes is reconciled by ORCID and retains the complete shared affiliation union of Dublin Institute for Advanced Studies and European Space Research and Technology Centre. Paul F. Boerner, Andrew J. Leonard, and Nicholas Padmanabhan are added from the JOSS author list.
+- **Source:** The author and affiliation set is supported by the current v0.12.1 Zenodo/DataCite creators, repository history, and the project JOSS paper/archived Zenodo metadata. JOSS supplies authoritative ORCIDs and full names for Mark C. M. Cheung, Georgios Chintzoglou, and Nina Shirman; repository history maps the handles `gchintzo`, `mkocher56`, and `nsshirman` to Georgios Chintzoglou, Manan Kocher, and Nina Shirman. The established identity labels for Will Barnes, Monica Bobra, Laura Hayes, Paul Wright, and Andrew J. Leonard are retained. Laura Hayes is resolved by ORCID and carries the complete supported affiliation set of Dublin Institute for Advanced Studies and European Space Research and Technology Centre. The JOSS author list supports Paul F. Boerner, Andrew J. Leonard, and Nicholas Padmanabhan.
 - **Note:** By explicit user decision, `Hellseher` is omitted because no authoritative two-part personal name exists, and `AIA Instrument Team @ LMSAL` is omitted because no exact ROR exists and the API would misclassify it as a Person.
 
 ### 7. Software Name (MANDATORY)
@@ -307,8 +309,8 @@ Python tools for calibrating, registering, correcting, deconvolving, and analyzi
 - **Instrument Identifier:** https://spase-metadata.org/SMWG/Instrument/SDO/AIA
 - **Instrument Name:** HMI
 - **Instrument Identifier:** https://spase-metadata.org/SMWG/Instrument/SDO/HMI
-- **Source:** aiapy is purpose-built to calibrate and analyze AIA data, and its registration implementation explicitly supports HMI maps. The 7,648-row target vocabulary contained one canonical bare SPASE resource and an `.html` duplicate for AIA; the duplicate was normalized away and the canonical row name was copied verbatim. The unrelated "Magnetometers at Argentine Island" abbreviation collision was rejected using the repository's explicit SDO/AIA context. HMI was added by set union using the exact user-approved SPASE row.
-- **Replacement rationale:** The existing HSSI view displays "Atmospheric Imaging Assembly (AIA)" without its identifier. This extraction records the same instrument using the canonical controlled-row name and non-`.html` SPASE identifier; no bare name is emitted.
+- **Source:** aiapy is purpose-built to calibrate and analyze AIA data, and its registration implementation explicitly supports HMI maps. The controlled vocabulary contained a canonical bare SPASE resource and an `.html` duplicate for AIA; the bare identifier and its canonical row name are used. The unrelated "Magnetometers at Argentine Island" abbreviation collision is excluded by the repository's explicit SDO/AIA context. HMI uses the exact SPASE row above because aiapy's registration implementation explicitly supports HMI maps.
+- **Replacement rationale:** The previous value displayed "Atmospheric Imaging Assembly (AIA)" without its identifier. The same instrument is now represented by the canonical controlled-row name and non-`.html` SPASE identifier; the bare name is not used.
 
 ### 32. Related Observatories (OPTIONAL)
 - **Observatory Name:** Solar Dynamics Observatory
@@ -317,4 +319,4 @@ Python tools for calibrating, registering, correcting, deconvolving, and analyzi
 
 ### 33. Logo (OPTIONAL)
 - Not found
-- **Source:** The PyHC registry supplies an old GitLab static asset URL for `AIA_logo_small.jpg`, but that host failed DNS resolution during extraction and was not carried forward as a broken URL. The repository's `docs/_static/sdo.png` is an illustration of the SDO spacecraft rather than an aiapy software logo, so it was not misclassified.
+- **Source:** The PyHC registry supplies an old GitLab static asset URL for `AIA_logo_small.jpg`, but that host no longer resolves in DNS and the broken URL is therefore omitted. The repository's `docs/_static/sdo.png` is an illustration of the SDO spacecraft rather than an aiapy software logo, so it was not misclassified.

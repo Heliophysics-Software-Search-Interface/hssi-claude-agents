@@ -4,7 +4,7 @@
 **Repository:** https://github.com/mshumko/asilib
 **Source Revision:** 79d166a17c5a25a70fad1dee8294fad21e04c7b5
 **Extraction Date:** 2026-07-26
-**Validation Date:** 2026-07-27
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
 
 ---
@@ -18,11 +18,11 @@
 
 ### 2. Persistent Identifier (RECOMMENDED)
 - https://doi.org/10.5281/zenodo.4746446
-- **Source Note:** Retained from the existing HSSI record and confirmed as the concept DOI by the repository README, DataCite, and Zenodo.
+- **Source Note:** The repository README, DataCite, and Zenodo confirm this as the concept DOI.
 
 ### 3. Code Repository (MANDATORY)
 - https://github.com/mshumko/asilib
-- **Source Note:** Retained from the existing HSSI record and confirmed by the repository remote, README, PyPI metadata, Zenodo, and the PyHC community registry.
+- **Source Note:** Confirmed by the repository remote, README, PyPI metadata, Zenodo, and the PyHC community registry.
 
 ### 4. Software Functionality (MANDATORY)
 - Coordinate Transforms
@@ -41,12 +41,15 @@
 - Data Visualization:Line Plots
 - Data Visualization:Movies
 - Data Visualization:Orbit Plots
-- **Source Note:** Identity-aware enrichment of the existing HSSI values `Data Processing and Analysis` and `Data Processing and Analysis: Data Access and Retrieval`; the latter is normalized to the checked-in controlled-list spelling without a space after the colon. Repository code, public APIs, docs, examples, and tests show remote ASI data access; PGM/HDF5/IDL SAV/raw image loading; image masking, contrast adjustment, downsampling, mosaicking, and keogram/time-series analysis; fisheye and mapped 2D plots; availability and intensity line plots; PNG/MP4 animation generation; satellite-track visualization; AACGM ionospheric-coordinate conversion; and IRBEM magnetic-footprint and magnetic-equator mapping. Every selected subcategory includes its required parent. Mission-related was considered and excluded because the README expressly says asilib is not associated with instrument development or operations. Spectrogram was considered and excluded because a keogram is a time-versus-position image, not a time-frequency representation.
+- **Source Note:** Repository code, public APIs, docs, examples, and tests show remote ASI data access; PGM/HDF5/IDL SAV/raw image loading; image masking, contrast adjustment, downsampling, mosaicking, and keogram/time-series analysis; fisheye and mapped 2D plots; availability and intensity line plots; PNG/MP4 animation generation; satellite-track visualization; AACGM ionospheric-coordinate conversion; and IRBEM magnetic-footprint and magnetic-equator mapping. Every selected subcategory includes its required parent. Mission-related was considered and excluded because the README expressly says asilib is not associated with instrument development or operations. Spectrogram was considered and excluded because a keogram is a time-versus-position image, not a time-frequency representation.
 
 ### 5. Related Region (MANDATORY)
 - Earth Atmosphere
 - Earth Magnetosphere
-- **Source Note:** Retains existing HSSI `Earth Atmosphere` and adds `Earth Magnetosphere`. The repository explicitly supports upper-atmosphere/ionosphere auroral imaging, satellite-to-aurora conjunction analysis, magnetic-footprint tracing, and mapping auroral images to the magnetic equator.
+- Earth Auroral Subregion
+- Earth Ionosphere
+- Earth Thermosphere
+- **Source Note:** The repository explicitly supports upper-atmosphere/ionosphere auroral imaging, satellite-to-aurora conjunction analysis, magnetic-footprint tracing, and mapping auroral images to the magnetic equator. `Earth Auroral Subregion` is supported by `asilib/asi/themis.py:2`, which describes white-light aurora observations covering a large section of the auroral oval. `Earth Ionosphere` is supported by `docs/tutorials/magnetic_equator.ipynb:14`, which maps a TREx mosaic from the ionosphere to the magnetic equator. `Earth Thermosphere` is supported by `asilib/asi/mango.py:2`, which describes MANGO observations of nighttime thermosphere-ionosphere dynamics at thermospheric emission altitudes.
 
 ### 6. Authors (MANDATORY)
 - **Author:** Cassandra Litwinowich
@@ -57,11 +60,11 @@
   - **Author Identifier:** https://orcid.org/0000-0002-0437-7521
   - **Affiliation:** Johns Hopkins University Applied Physics Laboratory
   - **Affiliation Identifier:** https://ror.org/029pp9z10
-- **Source Note:** Both authors, ORCIDs, and affiliation relationships are retained from the existing HSSI record. The local HSSI Organization rows resolve the affiliation UUIDs to the names and RORs shown here. The current Zenodo concept record independently confirms both creators and affiliations; `pyproject.toml` and SoMEF also confirm Mykhaylo Shumko. No CITATION.cff, codemeta.json, AUTHORS, or CONTRIBUTORS file is present.
+- **Source Note:** The current Zenodo concept record confirms both creators and affiliations; `pyproject.toml` and SoMEF also confirm Mykhaylo Shumko. The names and RORs shown here identify the affiliation organizations. No CITATION.cff, codemeta.json, AUTHORS, or CONTRIBUTORS file is present.
 
 ### 7. Software Name (MANDATORY)
 - asilib
-- **Source Note:** Retained from the existing HSSI record and confirmed by the README title, `pyproject.toml`, PyPI, SoMEF, and the PyHC community registry.
+- **Source Note:** Confirmed by the README title, `pyproject.toml`, PyPI, SoMEF, and the PyHC community registry.
 
 ### 8. Description (MANDATORY)
 asilib is an open source package providing data access and analysis tools for the world's all-sky imager (ASI) data.
@@ -70,11 +73,11 @@ The purpose of this project is to combine data from numerous observational ASI a
 
 It provides unified loaders for THEMIS, REGO, TREx NIR and RGB, MANGO, the Pulsating Aurora Project, and LAMP-supporting all-sky imagers; image and skymap access; fisheye and mapped-image plotting; multi-imager mosaics and animations; keograms; ASI-satellite conjunction and auroral-intensity analysis; magnetic-footprint tracing; and magnetic-equator projection.
 
-- **Source Note:** Preserves the two substantive paragraphs from the existing HSSI description/README and adds a source-evidenced capability summary from the current public API, docs, examples, and tests. Removes the appended old `Changed / Standardized download exception handling` release-note fragment from HSSI because it is stale v0.26.x changelog text rather than part of the software description.
+- **Source Note:** The first two paragraphs come from the repository README, and the capability summary is supported by the current public API, docs, examples, and tests. An earlier HSSI description appended the old `Changed / Standardized download exception handling` fragment; it is omitted because it is stale v0.26.x changelog text rather than part of the software description.
 
 ### 9. Concise Description (OPTIONAL)
 asilib is an open source package providing data access and analysis tools for the world's all-sky imager (ASI) data.
-- **Source Note:** The repository and PyHC description, 116 characters. It replaces the existing HSSI concise description only to remove appended stale release-note text while retaining the submitter's substantive wording.
+- **Source Note:** The repository and PyHC description, 116 characters. An earlier HSSI concise description appended stale release-note text; the substantive repository wording is used without that fragment.
 
 ### 10. Publication Date (RECOMMENDED)
 - 2021-02-14
@@ -83,7 +86,7 @@ asilib is an open source package providing data access and analysis tools for th
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
 - **Publisher Identifier:** https://zenodo.org
-- **Source Note:** Retained from the existing HSSI record and confirmed by DataCite and Zenodo for the concept DOI.
+- **Source Note:** Confirmed by DataCite and Zenodo for the concept DOI.
 
 ### 12. Version (RECOMMENDED)
 - **Version Number:** v0.30.1fix
@@ -95,16 +98,16 @@ asilib is an open source package providing data access and analysis tools for th
 ### 13. Programming Language (RECOMMENDED)
 - Other
 - Python 3.x
-- **Source Note:** Identity-aware retention of both existing HSSI values. `Python 3.x` is confirmed by `pyproject.toml` (`requires-python >=3.11`, classifiers for 3.11–3.14), PyPI, CI, and the source. `Other` is retained as supported existing editorial metadata and is consistent with substantial versioned Jupyter Notebook and TeX content reported by the GitHub/SoMEF language analysis.
+- **Source Note:** `Python 3.x` is confirmed by `pyproject.toml` (`requires-python >=3.11`, classifiers for 3.11–3.14), PyPI, CI, and the source. `Other` is supported editorial metadata consistent with substantial versioned Jupyter Notebook and TeX content reported by the GitHub/SoMEF language analysis.
 
 ### 14. Reference Publication (RECOMMENDED)
 - https://doi.org/10.3389/fspas.2022.1009450
-- **Source Note:** Retained from the existing HSSI record with the DOI URL normalized from `http` to `https`; the repository documentation explicitly asks users to cite this paper as the publication describing asilib.
+- **Source Note:** The repository documentation explicitly asks users to cite this paper as the publication describing asilib. The earlier `http` DOI URL is normalized to `https`.
 
 ### 15. License (RECOMMENDED)
 - **License:** BSD 3-Clause "New" or "Revised" License
 - **License URI:** https://spdx.org/licenses/BSD-3-Clause.html
-- **Source Note:** Retained from the existing HSSI record and confirmed by `pyproject.toml` (`BSD-3-Clause`), the three-condition LICENSE text, GitHub license metadata, DataCite, and Zenodo. SoMEF's file-text classifier also emitted a conflicting `BSD-2-Clause` label, but its GitHub and package parsers identify BSD-3-Clause; the authoritative package metadata and actual three conditions resolve the conflict in favor of BSD-3-Clause.
+- **Source Note:** Confirmed by `pyproject.toml` (`BSD-3-Clause`), the three-condition LICENSE text, GitHub license metadata, DataCite, and Zenodo. SoMEF's file-text classifier also emitted a conflicting `BSD-2-Clause` label, but its GitHub and package parsers identify BSD-3-Clause; the authoritative package metadata and actual three conditions resolve the conflict in favor of BSD-3-Clause.
 
 ---
 
@@ -131,7 +134,7 @@ asilib is an open source package providing data access and analysis tools for th
 - Keogram
 - Auroral conjunctions
 - Magnetic field-line tracing
-- **Source Note:** Identity-aware union retaining all six existing HSSI keywords and adding current repository/PyHC evidence. The PyHC community registry supplies `ionosphere_thermosphere_mesosphere`, data access/analysis, instrumentation, THEMIS, and IGRF concepts; `pyproject.toml`, README, docs, modules, and tests support the ASI-network and analysis terms. Low-information PyHC terms `general`, `remote`, and `plotting` were considered and omitted.
+- **Source Note:** The PyHC community registry supplies `ionosphere_thermosphere_mesosphere`, data access/analysis, instrumentation, THEMIS, and IGRF concepts; `pyproject.toml`, README, docs, modules, and tests support the ASI-network and analysis terms. Low-information PyHC terms `general`, `remote`, and `plotting` were considered and omitted.
 
 ### 17. Data Sources (OPTIONAL)
 - HTTP/HTTPS Directories
@@ -167,7 +170,7 @@ asilib is an open source package providing data access and analysis tools for th
 
 ### 24. Documentation (RECOMMENDED)
 - https://aurora-asi-lib.readthedocs.io/
-- **Source Note:** Retained from the existing HSSI record and confirmed by the README, `pyproject.toml`, SoMEF, and the PyHC community registry.
+- **Source Note:** Confirmed by the README, `pyproject.toml`, SoMEF, and the PyHC community registry.
 
 ### 25. Funder (OPTIONAL)
 - Not found
@@ -270,9 +273,9 @@ asilib is an open source package providing data access and analysis tools for th
   - **Instrument Identifier:** https://spase-metadata.org/IUGONET/Instrument/ISEE/EMCCD/TRS/EMCCD_845nm
 - **Instrument Name:** All-sky EMCCD imager with a 428nm filter at Tromso, Norway
   - **Instrument Identifier:** https://spase-metadata.org/IUGONET/Instrument/ISEE/EMCCD/TRS/EMCCD_428nm
-- **Source Note:** The 23 THEMIS station instruments, two TREx instruments, and two PsA instruments are exact type-1 matches in the localhost 7,648-row SPASE vocabulary; canonical names are copied verbatim, stable SPASE identifiers are included, and non-`.html` identifiers are preferred. They correspond to public loaders and supported locations in `asilib/data/asi_locations.csv`.
-- **PsA Resolution Note:** The user approved mapping only C3 (Tromsø, 844.6 nm) to `All-sky EMCCD imager with a 845nm filter at Tromso, Norway` and C5 (Tromsø, 427.8 nm) to `All-sky EMCCD imager with a 428nm filter at Tromso, Norway`. C1, C2, C4, C6, C7, and C8 use BG3 filters and are omitted from Field 31 because no safe exact SPASE match exists; same-site RG665 or generic instrument rows are not assumed equivalent. The identifierless aggregate PsA instrument candidate remains removed, and the identifierless PsA observatory is omitted from Field 32 under the SPASE-only policy.
-- **REGO Resolution Note:** The user approved omitting a separate REGO Field 31 instrument. Localhost exposes `Redline Emission Geospace Observatory` at `https://spase-metadata.org/SMWG/Observatory/REGO` as type 2 and a `.html` duplicate named `Redline Emission Geospace Observatory (REGO)` as type 1; because the `.html` row normalizes to the same type-2 observatory resource, it is not a defensible distinct instrument. The canonical bare observatory resource remains in Field 32.
+- **Source Note:** The 23 THEMIS station instruments, two TREx instruments, and two PsA instruments map to the canonical names and stable SPASE identifiers shown above; non-`.html` identifiers are preferred. They correspond to public loaders and supported locations in `asilib/data/asi_locations.csv`.
+- **PsA Resolution Note:** Only C3 (Tromsø, 844.6 nm) maps to `All-sky EMCCD imager with a 845nm filter at Tromso, Norway`, and C5 (Tromsø, 427.8 nm) maps to `All-sky EMCCD imager with a 428nm filter at Tromso, Norway`. C1, C2, C4, C6, C7, and C8 use BG3 filters and are omitted from Field 31 because no safe exact SPASE match exists; same-site RG665 or generic instrument rows are not assumed equivalent. The identifierless aggregate PsA instrument candidate remains excluded, and the identifierless PsA observatory is omitted from Field 32 under the SPASE-only policy.
+- **REGO Resolution Note:** A separate REGO Field 31 instrument is omitted. `Redline Emission Geospace Observatory` at `https://spase-metadata.org/SMWG/Observatory/REGO` is an observatory resource; a `.html` duplicate named `Redline Emission Geospace Observatory (REGO)` is not a defensible distinct instrument because it normalizes to the same observatory resource. The canonical bare observatory resource remains in Field 32.
 - **SPASE-only Exclusion Note:** Merged hssi-website PR #54 (`https://github.com/Heliophysics-Software-Search-Interface/hssi-website/pull/54`) removed legacy non-SPASE instrument/observatory rows and requires omission when no legitimate SPASE equivalent exists. `MANGO all-sky imagers` and `LAMP-supporting Phantom and EMCCD all-sky imagers` remain relevant to asilib but are omitted from Field 31 because neither has an exact SPASE instrument match.
 - **Exclusion Note:** The unused TREx Blue constants/location table were considered but excluded because no public loader or exported API supports the distinct Blue ASI; selecting the blue color channel of TREx RGB still uses the RGB instrument.
 
@@ -281,8 +284,8 @@ asilib is an open source package providing data access and analysis tools for th
   - **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/REGO
 - **Observatory Name:** Transition Region Explorer
   - **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/TREX
-- **Source Note:** REGO and TREx are exact type-2 localhost SPASE matches with canonical non-`.html` identifiers.
-- **THEMIS Resolution Note:** The user approved omitting an aggregate THEMIS Field 32 observatory because no controlled aggregate accurately covers the complete supported ground ASI network. Localhost candidates cover different or misleading scopes, including `NASA THEMIS GBO Ground Stations` (`https://spase-metadata.org/SMWG/Observatory/THEMIS/Ground/UCLA-GBO`) and `THEMIS-Associated Ground Magnetometer Stations` (`https://spase-metadata.org/SMWG/Observatory/THEMIS/Ground`), plus separate CANMAG/station rows. All 23 supported station ASI instruments remain individually resolved in Field 31. The spacecraft `THEMIS` observatory row remains excluded because asilib supports ground ASI data, not the spacecraft observatory as such.
+- **Source Note:** REGO and TREx use canonical non-`.html` SPASE observatory identifiers.
+- **THEMIS Resolution Note:** An aggregate THEMIS Field 32 observatory is omitted because no controlled aggregate accurately covers the complete supported ground ASI network. Candidates cover different or misleading scopes, including `NASA THEMIS GBO Ground Stations` (`https://spase-metadata.org/SMWG/Observatory/THEMIS/Ground/UCLA-GBO`) and `THEMIS-Associated Ground Magnetometer Stations` (`https://spase-metadata.org/SMWG/Observatory/THEMIS/Ground`), plus separate CANMAG/station rows. All 23 supported station ASI instruments remain individually resolved in Field 31. The spacecraft `THEMIS` observatory row remains excluded because asilib supports ground ASI data, not the spacecraft observatory as such.
 - **SPASE-only Exclusion Note:** Under merged hssi-website PR #54, `Mid-latitude All-sky-imaging Network for Geophysical Observations (MANGO)`, `Pulsating Aurora (PsA) Project`, and `Loss through Auroral Microburst Pulsations (LAMP) sounding rocket` are omitted from Field 32 because no legitimate exact SPASE observatory equivalent exists. Their omission from this controlled field does not remove the supported networks/missions from other appropriate metadata fields.
 
 ### 33. Logo (OPTIONAL)

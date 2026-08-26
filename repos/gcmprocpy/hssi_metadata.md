@@ -4,7 +4,7 @@
 **Repository:** https://github.com/NCAR/gcmprocpy
 **Source Revision:** 456398e8c76f9b341b279e0a592c1d12b6a8cf32
 **Extraction Date:** 2026-08-04
-**Validation Date:** 2026-08-21
+**Validation Date:** 2026-08-26
 **Validation Status:** PASS
 
 ---
@@ -207,6 +207,7 @@ Considered and rejected, with reasons — recorded so a future refresh does not 
 - Earth Ionosphere
 - Earth Lower and Middle Atmosphere
 - Earth Thermosphere
+- Interplanetary Space
 - Solar Wind
 
 - **Earth Atmosphere** — carried over from the existing HSSI record and independently supported:
@@ -232,6 +233,14 @@ Considered and rejected, with reasons — recorded so a future refresh does not 
   solar-wind proton density and flow speed, trailing-averages and gap-fills them, and writes them as
   boundary conditions. Solar-wind quantities are processed data products of this software, not just a
   passing mention.
+- **Interplanetary Space** — supported by the same first-class `imfgen` capability:
+  `gcmprocpy/src/gcmprocpy/imfgen/sources.py:35-36` maps the OMNI high-resolution IMF components and
+  solar-wind plasma quantities, and `:301-317` retrieves the corresponding OMNI HAPI product. It was
+  originally omitted as redundant to the more specific `Solar Wind` value. That premise was
+  falsified on 2026-08-25: the Region vocabulary is flat, so neither value implies the other and an
+  `Interplanetary Space` filter would otherwise miss this applicable capability. The value was added
+  by user approval, resolving the dossier's prior self-contradiction while leaving the correct
+  flat-vocabulary rationale for `Earth Atmosphere` intact.
 
 Considered and rejected:
 
@@ -240,9 +249,6 @@ Considered and rejected:
   heating rate in the radiation variable group) but nothing auroral-specific: no auroral-oval
   boundary, no precipitation parameterization, no magnetic-latitude binning. gcmprocpy plots
   whatever the global model wrote.
-- **Interplanetary Space** — genuinely applicable to the IMF that `imfgen` handles, but `Solar Wind`
-  is the more specific term for exactly the same evidence, and the guidance prefers the specific
-  region. Listing both would add no information.
 - **Earth Magnetosphere** and its subregions — TIE-GCM's high-latitude electrodynamics is driven by
   magnetospheric convection (the Heelis and Weimer benchmark configurations), but that coupling
   happens inside the model. gcmprocpy neither models nor reads magnetospheric fields.
@@ -941,7 +947,7 @@ belongs, rather than duplicated here. No entry rests on "part of the scientific 
 on PyHC membership, neither of which demonstrates interoperation with any particular package.
 
 ### 31. Related Instruments (OPTIONAL)
-None. This field is correctly empty; nothing about it is unresolved or ambiguous.
+None.
 
 gcmprocpy is instrument-agnostic. It reads numerical model output — TIE-GCM and WACCM-X NetCDF
 history files — plus two index and solar-wind products used as model forcing. It reads no
@@ -970,7 +976,7 @@ Two things that look instrument-adjacent and are correctly filed elsewhere:
   (`Models and Simulations: Physics-Based`), not here.
 
 ### 32. Related Observatories (OPTIONAL)
-None. This field is correctly empty; no unresolved or ambiguous entry exists.
+None.
 
 Two candidate identifiers do exist in HSSI's SPASE-backed observatory vocabulary for data sources
 this software reads, and both were examined and rejected on relevance, not on resolvability:
