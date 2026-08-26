@@ -59,7 +59,7 @@
     - **Affiliation Identifier:** Not found
   - **Affiliation:** Goddard Space Flight Center
     - **Affiliation Identifier:** https://ror.org/0171mag52
-  - **Affiliation:** Naval Research Laboratory
+  - **Affiliation:** United States Naval Research Laboratory
     - **Affiliation Identifier:** https://ror.org/04d23a975
 - **Author:** Monica Bobra
   - **Author Identifier:** https://orcid.org/0000-0002-5662-9604
@@ -150,6 +150,7 @@
     - **Affiliation Identifier:** https://ror.org/00hx57361
 - **Source:** The author and affiliation set is supported by the current v0.12.1 Zenodo/DataCite creators, repository history, and the project JOSS paper/archived Zenodo metadata. JOSS supplies authoritative ORCIDs and full names for Mark C. M. Cheung, Georgios Chintzoglou, and Nina Shirman; repository history maps the handles `gchintzo`, `mkocher56`, and `nsshirman` to Georgios Chintzoglou, Manan Kocher, and Nina Shirman. The established identity labels for Will Barnes, Monica Bobra, Laura Hayes, Paul Wright, and Andrew J. Leonard are retained. Laura Hayes is resolved by ORCID and carries the complete supported affiliation set of Dublin Institute for Advanced Studies and European Space Research and Technology Centre. The JOSS author list supports Paul F. Boerner, Andrew J. Leonard, and Nicholas Padmanabhan.
 - **Note:** By explicit user decision, `Hellseher` is omitted because no authoritative two-part personal name exists, and `AIA Instrument Team @ LMSAL` is omitted because no exact ROR exists and the API would misclassify it as a Person.
+- **Affiliation naming note:** ROR `https://ror.org/04d23a975` registers **United States Naval Research Laboratory** as its display name, and that is the form recorded above and held on the shared organization record. An earlier revision of this file carried the shorter `Naval Research Laboratory`; that bare form is stale and should not be restored. Affiliations bind on the ROR identifier, so the shorter label never mis-linked anything — it was a display inconsistency only.
 
 ### 7. Software Name (MANDATORY)
 - aiapy

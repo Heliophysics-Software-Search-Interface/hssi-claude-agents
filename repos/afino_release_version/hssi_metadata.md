@@ -199,18 +199,27 @@ Not found.
 - **Source note:** The main API is data-agnostic, and the repository does not identify a supported dataset with a persistent citation.
 
 ### 29. Related Software (OPTIONAL)
-- https://github.com/numpy/numpy
-- https://github.com/scipy/scipy
-- https://github.com/matplotlib/matplotlib
-- https://github.com/astropy/astropy
-- https://github.com/mwaskom/seaborn
+Not found.
 
-- **Source note:** NumPy, SciPy, Matplotlib, and Astropy are declared in `requirements.txt`; Seaborn is imported directly by the plotting functions but is not declared there. These are important dependencies rather than merely similar software.
+- **Source note:** No package clears Field 29's relevance gate. AFINO's entire dependency set is generic scientific-Python infrastructure, and this field records *distinguishing* software — similar-purpose tools, a predecessor or fork parent, a companion package, or a domain-specific dependency.
+
+- **Previous incorrect values, and why they were removed (settled 2026-08-26).** This field previously held five entries: `https://github.com/numpy/numpy`, `https://github.com/scipy/scipy`, `https://github.com/matplotlib/matplotlib`, `https://github.com/astropy/astropy` and `https://github.com/mwaskom/seaborn`. Their stated justification was that four "are declared in `requirements.txt`" and that Seaborn "is imported directly by the plotting functions" — i.e. dependency presence. That is the reasoning Field 29 explicitly rejects: a dependency shared by most of the Python ecosystem distinguishes nothing, and no amount of evidence rehabilitates such an entry. NumPy, SciPy, Matplotlib and Seaborn are generic infrastructure (arrays, numerical routines, plotting) that would be equally at home in a web application, a finance model or a biology pipeline, so all four were removed.
+
+- **`astropy` — considered in detail and removed (settled 2026-08-26).** Astropy is a domain-adjacent library for which dependency presence alone is insufficient but a *cited, specific exchange* would suffice — a public API that accepts or returns astropy objects as a documented interchange format, a named `to_*`/`from_*` adapter, or a plugin relationship. AFINO has none. The evidence, checked at revision `6aceac95`:
+  - `afino/afino_spectral_models.py:6` contains `import astropy.units as u`, but the name `u` is **never used again** anywhere in the package — a dead import surviving from the original code port.
+  - The documented public entry point `afino_start.analyse_series(times, flux, ...)` declares `times : ndarray`, `flux : ndarray`. No astropy type crosses AFINO's API boundary in either direction.
+  - The only substantive use, `afino/afino_test_script.py:3-10`, opens a FITS file with `astropy.io.fits` and then unwraps the columns to plain NumPy arrays (`flux = hdu1.data['flux']`, `tt2 = tt*60`) before calling `analyse_series`. It is also not runnable as shipped: the repository contains **no `.fits` files**, and line 2's bare `import afino_start` does not resolve under the installed `afino.` package layout produced by `setup.py`.
+  - `docs/` never mentions astropy or FITS; the user guide's canonical example feeds `np.linspace`/`np.random` into `analyse_series`.
+  - `afino/afino_series.py:10,33,69` stores units as plain Python strings (`units='seconds'`, `units='Hz'`) rather than `astropy.units` quantities — the opposite of a shared data model.
+
+  Relocating it to Field 30 is not an alternative: that field applies the same exclusion.
+
+- **What would justify re-adding astropy**, recorded so this is not re-litigated: a public AFINO function that accepts or returns an `astropy.table.Table`, `Quantity`, `Time`, `TimeSeries` or `NDData`; a named adapter such as `from_fits`/`to_table`; AFINO's spectral models subclassing `astropy.modeling.Fittable1DModel` so callers fit them with astropy fitters; `astropy.units` actually attached to `SampleTimes.units`/`PowerSpectrum.units`; or a documented FITS ingest path in the user guide backed by a working, packaged example with its data file present.
 
 ### 30. Interoperable Software (OPTIONAL)
 Not found.
 
-- **Source note:** No separately demonstrated interoperable heliophysics package was found. Dependencies are recorded under Related Software.
+- **Source note:** No separately demonstrated interoperable heliophysics package was found. AFINO's dependencies are generic infrastructure and are excluded from this field for the same reasons recorded under Field 29; none demonstrates a data-model exchange, adapter, or plugin relationship with a peer tool.
 
 ### 31. Related Instruments (OPTIONAL)
 Not found.

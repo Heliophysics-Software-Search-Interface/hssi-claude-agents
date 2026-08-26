@@ -7,14 +7,12 @@
 **Validation Date:** 2026-07-28
 **Validation Status:** PASS
 
-This file was produced by seeding from the live HSSI record for this entry (fetched
-2026-07-28 from `http://localhost`) and then filling gaps and correcting stale values from the
-source repository at the revision above, the Zenodo/DataCite records for the concept DOI, PyPI,
-the PyHC community registry, ORCID, and SoMEF. No prior canonical `hssi_metadata.md` existed.
-Stored HSSI values are preserved unless an evidence-cited justification for a change is recorded
-in the field. Multi-value fields are set-unions of the stored values and newly evidenced values.
-
-**Applied to HSSI:** 2026-07-28. Fields 2–33 match the live entry.
+**How to read this file.** The values here were reconciled against the entry's previously recorded
+metadata and then gap-filled and corrected from the source repository at the revision above, the
+Zenodo/DataCite records for the concept DOI, PyPI, the PyHC community registry, ORCID, and SoMEF.
+No earlier canonical dossier existed for this software. Previously recorded values are preserved
+unless an evidence-cited justification for superseding one is given in the field, and multi-valued
+fields are set-unions of the earlier values and newly evidenced ones.
 
 ---
 
@@ -27,14 +25,12 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 2. Persistent Identifier (RECOMMENDED)
 - **Persistent Identifier:** https://doi.org/10.5281/zenodo.7735001
-- **Change:** Unchanged from the existing HSSI record.
 - **Source:** Preserved from the existing HSSI record and confirmed as the Zenodo *concept* DOI
   (`conceptdoi: 10.5281/zenodo.7735001`, `conceptrecid: 7735001`) by the Zenodo and DataCite APIs, and
   by the README DOI badge.
 
 ### 3. Code Repository (MANDATORY)
 - **Code Repository:** https://github.com/lasp/space_packet_parser
-- **Change:** Unchanged from the existing HSSI record.
 - **Source:** Preserved from the existing HSSI record and confirmed by `CITATION.cff`
   (`repository-code`), `pyproject.toml` (`[project.urls] repository`), `meta.yaml` (`home`/`dev_url`),
   the Zenodo record's `code:codeRepository` custom field, and SoMEF.
@@ -50,9 +46,9 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
   - Mission-related:Ingest
   - Mission-related:Packet Decommutation
   - Mission-related:System Testing
-- **Change:** ENRICHED — the stored record had exactly one value
-  (`Data Processing and Analysis:Packet Decommutation`), which is preserved. Eight values are added,
-  including the two required parent categories.
+- **Note:** The prior record held only `Data Processing and Analysis:Packet Decommutation`, which is
+  preserved. The remaining eight values, including the two required parent categories, rest on the
+  evidence below.
 - **Source and code evidence (per value):**
   - *Data Processing and Analysis* — required parent of the four selected subcategories.
   - *Data Processing and Analysis:Packet Decommutation* — preserved from HSSI and the core purpose of the
@@ -127,7 +123,7 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
   - Earth Magnetosphere
   - Interplanetary Space
   - Solar Environment
-- **Change:** ENRICHED — all three stored regions are preserved; `Interplanetary Space` is added.
+- **Note:** All three previously recorded regions are preserved; `Interplanetary Space` is added.
 - **Source:** The library is region-agnostic by design, so region applies through the missions whose
   telemetry it decodes, which is the same basis as the stored values. README "Missions using Space Packet
   Parser": CLARREO Pathfinder, Libera, and CTIM-FD are Earth atmosphere/radiation-budget missions
@@ -164,15 +160,13 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
     - **Affiliation Identifier:** https://ror.org/035a68863
   - **Affiliation:** University of Colorado Boulder
     - **Affiliation Identifier:** https://ror.org/02ttsq026
-- **Change:** ENRICHED, additive only. The author set is identical to the three stored HSSI Person records
-  (matched by ORCID) — nobody is added or removed. Affiliations are added for Gavin Medley and Michael
-  Chambliss, who had none stored. All five stored affiliations on the shared Greg Lucas Person record are
-  preserved unchanged. The listing order follows the authoritative credit order in `CITATION.cff` and the
-  Zenodo/DataCite creator list (Medley, Chambliss, Lucas), and this order **is** stored: `Software.authors`
-  is a `SortedManyToManyField`, so `.set()` clears and re-adds the author rows with fresh sort values.
-  Applying this file therefore replaced the previous stored order (Chambliss, Lucas, Medley — incidental
-  alphabetical) with the authors' own credit order. That ordering change was reviewed and approved
-  explicitly, and the stored order now matches this file.
+- **Author-set note:** The author set is exactly the three people already on record (matched by ORCID) —
+  nobody is added or removed. Affiliations are added for Gavin Medley and Michael Chambliss, who had none.
+  All five affiliations on the shared Greg Lucas Person record are preserved unchanged. The listing order
+  is the authoritative credit order from `CITATION.cff` and the Zenodo/DataCite creator list (Medley,
+  Chambliss, Lucas). Author order is stored metadata, so adopting it superseded an earlier incidental
+  alphabetical order (Chambliss, Lucas, Medley); that ordering change was reviewed and approved
+  explicitly.
 - **Source (author set):** `CITATION.cff` `authors` (three entries with ORCIDs and `@lasp.colorado.edu`
   emails), `pyproject.toml` `authors`, and the Zenodo/DataCite creator list all agree on exactly these three
   people and ORCIDs. Organization names are written out in full with no acronyms.
@@ -198,7 +192,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 7. Software Name (MANDATORY)
 - **Software Name:** Space Packet Parser
-- **Change:** Unchanged from the existing HSSI record.
 - **Source:** Preserved from the existing HSSI record and confirmed by the README H1 title
   ("# Space Packet Parser") and SoMEF's `full_title` result. The distribution/package name is
   `space_packet_parser` (`pyproject.toml`, PyPI `space-packet-parser`, conda `space_packet_parser`), and the
@@ -226,7 +219,7 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
   XTCE schema and for internal structural consistency, and provides a command line interface (spp) for
   describing XTCE documents, inspecting packet files, and validating definitions.
 
-- **Change:** ENRICHED, append-only. The stored description is preserved verbatim as the opening text; two
+- **Note:** The earlier description is preserved verbatim as the opening text; two
   sentences are appended to cover capabilities added in the 6.x series that the stored text predates. No
   stored wording was reworded or removed. If the maintainers prefer the shorter author-written abstract
   exactly as stored, the appended text can be dropped without affecting any other field.
@@ -241,7 +234,7 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 9. Concise Description (OPTIONAL)
 - **Concise Description:** A generalized, configurable Python library for decoding CCSDS telemetry packets, including complex and polymorphic structures, from files, buffers, or sockets using XTCE packet structure definitions.
-- **Change:** REPLACED (199 characters, within the 200-character limit).
+- **Note:** 199 characters, within the 200-character limit.
 - **Replacement justification:** The stored value is not a description at all — it is a mechanical truncation
   of the long description that ends mid-word ("It supports compl"), so it fails the field's purpose of
   providing a readable standalone preview and renders as a broken sentence in the HSSI UI. The replacement is
@@ -253,7 +246,7 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 10. Publication Date (RECOMMENDED)
 - **Publication Date:** 2022-09-22
-- **Change:** REPLACED (stored value was 2025-09-04).
+- **Previous incorrect value:** 2025-09-04.
 - **Replacement justification:** The field is defined as the date of first broadcast/publication and is
   "used for the initial version of the software." The stored 2025-09-04 is the release date of version
   6.0.0 — the version that was current when the entry was first submitted — not the software's first
@@ -282,7 +275,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
 - **Publisher Identifier:** https://zenodo.org
-- **Change:** Unchanged from the existing HSSI record.
 - **Source:** Preserved from the existing HSSI record and confirmed by DataCite (`publisher: "Zenodo"`) for the
   concept DOI, which is the correct publisher for a GitHub–Zenodo archived release.
 
@@ -292,11 +284,11 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 - **Version Description:** Bug-fix release: prevents `BinaryParameter` truncation in `create_dataset`
   (issue #246).
 - **Version PID:** https://doi.org/10.5281/zenodo.19392826
-- **Change:** REPLACED — all four subfields. The stored `SoftwareVersion` row was not a bare number: it
+- **Previous incorrect values, all four subfields.** The earlier version record was not a bare number: it
   held `6.0.0`, release date 2025-09-04, version PID `https://doi.org/10.5281/zenodo.17055485`, and a
-  `description` that was a **verbatim copy of the software description** rather than a version note. So the
-  version date, description, and PID are replacements, not additions, and the stale description was a
-  second copy-paste corruption in this entry alongside the truncated Concise Description.
+  `description` that was a **verbatim copy of the software description** rather than a version note. The
+  version date, description and PID above therefore supersede those values, and that stale description was
+  a second copy-paste corruption in this entry alongside the truncated Concise Description.
 - **Replacement justification:** 6.1.2 is the latest authoritative release and five independent primary
   sources agree: the newest git tag is `6.1.2` (2026-04-02); `pyproject.toml`, `CITATION.cff`, and `meta.yaml`
   all declare `version = 6.1.2`; the newest PyPI release is 6.1.2 (uploaded 2026-04-02T22:26:54Z); the
@@ -314,7 +306,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 - **Values:**
   - Other
   - Python 3.x
-- **Change:** Unchanged from the existing HSSI record (both stored values retained).
 - **Source:** `Python 3.x` is confirmed by `requires-python = ">=3.10"`, the CI matrix
   (Python 3.10–3.14 in `.github/workflows/ci.yml`), and the `Programming Language :: Python :: 3` classifier.
   `Other` is retained and is independently supported by the non-Python sources GitHub attributes to the
@@ -324,7 +315,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 14. Reference Publication (RECOMMENDED)
 - **Reference Publication:** Not found
-- **Change:** Unchanged (stored field is empty).
 - **Source:** No reference publication exists. `CITATION.cff` has no `preferred-citation`, the README's only
   citation pointer is the Zenodo DOI badge, and the DataCite record for the concept DOI contains no
   `IsDescribedBy`/`IsSupplementedBy` publication relation (its only related identifiers are the GitHub tag URL
@@ -333,7 +323,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 ### 15. License (RECOMMENDED)
 - **License:** BSD 3-Clause "New" or "Revised" License
 - **License URI:** https://opensource.org/licenses/BSD-3-Clause
-- **Change:** License name unchanged from the existing HSSI record; the SPDX-scheme URI is recorded.
 - **Source:** `LICENSE.txt` (BSD 3-clause text, "Copyright (c) 2023 University of Colorado"),
   `pyproject.toml` (`license = { text = "BSD-3-Clause" }`), `CITATION.cff` (`license: BSD-3-Clause`),
   `meta.yaml`, PyPI (`BSD-3-Clause`), and the DataCite record, which supplies both the exact name
@@ -370,7 +359,7 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
   - telemetry
   - xml
   - xtce
-- **Change:** ENRICHED 10 → 24 — all ten stored keywords are preserved (compared by normalized lowercase
+- **Note:** All ten previously recorded keywords are preserved (compared by normalized lowercase
   identity, not display casing); fourteen are added: `binary data`, `data decoding`, `data encoding`,
   `data extraction`, `data manipulation`, `data processing`, `data transformation`, `heliophysics`,
   `packet inspection`, `packet parsing`, `space data systems`, `space packet protocol`, `telemetry`, `xml`.
@@ -391,7 +380,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 ### 17. Data Sources (OPTIONAL)
 - **Values:**
   - Other
-- **Change:** NEW — the stored field was empty.
 - **Source:** The library ingests raw binary telemetry from local packet files, buffered binary file-like
   readers, in-memory `bytes`, and live network sockets (`generators/utils.py::_read_packet_file` and the
   `_setup_binary_reader` dispatch, which has a dedicated `socket.socket` implementation; `udp_generator` for
@@ -406,7 +394,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 ### 18. Input File Formats (RECOMMENDED)
 - **Values:**
   - Other
-- **Change:** NEW — the stored field was empty.
 - **Source:** The two input formats are raw binary CCSDS/UDP packet files (no enumerated value applies) and
   XTCE XML packet definition documents (`XtcePacketDefinition.from_xtce()`, `spp.load_xtce()`), plus the XTCE
   XSD schema files used by `validate_xtce(local_xsd=...)`. Neither binary telemetry nor XML is in the allowed
@@ -420,7 +407,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 ### 19. Output File Formats (RECOMMENDED)
 - **Values:**
   - Other
-- **Change:** NEW — the stored field was empty.
 - **Source:** The library's only file output is XTCE XML: `XtcePacketDefinition.write_xml()` and
   `to_xml_tree()` serialize a definition (including definitions constructed from Python objects, as in
   `examples/csv_to_xtce_conversion.py`) to an XTCE XML document. XML is not in the allowed list, so `Other` is
@@ -435,7 +421,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
   - Linux
   - Mac
   - Windows
-- **Change:** NEW — the stored field was empty.
 - **Source:** `.github/workflows/ci.yml` runs the full unit and integration test suite on
   `[windows-latest, ubuntu-latest, macos-latest]` across Python 3.10–3.14 on every push, pull request, and
   nightly schedule, which is direct verification on all three platforms. `pyproject.toml` also declares the
@@ -449,7 +434,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
   - CPU Independent
   - x86-64
   - Apple Silicon arm64
-- **Change:** NEW — the stored field was empty.
 - **Source:** The package is pure Python with no compiled extensions (`hatchling` wheel build with
   `packages = ["space_packet_parser"]`; conda recipe declares `noarch: python`), so `CPU Independent` is the
   primary value. `x86-64` and `Apple Silicon arm64` are recorded as concretely verified because the CI matrix
@@ -458,7 +442,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 22. Related Phenomena (OPTIONAL)
 - **Related Phenomena:** Not found
-- **Change:** Unchanged (stored field is empty).
 - **Source:** The controlled vocabulary for this field is solar-phenomenon specific (Coronal Heating, Coronal
   Holes, Coronal Mass Ejections, Solar Corona, Solar Flares, X-ray emission). Space Packet Parser is a
   telemetry transport/decoding library and supports no phenomenon-specific science functionality; no value in
@@ -466,7 +449,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 23. Development Status (RECOMMENDED)
 - **Development Status:** Active
-- **Change:** NEW — the stored field was empty.
 - **Source:** repostatus.org "Active" (stable, usable, and under active development) is supported by
   `pyproject.toml`'s `Development Status :: 5 - Production/Stable` classifier, five releases in the last
   eleven months (6.0.0 2025-09-04, 6.0.1 2025-11-06, 6.1.0 2026-01-21, 6.1.1 2026-03-31, 6.1.2 2026-04-02),
@@ -476,7 +458,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 24. Documentation (RECOMMENDED)
 - **Documentation:** https://space-packet-parser.readthedocs.io
-- **Change:** Unchanged from the existing HSSI record.
 - **Source:** Preserved from the existing HSSI record and confirmed live (HTTP 200) and canonical by
   `CITATION.cff` (`url`), `pyproject.toml` (`[project.urls] documentation`), `meta.yaml` (`doc_url`), the
   GitHub repository homepage, the PyHC registry `docs` field, and SoMEF. The README's
@@ -484,7 +465,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 25. Funder (OPTIONAL)
 - **Funder:** Not found
-- **Change:** Unchanged (stored field is empty).
 - **Source:** No funding statement, acknowledgement section, grant number, or funder appears anywhere in the
   repository (README, docs, `CITATION.cff`, `pyproject.toml`, `LICENSE.txt`), and the DataCite record for the
   concept DOI has an empty `fundingReferences` array. The missions listed in the README are NASA missions and
@@ -494,7 +474,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 ### 26. Award Title (OPTIONAL)
 - **Award Title:** Not found
 - **Award Number:** Not found
-- **Change:** Unchanged (stored field is empty).
 - **Source:** No award title or grant number appears in the repository or in the DataCite/Zenodo metadata for
   the concept DOI.
 
@@ -504,21 +483,18 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 27. Related Publications (OPTIONAL)
 - **Related Publications:** Not found
-- **Change:** Unchanged (stored field is empty).
 - **Source:** The repository cites no papers describing or using the library, and the DataCite record's
   `relatedIdentifiers` contain only the GitHub tag URL (`IsSupplementTo`) and sibling version DOIs
   (`HasVersion`) — no publication relations.
 
 ### 28. Related Datasets (OPTIONAL)
 - **Related Datasets:** Not found
-- **Change:** Unchanged (stored field is empty).
 - **Source:** The binary telemetry files under `tests/test_data/` (CTIM, IMAP IDEX, JPSS-1, Europa Clipper
   SUDA) are small unpublished test fixtures committed to the repository, not citable datasets with DOIs or
   archive landing pages. No dataset identifiers appear in the repository or DOI metadata.
 
 ### 29. Related Software (OPTIONAL)
 - **Related Software:** https://github.com/ccsdspy/ccsdspy
-- **Change:** NEW — the stored field was empty.
 - **Source:** CCSDSPy is the other Python library for decoding CCSDS space packets, i.e. software that
   performs a similar task, and this repository engages with it concretely rather than generically:
   `examples/csv_to_xtce_conversion.py` is a documented, CI-executed converter from the CCSDSPy CSV packet
@@ -541,7 +517,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 30. Interoperable Software (OPTIONAL)
 - **Interoperable Software:** https://github.com/pydata/xarray
-- **Change:** NEW — the stored field was empty.
 - **Source:** Cited, specific data-model exchange rather than dependency presence: the public function
   `space_packet_parser.xarr.create_dataset()` is documented and typed to return `dict[int, xr.Dataset]`
   (`space_packet_parser/xarr.py`), so parsed telemetry is handed to xarray's data model as the library's
@@ -560,7 +535,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 31. Related Instruments (OPTIONAL)
 - **Related Instruments:** None — intentionally empty
-- **Change:** Unchanged (stored field is empty), now with a documented rationale.
 - **Source:** Space Packet Parser is an instrument-agnostic library. It implements the CCSDS Space Packet
   Protocol and the XTCE packet-structure standard generically: the parsing behavior is entirely determined by
   the user-supplied XTCE document, and the codebase contains no instrument-specific parser, calibration
@@ -577,7 +551,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 32. Related Observatories (OPTIONAL)
 - **Related Observatories:** None — intentionally empty
-- **Change:** Unchanged (stored field is empty), now with a documented rationale.
 - **Source:** As with Field 31, the library is mission/observatory-agnostic: it decodes any CCSDS packet
   stream described by any XTCE document, contains no mission-specific code path, data convention, archive
   client, or mission API, and is distributed as a general-purpose library. A user searching HSSI for a
@@ -592,7 +565,6 @@ in the field. Multi-value fields are set-unions of the stored values and newly e
 
 ### 33. Logo (OPTIONAL)
 - **Logo:** https://raw.githubusercontent.com/lasp/space_packet_parser/main/docs/source/_static/logo-no-background.png
-- **Change:** NEW — the stored field was empty.
 - **Source:** `docs/source/conf.py` sets `html_logo = "_static/logo-no-background.png"`, making this file the
   project's official documentation logo. The raw GitHub URL on the default branch was verified publicly
   accessible (HTTP 200, `image/png`, 50,558 bytes).
