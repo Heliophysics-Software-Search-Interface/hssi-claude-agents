@@ -56,11 +56,10 @@ Verify the file is well-formed and complete:
 - [ ] Every MANDATORY field has a value (not "Not found", not blank, not placeholder text):
   - Field 1: Submitter (exception: "[To be filled by actual submitter]" is acceptable)
   - Field 3: Code Repository
-  - Field 4: Software Functionality
-  - Field 5: Related Region
   - Field 6: Authors
   - Field 7: Software Name
   - Field 8: Description
+- [ ] Fields 4 (Software Functionality) and 5 (Related Region) are RECOMMENDED on the live form, not MANDATORY. This workflow still treats them as critically important: an empty value is acceptable only when the dossier carries durable evidence that no value applies (domain-independent tooling can legitimately have no Region — e.g. the settled sammi/cdflib decisions); an unexamined blank is still an ERROR.
 - [ ] Multi-value fields use consistent formatting (bulleted lists)
 - [ ] Section headers and field numbering are correct
 

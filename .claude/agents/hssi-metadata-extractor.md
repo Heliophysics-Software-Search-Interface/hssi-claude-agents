@@ -230,14 +230,14 @@ After automated extraction, **thoroughly examine the repository** to fill in rem
 
 #### Critical Fields Requiring Deep Analysis
 
-**Software Functionality (MANDATORY):**
+**Software Functionality (RECOMMENDED on the form; treat as critical):**
 - This is one of the most important fields
 - Requires understanding the full breadth of what the software does
 - Be **exhaustive** — try not to miss any functionality
 - Use the `software-functionality` skill for detailed classification guidance, code patterns, library mappings, and common mistakes to avoid
 - Select ALL that apply, using the `hssi-field-definitions` lists to pick candidates — then **confirm each candidate against the live vocabulary** at `/api/models/FunctionCategory/rows/all/` before writing it into the file (see "Controlled-list values" below)
 
-**Related Region (MANDATORY):**
+**Related Region (RECOMMENDED on the form; treat as critical):**
 - Also critically important
 - Requires understanding the physical regions the software is commonly used for
 - **Fetch the options from `/api/models/Region/rows/all/`** — there are 24, and they are finer-grained than the five broad regions this file used to list (`Earth Ionosphere`, `Earth Thermosphere`, `Earth Magnetotail`, `Corona`, `Photosphere`, per-planet magnetospheres, …). Prefer the most specific applicable region over a broad one.
@@ -346,13 +346,15 @@ When metadata conflicts between sources, use this priority order:
 Pay special attention to **MANDATORY** fields:
 - Submitter (placeholder is acceptable)
 - Code Repository
-- Software Functionality
-- Related Region
 - Authors
 - Software Name
 - Description
 
-Strongly prioritize **RECOMMENDED** fields, as they greatly improve submission quality.
+Strongly prioritize **RECOMMENDED** fields, as they greatly improve submission quality — above all
+Software Functionality and Related Region, which this workflow treats as critically important even
+though the live form marks them RECOMMENDED. For those two, an empty value is legitimate only when
+the evidence genuinely supports no value (e.g. domain-independent tooling with no Region), never as
+an unexamined gap.
 
 ## Domain Expertise
 

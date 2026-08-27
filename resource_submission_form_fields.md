@@ -76,12 +76,12 @@ document. To re-verify these snapshots against live and refresh them, run **Step
 
 ---
 
-### 4. Software Functionality (MANDATORY)
+### 4. Software Functionality (RECOMMENDED)
 **Type:** Multi-select dropdown
 
 **What it is:** The type of software.
 
-**How to fill it:** Select all types of software functionalities that apply to the software.
+**How to fill it:** Select all software functionalities that apply. Be as exhaustive as possible—these selections determine which filters and search results your software appears in.
 
 **Possible Values** — *83 values, snapshot 2026-07-29, verified identical on `https://hssi.hsdcloud.org` and `http://localhost`. Live `/api/models/FunctionCategory/rows/all/` is authoritative.*
 
@@ -177,7 +177,7 @@ The 6 top-level categories are also selectable on their own, and **when a subcat
 
 ---
 
-### 5. Related Region (MANDATORY)
+### 5. Related Region (RECOMMENDED)
 **Type:** Multi-select dropdown
 
 **What it is:** The physical region the software supports science functionality for.
@@ -335,7 +335,7 @@ Note the exact spellings: **`Javascript`** (not `JavaScript`) and **`Typescript`
 
 ---
 
-### 14. Reference Publication (RECOMMENDED)
+### 14. Reference Publication (OPTIONAL)
 **Type:** DataCite DOI
 
 **What it is:** The DOI for the publication describing the software, sometimes used as the preferred citation for the software in addition to the version-specific citation to the code itself.
@@ -438,7 +438,7 @@ rather than minting a near-duplicate.
 
 **What it is:** The data input source the software supports.
 
-**How to fill it:** Select all data input sources the software supports. If a source is not listed, select 'Other'. If observatory-specific, select 'observatory-specific' and indicate the observatory/mission name in the Related Observatory field.
+**How to fill it:** Select all data input sources the software supports. If a source is not listed, select 'Other'. If observatory-specific, select 'observatory-specific' and indicate the observatory/mission name in the Related Observatory field. *(The live form currently shows the short field description in this tooltip's place — a website wiring slip points the tooltip at the wrong constant; the guidance above is the intended text.)*
 
 **Possible Values** — *17 values, snapshot 2026-08-06. Live `/api/models/DataInput/rows/all/` is authoritative. **Row counts differ by target**: `http://localhost` has these 17; `https://hssi.hsdcloud.org` still carries the junk row described below.*
 
@@ -629,7 +629,7 @@ definitions, not part of the value.
 **How to fill it:** The name of the organization that provided the funding (e.g., National Aeronautics and Space Administration). Avoid acronyms and enter one organization per field.
 
 **Sub-fields:**
-- **Organization** (OPTIONAL): Funder name
+- **Organization** (RECOMMENDED): Funder name
 - **Funder Identifier** (RECOMMENDED): ROR identifier if available (e.g., https://ror.org/027ka1x80)
 
 ---
@@ -672,7 +672,7 @@ definitions, not part of the value.
 ### 29. Related Software (OPTIONAL)
 **Type:** Multi-entry URL (RelatedItem lookup — DOI URL preferred)
 
-**What it is:** Software that performs similar tasks but does not necessarily link together (which would be 'interoperable software'). Important software dependencies and software this work was forked from should also be included.
+**What it is:** Software that performs similar tasks but does not necessarily link together (which would be 'interoperable software'). For example, two software that model the upper atmosphere of Earth but using different assumptions. Important software dependencies and software this work was forked from should also be included.
 
 **When to include it (relevance):** List software that is *distinguishing* — it tells a reader something about **this** software. That means a package performing similar tasks, a predecessor or the project this was forked from, a companion package, or a **domain-specific** dependency (a heliophysics/science library whose presence characterizes the software). "Important software dependencies" means exactly that: *important*, not merely *present*. **The generic scientific-Python stack is excluded here too** — numpy, scipy, pandas, matplotlib, cartopy, seaborn, plotly, bokeh, requests, python-dateutil, pytest, tqdm, PyYAML, click, setuptools and their peers are not related software, because listing them says nothing that isn't equally true of most of the ecosystem. Those names are **examples, not a closed list**: apply Field 30's "web app, finance model, or biology pipeline" test to anything unnamed, and treat generic infrastructure as excluded here too. Same test as Field 30: **if the entry would be equally true of most Python packages, it carries no information and does not belong.** The two gates are one rule — a package rejected from Field 30 is *not* thereby a Field 29 entry; it usually belongs in neither.
 
@@ -708,7 +708,7 @@ definitions, not part of the value.
 
 **When to include it (relevance):** List an instrument only if the software is *designed to support* it — it directly reads/writes/parses/calibrates/processes that specific instrument's data, implements a data format/convention specific to it (as a means of supporting it), is purpose-built or an instrument-team tool for it, or models/visualizes its measurements as a primary function. Sanity check: would a user searching HSSI for `instrument:"X"`, or someone working with X's data, expect this software back? If not, leave it out. **Exclude** instrument-agnostic tools (general models/utilities/frameworks support none specifically), tutorial/demo/example name-drops, "configurable for" / "commonly used with" / "optimized for" mentions of an otherwise-agnostic tool, and links that belong to another field — **generic** support for a multi-instrument *file format* (FITS/CDF/netCDF) → Input/Output File Formats, or a **generic/multi-mission** *data archive/source* (e.g. CDAWeb broadly) → Data Sources. **But** an instrument-**specific** parser, format, convention, or data source/API *does* count as designed-to-support — list that instrument here. Note: an instrument the software genuinely supports but that isn't in the controlled vocabulary is still *related* — don't drop it at the relevance stage. Carry it into the resolution ladder below, which decides between an observatory-level association and a documented omission. "Related but unresolvable" is never a licence to invent a value.
 
-**How to fill it:** Begin typing the instrument name. Matches from HSSI's controlled instrument/observatory vocabulary appear in the dropdown; choose the correct one. This vocabulary is sourced from the heliophysics.net API and resolved to SPASE identifiers (it replaced the older IVOA-based list, which is now retired). If no entry matches, type the full name. **(That last sentence describes what the web form lets a *human* submitter do. Agents must never free-type a value — see Agent guidance below.)**
+**How to fill it:** Begin typing the instrument name. Matches from HSSI's controlled instrument/observatory vocabulary appear in the dropdown; choose the correct one. The live form's tooltip still tells submitters the matches come from "the IVOA" — that on-page text is stale: the vocabulary is actually sourced from the heliophysics.net API and resolved to SPASE identifiers (the IVOA-based list is retired). If no entry matches, type the full name. **(That last sentence describes what the web form lets a *human* submitter do. Agents must never free-type a value — see Agent guidance below.)**
 
 **Agent guidance — the SPASE resolution ladder.** This is the canonical procedure for **both** Field 31 and Field 32; everything else in this repo refers back to it.
 
@@ -740,7 +740,7 @@ See the `submission-payload` / `update-payload` skills for the payload-level res
 
 **When to include it (relevance):** List a mission/observatory only if the software is *designed to support* it — it directly works with that observatory's/mission's data or data products, implements its data conventions, is purpose-built or a mission-team tool for it, or models/visualizes its measurements as a primary function. Sanity check: would a user searching HSSI for `observatory:"X"`, or a scientist working with X's data, expect this software back? If not, leave it out. **Exclude** observatory-agnostic tools (general models/utilities support none specifically), tutorial/demo/example name-drops and "platforms you *could* support," "configurable for a location/observatory" general tools, and links that belong to another field — a **generic/multi-mission** *data archive/source* (e.g. CDAWeb broadly) → Data Sources, or a generic *file convention* → Input/Output File Formats. **But** if the software directly supports a **specific named mission's** data — including via that mission's own archive, API, or format — that mission *is* designed-to-support: list it here **and** mark the source `observatory-specific` in Data Sources (Field 17 already instructs this cross-listing). A mission/observatory the software genuinely supports but that isn't in the controlled vocabulary is still *related* — don't drop it at the relevance stage. Carry it into the Field 31 resolution ladder, which decides between a broader platform association and a documented omission. "Related but unresolvable" is never a licence to invent a value.
 
-**How to fill it:** Begin typing the name. Matches from HSSI's controlled instrument/observatory vocabulary appear in the dropdown; choose the correct one. This vocabulary is sourced from the heliophysics.net API and resolved to SPASE identifiers (it replaced the older IVOA-based list, which is now retired). If no entry matches, type the full name. **(That last sentence describes what the web form lets a *human* submitter do. Agents must never free-type a value — see Agent guidance below.)**
+**How to fill it:** Begin typing the name. Matches from HSSI's controlled instrument/observatory vocabulary appear in the dropdown; choose the correct one. The live form's tooltip still tells submitters the matches come from "the IVOA" — that on-page text is stale: the vocabulary is actually sourced from the heliophysics.net API and resolved to SPASE identifiers (the IVOA-based list is retired). If no entry matches, type the full name. **(That last sentence describes what the web form lets a *human* submitter do. Agents must never free-type a value — see Agent guidance below.)**
 
 **Agent guidance:** Apply the **SPASE resolution ladder under Field 31** — it governs Field 32 identically, matching on `type` 2 (observatory) instead of 1. Do not restate or reinterpret it here.
 
