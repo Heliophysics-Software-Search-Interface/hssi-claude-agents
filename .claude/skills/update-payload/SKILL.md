@@ -196,14 +196,16 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | `operatingSystem` | Array of strings | |
 | `cpuArchitecture` | Array of strings | |
 | `relatedPhenomena` | Array of strings | |
-| `relatedPublications` | Array of strings (URLs) | |
-| `relatedDatasets` | Array of strings (URLs) | |
-| `relatedSoftware` | Array of strings (URLs) | |
-| `interoperableSoftware` | Array of strings (URLs) | |
+| `relatedPublications` | Array of strings (URLs) | real URLs only, each ≤128 chars (see note below) |
+| `relatedDatasets` | Array of strings (URLs) | real URLs only, each ≤128 chars (see note below) |
+| `relatedSoftware` | Array of strings (URLs) | real URLs only, each ≤128 chars (see note below) |
+| `interoperableSoftware` | Array of strings (URLs) | real URLs only, each ≤128 chars (see note below) |
 | `funder` | Array of Organization objects | `{name, identifier}` |
 | `award` | Array of Award objects | `{name, identifier}` (the API field is `award`, **not** `awardTitle`) |
 | `relatedInstruments` | Array of Instrument objects | `{name, identifier}` |
 | `relatedObservatories` | Array of Observatory objects | `{name, identifier}` |
+
+**RelatedItem URL note (`relatedPublications`/`relatedDatasets`/`relatedSoftware`/`interoperableSoftware`):** each entry must be a real URL — free text fails the serializer's `URLValidator` (`Invalid URL: '<value>'`) and rejects the whole atomic PATCH. Keep each URL ≤128 characters: `_get_or_create_related` stores the URL as both `identifier` and the 128-capped `name`, so a longer URL passes validation and then fails at the database write.
 
 ---
 

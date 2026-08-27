@@ -652,25 +652,25 @@ definitions, not part of the value.
 ## Section 3: Additional Metadata
 
 ### 27. Related Publications (OPTIONAL)
-**Type:** Multi-entry DataCite DOI
+**Type:** Multi-entry URL (RelatedItem lookup — DOI URL preferred)
 
 **What it is:** Publications that describe, cite, or use the software that the software developer prioritizes but are different from the reference publication.
 
-**How to fill it:** Enter DOIs for all publications the software is cited in. If DOI not available, enter citation in APA format with permanent link (e.g., Shaifullah, G., Tiburzi, C., & Zucca, P. (2020) CMEchaser, Detecting Line-of-Sight Occultations Due to Coronal Mass Ejections Solar Physics, 295(10), 136. https://arxiv.org/abs/2008.12153).
+**How to fill it:** Enter the URLs — ideally DOIs — for all notable publications the software is cited in, one URL per entry (the form's "+ add" button adds a field per URL). Only a URL is accepted per entry; free-text citations are rejected. For a publication with no DOI, use any permanent link (e.g., its ADS abstract page, `https://ui.adsabs.harvard.edu/abs/<bibcode>/abstract`) and record the full citation in the dossier prose instead.
 
 ---
 
 ### 28. Related Datasets (OPTIONAL)
-**Type:** Multi-entry DataCite DOI
+**Type:** Multi-entry URL (RelatedItem lookup — DOI URL preferred)
 
 **What it is:** Datasets the software supports functionality for (e.g., analysis).
 
-**How to fill it:** At minimum, the DOI should be the publication that described the dataset. If DOI not available, enter citation in APA format (e.g., Fuselier et al. (2022). MMS 4 Hot Plasma Composition Analyzer (HPCA) Ions, Level 2 (L2), Burst Mode, 0.625 s Data [Data set]. NASA Space Physics Data Facility. https://hpde.io/NASA/NumericalData/MMS/4/HotPlasmaCompositionAnalyzer/Burst/Level2/Ion/PT0.625S.html).
+**How to fill it:** Enter the URLs — ideally DOIs — for all datasets related to the software, one URL per entry. Only a URL is accepted per entry; free-text citations are rejected. For a dataset with no DOI, use its permanent landing page (e.g., an hpde.io page such as `https://hpde.io/NASA/NumericalData/MMS/4/HotPlasmaCompositionAnalyzer/Burst/Level2/Ion/PT0.625S.html`).
 
 ---
 
 ### 29. Related Software (OPTIONAL)
-**Type:** Multi-entry DataCite DOI
+**Type:** Multi-entry URL (RelatedItem lookup — DOI URL preferred)
 
 **What it is:** Software that performs similar tasks but does not necessarily link together (which would be 'interoperable software'). Important software dependencies and software this work was forked from should also be included.
 
@@ -681,7 +681,7 @@ definitions, not part of the value.
 ---
 
 ### 30. Interoperable Software (OPTIONAL)
-**Type:** Multi-entry DataCite DOI
+**Type:** Multi-entry URL (RelatedItem lookup — DOI URL preferred)
 
 **What it is:** Other important software packages this software has demonstrated interoperability with. Can run package in the same environment as the others without errors.
 
