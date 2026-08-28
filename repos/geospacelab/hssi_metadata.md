@@ -598,9 +598,28 @@ One award number is recorded per entry because an award title may have only one 
 - **CDAWeb, Madrigal, OMNIWeb, WDC, GFZ, NCEI, TU Delft** — multi-mission archives and index services, not observatories. Correctly recorded in Field 17 (Data Sources), per the field guidance.
 
 ### 33. Logo (OPTIONAL)
-**Value:** https://github.com/JouleCai/geospacelab/blob/master/docs/images/logo_v1_landscape_accent_colors.png
+**Value:** https://raw.githubusercontent.com/JouleCai/geospacelab/213bbc22d47a5254584581b06692cb7e2cb65d76/docs/images/logo_v1_landscape_accent_colors.png
 
-**Source:** Identical to the PyHC registry `logo` value and to the image referenced at the top of README.md.
+**Source:** Same file the PyHC registry `logo` value and the top of README.md both point to
+(`docs/images/logo_v1_landscape_accent_colors.png`), pinned to the current `master` HEAD
+(`213bbc22d47a5254584581b06692cb7e2cb65d76`) via `raw.githubusercontent.com` rather than referenced
+by branch name or GitHub's web viewer.
+
+**Corrected from a URL that never rendered.** Until this correction the record carried
+`https://github.com/JouleCai/geospacelab/blob/master/docs/images/logo_v1_landscape_accent_colors.png`
+— a GitHub `blob/` URL, which is the HTML page for the file, not the raw content. It serves
+`content-type: text/html` unconditionally, confirmed even when requested with an image-only `Accept`
+header, so it never rendered as a logo despite passing an earlier "Verified HTTP 200" check: a
+`blob/` URL always returns HTTP 200 as an HTML page, so that check confirmed only that the URL was
+reachable, never that it served image bytes. HTTP-status-only checks are not evidence a logo URL
+works. The image file itself never moved — it has sat at this same `docs/images/` path across the
+repository's full commit history. The corrected value is `raw.githubusercontent.com`, independently
+verified to return `content-type: image/png`, 165,282 bytes, and valid PNG magic bytes
+(`89 50 4E 47 0D 0A 1A 0A`), with hotlink-safe CORS/CORP headers (`access-control-allow-origin: *`,
+`cross-origin-resource-policy: cross-origin`); 143 characters, clear of the 200-character `URLField`
+cap. The path is not Git-LFS-tracked (no `.gitattributes` filter), so there is no pointer-file risk.
+Pinned to the commit rather than the `master` branch name, so a future reorganization of `master`
+cannot silently break the link the same way again.
 
 ---
 
