@@ -250,11 +250,12 @@ pinned revision.
   `install_requires` or any extra; the repository contains no Dockerfile, Singularity definition or
   deployment manifest.
 
-**Change from the stored record.** HSSI currently stores three values — the bare top-level
-`Data Processing and Analysis`, `Data Visualization` and `Models and Simulations`. All three are
-retained. The other 26 values are additions: 23 subcategories under those three existing parents (14
-under Data Processing and Analysis, 5 under Data Visualization, 4 under Models and Simulations), plus
-a new `Coordinate Transforms` top-level branch with two subcategories.
+**What this refresh replaced.** Until this refresh the stored record carried three values — the
+bare top-level `Data Processing and Analysis`, `Data Visualization` and `Models and Simulations`,
+with no subcategory under any of them. All three are retained. The other 26 values were added by this
+refresh: 23 subcategories under those three existing parents (14 under Data Processing and Analysis,
+5 under Data Visualization, 4 under Models and Simulations), plus a `Coordinate Transforms`
+top-level branch, with two subcategories, that the record did not carry at all.
 
 ### 5. Related Region (MANDATORY)
 **Values:**
@@ -391,14 +392,14 @@ to HSSI's stored ordering.
 > `author = 'Jorge Amaya, Etienne Behar, Hugo Breuillard, Romain Dupuis,' \`
 > `         ' Sofoklis Katakis, Jannis Teunissen'`
 
-with the identical six names in the adjacent `copyright = '2019, ...'` line. The stored HSSI record
-carries three names — Jorge Amaya, Romain Dupuis, Giovanni Lapenta — which are the value of the
-`contact:` key in the PyHC registry entry (`_data/projects.yml`, the community list:
+with the identical six names in the adjacent `copyright = '2019, ...'` line. Until this refresh the
+stored record carried three names — Jorge Amaya, Romain Dupuis, Giovanni Lapenta — which are the
+value of the `contact:` key in the PyHC registry entry (`_data/projects.yml`, the community list:
 `contact: Romain Dupuis, Jorge Amaya, Giovanni Lapenta`). Those are the package's *contacts*, and the
 overlap with the author list is partial. Giovanni Lapenta is not in `conf.py`'s author list but is
 kept: he is the AIDA project's principal investigator, appears as a commit author
-(`giovanni.lapenta@kuleuven.be`), and is already published in this record. The value above is
-therefore the union of the two sources, which drops nobody.
+(`giovanni.lapenta@kuleuven.be`), and was already among the three names published for this software.
+The value above is therefore the union of the two sources, which drops nobody.
 
 **Identifier resolution.** Each ORCID was matched by name and then corroborated against the record's
 own works or employments, because same-name ORCID collisions are common:
@@ -441,7 +442,7 @@ domain. ROR's display name for that organization is "Irida Labs (Greece)" — th
 ROR disambiguation artifact, so the institutional name is recorded without it and the ROR carries the
 precise identity.
 
-**The recorded affiliation name for Breuillard, and an upstream discrepancy.**
+**The recorded affiliation name for Breuillard, and the name forms behind it.**
 `Laboratoire de Physique des Plasmas` is the authoritative name for ROR `https://ror.org/05c95bg36`.
 That ROR record (`https://api.ror.org/v2/organizations/05c95bg36`) carries it as the `ror_display`
 name, also typed `label` and tagged French; `Laboratory of Plasma Physics` is an English **alias** on
@@ -458,22 +459,26 @@ deposited metadata, not a variant institutional name.) The Frontiers paper's own
 "Laboratoire de Physique des Plasmas (LPP), France", agrees on the French name and appends the
 acronym, which this field's expand-acronyms instruction drops.
 
-HSSI stores that same ROR-identified organization under the name
-`Laboratory of Plasma Physics (LPP/CNRS)` — the English alias, plus a `(LPP/CNRS)` parenthetical that
-corresponds to no name form on the ROR record — and leaves its `abbreviation` and `website` columns
-empty even though ROR supplies `LPP` and the site above. Because organization resolution matches on
-the identifier and fills only a blank name, the correct name cannot be written through the metadata
-API; it is pending a direct database correction, whose target is the whole row — name
-`Laboratoire de Physique des Plasmas`, abbreviation `LPP`, website
-`https://www.lpp.polytechnique.fr`, identifier unchanged.
+This field records `Laboratoire de Physique des Plasmas`, which is also the name, abbreviation `LPP`
+and website `https://www.lpp.polytechnique.fr` that the ROR-identified organization row was corrected
+to carry when this record was refreshed. That correction had to be made directly against the database
+for the reason set out below, so it does not travel with a submitted field value: an HSSI instance
+that has not received it will still show the earlier English-alias form, and correcting it there is a
+database change, not something this field can express.
 
-The stored spelling is not an unreviewed error waiting to be noticed: the disagreement between it and
-the ROR form has been examined against the evidence above and settled in favour of the ROR name,
-which is why this file records that form. This record makes no claim about how the stored label came
-to be. So the difference between this field and the stored label is a **documented, intentional
-divergence**, not drift: a later refresh seeding from the live record should neither read it as an
-error in this file nor restore the stored spelling here. What closes the gap is the database
-correction described above, and nothing this field can express.
+**The name this replaced, recorded so it is not reintroduced.** The same ROR-identified organization
+was stored as `Laboratory of Plasma Physics (LPP/CNRS)` — the English alias from the ROR record, plus
+a `(LPP/CNRS)` parenthetical matching none of the name forms enumerated above — with its
+`abbreviation` and `website` columns empty even though ROR supplies both. The disagreement between
+that spelling and the ROR form was examined against the evidence above and settled in favour of the
+ROR name; it is not a variant to restore. This record makes no claim about how the earlier label came
+to be.
+
+**Why the correction could not be a field value.** Organization resolution matches on the identifier
+and fills only a *blank* name, so a row whose name already differs keeps its stored label however the
+name is spelled in submitted metadata. The name, abbreviation and website could therefore only be
+corrected directly against the database, which is where the recorded values came from — this field
+can state the correct name but cannot install it.
 
 The laboratory's own site could not be used to corroborate any of this:
 `https://www.lpp.polytechnique.fr` refuses automated requests. The recorded name therefore rests on
@@ -507,7 +512,8 @@ failed to establish. His only in-repo traces are `Contributors: Etienne Behar` i
   ("@author: Brecht Laperre"), i.e. of both the Dst LSTM and the dynamic-time-warping metric. He also
   presented AIDApy publicly ("Pitfalls in the prediction of the Dst index using ANN", Machine Learning
   in Heliophysics 2019: "We will give an introduction to the AIDApy python package and the AIDAdb
-  database that contain the ANN models that we studied").
+  database that contain the ANN models that we studied"; that abstract's ADS permanent link is the
+  fifth value in Field 27).
 - **Leonidas Liakopoulos** — co-credited with Sofoklis Katakis in the module docstrings of
   `aidapy/ml/builders/builders.py`, `cli.py`, `engine.py`, `engine_unspr.py`, `factory.py` and
   `hpo_optuna.py`, which is most of the ML framework's scaffolding, and is a substantial commit author.
@@ -544,28 +550,32 @@ resolution branches on whether an identifier is supplied. **With** an identifier
 identifier alone and does not fall back to the name: supplying an ORCID for an author already stored
 *without* one does not enrich that stored row, it creates a second person row and leaves the original
 behind. **Without** an identifier, resolution matches on the exact, case-sensitive given and family
-name and reuses the existing row. Affiliations are added to whichever row was matched, so an
-affiliation can be attached in place even when an identifier is withheld. Two further constraints sit
-alongside that: the whole authors field is rejected if any stored given name is blank, and an existing
-affiliation cannot be replaced (adding one whose ROR already matches is idempotent).
+name and reuses the existing row. Affiliations are added to whichever row was matched, so submitting
+an author with no identifier still attaches the affiliation to the row that already exists. Two
+further constraints sit alongside that: the whole authors field is rejected if any stored given name
+is blank, and an existing affiliation cannot be replaced (adding one whose ROR already matches is
+idempotent).
 
-**The settled consequence for AIDApy.** Jorge Amaya, Romain Dupuis and Giovanni Lapenta are the three
-authors HSSI already stores for this software, and it stores them without identifiers. Their ORCIDs
-are therefore deliberately withheld from anything submitted through the metadata API, so that their
-existing person rows are reused and their affiliations attach to those rows instead of being stranded
-behind three new duplicates. Those three identifiers —
+**The settled consequence for AIDApy.** All five ORCIDs recorded above were applied to their authors'
+person rows when this record was refreshed, two of them through submitted metadata and three directly
+against the database. As with the affiliation name above, the three database-applied identifiers do
+not travel with a submitted field value: an HSSI instance that has not received that correction will
+still hold those three authors without identifiers, and putting them right there is a database change
+rather than anything this field can carry. Those three —
 `https://orcid.org/0000-0003-1320-8428` (Amaya), `https://orcid.org/0000-0002-7976-1034` (Dupuis) and
-`https://orcid.org/0000-0002-3123-4024` (Lapenta) — are correct metadata and are recorded above as
-this record's target state; they are pending a direct database correction, so HSSI is expected to lag
-on exactly those three identifiers until it lands. That gap is a **documented, intentional
-divergence**, not drift: a later refresh seeding from the live record must not read the empty stored
-identifiers as evidence that these three ORCIDs are wrong, and must not clear them from this file to
-match. The withholding applies to those three names only:
-Behar carries no identifier at all, Katakis carries an affiliation ROR and no ORCID, and Breuillard's
-and Teunissen's ORCIDs belong to authors this record adds rather than to rows already associated with
-this software. Identifier-only matching can still create a duplicate of a same-named person stored
-elsewhere in HSSI without that ORCID; what it cannot do is displace an association this record
-already holds.
+`https://orcid.org/0000-0002-3123-4024` (Lapenta) — belong to the three authors the record already
+carried before this refresh, and were applied directly against the database rather than as submitted
+field values. The mechanism above is the reason: because those three rows existed with no identifier,
+an ORCID accompanying them in submitted metadata would have created a second person row and left the
+original behind, so the KU Leuven affiliation recorded above would have attached to the duplicate
+instead of to the row this software points at. Correcting the existing rows instead put each author's
+identifier and affiliation on the person this software is actually associated with.
+
+Breuillard's and Teunissen's ORCIDs were not exposed to that hazard, because both are authors this
+record added rather than rows already associated with this software; Behar carries no identifier at
+all, and Katakis carries an affiliation ROR and no ORCID. Identifier-only matching can still create a
+duplicate of a same-named person stored elsewhere in HSSI without that ORCID; what it cannot do is
+displace an association this record already holds.
 
 The general rule behind the choice, and the reason it is recorded here rather than treated as a
 one-off: orphaning a shared row — a Person or an Organization, which other software records may
@@ -579,15 +589,16 @@ judged acceptable HSSI behaviour (Field 12).
 **Source.** `README.rst`'s document title is `AIDApy`, and `doc/source/index.rst` reads "Welcome to
 AIDApy's documentation!". The distribution name is lower-case `aidapy` on PyPI and in
 `setup.py` (`name="aidapy"`), and the PyHC registry entry uses `name: aidapy`; the mixed-case
-`AIDApy` is the project's own presentation form and is what HSSI already stores. Retained unchanged —
-the lower-case packaging name is a distribution identifier, not a rename.
+`AIDApy` is the project's own presentation form, and is the form the record already carried before
+this refresh. Retained unchanged — the lower-case packaging name is a distribution identifier, not a
+rename.
 
 ### 8. Description (MANDATORY)
 **Value:** The Python package aidapy centralizes and simplifies access to spacecraft data from heliospheric missions, space physics simulations, advanced statistical tools, and Machine Learning/Deep Learning algorithms and applications. It provides a simple mechanism for downloading multi-dimensional time-series from various sources and analyzing them by extracting different meaningful statistics. The package includes four main sub-packages: Mission tool, Event search tool, Velocity distribution function tool, and Machine learning tool. It features easy data download from heliophysics missions, xarray data structures for statistical analysis, sophisticated event identification, multiple heliophysics use-cases ready to use, simple interface based on configuration files, easy mechanism to add custom metrics and datasets, visualization and logging of training/validation procedures, and optimization techniques such as Hyper-Parameter Optimization (HPO) and pruning.
 
 **Source.** Carried over unchanged from the published HSSI record. It is a faithful consolidation of
-`README.rst`'s opening bullets, its four-subpackage list and its eight-item feature list. No rewording
-is proposed: the text is accurate against the pinned revision, and a stylistic alternative is not a
+`README.rst`'s opening bullets, its four-subpackage list and its eight-item feature list. It is kept
+as written: the text is accurate against the pinned revision, and a stylistic alternative is not a
 reason to overwrite a curated description.
 
 ### 9. Concise Description (OPTIONAL)
@@ -655,9 +666,9 @@ actual release files.
 
 *Version-string form.* The git tag and the GitLab release `tag_name` are both `v0.0.4`; `CHANGELOG.rst`
 and PyPI write it as `0.0.4` without the prefix. `v0.0.4` is recorded because it matches the tag and
-release names and appears to be what HSSI already holds. This cannot be confirmed from the rendered
-view, which shows a name-prefixed transform ("AIDApy - v0.0.4") rather than the stored string, so the
-stored `SoftwareVersion` row should be read directly before any change to this field is proposed.
+release names. The rendered view is not a way to check what is stored — it shows a name-prefixed
+transform ("AIDApy - v0.0.4") rather than the stored string — so the stored `SoftwareVersion` row
+should be read directly before any change to this field is made.
 
 *Version PID.* None exists; see Field 2 for the negative research.
 
@@ -738,8 +749,9 @@ metadata (`license = MIT` for both published releases), `README.rst`'s MIT badge
 distributed under the open-source MIT license", and the PyHC registry's "Good" licence rating. The
 name and URI are copied from the matched controlled-vocabulary row so they resolve exactly.
 
-**This field is currently empty in HSSI**, which is a real gap rather than a curation decision — the
-repository has stated its licence unambiguously since 2019.
+**This field held no value in HSSI until this refresh**, which was a real gap rather than a curation
+decision: `LICENSE.txt` carries the MIT text under a 2019 copyright, and `setup.py` and `README.rst`
+name MIT as well.
 
 **Two traps in `README.rst` that must not change this value.**
 1. Its "Licenses" section hyperlinks the word MIT to a GPL-3.0 URL:
@@ -791,7 +803,7 @@ transform, not the stored value. The previous version of this record listed `mac
 `data_analysis` with underscores, which is PyHC's spelling, not HSSI's — the matching rows are
 `machine learning` and `data analysis`.
 
-**Additions and why they carry information not already in another field.**
+**Added by this refresh, and why each carries information not already in another field.**
 - `magnetic reconnection` — the single most pervasive science theme in the package and the one with no
   home elsewhere. `event_search(settings='edr')` detects electron diffusion regions;
   `examples/03_gmm/` characterises reconnection regions with Gaussian mixture models;
@@ -806,10 +818,11 @@ transform, not the stored value. The previous version of this record listed `mac
   ("intermittency measurements", "a newly developed technique known as Partial Variance of
   Increments", "tested here on direct numerical simulations of turbulence, by using the virtual
   spacecraft technique"), and `statistics.autocorr`'s documentation refers to "the typical energy
-  containg scale" in turbulence. **This term has no existing row in the keyword vocabulary and will
-  create one.** Keywords is the one field whose vocabulary is open — a missing value is created rather
-  than rejected — so that is permitted. It is noted because minting rows is how near-duplicates
-  accumulate; the vocabulary was checked for a near-duplicate of `turbulence` to reuse and has none.
+  containg scale" in turbulence. **This term had no existing row in the keyword vocabulary when this
+  record was compiled, so it is a minted row rather than a reused one.** Keywords is the one field
+  whose vocabulary is open — a missing value is created rather than rejected — so that is permitted.
+  It is noted because minting rows is how near-duplicates accumulate; the vocabulary was searched for
+  a near-duplicate of `turbulence` to reuse on 2026-08-27 and held none.
 
 **Considered and rejected.** `magnetotail`, `magnetosheath` and `solar wind` all have existing rows and
 are all well evidenced, but Fields 5 and 22 already carry them as regions and phenomena, and this field
@@ -831,11 +844,11 @@ Science Archive directly (`csa_url = 'https://csa.esac.esa.int/csa/aio/product-a
 `DELIVERY_FORMAT: 'CDF'` request dictionary and the CSA cookie described in its module docstring). The
 corresponding missions are listed in Field 32, as this field's instruction requires.
 
-`OMNIWeb` is an addition. `doc/source/mission.rst` states "Missions that can be selected currently
-are: OMNIWeb, MMS, Cluster"; `aidapy/data/mission/omni.py`'s docstring is "This module serves as data
-manager for Omniweb" and its `_download_ts` calls `omni.h0_mrg1hr` for the OMNI2 hourly merged
-product; `aidapy/ml/data/aidapy_omniweb.py` is "Dataloader to download from the omni web" and is
-selected by name in the Dst configurations (`train_datasets: [Aidapy_OmniWeb]`).
+`OMNIWeb` was added by this refresh. `doc/source/mission.rst` states "Missions that can be selected
+currently are: OMNIWeb, MMS, Cluster"; `aidapy/data/mission/omni.py`'s docstring is "This module
+serves as data manager for Omniweb" and its `_download_ts` calls `omni.h0_mrg1hr` for the OMNI2
+hourly merged product; `aidapy/ml/data/aidapy_omniweb.py` is "Dataloader to download from the omni
+web" and is selected by name in the Dst configurations (`train_datasets: [Aidapy_OmniWeb]`).
 
 **Considered and rejected.** `CDAWeb` and `HTTP/HTTPS Directories` describe how HelioPy transports the
 OMNI2 product beneath AIDApy, not a source AIDApy itself declares or targets; AIDApy names OMNIWeb
@@ -856,7 +869,7 @@ data source; `Other` was considered for them and rejected as uninformative.
 - Other
 
 **Source.** The first five are retained from the published record, each verified against the pinned
-revision; `Other` is an addition.
+revision; `Other` was added by this refresh.
 - **CDF** — `aidapy/data/mission/modified_cluster.py` sets `extension = '.cdf'`, requests
   `DELIVERY_FORMAT: 'CDF'` from the Cluster Science Archive and reads the files through `cdf_info()`;
   every product entry in `mission_settings/mms.json` and `cluster.json` is keyed on a CDF variable
@@ -907,7 +920,8 @@ revision; `Other` is an addition.
 - HDF5
 - Other
 
-**Source.** The first three are retained from the published record; `Other` is an addition.
+**Source.** The first three are retained from the published record; `Other` was added by this
+refresh.
 - **ascii** — `aidapy/aidafunc/event_search.py:_write_events` writes `events_list.txt` with a header
   and one line per event interval, which `doc/source/event_search.rst` describes as the subpackage's
   ASCII output; `aidapy/external/unsupmr/ar_utils_2d.py` writes `structures_thickness.log`.
@@ -986,7 +1000,7 @@ pinned revision, and are not part of this release.) `x86-64`, `Apple Silicon arm
   `figures/notebook_storms`, i.e. storm-interval evaluation is a first-class output. This value was
   added to the record on 2026-08-24 on exactly that DST-forecasting evidence and is confirmed here.
 
-**Addition.**
+**Added by this refresh.**
 - **Solar Corona** — the coronal-hole segmentation use case is solar-corona science:
   `examples/04_coronal_holes/README.rst`, six shipped configurations, the `CoronalHoles` dataloader,
   and a trained UNet checkpoint at `aidapy/ml/models/tests/CH/model_best.pt`. The value is settled as
@@ -997,10 +1011,11 @@ pinned revision, and are not part of this release.) `x86-64`, `Apple Silicon arm
   should return this package.
 
 **`Coronal Holes` is not a value in this vocabulary and must not be re-proposed.** The controlled list
-holds seven terms — `Coronal Heating`, `Coronal Mass Ejections`, `Geomagnetic Storms`, `Solar Corona`,
-`Solar Flares`, `Solar Wind`, `X-ray emission` — and `Coronal Holes` is not one of them. It appeared
-in the submission form's own documented value list in error until that list was audited against the
-live vocabulary on 2026-07-29; submitting it now would be rejected. It was removed from this record on
+held seven terms when this record was compiled (2026-08-27) — `Coronal Heating`,
+`Coronal Mass Ejections`, `Geomagnetic Storms`, `Solar Corona`, `Solar Flares`, `Solar Wind`,
+`X-ray emission` — and `Coronal Holes` is not one of them. It appeared in the submission form's own
+documented value list in error until that list was audited against the live vocabulary on 2026-07-29;
+submitting it now would be rejected. It was removed from this record on
 2026-08-24 for that reason. The coronal-hole science is real and is carried by the `coronal holes`
 keyword in Field 16, the `Corona` and `Solar Environment` rows in Field 5, and now `Solar Corona`
 here.
@@ -1014,9 +1029,9 @@ here.
   recorded so a future agent recognises the sentence rather than treating it as new evidence.
 - **Coronal Heating, Solar Flares, X-ray emission** — no corresponding functionality.
 - **Magnetic reconnection has no row here.** It is arguably the package's central science theme
-  (Field 16 sets out the evidence), and the seven-term vocabulary simply has no term for it. This is
-  the reason the `magnetic reconnection` keyword was added to Field 16, and the reason this field looks
-  thinner than the software's reconnection focus would suggest.
+  (Field 16 sets out the evidence), and the vocabulary enumerated above simply has no term for it.
+  This is the reason the `magnetic reconnection` keyword was added to Field 16, and the reason this
+  field looks thinner than the software's reconnection focus would suggest.
 - **Nor do the other phenomena the software actually classifies.** `sitl_parsing.py`'s event
   classifier emits `DIPOLARIZATION_FRONT`, `BURSTY_BULK_FLOW`, `PLASMA_JET`, `FLUX_ROPES` and
   `PLASMA_FLOWS`, and `event_search` ships presets for dipolarization fronts and electron diffusion
@@ -1060,17 +1075,18 @@ that day).
   "Maintained?: yes" shield. `Inactive` is the strongest status the published evidence supports
   without inventing an intent. (GitLab's unauthenticated project response does not expose the
   `archived` flag at all, so archival status is not usable evidence either way here.)
-- **Moved** — no successor location is announced. The `aidaspace` GitLab group still holds only
-  `aidapy`, `heliopy_multid` and `notebooks_aida`.
+- **Moved** — no successor location is announced. When this record was compiled the `aidaspace`
+  GitLab group held only `aidapy`, `heliopy_multid` and `notebooks_aida`.
 
 **Caveat for a future refresh.** This is a 2026 judgement about a repository whose trunk last moved in
 2021 and whose last activity of any kind was 2022-03-03. The H2020 AIDA project that funded it has
 ended and the project website is gone: `http://aida-space.eu/AIDApy_AIDAdb`, the URL that Arró,
-Califano & Lapenta (2020) give for accessing the AIDA database, no longer responds. If a maintainer
-ever declares end-of-life or asks for a new maintainer, `Unsupported` becomes the correct value; if
-someone resumes releases, `Active`.
+Califano & Lapenta (2020), `https://doi.org/10.1051/0004-6361/202038696`, give for accessing the AIDA
+database, no longer responds. If a maintainer ever declares end-of-life or asks for a new maintainer,
+`Unsupported` becomes the correct value; if someone resumes releases, `Active`.
 
-**This field is currently null in HSSI**, which is a real gap rather than a curation decision.
+**This field held no value in HSSI until this refresh**, which was a real gap rather than a curation
+decision.
 
 ### 24. Documentation (RECOMMENDED)
 **Value:** https://aidapy.readthedocs.io
@@ -1102,25 +1118,23 @@ Independently corroborated twice: Crossref's funding block for
 funding from the European Unions Horizon 2020 research and innovation programme under grant agreement
 No 776262 (AIDA)]".
 
-**Why the name changes.** HSSI currently stores the organization as
-`European Commission - Horizon 2020` with an empty identifier. Horizon 2020 is the European Union's
-funding *programme*, not an organization; the funding body is the European Commission, which
-`https://api.ror.org/v2/organizations` resolves to `https://ror.org/00k4n6c32` (display name
-"European Commission", aliases including "EC", located in Belgium). This field asks for one
-organization per entry with acronyms expanded, so the programme name belongs to the award context in
-Field 26 rather than inside the funder's name, and the ROR makes the organization machine-identifiable
-where the stored empty identifier does not.
+**Why the recorded name is not the label it replaced.** Until this refresh the record carried the
+organization as `European Commission - Horizon 2020` with an empty identifier. Horizon 2020 is the
+European Union's funding *programme*, not an organization; the funding body is the European
+Commission, which `https://api.ror.org/v2/organizations` resolves to `https://ror.org/00k4n6c32`
+(display name "European Commission", aliases including "EC", located in Belgium). This field asks for
+one organization per entry with acronyms expanded, so the programme name belongs to the award context
+in Field 26 rather than inside the funder's name, and the ROR makes the organization
+machine-identifiable where that identifier-less label did not.
 
-**How this resolves against what HSSI stores, and why no rename is needed.** Two organization rows
-exist for this funder: one named `European Commission` that already carries the ROR
-`https://ror.org/00k4n6c32`, and a separate, identifier-less row named
-`European Commission - Horizon 2020`, which is the label this software's funding was stored under. The
-settled outcome is to associate the ROR-identified row — which is exactly the value recorded above —
-rather than to rename anything. A rename would not work in any case: organization resolution matches
-on the identifier and fills only a *blank* name, so an existing row whose name differs keeps its
-stored label. Because the correct row already carries the correct name, supplying the ROR is
-sufficient here, and the identifier-less `European Commission - Horizon 2020` row simply stops being
-the row this record points at.
+**Why this needed no rename.** Two organization rows exist for this funder: one named
+`European Commission` carrying the ROR `https://ror.org/00k4n6c32`, and a separate, identifier-less
+row named `European Commission - Horizon 2020`, which was the label this software's funding had been
+stored under. The settled outcome was to associate the ROR-identified row — exactly the value recorded
+above — rather than to rename anything, and that is the row this record points at. A rename would not
+have worked in any case: organization resolution matches on the identifier and fills only a *blank*
+name, so an existing row whose name differs keeps its stored label. Because the ROR-identified row
+already carried the right name, supplying the ROR was sufficient.
 
 A related constraint worth knowing before a later refresh: the funder-to-award association renders on
 the software's detail page but is not writable through any API path, so keeping the award linkage
@@ -1338,8 +1352,10 @@ every declared dependency at the pinned revision:
   project of that name is unrelated to anything AIDApy imports). From `requirements.txt`: `scipy`,
   `pandas`, `ConfigUpdater`, `coverage`, `pytest`, `Sphinx`, `sphinx_rtd_theme`. From the `ml` extra:
   `torch`, `torchvision`, `optuna`, `plotly`, `sklearn`, `h5py`, `joblib`, `tensorboard`,
-  `albumentations`, plus `skorch` from `requirements.txt`. From the `vdf_cub` extra: `tricubic`. Also
-  `opencv` (imported as `cv2` by the coronal-hole and K-means modules but not declared at all).
+  `albumentations`, plus `skorch` from `requirements.txt`. From the `vdf_cub` extra: `tricubic`. From
+  `tests_require` and the `doc` extra, both development-only: `pylint`, `pytest-cov`, `ipython`,
+  `ipykernel`, `nbsphinx` and `sphinxcontrib-apidoc`. Also `opencv` (imported as `cv2` by the
+  coronal-hole and K-means modules but not declared at all).
 - *`cdflib`* — declared in `install_requires` and used by `modified_cluster.py` to read Cluster CDFs.
   Closer to the domain than the stack above, but it is a file-format reader: reading CDF files is I/O
   plumbing, not a relationship that characterises this software, and the format itself is recorded in
@@ -1418,8 +1434,12 @@ an identifierless entry either binds to an arbitrary same-name row or creates a 
 one.
 
 **The evidence base.** `aidapy/data/mission/mission_settings/mms.json` and `cluster.json` are the
-product catalogues that drive every download, and each product entry names the instrument it comes
-from in an `"instr"` key. `doc/source/mission.rst` establishes the spacecraft range: "Probes that can
+product catalogues that drive the MMS and Cluster downloads, and every one of their product entries
+names the instrument it comes from in an `"instr"` key (22 entries and 8 respectively at the pinned
+revision). The third catalogue, `omni.json`, names no instrument at all — each of its three entries
+carries `"instr": "low"` — which fits OMNI being a derived multi-mission product rather than an
+observatory with instruments; Field 32 sets out why it is not listed there.
+`doc/source/mission.rst` establishes the spacecraft range: "Probes that can
 be selected are probe1, probe2, probe3 and probe4 for MMS and Cluster and probe1 for OMNIWeb", and the
 CDF keys are templated per probe (`mms${probe}_fgm_b_${coords}_${mode}_l2`,
 `B_vec_xyz_${coords}__C${probe}_CP_FGM_${mode}`). The curlometer requires all four spacecraft
@@ -1514,7 +1534,8 @@ velocity, total/parallel/perpendicular temperature and the 3D ion distribution).
 
 A finer alternative was considered and not used. The repository's CDF keys name the CIS **HIA**
 sub-sensor specifically (`CP_CIS-HIA_ONBOARD_MOMENTS`, `CP_CIS-HIA_HS_MAG_IONS_PF`), and the
-vocabulary carries two HIA-specific rows, `Cluster Ion Spectrometry : Hot Ion Analyser` at
+vocabulary carried two HIA-specific rows when this record was compiled, both named
+`Cluster Ion Spectrometry : Hot Ion Analyser`, at
 `https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/Cluster1/CIS-HIA` and
 `https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/Cluster3/CIS-HIA` — for Cluster 1 and Cluster 3
 only. Choosing those would be more precise about the sensor but would silently narrow the association
@@ -1572,11 +1593,12 @@ support for those missions.
   event-search presets (`_settings_df` and `_settings_edr` set `"mission": "mms"`), an MMS SITL report
   parser (`aidapy/tools/sitl_parsing.py`), and MMS-specific tests
   (`aidapy/tests/test_vdf_mms.py`, `aidapy/aidaxr/tests/test_vdf_mms.py`).
-- **Cluster** — an addition. `aidapy/data/mission/cluster.py` and `modified_cluster.py` implement a
-  dedicated manager that downloads from the Cluster Science Archive; `mission_settings/cluster.json`
-  is an eight-product catalogue; `doc/source/mission.rst` lists Cluster among the three selectable
-  missions and gives it Level-3 `j_curl`, `i_beta`, `e_beta` and `mag_elev_angle` products; and
-  `set_load_config(cluster_cookie=...)` exists specifically to configure Cluster archive access.
+- **Cluster** — added by this refresh. `aidapy/data/mission/cluster.py` and `modified_cluster.py`
+  implement a dedicated manager that downloads from the Cluster Science Archive;
+  `mission_settings/cluster.json` is an eight-product catalogue; `doc/source/mission.rst` lists
+  Cluster among the three selectable missions and gives it Level-3 `j_curl`, `i_beta`, `e_beta` and
+  `mag_elev_angle` products; and `set_load_config(cluster_cookie=...)` exists specifically to
+  configure Cluster archive access.
 
 **Considered and rejected: Solar Dynamics Observatory**
 (`https://spase-metadata.org/SMWG/Observatory/SDO`). The case for it is real and was weighed, not
@@ -1639,7 +1661,7 @@ the PyHC registry entry has no `logo:` key. The value is settled as recorded: th
 the software's own documentation displays is a better answer to this field than an empty value, and
 the caveat is kept here so that the provenance of the image is not mistaken.
 
-**This field is currently empty in HSSI.**
+**This field held no value in HSSI until this refresh.**
 
 ---
 
