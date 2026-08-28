@@ -152,7 +152,7 @@ The complete stored 15-author set is retained in its established order.
 4. **Bryan Harter** — https://orcid.org/0000-0002-3908-9001 — Affiliation: Laboratory for Atmospheric and Space Physics (https://ror.org/01fcjzv38)
 5. **htyeim (GitHub)** *(stored as givenName `htyeim`, familyName `(GitHub)`)* — Identifier: Not found — Affiliation: Not found
 6. **Jack Ireland** — https://orcid.org/0000-0002-2019-8881 — Affiliation: Goddard Space Flight Center (https://ror.org/0171mag52)
-7. **Alexis Jeandet** — https://orcid.org/0000-0003-2892-6924 — Affiliation: Laboratory of Plasma Physics (LPP/CNRS) (https://ror.org/05c95bg36)
+7. **Alexis Jeandet** — https://orcid.org/0000-0003-2892-6924 — Affiliation: Laboratoire de Physique des Plasmas (https://ror.org/05c95bg36)
 8. **Hugo van Kemenade** — https://orcid.org/0000-0001-5715-8632 — Affiliation: Nord Software (no ROR)
 9. **Pey Lian Lim** — https://orcid.org/0000-0003-0079-4114 — Affiliation: Space Telescope Science Institute (https://ror.org/036f5mx38)
 10. **Michael Hirsch** — https://orcid.org/0000-0002-1637-6526 — Affiliations: Boston University (https://ror.org/05qwgg493); Scivision, Inc. (no ROR)
@@ -238,12 +238,14 @@ creating a second record for the same person.
   Kiel" — so the acronym string and the expanded string denote one organization. No ROR record exists
   for the institute (a ROR v2 search for it returns nothing), so the expanded name is correctly
   identifierless and no identifier should be invented or attached to it.
-- **Affiliation naming — Alexis Jeandet.** The stored English form
-  `Laboratory of Plasma Physics (LPP/CNRS)` is kept. ROR's own display name for the same organization,
-  `Laboratoire de Physique des Plasmas` (`https://ror.org/05c95bg36`), was considered as an expansion
-  and not adopted: the ROR identifier already fixes the organization's identity, and the stored
-  English-plus-acronym label was deliberately retained rather than replaced by the French display
-  name. This is a rejected alternative, not an outstanding acronym expansion.
+- **Affiliation naming — Alexis Jeandet.** The recorded form is ROR's own display name for the
+  organization, `Laboratoire de Physique des Plasmas` (`https://ror.org/05c95bg36`). An earlier
+  revision of this record kept HSSI's stored English form `Laboratory of Plasma Physics (LPP/CNRS)`
+  on the reasoning that the ROR identifier already fixes identity; that reasoning was superseded once
+  the ROR record was read in full. `Laboratory of Plasma Physics` is only an English *alias* there and
+  `LPP` an acronym, so the stored label corresponded to no name form on the record at all. The
+  organization row was corrected accordingly, and the superseded English-plus-acronym label is noted
+  here so it is not reintroduced.
 
 *Git contributors not treated as authors:* `git shortlog -sne` and the GitHub
 contributors list include Mykhaylo Shumko, David Turner, Brad Trantham, Stuart Mumford, Warrick Ball,

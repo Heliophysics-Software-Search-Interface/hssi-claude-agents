@@ -115,7 +115,7 @@ HSSI does not expose the original submitter through the view API. The Speasy wor
 - **Name:** Alexis Jeandet
 - **Author Identifier:** `https://orcid.org/0000-0003-2892-6924`
 - **Affiliation:**
-  - **Organization:** Laboratory of Plasma Physics (LPP/CNRS)
+  - **Organization:** Laboratoire de Physique des Plasmas
   - **Affiliation Identifier:** `https://ror.org/05c95bg36`
 - **Source:** From existing HSSI record. Re-verified: `CITATION.cff`, `pyproject.toml` `authors`/`maintainers`, `AUTHORS.rst` (Development Lead), Zenodo + DataCite creators, and the author's ORCID record (current employment "Laboratoire de Physique des Plasmas", ROR `05c95bg36`, since 2008 — an exact ROR match to the existing HSSI affiliation).
 
@@ -132,7 +132,7 @@ HSSI does not expose the original submitter through the view API. The Speasy wor
 - **Name:** Nicolas Aunai
 - **Author Identifier:** `https://orcid.org/0000-0002-9862-4318`
 - **Affiliation:**
-  - **Organization:** Laboratory of Plasma Physics (LPP/CNRS)
+  - **Organization:** Laboratoire de Physique des Plasmas
   - **Affiliation Identifier:** `https://ror.org/05c95bg36`
 - **Source:** `CITATION.cff` (3rd author), Zenodo v1.7.1 creators, DataCite concept-DOI creators. Affiliation from the author's ORCID record: current employment "Laboratoire de Physique des Plasmas / CNRS" (since 2014) — matched by institution to the **existing** HSSI organization row for LPP (ROR `05c95bg36`).
 - **Affiliation, and the add-only constraint that governs it.** The LPP affiliation recorded above is the affiliation Nicolas Aunai holds, on the ROR-backed organization row (`https://ror.org/05c95bg36`), and it is the only LPP organization he is associated with. A durable platform constraint governs any future change here: an affiliation can only ever be **added** to a person through the metadata update path — it can never be replaced or removed there — so recording an affiliation for an institution the person already carries under a differently-named organization row leaves a permanent duplicate that no later metadata update can undo. That constraint is why this value was once withheld: a second, identifierless organization row denoted the same laboratory, and recording the ROR-backed row while that duplicate stood would have left him permanently showing two affiliations for one institution. Those identifierless rows no longer exist and the laboratory is represented by the single ROR-backed row above, so the constraint no longer stands against this value — but it still binds a future agent, who must resolve any name variant of this laboratory to `https://ror.org/05c95bg36`, and check for an existing same-institution affiliation, rather than adding a second organization for it.
