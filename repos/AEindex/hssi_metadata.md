@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/AEindex
 **Source Revision:** bcb6ac4aa2c1691d12dbf23ac4f9c9f7eb002c8c
 **Extraction Date:** 2026-08-29
-**Validation Date:** 2026-08-29
+**Validation Date:** 2026-08-31
 **Validation Status:** PASS
 
 ---
@@ -12,10 +12,19 @@
 ## Scope note — read this before weighing any evidence below
 
 `AEindex` is a very small, archived package: one Python module (`aeindex/__init__.py`, two functions),
-one command-line script (`plotAE.py`), and packaging files. It has no DOI, no reference publication,
-no test suite, no documentation site, and no data-retrieval code. Several fields below are therefore
+one command-line script (`plotAE.py`), and packaging files. It has no reference publication, no test
+suite, no documentation site, and no data-retrieval code. Several fields below are therefore
 "Not found" as a *researched conclusion*, not as an unexamined gap, and the reasoning for each
 emptiness is recorded so a future refresh does not have to re-derive it.
+
+**The repository is not a complete record of this software's published artifacts.** A registered
+Zenodo DOI pair exists for it (Field 2), deposited in 2017 and never advertised anywhere in the
+repository: no revision of `README.md` or `README.rst` anywhere in the history carries a DOI badge or
+names Zenodo, and there is no `CITATION.cff`, `.zenodo.json` or `codemeta.json` at any point. So a
+question of the form "does this software have an X?" must be put to the archive as well as to the
+repository, and put using the software's *descriptive* name rather than its repository name. An
+earlier revision of this dossier concluded from repository-keyed evidence alone that no DOI existed;
+Field 2 records that error, its cause, and the search that does find the deposit.
 
 Two properties of this repository's packaging metadata distort naive extraction and must be kept in
 mind for Fields 5, 12, 16, 20, 21 and 23:
@@ -40,10 +49,86 @@ The bracketed placeholder is the standing convention for this field in these dos
 submitter identity is supplied at submission time and is not repository-derived metadata.
 
 ### 2. Persistent Identifier (RECOMMENDED)
-Not found
+https://doi.org/10.5281/zenodo.789099
 
-No DOI exists for this software. Four independent checks agree, and they are recorded here so a later
-refresh need not repeat them:
+**Corrected 2026-08-31. This field previously read "Not found."** That was wrong: a registered Zenodo
+DOI pair for this software has existed since 2017. HSSI held no persistent identifier for this
+software before this refresh. The superseded reasoning and the reason it failed are both recorded
+below, because the failure mode is general and will recur if it is not named.
+
+**Why the concept DOI.** `10.5281/zenodo.789099` is the Zenodo *concept* DOI — the software-level
+identifier. Zenodo's own record says so outright, reporting `conceptdoi: 10.5281/zenodo.789099` and
+`conceptrecid: 789099`, and DataCite corroborates through the reciprocal pair: `789099` carries
+`HasVersion` to `10.5281/zenodo.376875`, and `376875` carries `IsVersionOf` back to `789099`. Field 2
+takes the software-level identifier and the version-specific DOI belongs to Field 12 — the settled
+convention across this cohort, applied the same way for DASCutils, the Digital Meridian Spectrometer,
+AstrometryAzEl and ApexPy — so `376875` is recorded there, not here. There is one version record under
+the concept, so the concept DOI presently resolves to `376875`; that is the concept relation working
+as intended, not a sign that the two DOIs are interchangeable.
+
+**What the deposit is.** Title "Auroral Electrojet Tools"; publisher Zenodo; Issued 2017-03-13;
+`resourceTypeGeneral: Software`; creator "Hirsch, Michael" with affiliation "Boston University";
+keyword `auroral electrojet`; member of the Zenodo `spacephysics` community; description "This program
+loads and plots Auroral Electrojet data of specified parameters from the original ASCII data tables."
+Both DOI records carry the same values for all of these. The creator affiliation independently
+corroborates the Boston University affiliation already recorded in Field 6; it does not change it.
+
+**That this deposit is this software.** The identity does not rest on the title resembling the
+software's subject. The deposit's single artifact, `AE-index-plot-1.0.tar.gz`, unpacks to six files —
+`.gitignore`, `LICENSE`, `README.rst`, `aeindex/__init__.py`, `plotAE.py`, `setup.py` — each
+byte-identical to the corresponding blob at this repository's `v1.0` tag, commit `67ddc628` of
+2017-03-13, and the two file sets are the same set in both directions: the tag tree holds nothing the
+tarball lacks and the tarball holds nothing the tag tree lacks. Timing corroborates the artifact
+match: the GitHub release `v1.0` was published 2017-03-13T06:11:06Z and the Zenodo record was created
+2017-03-13T06:15:58Z, about five minutes later.
+
+**The deposit is a manual upload, not a GitHub–Zenodo integration deposit — and that does not weaken
+it.** Neither DOI record carries `IsSupplementTo`, a GitHub `/tree/<tag>` relation, or any GitHub
+reference at all; Zenodo reports no related identifiers for the record; and the description is
+hand-written prose rather than release notes. The archive's own shape says the same. Its root
+directory is named `AE-index-plot-1.0`, after the repository's then-name `scivision/AE-index-plot`
+(Field 3), whereas the tagged `setup.py` declares `name='AEindex_plot'` and no version at all; and the
+tarball contains neither `PKG-INFO` nor an `*.egg-info` directory, which a setuptools sdist would. It
+is a hand-rolled archive of the tagged working tree.
+
+An era-matched control shows this is a real distinction and not a limitation of what Zenodo recorded
+in 2017. The same author's integration deposits from the same period do carry the signature:
+`10.5281/zenodo.162066` (DASCutils, Issued 2016-10-19) has `IsSupplementTo` pointing at
+`https://github.com/scienceopen/dascutils/tree/v1.0`, and `10.5281/zenodo.167565` (Meridian
+Spectrometer Reader, Issued 2016-11-20) has `IsSupplementTo` pointing at
+`https://github.com/scienceopen/meridian-spectrometer-reader/tree/v1.0`. This deposit has none of it.
+What follows is only that the DOI was minted by hand: the artifact identity above ties the deposit to
+this software independently of any declared repository link, so the DOI is no less this software's for
+having been uploaded manually.
+
+**Why the previous "Not found" was reached, and the lesson that stops it recurring.** The four checks
+recorded in the superseded version of this field were accurately executed, and their results still
+hold on re-run — `https://zenodo.org/api/records?q=AEindex` still returns the same two unrelated
+records (`10.5281/zenodo.4718561`, a soft-proton-intensity prediction dataset; `10.5281/zenodo.17494514`,
+a brain-activity/geomagnetic sleep study); the exact-string search for `"space-physics/AEindex"` still
+returns zero; `https://api.datacite.org/dois?query=%22AEindex%22` still returns a total of 0. None of
+them could ever have found this deposit, because **every one of them keyed on the string `AEindex` or
+on the repository path, and the deposit's metadata contains neither.** Inspecting the full Zenodo
+record confirms it: the tokens `AEindex`, `aeindex`, `space-physics`, `github` and `scivision` appear
+nowhere in it. The one repository-derived string anywhere in the deposit is `AE-index`, inside the
+artifact filename, and Zenodo does not index filename text — a quoted search for `"AE-index-plot"`
+returns zero records.
+
+So those four checks were not four independent confirmations. They shared a single point of failure,
+and **a set of checks that share one failure mode is one check.** The README-badge check is that same
+failure in another guise: it asked the repository whether it advertised a DOI. The repository does not,
+at any revision — but that is a fact about this author's badging practice for this repository, not
+about whether a deposit exists.
+
+**The search that does find it**, recorded so the next refresh uses it: query Zenodo or DataCite on the
+software's *descriptive* name, independently of any repository naming. A Zenodo search for
+`"Auroral Electrojet"` — the software name this record already stores in Field 7 — returns this deposit
+among its hits, and a DataCite query for `titles.title:"Auroral Electrojet Tools"` returns exactly the
+two DOIs recorded here. This record's own Field 7 value would have found what its Field 2 checks could
+not.
+
+**Durable evidence that survives the correction.** The following was gathered for the superseded
+conclusion, remains true, and is kept because it still answers real questions:
 
 - **Repository history.** Exactly 19 distinct file paths appear anywhere on the pinned history:
   `.coveragerc`, `.flake8`, `.gitattributes`, `.github/CODE_OF_CONDUCT.md`, `.github/FUNDING.yml`,
@@ -55,15 +140,21 @@ refresh need not repeat them:
   additions-only listing, which undercounts by one.
 - **README badges.** The pinned `README.md` carries one badge, a Travis CI build badge pointing at
   `https://travis-ci.com/space-physics/AEindex` (the `.travis.yml` it referred to was deleted at the
-  pinned commit itself, so the badge is dead). There is no DOI badge. By contrast, the same author's
-  `lowtran` carries a Zenodo DOI badge in its PyPI long description, so the absence here is a real
-  difference in practice, not an oversight in how badges were searched.
-- **Zenodo.** A search of `https://zenodo.org/api/records?q=AEindex` returns two records
-  (`10.5281/zenodo.4718561`, a soft-proton-intensity prediction dataset; `10.5281/zenodo.17494514`,
-  a brain-activity/geomagnetic sleep study). Neither is this software. A search for the exact string
-  `"space-physics/AEindex"` returns zero records, so no GitHub-Zenodo archive of this repository
-  exists.
-- **DataCite.** `https://api.datacite.org/dois?query=%22AEindex%22` returns a total of 0.
+  pinned commit itself, so the badge is dead). There is no DOI badge — not at the pinned revision, and
+  not in the `v1.0` `README.rst` either. By contrast, the same author's `lowtran` carries a Zenodo DOI
+  badge in its PyPI long description, so the difference in badging practice between his repositories is
+  real; what it is not, as above, is evidence about whether a deposit exists.
+- **No GitHub–Zenodo archive of this repository exists.** The zero result for `"space-physics/AEindex"`
+  remains sound for that narrower question: the integration signature is absent, which is independently
+  what the manual-upload analysis above concludes. What it cannot establish is the broader claim that
+  no DOI exists.
+
+**A trap the deposit sets for other fields.** Both DOI records declare the licence `cc-by-4.0`. That is
+not this software's licence at any point in its history: the `v1.0` tree the deposit archives carries
+the GNU Affero General Public License v3, and the pinned revision carries Apache-2.0 (Field 15).
+**Do not re-derive Field 15 from the DOI record** — a DOI-autofill path that copies Zenodo's
+declaration verbatim would introduce a licence this software has never carried. The deposit's
+publication date of 2017-03-13 sets a related trap for Field 10, addressed in the note there.
 
 ### 3. Code Repository (MANDATORY)
 https://github.com/space-physics/AEindex
@@ -293,19 +384,51 @@ the first commit, `5d4bbd02fff9d0bdd42bc546484fe432533162df` "Initial commit", i
 2017-02-23 17:47:14 -0500, i.e. 22:47:14Z — the same date in UTC and in the author's local time, so the
 value is not sensitive to timezone interpretation.
 
-### 11. Publisher (RECOMMENDED)
-- **Organization:** GitHub
-- **Publisher Identifier:** https://github.com
+**Considered and not selected: the Zenodo deposit's Issued date, 2017-03-13.** The DOI recorded in
+Field 2 was published on that date, and now that Field 11 names Zenodo as the publisher a reader will
+reasonably ask why this field does not follow it. The field asks for the date of first
+broadcast/publication, and this software was first published — publicly readable at its repository —
+on 2017-02-23, eighteen days before it was deposited. The deposit date is not lost: it is the release
+date of `v1.0`, recorded in Field 12 alongside that version's DOI. The recorded value is therefore left
+unchanged. The alternative reading — that the field's "used for the initial version of the software"
+points at the first tagged release rather than at first publication — is noted here so that a future
+agent weighs it deliberately rather than discovering the eighteen-day gap and closing it silently in
+one direction or the other.
 
-Carried over from the existing HSSI record, and correct under the field's own rule: with no DOI (Field 2), the publisher is
-the repository host. Zenodo would be the answer only if a GitHub-Zenodo archive existed, and Field 2
-records that it does not.
+### 11. Publisher (RECOMMENDED)
+- **Organization:** Zenodo
+- **Publisher Identifier:** https://zenodo.org
+
+**Corrected 2026-08-31.** This field previously read `GitHub` / `https://github.com`, on the rationale
+that "with no DOI (Field 2), the publisher is the repository host" and that "Zenodo would be the answer
+only if a GitHub-Zenodo archive existed." Both halves of that rationale fail. A DOI does exist
+(Field 2), so the field's no-DOI branch — "If no DOI has been obtained, indicate the repository host" —
+no longer applies; and the field's positive rule is *a DOI obtained through Zenodo*, with the
+GitHub–Zenodo workflow named as an example of how that comes about ("e.g., GitHub-Zenodo workflow")
+rather than as a condition on it. DataCite reports `publisher: "Zenodo"` for both the concept and the
+version DOI. HSSI held `GitHub` in this field before this refresh.
+
+**This entry reaches the cohort rule by a different route than its siblings.** DASCutils, the Digital
+Meridian Spectrometer, AstrometryAzEl and ApexPy all record Zenodo here because their DOIs were minted
+through the GitHub–Zenodo release integration. This software's DOI was uploaded to Zenodo by hand, with
+no integration and no repository link in the deposit at all (the evidence is in Field 2). The route
+differs; the publisher does not. Zenodo published the deposit that carries the DOI either way — which
+is precisely why the example in the field's rule must not be read as the rule itself.
+
+**From the searcher's side this is also the only non-confusing option.** The record shows a resolving
+Zenodo DOI in Field 2; "Publisher: GitHub" displayed beside it would invite a reader to conclude that
+one of the two must be wrong.
+
+Zenodo has no ROR that would serve as a better identifier — a ROR v2 query for "Zenodo" returns zero
+results — so `https://zenodo.org` is the URL fallback the field allows ("ROR identifier when available
+or URL otherwise"). Do not substitute CERN's ROR: CERN operates Zenodo but is not the publisher named
+in the DOI metadata.
 
 ### 12. Version (RECOMMENDED)
 - **Version Number:** v1.0
 - **Version Date:** 2017-03-13
 - **Version Description:** Initial
-- **Version PID:** Not found
+- **Version PID:** https://doi.org/10.5281/zenodo.376875
 
 This field was the substantive problem with this entry. As stored on 2026-08-29, before this refresh,
 HSSI held version `v2.4.0` with no release date and no version PID. **`2.4.0` is a different package's
@@ -365,8 +488,28 @@ rejected: it is defensible on the grounds that no release corresponds to the arc
 code, and that recording a 2017 version alongside a 2022 last-push date could mislead, but it discards
 a true fact in order to avoid a partial one.
 
+**The Version PID, recorded 2026-08-31.** This sub-field previously read `Not found`, justified by
+Field 2's superseded conclusion that no DOI existed for any version; that justification fell with
+Field 2's correction. `https://doi.org/10.5281/zenodo.376875` is the version-specific Zenodo DOI paired
+with the concept DOI recorded in Field 2, carrying `IsVersionOf` back to `10.5281/zenodo.789099`. It
+belongs here rather than in Field 2 under the cohort convention, and it is the right version DOI for
+*this* version row on direct evidence rather than by elimination: the deposit's artifact
+`AE-index-plot-1.0.tar.gz` unpacks to a file set byte-identical to the `v1.0` tag tree (the full
+identity argument is in Field 2), its Issued date is 2017-03-13, and the Zenodo record was created
+about five minutes after the GitHub `v1.0` release was published. Version number, version date and
+version PID recorded here therefore all describe one and the same release. The PID inherits the same
+limitation as the number — it archives the 2017 release, not the archived HEAD — and that is a reason
+to read the three sub-fields together, not a reason to doubt any of them. HSSI held no version PID for
+this software before this refresh.
+
+**One thing not to expect here.** Neither Zenodo nor DataCite declares a `version` string for this
+deposit; both report it as null. Where a sibling record in this cohort does declare one and can be
+matched on that string — DASCutils's `v3.0.0`, AstrometryAzEl's `v1.4.1` — the pairing of this DOI to
+`v1.0` rests on artifact identity and timing instead. That is stronger evidence, not weaker — but an agent
+looking for a declared version string will not find one, and must not read its absence as a mismatch.
+
 `v2.4.0` must not return under any reading: it is not a version of this software and it carries no
-date. The Version PID stays empty — there is no DOI for any version (Field 2).
+date.
 
 ### 13. Programming Language (RECOMMENDED)
 - Python 3.x
