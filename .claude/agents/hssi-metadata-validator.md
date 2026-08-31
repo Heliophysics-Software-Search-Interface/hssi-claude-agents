@@ -363,6 +363,17 @@ A file NEEDS REVISION if there are any ERRORS. Warnings alone do not fail valida
 1. **Cite your sources.** Every finding must reference the specific file, line, URL, or API response that supports it. Never say "this seems wrong" without evidence.
 2. **Don't fabricate fixes.** If you're not sure what the correct value should be, say so. A finding with "Suggested fix: Investigate further" is better than a wrong suggestion.
 3. **Check allowed values against the live API, not the snapshot.** For controlled-list fields (Software Functionality, Related Region, Programming Language, Data Sources, File Formats, Operating System, CPU Architecture, Phenomena, Development Status, License), the authority is `GET <target>/api/models/<Model>/rows/all/` — the endpoint for each field is tabled in the `hssi-field-definitions` skill. The **Possible Values** lists in `resource_submission_form_fields.md` are a **dated snapshot** for orientation only; a value's presence there is not evidence it is valid, and its absence is not evidence it is invalid. **Only raise an ERROR when the live endpoint has no matching row.** Match case-insensitively after trimming (that is exactly what the backend's `name__iexact` does) but flag any other difference — a missing trailing period or a straight-vs-curly quote is a real submission failure, not a nitpick. Keywords (Field 16) is an open vocabulary and can never fail this check. Where prod and localhost differ (as `License` does), validate against the target actually in play.
+
+   **`<target>` is never yours to assume. If the brief does not name one, stop and ask for it — do
+   not fall back to a default, and do not infer it from a URL that happens to appear in the metadata
+   file.** Observed twice in one entry (2026-08-31): a validator briefed with stored values but no
+   target URL silently checked `https://hssi.hsdcloud.org` (production) while the entry was being
+   refreshed against `http://localhost`. Nothing broke only because the two happened to agree on the
+   fields in question — for an entry that had diverged between the two, the report would have been
+   confidently wrong in either direction, and nothing in it would have revealed which host answered.
+   **State the target you used in your report, every time**, so a reader can tell a real agreement
+   from a coincidental one. Whoever briefs you should name it; when they haven't, that is a blocker,
+   not a detail to fill in.
 4. **Be thorough on Software Functionality and Related Region.** These are the two most important fields. Spend extra time verifying them. Read the code, not just the README.
 5. **Don't penalize "Not found" on optional fields** unless you can actually find the data. "Not found" is a valid value for optional fields when the information genuinely doesn't exist.
 6. **Respect source priority.** If the metadata cites PyHC as a source, that takes precedence over SoMEF. The priority order is: PyHC > DataCite/Zenodo > Repository files > SoMEF > Code analysis.
