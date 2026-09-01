@@ -1221,7 +1221,7 @@ A previous version of this record reached the same conclusion but recorded only 
 rather than merely asserted.
 
 ### 33. Logo (OPTIONAL)
-- **URL:** https://raw.githubusercontent.com/astropy/repo_stats/main/dashboard_template/astropy_banner_gray.svg
+- **URL:** https://raw.githubusercontent.com/astropy/repo_stats/91d5871e034edb72af832ff662acd9ae5146fdc4/dashboard_template/astropy_banner_gray.svg
 
 This is the Astropy banner the README itself uses as the project logo (`README.rst` defines the
 `|Astropy Logo|` substitution from this image, targeting `https://www.astropy.org/`), served in raw
@@ -1232,6 +1232,13 @@ form. The URL returns the SVG document itself, with content type `image/svg+xml`
 a GitHub **blob** URL — a web page *about* the file. It returns `text/html`, not an image, so anything
 consuming this field as an image source gets a rendered HTML page. The raw form of the same asset is
 recorded instead. **Do not restore the blob URL even though it is what the README contains.**
+
+The raw URL is further pinned to the commit the banner file is at, rather than to `main`. A branch
+reference breaks silently the moment the file is renamed, moved or deleted — which matters more than
+usual here, since the asset lives in the `dashboard_template/` directory of a *separate* repository
+(`astropy/repo_stats`) whose layout is not governed by Astropy's release process. The pin also
+partly answers the fragility flagged below: the location can still change, but the recorded URL can no
+longer silently start serving something else.
 
 **Considered and not selected: https://www.astropy.org/_images/astropy_project_logo.svg.** The project
 website does host a compact, genuine Astropy Project logo mark (about 10 kB, correctly served as

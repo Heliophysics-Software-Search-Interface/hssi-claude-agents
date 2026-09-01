@@ -446,7 +446,7 @@
 **Source:** JOSS paper "Community Applications" section
 
 ### 33. Logo (OPTIONAL)
-**Value:** https://raw.githubusercontent.com/sunpy/ndcube/master/docs/logo/ndcube.png
+**Value:** https://raw.githubusercontent.com/sunpy/ndcube/0bf111ddf5c4e06899ce21c63a9c2a60833d682d/docs/logo/ndcube.png
 
 **Source:** PyHC registry and acknowledging.rst
 

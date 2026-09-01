@@ -1618,10 +1618,13 @@ only as worked examples, and their SPASE identifiers are recorded in Field 31 so
 can see they were evaluated and rejected on relevance rather than left unresolved.*
 
 ### 33. Logo (OPTIONAL)
-https://raw.githubusercontent.com/PlasmaPy/PlasmaPy-logo/main/exports/with-text-dark.png
+https://raw.githubusercontent.com/PlasmaPy/PlasmaPy-logo/50502799230ca74410992bc61d31048f785e6e42/exports/with-text-dark.png
 
 *The image `README.md` renders at the top of the page, served from the project's own
-`PlasmaPy/PlasmaPy-logo` repository. Verified to resolve.*
+`PlasmaPy/PlasmaPy-logo` repository. Verified to serve `image/png`. The URL pins the commit the file is
+at rather than the `main` branch that `README.md` and the registry reference — a branch reference
+breaks silently on any upstream rename, move or deletion, and this asset lives in a separate
+repository whose layout is not governed by PlasmaPy's release process.*
 
 *Considered and not selected: the PyHC registry lists a different asset from the same repository,
 `https://github.com/PlasmaPy/PlasmaPy-logo/raw/main/exports/graphic-circular.png` — a circular mark

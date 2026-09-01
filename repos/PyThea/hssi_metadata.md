@@ -882,11 +882,13 @@ of their imager support, not their ephemeris entries.
 
 ### 33. Logo (OPTIONAL)
 
-`https://raw.githubusercontent.com/AthKouloumvakos/PyThea/master/docs/logo/pythea_logo.png`
+`https://raw.githubusercontent.com/AthKouloumvakos/PyThea/f5bc63e11335b2fdaa0d49bc482083c65c8875bb/docs/logo/pythea_logo.png`
 
 *Source:* verified reachable and served as `image/png`. The file exists in the
 repository at `docs/logo/pythea_logo.png` and is the logo the project itself points to
-(`README.md:11,107`, `PyThea/PyThea_app.py:105`). SoMEF independently reported the identical URL.
+(`README.md:11,107`, `PyThea/PyThea_app.py:105`). SoMEF independently reported the same asset. The URL
+is pinned to the commit above rather than to the default branch that upstream and SoMEF reference, so
+no rename or move upstream can silently break it.
 
 ---
 
@@ -905,7 +907,8 @@ repository at `docs/logo/pythea_logo.png` and is the logo the project itself poi
 | 29 / 30 | `gcs_python` recorded as related rather than interoperable software; Field 30 rebuilt around demonstrated exchanges |
 
 Fields 4, 5, 14, 16–23, 25–27, 31 and 32 were substantially expanded from empty or minimal values.
-Fields 3, 10, 11, 13, 15, 24 and 33 were already correct and are unchanged. Field 28 is empty because
+Fields 3, 10, 11, 13, 15 and 24 were already correct and are unchanged. Field 33 names the same logo
+asset it always did, now recorded as a commit-pinned raw URL instead of a branch reference. Field 28 is empty because
 PyThea cites no dataset DOI.
 
 **Upstream data quirks worth remembering.** `CHANGELOG.md` mis-dates several releases — v1.0.0 as

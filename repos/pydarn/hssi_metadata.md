@@ -592,11 +592,11 @@
 ---
 
 ### 33. Logo (OPTIONAL)
-**Value:** https://raw.githubusercontent.com/SuperDARN/pydarn/main/docs/imgs/pydarn_logo.png
+**Value:** https://raw.githubusercontent.com/SuperDARN/pydarn/203ad0450906b8825b00dccf7b0126cd0fa5b955/docs/imgs/pydarn_logo.png
 
-**Source:** Repository file `docs/imgs/pydarn_logo.png` on the `main` branch; the URL serves the repository's PNG logo and matches the image formerly served through the stale ref path.
-**Previous URL and correction:** HSSI, README.md (first line) and the PyHC `projects.yml` `logo` field had all pointed at `.../pydarn/**master**/docs/imgs/pydarn_logo.png`. No `master` ref exists on the remote, so that URL resolves only through GitHub's legacy default-branch alias, which survived the `master` to `main`/`develop` rename and is not a guaranteed-stable contract. The value is therefore repointed at the **branch** form `main`, which is a real ref on the remote and currently identical to `develop`.
-**Why the branch form rather than a tag:** the tag-pinned `.../v4.3/docs/imgs/pydarn_logo.png` would freeze the logo at v4.3 and require an update at every release; the `main` branch form survives future releases.
+**Source:** Repository file `docs/imgs/pydarn_logo.png`, recorded as a raw URL pinned to the commit above; it serves the repository's PNG logo and matches the image formerly served through the stale ref path.
+**Previous URL and correction:** HSSI, README.md (first line) and the PyHC `projects.yml` `logo` field had all pointed at `.../pydarn/**master**/docs/imgs/pydarn_logo.png`. No `master` ref exists on the remote, so that URL resolves only through GitHub's legacy default-branch alias, which survived the `master` to `main`/`develop` rename and is not a guaranteed-stable contract. That rename is precisely the failure a mutable ref invites, so the value is repointed at a **commit-pinned** raw URL, which no upstream rename, move or deletion can silently break.
+**Why a commit rather than a tag or a branch:** the tag-pinned `.../v4.3/docs/imgs/pydarn_logo.png` would freeze the logo at v4.3 and require an update at every release. An earlier revision of this record answered that objection with the `main` branch form; a commit SHA answers it better, needing no per-release maintenance *and* being unable to move. A future logo redesign then becomes something a refresh notices and records deliberately, rather than something the catalogue inherits unannounced.
 **Upstream follow-up (outside HSSI's control):** PyHC's `projects.yml` still carries the stale `master` URL, and so does the repository's own README.md. Worth reporting upstream, but it does not block this correction.
 
 ---

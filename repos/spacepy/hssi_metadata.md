@@ -1176,8 +1176,10 @@ consumes the OMNI *data product* rather than supporting an instrument, so the as
 the observatory level. Field 31 stays empty.
 
 ### 33. Logo (OPTIONAL)
-https://raw.githubusercontent.com/spacepy/spacepy/main/Doc/source/_static/spacepy_logo.jpg
+https://raw.githubusercontent.com/spacepy/spacepy/cb983af96e06265dc35463e0d725a11eaf0682a6/Doc/source/_static/spacepy_logo.jpg
 
-The canonical logo asset in the repository, tracking the default branch. The PyHC registry points at
+The canonical logo asset in the repository, recorded as a raw URL pinned to the commit above rather
+than tracking the default branch — a branch reference breaks silently on any upstream rename, move or
+deletion, and a redesign should be recorded by a refresh rather than inherited unannounced. The PyHC registry points at
 the rendered documentation copy (`https://spacepy.github.io/_static/spacepy_logo.jpg`), which is the
 same image; the repository-hosted URL is preferred because it is the source of record.

@@ -304,7 +304,7 @@
 **Source:** Package analysis
 
 ### 33. Logo (OPTIONAL)
-**Value:** https://raw.githubusercontent.com/timduly4/pyglow/master/logo.png
+**Value:** https://raw.githubusercontent.com/timduly4/pyglow/1988757f3b6a4bd5ed98266a3fb1dc64f2513fc5/logo.png
 
 **Notes:** Logo shows airglow image from ISS. Also available via PyHC registry with alternate camo.githubusercontent.com URL.
 

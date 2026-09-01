@@ -1453,15 +1453,17 @@ observatory associations — they are service and deployment relationships, not 
 SWMF is designed to support, and the vocabulary is a mission and observatory list.
 
 ### 33. Logo (OPTIONAL)
-https://raw.githubusercontent.com/SWMFsoftware/SWMF/master/doc/Logo/SWMF-Logo-Color-LightBG-Horizontal.png
+https://raw.githubusercontent.com/SWMFsoftware/SWMF/127a73cb13951351d60e7936583f69f39bd0272e/doc/Logo/SWMF-Logo-Color-LightBG-Horizontal.png
 
 *Source note:* `doc/Logo/` holds the project's official logo set
 in colour and greyscale, for light and dark backgrounds, in horizontal, stacked and wordmark
 arrangements, with and without the CSEM lockup, together with `SWMF_Logo_Guide.pdf`. The
 `doc/Logo/README` records that "The logo was designed by Matthew Sturm graphics designer" and that
 the logos "are copyrighted and should not be modified in any way", so the URL points at the
-unmodified file as committed. The colour, light-background, horizontal variant without the lockup was
-chosen as the most legible against a light catalogue page.
+unmodified file as committed — pinned to that commit rather than to the `master` branch, which also
+means the copyright-bearing asset the catalogue displays cannot be silently substituted upstream. The
+colour, light-background, horizontal variant without the lockup was chosen as the most legible against
+a light catalogue page.
 
 The alternative `doc/Tex/SWMF_logo.png` is the manual's title-page image, kept in the LaTeX source
 tree rather than in the maintained logo set, so it is the less appropriate reference.

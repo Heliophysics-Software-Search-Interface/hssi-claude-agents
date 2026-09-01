@@ -1054,9 +1054,11 @@ had not read the JOSS paper's back matter.
   reason the field is empty; relevance is the reason.
 
 ### 33. Logo (OPTIONAL)
-- **Value:** https://raw.githubusercontent.com/nasa/Kamodo/master/docs/notebooks/Files/Kamodo.png
-- **Verified reachable** at this revision. This is the logo the README displays in its header banner
-  alongside the CCMC logo, which is why it is preferred over the alternatives.
+- **Value:** https://raw.githubusercontent.com/nasa/Kamodo/9004ec1bbf75495c8f376faa0d3b1dad3701e74f/docs/notebooks/Files/Kamodo.png
+- **Verified to serve `image/png`.** This is the logo the README displays in its header banner
+  alongside the CCMC logo, which is why it is preferred over the alternatives. The URL pins the commit
+  the logo file is at — not this record's Source Revision, which is a later commit — rather than the
+  `master` branch, so no upstream rename, move or deletion can silently break it.
 - **Alternatives:** the repository also carries `logos/Kamodo1.png`, `Kamodo2.png` and `Kamodo3.png`;
   the PyHC core registry points at
   `https://raw.githubusercontent.com/nasa/Kamodo/master/logos/Kamodo2.png`. Either would be

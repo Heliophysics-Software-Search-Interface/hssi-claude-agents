@@ -1113,7 +1113,7 @@ repository for any station other than Resolute Bay. `European Incoherent Scatter
 Association` and the Millstone Hill records — no reference to either appears in the repository.
 
 ### 33. Logo (OPTIONAL)
-https://github.com/jswoboda/GeoDataPython/raw/master/logo/logo1.png
+https://raw.githubusercontent.com/jswoboda/GeoDataPython/c3e29541327ec754eb5a2a9e8dd94bf1abee3328/logo/logo1.png
 
 The original submission carried no value for this field. The value above is deliberate and the
 objection to it was weighed; both halves are set out below, because the value looks odd on its face
@@ -1126,8 +1126,11 @@ curated community value, and community curation outranks automated extraction fo
 field like this one. The project itself agrees on the designation:
 the image lives in a directory the primary author named `logo/` (added 2015-06-12 in commit
 `aa77be4`), it is the file `logo1.png`, and `README.rst` displays it as the banner immediately under
-the title. Two independent sources therefore designate this URL as this software's logo, and Field 33
-is a presentational field asking for the link the project offers.
+the title. Two independent sources therefore designate this *file* as this software's logo, and Field
+33 is a presentational field asking for the link the project offers. The URL recorded above reaches
+that same file through a commit-pinned `raw.githubusercontent.com` path rather than the registry's
+`master`-referenced `/raw/` form: the registry is authoritative about which asset is the logo, not
+about the URL string, and a branch reference breaks silently on any upstream rename, move or deletion.
 
 **The content objection, considered and overruled.** The image's content is not a graphic identity. It
 is a

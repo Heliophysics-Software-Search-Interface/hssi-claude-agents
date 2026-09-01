@@ -1319,12 +1319,14 @@ Hinode (`SMWG/Observatory/Hinode`) — excluded with its SOT instrument, for the
 Wind, IMP 8 and Geotail — OMNI constituents, recorded as `OMNIWeb` in Field 17.
 
 ### 33. Logo (OPTIONAL)
-https://raw.githubusercontent.com/HelioML/HelioML/master/book/logo.png
+https://raw.githubusercontent.com/HelioML/HelioML/8d1b5102bf6e2954fbb0b306cf8578cd37c80d3e/book/logo.png
 
 `book/logo.png` is the book's declared logo and favicon
 (`book/_config.yml`: `logo: logo.png`, `html.favicon: logo.png`), and the image is a purpose-made
-HelioML mark — a book with a stylised setting sun and the word "HelioML". The raw URL on the default
-branch is publicly accessible and always serves the current logo.
+HelioML mark — a book with a stylised setting sun and the word "HelioML". The raw URL is publicly
+accessible and pinned to the commit above, so it cannot be broken by an upstream rename or move; a
+later logo redesign is something a refresh should notice and record deliberately rather than have
+the catalogue inherit unannounced.
 
 The built site's copy at `http://helioml.org/_static/logo.png` also resolves and was considered; the
 repository path is preferred because it is the source from which the site's copy is generated, and

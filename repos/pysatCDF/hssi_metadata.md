@@ -215,7 +215,7 @@ Python reader for NASA CDF file format
 - **Note:** As a general CDF reader, it supports data from any mission that uses CDF format rather than specific observatories
 
 ### 33. Logo (OPTIONAL)
-- **Logo URL:** https://raw.githubusercontent.com/pysat/pysatCDF/main/docs/images/logo.png
+- **Logo URL:** https://raw.githubusercontent.com/pysat/pysatCDF/0d0d0fa843e26d269b17591fd27e4561bb32d40f/docs/images/logo.png
 - **Source:** SoMEF regular expression extraction, PyHC registry
 
 ---

@@ -299,7 +299,7 @@
 **Note - REGO is an observatory, not an instrument.** REGO's SPASE identity is the imager network itself, so it belongs in Field 32; it was previously listed among the Field 31 instruments and has been moved here.
 
 ### 33. Logo (OPTIONAL)
-- **Value:** https://raw.githubusercontent.com/aurorax-space/pyaurorax/main/logo.svg
+- **Value:** https://raw.githubusercontent.com/aurorax-space/pyaurorax/52319d549ba9e86bc5c4e782a02e0fc222a117af/logo.svg
 - **Source:** README.md, PyHC registry, SoMEF
 
 ---

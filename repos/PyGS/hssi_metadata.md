@@ -258,9 +258,18 @@ https://github.com/AlexJinlei/Magnetic_Flux_Rope_Detection
 **Source:** From README.md and PyHC registry keywords
 
 ### 33. Logo (OPTIONAL)
-https://github.com/PyGSDR/PyGS/blob/main/logo/logo.png
+https://raw.githubusercontent.com/PyGSDR/PyGS/c12cc7a92352427a2cd6496d309e2417a7d87781/logo/logo.png
 
-**Source:** From PyHC registry and confirmed by repository structure containing logo/ folder
+**Source:** The asset designated by the PyHC registry, confirmed by the repository's `logo/` folder.
+
+**This is a repair, not only a hardening.** This record previously carried
+`https://github.com/PyGSDR/PyGS/blob/main/logo/logo.png` — a GitHub HTML file-viewer page, not the
+image. It answers HTTP 200 with `Content-Type: text/html`, so anything consuming Field 33 as an image
+source got no image at all; the status code alone concealed that. (HSSI's stored value was the
+`?raw=true` variant of the same page, which reached the image only through GitHub's redirect.) The URL
+above is the canonical `raw.githubusercontent.com` form of the same file, pinned to a commit rather
+than to the `main` branch, and it serves `image/png` directly. Do not restore the `blob/` form even
+though it is the shape the registry and the repository page present.
 
 ---
 

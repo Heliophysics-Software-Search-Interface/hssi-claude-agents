@@ -294,7 +294,7 @@
 **Source:** README.md explicitly mentions use by these missions/observatories
 
 ### 33. Logo (OPTIONAL)
-**Value:** https://raw.githubusercontent.com/CosmicStudioSoftware/OMMBV/main/docs/images/logo_high_res.png
+**Value:** https://raw.githubusercontent.com/CosmicStudioSoftware/OMMBV/e4b36778fd99ed01b9d68d2d565761937a9fa4a6/docs/images/logo_high_res.png
 
 **Source:** SoMEF, PyHC registry, README
 

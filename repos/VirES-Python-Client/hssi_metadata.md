@@ -417,18 +417,19 @@ aeolus, array, data access, data retrieval, earth observation, esa, geomagnetic 
 - **GRACE-FO (GRACE Follow-On)** - supported via `MAG_GFO`, `MAG_GFO_ML`, `DNS_ACC_GFO`, `WND_ACC_GFO`, `TEC_TIRO`, `NE_TIRO`, and named in `MISSION_SPACECRAFTS`. Searched `follow[- ]?on`, `GRACE-FO`, `GFO`: zero matches; probed `/SMWG/Observatory/GRACE-FO`, `/GRACEFO`, `/GRACE_FO`, `/GRACE-FO1`, `/GRACEFollowOn` - none exist. Omitted for the same reason. Note that `SMWG/Observatory/GRACE` covers only the original GRACE duo and must not be used as a stand-in.
 
 ### 33. Logo (OPTIONAL)
-**URL:** https://raw.githubusercontent.com/ESA-VirES/Swarm-VRE/staging/docs/_static/vre_logo.png
+**URL:** https://raw.githubusercontent.com/ESA-VirES/Swarm-VRE/766a3ac5a4f834e9f4964e5429d9d117f1e68302/docs/_static/vre_logo.png
 
 - The earlier HSSI value `https://raw.githubusercontent.com/ESA-VirES/VirES-Python-Client/refs/heads/master/docs/images/vre_lo` is dead. It is a truncated URL, exactly 100 characters long and cut off mid-filename, and it does not exist.
 - Candidates considered:
 
   | Candidate | Result |
   |---|---|
-  | `.../VirES-Python-Client/refs/heads/master/docs/images/vre_lo` (live value) | does not exist - dead |
+  | `.../VirES-Python-Client/refs/heads/master/docs/images/vre_lo` (the earlier stored value) | does not exist - dead |
   | `.../VirES-Python-Client/refs/heads/master/docs/images/vre_logo.png` (presumed intended target) | does not exist - the file is absent from the repo and from its entire git history |
   | `.../VirES-Python-Client/refs/heads/master/docs/images/vre_logo_light.svg` | valid in-repository SVG alternative |
   | `.../Swarm-VRE/staging/docs/_static/vre_logo.png` (**selected**) | real PNG image |
 
-- Why the selected URL: it resolves to a real PNG image, and it is the value curated in the PyHC registry for this package (`logo:` in `_data/projects.yml`), which is the highest-priority metadata source in the HSSI extraction order. It is also the value carried in the 2025-10-09 canonical file, so this restores a previously-correct value rather than inventing one.
-- In-repo alternative, if a same-repository asset is preferred: `https://raw.githubusercontent.com/ESA-VirES/VirES-Python-Client/refs/heads/master/docs/images/vre_logo_light.svg` (SVG, light-background variant; added in commit 70eb6e9 and the only logo asset in the repository).
+- Why the selected asset: it resolves to a real PNG image, and it is the asset curated in the PyHC registry for this package (`logo:` in `_data/projects.yml`), which is the highest-priority metadata source in the HSSI extraction order. It is also the asset carried in the 2025-10-09 canonical file, so this restores a previously-correct value rather than inventing one.
+- Why the URL pins a commit: the registry's string, the 2025-10-09 file's string, and the table row above all reference the `staging` branch of `ESA-VirES/Swarm-VRE`. That is an unusually weak anchor even by branch standards — `staging` is by name a working branch, not a release ref, so the file it points at can be rewritten or removed as ordinary upstream practice rather than as an exceptional event. Pinning the commit above is therefore a larger durability gain here than it is for a `main`-referenced logo, and the pinned URL serves byte-identical image data.
+- In-repo alternative, if a same-repository asset is preferred: `docs/images/vre_logo_light.svg` (SVG, light-background variant; added in commit 70eb6e9 and the only logo asset in the repository). Recorded here as a repository path rather than a URL on purpose: were it ever adopted, it would need resolving to the commit the file is at, not to `refs/heads/master`.
 - Both images are the VirES/VRE logo; there is no viresclient-specific logo.

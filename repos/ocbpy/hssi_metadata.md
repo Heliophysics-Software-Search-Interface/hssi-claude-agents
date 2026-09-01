@@ -225,7 +225,7 @@
 - **Source:** README.md. AMPERE is an observatory-class entity — its SPASE identity lives under SMWG/Observatory/ — so the association belongs in Field 32 (Related Observatories), not Field 31 (Related Instruments).
 
 ### 33. Logo (OPTIONAL)
-- **Value:** https://raw.githubusercontent.com/aburrell/ocbpy/main/docs/figures/ocbpy_logo.gif
+- **Value:** https://raw.githubusercontent.com/aburrell/ocbpy/3ced0dec8cabf055b9e0a75a5eb1a57c017740be/docs/figures/ocbpy_logo.gif
 - **Source:** PyHC registry, README.md, SoMEF output
 
 ---

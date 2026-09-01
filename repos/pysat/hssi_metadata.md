@@ -444,7 +444,7 @@
 **Source:** `docs/examples/example_orbit.rst`; `docs/tutorial/tutorial_basics.rst`; `docs/tutorial/tutorial_constellation.rst`; `docs/new_instrument.rst`; `docs/ecosystem.rst`.
 
 ### 33. Logo (OPTIONAL)
-- **Logo URL:** https://raw.githubusercontent.com/pysat/pysat/main/docs/images/logo.png
+- **Logo URL:** https://raw.githubusercontent.com/pysat/pysat/3f0e5a43ad36f1eecfed02a3d1e3a740fd1a5f37/docs/images/logo.png
 - **Source:** `README.md`; `docs/conf.py`; PyHC core registry.
 
 ---

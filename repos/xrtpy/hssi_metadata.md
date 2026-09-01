@@ -919,10 +919,13 @@ sunpy exchange (entry 4) is the only one demonstrated in XRTpy's own code.
   interoperability or heritage context, never as data XRTpy reads.
 
 ### 33. Logo (OPTIONAL)
-- **Value:** https://raw.githubusercontent.com/HinodeXRT/xrtpy/main/docs/_static/images/XRTpy_logo.png
+- **Value:** https://raw.githubusercontent.com/HinodeXRT/xrtpy/b60be80e42708ed655cceb2b86609da3e066f83a/docs/_static/images/XRTpy_logo.png
 - **Source:** Live HSSI; `README.md` header image (`docs/_static/images/XRTpy_logo.png`);
-  `docs/index.rst`; also configured as the gallery `default_thumb_file` in `docs/conf.py` at exactly
-  this raw URL. Verified to resolve.
+  `docs/index.rst`; also configured as the gallery `default_thumb_file` in `docs/conf.py`, which
+  usefully shows that upstream itself reaches this asset through a `raw.githubusercontent.com` URL
+  rather than a repository-relative path — though upstream's form references the default branch.
+  Verified to serve `image/png`. The value here pins the commit above instead, so no upstream rename,
+  move or deletion can silently break it; at 125 characters it is well inside the 200-character limit.
 - **Provenance correction:** the 2025-10-09 canonical file claimed the logo was "Listed in PyHC
   registry as well". The PyHC community-registry entry for XRTpy has **no `logo` field**; the URL
   comes from the repository, not PyHC.

@@ -564,16 +564,18 @@ fields are set-unions of the earlier values and newly evidenced ones.
   there is no unresolved-ambiguity blocker for this field.
 
 ### 33. Logo (OPTIONAL)
-- **Logo:** https://raw.githubusercontent.com/lasp/space_packet_parser/main/docs/source/_static/logo-no-background.png
+- **Logo:** https://raw.githubusercontent.com/lasp/space_packet_parser/d21e9f6ed6390e3f4d42a09df72ad72a1e6423bf/docs/source/_static/logo-no-background.png
 - **Source:** `docs/source/conf.py` sets `html_logo = "_static/logo-no-background.png"`, making this file the
-  project's official documentation logo. The raw GitHub URL on the default branch was verified publicly
-  accessible (HTTP 200, `image/png`, 50,558 bytes).
-- **Note (tag-pinned alternative considered and declined):** A commit- or tag-pinned raw permalink
-  (`.../space_packet_parser/6.1.2/docs/source/_static/logo-no-background.png`) was considered and rejected.
-  A branch-pinned raw URL is the established HSSI convention: of the 38 HSSI entries that carry a logo, 28
-  use a `/main/` or `/master/` raw GitHub URL (including sunpy, PlasmaPy, pysat, spacepy, pydarn, speasy, and
-  ndcube) while only two pin a commit SHA. A `main` URL also keeps the logo current if the project redesigns
-  it.
+  project's official documentation logo. The commit-pinned raw URL above was verified publicly accessible
+  (HTTP 200, `image/png`, 50,558 bytes), serving the same image the default-branch URL served.
+- **Note (an earlier revision declined pinning; that reasoning is superseded):** this record previously
+  held the branch form `.../space_packet_parser/main/docs/source/_static/logo-no-background.png`, on the
+  argument that a `main` URL "keeps the logo current if the project redesigns it." That has it the wrong
+  way round: a branch URL breaks silently if the file is renamed, moved or deleted, and a redesign is
+  something a metadata refresh should notice and record deliberately rather than inherit unannounced. The
+  commit-pinned form cannot drift. A *tag*-pinned permalink
+  (`.../space_packet_parser/6.1.2/docs/source/_static/logo-no-background.png`) is still the wrong shape,
+  but for a different reason — it would need updating at every release, where a commit SHA needs none.
 - **Note:** SoMEF reported a logo of
   `https://lasp.colorado.edu/ctim/files/2023/01/CTIM_LOGO_350x100_centered_transparent.png`; that is the CTIM
   mission patch from the README's "Missions using" section, not this software's logo, and was rejected.
@@ -610,5 +612,5 @@ been decided and are recorded here as resolved.
   values kept), Field 5 Related Region (+`Interplanetary Space`), Field 16 Keywords (10 → 24), and the
   previously-empty Fields 17, 18, 19, 20, 21, 23, 29, 30, and 33.
 - **Decided, no change:** Field 20/21 breadth is kept as recorded (the three CI-verified operating systems;
-  `CPU Independent` plus the two CI-verified architectures). Field 33 keeps the branch-pinned `/main/` raw
-  logo URL, which is the established HSSI convention.
+  `CPU Independent` plus the two CI-verified architectures). Field 33's logo *asset* is unchanged; only its
+  URL form is, from a branch reference to a commit-pinned raw URL.

@@ -289,5 +289,5 @@ asilib is an open source package providing data access and analysis tools for th
 - **SPASE-only Exclusion Note:** Under merged hssi-website PR #54, `Mid-latitude All-sky-imaging Network for Geophysical Observations (MANGO)`, `Pulsating Aurora (PsA) Project`, and `Loss through Auroral Microburst Pulsations (LAMP) sounding rocket` are omitted from Field 32 because no legitimate exact SPASE observatory equivalent exists. Their omission from this controlled field does not remove the supported networks/missions from other appropriate metadata fields.
 
 ### 33. Logo (OPTIONAL)
-- https://raw.githubusercontent.com/mshumko/asilib/refs/heads/main/docs/_static/asilib_logo.png
-- **Source Note:** From the manually curated PyHC community registry and confirmed as a live PNG at the current repository revision. The repository also contains an SVG version.
+- https://raw.githubusercontent.com/mshumko/asilib/79d166a17c5a25a70fad1dee8294fad21e04c7b5/docs/_static/asilib_logo.png
+- **Source Note:** The asset designated by the manually curated PyHC community registry, confirmed as a live PNG at the pinned revision (which is this record's Source Revision). The registry's own `logo:` string references the default branch; the URL here pins the commit instead, since a branch reference breaks silently on any upstream rename, move or deletion. The repository also contains an SVG version.

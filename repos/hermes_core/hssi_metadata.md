@@ -292,7 +292,7 @@ Based on HERMES mission configuration:
 - **Source:** Web search about HERMES mission, software is mission-specific
 
 ### 33. Logo (OPTIONAL)
-- **Logo URL:** https://raw.githubusercontent.com/HERMES-SOC/hermes_core/main/docs/logo/hermes_logo.png
+- **Logo URL:** https://raw.githubusercontent.com/HERMES-SOC/hermes_core/416231f5982f53d03ad04b206e33e8018b856792/docs/logo/hermes_logo.png
 - **Source:** PyHC registry
 
 ---

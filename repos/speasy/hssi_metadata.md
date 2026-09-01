@@ -649,9 +649,9 @@ SPASE models MMS instruments **per spacecraft**, so each instrument yields four 
 ---
 
 ### 33. Logo (OPTIONAL)
-- **Value:** `https://raw.githubusercontent.com/SciQLop/speasy/main/logo/logo_speasy_400dpi.png`
+- **Value:** `https://raw.githubusercontent.com/SciQLop/speasy/8f06d06f1e9c6e6013668c887c5c2546079b9b90/logo/logo_speasy_400dpi.png`
 
-**Source:** From existing HSSI record — submitted value preserved. The URL resolves, and serves the logo file itself. Identical to the PyHC registry `logo` field. The repository also contains `logo/logo_speasy.svg` (which also resolves, and is used in the README and docs headers), but Field 33 takes a single URL and the submitted PNG is kept.
+**Source:** From existing HSSI record — the submitted *asset* is preserved, recorded as a commit-pinned raw URL. The URL serves the logo file itself. The submitted value and the PyHC registry `logo` field both reference the same file on the `main` branch; the registry is authoritative about which asset is the logo, not about the URL string, and a branch reference breaks silently on any upstream rename, move or deletion, so the commit is pinned instead. The repository also contains `logo/logo_speasy.svg` (which also resolves, and is used in the README and docs headers), but Field 33 takes a single URL and the submitted PNG is kept.
 
 ---
 

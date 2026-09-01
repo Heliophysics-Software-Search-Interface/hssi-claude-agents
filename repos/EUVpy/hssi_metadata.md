@@ -1279,7 +1279,7 @@ Considered and rejected:
   neither is recorded as a value here.
 
 ### 33. Logo (OPTIONAL)
-https://raw.githubusercontent.com/DanBrandt/EUVpy/main/EUVpy_logo.png
+https://raw.githubusercontent.com/DanBrandt/EUVpy/52f72d874a616f4e75b2d2f37424b0c2e6de9eac/EUVpy_logo.png
 
 This corrects the stored value
 `https://raw.githubusercontent.com/DanBrandt/EUVpy/main/./EUVpy_logo.png`, which contained a `/./`
@@ -1287,16 +1287,17 @@ path artefact. The artefact came from concatenating the repository's raw base UR
 relative reference `<img src="./EUVpy_logo.png">` without normalising the leading `./`. Both forms
 happen to resolve to the same 12,250,542-byte image because GitHub normalises the redundant segment,
 so this is a cosmetic correction of a malformed URL rather than a broken link - but a stored URL
-should not carry a path artefact. The target is `EUVpy_logo.png` at the repository root on `main`,
-which is the canonical source file and is also what `docs/source/images/EUVpy_logo.png` duplicates
-for the documentation build.
+should not carry a path artefact. The target is `EUVpy_logo.png` at the repository root, pinned to the
+commit above rather than to `main`: a branch reference breaks silently on any upstream rename, move or
+deletion. That file is the canonical source and is also what `docs/source/images/EUVpy_logo.png`
+duplicates for the documentation build.
 
 Alternative considered and not selected: `https://euvpy.readthedocs.io/en/latest/_images/EUVpy_logo.png`,
 which the PyHC registry records as EUVpy's logo. It serves the identical image and, unlike
 `raw.githubusercontent.com`, serves it with a `image/png` content type rather than
-`application/octet-stream`. The repository-root URL was preferred because it is the minimal
-correction to the stored value and points at the version-controlled source of the image rather than
-at a Sphinx build artefact whose path depends on the documentation continuing to embed that figure.
+`application/octet-stream`. The repository-root URL was preferred because it points at the
+version-controlled source of the image, and can be pinned to an immutable commit, rather than at a
+Sphinx build artefact whose path depends on the documentation continuing to embed that figure.
 If HSSI ever has trouble rendering an `application/octet-stream` logo, the PyHC URL is the
 ready-made substitute.
 

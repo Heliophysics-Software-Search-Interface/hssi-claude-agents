@@ -848,11 +848,12 @@ resource, so this is a naming normalization rather than a change of meaning.
 demonstration-context reasons given in Field 31.
 
 ### 33. Logo (OPTIONAL)
-https://raw.githubusercontent.com/DKISTDC/dkist/main/docs/logo/icon_square.jpg
+https://raw.githubusercontent.com/DKISTDC/dkist/3e0636db36b99b14f096b9752d65f5629c69bff0/docs/logo/icon_square.jpg
 
 - *Evidence:* `docs/logo/icon_square.jpg` is the only logo asset in the repository — a square orange
   DKIST telescope-dome icon. The raw GitHub URL is publicly accessible and serves `image/jpeg`
-  (72,150 bytes), and at 78 characters it is well inside the 200-character URL limit.
+  (72,150 bytes), and at 114 characters it is well inside the 200-character URL limit. It is pinned to
+  the commit above rather than to a branch, so no upstream rename or move can silently break it.
 - *Note:* the documentation site additionally serves DKIST facility and NSO logos supplied by
   `dkist-sphinx-theme`
   (`https://docs.dkist.nso.edu/projects/python-tools/en/stable/_static/img/dkist-logo-v5-blue-text.png`);

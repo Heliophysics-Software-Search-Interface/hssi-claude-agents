@@ -504,8 +504,8 @@ The 2025-10-09 entries rested entirely on example notebooks and README usage sni
 **Nothing was omitted merely for being hard to resolve.** Every candidate was resolved as far as the vocabulary allows and then rejected on relevance; the ambiguity findings above are recorded so a future include decision starts from verified data rather than from scratch. Should MMS ever be added — it has the strongest case, since SciQLop ships a dedicated installable MMS example workspace (`SciQLop/examples/mms/` with `example.json`, `index.ipynb`, `DemoMMS_tags-up_meeting.ipynb` and `MMS_dayside_magnetopause.ipynb`, all present at `v0.12.0`), the project's demo screencast is `SciQLop_MMS.gif`, and the README's primary API examples use MMS products — it would have to be hand-bound to one of the 16 rows, most plausibly `Magnetospheric Multiscale` / `https://spase-metadata.org/SMWG/Observatory/MMS`.
 
 ### 33. Logo (OPTIONAL)
-**Value:** https://raw.githubusercontent.com/SciQLop/SciQLop/main/SciQLop/resources/icons/SciQLop.png
+**Value:** https://raw.githubusercontent.com/SciQLop/SciQLop/f9a0484a61b63def3814309d5af53d839229b16a/SciQLop/resources/icons/SciQLop.png
 
-**Source:** Existing HSSI record. Re-verified: the URL still resolves and serves a PNG image; the file exists at that path in the checkout; the README renders it as the project banner; and the PyHC community registry entry for SciQLop lists the identical URL as its `logo`.
+**Source:** Existing HSSI record. Re-verified: the URL serves a PNG image; the file exists at that path in the checkout; the README renders it as the project banner; and the PyHC community registry entry for SciQLop designates the same asset as its `logo`.
 
-**Unchanged from live HSSI.**
+**Same asset as the original submission, recorded as a commit-pinned raw URL.** The submitted value referenced the `main` branch, which breaks silently on any upstream rename, move or deletion; the URL above pins the commit and serves byte-identical image data. The registry's own `logo` string is still the branch form — it is authoritative about *which* asset is the logo, not about the URL used to reach it.

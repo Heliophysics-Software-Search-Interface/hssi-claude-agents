@@ -538,8 +538,8 @@ Rationale for the granularity: PyRFU supports all four MMS observatories equally
 **Considered and REJECTED (audit trail):** Cluster / THEMIS / Cassini / Galileo — see Field 31's rejection note (surface-material presets and a plot color scheme only). Per-spacecraft rows `SMWG/Observatory/MMS/{1,2,3,4}` — PyRFU supports the whole constellation, so the constellation-level row is the right granularity. CDAWeb / OMNIWeb — multi-mission archives, recorded in Field 17 (Data Sources) as the field definitions direct, not as observatories.
 
 ### 33. Logo (OPTIONAL)
-- **Value:** https://raw.githubusercontent.com/louis-richard/irfu-python/master/docs/_static/logo-pyrfu.png
-- **Note:** Matches the prior canonical file and PyHC registry. `docs/_static/logo-pyrfu.png` exists at revision `40505b6a` on the default `master` branch; an SVG version is also available at `docs/_static/logo-pyrfu.svg`.
+- **Value:** https://raw.githubusercontent.com/louis-richard/irfu-python/40505b6a6e69c6c6ade8ff57062fbb21f23734b8/docs/_static/logo-pyrfu.png
+- **Note:** The same asset as the prior canonical file and the PyHC registry, recorded as a raw URL pinned to revision `40505b6a` — which is also this record's Source Revision — rather than to the default `master` branch that both of those sources reference; a branch reference breaks silently on any upstream rename, move or deletion. `docs/_static/logo-pyrfu.png` exists at that revision; an SVG version is also available at `docs/_static/logo-pyrfu.svg`.
 
 ---
 

@@ -1283,8 +1283,13 @@ notes after the list cover the entries whose resolution required a choice.
   detailed under Field 31.
 
 ### 33. Logo (OPTIONAL)
-- **URL:** https://raw.githubusercontent.com/sunpy/sunpy-logo/master/generated/sunpy_icon.png
-- Source: the PyHC core registry `logo:` field. Verified to resolve.
+- **URL:** https://raw.githubusercontent.com/sunpy/sunpy-logo/4fc0161e25ab07e64ecdb1f4d0360538a91484e5/generated/sunpy_icon.png
+- Source: the PyHC core registry `logo:` field designates this asset. Verified to serve `image/png`.
+- The registry's own `logo:` string references the default branch; the value here pins the commit
+  above instead, so no upstream rename, move or deletion can silently break it. The asset is
+  independently locatable without the registry: it is `generated/sunpy_icon.png` in the project's own
+  `sunpy/sunpy-logo` repository, which is the fallback source of record should the registry entry ever
+  change or disappear.
 - `README.rst` embeds a different asset from the same repository,
   `.../generated/sunpy_logo_landscape.png`. The square icon stored here is the better fit for a
   catalogue listing and matches what PyHC publishes, so it is kept.

@@ -1132,7 +1132,7 @@ which is a model, not an observatory, and is captured by Field 5 (`Solar Wind`) 
 ---
 
 ### 33. Logo (OPTIONAL)
-`https://raw.githubusercontent.com/kgklein/PLUME/main/PLUME_logo.png`
+`https://raw.githubusercontent.com/kgklein/PLUME/11da73ac1e3628ae0ec8b433ed37880207857c71/PLUME_logo.png`
 
 *Source:* `PLUME_logo.png` at the repository root, embedded by `README.md` line 7 and copied into the
 documentation site by `.github/workflows/doc.yml`.
@@ -1141,15 +1141,18 @@ documentation site by `.github/workflows/doc.yml`.
 not serve an image.** A `/blob/` URL is GitHub's HTML file-viewer page: requesting it returns
 `Content-Type: text/html` and a roughly 216 KB HTML document, so anything rendering it as an image
 gets nothing. The `raw.githubusercontent.com` form of the same file returns `Content-Type: image/png`
-and the actual 672,580-byte asset. The recorded URL is 67 characters, well inside the 200-character
+and the actual 672,580-byte asset. The recorded URL is 103 characters, well inside the 200-character
 limit that applies to a URL field.
 
-**Alternative considered.** Pinning the commit instead of the branch —
-`https://raw.githubusercontent.com/kgklein/PLUME/81ac15d6aa5eee43fa5fcb91df1ed9c28c4670c9/PLUME_logo.png`
-(103 characters) — would be immutable, which Field 33's "stored online in a permanent place" wording
-mildly favours. The branch form is chosen because it keeps working if the maintainers update the
-logo, and because a commit-pinned asset URL would silently freeze the catalogue image to one 2025
-revision. Both forms are recorded so the choice can be revisited.
+**Why the commit is pinned rather than the branch.** An earlier revision of this record used the
+branch form `.../kgklein/PLUME/main/PLUME_logo.png` and reasoned that pinning would "silently freeze
+the catalogue image to one revision" while the branch form keeps working if the maintainers update
+the logo. That reasoning is rejected. A branch's mutability is not a feature here but the fragility
+being avoided: the URL breaks silently the moment the file is renamed, moved or deleted, and Field
+33's "stored online in a permanent place" wording is a requirement about the URL, not only about the
+file. A logo redesign is something a metadata refresh should notice and record deliberately, not
+something the catalogue inherits unannounced. Only the commit-pinned URL above is recorded, so that
+no superseded candidate can later be mistaken for a live alternative.
 
 **Not selected: `Jet-Plume_Logo.svg`.** SoMEF reports this file as the repository's `logo`, but it is
 the logo of the JET-PLUME sub-component (`README.md` §5, `README-JETPLUME.md`), not of PLUME.

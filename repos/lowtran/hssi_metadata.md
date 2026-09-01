@@ -242,7 +242,7 @@ Not found
 **Note:** LOWTRAN is a general atmospheric model not specific to any particular observatory or mission.
 
 ### 33. Logo (OPTIONAL)
-- **URL:** https://raw.githubusercontent.com/space-physics/lowtran/master/gfx/whyskyisblue.png
+- **URL:** https://raw.githubusercontent.com/space-physics/lowtran/5b8d38714b204eaa12595f5f15e2babec1dbdfb5/gfx/whyskyisblue.png
 
 **Source:** PyHC unevaluated registry (logo field), SoMEF (logo field from README)
 
