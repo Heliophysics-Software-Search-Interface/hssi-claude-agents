@@ -759,6 +759,19 @@ Field-32-specific notes: match against the row `name`, its `abbreviation`, sourc
 
 **How to fill it:** The logo should be stored online in a permanent place and made publicly accessible.
 
+**Agent guidance — pin the URL, then look at the image.** "A permanent place" is a requirement about the URL, not just the file. Apply in order:
+
+1. **Git-hosted asset (GitHub/GitLab) — pin it to an exact commit.** Write `https://raw.githubusercontent.com/<owner>/<repo>/<40-char-sha>/<path>` (GitLab: `https://gitlab.com/<group>/<project>/-/raw/<sha>/<path>`). Never a branch name — `main`, `master`, or `refs/heads/<branch>` — and never a `blob/…` URL, which is GitHub's HTML *file-viewer page* and serves `text/html` rather than image bytes (the `?raw=true` variant only works by redirect). A branch reference silently breaks the logo whenever the file is renamed, moved, or deleted, and a branch can itself be renamed: several catalogue entries survived a `master`→`main` rename only through GitHub's compatibility redirect, which is not a guaranteed contract.
+2. **The asset is Git-LFS-tracked** (`.gitattributes` has a `filter=lfs` rule for that path) — use `https://media.githubusercontent.com/media/<owner>/<repo>/<sha>/<path>`, which resolves the LFS object to real bytes. `raw.githubusercontent.com` returns the ~130-byte pointer *as `text/plain` with HTTP 200*, which renders as a broken image.
+3. **Not hosted in a git repository at all** — a project or institutional site, a documentation build, a registry-hosted asset. This is a **perfectly good Field 33 value**; there is no commit to pin, so record it as-is and verify reachability. Do not discard such a logo, and do not treat "unpinnable" as a defect.
+4. **No logo found** — a documented omission is a fine outcome. Never invent one.
+
+**Verify before recording, in two ways.** First, fetch the URL: require an `image/*` content-type (`image/svg+xml` counts) and a plausible byte size. An HTTP 200 alone proves nothing — see the LFS case above, and the `blob/` page, which also answers 200. Second, **look at the image**. If it does not read as a logo for this software — a screenshot, an example plot, a data product, an unrelated mission patch, a sub-component's mark — **raise it with the user rather than rejecting it or swapping it yourself**, and bring the evidence: whether the project itself presents that image as its logo (README header, docs banner or `html_logo`, registry `logo:` field) is good reason to keep it, and that judgement is the user's to make. Record the outcome so a later refresh does not reopen a settled choice.
+
+Keep the whole URL within 200 characters (the stored column's limit). A pinned URL is longer than a branch one; if a specific case would exceed 200, say so rather than falling back to a branch reference.
+
+**Do not re-argue pinning on freshness grounds.** That a commit-pinned URL "freezes" the image to one revision is the intended behaviour, not a drawback: branch mutability *is* the fragility being removed. A logo redesign should reach the catalogue through a metadata refresh that re-derives and re-verifies the value, not silently through a moving reference.
+
 ---
 
 ## Agreement
@@ -949,6 +962,11 @@ curl -s "https://raw.githubusercontent.com/heliophysicsPy/heliophysicsPy.github.
 - PyHC metadata is curated by the community and is considered more definitive/accurate than auto-extracted metadata
 - The quality ratings (Good, Partially met, etc.) can inform the Development Status field
 - PyHC keywords may map to HSSI's Related Region, Software Functionality, or Keywords fields
+- **Its `logo:` value is an exception to that curation.** The registry's logo URLs are commonly
+  branch-referenced (`.../main/...`) and sometimes point at a file that no longer exists. Treat the
+  registry as authoritative about **which asset** is the project's logo, not about the URL string:
+  re-derive the URL from the repository and pin it per the Field 33 guidance. Recording the registry's
+  string verbatim is a defect even though the registry is otherwise the better source.
 
 ---
 

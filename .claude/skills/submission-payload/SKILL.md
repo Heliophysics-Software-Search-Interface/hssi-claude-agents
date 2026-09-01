@@ -234,6 +234,8 @@ Each submission object **must** include these five fields:
 
 **Important:** The API field for Award Title (section 26) is `award`, **not** `awardTitle`.
 
+**Important — Logo (33):** `logo` is a `URLField(max_length=200)`, so keep the whole URL under 200 characters. A git-hosted logo must be pinned to an exact commit SHA (`https://raw.githubusercontent.com/<owner>/<repo>/<40-hex-sha>/<path>`, or `https://media.githubusercontent.com/media/…` when the path is Git-LFS-tracked) — never a branch (`/main/`, `/master/`, `refs/heads/…`) and never a `/blob/` page URL. Fetch it before putting it in the payload and require an `image/*` content-type: both an LFS pointer (`text/plain`, ~130 bytes) and a `blob/` page (`text/html`) answer HTTP 200 while serving no image. A logo on a non-git host has no commit to pin and is a valid value once reachability is confirmed.
+
 **Important — RelatedItem URL fields (27–30):** each entry must be a real URL. Free text fails the serializer's `URLValidator` (`Invalid URL: '<value>'`) and rejects the whole atomic request. Keep each URL ≤128 characters: `_get_or_create_related` stores the URL as both `identifier` and the 128-capped `name`, so a longer URL passes validation and then fails at the database write.
 
 ### License is a plain string

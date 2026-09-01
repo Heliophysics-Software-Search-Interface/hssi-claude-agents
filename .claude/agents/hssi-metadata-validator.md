@@ -147,7 +147,10 @@ Cross-reference each metadata value against primary sources in the repository. F
 - Cross-check against README links and docs/ folder
 
 **Field 33 (Logo):**
-- If a URL is provided, verify it resolves
+- **Fetch it — a status code is not enough.** `curl -sIL {URL}` and read the content-type and length. A `content-type` that is not `image/*` (`image/svg+xml` counts) is an **ERROR**: `text/plain` at ~130 bytes is a Git-LFS pointer file (use `https://media.githubusercontent.com/media/<owner>/<repo>/<sha>/<path>` instead), and `text/html` is a repo page rather than the image. Both return HTTP 200 and both render as a broken logo.
+- **A git-hosted URL must be pinned to a commit.** If the URL is on `github.com`/`raw.githubusercontent.com`/`gitlab.*` and contains a branch reference (`/main/`, `/master/`, `refs/heads/…`) or a `/blob/` segment — including `blob/…?raw=true`, which only works through a redirect — that is an **ERROR**, with `Suggested fix: repoint at https://raw.githubusercontent.com/<owner>/<repo>/<40-hex-sha>/<path>` for the commit the file is at. Do not accept the counter-argument that a branch URL "always serves the current logo": that mutability is the defect, and a redesign should be recorded deliberately at refresh time rather than inherited silently.
+- **A logo on a non-git host is not a defect.** Project sites, institutional pages, and ReadTheDocs-served assets have no commit to pin. Verify reachability and content-type only, and never report "unpinned" against them.
+- **Look at the image.** You can see it — fetch and view it. If it does not read as a logo for this software (an example plot, a data product, a screenshot, an unrelated graphic), this is **never an ERROR**: report it as a WARNING that asks the user to decide, and include the image and your evidence. It is satisfied outright if the dossier records that the project itself uses the image as its logo in practice (README header, docs banner, PyHC registry `logo:`), or that the value was already reviewed and approved — in that case do not raise it at all.
 
 **Field 25 (Funder):**
 - **Funder organization names should be the full institutional name, not acronyms.** Flag any funder value that is a bare acronym (e.g., `ESA` instead of `European Space Agency`) as a WARNING with `Suggested fix: expand to the full institutional name`. Do not flag values that include an acronym alongside the full name (e.g., "European Space Agency (ESA)").
@@ -189,7 +192,13 @@ Actively look for metadata the extractor might have missed:
    - Grep for common format indicators: `fits`, `hdf5`, `netcdf`, `cdf`, `csv`, `json`, `zarr`
    - Check import statements for format-specific libraries
 
-5. **Check for related instruments/observatories** not mentioned:
+5. **Check for a logo (Field 33) recorded as "Not found" when one exists upstream.** Nothing else in
+   this document catches an under-included logo. Look for `docs/**/_static/*logo*`, `docs/conf.py`'s
+   `html_logo`, a README header image, an `assets/`/`images/` logo file, and the PyHC registry `logo:`
+   entry. If you find one, report it as a SUGGESTION with the commit-pinned raw URL (see Field 33 in
+   Phase 3), fetched and viewed. A deliberate documented omission is fine — an unexamined blank is not.
+
+6. **Check for related instruments/observatories** not mentioned:
    - Search README and docs for instrument or mission names
    - **Apply the "designed to support" relevance bar to what's listed and what's missing.** An
      instrument/observatory belongs in Field 31/32 only if the software directly works with that
@@ -241,7 +250,7 @@ Actively look for metadata the extractor might have missed:
      Treat any extractor entry already marked `NEEDS MANUAL RESOLUTION` as unresolved (don't silently
      "fix" it into a submittable value). Also flag embedded-abbreviation names (e.g. `Parker Solar Probe (PSP)`).
 
-6. **Verify "Not found" fields** — for each field marked "Not found", spend a moment confirming it truly cannot be determined from available sources
+7. **Verify "Not found" fields** — for each field marked "Not found", spend a moment confirming it truly cannot be determined from available sources
 
 ### Phase 5: Canonical State
 
@@ -352,7 +361,7 @@ A file NEEDS REVISION if there are any ERRORS. Warnings alone do not fail valida
 
 ## Severity Definitions
 
-- **ERROR**: The metadata is demonstrably wrong, a mandatory field is missing/empty, a value is not from the allowed list, a DOI/URL doesn't resolve (confirm it is genuinely unreachable, not bot-blocked — see Phase 3), an author is verifiably misattributed, or a Tier A generic dependency (numpy, pandas, matplotlib, scipy, …) is listed under Field 29 or 30. Errors must be fixed.
+- **ERROR**: The metadata is demonstrably wrong, a mandatory field is missing/empty, a value is not from the allowed list, a DOI/URL doesn't resolve (confirm it is genuinely unreachable, not bot-blocked — see Phase 3), a URL returns 200 but not the content it is supposed to (a Git-LFS pointer or an HTML page where an image belongs), a git-hosted Logo URL references a branch or a `blob/` page instead of a commit SHA, an author is verifiably misattributed, or a Tier A generic dependency (numpy, pandas, matplotlib, scipy, …) is listed under Field 29 or 30. Errors must be fixed. **"This image doesn't look like a logo" is not in this class** — it is a WARNING that asks the user to decide (see Field 33 in Phase 3).
 - **WARNING**: The metadata is likely incomplete or inaccurate but you can't fully prove it. Examples: an author appears in CITATION.cff but not in the metadata, a plausible software functionality seems missing, a version number seems stale.
 - **SUGGESTION**: The metadata is acceptable but could be improved. Examples: a "Not found" field that you found a partial answer for, a description that could be more precise, additional keywords that would improve discoverability.
 

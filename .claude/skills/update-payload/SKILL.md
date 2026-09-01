@@ -181,7 +181,7 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | `developmentStatus` | String | Must match RepoStatus controlled list |
 | `referencePublication` | String (DOI URL) | |
 | `publicationDate` | String (`YYYY-MM-DD`) | |
-| `logo` | String URL | |
+| `logo` | String URL | ≤200 chars (`URLField(max_length=200)`). A git-hosted URL must be commit-pinned (`raw.githubusercontent.com/<owner>/<repo>/<40-hex-sha>/<path>`, or `media.githubusercontent.com/media/…` for Git-LFS paths) — never a branch or a `/blob/` page. |
 | `authors` | Array of Person objects | `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}` |
 | `publisher` | Organization object | `{name, identifier}` |
 | `license` | String | License name only — must match an existing `License.name` (case-insensitive) |
@@ -257,7 +257,7 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | 25 | Funder | New grants | Zenodo/DataCite APIs |
 | 26 | Award Title | New awards | Zenodo/DataCite APIs |
 | 27 | Related Publications | New papers | Zenodo/DataCite APIs |
-| 33 | Logo | URL changes | Verify URL resolves |
+| 33 | Logo | URL changes; a git-hosted URL still on a branch or `/blob/` must be repointed at a commit SHA | `curl -sIL` — require `image/*`; a 200 with `text/plain` (LFS pointer) or `text/html` (`blob/` page) is a broken logo |
 
 ### Enrich-only fields (checked only in enrich mode)
 

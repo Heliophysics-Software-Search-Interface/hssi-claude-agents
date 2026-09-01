@@ -157,9 +157,11 @@ Check only dynamic fields directly against the repo — no SoMEF, no deep code a
 | **Programming Language** | File extension analysis, pyproject.toml |
 | **Keywords** | PyHC registry, GitHub topics |
 | **Documentation** | Verify existing URL resolves (HEAD request) |
-| **Logo** | Verify existing URL resolves (HEAD request) |
+| **Logo** | `curl -sIL` and require an `image/*` content-type — a 200 is not enough (see note below) |
 | **Funders/Awards** | DataCite/Zenodo APIs (if concept DOI exists in HSSI data) |
 | **Related Publications** | DataCite/Zenodo APIs (if concept DOI exists) |
+
+**Logo (Field 33) — a refresh is exactly where a stored logo URL goes stale.** A HEAD returning 200 proves nothing: a `raw.githubusercontent.com` URL for a Git-LFS-tracked file answers 200 with a ~130-byte `text/plain` pointer, and a `blob/…` URL answers 200 with HTML — both render as a broken image. Require an `image/*` content-type (`image/svg+xml` counts) and a plausible size. If the stored URL is git-hosted and references a branch (`/main/`, `/master/`, `refs/heads/…`) or a `/blob/` segment, propose repointing it at `https://raw.githubusercontent.com/<owner>/<repo>/<40-hex-sha>/<path>` for the commit the file is at (`media.githubusercontent.com/media/…` when LFS-tracked) — a branch reference breaks silently on any upstream rename or move. A logo on a non-git host has no commit to pin and needs only the reachability check. Keep the URL ≤200 characters. Do not propose a *different image*: this is a change of URL form, and swapping the asset itself is a value decision for the user.
 
 **Development Status heuristic:**
 - Last commit < 6 months ago → "Active"
