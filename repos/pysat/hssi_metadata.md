@@ -287,9 +287,14 @@ an Earth-orbit and heliophysics framework at this revision).
 
 Fourteen authors, in the order the record carries them, which is also the order of the `creators`
 array in `.zenodo.json` at the source revision and of the creators on the published Zenodo v3.2.2
-deposit. The three sources agree on the same fourteen people and on which eight of them have ORCIDs.
-The numbering below is presentational only — it is not a stored sort value, so a later correction
-should identify an author by name, never by index.
+deposit. The three sources agree on the same fourteen people and on their order, but they no longer
+agree on ORCIDs: the record carries iDs for **Matthew Depew and Gayatri Iyer** that `.zenodo.json` and
+the Zenodo deposit do not, because those two were established from ORCID search and affiliation
+matching rather than copied from `.zenodo.json` — the evidence is under Authors 7 and 13. Apart from
+those two, the record's identifiers, present and absent alike, match `.zenodo.json`. The divergence is
+deliberate and is **not** drift to be reconciled back to the upstream sources. The numbering below is
+presentational only — it is not a stored sort value, so a later correction should identify an author
+by name, never by index.
 
 There is **no `CITATION.cff` and no `codemeta.json`** in the repository at the source revision, and
 `pyproject.toml` credits only `Russell Stoneback, et al.`, so `.zenodo.json` is the authoritative
@@ -334,15 +339,22 @@ the correct canonical form; the shorter variants are the same institution.
 
 #### Author 4: Asher Pembroke
 - **Identifier:** Not found
-- **Affiliation — Organization:** Predictive Science · **Identifier:** Not found
+- **Affiliation — Organization:** Predictive Science · **Identifier:** https://ror.org/05canvq15
 
 **Negative research — do not re-propose.** An ORCID iD exists under the exact name Asher Pembroke
 (0000-0002-5718-1303), but that record contains **no employments and no works**, so nothing ties it to
-the pysat contributor. Recording it would be a guess. A ROR record does exist for Predictive Science
-(https://ror.org/05canvq15, ROR display name `Predictive Science (United States)`), but the stored
-organisation row carries no identifier and its name is `Predictive Science`; attaching the ROR is a
-database correction rather than a metadata value, because supplying a ROR that does not match the
-stored row creates a second organisation instead of updating the first.
+the pysat contributor. Recording it would be a guess.
+
+**Predictive Science carries https://ror.org/05canvq15**, which is recorded in HSSI. ROR gives the
+display name `Predictive Science (United States)` for an active company in San Diego, established
+2008, with the website https://www.predsci.com/portal/home.php, and pysat's own `.zenodo.json` gives
+Pembroke's affiliation as `Predictive Science`, so the match is unambiguous. The organisation was held
+without any identifier before this refresh; the identification had to be established from that
+evidence rather than simply submitted alongside the name, because a ROR supplied for a stored
+organisation that carries none is matched as a second organisation instead of being applied to the
+existing one. The stored organisation **name remains `Predictive Science`** and was deliberately not
+changed to the ROR display form — the short form is what the software's own `.zenodo.json` uses, and a
+later agent should not "correct" it to `Predictive Science (United States)`.
 
 #### Author 5: Carey Spence
 - **Identifier:** https://orcid.org/0000-0001-8340-5625
@@ -360,16 +372,22 @@ with the stored value.
 University of America, Physics, Research Scientist, from 2018-08.
 
 #### Author 7: Matthew Depew
-- **Identifier:** Not found *(see the database matter below)*
+- **Identifier:** https://orcid.org/0000-0001-9069-4998
 - **Affiliation — Organization:** The University of Texas at Dallas · **Identifier:** https://ror.org/049emcs32
 
-**Target state, not a submittable value.** ORCID https://orcid.org/0000-0001-9069-4998 belongs to a
-Matthew Depew whose sole employment is University of Texas at Dallas, **Center for Space Sciences**,
-Electrical Engineer — the group pysat came out of, and the same institution `.zenodo.json` gives for
-him. He is also a co-author of the 2018 JGR pysat paper. The identification is sound. It is
-nevertheless **withheld from the metadata value** because sending an ORCID for a person whose stored
-row has no identifier creates a new person row and orphans the existing one; correcting it is a
-database operation.
+**Why this ORCID.** An ORCID expanded search on the name Matthew Depew returns exactly one record,
+https://orcid.org/0000-0001-9069-4998, and its sole employment is University of Texas at Dallas,
+department **Center for Space Sciences**, Electrical Engineer, from 2010-12-22 — the group pysat came
+out of, and the same institution `.zenodo.json` gives for him. He is also a co-author of the reference
+publication https://doi.org/10.1029/2018JA025297, whose author list Crossref gives as Stoneback,
+Burrell, Klenzing and M. D. Depew; that co-authorship comes from the paper's own metadata and **not**
+from the ORCID record, which lists no works at all. The employment and the uniqueness of the name in
+ORCID are the whole of the identification, and it is on that basis that the iD is recorded in HSSI.
+
+He was stored without any identifier before this refresh. The iD could not simply be sent as a value
+alongside the existing name, because an ORCID supplied for a stored person who carries none is matched
+as a new person rather than applied to the existing one — which is why the identification was
+established this carefully before it was recorded.
 
 #### Author 8: Aadarsh Govada
 - **Identifier:** https://orcid.org/0009-0004-7873-5899
@@ -410,15 +428,22 @@ carry.
 a space-science group.
 
 #### Author 13: Gayatri Iyer
-- **Identifier:** Not found *(see the database matter below)*
+- **Identifier:** https://orcid.org/0000-0002-0229-8125
 - **Affiliation — Organization:** The University of Texas at Dallas · **Identifier:** https://ror.org/049emcs32
 
-**Target state, not a submittable value.** ORCID https://orcid.org/0000-0002-0229-8125 belongs to a
-Gayatri Iyer whose employments include The University of Texas at Dallas, department
-`Physics - William B. Hanson Center for Space Sciences`, Research Assistant — pysat's home group, and
-the same institution `.zenodo.json` gives. Three other ORCID records share the name; this is the only
-one with a space-science affiliation. Withheld from the metadata value for the same reason as
-Author 7: attaching an ORCID to an identifier-less stored person creates a duplicate. Database matter.
+**Why this ORCID.** Four ORCID records carry the name Gayatri Iyer, and
+https://orcid.org/0000-0002-0229-8125 is the only one of the four with any University of Texas at
+Dallas affiliation: department `Physics - William B. Hanson Center for Space Sciences`, Research
+Assistant, 2018-06-15 to 2019-05-05 — pysat's home group, and the same institution `.zenodo.json`
+gives for her. Of the other three, one is a genetics and biotechnology researcher (ICGEB and the
+University of Michigan) and two list no institutions at all. That affiliation match is what the
+recorded iD rests on.
+
+The limit of the evidence is worth stating plainly so a later agent does not go looking for more: her
+ORCID record lists no works, and she is **not** an author of the 2018 JGR pysat paper. As with
+Author 7, she was stored without an identifier before this refresh, and an ORCID supplied for a stored
+person who carries none is matched as a new person rather than applied to the existing one — hence the
+care taken over the affiliation evidence before the iD was recorded.
 
 #### Author 14: Silvio Leite
 - **Identifier:** https://orcid.org/0000-0003-1707-7963
