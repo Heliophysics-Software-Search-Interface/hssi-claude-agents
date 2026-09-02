@@ -170,6 +170,7 @@ Cross-reference each metadata value against primary sources in the repository. F
 - Where a value is given, verify it against available sources
 - Where "Not found" is listed, do a quick check to confirm it truly can't be found
 - A source returning 402/403 to an automated fetch is often bot-blocking, not genuine unavailability; the article may be fully open access. Try Europe PMC (`.../europepmc/webservices/rest/search?query=DOI:"<doi>"&resultType=core&format=json`; if `inEPMC=Y`, the PMC page is readable by ordinary fetch). A browser User-Agent does not defeat the block. If no route works, report the claim as **unverified for lack of access** rather than unsupported, and say which routes you tried — the orchestrator may have a browser and can supply the text
+- **ADS/Sci-X needs no personal API token.** `GET https://scixplorer.org/v1/accounts/bootstrap` returns an anonymous token, usable as `Authorization: Bearer <token>` against `https://api.adsabs.harvard.edu/v1/search/query`. It supports `ack:` (acknowledgements section), `body:`, `full:`, proximity (`"a b"~N`) and fuzzy (`word~`). A report of "no ADS token available, claim unreproducible" is therefore a wrong premise, not a finding: run the bootstrap, re-check the claim, and validate with controls — a nonsense token must return 0, and a term you believe absent should still be findable in *other* records, so a real 0 is distinguishable from an auth failure. If the bootstrap stops working, fall back to the routes above.
 
 ### Phase 4: Completeness Validation
 
