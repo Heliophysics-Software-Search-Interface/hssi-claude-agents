@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/WMM2015
 **Source Revision:** fb4e06f5f66ac707f1799aa12ef1687904926d56
 **Extraction Date:** 2026-09-05
-**Validation Date:** 2026-09-05
+**Validation Date:** 2026-09-07
 **Validation Status:** PASS
 
 ---
@@ -242,7 +242,7 @@ taken, and `Earth Atmosphere` is now this field's only value.
   - **Affiliation:** Boston University — https://ror.org/05qwgg493
   - **Affiliation:** Scivision, Inc.
 - **Author: Manoj C. Nair**
-  - **Identifier:** Not recorded (see below)
+  - **Identifier:** https://orcid.org/0000-0002-0541-0127
   - **Affiliation:** Not recorded (see below)
 - **Author: Adam Woods**
   - **Identifier:** Not recorded (see below)
@@ -351,7 +351,7 @@ no software. A future refresh that encounters the value must reject it rather th
 The `Scivision, Inc.` spelling is parked deliberately across the catalogue and must not be
 normalised here.
 
-**Manoj C. Nair — correct target identifier, recorded in prose rather than proposed as a value.**
+**Manoj C. Nair — identifier confirmed, and applied by database-side correction on 2026-09-07.**
 `https://orcid.org/0000-0002-0541-0127` is this author. The record's employment is University of
 Colorado Boulder, and its 127 works are geomagnetism throughout — including *Evaluation of candidate
 models for the 13th generation International Geomagnetic Reference Field*, *International geomagnetic
@@ -361,11 +361,14 @@ independent of the name: the WMM2015 Technical Report (Field 27) lists "Nair, M.
 authors, and the University of Colorado Boulder is where the NOAA geomagnetism group's academic
 affiliate sits, at the same Boulder address the vendored C prints.
 
-This identifier is **deliberately not written into the Field 6 value**. The author's HSSI row was
-created without an identifier, and attaching one through an ordinary metadata update matches on the
-identifier rather than the name, which would mint a second person row and orphan the existing one.
-Applying it needs a database-side correction. Recording it here means a future refresh has the
-verified ORCID to hand without re-deriving it, and knows why it was not simply sent.
+This identifier could not be applied through the metadata API and was **not** sent in this entry's
+PATCH. The author's HSSI row was created without an identifier, and attaching one through an ordinary
+metadata update matches on the identifier rather than the name, which would mint a second person row
+and orphan the existing one. It was therefore applied on **2026-09-07 by a database-side correction**
+to the existing person row, leaving that row's identity — and every other entry referencing it —
+intact. A later refresh should expect to find the ORCID already present on the row and must still not
+send it in a PATCH: the mint-and-orphan hazard is a property of the update path, not of the value, and
+it does not go away now that the value is stored.
 
 **Adam Woods — researched, and deliberately not asserted.** `https://orcid.org/0000-0003-1831-5038`
 is a plausible candidate: the name matches, the sole employment is University of Colorado Boulder,
