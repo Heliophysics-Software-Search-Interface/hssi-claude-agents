@@ -342,7 +342,7 @@ vocabulary change.
   - **Affiliation:** Boston University — https://ror.org/05qwgg493
   - **Affiliation:** Scivision, Inc.
 - **Author: Manoj C. Nair**
-  - **Identifier:** Not recorded — a verified ORCID exists and is documented below rather than asserted here
+  - **Identifier:** https://orcid.org/0000-0002-0541-0127
   - **Affiliation:** Not recorded — see the affiliation note below
 - **Author: Adam Woods**
   - **Identifier:** Not recorded
@@ -405,9 +405,10 @@ identifier and each matching byte-exactly on given and family name, so crediting
 against that: an ORCID for either must **not** be sent in a routine metadata update. A person row
 created without an identifier is found by name, whereas an update carrying an identifier is matched on
 that identifier instead — so sending one matches nothing, mints a duplicate row and orphans the
-original. Nair's verified ORCID is therefore recorded below in prose rather than asserted as his
-identifier value, and no ORCID is asserted for Woods at all; attaching either to the existing row is a
-correction only a database-side change can make.
+original. Nair's verified ORCID was therefore **not** sent in this entry's PATCH; it was applied on
+2026-09-07 by a database-side correction to the existing row, which preserves that row's identity and
+every other entry referencing it. No ORCID is asserted for Woods at all, and none should be — see the
+Woods note below.
 
 **The commit-authorship evidence, exactly.** Five distinct author forms appear across all 28 commits
 in the pin's ancestry, and they sum to 28, so this is the whole history rather than a sample:
@@ -578,16 +579,17 @@ identifier is recorded — the name is corrected and the identifier left absent 
 
 **The two NOAA authors — identifiers researched, and neither asserted as a value.**
 
-*Manoj C. Nair — the correct identifier, recorded in prose and not asserted as a value.*
+*Manoj C. Nair — identifier confirmed, and applied by database-side correction on 2026-09-07.*
 `https://orcid.org/0000-0002-0541-0127` is this author: the record's employment is University of
 Colorado Boulder and its works are geomagnetism throughout, including *International geomagnetic
 reference field: the thirteenth generation* and CrowdMag work. Corroboration independent of the name:
-the WMM2020 Technical Report recorded in Field 27 lists `Nair, Manoj` among its three authors. It is
-recorded here in prose and deliberately not asserted as this author's identifier, for the reason above:
-sending an ORCID for an author whose stored person row was created without an identifier matches on the
-identifier rather than the name, which mints a duplicate row and orphans the existing one. Attaching it
-to the existing row is a correction only a database-side change can make. Recording it here means a
-future refresh has the verified ORCID to hand and knows why it was not simply sent.
+the WMM2020 Technical Report recorded in Field 27 lists `Nair, Manoj` among its three authors. It was
+**not** sent through the metadata API, for the reason above: sending an ORCID for an author whose stored
+person row was created without an identifier matches on the identifier rather than the name, which mints
+a duplicate row and orphans the existing one. It was applied instead on **2026-09-07 by a database-side
+correction** to the existing row. A later refresh should expect the ORCID already present and must still
+not send it in a PATCH — the mint-and-orphan hazard belongs to the update path, not to the value, and
+storing the value does not retire it.
 
 *Adam Woods — researched and deliberately not asserted.* `https://orcid.org/0000-0003-1831-5038` is a
 plausible candidate: the name matches and the sole employment is University of Colorado Boulder. But
