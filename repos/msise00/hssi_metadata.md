@@ -182,8 +182,7 @@ here and was not found wanting.
 
 #### Author 2:
 - **Name:** Daniel Kastinen
-- **Author Identifier:** https://orcid.org/0000-0002-6371-1016 — correct value established here; must
-  be applied database-side, see the note below.
+- **Author Identifier:** https://orcid.org/0000-0002-6371-1016
 - **Affiliation:**
   - **Organization:** Swedish Institute of Space Physics
   - **Affiliation Identifier:** https://ror.org/043kppn11
@@ -224,9 +223,10 @@ is single-molecule fluorescence microscopy, receptor biophysics and EMCCD detect
 heliophysics, no geospace, no software. It appears in the same seven-record name search as the correct
 ORCID, which is exactly why the name alone cannot settle this field.
 
-**Daniel Kastinen — identifier newly established, and how it must be applied.** No identifier was
-recorded on HSSI for this author before this refresh, and this refresh does not add one, for the reason
-set out at the end of this paragraph. The correct value is `https://orcid.org/0000-0002-6371-1016`. A
+**Daniel Kastinen — identifier newly established, and applied by database-side correction on
+2026-09-08.** No identifier was recorded on HSSI for this author before this refresh, and this refresh's
+metadata update deliberately did not send one, for the reason set out at the end of this paragraph. The
+correct value is `https://orcid.org/0000-0002-6371-1016`. A
 fielded search on `given-names:Daniel AND family-name:Kastinen` returns exactly one record (the same
 search shape returns seven for Michael Hirsch, so it is discriminating rather than merely lucky), and
 three independent things bind that record to this contributor: its employment is Scientist at
@@ -236,10 +236,12 @@ commit to this repository is authored as `danielk <daniel.kastinen@irf.se>`, and
 institute's domain; and his publications include *Monitoring of lower thermospheric neutral density
 variations using meteor head echoes*, which is the very quantity this package computes.
 **This value must not be sent through a routine metadata update.** The stored person record for him
-already exists without an identifier, and supplying one that way mints a second person record and
-orphans the first, splitting his authorship across two entities. It has to be written directly to the
-existing record. Until that happens the divergence persists, and a future refresh should treat this
-paragraph as the pending item rather than re-deriving the ORCID.
+was created without an identifier, and supplying one that way mints a second person record and orphans
+the first, splitting his authorship across two entities. It was therefore written directly to the
+existing record by a database-side correction on 2026-09-08, which preserves that record's identity. A
+later refresh should expect the ORCID already present and must still not send it in a metadata update:
+the mint-and-orphan hazard belongs to the update path, not to the value, and storing the value does not
+retire it.
 
 **A one-commit author is still an author.** His contribution at this revision is a single commit
 (`c89d8d9`, 2021-06-24, "update example to conform to wrapper API", modifying
