@@ -1107,7 +1107,7 @@ value in this field is drawn from either paper's acknowledgements.
 ### 26. Award Title (OPTIONAL)
 
 **Values:**
-- **Award Title:** U.S. Naval Research Laboratory award
+- **Award Title:** PR 76-3033-19 PYSAT AND DINEOFS- A GENERALIZED SPACE WEATHER SYSTEM
   - **Award Identifier:** N00173191G016
 - **Award Title:** NASA grant
   - **Award Identifier:** 80NSSC18K1203
@@ -1132,30 +1132,30 @@ funder attached until someone makes a database-side correction.
 
 **Three of the four attach existing award records, so nothing new is created for them.**
 
-*1. `U.S. Naval Research Laboratory award` — identifier `N00173191G016`.*
+*1. `PR 76-3033-19 PYSAT AND DINEOFS- A GENERALIZED SPACE WEATHER SYSTEM` — identifier `N00173191G016`.*
 This is the README's `N00173-19-1-G016`. An award record already exists for it, and its funder is
 already one of this software's funders. **The identifier must be recorded in the hyphen-stripped form
 `N00173191G016`, because that is the form the existing record carries; the README's hyphenated
 `N00173-19-1-G016` would fail to match and would create a duplicate.**
 
-The title recorded above is the title that shared award record carried when this field was resolved.
-An award's title is a property of the shared record rather than of this software's entry, and
-attaching by identifier reuses that record without overwriting its title — so this field cannot be
-used to change the title, and a later correction to the shared record would not require an edit here.
-As carried, the title is generic rather than descriptive, and generic enough that it need not be
-unique across Naval Research Laboratory awards, which leaves the identifier as the only thing that
-actually distinguishes this award.
+**Previous title, and how it was corrected.** When this field was resolved, the shared award record
+carried the placeholder title `U.S. Naval Research Laboratory award` — generic rather than
+descriptive, and shared verbatim with a second Naval Research Laboratory award record
+(`N0017322P0744`), so the identifier was the only thing that distinguished it. An award's title is a
+property of the shared record rather than of this software's entry, and attaching by identifier
+reuses that record without overwriting its title, so the title could not be corrected through this
+field. It was corrected by a database-side change to the shared record on 2026-09-09, to the title
+recorded above. That record is also attached to pysat, so pysat now displays the same corrected
+title; the second Naval Research Laboratory record keeps its placeholder. A later refresh should
+expect the corrected title already present and must not attempt to send a title for this award.
 
-A better title does exist, and it is set down here so that whoever corrects that shared record does
-not have to re-derive it. The federal spending record for this award gives the description
+The corrected title is the federal spending record's description for this award,
 `PR 76-3033-19 PYSAT AND DINEOFS- A GENERALIZED SPACE WEATHER SYSTEM`, 67 characters and so
 comfortably inside the 128-character cap on award titles. The award went to the University of Texas
 at Dallas from the Department of Defense and ran 2019-09-01 to 2022-08-31. It is worth noticing that
 this description names **pysat** explicitly, which independently corroborates the pysat relation
 argued under Fields 29 and 30: the grant that the README credits for the multipole work funded
-pysat-family development at the same institution. Correcting the shared record is a database-side
-matter that has been escalated separately; it is not a value in this field, and nothing here depends
-on whether it has happened yet.
+pysat-family development at the same institution.
 
 **A search trap that hid this, and that generalises.** Looking this award up under the README's
 hyphenated spelling `N00173-19-1-G016` returns nothing from the federal spending data across every
@@ -1232,12 +1232,13 @@ would be second-guessing the people who wrote the acknowledgement.
 awardee is UCAR and the principal investigator is not an author of this software, and the award funds
 COSMIC constellation operations rather than this package. More concretely, and this is the durable
 part: an award's funder link cannot be written through any submission or update path, so the award
-record for `AGS-1033112` carries no funder until a database-side correction attaches one. That is a
-real gap in a record created on this entry's behalf but visible wherever awards are shown, and it is
-the follow-up this decision generates.
+record created for `AGS-1033112` carried no funder at first. That gap was closed by a database-side
+change on 2026-09-09, which attached the U.S. National Science Foundation record already used by this
+software's other NSF award (`AGS-1651393`) as the funder. A later refresh should expect the funder
+already present and must not attempt to send it.
 
 The title, principal investigator, awardee and dates are set down above so that nobody has to
-re-derive them — whether for that funder correction or for a later audit of why this award is here.
+re-derive them for a later audit of why this award is here.
 
 ---
 
