@@ -235,8 +235,8 @@ Considered and rejected, with reasons, so they are not re-proposed:
 ### 6. Authors (MANDATORY)
 
 **David Parunakian**
-- Identifier: `https://orcid.org/0000-0002-5468-4060` — **the correct target state, but not a value a
-  routine metadata update can apply; see the durable limitation below.**
+- Identifier: `https://orcid.org/0000-0002-5468-4060` — recorded in HSSI. It was applied directly to the
+  existing person record rather than through a metadata update, for the reason set out below.
 - Affiliation: Skobeltsyn Institute of Nuclear Physics of the Moscow State University
 - Affiliation identifier: none (researched; see below)
 
@@ -277,12 +277,12 @@ magnetometer works correspond to the DataCite deposits found under Field 2, whic
 Moscow State University affiliation — and SINP is an institute *of* Moscow State University. Name
 coincidence alone would not be enough; the agreement of domain, institution and date range is.
 
-**Durable limitation — this is a database-side correction, not a metadata patch.** HSSI holds this
-author with an empty identifier. Sending an ORCID for an already-stored identifier-less author does not
-fill in the existing entry: it resolves to a *new* person record and leaves the original orphaned while
-still attached elsewhere. The ORCID above must therefore be applied to the existing record directly,
-and a later refresh must not "fix" the gap by pushing it through the ordinary metadata path. This is a
-known follow-up, not an oversight.
+**Durable limitation — this identifier can only be set on the person record directly, never sent as a
+metadata value.** Sending an ORCID for an author already stored without one does not fill in the
+existing entry: it resolves to a *new* person record and leaves the original orphaned while still
+attached elsewhere. The identifier above was therefore written to the existing record, and a later
+refresh must not "correct" it by pushing it through the ordinary metadata path — the gap it would be
+repairing is already closed, and the attempt would create the duplicate this note exists to prevent.
 
 **Affiliation identifier — a researched absence.** A ROR search for `Skobeltsyn` returns zero results
 on both the v1 and v2 endpoints, while a control search for Lomonosov Moscow State University returns
