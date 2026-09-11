@@ -1,385 +1,299 @@
 # HSSI Metadata Extraction Results
 
+**HSSI Software ID:** b5c250bc-fe00-41b8-b06b-2f4c3e688520
 **Repository:** https://github.com/timduly4/pyglow
-**Extraction Date:** 2025-12-02
+**Source Revision:** 1988757f3b6a4bd5ed98266a3fb1dc64f2513fc5
+**Extraction Date:** 2026-09-10
+**Validation Date:** 2026-09-11
+**Validation Status:** PASS
 
 ---
 
 ## Section 1: Basic Information
 
-### 1. Submitter
+### 1. Submitter (MANDATORY)
+
 - **Submitter Name:** [To be filled by actual submitter]
 - **Submitter Email:** [To be filled by actual submitter]
 
+The repository does not identify the person who will submit or maintain this HSSI record.
+
 ### 2. Persistent Identifier (RECOMMENDED)
+
 **Value:** Not found
 
-**Notes:** No DOI found in repository files (no CITATION.cff, no DOI badges in README, no Zenodo integration detected).
+The repository, its complete tracked history, its bundled archives, and its separate GitHub wiki provide no software DOI or other persistent identifier for pyglow. DataCite and Zenodo searches by the software title and capitalization variants, repository identity, subject/full text, and creator names found no record that identifies `timduly4/pyglow`. Broad `pyglow` matches instead describe pysat integrations, pysatMissions integrations, or research datasets that used a copy of pyglow. The package named PyGlow on PyPI is the unrelated `spino17/PyGlow` project and is not identifier evidence for this software.
 
 ### 3. Code Repository (MANDATORY)
+
 **Value:** https://github.com/timduly4/pyglow
 
-**Source:** Repository URL, SoMEF extraction, PyHC registry
+This is the repository URL declared in `setup.py`, linked by the PyHC registry, cited by the project wiki, and used by the CEDAR 2014 pyglow abstract.
 
-### 4. Software Functionality (MANDATORY)
+### 4. Software Functionality (RECOMMENDED)
+
 **Values:**
+
 - Coordinate Transforms
 - Data Processing and Analysis
+- Data Processing and Analysis: Analysis
 - Data Processing and Analysis: Data Access and Retrieval
 - Data Processing and Analysis: Field-line Tracing
+- Data Processing and Analysis: Processing
 - Models and Simulations
 - Models and Simulations: Empirical
 - Models and Simulations: Field-line Tracing
 
-**Notes:**
-- **Coordinate Transforms:** Package includes coordinate conversion functionality (coord.py, location_time.py with LLA-to-ECEF, ECEF-to-LLA, VEN-to-ECEF transformations)
-- **Data Access and Retrieval:** Provides access to geophysical indices (AP, Kp, F10.7, DST, AE) via automatic downloading and updating (update_indices() function)
-- **Field-line Tracing:** Geomagnetic field-line tracing using IGRF model (Line() function traces along magnetic field lines, pyglow.py:530-553)
-- **Empirical Models:** Wraps multiple empirical climatological models:
-  - HWM (Horizontal Wind Model) versions 1993, 2007, 2014 - provides horizontal wind velocities
-  - IGRF (International Geomagnetic Reference Field) versions 11, 12 - provides magnetic field vectors
-  - IRI (International Reference Ionosphere) versions 2012, 2016 - provides electron density, ion density, temperatures
-  - MSIS (Mass Spectrometer and Incoherent Scatter Radar) 2000 - provides neutral density, composition, temperature
-- **Airglow Emission Calculations:** Computes 630.0-nm and 777.4-nm airglow volume emission rates (run_airglow() method, pyglow.py:308-387)
+The public coordinate functions convert between WGS-84 latitude/longitude/altitude, Earth-centered Earth-fixed coordinates, and vertical/east/north vectors (`src/pyglow/coord.py`). `update_indices()` retrieves Kp/AP/F10.7 data from GFZ and Dst/AE data from WDC Kyoto, while the download helpers normalize source files for local use (`src/pyglow/indice_maintenance.py`). `Point` executes HWM, IGRF, IRI, and MSIS empirical climatologies, derives physical quantities, and computes 630.0-nm and 777.4-nm airglow volume emission rates; `Line` integrates along IGRF magnetic field lines (`src/pyglow/pyglow.py`).
 
-**Source:** Analysis of README.md, source code (pyglow.py, hwm.py, igrf.py, iri.py, msis.py, coord.py), __init__.py public API, and example files
+The parent categories, coordinate transforms, data access, both field-line-tracing children, and empirical models are directly supported. `Analysis` and `Processing` are included because the library computes derived scientific quantities and transforms retrieved index data. `Physics-Based` is not selected: although the airglow calculation implements published physical rate equations, the named wrapped climatologies are principally empirical, making `Empirical` the more precise controlled classification. Plotting is confined to example scripts rather than a public visualization API, and the Dockerfile is a deployment option rather than server/environment functionality, so those categories are not selected.
 
-### 5. Related Region (MANDATORY)
-**Value:** Earth Atmosphere
+### 5. Related Region (RECOMMENDED)
 
-**Notes:** Specifically focused on the ionosphere, thermosphere, and mesosphere regions of Earth's atmosphere. The models wrapped by pyglow (HWM, IGRF, IRI, MSIS) are all upper atmosphere models operating in the 85-1000+ km altitude range.
+**Values:**
 
-**Source:** README.md description, PyHC registry keywords ("ionosphere_thermosphere_mesosphere"), example files showing altitude ranges
+- Earth Atmosphere
+- Earth Lower and Middle Atmosphere
+- Earth Ionosphere
+- Earth Thermosphere
+
+The existing HSSI value `Earth Atmosphere` remains the broad physical scope. HWM covers atmospheric winds from the lower atmosphere through the thermosphere, IRI describes ionospheric plasma, and MSIS describes the neutral atmosphere and thermosphere; the more specific flat-region values make those independently supported scopes explicit. `Earth Auroral Subregion` is not selected because airglow is not synonymous with aurora and pyglow is not restricted to auroral locations. `Earth Magnetosphere` is not selected because IGRF supplies an internal geomagnetic field and field-line utility rather than a full magnetospheric model.
 
 ### 6. Authors (MANDATORY)
 
 **Author 1:**
-- **Name:** Timothy M. Duly (Timothy Duly)
+
+- **Name:** Timothy M. Duly
 - **Author Identifier:** Not found
-- **Affiliation:**
-  - **Organization:** Not found
-  - **Affiliation Identifier:** Not found
+- **Affiliation:** Not found
 
-**Notes:**
-- Primary author identified from setup.py (author='Timothy M. Duly', author_email='timduly4@gmail.com')
-- PyHC registry lists contact as "Timothy Duly"
-- SoMEF found email: timduly4@gmail.com
-- No ORCID or institutional affiliation found in repository
-- Copyright notice in LICENSE shows "Copyright (c) 2016 Timothy Duly"
+**Author 2:**
 
-**Source:** setup.py:144-145, License.md:3, PyHC registry, SoMEF output
+- **Name:** Mark D. Butala
+- **Author Identifier:** Not found
+- **Affiliation:** Not found
+
+`setup.py` uses the full display name Timothy M. Duly; `License.md` and the PyHC registry use Timothy Duly. These primary project metadata sources and Timothy M. Duly's CEDAR abstract name Timothy alone. The PYSAT paper's bibliography instead credits the software to Duly and Butala, and the pin-bounded history contains substantive Mark Butala contributions. Taken together, the scholarly software citation and substantive contribution history support classifying Mark D. Butala as a software author despite the single-author project metadata. The source tree contains no ORCID or ROR identifier for either author.
+
+A fielded ORCID search for given name Timothy and family name Duly produced one candidate, https://orcid.org/0000-0001-5424-0921. Its public name is Timothy Duly, but its public record exposes no works, affiliations, email, URLs, or alternate names that connect it to this repository. The candidate is therefore not recorded because independent identity linkage is lacking.
+
+Contemporary repository source comments use an `illinois.edu` address, and a publication by Timothy M. Duly identifies the University of Illinois at Urbana-Champaign. The exact institutional ROR is University of Illinois Urbana-Champaign, https://ror.org/047426m28. No affiliation is recorded for Timothy because the repository does not explicitly declare an author affiliation; later employment at Spire Global is not evidence of the affiliation under which pyglow was authored. No affiliation is recorded for Mark D. Butala because the reviewed software-author evidence does not establish one in this context.
 
 ### 7. Software Name (MANDATORY)
+
 **Value:** pyglow
 
-**Source:** Repository name, setup.py:142, README.md, PyHC registry, SoMEF output
+The lower-case name is used by `setup.py`, the repository, the package import, the wiki, the PyHC registry, and the existing HSSI record. The capitalized PyGlow name on PyPI belongs to an unrelated project.
 
 ### 8. Description (MANDATORY)
+
 **Value:** pyglow is a Python module that wraps several upper atmosphere climatological models written in FORTRAN, such as the Horizontal Wind Model (HWM), the International Geomagnetic Reference Field (IGRF), the International Reference Ionosphere (IRI), and the Mass Spectrometer and Incoherent Scatter Radar (MSIS). It includes HWM 1993/2007/2014, IGRF 11/12, IRI 2012/2016, and MSIS 2000. pyglow offers access to these models and geophysical indices (AP, Kp, F10.7, DST, AE) in a convenient, high-level object-oriented interface within Python.
 
-**Source:** README.md lines 11-31, GitHub API description (via SoMEF), PyHC registry
+This wording is retained from the existing HSSI record because it accurately and specifically summarizes `README.md` lines 11-31 at the pinned revision.
 
 ### 9. Concise Description (OPTIONAL)
+
 **Value:** Upper atmosphere climatological models in Python
 
-**Source:** GitHub repository description (via SoMEF output)
+This exact phrase is the GitHub repository description, the tagline displayed in the project logo, and the title of the CEDAR 2014 abstract.
 
 ### 10. Publication Date (RECOMMENDED)
+
 **Value:** 2013-08-09
 
-**Notes:** Date the repository was created on GitHub
-
-**Source:** SoMEF output (date_created field from GitHub API)
+GitHub records repository creation on 2013-08-09. The first git commit followed on 2013-08-10, so the existing publication date remains the earliest authoritative public-project date.
 
 ### 11. Publisher (RECOMMENDED)
+
 - **Organization:** GitHub
 - **Publisher Identifier:** https://github.com
 
-**Notes:** No DOI found, so the repository is hosted on GitHub without formal publication through a service like Zenodo.
-
-**Source:** Code repository location
+No formal software publication record was found. GitHub is retained as publisher because it is the public host and distribution point for the software and its wiki.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** Not found
-- **Version Date:** 2025-12-01
-- **Version Description:** Not found
+
+- **Version Number:** 2.2
+- **Version Date:** 2019-01-11
+- **Version Description:** Docker for pyglow (#81)
 - **Version PID:** Not found
 
-**Notes:**
-- Repository has no git tags for versioning
-- No version information found in setup.py or __init__.py
-- Last update date from GitHub API: 2025-12-01T22:19:37Z
-- README.md (line 63) mentions the package is "far behind on maintenance" as of April 2023
+At the pinned revision, `src/pyglow/constants.py` declares `VERSION = '2.2'`, and `src/pyglow/__init__.py` exposes that value as `__version__`. Commit `e8a0e85219c9da9b3464dc9469b04c1e650cc53c` changed the constant from 2.1 to 2.2 on 2019-01-11 with the description recorded above. Earlier commits explicitly added `pyglow-0.21.tar.gz` and `pyglow-0.21.zip` distributions, confirming that the project used intentional version numbers despite having no current git tags or GitHub Releases.
 
-**Source:** Git tag check (no tags found), SoMEF output (date_updated field)
+Before this refresh, the HSSI version attachment had an empty number and therefore did not communicate the source-defined version. GitHub's repository `updated_at` value is not a version date, and the unrelated PyPI package's 0.1.7 must not be used. No version-specific persistent identifier was found.
 
 ### 13. Programming Language (RECOMMENDED)
+
 **Values:**
+
 - Fortran77
 - Fortran90
 - Python 3.x
 
-**Notes:**
-- Primary language is Python 3 for the interface
-- Wraps FORTRAN models (Fortran 77/90) via f2py
-- Language statistics from GitHub: Fortran (405,001 bytes), Python (109,604 bytes), Makefile (9,515 bytes), Dockerfile (608 bytes)
-- README troubleshooting section notes incompatibility with Python 3.10, recommending Python 3.8
+The consistent criterion is languages central to the shipped user-facing Python interface and to the bundled or wrapped model implementations, rather than every language mentioned in comments or historical lineage. Python 3 is the public interface and installation target; fixed-form and free-form Fortran implement the wrapped models and are compiled through f2py. There is no shipped IDL, MATLAB, or Julia implementation. MATLAB appears only as code-lineage and comparison context, while the source does not identify distinct Fortran 2003 or Fortran 2008 implementations. The three existing HSSI values therefore remain the complete important-language set.
 
-**Source:** SoMEF output (programming_languages from GitHub API), setup.py (uses f2py and fortran compilation flags), README.md:60
+### 14. Reference Publication (OPTIONAL)
 
-### 14. Reference Publication (RECOMMENDED)
 **Value:** Not found
 
-**Notes:** No reference publication, JOSS paper, or preferred citation found in repository.
-
-**Source:** Searched for CITATION files, DOI references, and publication mentions in README
+The repository and wiki do not designate a DOI-bearing paper as the preferred publication describing pyglow. Timothy M. Duly's CEDAR 2014 abstract directly presents the package, but it has no DOI and cannot populate this DOI-only field. DOIs embedded in bundled model files describe the upstream HWM, IRI, and index products rather than pyglow itself.
 
 ### 15. License (RECOMMENDED)
+
 - **License:** MIT License
-- **License URI:** https://opensource.org/licenses/MIT
 
-**Notes:** Full license text available in License.md file. Copyright (c) 2016 Timothy Duly.
-
-**Source:** License.md, SoMEF output (license field with SPDX ID "MIT"), GitHub API
+`License.md` contains the MIT License text and names Timothy Duly as copyright holder. `MIT License` is the exact closed-vocabulary row. The license URI belongs to that shared controlled row and is not a separate per-software value.
 
 ---
 
 ## Section 2: Additional Data
 
 ### 16. Keywords (OPTIONAL)
+
 **Values:**
-- ionosphere_thermosphere_mesosphere
-- specific
-- upper atmosphere
-- climatological models
-- geophysical indices
-- HWM
-- IGRF
-- IRI
-- MSIS
+
 - airglow
+- climatological models
+- electron density
+- f10.7
+- geomagnetic field
+- geophysical indices
+- hwm
+- igrf
+- ionosphere
+- ionosphere thermosphere mesosphere
+- iri
+- mesosphere
+- msis
+- neutral atmosphere
+- thermosphere
+- upper atmosphere
 
-**Notes:**
-- First two keywords from PyHC registry
-- Additional keywords derived from README description and model names
-- "specific" in PyHC context indicates mission/instrument-specific or model-specific software
-
-**Source:** PyHC registry keywords, README.md, model documentation
+The exact lower-case spellings reuse existing keyword rows; title-cased display variants must not create duplicates. Nine established keywords are retained. `ionosphere`, `thermosphere`, `mesosphere`, `geomagnetic field`, `neutral atmosphere`, `electron density`, and `f10.7` add separately searchable scientific concepts directly exposed by the wrapped models and index interface. `specific` came from the PyHC registry taxonomy but is omitted because it has no clear standalone scientific meaning. The compound PyHC keyword remains separately useful because it preserves the registry's established concept.
 
 ### 17. Data Sources (OPTIONAL)
+
 **Values:**
-- Other
 
-**Notes:** pyglow downloads geophysical indices from various sources as part of its update_indices() functionality, but the specific data source websites are embedded in the code rather than being a standard data source like CDAWeb or HAPI.
+- GFZ
+- HTTP/HTTPS Directories
+- WDC
 
-**Source:** README.md:162-180, indice_maintenance.py
+`src/pyglow/indice_maintenance.py` retrieves Kp/AP/F10.7 data from GFZ and Dst/AE data from World Data Center Kyoto over HTTP or HTTPS. These three controlled values represent the authored remote sources and transport directly. `Other` is omitted because it is redundant once those sources are represented specifically.
 
 ### 18. Input File Formats (RECOMMENDED)
-**Values:**
-- ascii
 
-**Notes:** The geophysical indices are stored as ASCII data files (in kpap/, dst/, ae/ directories). The wrapped FORTRAN models also use ASCII data files (.dat, .asc, .for extensions).
+**Value:** ascii
 
-**Source:** Directory analysis (kpap/, dst/, ae/ folders), setup.py data_files listing
+The index stores and bundled model data use plain-text ASCII formats, including fixed-width index files, model coefficient files, and Fortran-readable data. `ascii` is the exact existing controlled value.
 
 ### 19. Output File Formats (RECOMMENDED)
+
 **Value:** Not found
 
-**Notes:** pyglow primarily provides data through Python objects (Point class) rather than writing output files. Users can export results using standard Python file I/O, but no specific output format is enforced by the package.
-
-**Source:** Example files showing in-memory data access, no file writing functionality in main code
+The pyglow package returns model results through Python objects and arrays. The public API does not designate or write an output file format, so formats that users could choose through general Python I/O are deliberately not inferred.
 
 ### 20. Operating System (RECOMMENDED)
+
 **Values:**
+
 - Linux
 - Mac
 
-**Notes:**
-- README installation instructions reference Linux commands (apt-get)
-- macOS specifically mentioned in README:128 for installation path
-- Requires gfortran compiler which is readily available on Linux/Mac
-- No explicit Windows support mentioned, though Windows may work with appropriate Fortran compiler
-- Docker support available for cross-platform compatibility
-
-**Source:** README.md:37 (Linux apt-get), README.md:128 (macOS path example), README.md:143-154 (Docker), setup.py compilation requirements
+The README provides native Linux installation commands, a Mac installation-path example, and a Linux Docker build. No Windows installation, continuous-integration, or support evidence appears at the pinned revision. The two existing values are therefore retained without inferring Windows or a generic OS-independent value.
 
 ### 21. CPU Architecture (RECOMMENDED)
+
 **Value:** CPU Independent
 
-**Notes:** Python/Fortran code should run on standard CPU architectures. No GPU or HPC-specific requirements mentioned.
-
-**Source:** Code analysis
+The Python and portable Fortran sources have no GPU, accelerator, or architecture-specific requirement. Compilation is required, but no CPU family is prescribed, so the existing controlled value remains appropriate.
 
 ### 22. Related Phenomena (OPTIONAL)
+
 **Value:** Not found
 
-**Notes:** While the package models upper atmosphere phenomena (ionospheric density, winds, magnetic fields), specific phenomena are not explicitly listed in the repository documentation. The models provide general climatological conditions rather than focusing on specific phenomena like auroras or geomagnetic storms.
-
-**Source:** README.md and model documentation review
+Of the available controlled phenomena, `Geomagnetic Storms` is plausibly related because pyglow exposes Dst, AE, Kp/AP, and HWM disturbance-wind behavior. It is nevertheless omitted because the package is a general climatological-model and index interface rather than storm-specific software; none of the solar-only phenomena applies.
 
 ### 23. Development Status (RECOMMENDED)
+
 **Value:** Inactive
 
-**Notes:**
-- PyHC registry rates software_maturity as "Good" but community and documentation as "Requires improvement"
-- README.md:59-63 includes troubleshooting note dated April 2023 stating "pyglow is far behind on maintenance" and "A solution to Issue #139 is sorely needed"
-- Last commit: 2025-12-01 (recent), but maintenance issues noted
-- Most appropriate status is "Inactive" - reached stable usable state but no longer actively developed, support provided as time allows
-
-**Source:** PyHC registry quality ratings, README.md:59-63, git log
+The repository is not archived, but its last source commit was 2023-05-02 and the pinned README states that pyglow was already far behind on maintenance and difficult to install in April 2023. The exact controlled definition of `Inactive` is: “The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.” This fits the available evidence. `Unsupported` would require evidence that the authors had ceased all work and a new maintainer may be desired; the repository does not make that stronger claim. GitHub's `updated_at` timestamp is not commit activity.
 
 ### 24. Documentation (RECOMMENDED)
+
 **Value:** https://github.com/timduly4/pyglow/wiki
 
-**Notes:** Documentation is available on the GitHub wiki. PyHC registry rates documentation as "Requires improvement".
-
-**Source:** README.md:193 link, SoMEF output (documentation field), PyHC registry documentation rating
+The README links this separate GitHub wiki, and the existing HSSI record uses it. The wiki exists at its own repository revision and currently contains acknowledgement guidance; the README remains the more extensive installation and API overview, but the established documentation URL is valid.
 
 ### 25. Funder (OPTIONAL)
+
 **Value:** Not found
 
-**Notes:** No funding information found in repository.
-
-**Source:** Searched README, setup.py, and repository files
+No repository, archive, wiki, registry, DOI record, or author-keyed source attributes funding for pyglow itself. Funding attached to papers that merely use pyglow is not software funding.
 
 ### 26. Award Title (OPTIONAL)
+
 **Value:** Not found
 
-**Notes:** No grant or award information found in repository.
-
-**Source:** Searched README, setup.py, and repository files
+No award or grant title is attributed to pyglow by the repository, wiki, registry, or related metadata sources.
 
 ---
 
 ## Section 3: Additional Metadata
 
 ### 27. Related Publications (OPTIONAL)
-**Value:** Not found
 
-**Notes:** No related publications found in repository.
+**Values:**
 
-**Source:** Searched README and repository files
+- https://cedarscience.org/2014-it-poster-list
+- https://doi.org/10.1029/2018JA025297
+- https://doi.org/10.1029/2020JA027972
+- https://doi.org/10.1029/2018JA025877
+
+The CEDAR 2014 meeting record is Timothy M. Duly's direct abstract presenting pyglow as a common Python framework for HWM, IGRF, IRI, and MSIS; its stable meeting page is used because the abstract has no DOI. The PYSAT paper, https://doi.org/10.1029/2018JA025297, cites and describes pyglow. Pysat release notes separately document coupled satellite/model simulation using pyglow and Python 3 pyglow integration, supporting both scientific use and interoperability. Mesquita et al. 2020, https://doi.org/10.1029/2020JA027972, used an archived `pyglow-master.zip` to generate empirical-model results, as documented by its associated Zenodo dataset record. https://doi.org/10.1029/2018JA025877 has a dedicated pyglow subsection describing its wrapped models and index downloads and independently describes pysat's use of pyglow for model access. Other papers found in literature searches cite pyglow or use one wrapped model but lack evidence that the developer prioritized them, so they are not selected.
 
 ### 28. Related Datasets (OPTIONAL)
-**Values:**
-- Geophysical indices datasets (Kp, AP, F10.7, DST, AE)
 
-**Notes:** While specific dataset DOIs are not provided, the package relies on and provides access to standard geophysical indices datasets. The update_indices() function downloads these from authoritative sources.
+**Value:** https://doi.org/10.5880/Kp.0001
 
-**Source:** README.md:162-180, geophysical_indices.py
+The Kp/AP/F10.7 input file distributed with pyglow identifies this GFZ DOI for the Kp index series, and the update code retrieves the same source product. Dst and AE are retrieved from WDC Kyoto but the source does not identify dataset DOIs for them. The Mesquita Zenodo dataset includes a copy of pyglow and uses it to produce results; it is not a dataset that pyglow is designed to support and is therefore recorded through its paper in Field 27 rather than here.
 
 ### 29. Related Software (OPTIONAL)
+
 **Values:**
-- HWM (Horizontal Wind Model) - FORTRAN models wrapped by pyglow
-- IGRF (International Geomagnetic Reference Field) - FORTRAN models wrapped by pyglow
-- IRI (International Reference Ionosphere) - FORTRAN models wrapped by pyglow
-- MSIS (NRLMSISE-00) - FORTRAN model wrapped by pyglow
 
-**Notes:** These are the upstream FORTRAN models that pyglow wraps to provide Python access. pyglow is essentially a Python interface to these existing models.
+- https://github.com/space-physics/hwm93
+- https://github.com/space-physics/msise00
+- https://github.com/space-physics/igrf
+- https://github.com/rilma/pyIRI2016
+- https://github.com/space-physics/NCAR-GLOW
 
-**Source:** README.md:13-22, setup.py model list
+HWM-93 and MSISE-00 represent model families directly wrapped by pyglow; the HSSI MSISE-00 record also links back to pyglow. IGRF-13 and pyIRI2016 are closely corresponding repository-backed Python interfaces for two other wrapped model families. GLOW is a distinguishing alternative for upper-atmosphere and airglow calculations. These URLs are the exact code-repository identities stored for the corresponding HSSI entries.
+
+IRI-90 and IGRF-14 were considered but are redundant generation alternatives once the closer repository-backed IRI and IGRF family candidates are represented. Generic Python dependencies and build tools are excluded because they do not distinguish pyglow.
 
 ### 30. Interoperable Software (OPTIONAL)
-**Values:**
-- numpy
-- python-dateutil
-- matplotlib (used in examples)
 
-**Notes:** Listed dependencies from requirements.txt. Package integrates with standard scientific Python ecosystem.
+**Value:** https://github.com/pysat/pysat
 
-**Source:** requirements.txt, examples/
+Pysat release metadata documents pyglow integration for Python 3 and a coupled satellite/model simulation that uses pyglow; pysatMissions also exposed pyglow access methods for pysat Instrument objects. This is a demonstrated domain-tool integration, and the URL is the exact code repository stored for pysat in HSSI.
+
+Numpy, SciPy, pandas, matplotlib, python-dateutil, future, pytest, compilers, Docker, and Jupyter are deliberately excluded. Dependency, build, plotting-example, or shared-runtime presence does not establish peer-tool data exchange under the Field 30 relevance rule.
 
 ### 31. Related Instruments (OPTIONAL)
+
 **Value:** Not found
 
-**Notes:** This is a general-purpose modeling package not specific to any particular instrument.
-
-**Source:** Package analysis
+The pyglow package is an instrument-agnostic climatological-model wrapper and index interface. UARS, WINDII, and HRDI appear only in embedded HWM07 metadata as observations used to construct that upstream model; pyglow does not read or process their measurements. “Mass Spectrometer and Incoherent Scatter Radar” expands the MSIS model name rather than identifying particular supported instruments. These mentions fail the designed-to-support relevance gate before vocabulary resolution, so no instrument name or identifier is emitted.
 
 ### 32. Related Observatories (OPTIONAL)
+
 **Value:** Not found
 
-**Notes:** This is a general-purpose modeling package not specific to any particular mission or observatory.
-
-**Source:** Package analysis
+No observatory or mission is designed into pyglow's input, output, or API. The README's ISS mention only credits the photograph used in the logo, and the UARS mention belongs to upstream HWM model-generation history. A user searching for those observatories' data would not reasonably expect this general model wrapper as a result, so no observatory association is selected.
 
 ### 33. Logo (OPTIONAL)
+
 **Value:** https://raw.githubusercontent.com/timduly4/pyglow/1988757f3b6a4bd5ed98266a3fb1dc64f2513fc5/logo.png
 
-**Notes:** Logo shows airglow image from ISS. Also available via PyHC registry with alternate camo.githubusercontent.com URL.
-
-**Source:** README.md:5, PyHC registry, SoMEF output
-
----
-
-## Metadata Sources Summary
-
-**Automated Extraction:**
-1. **SoMEF:** Provided software name, description, license, repository URL, programming languages, dates, logo, documentation URL, requirements, and GitHub statistics
-2. **PyHC Registry:** Confirmed package listing, provided contact name, keywords, quality ratings, and logo URL
-3. **No DOI found:** DataCite and Zenodo API queries were not applicable
-
-**Manual Extraction:**
-1. **README.md:** Software description, model versions, geophysical indices, installation requirements, documentation link, development status notes
-2. **setup.py:** Author name, author email, package name, repository URL, model list, dependencies
-3. **License.md:** License type, copyright holder, copyright year
-4. **Source code analysis:** Software functionality (coordinate transforms, data access, empirical models), related region (upper atmosphere)
-5. **Example files:** Usage patterns, altitude ranges, functionality demonstration
-6. **Git history:** Creation date, recent activity, lack of version tags
-
----
-
-## Verification Notes
-
-**Completeness Check:**
-- ✅ All 33 form fields addressed
-- ✅ All MANDATORY fields have values
-- ✅ Most RECOMMENDED fields have values
-- ⚠️ Some OPTIONAL fields marked as "Not found" where data was not available
-
-**Accuracy Check:**
-- ✅ All URLs verified as valid GitHub links
-- ✅ Author information confirmed across multiple sources
-- ✅ Software functionality verified through code analysis
-- ✅ Related region confirmed through PyHC keywords and model descriptions
-- ✅ License SPDX ID confirmed
-- ⚠️ No version number available (package lacks formal versioning)
-- ⚠️ No DOI or formal publication
-
-**Exhaustiveness Check:**
-- ✅ Software Functionality: Identified coordinate transforms, data access/retrieval, and empirical models
-- ✅ Related Region: Confirmed Earth Atmosphere (ionosphere/thermosphere/mesosphere)
-- ✅ Programming Languages: All major languages identified (Python, Fortran77, Fortran90)
-- ✅ Keywords: Comprehensive list from PyHC and model names
-- ⚠️ Author affiliation unknown (no institutional information in repository)
-
-**Priority Metadata Status:**
-- ✅ MANDATORY fields: All complete
-- ⚠️ RECOMMENDED fields: Missing version number, version PID, reference publication, author identifier, author affiliation
-- ℹ️ OPTIONAL fields: Many not found, which is acceptable
-
----
-
-## Extraction Challenges
-
-1. **No formal versioning:** Repository lacks git tags or version numbers in code
-2. **No DOI:** Package has not been published to Zenodo or similar DOI-issuing service
-3. **Limited author information:** No ORCID or institutional affiliation provided
-4. **No citation file:** No CITATION.cff or similar citation guidance
-5. **Maintenance concerns:** README notes package is "far behind on maintenance" as of April 2023
-6. **Documentation limitations:** PyHC registry notes documentation "Requires improvement"
-
----
-
-## Recommendations for Package Maintainers
-
-If the package maintainers wish to improve metadata for HSSI submission:
-
-1. **Add versioning:** Use git tags to mark releases
-2. **Obtain a DOI:** Publish to Zenodo to get a persistent identifier
-3. **Create CITATION.cff:** Provide clear citation guidance
-4. **Add author ORCIDs:** Include author identifiers in repository
-5. **Document affiliations:** Add institutional affiliations for authors
-6. **Improve documentation:** Address documentation gaps noted by PyHC
-7. **Add reference publication:** Consider publishing a software paper (e.g., JOSS)
-8. **Update README:** Add DOI badge, citation information, and version information
+This revision-pinned URL returns a valid PNG byte-identical to the repository's `logo.png`. Visual inspection shows the `pyglow` name and “upper atmosphere climatological models in Python” tagline over the airglow photograph displayed at the top of the README. The existing HSSI value is therefore retained without substituting a different graphic.
