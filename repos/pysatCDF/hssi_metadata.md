@@ -370,7 +370,7 @@ rather than an editorialisation, and every clause checks out at the pin:
   files into Python." (one unwrapped source line).
 - "provides simple, robust access to CDF data and simplifies adding instruments to pysat" — the
   README's Motivation section reads, across two wrapped lines, "Provide simple, robust access to CDF
-  data in Python and simplify / adding instruments to [pysat](https://github.com/pysat/pysat)."
+  data in Python and simplify adding instruments to [pysat](https://github.com/pysat/pysat)."
 - "includes the NASA CDF libraries" — the vendored `cdf36_3-dist/` tree, and the README's statement
   that actual CDF loading is performed by the NASA CDF libraries "which are included with pysatCDF".
 - "reading CDF files, accessing variable data and metadata, and exporting data to pysat data and
@@ -503,7 +503,7 @@ pysatCDF.
 - **Fortran77** — not incidental: the Fortran layer is what distinguishes pysatCDF from every other
   Python CDF reader. `pysatCDF/fortran_cdf.f` is the f2py-wrapped bridge to the NASA C library, and
   the package docstring in `pysatCDF/__init__.py` states that pysatCDF "uses NASA's C library to do
-  the actual loading and couples / Python to this library via an intermediate Fortran layer" (two
+  the actual loading and couples Python to this library via an intermediate Fortran layer" (two
   wrapped source lines). The dialect is F77 specifically, and the repository says so twice: the file
   is fixed-form with column-1 `C` comments, and `setup.py` line 194 passes
   `extra_f77_compile_args=['--std=legacy'],`. A contributor cannot avoid it, and a user cannot
@@ -566,12 +566,13 @@ reader.
 
 `LICENSE` at the pin is a BSD licence with three enumerated conditions, set as `*` bullets rather
 than numbers, the third of which reads
-"* Neither the name of pysatCDF nor the names of its" (one wrapped source line, continuing
-"contributors may be used to endorse or promote products derived from / this software without
-specific prior written permission."). That third clause is precisely what separates BSD-3-Clause
-from BSD-2-Clause, so the near-match vocabulary row `BSD 2-Clause "Simplified" License` is ruled out
-on content, not on name. GitHub's licence detector independently reports `spdx_id` = `BSD-3-Clause`
-for this repository, and `setup.cfg` declares the classifier `License :: OSI Approved :: BSD License`.
+"* Neither the name of pysatCDF nor the names of its" (the clause's first source line, continuing
+across the two that follow with "contributors may be used to endorse or promote products derived
+from this software without specific prior written permission."). That third clause is precisely
+what separates BSD-3-Clause from BSD-2-Clause, so the near-match vocabulary row
+`BSD 2-Clause "Simplified" License` is ruled out on content, not on name. GitHub's licence detector
+independently reports `spdx_id` = `BSD-3-Clause` for this repository, and `setup.cfg` declares the
+classifier `License :: OSI Approved :: BSD License`.
 
 **The licence history was read by content, not assumed constant.** Only two commits in the pinned
 lineage have ever touched `LICENSE`: `fed5acee4b72fc4fa741956c12c3d806205bb687` (2018-09-13, "Added
@@ -589,7 +590,7 @@ be strictly worse for a site visitor filtering by licence.
 
 **Bundled third-party licence, not this software's licence.** `cdf36_3-dist/CDF_copyright.txt` carries
 NASA/GSFC Space Physics Data Facility's own terms ("This software may be copied or redistributed as
-long as it is not sold / for profit…", two wrapped source lines). Those govern the vendored CDF
+long as it is not sold for profit…", two wrapped source lines). Those govern the vendored CDF
 distribution, not pysatCDF, and Field 15 takes a single value describing the software itself. The
 existence of the bundled NASA terms is noted here so a future agent understands why a licence scan
 over the whole tree returns two different licences.
@@ -617,7 +618,7 @@ hyphens to spaces: the repository's `topics` are `cdf`, `nasa-cdf`, `python`, `p
 are the project's own chosen search terms and are kept unchanged.
 
 **Why `pysat`.** pysat is not incidental to pysatCDF; it is the reason the package exists. The
-README's Motivation section gives the purpose as providing access to CDF data "and simplify /
+README's Motivation section gives the purpose as providing access to CDF data "and simplify
 adding instruments to [pysat](https://github.com/pysat/pysat)." (two wrapped source lines);
 `to_pysat()` is the package's flagship export; `pysat` is a hard, unconditional module-level import
 in `_cdf.py`; and the project declares
@@ -691,7 +692,7 @@ enumerated here rather than merely referenced.
 **`CDAWeb` was specifically considered and rejected.** pysatCDF is overwhelmingly used on files that
 came from CDAWeb, and `to_pysat()`'s defaults are tuned to CDAWeb's conventions. But reading a file
 that an archive produced is not being a client of that archive. The division of labour is stated in
-the 2018 Snakes survey, whose section A.3.3 records that "the NASA CDAWeb hosted / mission support
+the 2018 Snakes survey, whose section A.3.3 records that "the NASA CDAWeb hosted mission support
 within pysat relies upon pysatCDF" (arXiv 1901.00143v1 text, two wrapped lines): pysat does the
 fetching, pysatCDF does the opening. A visitor filtering HSSI for CDAWeb clients wants tools that
 will go and get data for them, and would be misled by finding a library that cannot.
@@ -1079,7 +1080,7 @@ magnetospheric physics." A visitor comparing Python CDF readers is exactly who t
 
 **CDFlib.** The third Python CDF reader, and the natural alternative to pysatCDF for anyone
 who cannot or will not compile a Fortran extension. The Snakes survey introduces all three in one
-passage — "there / are three different packages that load NASA common data format (CDF) files"
+passage — "there are three different packages that load NASA common data format (CDF) files"
 (two wrapped lines) — and distinguishes them: CDFlib "was developed recently, and contains a pure
 Python CDF reader and" / "writer (as opposed to a Python wrapper for the NASA CDF C library)." That
 contrast is precisely the "distinguishing" information Field 29 asks for: it tells a reader what
