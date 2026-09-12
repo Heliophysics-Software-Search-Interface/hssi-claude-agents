@@ -745,11 +745,11 @@ the package ingests.
 returns the parsed JSON payload of a Zenodo API response.
 
 **`Other` was removed in this refresh.** Before this refresh the field carried `JSON` and `Other`
-together. An earlier dossier read the pair as "`JSON` = API responses, `Other` = metadata JSON files
-generated from `.ini`" — but both of those things are JSON, so on that reading `Other` named nothing
-distinct. Searching the pinned tree for any other write path: the only file the package creates is
-`outfn.write_text(json_meta)` in `upload.meta()`. There is no other serialiser, no other writer, and no
-binary output.
+together. An earlier dossier glossed `JSON` as "API responses" and `Other` as "metadata JSON files
+generated from `.ini` upload metadata" — but both of those things are JSON, so on that reading
+`Other` named nothing distinct. Searching the pinned tree for any other write path: the only file
+the package creates is `outfn.write_text(json_meta)` in `upload.meta()`. There is no other
+serialiser, no other writer, and no binary output.
 
 **The case for keeping `Other`, which was weighed and did not prevail.** The package *transmits*
 arbitrary user files to Zenodo through `upload_data()`, and the formats of those files are entirely
