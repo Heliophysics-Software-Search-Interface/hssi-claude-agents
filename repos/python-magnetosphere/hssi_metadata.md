@@ -1167,7 +1167,7 @@ The sweep matched only eight terms, and **every one is a false positive**:
 | `cosmic` | `rigidity.c` | the phrase "cosmic ray penetration"; collides with the COSMIC constellation |
 | `ephemeris` | `README`, `cxform-manual.c` | "ephemeris seconds past J2000"; collides with rows literally named "Ephemeris" |
 | `greenwich` | `README`, `cxform-manual.c` | "Greenwich Rotating Coordinates", the GEO frame's alias |
-| `magnetic field` | `igrf_sub.c`, `igrfmodule.c`, `README` | the physical quantity; collides with rows named "Magnetic Field" |
+| `magnetic field` | `igrf_sub.c`, `igrfmodule.c`, `README` | the physical quantity; collides with the Ulysses FGM row named "Magnetic Field" |
 | `santiago` | `README`, `cxform-manual.c` | Ed Santiago, CXFORM's author; collides with the Santiago observatory |
 
 **IMP-8, separately, because a naive search misses it and a naive reading over-reads it.** A
