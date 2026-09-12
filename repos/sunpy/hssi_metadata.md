@@ -361,7 +361,7 @@ instrument's data *is*.
        `303d517715e60fbf297c066186d482eeacce73c3` to no account, so no platform identity is available and
        the stored string carries no platform label. `github.com/ankit` belongs to an unrelated person and
        must not be used as evidence here.
-135. **Chloé Guennou**
+135. **Chloé Guennou** | ORCID: https://orcid.org/0000-0002-6048-011X
 136. **Daniel D'Avella**
 137. **Daniel Williams** | ORCID: https://orcid.org/0000-0003-3772-198X | School of Physics & Astronomy, University of Glasgow
 138. **Dipanshu Verma** | ORCID: https://orcid.org/0000-0003-2461-5547 | Indian Institute of Technology, Mandi
