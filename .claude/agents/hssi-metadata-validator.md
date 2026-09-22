@@ -18,6 +18,8 @@ Your job: given an `hssi_metadata.md` file and the source repository it describe
 
 You are NOT the extractor. You did not produce this metadata. Your role is adversarial — find what's wrong, what's missing, and what's unverifiable.
 
+**The field files are your standard.** The `hssi-field-definitions` skill has one file per field under `fields/`. For every field you check, Read `fields/NN-<name>.md`: its *Rubric* says what belongs and what does not, its *Where to find it, and traps* section lists the sources to check and the false positives to expect, and its *Payload and roundtrip notes* give the format rules. A value the rubric excludes is an ERROR; a value the rubric requires evidence for, where the dossier cites none, is a WARNING. When you meet a case no rubric line covers, report it as a SUGGESTION tagged **rubric gap** so the file can be completed — do not improvise a standard.
+
 ---
 
 ## Input
@@ -58,197 +60,43 @@ Verify the file is well-formed and complete:
   - Field 6: Authors
   - Field 7: Software Name
   - Field 8: Description
-- [ ] Fields 4 (Software Functionality) and 5 (Related Region) are RECOMMENDED on the live form, not MANDATORY. This workflow still treats them as critically important: an empty value is acceptable only when the dossier carries durable evidence that no value applies (domain-independent tooling can legitimately have no Region — e.g. the settled sammi/cdflib decisions); an unexamined blank is still an ERROR.
+- [ ] Fields 4 (Software Functionality) and 5 (Related Region) are RECOMMENDED on the live form, not MANDATORY, but this workflow treats them as critical: an empty value is acceptable only with the durable evidence `fields/04` / `fields/05` describe; an unexamined blank is still an ERROR.
 - [ ] Multi-value fields use consistent formatting (bulleted lists)
 - [ ] Section headers and field numbering are correct
 
 ### Phase 2: Format Validation
 
-Check that values conform to expected formats:
+Check that values conform to expected formats. The per-field format rules are in each field file's *Payload and roundtrip notes* and *Where to find it, and traps*; the cross-field rules are:
 
 - **Dates** must be YYYY-MM-DD (Fields 10, 12)
-- **DOIs** must be full URLs: `https://doi.org/10.XXXX/XXXXX` (Fields 2, 12, 14, 27, 28, 29, 30). **Field 31 (Instrument Identifier) is normally a SPASE Resource ID URL** (`https://spase-metadata.org/...`), not a DOI — do **not** flag a SPASE identifier as a malformed DOI (a DOI there is only a manual exception).
-- **URLs** must be complete with protocol (Fields 3, 24, 33)
-- **Author names** should follow "Given Name, Initials, Surname" convention (Field 6)
-- **Author identifiers** must be full URLs (Field 6): an **ORCID** (`https://orcid.org/XXXX-XXXX-XXXX-XXXX`) for a person author, or a **ROR** (`https://ror.org/XXXXXXXXX`) for an author that is an organization. Do **not** flag a `ror.org` author identifier as an error — HSSI treats such an author as an organization.
-- **ROR identifiers** must be full URLs: `https://ror.org/XXXXXXXXX` (Fields 6, 11, 25)
-- **Software Functionality** values must be from the allowed list, written as `Parent: Child` for subcategories (Field 4). **Never flag colon spacing as an error, in either direction.** The HSSI API strips whitespace around the colon (the graph-list parser does `part.strip()` on `value.split(":")`), so `Parent: Child` and `Parent:Child` bind to the same row. The **with-space form is canonical** — it is what the API returns, what the form displays, and what `submission-payload` / `update-payload` / `resource_submission_form_fields.md` now all specify — so prefer it in new files, but a pre-existing no-space file is valid and must not be rewritten for spacing alone. Also confirm every subcategory has its bare parent top-level category listed as a separate value (see the `software-functionality` skill).
-- **Related Region** values must be rows of the live `/api/models/Region/rows/all/` vocabulary (Field 5). There are **24**, not the five broad regions older instructions listed — `Earth Ionosphere`, `Earth Thermosphere`, `Earth Magnetotail`, `Corona`, `Photosphere`, the per-planet magnetospheres and so on are all valid. **Never flag a specific region as invalid just because it isn't one of the old five.**
-- **Programming Language** values must be rows of `/api/models/ProgrammingLanguage/rows/all/` (Field 13). Note the exact spellings `Javascript` and `Typescript`.
-- **Development Status** must be one of: Abandoned, Active, Concept, Inactive, Moved, Suspended, Unsupported, WIP (Field 23)
-- **Data Sources**, **File Formats**, **Operating System**, **CPU Architecture**, **Related Phenomena**, **License** values must be rows of their respective live vocabularies (Fields 15, 17–22) — see rule 3 under Important Rules, and the endpoint table in `hssi-field-definitions`. Watch the byte-level traps: `The Virtual Solar Observatory.` carries a trailing period, the LGPL license names use curly `‘Lesser’`, and `Operating System Independent` is spelled out in full (there is no `OS Independent`).
+- **DOIs** must be full URLs `https://doi.org/10.XXXX/XXXXX` (Fields 2, 12, 14, 27–30); a Field 31/32 identifier is a SPASE Resource ID URL, not a DOI — never flag it as a malformed DOI
+- **URLs** must be complete with protocol (Fields 3, 24, 33); **identifiers** are full URLs — ORCID or ROR for Field 6 (a `ror.org` author is an organization author, not an error), ROR for Fields 11 and 25
+- **Controlled-list values** (Fields 4, 5, 13, 15, 17–23, 31/32) must be rows of the live vocabulary on the target in play — see `hssi-field-definitions/sources/vocabulary-authority.md` and rule 3 below. Match case-insensitively after trimming, flag every other byte difference; the field files list the known traps (a trailing period, curly quotes, `Parent: Child` spacing which is never an error in either direction, the bare parent that must accompany a Field 4 child).
 
 ### Phase 3: Accuracy Validation
 
-Cross-reference each metadata value against primary sources in the repository. For each field, check the sources listed below and flag discrepancies.
+Cross-reference each metadata value against primary sources. **For each of the 33 fields, Read its `fields/NN` file and:**
 
-**Field 2 (Persistent Identifier) & Field 12 (Version PID):**
-- Verify DOIs resolve: `curl -s -o /dev/null -w "%{http_code}" https://doi.org/{DOI}`
-- Cross-check against CITATION.cff, README badges, codemeta.json
+1. Check the value against the sources listed under *Where to find it, and traps*, in that priority order, with the verification steps given there (resolve the DOI, `git remote -v`, `git tag --sort=-creatordate`, `curl -sIL` the logo and read the content-type, fetch the paper's acknowledgements…).
+2. Judge inclusion and exclusion by the *Rubric*: for each listed value find the evidence the firing rule requires (code, file, line, page); for each value the rubric excludes outright, raise an ERROR with the rubric line as the reason.
+3. Apply the file's traps: a false positive it names (a PyPI HTML page that 200s for any name, a Zenodo licence copied verbatim, a title-cased keyword rendering, an `updated_at` mistaken for commit activity) is not evidence.
+4. Where the value is "Not found", do a quick check that it truly cannot be found from the file's listed sources.
 
-**Field 3 (Code Repository):**
-- Run `git remote -v` in the repo directory and compare
+Give Fields 4 and 5 the most time (read the code, not just the README), and treat the long-rubric fields — 6, 25/26, 29/30, 31/32, 33 — as the ones most likely to hide an over-inclusion.
 
-**Field 4 (Software Functionality):**
-- This is the most important field to validate thoroughly
-- Use the `software-functionality` skill for the classification framework, code patterns, library mappings, and decision rules
-- For each listed functionality: find specific code evidence that justifies it (module, function, or file)
-- For each functionality NOT listed: check the skill's library mapping table and code pattern indicators against the actual codebase to find gaps
-- Verify every subcategory has its parent category also listed
-- Pay special attention to commonly missed functionalities: Data Access and Retrieval, coordinate transforms used internally, and the processing-vs-visualization distinction for spectrograms
-
-**Field 5 (Related Region):**
-- Verify against the scientific description, README, and papers
-- Check: Does the software actually operate in all listed regions?
-- Check: Are there regions it supports that aren't listed?
-
-**Field 6 (Authors):**
-- Cross-check against ALL of these sources (if they exist):
-  - CITATION.cff
-  - codemeta.json
-  - AUTHORS or CONTRIBUTORS files
-  - .zenodo.json
-  - Package metadata (setup.py, pyproject.toml, setup.cfg, package.json)
-- Flag authors present in sources but missing from metadata
-- Verify author identifiers resolve and match the right entity: an **ORCID** should match the right person; a **ROR** identifies an *organization* author (a lab/consortium/institution credited as an author) — check the ROR resolves to that organization, and do not flag it as a malformed person ORCID
-- **Affiliation organization names should be the full institutional name, not acronyms.** Flag any affiliation that is a bare acronym (e.g., `ESA` instead of `European Space Agency`) as a WARNING with `Suggested fix: expand to the full institutional name`. Do not flag values that include an acronym alongside the full name (e.g., "European Space Agency (ESA)").
-
-**Field 7 (Software Name):**
-- Compare against: repo name, README title, package name in config files
-- Note any inconsistencies (e.g., repo is "pydarn" but package is "pyDARN")
-
-**Field 8 (Description):**
-- Compare against README and package metadata descriptions
-- Is it accurate? Does it mischaracterize the software?
-- Is the first 150-200 characters a reasonable preview?
-
-**Field 12 (Version):**
-- Run `git tag --sort=-creatordate` and compare latest tag
-- Check pyproject.toml, setup.cfg, setup.py, package.json for version
-- Verify version date against git tag date
-
-**Field 13 (Programming Language):**
-- Check actual file extensions in the repo using Glob
-- Compare against what's listed
-- Flag significant languages present but unlisted
-
-**Field 14 (Reference Publication):**
-- Verify DOI resolves
-- Cross-check against CITATION.cff preferred-citation and README citation sections
-
-**Field 15 (License):**
-- Read the actual LICENSE/LICENSE.txt file
-- Compare license name against what's in the metadata
-- Check if SPDX identifier is correct
-
-**Field 24 (Documentation):**
-- Verify URL resolves: `curl -s -o /dev/null -w "%{http_code}" {URL}`
-- Cross-check against README links and docs/ folder
-
-**Field 33 (Logo):**
-- **Fetch it — a status code is not enough.** `curl -sIL {URL}` and read the content-type and length. A `content-type` that is not `image/*` (`image/svg+xml` counts) is an **ERROR**: `text/plain` at ~130 bytes is a Git-LFS pointer file (use `https://media.githubusercontent.com/media/<owner>/<repo>/<sha>/<path>` instead), and `text/html` is a repo page rather than the image. Both return HTTP 200 and both render as a broken logo.
-- **A git-hosted URL must be pinned to a commit.** If the URL is on `github.com`/`raw.githubusercontent.com`/`gitlab.*` and contains a branch reference (`/main/`, `/master/`, `refs/heads/…`) or a `/blob/` segment — including `blob/…?raw=true`, which only works through a redirect — that is an **ERROR**, with `Suggested fix: repoint at https://raw.githubusercontent.com/<owner>/<repo>/<40-hex-sha>/<path>` for the commit the file is at. Do not accept the counter-argument that a branch URL "always serves the current logo": that mutability is the defect, and a redesign should be recorded deliberately at refresh time rather than inherited silently.
-- **A logo on a non-git host is not a defect.** Project sites, institutional pages, and ReadTheDocs-served assets have no commit to pin. Verify reachability and content-type only, and never report "unpinned" against them.
-- **Look at the image.** You can see it — fetch and view it. If it does not read as a logo for this software (an example plot, a data product, a screenshot, an unrelated graphic), this is **never an ERROR**: report it as a WARNING that asks the user to decide, and include the image and your evidence. It is satisfied outright if the dossier records that the project itself uses the image as its logo in practice (README header, docs banner, PyHC registry `logo:`), or that the value was already reviewed and approved — in that case do not raise it at all.
-
-**Field 25 (Funder):**
-- **Funder organization names should be the full institutional name, not acronyms.** Flag any funder value that is a bare acronym (e.g., `ESA` instead of `European Space Agency`) as a WARNING with `Suggested fix: expand to the full institutional name`. Do not flag values that include an acronym alongside the full name (e.g., "European Space Agency (ESA)").
-- Each funder entry should be a single organization — flag entries that combine multiple organizations.
-
-**Fields 29 & 30 (Related / Interoperable Software):**
-- **Field 30 is not a dependency list.** It records other high-level heliophysics/science tools this software genuinely interoperates with — a shared or converted data model, output from one imported into the other, an adapter/converter API, a plugin/companion relationship, or a cross-language bridge to a named domain tool. Field 29 records *distinguishing* software (similar-purpose tools, predecessor/fork parent, companion, domain-specific dependency).
-- **Over-inclusion.** For each listed entry, demand the specific exchange evidence — a named function, doc page, example, or test.
-  - A **Tier A** package under either field (numpy, scipy, pandas, matplotlib, cartopy, seaborn, plotly, bokeh, requests, python-dateutil, pytest, tqdm, PyYAML, click, setuptools and the rest of the generic stack) is an **ERROR**, with `Suggested fix: remove — a dependency shared by most of the Python ecosystem is not interoperability`. No evidence rehabilitates a Tier A entry.
-  - **Tier A is examples, not a closed list — do not pass an entry merely because it isn't named.** For any package absent from both tiers, apply the test: *would it be equally at home in a web app, a finance model, or a biology pipeline?* If yes, it is generic infrastructure (arrays, dataframes, plotting/mapping, I/O plumbing, packaging, testing, HTTP) and takes the Tier A **ERROR** treatment. A real heliophysics/science peer tool fails that test immediately, so this does not endanger genuine domain entries.
-  - A **Tier B** package (astropy, xarray, cdflib, h5py, netCDF4, dask, MATLAB, Jupyter) with no cited exchange is a **WARNING**. A cited, specific exchange ("public API returns `xarray.Dataset` as its documented interchange format") is acceptable; "uses xarray internally" is not.
-  - Reject these justifications by name wherever they appear in a source note: *"listed as a dependency"* / *"in pyproject.toml"*, *"part of the standard scientific Python ecosystem"*, and *"PyHC member, so it interoperates with PyHC packages."* Ecosystem membership is not interoperation with any particular package.
-  - The fix is normally **removal, not relocation to Field 29** — Field 29 applies the same Tier A exclusion.
-- **Under-inclusion.** Check README, docs, examples, and tests for genuine interoperability with named domain tools that is *missing* from Field 30 — `to_*`/`from_*` converters, documented export→import handoffs, companion or plugin packages, shared data models. Flag these as WARNING/SUGGESTION. The gate is not purely subtractive: a real interoperability partner left out is as wrong as numpy left in.
-
-**For all other fields:**
-- Where a value is given, verify it against available sources
-- Where "Not found" is listed, do a quick check to confirm it truly can't be found
-- A source returning 402/403 to an automated fetch is often bot-blocking, not genuine unavailability; the article may be fully open access. Try Europe PMC (`.../europepmc/webservices/rest/search?query=DOI:"<doi>"&resultType=core&format=json`; if `inEPMC=Y`, the PMC page is readable by ordinary fetch). A browser User-Agent does not defeat the block. If no route works, report the claim as **unverified for lack of access** rather than unsupported, and say which routes you tried — the orchestrator may have a browser and can supply the text
-- **ADS/Sci-X needs no personal API token.** `GET https://scixplorer.org/v1/accounts/bootstrap` returns an anonymous token, usable as `Authorization: Bearer <token>` against `https://api.adsabs.harvard.edu/v1/search/query`. It supports `ack:` (acknowledgements section), `body:`, `full:`, proximity (`"a b"~N`) and fuzzy (`word~`). A report of "no ADS token available, claim unreproducible" is therefore a wrong premise, not a finding: run the bootstrap, re-check the claim, and validate with controls — a nonsense token must return 0, and a term you believe absent should still be findable in *other* records, so a real 0 is distinguishable from an auth failure. If the bootstrap stops working, fall back to the routes above.
+**Reaching sources:**
+- A source returning 402/403 to an automated fetch is often bot-blocking, not genuine unavailability; the routes (Europe PMC, the anonymous ADS/Sci-X bootstrap, controls that distinguish a real 0 from an auth failure) are in `hssi-field-definitions/sources/extraction-sources.md`. If no route works, report the claim as **unverified for lack of access** rather than unsupported, and say which routes you tried — the orchestrator may have a browser and can supply the text. "No ADS token available, claim unreproducible" is a wrong premise, not a finding.
 
 ### Phase 4: Completeness Validation
 
-Actively look for metadata the extractor might have missed:
+Actively look for metadata the extractor might have missed. Each field file's *Where to find it, and traps* section ends with the under-inclusion checks for that field; run them for every field. The ones that most often find something:
 
-1. **Search for DOIs** the extractor may not have found:
-   - Grep for `doi` (case-insensitive) across the repo
-   - Check README badges for DOI shields
-   - Check for `.zenodo.json` or `codemeta.json`
-
-2. **Search for unlisted authors:**
-   - Compare every source of author info against the metadata
-   - Look for CONTRIBUTORS files, git shortlog patterns
-
-3. **Search for unlisted keywords:**
-   - Check repo topics (if visible in README badges or package metadata)
-   - Compare against PyHC keywords if applicable
-
-4. **Check for file format support** not mentioned:
-   - Grep for common format indicators: `fits`, `hdf5`, `netcdf`, `cdf`, `csv`, `json`, `zarr`
-   - Check import statements for format-specific libraries
-
-5. **Check for a logo (Field 33) recorded as "Not found" when one exists upstream.** Nothing else in
-   this document catches an under-included logo. Look for `docs/**/_static/*logo*`, `docs/conf.py`'s
-   `html_logo`, a README header image, an `assets/`/`images/` logo file, and the PyHC registry `logo:`
-   entry. If you find one, report it as a SUGGESTION with the commit-pinned raw URL (see Field 33 in
-   Phase 3), fetched and viewed. A deliberate documented omission is fine — an unexamined blank is not.
-
-6. **Check for related instruments/observatories** not mentioned:
-   - Search README and docs for instrument or mission names
-   - **Apply the "designed to support" relevance bar to what's listed and what's missing.** An
-     instrument/observatory belongs in Field 31/32 only if the software directly works with that
-     specific instrument's/observatory's data or is purpose-built for it. Flag **over-inclusion** —
-     entries that look like instrument/observatory-agnostic claims, tutorial/demo name-drops,
-     "configurable for" / "optimized for" mentions, or links that really belong to another field (a
-     *generic* file format → Input/Output Formats, a *generic/multi-mission* data source → Data Sources,
-     a *phenomenon* → Related Phenomena — but an instrument/mission-**specific** format or data source
-     legitimately stays, and an observatory-specific data source should be cross-listed here per
-     Field 17) — and recommend removing or moving only the genuinely-misfiled ones. Flag
-     **under-inclusion** — an instrument/observatory the software is genuinely designed to support but
-     that is missing from 31/32. (A genuinely-supported instrument that is merely hard to resolve is
-     still *related* — the valid outcomes are a resolved identifier, an observatory-level substitution,
-     `NEEDS MANUAL RESOLUTION`, or an omission with a recorded reason. Never a bare name.)
-   - For any instrument/mission found, check it resolves to HSSI's controlled vocabulary at
-     `/api/models/InstrumentObservatory/rows/all/`. The endpoint returns the whole vocabulary
-     (~7,700 rows) in `data[]` — fetch it once to a file and filter with `grep`/`jq`/`python` rather
-     than loading every row into context (`?columns=id,name,identifier,type,abbreviation` drops the large
-     `definition`; keep `id`, or the API returns an empty `data[]`). **Vocabulary state — verify, don't
-     assume:** as of the PR #54 backfill (2026-07-07) it is 100% SPASE-backed (7,648 rows, 0 non-SPASE;
-     re-verified 2026-07-27), but treat that as a **dated observation, not an invariant**. Keep
-     `identifier.startswith("https://spase-metadata.org/")` as a **real guard** — a row failing it means
-     upstream drift or a row an agent wrongly created; **report it, never endorse it**.
-     **Normalize `.html`** — ~40+ identifiers
-     exist in both bare and `.html` forms (e.g. `.../SDO/AIA` and `.../SDO/AIA.html`); treat them as one
-     and prefer the non-`.html` row. Match on multiple signals restricted to the right `type`
-     (1 = instrument, 2 = observatory): the row `name`, its `abbreviation`, source parenthetical
-     aliases, and the SPASE **identifier path segments** (platform/mission evidence, e.g.
-     `.../GOES/17/SUVI`). Prefer `SMWG/...` only as a tie-breaker among same-name duplicates (a single
-     non-SMWG match like `ESA/Observatory/SolarOrbiter` is still correct). Recommend that row's
-     canonical `name` (verbatim) and SPASE `identifier`. Validate against the **SPASE resolution ladder**
-     in the `hssi-field-definitions` skill (Field 31) — it is the authoritative procedure. In particular:
-     - **An entry with a `name` but no SPASE `identifier` is always an ERROR.** Never endorse one, under
-       any circumstances — there is no "no plausible match, so free-typing is fine" exception. The
-       backend turns such a value into either an arbitrary same-name binding or a **brand-new
-       identifierless row**, reintroducing the legacy rows PR #54 deleted (63 → 0). The correct outcomes
-       are a resolved identifier, an observatory-level substitution, `NEEDS MANUAL RESOLUTION`, or a
-       documented omission.
-     - **Several candidates with cited in-repo evidence** naming which ones (a supported-version list, a
-       station table, an explicit doc/API statement) → a multi-row expansion is **correct**; verify the
-       evidence actually appears in the repo, then PASS it. Without such evidence (e.g. `Solar Ultraviolet
-       Imager` → GOES-16/17/18/19 with nothing selecting among them), flag an **unresolved collision that
-       must be manually resolved before submission**.
-     - **A missing instrument whose platform/mission does resolve** → recommend the observatory-level
-       association rather than an omission (SPASE/HDRL guidance, 2026-07-01).
-     - **A documented omission is a valid, passing outcome** for a generic class label (`Ionosonde`,
-       `Digital All Sky Cameras`) or an out-of-heliophysics-scope entry (`NEXRAD`) — do not flag it as
-       under-inclusion when the reason is recorded.
-     Treat any extractor entry already marked `NEEDS MANUAL RESOLUTION` as unresolved (don't silently
-     "fix" it into a submittable value). Also flag embedded-abbreviation names (e.g. `Parker Solar Probe (PSP)`).
+1. **DOIs** the extractor missed — grep `doi` across the repo, README badges, `.zenodo.json`, `codemeta.json` (`fields/02`).
+2. **Unlisted authors** — every author source against the metadata, CONTRIBUTORS files, git shortlog patterns (`fields/06`).
+3. **Unlisted keywords** — repo topics, PyHC registry, package metadata (`fields/16`).
+4. **File formats** — grep the format indicators and format-library imports (`fields/18`, `fields/19`).
+5. **A logo recorded as "Not found" when one exists upstream** — nothing else catches this (`fields/33`).
+6. **Instruments and observatories** the software is genuinely designed to support but does not list, and over-inclusions that fail the relevance gate; every candidate resolves through the ladder in `fields/31` — a `name` with no SPASE `identifier` is always an ERROR, an evidenced multi-row expansion is correct, a documented omission is a passing outcome, and a `NEEDS MANUAL RESOLUTION` marker stays unresolved.
 
 7. **Verify "Not found" fields** — for each field marked "Not found", spend a moment confirming it truly cannot be determined from available sources
 
@@ -361,7 +209,7 @@ A file NEEDS REVISION if there are any ERRORS. Warnings alone do not fail valida
 
 ## Severity Definitions
 
-- **ERROR**: The metadata is demonstrably wrong, a mandatory field is missing/empty, a value is not from the allowed list, a DOI/URL doesn't resolve (confirm it is genuinely unreachable, not bot-blocked — see Phase 3), a URL returns 200 but not the content it is supposed to (a Git-LFS pointer or an HTML page where an image belongs), a git-hosted Logo URL references a branch or a `blob/` page instead of a commit SHA, an author is verifiably misattributed, or a Tier A generic dependency (numpy, pandas, matplotlib, scipy, …) is listed under Field 29 or 30. Errors must be fixed. **"This image doesn't look like a logo" is not in this class** — it is a WARNING that asks the user to decide (see Field 33 in Phase 3).
+- **ERROR**: The metadata is demonstrably wrong, a mandatory field is missing/empty, a value is not from the allowed list, a DOI/URL doesn't resolve (confirm it is genuinely unreachable, not bot-blocked — see Phase 3), a URL returns 200 but not the content it is supposed to (a Git-LFS pointer or an HTML page where an image belongs), an author is verifiably misattributed, or a value that a field rubric excludes outright is present (a Tier A generic dependency in Field 29/30; a git-hosted logo URL on a branch or a `blob/` page). Errors must be fixed. A judgment the rubric reserves for the user (its *Ask the user only when* list — e.g. "this image does not look like a logo") is a WARNING, never an ERROR.
 - **WARNING**: The metadata is likely incomplete or inaccurate but you can't fully prove it. Examples: an author appears in CITATION.cff but not in the metadata, a plausible software functionality seems missing, a version number seems stale.
 - **SUGGESTION**: The metadata is acceptable but could be improved. Examples: a "Not found" field that you found a partial answer for, a description that could be more precise, additional keywords that would improve discoverability.
 
@@ -371,23 +219,14 @@ A file NEEDS REVISION if there are any ERRORS. Warnings alone do not fail valida
 
 1. **Cite your sources.** Every finding must reference the specific file, line, URL, or API response that supports it. Never say "this seems wrong" without evidence.
 2. **Don't fabricate fixes.** If you're not sure what the correct value should be, say so. A finding with "Suggested fix: Investigate further" is better than a wrong suggestion.
-3. **Check allowed values against the live API, not the snapshot.** For controlled-list fields (Software Functionality, Related Region, Programming Language, Data Sources, File Formats, Operating System, CPU Architecture, Phenomena, Development Status, License), the authority is `GET <target>/api/models/<Model>/rows/all/` — the endpoint for each field is tabled in the `hssi-field-definitions` skill. The **Possible Values** lists in `resource_submission_form_fields.md` are a **dated snapshot** for orientation only; a value's presence there is not evidence it is valid, and its absence is not evidence it is invalid. **Only raise an ERROR when the live endpoint has no matching row.** Match case-insensitively after trimming (that is exactly what the backend's `name__iexact` does) but flag any other difference — a missing trailing period or a straight-vs-curly quote is a real submission failure, not a nitpick. Keywords (Field 16) is an open vocabulary and can never fail this check. Where prod and localhost differ (as `License` does), validate against the target actually in play.
+3. **Check allowed values against the live API, not the snapshot.** For controlled-list fields the authority is `GET <target>/api/models/<Model>/rows/all/` — the field → model table and the matching semantics are in `hssi-field-definitions/sources/vocabulary-authority.md`. The `Possible Values` blocks in the field files are a dated snapshot for orientation only. **Only raise an ERROR when the live endpoint has no matching row.** Keywords (Field 16) is an open vocabulary and can never fail this check. Where production and localhost differ (as `License` does), validate against the target actually in play.
 
-   **`<target>` is never yours to assume. If the brief does not name one, stop and ask for it — do
-   not fall back to a default, and do not infer it from a URL that happens to appear in the metadata
-   file.** Observed twice in one entry (2026-08-31): a validator briefed with stored values but no
-   target URL silently checked `https://hssi.hsdcloud.org` (production) while the entry was being
-   refreshed against `http://localhost`. Nothing broke only because the two happened to agree on the
-   fields in question — for an entry that had diverged between the two, the report would have been
-   confidently wrong in either direction, and nothing in it would have revealed which host answered.
-   **State the target you used in your report, every time**, so a reader can tell a real agreement
-   from a coincidental one. Whoever briefs you should name it; when they haven't, that is a blocker,
-   not a detail to fill in.
-4. **Be thorough on Software Functionality and Related Region.** These are the two most important fields. Spend extra time verifying them. Read the code, not just the README.
+   **`<target>` is never yours to assume. If the brief does not name one, stop and ask for it** — do not fall back to a default, and do not infer it from a URL that happens to appear in the metadata file; a validator that silently checks the wrong host produces a report that is confidently wrong in either direction with nothing in it to reveal which host answered. **State the target you used in your report, every time.**
+4. **Be thorough on Software Functionality and Related Region.** These are the two most important fields (`fields/04`, `fields/05`). Spend extra time verifying them. Read the code, not just the README.
 5. **Don't penalize "Not found" on optional fields** unless you can actually find the data. "Not found" is a valid value for optional fields when the information genuinely doesn't exist.
 6. **Respect source priority.** If the metadata cites PyHC as a source, that takes precedence over SoMEF. The priority order is: PyHC > DataCite/Zenodo > Repository files > SoMEF > Code analysis.
 7. **Report the total count** of fields that passed validation, not just problems. The user should see that 28/33 fields passed, not just 5 issues.
 8. **Respect carried-over submitted values without weakening validation.** Lack of repository corroboration alone is not an ERROR when a value was seeded from the existing HSSI record or prior canonical file. Preserve subjective wording unless primary evidence shows it is factually wrong, materially incomplete, or misleading; a stylistic rewrite is not an improvement by default. This exception never excuses a missing mandatory value, malformed or unresolved identifier/URL, controlled-vocabulary miss, schema violation, cross-field inconsistency, or active contradiction from authoritative evidence — classify those at their normal severity.
 9. **Validate the final decision state.** A report on initial extracted candidates does not validate later user choices. If the user changes the file during reconciliation, perform a focused recheck before an update plan is approvable. Only the final user-approved file may be marked with a completed Validation Date and `Validation Status: PASS`; otherwise leave both validation header values `Pending`. `PASS` additionally requires that **Phase 5 found no ERRORs** — a file that still reads as a working document is not canonical, however correct its values are.
 10. **Judge canonical state by purpose, never by vocabulary.** Phase 5 exists to remove one run's execution history while preserving the metadata's reasoning history. Do not maintain or apply a forbidden-word list; the presence of a term like *considered*, *excluded*, *previously*, or *rejected* is at least as likely to mark durable rationale as cruft. When in doubt, keep.
-11. **Run a mechanical quotation-fidelity sweep — every time, before judging anything else about quotations.** Three full validation passes in one campaign reported "no altered or fabricated quotation" while byte-level sweeps of the same files found real ones (a re-cased CHANGELOG line; repostatus.org's "may be desired" promoted to "is desired", which was the sole basis for a wrong Field 23 value; the form document's "part of the standard scientific Python ecosystem" quoted without "standard"). Reading is not checking. Procedure: normalise the whole dossier's whitespace first (a per-line match silently skips every quotation that wraps across a newline), extract every string inside straight or curly double quotes, and test each byte-for-byte against (a) every tracked blob at the pinned source revision, (b) `resource_submission_form_fields.md`, (c) the live vocabulary rows' names and definitions, and (d) for quotations of external sources — papers, Zenodo/DataCite metadata, other repositories, live pages — the fetched source itself. Any quotation found in none of its claimed sources is an **ERROR** (altered or fabricated quotation), cited by dossier line and by the source's actual wording. Then ask what the misquote was doing: if the altered wording carried an argument for or against a value, report that the value is back in play and must be re-derived from the source's real wording — never let a quotation repair re-defend the incumbent. Elisions must be marked; an unmarked elision is an altered quotation. Report the counts: quotations extracted, verified, and unresolved.
+11. **Run a mechanical quotation-fidelity sweep — every time, before judging anything else about quotations.** Reading is not checking: byte-level sweeps find altered quotations (a re-cased line, "may be desired" promoted to "is desired", a dropped qualifier) that careful reading passes. Procedure: normalise the whole dossier's whitespace first (a per-line match silently skips every quotation that wraps across a newline), extract every string inside straight or curly double quotes, and test each byte-for-byte against (a) every tracked blob at the pinned source revision, (b) the `hssi-field-definitions` field files, (c) the live vocabulary rows' names and definitions, and (d) for quotations of external sources — papers, Zenodo/DataCite metadata, other repositories, live pages — the fetched source itself. Any quotation found in none of its claimed sources is an **ERROR** (altered or fabricated quotation), cited by dossier line and by the source's actual wording. Then ask what the misquote was doing: if the altered wording carried an argument for or against a value, report that the value is back in play and must be re-derived from the source's real wording — never let a quotation repair re-defend the incumbent. Elisions must be marked; an unmarked elision is an altered quotation. Report the counts: quotations extracted, verified, and unresolved.

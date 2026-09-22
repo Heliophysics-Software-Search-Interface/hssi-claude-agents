@@ -4,9 +4,6 @@
 **Vocabulary:** free text / no controlled list
 **Filter tab:** none · **Free-text search tier:** T4.1 (given, family, identifier) · **Field-search code:** `author`
 
-<!-- Sections below follow the template in ../SKILL.md. "What it is" and "Where to find it" carry text moved
-     verbatim from resource_submission_form_fields.md (RSFF) lines 225-240; other sections are authored in Phase 2. -->
-
 ## What it is
 
 **Type:** Multi-entry nested group
@@ -24,82 +21,298 @@
 
 ## Why it exists
 
-<!-- phase2 -->
+A site user reads the author list to learn whose work this is, whom to cite, and whom to contact, and
+follows an author's identifier to their other work. Each author is a shared Person record, so a correct
+identifier also joins this entry to everything else that person has in the catalogue. A missing author
+denies someone credit; a padded list (committers, contacts, model originators) buries the people who
+actually made the package; a wrong ORCID sends the reader to a stranger; a stale or wrong affiliation
+misstates where the work was done on every entry that person appears on.
 
 ## How it appears on the site
 
-<!-- phase2 -->
+- **Detail page:** an "Authors" section (expanded when there are ten or fewer). Each author renders as
+  "given family", linked to the author identifier when one is stored; the author's affiliations follow in
+  parentheses, each linked to its identifier (or the organization's website) when one is stored.
+- **Order:** authors are a sorted many-to-many; the stored order is the order shown.
+- **Free-text search:** tier T4.1 on author given name, family name and identifier. Affiliations are not
+  searched.
+- **Field search:** `author:"…"` matches any token against given or family name; for two or more tokens
+  it also matches a Person whose given name contains the first token and family name contains the last.
+- **Filter tab:** none.
+- **JSON-LD:** `author` is an ordered `@list`. A person renders as `Person` with `givenName`,
+  `familyName`, identifier and `affiliation`; an author whose identifier contains `ror.org` renders as
+  `Organization` named "given family", with its affiliations as `parentOrganization`.
 
 ## Rubric: include / exclude
 
-<!-- moved from .claude/agents/hssi-metadata-extractor.md:46-46 -->
-- **Pre-populate** every field from the seed first. If both a prior `hssi_metadata.md` and live HSSI metadata are provided, live HSSI is the authoritative baseline for what is currently published. For scalar fields, keep a populated live HSSI value when the sources disagree and retain the prior-file value only as a documented candidate. For multi-valued fields, take the identity-aware union of values that either source has; do not concatenate conflicting scalar values. Match authors by ORCID and then normalized name, and for each matched author union affiliations by ROR and then normalized organization name so choosing one author object never discards affiliations from the other seed. Match other structured entries by stable identifier before normalized name.
+Decide each candidate author, then each attribute of each kept author, in the groups below. Within a
+group apply the rules top to bottom and **stop at the first rule that fires**.
 
-<!-- moved from .claude/agents/hssi-metadata-extractor.md:273-273 -->
-**Organization names (Author Affiliation, Funder) — expand acronyms.** When you encounter an acronym for an affiliation (Field 6) or funder (Field 25), record the full institutional name instead. Example: `NASA` → `National Aeronautics and Space Administration`. If the source only contains an ambiguous acronym you can't confidently expand, leave it as-is and note it so the validator/user can resolve it.
+**Candidate pool.** Build it from the union of: the current HSSI record, CITATION.cff, codemeta.json,
+`.zenodo.json` and the Zenodo/DataCite record's `creators` **and** `contributors`, AUTHORS/CONTRIBUTORS
+files, package metadata (setup.py, pyproject.toml, setup.cfg, package.json authors and maintainers), and
+the byline of a refereed paper describing this software. **Match candidates by ORCID first, then by
+normalized name.** When both a prior `hssi_metadata.md` and live HSSI are seeded, live HSSI is the
+baseline for what is published, and the author list is the identity-aware union of both seeds; for each
+matched author, union affiliations by ROR and then normalized organization name, so choosing one author
+object never discards affiliations from the other seed. Git history is evidence for a candidacy, never an
+attestation of authorship.
 
-<!-- moved from .claude/agents/hssi-metadata-extractor.md:275-275 -->
-**Organization authors (Field 6) — detect and record a ROR.** An *author* can be an organization (a lab, consortium, or institution credited as an author), not just a person. Recognize these signals: a CITATION.cff author entry with a single `name:` key and no `given-names`/`family-names`; a codemeta.json / JSON-LD author with `"@type": "Organization"`; a DataCite or Zenodo creator whose `nameType` is `"Organizational"`; or a name that is clearly a group (`… Team`, `… Community`, `… Consortium`, `… Collaboration`). For such an author, look up its **ROR** via the ror.org API (`https://api.ror.org/organizations?query=<name>`) and record that ROR as the author's identifier — no separate "organization" marker is needed, since HSSI infers org-ness from the `ror.org` identifier. Keep the person-vs-organization distinction: use an ORCID for people and a ROR for organization authors.
+### A. Who is an author
 
-<!-- moved from .claude/agents/hssi-metadata-updater.md:409-413 -->
-When extracting fresh values for **Author Affiliation (Field 6)** or **Funder (Field 25)**, record the full institutional name instead of an acronym (example: `NASA` → `National Aeronautics and Space Administration`). When diffing against HSSI, do not flag an existing full name as STALE just because the fresh source uses an acronym — prefer the full-name form. For Funder, also keep one organization per entry rather than combining multiple into a single value.
+1. **Stored in HSSI as an author of this entry → keep.** No author is dropped in a refresh, including
+   one a later CITATION.cff omits. If the stored link points at a defective duplicate row (a misspelled,
+   identifier-less copy) of a person whose identified row already exists, send that person's stored ORCID
+   so the entry binds the identified row; that is a relink, not a removal.
+2. **Handle-only credit → not an author.** A GitHub username or other handle with no real name is not an
+   author. A handle becomes a person only when a primary artifact carries the personal name: a commit
+   git-authored under that name, tied to the login by a GitHub noreply address
+   (`<id>+<login>@users.noreply.github.com`) or by the commit API's `author.login`. Never infer the person
+   from `github.com/<handle>` or from the handle's spelling. An unresolved handle is a documented omission.
+3. **Originator of a model, algorithm or predecessor code that this package reimplements, adapts or was
+   inspired by → not an author.** Credit them in Field 27 (their paper) or Field 29 (their code).
+4. **Wrapper that ships a third-party component whole → credit the people the sources name as authors of
+   that shipped component**, alongside the wrapper's own author. Do not credit support or correspondence
+   contacts, authors of individual routines inside a component, authors of a prior-language original a
+   routine was adapted from, people acknowledged, or version-control keywords (`$Author: … $`).
+5. **Committer absent from every attestation → not an author.** Commit volume is not authorship; neither
+   is a CI-integration commit, a README-only commit, or a successor project's author touching the repo.
+6. **Listed as a contributor under a heading the project keeps separate from its authors, and absent from
+   every other author source → not an author.**
+7. **Co-author of a paper or presentation about the software who appears in no software-metadata source
+   → not an author.**
+8. **Attested → add.** A person or organization named as an author, creator or maintainer in any source
+   in the candidate pool, or credited as an author of the software in a scholarly citation of it (a
+   paper's bibliography entry for the software, the software's own citation guidance), is an author. A
+   refereed software paper's byline outranks a repository file that demotes its co-authors to testers.
+9. **Otherwise → not an author.** Flag any author present in a source but missing from the metadata.
 
-When an author is itself an **organization** (a lab, consortium, or institution credited as an author), its identifier is a **ROR** (`https://ror.org/…`) rather than an ORCID, and HSSI treats such an author as an organization. During refresh/enrich, match and dedupe these authors by that ROR identifier (exactly as ORCID is used for people), and don't flag a `ror.org` author identifier as invalid.
+### B. Name form
+
+10. **Stored name matches a project source, or the person's ORCID primary, credit or other name → keep it
+    and document any divergence.** A middle initial, a fuller given name or an unaccented spelling is a
+    style variant, not a correction. The stored name is not writable by PATCH, and the Person row is shared
+    by the person's other entries.
+11. **Stored name matches no source (a typo, a wrong particle split such as `Darren de` / `Zeeuw`, an
+    honorific in the given name) → record the correct form as the target and report the rename as
+    NON-PATCHABLE.** It needs a database-side correction to a shared Person row, checked against every
+    entry that row serves.
+12. **New author → the project's own spelling**, diacritics included as the project writes them, over a
+    better-documented external form. Take the given/family split from the person's linked ORCID
+    structured name, else from CITATION.cff `given-names`/`family-names`; keep surname particles with the
+    family name (`De Zeeuw`, `Al Shidi`, `Van Kooten`); drop degree suffixes (`Ph.D.`). Names follow the
+    "Given Name, Initials, Surname" convention. Never import a DataCite/Zenodo split that puts an
+    honorific in the given name or the whole name in `familyName`.
+
+### C. Identifier (person authors)
+
+13. **Stored ORCID → keep.** If it demonstrably belongs to a different person, record the right one and
+    report the change as NON-PATCHABLE.
+14. **Candidate ORCID without independent identity linkage → do not record it.** The ORCID record itself
+    must connect to this person or this work: its works list the software or its paper, its employment
+    matches the commit address and the field of the work, its researcher URL leads to the contributor's
+    GitHub account, or a project source or DOI record carries the ORCID beside this name. A name match
+    alone is not enough, nor is a same-name, same-institution record with no works. Record the rejected
+    candidate and the reason, so a later refresh neither re-hunts it nor adopts it.
+15. **Linked ORCID for an author stored without an identifier → record it in the dossier as the target and
+    report it as NON-PATCHABLE.** A Person sent with an ORCID that matches no row **creates a new Person,
+    even when a row with that name exists**, and the original row is orphaned from the entry. The Updater
+    never mints: it sends that author without the identifier and routes the ORCID to the database workflow.
+    The hazard belongs to the update path, not the value: a later refresh that finds the ORCID applied must
+    still not have sent it.
+16. **Linked ORCID for a new author, or one already stored on the row being bound → record and send it.**
+
+### D. Affiliations
+
+17. **Stored affiliation → keep.** Affiliations accumulate on PATCH and cannot be removed; a desired
+    removal is NON-PATCHABLE and is reported, never attempted.
+18. **Not an affiliation:** a GitHub organization handle (`@rice-solar-physics`), an alumni address (it
+    says where someone studied), an employer the person joined after producing the software, a
+    ROR false match found by name search (e.g. SciVision Biotech Inc. for Scivision, Inc.), or a raw
+    affiliation string that does not name an institution.
+19. **Years-stale source and the Person row serves other entries → do not add.** A past institution
+    lengthens that person's display on every entry while telling a reader nothing about where the work is
+    done now.
+20. **Evidence conflicts about the institution → add only an institution true under every reading;
+    otherwise assert nothing.** No affiliation is the reversible choice; an added affiliation cannot be
+    withdrawn. Record the supported alternatives in the dossier so a later refresh can reconsider them.
+21. **Institution the project's own metadata gives for the person** (CITATION.cff, codemeta.json,
+    `.zenodo.json`/Zenodo creator affiliation), **or an ORCID employment or paper byline covering the
+    period the software was produced → add it with its ROR.** Read an ORCID employment whole (organization,
+    department, role, dates, city, country, disambiguation id) before relying on it. Split a Zenodo
+    affiliation string that packs several institutions (`1 - … 2 - …`) and decide each part here.
+22. **Organization name → the full institutional name, not an acronym** (`NASA` → `National Aeronautics
+    and Space Administration`, `Naval Research Laboratory` → `United States Naval Research Laboratory`).
+    The validator flags a bare-acronym affiliation (e.g. `ESA` instead of `European Space Agency`) as a
+    WARNING with `Suggested fix: expand to the full institutional name`, and does not flag a value that
+    includes an acronym alongside the full name (e.g. "European Space Agency (ESA)"). An acronym you cannot
+    confidently expand stays as-is with a note so the validator or user can resolve it. A new ROR-keyed row takes ROR's display
+    name verbatim; an existing row keeps its stored name, and a stored full name is never flagged STALE
+    because a fresh source uses an acronym.
+23. **Department or other sub-institutional unit → add it only when it resolves to an Organization row
+    HSSI already stores;** otherwise record the institution. ROR does not register most departments, and
+    an identifier-less row is permanent and cannot be renamed through the API.
+24. **Institution with no ROR → record it with no identifier, and record the negative search** (the query
+    forms tried and a positive control), so a later refresh does not re-hunt it.
+
+### E. Organization authors
+
+25. **Detect an organization author** from: a CITATION.cff author with a single `name:` key and no
+    `given-names`/`family-names`; a codemeta.json/JSON-LD author with `"@type": "Organization"`; a
+    DataCite or Zenodo creator with `nameType: "Organizational"`; or a name that is clearly a group
+    (`… Team`, `… Community`, `… Consortium`, `… Collaboration`). Look up its **ROR**
+    (`https://api.ror.org/organizations?query=<name>`) and record it as the author identifier; HSSI infers
+    org-ness from the `ror.org` identifier, so no other marker exists. Use an ORCID for people and a ROR
+    for organization authors; contributors remain person/ORCID-only.
+26. **Organization author already stored → send its stored given/family split exactly.** Without an
+    identifier, the Person match is exact and case-sensitive on both parts, so a different split of the
+    same string creates a duplicate row.
+27. **New organization author with a multi-token name → split on the first whitespace:** first token →
+    `givenName`, the remainder → `familyName` ("The SunPy Community" → `The` / `SunPy Community`).
+28. **Single-token organization name (e.g. `NASA`) → cannot be encoded;** both name parts must be
+    non-empty. Put it on the Ask list; never guess a split.
+
+### F. Order and refresh
+
+29. **Keep the stored author order.** It is stored data; do not reorder stored authors to match a byline or
+    a preference. Append new authors in the order of the source that attests them. Identify authors by
+    name, never by their position in a dossier list.
+30. **The PATCH carries the complete intended author list.** `authors` is replaced wholesale, so an author
+    left out is removed from the entry.
 
 ## Ask the user only when
 
-<!-- phase2 -->
+- **A NON-PATCHABLE correction to a shared row is needed** — an ORCID for a stored identifier-less
+  author, a rename or re-split of a stored name, an affiliation removal, a ROR for an identifier-less
+  Organization row, or the repair of an empty stored given name. The rubric decides the target value; the
+  user decides whether it goes through the database workflow. It is a hard blocker for canonical
+  completion until routed.
+- **A single-token organization author name** that cannot be split into non-empty given and family names.
 
 ## Where to find it, and traps
 
-<!-- moved from RSFF "Notes for AI Agents" -->
-4. **Authors** can be extracted from:
-   - CITATION.cff file
-   - codemeta.json file
-   - AUTHORS file
-   - CONTRIBUTORS file
-   - Git commit history (with caution)
-   - Package metadata (setup.py, package.json, etc.)
+**Sources, in priority order**
+1. The current HSSI record (`GET /api/view/software/<uid>/`, `GET /api/data/software/<uid>/`).
+2. CITATION.cff; codemeta.json; `.zenodo.json` and the Zenodo/DataCite record (creators and
+   contributors).
+3. AUTHORS or CONTRIBUTORS files; the software's citation guidance (`docs/citing.rst`, README).
+4. Package metadata (setup.py, pyproject.toml, setup.cfg, package.json).
+5. The byline and affiliation block of a refereed paper describing the software.
+6. Git commit history, with caution: `git log --format='%an <%ae>' <pin> | sort | uniq -c` over the pinned
+   ancestry, and every `.mailmap` under `repos/` for aliases. Use it to resolve names, never to promote
+   committers.
 
-<!-- moved from .claude/agents/hssi-metadata-validator.md:72-74 -->
-- **Author names** should follow "Given Name, Initials, Surname" convention (Field 6)
-- **Author identifiers** must be full URLs (Field 6): an **ORCID** (`https://orcid.org/XXXX-XXXX-XXXX-XXXX`) for a person author, or a **ROR** (`https://ror.org/XXXXXXXXX`) for an author that is an organization. Do **not** flag a `ror.org` author identifier as an error — HSSI treats such an author as an organization.
-- **ROR identifiers** must be full URLs: `https://ror.org/XXXXXXXXX` (Fields 6, 11, 25)
+**Cross-check and search.** Cross-check the metadata against all of CITATION.cff, codemeta.json,
+AUTHORS/CONTRIBUTORS, `.zenodo.json` and package metadata where they exist. Search for unlisted authors by
+comparing every source of author information against the metadata, including CONTRIBUTORS files and git
+shortlog patterns.
 
-<!-- moved from .claude/agents/hssi-metadata-validator.md:105-114 -->
-**Field 6 (Authors):**
-- Cross-check against ALL of these sources (if they exist):
-  - CITATION.cff
-  - codemeta.json
-  - AUTHORS or CONTRIBUTORS files
-  - .zenodo.json
-  - Package metadata (setup.py, pyproject.toml, setup.cfg, package.json)
-- Flag authors present in sources but missing from metadata
-- Verify author identifiers resolve and match the right entity: an **ORCID** should match the right person; a **ROR** identifies an *organization* author (a lab/consortium/institution credited as an author) — check the ROR resolves to that organization, and do not flag it as a malformed person ORCID
-- **Affiliation organization names should be the full institutional name, not acronyms.** Flag any affiliation that is a bare acronym (e.g., `ESA` instead of `European Space Agency`) as a WARNING with `Suggested fix: expand to the full institutional name`. Do not flag values that include an acronym alongside the full name (e.g., "European Space Agency (ESA)").
+**Identifier formats and verification**
+- Author identifiers are full URLs: an ORCID (`https://orcid.org/XXXX-XXXX-XXXX-XXXX`) for a person, a
+  ROR (`https://ror.org/XXXXXXXXX`) for an organization author. A `ror.org` author identifier is not an
+  error and not a malformed ORCID; check that it resolves to that organization.
+- Affiliation identifiers are full ROR URLs (Fields 6, 11 and 25 share this format).
+- Verify every ORCID resolves to the right person, and every ROR to the right organization.
+- ORCID search: use the fielded query
+  `https://pub.orcid.org/v3.0/expanded-search/?q=given-names:<G>+AND+family-name:<F>` with
+  `Accept: application/json`, and run a positive control beside it. A bare-name query ORs its terms and
+  proves nothing either way. `/person` carries primary, credit and other names; the search index's
+  institution is not the employment record, so read `/employments`.
+- ROR search: use the v2 API. Names live in `names[{value, types}]`; there is no top-level `name`, so
+  reading `name` makes an existing record look empty. Run a positive control in the same query set.
 
-<!-- moved from .claude/agents/hssi-metadata-validator.md:183-185 -->
-2. **Search for unlisted authors:**
-   - Compare every source of author info against the metadata
-   - Look for CONTRIBUTORS files, git shortlog patterns
+**Traps**
+- An ORCID sent for a stored identifier-less author mints a duplicate Person (rule 15).
+- A name sent without an identifier binds only on an exact, case-sensitive given+family match; any
+  spelling, case or split difference mints a duplicate.
+- The same person can appear under several commit identities (`, Ph.D` suffixes, numeric noreply
+  prefixes, machine hostnames); treat none as a second person.
+- A GitHub account whose login equals a stored string is often someone else.
+- `.zenodo.json` gives one affiliation string per creator; several institutions are often packed into it
+  and HSSI stores only what is sent.
+- Zenodo's GitHub integration builds creators from account names; a later deposit built from CITATION.cff
+  supersedes those handles.
+- A Zenodo deposit's creator list is a snapshot; it does not prove a contributor absent from it was
+  excluded, and it does not license expanding the list from the commit graph.
+- Two ORCID queries differing only by a name variant (`Josh`/`Joshua`) can each return one record for
+  different people.
+- Near-miss RORs: a campus or academy of the same university, a company sharing a name (SciVision Biotech
+  Inc.), a successor body that does not list the historic name among its aliases.
+- The DataCite rendering of an old deposit may put `Ph.D.` in `givenName` and the whole name in
+  `familyName`.
 
 ## Payload and roundtrip notes
 
-<!-- moved from .claude/skills/submission-payload/SKILL.md:108-108 -->
-**Organization authors.** An author may be an organization (a lab, consortium, or institution credited as an author) rather than a person. To submit one, put its **ROR URL** in `identifier` (e.g., `https://ror.org/03c3r2d17`). HSSI derives org-ness server-side purely from the `ror.org` identifier — there is no separate flag — and renders the author as a schema.org `Organization`, with its affiliations as `parentOrganization`. `givenName` and `familyName` are still both required and non-empty, and the stored name is `givenName + " " + familyName`, so **split the org name on the first whitespace**: first token → `givenName`, the remainder → `familyName` (e.g., "The SunPy Community" → `givenName: "The"`, `familyName: "SunPy Community"`). A single-token org name (e.g., "NASA") can't satisfy the non-empty `familyName` rule — flag it to the user rather than guessing a split. This applies to **authors only**; contributors remain person/ORCID-only.
-
-<!-- moved from .claude/agents/hssi-metadata-submitter.md:113-113 -->
-**D. Organization-name sanity** — For `affiliation[].name` (Field 6) and `funder[].name` (Field 25), if a value is a bare acronym (e.g., `ESA` rather than `European Space Agency`), surface it in the verification report and ask the user before submitting. Do not auto-expand — the value should already be expanded upstream by the extractor. Also flag funder entries that combine multiple organizations into one value (the form expects one organization per entry).
-
-<!-- moved from .claude/agents/hssi-metadata-updater.md:217-218 -->
-- **Identity matching does not erase attribute differences.** Match authors by ORCID and then normalized name; for each matched author, union affiliations by ROR and then normalized organization name. Match organizations, awards, instruments, and observatories by their stable identifier before normalized/canonical name, then separately compare their labels and nested values. Do not mark two objects fully MATCH merely because their identifiers match.
-- **Respect PATCH capability limits.** The endpoint reuses existing people, organizations, awards, instruments, and observatories and does not overwrite their nonblank names. It can add author affiliations but cannot remove an existing affiliation. Classify a desired shared-entity rename or nested affiliation removal as NON-PATCHABLE, omit it from `patch`, and make it a hard blocker for canonical completion until the user routes it through the CSV/manual database workflow. Top-level relationship removals remain possible through a complete approved replacement list.
+- **Shape:** `authors` is an array of Person objects
+  `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}`; `givenName` and
+  `familyName` are both required and non-empty.
+- **Organization authors.** An author may be an organization (a lab, consortium, or institution credited
+  as an author) rather than a person. To submit one, put its **ROR URL** in `identifier` (e.g.,
+  `https://ror.org/03c3r2d17`). HSSI derives org-ness server-side purely from the `ror.org` identifier —
+  there is no separate flag — and renders the author as a schema.org `Organization`, with its
+  affiliations as `parentOrganization`. `givenName` and `familyName` are still both required and
+  non-empty, and the stored name is `givenName + " " + familyName`, so split a new org name as rule 27
+  says. A single-token org name can't satisfy the non-empty `familyName` rule — flag it to the user rather
+  than guessing a split. This applies to **authors only**; contributors remain person/ORCID-only.
+- **Person resolution.** With an identifier: match on the identifier only; on a hit, only a *blank* given
+  or family name is filled in and a non-blank name is never overwritten; on a miss, a new Person is
+  created with no name fallback. Without an identifier: exact, case-sensitive given+family match, else
+  create. So sending name + ORCID is safe when that ORCID is already stored on a row, and mints when it is
+  on none.
+- **Renames are silent no-ops.** A corrected name for a matched Person returns 200 and changes nothing.
+- **Affiliations accumulate.** Each sent affiliation is `.add()`ed to whichever Person row was resolved;
+  re-sending an existing affiliation inserts nothing, and nothing is ever removed.
+- **Organization resolution** (affiliations): with an identifier, match on the identifier only, else
+  create with the name exactly as sent — an existing identifier-less row of the same name is not reused
+  and becomes a duplicate; without an identifier, `name__iexact`, else create. Before sending a ROR for a
+  name the catalogue already holds, check for an identifier-less row of that name.
+- **Organization-name sanity.** For `affiliation[].name`, if a value is a bare acronym (e.g., `ESA` rather
+  than `European Space Agency`), surface it in the verification report and ask the user before
+  submitting. Do not auto-expand — the value should already be expanded upstream by the extractor.
+- **Full replacement.** `authors` is replaced by the submitted list (`.set()`), in the submitted order.
+- **Empty stored given name.** If any stored author has `givenName: ""`, the whole `authors` field is
+  unpatchable: re-sending it 400s the entire PATCH, and a corrected name creates a new Person. Leave
+  `authors` out of the patch and fix the row in the database first.
+- **Identity matching does not erase attribute differences.** Match authors by ORCID and then normalized
+  name; for each matched author, union affiliations by ROR and then normalized organization name. Match
+  organizations by their stable identifier before normalized/canonical name, then separately compare
+  their labels and nested values. Do not mark two objects fully MATCH merely because their identifiers
+  match.
+- **Respect PATCH capability limits.** The endpoint reuses existing people and organizations and does not
+  overwrite their nonblank names. It can add author affiliations but cannot remove an existing
+  affiliation. Classify a desired shared-entity rename or nested affiliation removal as NON-PATCHABLE,
+  omit it from `patch`, and make it a hard blocker for canonical completion until the user routes it
+  through the CSV/manual database workflow. Top-level relationship removals remain possible through a
+  complete approved replacement list.
+- **Refresh matching.** During refresh/enrich, match and dedupe organization authors by their ROR
+  exactly as ORCID is used for people, and don't flag a `ror.org` author identifier as invalid.
+- **Stored-row sharing.** A Person row is shared by every entry that person authors; a database-side
+  change to it changes all of them. Check the row's other entries before routing a correction.
 
 ## Worked examples
 
-<!-- phase2 -->
+- **A wrapper over a vendored C library (WMM2015).** The Python package ships NOAA's Geomagnetism Library
+  unmodified, whose header says it was written by two named people. Rule 4 credits the wrapper's author
+  and those two; the contact names in the address blocks, the routine-level credits, the Fortran-original
+  credit and the `$Author:` keyword are recorded as excluded with their roles.
+- **Verified ORCIDs for identifier-less stored authors (PyGS, PyAuroraX).** Fielded ORCID searches with
+  controls tie each author to a single record whose employment and works match. Because the stored Person
+  rows carry no identifier, rule 15 fires: the dossier records the ORCIDs, the patch sends the authors
+  without them, and the identifiers go to the database workflow. A third author whose five same-name
+  records are all other people gets no identifier (rule 14).
+- **GitHub handles in a Zenodo creator list (georinex).** Three handles resolve to people through commits
+  git-authored under personal names; the fourth has only its handle and a noreply address in every
+  artifact, so rule 2 leaves it off as a documented omission. Named committers missing from the Zenodo
+  snapshot are not added (rule 5).
+- **A years-stale affiliation (hissw).** The software was begun at a university the author has since
+  left, and his Person row serves several entries. Rule 19 keeps that university off; his stored past
+  affiliation from the period of the catalogued releases stays (rule 17).
+- **A shorter stored name (OCBpy).** HSSI stores `Jone` / `Reistad` while the project writes
+  "Jone P. Reistad". The stored form matches an ORCID other-name, so rule 10 keeps it and the dossier
+  records which source each form matches.
 
 ## Provenance
 
 - No regenerated blocks; hand-written.
 - Migrated from RSFF 225-240 on 2026-09-22.
+- Rubric authored 2026-09-22 from prior guidance and past refresh decisions.

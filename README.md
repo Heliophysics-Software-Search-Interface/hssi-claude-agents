@@ -10,6 +10,10 @@ Claude Code agents for managing [HSSI](https://hssi.hsdcloud.org) software metad
 - **Submitter** (.claude/agents/hssi-metadata-submitter.md) — Builds API payloads and submits to HSSI
 - **Updater** (.claude/agents/hssi-metadata-updater.md) — Updates existing HSSI entries with fresh metadata
 
+## Field rules
+
+The `hssi-field-definitions` skill (.claude/skills/hssi-field-definitions/) holds one file per HSSI metadata field under `fields/` — what the field is, why it exists, how it appears on the website, the inclusion/exclusion rubric the agents apply, where to find the value, and its API quirks. Every agent reads a field's file before deciding that field, and asks the user only for the decision shapes the file lists as needing a human.
+
 ## Steps to Use
 
 1. Get [Claude Code](https://www.claude.com/product/claude-code)

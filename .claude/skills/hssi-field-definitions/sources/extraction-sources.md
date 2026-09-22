@@ -198,7 +198,7 @@ The autofill cascade fills form fields in this recommended order:
 
 Later stages generally don't overwrite fields that are already filled, unless the new data is more specific or complete. PyHC metadata, being manually curated, may be prioritized for certain fields like documentation URLs and description.
 
-## Notes for AI Agents — general
+## General notes on extracting from a repository
 
 <!-- Intro and closing sentences of the former RSFF "Notes for AI Agents"; the 16 numbered items moved to their fields. -->
 
