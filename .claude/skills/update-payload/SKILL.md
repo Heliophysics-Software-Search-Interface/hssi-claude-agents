@@ -320,59 +320,6 @@ This is simpler than the submit verification because we only need to check the f
 
 ## Controlled-List Endpoints
 
-Same endpoints as the submission payload — use these to normalize values before sending:
+Same endpoints as the submission payload; the single field → model table is `hssi-field-definitions/sources/vocabulary-authority.md`. Normalize values to exact `name` strings before sending.
 
-| Field | Endpoint |
-|-------|----------|
-| Software Functionality | `/api/models/FunctionCategory/rows/all/` |
-| Related Region | `/api/models/Region/rows/all/` |
-| Programming Language | `/api/models/ProgrammingLanguage/rows/all/` |
-| Input/Output File Formats | `/api/models/FileFormat/rows/all/` |
-| Operating System | `/api/models/OperatingSystem/rows/all/` |
-| CPU Architecture | `/api/models/CPUArchitecture/rows/all/` |
-| Development Status | `/api/models/RepoStatus/rows/all/` |
-| Data Sources | `/api/models/DataInput/rows/all/` |
-| Related Phenomena | `/api/models/Phenomena/rows/all/` |
-| License | `/api/models/License/rows/all/` |
-| Related Instruments / Observatories | `/api/models/InstrumentObservatory/rows/all/` (`type` 1 = instrument, 2 = observatory; **resolve to a SPASE-backed `identifier` — never send a bare name** — see the resolution notes below) |
-
-**Instruments / Observatories matching:** First apply the **relevance gate** — only list instruments/observatories the software is *designed to support* (see Fields 31/32 "When to include it"); the resolution below is for entries that have already passed it. Resolve those names against
-`/api/models/InstrumentObservatory/rows/all/`. The endpoint returns the whole vocabulary (~7,700 rows)
-in `data[]` — **fetch it once to a file and filter locally** (`grep`/`jq`/`python`); don't load every
-row into context (`?columns=id,name,identifier,type,abbreviation` drops the large `definition` field;
-keep `id`, or the API returns an empty `data[]`).
-Then:
-
-- **Vocabulary state — verify, don't assume.** As of the PR #54 backfill (2026-07-07) the vocabulary is
-  100% SPASE-backed (7,648 rows, 0 non-SPASE; re-verified 2026-07-27) — a **dated observation, not an
-  invariant**. Keep `identifier.startswith("https://spase-metadata.org/")` as a **real guard**: a row
-  failing it signals upstream drift or a row an agent wrongly created, and must be **reported, never used**.
-- **Normalize `.html`** — ~40+ identifiers exist in both bare and `.html` forms (e.g.
-  `.../SDO/AIA` and `.../SDO/AIA.html`); treat them as one resource and prefer the non-`.html` row.
-- **Match on multiple signals** — the row `name`, its `abbreviation`, source parenthetical aliases,
-  and the SPASE **identifier path segments** (platform/mission evidence, e.g. `.../GOES/17/SUVI`),
-  restricted to the right `type` (1 = instrument, 2 = observatory). Abbreviations are often non-unique,
-  so they feed the collision rule rather than resolve uniquely.
-- **Prefer `SMWG/...` only as a tie-breaker** among same-name duplicates (over `CNES/...` archives); a
-  single non-SMWG match is still correct (Solar Orbiter is `ESA/Observatory/SolarOrbiter`). The
-  canonical SMWG name is sometimes the long form (e.g. `SMWG/Observatory/THEMIS` is
-  "Time History of Events and Macroscale Interactions during Substorms"). Copy the matched row's `name`
-  verbatim.
-- **On an unresolved collision, omit the entry entirely** — if more than one SPASE candidate remains
-  after namespace/platform evidence (e.g. `Solar Ultraviolet Imager` matches four GOES-16/17/18/19
-  rows), **drop the instrument/observatory from the payload** and flag for user/manual review. Do
-  **not** send a bare `name`: the no-identifier path is a case-sensitive `filter(name=…, type=…).first()`,
-  so a bare name matching several identically-named rows binds to an arbitrary one — the same silent
-  mis-link a wrong identifier causes. A collision flag is a hard blocker for the approval gate.
-- Otherwise send the chosen row's `name` plus its SPASE `identifier`, following the **SPASE resolution
-  ladder** in the `hssi-field-definitions` skill (Field 31), which is authoritative. At payload level:
-  several rows with cited in-repo evidence → send **all** the evidenced rows (a legitimate one-to-many
-  expansion, not a collision); several rows with nothing selecting among them → **omit and flag**; no
-  instrument row but a resolvable platform/mission → send the **observatory** row instead and note the
-  substitution; nothing defensible → **omit and document why**. **Never send a `name` with no
-  `identifier`** — there is no free-type path and no "zero plausible matches" exception. The
-  no-identifier fallback `filter(name=…, type=…).first()` runs case-sensitively over the **whole table**
-  and, failing that, *creates a new identifierless row* — exactly the legacy rows PR #54 deleted
-  (63 → 0). Backend matching is `identifier` first, then the case-sensitive `name`+`type` match, so the
-  identifier is the reliable key. Never send `landing_url` (server-derived — a HelioData mission page when one is
-  confirmed, otherwise empty so the link falls back to the SPASE `identifier`).
+**Instruments / Observatories:** apply the relevance gate and the SPASE resolution ladder in `hssi-field-definitions/fields/31-related-instruments.md` — the single authoritative copy. Never send a `name` without a SPASE `identifier`; never send `landing_url`.

@@ -9,7 +9,6 @@ tools: Read, Glob, Grep, Bash, WebFetch, WebSearch
 model: opus
 skills:
   - hssi-field-definitions
-  - software-functionality
 ---
 
 # HSSI Metadata Extractor

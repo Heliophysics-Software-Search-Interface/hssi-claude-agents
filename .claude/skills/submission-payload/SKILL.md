@@ -105,7 +105,7 @@ Each submission object **must** include these five fields:
 - `identifier` — URL: an **ORCID** for a person author, or a **ROR** for an organization author (see "Organization authors" below)
 - `affiliation` — array of Organization objects
 
-**Organization authors.** An author may be an organization (a lab, consortium, or institution credited as an author) rather than a person. To submit one, put its **ROR URL** in `identifier` (e.g., `https://ror.org/03c3r2d17`). HSSI derives org-ness server-side purely from the `ror.org` identifier — there is no separate flag — and renders the author as a schema.org `Organization`, with its affiliations as `parentOrganization`. `givenName` and `familyName` are still both required and non-empty, and the stored name is `givenName + " " + familyName`, so **split the org name on the first whitespace**: first token → `givenName`, the remainder → `familyName` (e.g., "The SunPy Community" → `givenName: "The"`, `familyName: "SunPy Community"`). A single-token org name (e.g., "NASA") can't satisfy the non-empty `familyName` rule — flag it to the user rather than guessing a split. This applies to **authors only**; contributors remain person/ORCID-only.
+**Organization authors** — see `hssi-field-definitions/fields/06-authors.md` (Payload and roundtrip notes) for how a ROR-identified author is encoded.
 
 ### Submitter
 - `email` (required) — string
@@ -125,62 +125,7 @@ Each submission object **must** include these five fields:
   confirmed to exist; otherwise empty so the link falls back to the SPASE `identifier`) and is ignored
   on submission. Agents only ever set `name` and `identifier`.
 
-**First apply the relevance gate, then resolve.** Only list instruments/observatories the software is *designed to support* (see Fields 31/32 "When to include it" in the field definitions / extractor relevance gate); the steps below resolve the entries that have already passed it.
-
-**How to resolve against the controlled list** (`/api/models/InstrumentObservatory/rows/all/`):
-
-1. **Fetch once to a file; filter locally.** The endpoint returns the entire vocabulary (~7,700 rows)
-   in `data[]` — do **not** load it all into context. Save the response to a file (e.g. `curl`/Bash)
-   and filter it with `grep`/`jq`/`python`. You can request
-   `?columns=id,name,identifier,type,abbreviation` to drop the large `definition` field (keep `id` —
-   the API returns an empty `data[]` if it's omitted).
-2. **Vocabulary state — verify, don't assume.** As of the PR #54 backfill (2026-07-07) the vocabulary
-   is 100% SPASE-backed (7,648 rows, 0 non-SPASE; re-verified 2026-07-27). Treat that as a **dated
-   observation, not an invariant.** Keep `identifier.startswith("https://spase-metadata.org/")` as a
-   **real guard**: a row failing it signals upstream drift or a row an agent wrongly created, and must
-   be **reported, never used**.
-3. **Normalize `.html` identifiers.** ~40+ SPASE identifiers exist in both a bare and a `.html` form
-   (e.g. `.../SMWG/Instrument/SDO/AIA` and `.../SMWG/Instrument/SDO/AIA.html`). Treat them as the same
-   resource and **prefer the non-`.html` identifier** when both are present, so you don't split links
-   across two rows for one instrument.
-4. **Match on multiple signals**, not just the canonical name. Repos often mention only an acronym or
-   platform (`AIA`, `SDO`, `PSP`, `SUVI`). Compare your candidate against each row's `name`, its
-   `abbreviation`, the source's parenthetical aliases, and the **SPASE identifier path segments**
-   (which carry platform/mission evidence, e.g. `.../GOES/17/SUVI`). Restrict to the right `type`
-   (1 = instrument, 2 = observatory). Abbreviations are themselves often non-unique (e.g. `ELECTRON`
-   appears on both SMWG and CNES rows), so treat them as candidate signals that feed the collision
-   rule below — not as unique keys.
-5. **Prefer the `SMWG/...` namespace as a tie-breaker** among same-name duplicates (the authoritative
-   registry) over project archives like `CNES/...`. This is *only* a tie-breaker: a single non-SMWG
-   match is still correct (e.g. Solar Orbiter's canonical row is `ESA/Observatory/SolarOrbiter`).
-   The canonical SMWG `name` is sometimes the long form (e.g. `SMWG/Observatory/THEMIS` is named
-   "Time History of Events and Macroscale Interactions during Substorms", not "THEMIS"). **Copy the
-   matched row's `name` verbatim** — don't re-derive it.
-6. **On an unresolved collision, omit the entry entirely.** If more than one SPASE candidate still
-   remains after namespace and platform/mission evidence (e.g. `Solar Ultraviolet Imager` matches four
-   instrument rows, one each for GOES-16/17/18/19), **do not include the instrument/observatory in the
-   payload at all** — leave it out and flag it for user/manual review. Do **not** fall back to emitting
-   the bare `name`: the backend's no-identifier path is a case-sensitive `filter(name=…, type=…).first()`
-   (see Backend Quirks), so a bare name that matches several identically-named rows silently binds to an
-   **arbitrary** one — the same mis-link a wrong identifier would cause. Omission is the only safe
-   option, and the orchestrator's approval gate must treat a collision flag as a **hard blocker**.
-7. Otherwise emit the chosen row's `name` + SPASE `identifier`, following the **SPASE resolution ladder**
-   in the `hssi-field-definitions` skill (Field 31), which is authoritative. At payload level it reduces to:
-   - **Several rows match with cited in-repo evidence** naming which ones (a supported-version list, a
-     station table, an explicit doc/API statement) → emit **all** the evidenced rows, each with its
-     identifier. This is a legitimate one-to-many expansion, not a collision.
-   - **Several rows match with nothing selecting among them** → **omit the entry and flag it for manual
-     review.**
-   - **No instrument row but the platform/mission has one** → emit the **observatory** row instead and
-     note the substitution.
-   - **Nothing defensible resolves** (generic class label, out of heliophysics scope) → **omit and
-     document why.**
-   - **Never emit a `name` with no `identifier`.** There is no free-type path and no "zero plausible
-     matches" exception. The backend's no-identifier fallback is a case-sensitive
-     `filter(name=…, type=…).first()` over the **whole table**: it either binds to an arbitrary
-     same-name row or falls through to `InstrumentObservatory.objects.create(name=…, type=…)`, creating
-     a **new identifierless row** — exactly the legacy rows PR #54 deleted (63 → 0).
-   Always surface omitted entries to the user.
+**Relevance gate and SPASE resolution:** the single authoritative procedure is `hssi-field-definitions/fields/31-related-instruments.md` (Field 32 defers to it). Entries reach the payload only after passing it; never emit a `name` without a SPASE `identifier`.
 
 ### Award
 - `name` (required) — string
@@ -234,65 +179,31 @@ Each submission object **must** include these five fields:
 
 **Important:** The API field for Award Title (section 26) is `award`, **not** `awardTitle`.
 
-**Important — Logo (33):** `logo` is a `URLField(max_length=200)`, so keep the whole URL under 200 characters. A git-hosted logo must be pinned to an exact commit SHA (`https://raw.githubusercontent.com/<owner>/<repo>/<40-hex-sha>/<path>`, or `https://media.githubusercontent.com/media/…` when the path is Git-LFS-tracked) — never a branch (`/main/`, `/master/`, `refs/heads/…`) and never a `/blob/` page URL. Fetch it before putting it in the payload and require an `image/*` content-type: both an LFS pointer (`text/plain`, ~130 bytes) and a `blob/` page (`text/html`) answer HTTP 200 while serving no image. A logo on a non-git host has no commit to pin and is a valid value once reachability is confirmed.
+**Logo (33):** URL rules in `hssi-field-definitions/fields/33-logo.md` (≤200 chars, commit-pinned, verified `image/*`).
 
-**Important — RelatedItem URL fields (27–30):** each entry must be a real URL. Free text fails the serializer's `URLValidator` (`Invalid URL: '<value>'`) and rejects the whole atomic request. Keep each URL ≤128 characters: `_get_or_create_related` stores the URL as both `identifier` and the 128-capped `name`, so a longer URL passes validation and then fails at the database write.
+**RelatedItem URL fields (27–30):** real URLs only, each ≤128 characters — see `hssi-field-definitions/fields/27-related-publications.md` (Payload and roundtrip notes; Fields 28–30 share the rule).
 
 ### License is a plain string
 
-The `license` field is a **plain string** containing the license name — not an object. The serializer looks up `License.objects.filter(name__iexact=<value>)` against the controlled list, so the value must match an entry from `/api/models/License/rows/all/` exactly (case-insensitive).
-
-```json
-"license": "BSD 3-Clause \"New\" or \"Revised\" License"
-```
+See `hssi-field-definitions/fields/15-license.md` (Payload and roundtrip notes).
 
 ### Publisher has no `publisherIdentifier` key
 
-The publisher object uses `{name, identifier}` only. There is no `publisherIdentifier` key — use `identifier` for the ROR or other organizational ID.
-
-```json
-"publisher": {
-  "name": "Zenodo",
-  "identifier": "https://zenodo.org"
-}
-```
+See `hssi-field-definitions/fields/11-publisher.md` (Payload and roundtrip notes).
 
 ### Version sub-keys are camelCase
 
-The version object uses `releaseDate` and `versionPid` (camelCase). Snake_case (`release_date`, `version_pid`) also works due to auto-decamelization, but camelCase is the documented convention to match the rest of the payload.
-
-```json
-"version": {
-  "number": "2.4.1",
-  "releaseDate": "2025-05-01",
-  "description": "Adds GPU acceleration.",
-  "versionPid": "https://doi.org/10.XXXX/example"
-}
-```
+See `hssi-field-definitions/fields/12-version.md` (Payload and roundtrip notes).
 
 ---
 
 ## Controlled-List Endpoints
 
-Normalize values to **exact** strings from the `name` field in these endpoints on the target base URL:
-
-| Field | Endpoint |
-|-------|----------|
-| Software Functionality | `/api/models/FunctionCategory/rows/all/` |
-| Related Region | `/api/models/Region/rows/all/` |
-| Programming Language | `/api/models/ProgrammingLanguage/rows/all/` |
-| Input/Output File Formats | `/api/models/FileFormat/rows/all/` |
-| Operating System | `/api/models/OperatingSystem/rows/all/` |
-| CPU Architecture | `/api/models/CPUArchitecture/rows/all/` |
-| Development Status | `/api/models/RepoStatus/rows/all/` |
-| Data Sources | `/api/models/DataInput/rows/all/` |
-| Related Phenomena | `/api/models/Phenomena/rows/all/` |
-| License | `/api/models/License/rows/all/` |
-| Related Instruments / Observatories | `/api/models/InstrumentObservatory/rows/all/` (`type` 1 = instrument, 2 = observatory; **resolve to a SPASE-backed `identifier` — never emit a bare name** — see Instrument / Observatory above) |
+The field → model endpoint table lives in one place: `hssi-field-definitions/sources/vocabulary-authority.md`. Normalize values to **exact** strings from the `name` field of the endpoint on the target base URL.
 
 **How to use:** Fetch each relevant endpoint, extract the `name` field from each row, and normalize your metadata values to match exactly. If an extracted value doesn't match any controlled-list entry, flag it for user review rather than silently dropping it.
 
-**Software Functionality format:** Use `"Parent: Child"` (with space after colon). Values must be exact matches from the endpoint. Graph-list lookup walks the parent → child chain. **Always also include the bare parent top-level category as its own array entry** (e.g. include `"Data Processing and Analysis"` in addition to `"Data Processing and Analysis: Data Access and Retrieval"`). Selecting a subcategory does NOT automatically add its parent — the parent must be listed separately or it won't appear on the record. See the `software-functionality` skill.
+**Software Functionality format:** see `hssi-field-definitions/fields/04-software-functionality.md` (Payload and roundtrip notes).
 
 ---
 

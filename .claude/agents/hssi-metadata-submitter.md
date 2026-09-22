@@ -7,7 +7,6 @@ tools: Read, Glob, Grep, Bash, WebFetch
 model: opus
 skills:
   - hssi-field-definitions
-  - software-functionality
   - submission-payload
   - submission-verification
 ---

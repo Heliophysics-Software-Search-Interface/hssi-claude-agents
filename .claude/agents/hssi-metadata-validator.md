@@ -8,7 +8,6 @@ tools: Read, Glob, Grep, Bash, WebFetch, WebSearch
 model: sonnet
 skills:
   - hssi-field-definitions
-  - software-functionality
 ---
 
 # HSSI Metadata Validator
