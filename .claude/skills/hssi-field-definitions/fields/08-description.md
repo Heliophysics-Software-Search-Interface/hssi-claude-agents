@@ -87,7 +87,10 @@ restore it. Keep Fields 8 and 9 consistent: a claim removed from one is removed 
    `setup.cfg` `description`); the docs index introduction. Light cleanup is allowed — remove badges,
    markdown links, parenthetical asides — but do not compose marketing prose or merge sources into new
    sentences. It must say what the software does and, where the project states them, why to use it and
-   the assumptions it makes. A README written as a landing page (installation headings, badges, a
+   the assumptions it makes. When the lead paragraph is too thin for that, or a clause was dropped
+   under rule 2, add further **whole sentences** from the project's own text (later README sections,
+   the docs introduction), unaltered and in the project's order — extending the quotation is allowed,
+   composing is not. A README written as a landing page (installation headings, badges, a
    navigation structure) is the wrong source even when it is the most current prose. Fires on: every
    remaining case.
 

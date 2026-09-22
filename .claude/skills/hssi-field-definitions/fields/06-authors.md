@@ -70,7 +70,10 @@ attestation of authorship.
    (`<id>+<login>@users.noreply.github.com`) or by the commit API's `author.login`. Never infer the person
    from `github.com/<handle>` or from the handle's spelling. An unresolved handle is a documented omission.
 3. **Originator of a model, algorithm or predecessor code that this package reimplements, adapts or was
-   inspired by → not an author.** Credit them in Field 27 (their paper) or Field 29 (their code).
+   inspired by → not an author** — unless this package's own metadata (`CITATION.cff`, package
+   `authors`, Zenodo creators) names them as an author at the pinned revision or did so in a released
+   version, in which case rule 8 applies and the dossier records the predecessor relationship beside
+   the attestation. Otherwise credit them in Field 27 (their paper) or Field 29 (their code).
 4. **Wrapper that ships a third-party component whole → credit the people the sources name as authors of
    that shipped component**, alongside the wrapper's own author. Do not credit support or correspondence
    contacts, authors of individual routines inside a component, authors of a prior-language original a

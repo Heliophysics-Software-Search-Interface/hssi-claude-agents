@@ -122,10 +122,15 @@ package considered and dropped, and name the specific evidence for every package
     not, and the exact string keys the catalogue's own record. (If HSSI ever renders resolved titles for
     related items, the DOI becomes preferable on persistence grounds.)
 
-12. **An external target:** its concept DOI when it has one (the form's preference), otherwise its
-    repository URL, otherwise a page where users can find more information. When the same external
-    target is already a RelatedItem row on other entries, send that exact identifier so it binds the
-    existing row. Record the **upstream project**, not a fork a build script happens to fetch from.
+12. **An external target — bind first, then derive.** (a) If the target is already a RelatedItem row
+    anywhere in HSSI, send that row's exact identifier so it binds the existing row, even when you would
+    have chosen a different URL form. Check by fetching
+    `/api/models/RelatedItem/rows/all/?columns=id,name,identifier` once and filtering by the target's
+    host and path; "the same target" means the same software project, whatever URL form the row uses —
+    a project's PyPI page, its repository root and a `/tree/…` sub-path of that repository are one
+    target. (b) Otherwise its concept DOI when it has one (the form's preference); (c) otherwise the
+    repository root URL; (d) otherwise a page where users can find more information. Record the
+    **upstream project**, not a fork a build script happens to fetch from.
 
 13. **Never a version DOI** for a software relation — it asserts a relationship to one frozen release.
     A stored version DOI is replaced by the target's `code_repository_url` (in-catalogue) or concept DOI

@@ -121,8 +121,9 @@ candidate considered and dropped, so there is an audit trail.
     omitting it changes the counts materially.
 
 11. **Vocabulary state — verify, don't assume.** The vocabulary has been observed to be 100%
-    SPASE-backed after a backfill that removed every legacy non-SPASE row. That is a **dated observation,
-    not an invariant**. Keep `identifier.startswith("https://spase-metadata.org/")` as a **real guard**
+    SPASE-backed after a backfill that removed every legacy non-SPASE row (measured 2026-09-22:
+    `http://localhost` 7,602 rows, 0 non-SPASE; `https://hssi.hsdcloud.org` 7,602 rows, 0 non-SPASE). That is a
+    **dated observation, not an invariant** — `update-api-spec` Step A re-measures and re-dates it. Keep `identifier.startswith("https://spase-metadata.org/")` as a **real guard**
     on every fetch: a row failing it means upstream drift or a row an agent wrongly created, and must be
     **reported, never used**.
 
