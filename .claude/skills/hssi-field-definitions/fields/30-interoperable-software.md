@@ -14,6 +14,9 @@
 
 **How to fill it:** Ideally, enter the DOI for the software code. Otherwise, link to code repository (e.g., https://github.com/sunpy/sunpy). If no public repository, enter link where users can find more information (e.g., related HSSI page). Publication DOIs should go in relatedPublications instead.
 
+**The form's DOI preference is superseded by Field 29's URL-form rules (rules 11–13 there):** a
+repository URL is recorded whenever the target has one, a DOI only when it has none.
+
 This file holds the **single full copy of the Tier A and Tier B lists** and the generic-infrastructure test; Field 29 applies them by reference. Field 29 holds the single full copy of the URL-form rules (which URL to record for a relation); this field applies them by reference.
 
 ## Why it exists
@@ -128,9 +131,11 @@ dropped, record a short note so there is an audit trail; for every package kept,
     catalogue is a finding, not a mandate. A real interoperability partner left out is as wrong as numpy
     left in; a validator flags a missing one as a WARNING or SUGGESTION.
 
-11. **URL form** follows Field 29's URL rules, rules 11–17 there (in-catalogue target → that entry's exact stored
-    `code_repository_url`; no version DOIs; ≤128 characters; placeholder names never drive the choice;
-    dead links → a Wayback capture). Settle relevance first, then the URL.
+11. **URL form** follows Field 29's URL rules, rules 11–16 there: repository URL first (in-catalogue target →
+    that entry's exact stored `code_repository_url`; external target → the upstream repository root), a
+    concept DOI only when the target has no public repository, never a version DOI, a passed-over concept
+    DOI named beside the recorded URL in the dossier, ≤128 characters, placeholder names never drive the
+    choice, dead links → a Wayback capture. Settle relevance first, then the URL.
 
 12. **Incumbents are held to the same bar.** Give every stored value its own verdict under rules 1–9 on a
     refresh. A stored value kept without an argument is the same defect as a candidate rejected without

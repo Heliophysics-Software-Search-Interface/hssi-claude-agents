@@ -14,6 +14,10 @@
 
 **How to fill it:** Ideally, enter the DOI for the software code. Otherwise, link to code repository (e.g., https://github.com/sunpy/sunpy). If no public repository, enter link where users can find more information (e.g., related HSSI item). Publication DOIs should go in relatedPublications instead.
 
+**The form's DOI preference is superseded by the URL-form rules below (rules 11–13):** the site shows a
+related item's raw URL as its link text, so a repository URL is recorded whenever the target has one and a
+DOI only when it has none.
+
 The single full copy of the **Tier A and Tier B lists** and the generic-infrastructure test lives in
 Field 30 (`30-interoperable-software.md`, Rubric rules 1–4); this field applies them by reference. This
 file holds the single full copy of the **URL-form rules** (rules 11–16 below), which Field 30 applies by
@@ -119,22 +123,25 @@ package considered and dropped, and name the specific evidence for every package
 11. **An in-catalogue target uses that entry's exact stored `code_repository_url`** — bind, don't mint.
     Look up the other HSSI entry and copy its `code_repository_url` byte for byte, even when that entry
     also has a DOI: the page shows the raw URL as link text, a repository URL is legible where a DOI is
-    not, and the exact string keys the catalogue's own record. (If HSSI ever renders resolved titles for
-    related items, the DOI becomes preferable on persistence grounds.)
+    not, and the exact string keys the catalogue's own record.
 
-12. **An external target — bind first, then derive.** (a) If the target is already a RelatedItem row
-    anywhere in HSSI, send that row's exact identifier so it binds the existing row, even when you would
-    have chosen a different URL form. Check by fetching
-    `/api/models/RelatedItem/rows/all/?columns=id,name,identifier` once and filtering by the target's
-    host and path; "the same target" means the same software project, whatever URL form the row uses —
-    a project's PyPI page, its repository root and a `/tree/…` sub-path of that repository are one
-    target. (b) Otherwise its concept DOI when it has one (the form's preference); (c) otherwise the
-    repository root URL; (d) otherwise a page where users can find more information. Record the
-    **upstream project**, not a fork a build script happens to fetch from.
+12. **An external target uses its upstream repository root URL.** (a) The repository root of the
+    **upstream project** (`https://github.com/<owner>/<repo>`), never a fork a build script happens to
+    fetch from, never a `/tree/` or `/blob/` sub-path, never a docs or PyPI page when a repository exists.
+    (b) Only when the target has **no public repository**, its concept DOI. (c) Otherwise a page where
+    users can find more information (a model's CCMC page, a vendor's product page). If a RelatedItem row
+    already exists with exactly the prescribed URL, send it byte for byte so it binds; a row for the same
+    target in another form (a DOI, a docs page, a sub-path) is **not** reused — send the prescribed form
+    even though it mints a new row, and leave the other rows to be corrected when their own entries are
+    refreshed.
 
 13. **Never a version DOI** for a software relation — it asserts a relationship to one frozen release.
-    A stored version DOI is replaced by the target's `code_repository_url` (in-catalogue) or concept DOI
-    or repository URL (external).
+    Any stored DOI, version or concept, to a target that has a public repository is replaced by that
+    repository URL (the stored `code_repository_url` in-catalogue, the upstream root externally).
+    **Record the DOI you passed over.** Whenever a repository URL is recorded for a target that also has a
+    concept DOI, the field's dossier section names that concept DOI beside the recorded URL and states
+    that the repository form was chosen because the site renders the raw URL. Both forms are then on
+    file, so the choice can be reversed cheaply if HSSI ever renders resolved titles for related items.
 
 14. **New URLs are at most 128 characters** (the RelatedItem name column is capped at 128; see payload
     notes).
@@ -185,7 +192,7 @@ dead original, find a Wayback capture that still lists the content and record bo
 - GitHub `fork: true` and the upstream relationship: a build may fetch a zero-star fork; the upstream is
   the project to record.
 - A Zenodo concept DOI and a version DOI look alike; read DataCite (`HasVersion` → concept,
-  `IsVersionOf` → version) before recording or keeping one.
+  `IsVersionOf` → version) before recording one under rule 12(b) or naming one beside a URL under rule 13.
 - A catalogue entry with a similar name may be a different implementation (a Python wrapper versus the
   Fortran adaptation the software builds) — rule 5.
 - A redirect from the stored URL is not a broken link; a 404 or a removed subtree is.
@@ -226,10 +233,15 @@ dead original, find a Wayback capture that still lists the content and record bo
   Fortran came from, but that subtree was removed. The relation is still real, so the Wayback capture of
   the directory listing is recorded instead (rule 15), and the dossier keeps the evidence that the
   original is dead.
-- **DOIs to repository URLs (Kaipy, PyAuroraX).** Two stored relations were DOIs — one a stale version
-  DOI for a single release, one a concept DOI — to software that has its own HSSI entry. Both are replaced
-  by the target entry's stored `code_repository_url` (rules 11 and 13), which a reader recognises and
-  which keys the catalogue's record.
+- **DOIs to repository URLs (Kaipy, PyAuroraX, MGSutils).** Two stored relations were DOIs — one a stale
+  version DOI for a single release, one a concept DOI — to software that has its own HSSI entry. Both are
+  replaced by the target entry's stored `code_repository_url` (rules 11 and 13), which a reader recognises
+  and which keys the catalogue's record. An external target is treated the same way: xarray has a concept
+  DOI (`10.5281/zenodo.598201`), but `https://github.com/pydata/xarray` is recorded under rule 12(a) and
+  the concept DOI is named beside it in the dossier (rule 13), so the pair is on file either way.
+- **A DOI kept because nothing else exists (rule 12(b)).** A Fortran model distributed only as a Zenodo
+  deposit, with no repository, is recorded by its concept DOI; the dossier states that no repository was
+  found so a later refresh re-checks that fact rather than the URL form.
 - **Alternatives, predecessor, sister implementation (Maidenhead).** The README's "Alternatives" section
   names two converters; the PyPI record and a rename commit establish the earlier distribution name; a
   commit moved the Fortran implementation to a gist. All four are recorded under rule 9. The Julia
