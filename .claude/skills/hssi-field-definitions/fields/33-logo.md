@@ -193,9 +193,10 @@ name and no `blob/` segment.
 - **A registry-declared plot kept (LOWTRAN).** The PyHC registry's `logo:` is a README gallery figure —
   transmittance and path radiance against wavelength — with no designed mark anywhere in the tree. The
   project presents it as its logo, so rule 2 includes it, and once stored rule 1 keeps it. The registry's branch URL is re-derived to a commit-pinned raw URL under rule 7.
-- **A README hero plot excluded (WMM2015).** The only image in the tree is a declination and inclination
-  contour plot under `tests/`, shown in hero position in the README, with no registry `logo:` behind it.
-  Rule 4 fires: Field 33 stays empty, with the pinned candidate URL and its verification recorded.
+- **A test-fixture plot excluded (GEOrinex).** The only image in the tree is a four-panel GPS observation
+  plot under `src/georinex/tests/`, which the README embeds mid-page as an example "RINEX plot". No header
+  placement, docs logo, logo file or registry `logo:` presents it as the project's mark. Rule 4 fires:
+  Field 33 stays empty, with the pinned candidate URL and its verification recorded.
 - **An institution's mark excluded (IGRF-14).** The agency product page displays the developing
   association's logo. The software has no mark of its own and does not present that one as its logo, so
   rule 5 fires; the URL is recorded as a rejected alternative for a curator who wants it deliberately.
