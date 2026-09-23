@@ -1147,13 +1147,21 @@ no observatory-specific input to declare.
 
 ### 33. Logo (OPTIONAL)
 Not found
+*(stored value; erroneously left empty — see the correction below, to be applied at the next refresh)*
 
-**Settled: the README hero image is not recorded as this software's logo, and Field 33 stays empty.**
-The candidate and its verification are kept in full below, so a later refresh neither re-derives them
-nor re-opens the question without new grounds; the case for recording it was weighed and found not
-determinative, not refuted.
+**Correction — queued, not yet applied to HSSI: the earlier exclusion of the README hero image was
+ERRONEOUS for this software.** The general Field 33 rule is unchanged: a README hero figure with
+nothing else presenting it as branding is a figure, not a logo. This package and its sister WMM2020 are
+a deliberate, developer-backed exception: the developer has stated that these plot images are the ones
+they want used as the packages' logos, which is presentation evidence of the kind the rule asks for,
+and WMM2020 already records its nearly identical README hero plot as its logo. The two entries must
+agree. **Any agent refreshing WMM2015 must add the pinned URL below as the Field 33 value in its next
+update**, re-verifying the fetch and the pin at that time; if the file has moved, re-pin the same image
+at its current commit. Until that update is applied, HSSI holds no logo for this software and the value
+line above records that stored state. The candidate and its verification are kept in full below so the
+refresh does not have to re-derive them. This exception extends to no other package.
 
-HSSI held no logo for this software before this refresh. Exactly one image exists in the tracked tree,
+HSSI holds no logo for this software. Exactly one image exists in the tracked tree,
 and it is the README's hero image, referenced from the README as
 `![image](./src/wmm2015/tests/incldecl.png)` immediately after the introductory text and before
 `## Install`.
@@ -1179,18 +1187,25 @@ in hero position immediately below them. Sample output is a common and legitimat
 for a scientific model package, and on the searcher's side a thumbnail of global declination and
 inclination contours conveys what this software does far better than an empty logo slot does.
 
-*The case against.* It is not a logo in the designed sense — no wordmark, no mark, no chosen palette;
-it is a figure the plotting function happens to produce. Its path is `src/wmm2015/tests/incldecl.png`,
+*The reasoning that excluded it, now rejected.* The exclusion rested on these observations, which
+remain true but do not disqualify the image under the current rule. It is not a logo in the designed
+sense — no wordmark, no mark, no chosen palette; it is a figure the plotting function happens to produce. Its path is `src/wmm2015/tests/incldecl.png`,
 i.e. it lives in the **test directory**, which suggests it was committed as a test fixture or
 reference output and reused in the README rather than authored as a brand asset. At 1528x651 it is a
 wide figure, not a shape a logo slot is designed for. And the PyHC registry entry for this software
 (reproduced below) carries **no** `logo:` field, so the one external registry that could have
 corroborated the project's own intent does not.
 
-*Outcome.* This field is a documented omission rather than an unexamined gap: the sole candidate in
-the tree was found, verified and deliberately not recorded, on the ground that a sample-output figure
-committed under the test directory is not the project's chosen visual identity. No substitute image
-was sought or invented; there is no other image in the tree.
+*Why that reasoning does not decide this case.* Those observations would exclude the image under the
+general rule, and for another package they still would. Here the developer's stated wish that this
+image serve as the package's logo supplies the presentation evidence the rule asks for, so a
+sample-output figure, its location under the test directory, its wide aspect ratio, and the absence of
+a `logo:` field in the PyHC registry are not grounds to exclude it. WMM2020 records its counterpart
+plot as its logo on the same basis, and the two entries should agree.
+
+*Outcome.* The sole image in the tree is this software's logo and belongs in Field 33 at the pinned URL
+above; the stored value is empty only because the erroneous exclusion has not yet been reversed in
+HSSI. No substitute image was sought or invented; there is no other image in the tree.
 
 ---
 
