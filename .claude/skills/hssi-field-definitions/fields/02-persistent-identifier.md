@@ -45,8 +45,10 @@ labelled heading). The rubric below picks among them.
 
 ## Rubric: include / exclude
 
-Apply these to every candidate DOI and to the incumbent HSSI value, one at a time, and stop at the
-first rule that fires for it.
+Apply these to every candidate DOI and to the incumbent HSSI value, one at a time. Rules 1–5 decide
+whether a value qualifies — stop at the first of them that fires. Rule 6 then normalises every survivor,
+rule 7 selects when more than one qualifies, and rules 8–9 settle the outcome against the incumbent;
+those four always run after a rule-4 or rule-5 acceptance.
 
 1. **Not a software record → never Field 2.** Fires when the DOI's registration (DataCite
    `types.resourceTypeGeneral`, Zenodo `resource_type`) is a poster, presentation, article, preprint,

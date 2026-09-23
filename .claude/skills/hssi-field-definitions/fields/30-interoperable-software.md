@@ -6,7 +6,7 @@
 
 ## What it is
 
-**Type:** Multi-entry URL (RelatedItem lookup — DOI URL preferred)
+**Type:** Multi-entry URL (RelatedItem lookup — repository URL preferred; a DOI only when the target has no public repository. The form's tooltip says "DOI URL preferred"; the URL-form rules below supersede it.)
 
 **What it is:** Other important software packages this software has demonstrated interoperability with. Can run package in the same environment as the others without errors.
 
@@ -149,13 +149,9 @@ dropped, record a short note so there is an audit trail; for every package kept,
 
 ## Ask the user only when
 
-- **A Tier B package whose only documented exchange is being the container type of the software's
-  output** (the public API returns an `xarray.Dataset`, and nothing else — no converter, adapter,
-  round-trip test or cross-language bridge — is built on it). Rule 4's evidence bar is met; whether a
-  searcher is served by listing the container is the decision to put to the user, with the evidence
-  recorded either way so it is not rediscovered.
-
-Every other case is decided by the rubric.
+No listed shapes: every case is decided by the rubric. A documented public `xarray.Dataset` (or other
+package-specific) interchange type meets rule 4's bar without a separate converter or round-trip test;
+internal use and generic `ndarray`/`DataFrame` compatibility do not.
 
 ## Where to find it, and traps
 

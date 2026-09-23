@@ -85,7 +85,8 @@ Execute these steps in order:
   - Section number and title
   - Extracted value(s)
   - Whether the value is usable, "Not found", or ambiguous
-- Read `hssi-field-definitions/fields/NN-<name>.md` for any field whose value, shape or normalization is unclear — the *Payload and roundtrip notes* section is written for this step
+- Read `hssi-field-definitions/fields/NN-<name>.md` for **every field you map or verify** — its *Payload and roundtrip notes* section is written for this step and holds the binding, normalization and omission rules the payload skill no longer repeats; follow its pointers to paired fields
+- Read `hssi-field-definitions/sources/form-structure.md` once: every submission is made under the form's Metadata Agreement stated there, and the PREPARE report notes that
 
 ### Step 2: Build JSON Payload
 
@@ -110,7 +111,7 @@ Run three sub-checks:
   - Normalize each value to an exact match from the endpoint's `name` field
   - If no exact match exists, flag for user review — do not silently drop or approximate
 
-**D. Organization-name sanity** — For `affiliation[].name` (Field 6) and `funder[].name` (Field 25), a bare acronym (e.g., `ESA` rather than `European Space Agency`) should already have been expanded upstream by the extractor. Do not auto-expand here. If one remains, it is the *Ask the user only when* shape listed in `fields/06` / `fields/25`: surface it in the verification report and ask before submitting. Also flag funder entries that combine multiple organizations into one value (one organization per entry).
+**D. Organization-name sanity** — For `affiliation[].name` (Field 6) and `funder[].name` (Field 25), a bare acronym (e.g., `ESA` rather than `European Space Agency`) should already have been expanded upstream by the extractor. Do not auto-expand here. If one remains, report it in the verification report as an upstream normalization defect and resolve it under the field's own rule (the organization's ROR display name from `fields/06` / `fields/25`), routing the correction back through the extractor rather than editing the value yourself; ask only when the organization's identity is genuinely ambiguous under that rule. Also flag funder entries that combine multiple organizations into one value (one organization per entry).
 
 **E. Instrument/Observatory SPASE gate** — Every `relatedInstruments`/`relatedObservatories` entry in the payload **must carry a `https://spase-metadata.org/` identifier**, per the ladder in `fields/31` (Field 32 follows it). An entry marked `NEEDS MANUAL RESOLUTION`, an unresolved multi-row match with no evidence selecting among the rows, or a `name` with no identifier at all must have been **omitted** from the payload — a bare name would bind to an arbitrary same-name row or create a new identifierless row. An evidence-backed multi-row expansion is legitimate; verify each row has an identifier and let it through. Surface every omission in the report. This is a **hard blocker for EXECUTE:** PREPARE may produce the report, but do **not** POST while any unresolved or identifierless entry remains — the user must pick the SPASE identifier or confirm dropping the entry first.
 

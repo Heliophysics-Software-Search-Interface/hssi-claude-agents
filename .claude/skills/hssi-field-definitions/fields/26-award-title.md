@@ -87,13 +87,12 @@ qualifies, even when X wrote the software.**
 14. **Correct a typo in a source's number only when the agency's own record resolves the corrected number
     and the uncorrected one resolves to nothing** (NSF `125908` → `1259508`), and record both in the dossier.
 15. **Existing Award row → bind it and accept its stored title.** A matched row keeps its name; a better
-    title for it is a NON-PATCHABLE rename of a shared row (see the Ask list). **No existing row →
-    Ask** before creating one.
+    title for it is a NON-PATCHABLE rename of a shared row (see the Ask list). **No existing row → send
+    the title, number and funder the rubric chose**; the PREPARE report states that EXECUTE will create
+    the row, and approval of the exact payload covers that creation.
 
 ## Ask the user only when
 
-- **The award has no matching Award row.** Creating an Award row is a user decision; present the title,
-  number and funder the rubric chose.
 - **A shared Award row needs a rename or a funder link.** Award rows are shared across software entries,
   so a rename changes every entry on the row; it is NON-PATCHABLE and goes through the database workflow.
   Name every entry the row serves (query the row's `softwares` reverse relation, not the name string).

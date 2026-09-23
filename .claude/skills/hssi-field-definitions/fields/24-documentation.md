@@ -31,7 +31,8 @@ worked is the most likely field in an entry to go stale.
 
 ## Rubric: include / exclude
 
-Apply top to bottom; stop at the first rule that fires. Every value is verified by fetching it (see
+Rules 1–5 choose the documentation — apply them top to bottom and stop at the first that fires. Rule 6
+then normalises the chosen URL and always runs. Every value is verified by fetching it (see
 *Where to find it*) before it is recorded, and every URL considered and not used is recorded with the
 reason — especially a declared URL that is dead, so a later refresh does not "correct" the field into it.
 

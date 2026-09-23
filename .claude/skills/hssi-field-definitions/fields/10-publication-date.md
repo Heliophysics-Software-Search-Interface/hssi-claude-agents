@@ -39,9 +39,11 @@ that fires.
    mint date), a Zenodo `created`/`updated` timestamp, the date of a paper about the software (for
    example a JOSS article), or the date of any release after the first. An incumbent of this kind is
    replaced under rule 4.
-2. **A date of a different package → never Field 10.** Fires for an artifact of a predecessor
-   published under another package name, even if this code grew out of it. Its date does not date
-   this software.
+2. **A date of a different project → never Field 10.** Fires for an artifact of a separate predecessor
+   project, even if this code grew out of it (a fork, a port, a rewrite that started a new repository).
+   Its date does not date this software. **A rename is not a different project:** when one continuous
+   lineage — the same repository history — first published under an earlier package or distribution
+   name, the earlier public date is this software's publication date and is kept.
 3. **Incumbent that follows an accepted anchor → keep.** Before proposing any change, test whether
    the stored value already follows one of these:
    - **(a) first release:** the date of the earliest public release of this software — its first

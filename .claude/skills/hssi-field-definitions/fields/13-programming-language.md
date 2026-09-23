@@ -82,10 +82,12 @@ becomes. Rules 8–10 govern the incumbent value and an empty result.
    lists both. Fires on: the software's own API is IDL or MATLAB code.
 4. **Source-available package or library.** Record **the language a user writes to use it plus any
    compiled or scripted core in the repository that carries the science** (a Python wrapper over a
-   Fortran core lists both; a Python package over a vendored C library lists both). Exclude build, CI
-   and documentation tooling (CMake, Meson, Make, shell scripts, the generated Javascript of a built
-   docs site), test-only languages (a test harness not installed with the package), and vendored or
-   archived third-party code the package does not build or call. A **supported front end** in a second
+   Fortran core lists both). **Vendored code counts only as the science core:** a third-party C or
+   Fortran library the package compiles or calls to do its science (a vendored model, a bundled CDF
+   library) lists that language; vendored or archived third-party code the package does not build or
+   call is excluded. Exclude build, CI and documentation tooling (CMake, Meson, Make, shell scripts, the
+   generated Javascript of a built docs site) and test-only languages (a test harness not installed with
+   the package). A **supported front end** in a second
    language that ships with the software and has its own tests or build target counts (a MATLAB
    package directory with a test suite); a stub the author marks as not working, or that nothing builds
    or runs, does not. Fires on: public source.

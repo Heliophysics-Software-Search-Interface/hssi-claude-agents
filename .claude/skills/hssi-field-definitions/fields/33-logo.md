@@ -34,18 +34,21 @@ costs the user nothing, so an honest blank beats a borrowed or accidental image.
 ## Rubric: include / exclude
 
 Rules 1–6 choose **the image**: apply them top to bottom and stop at the first that fires. Rules 7–9
-choose **the URL form** for that image, the same way. Rule 10 applies to every value before it is
+choose **the URL form** for that image: test rule 8 (Git LFS) before rule 7, and rule 9 for an asset
+with no git host. Rule 10 applies to every value before it is
 recorded, and rules 11–12 govern a stored URL on refresh. Never record a URL you have not fetched, and
 never record the string a source hands you (a repo's `conf.py`/`README`, the PyHC registry `logo:` field,
 a DataCite/Zenodo record) without re-deriving it. Record the outcome — including every candidate image rejected, with its
 URL — so a later refresh does not reopen a settled choice.
 
-1. **A prior approved value is settled → keep the image.** If a prior dossier records the value as
-   already reviewed and approved, that settles it — don't re-raise it, and **do not propose a different
-   image on refresh**. Only a change of URL form is allowed (rules 7–9): swapping the asset itself is a
-   value decision for the user. If the stored URL no longer serves the image, recover the same image
-   under rules 7–10; if nothing recovers it, rule 6 applies with the dead URL recorded. Fires on: the
-   dossier records the logo as reviewed and kept, with reasons.
+1. **A prior approved value that is still eligible → keep the image.** If a prior dossier records the
+   value as reviewed and approved **and** the image still qualifies under rule 2, don't re-raise it and
+   **do not propose a different image on refresh**; only a change of URL form is allowed (rules 7–9). Prior
+   approval does not make an excluded image eligible: a stored plot, screenshot or institutional mark is
+   removed under rule 4 or 5 like any other, with the earlier approval recorded in the dossier. If the
+   stored URL no longer serves the image, recover the same image under rules 7–10; if nothing recovers
+   it, rule 6 applies with the dead URL recorded. Fires on: the dossier records the logo as reviewed and
+   kept, and the image reads as this software's mark.
 
 2. **The project presents an image as its logo, and it reads as a logo → include it.** Only an image the
    project presents as its logo qualifies: the docs `html_logo` (or the docs theme's logo option), the
@@ -54,13 +57,13 @@ URL — so a later refresh does not reopen a settled choice.
    an emblem, or a designed graphic for this software reads as a logo. Fires on: project presentation
    evidence plus an image that reads as this software's mark.
 
-3. **The project presents an image as its logo, but it does not look like a logo → ask.** A plot,
-   screenshot, photograph, data product, or an institution's or mission's banner that the project itself
-   designates (registry `logo:`, `html_logo`, README branding header) is the one case the rubric does not
-   decide. **Raise it with the user rather than rejecting it or swapping it yourself**, and bring the
-   evidence: the image, where the project presents it, what it depicts, and any alternatives. That the
-   project itself presents the image as its logo is good reason to keep it; that judgement is the user's
-   to make. Fires on: presentation evidence plus an image that is not a conventional mark.
+3. **The project presents an image as its logo, but it is not a logo → exclude it.** A plot, screenshot,
+   photograph, data product, or an institution's or mission's banner is not made eligible by the project
+   designating it (registry `logo:`, `html_logo`, a README header): the field carries this software's
+   mark, and such an image would present a figure or another organisation's identity as that mark.
+   Record the image, where the project presents it and what it depicts as a rejected alternative, and
+   report the exclusion as a WARNING so a curator can adopt it deliberately. Fires on: presentation
+   evidence plus an image that is not a conventional mark.
 
 4. **An image the project does not present as its logo → exclude it.** Never a plot, screenshot,
    diagram or data product — including a README hero figure, an example output, a test fixture, a
@@ -125,13 +128,8 @@ URL — so a later refresh does not reopen a settled choice.
 
 ## Ask the user only when
 
-- **The project presents an image as its logo but it does not look like a logo** (rule 3) — a plot,
-  screenshot, photograph, data product, or an institution's or mission's banner designated by the
-  registry `logo:`, `html_logo`, or a README branding header — and no prior dossier records it as
-  reviewed and approved. Bring the image, where the project presents it, what it shows, and the
-  alternatives.
-
-Every other case is decided by the rubric.
+No listed shapes: every case is decided by the rubric. An image the project designates that is not a
+logo is excluded and reported under rule 3, not asked about.
 
 ## Where to find it, and traps
 

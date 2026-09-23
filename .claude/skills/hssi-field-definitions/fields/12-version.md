@@ -64,7 +64,8 @@ the answer.
 1. **More than one attached row → collapse to one.** Fires when the entry holds two or more version
    rows. Byte-identical duplicates collapse to one with no loss; distinct rows are replaced by the
    single row rules 3–6 select.
-2. **Unreleased code never gets a version.** Fires for: commits after the last release; a version
+2. **Unreleased code never gets a version** (for a new value; a stored version that was declared but
+   never released is handled by rule 4, not cleared here). Fires for: commits after the last release; a version
    declared only on an unmerged branch; a tag whose tagged code still declares the previous version
    and has no release; a PyPI file built from code not on the main line; release text drafted in a
    wiki or a release-candidate branch with no tag. Record nothing for them; note in the dossier what
@@ -154,9 +155,10 @@ The description is **the release's own words, filtered for the site user.**
 
 ### Correcting the same release
 
-The number changes only for a newer release. A wrong sub-value of the **same** release — a date from
-a rule-8 source, a misattributed description, another version's PID — is corrected; this writes a new
-row and the orphan is accepted. A difference that is only cosmetic is never corrected.
+The number changes only for a newer release; that rule governs the **number**. A wrong sub-value of the
+**same** release — a date from a rule-8 source, a description that fails the description rules, another
+version's PID — is corrected with the number unchanged; HSSI stores the correction as a new row and the
+orphan is accepted. A difference that is only cosmetic is never corrected.
 
 ## Ask the user only when
 

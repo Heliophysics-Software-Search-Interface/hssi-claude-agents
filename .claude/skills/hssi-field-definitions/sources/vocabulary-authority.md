@@ -30,7 +30,10 @@ exists on the other — and never treat an extra row on one side as automaticall
 Validate against the target actually in play.
 
 **Only Keywords (Field 16) is an open vocabulary** — `_get_or_create_keyword` creates missing rows,
-so it can never fail this check. Every other list rejects unknown values.
+so it can never fail this check. The simple closed lists (Fields 4, 5, 13, 15, 17–23) reject unknown
+values. Fields 31–32 are structured records whose backend **creates** an `InstrumentObservatory` row for
+an unknown identifier or an unmatched bare name, so nothing rejects a bad entry there — enforce Field 31's
+SPASE resolution and payload gate yourself.
 
 ## How each agent applies this
 
@@ -72,8 +75,8 @@ Notes:
 - **Large lists:** `InstrumentObservatory` is ~7,700 rows. Fetch once to a file with
   `?columns=id,name,identifier,type,abbreviation` (keep `id`, or the API returns an empty `data[]`)
   and filter locally; never load every row into context.
-- **Keywords are the only open vocabulary.** `_get_or_create_keyword` creates missing rows; every
-  other list raises on an unknown value.
+- **Keywords are the only open vocabulary.** `_get_or_create_keyword` creates missing rows; the simple
+  closed lists raise on an unknown value; Fields 31–32 silently create rows (see above).
 
 To re-verify the snapshots against live and refresh them, use the `update-api-spec` skill (Step A);
 it rewrites only the fenced `vocab:` blocks in the field files.

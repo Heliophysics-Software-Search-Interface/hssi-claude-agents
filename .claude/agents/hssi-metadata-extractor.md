@@ -27,7 +27,7 @@ Extract all available metadata from the given software repository and produce a 
 
 ## How field decisions are made
 
-The rubric for every field lives in `hssi-field-definitions/fields/NN-<name>.md`. **Before you write a field, Read its file** and apply its *Rubric* top to bottom, stopping at the first rule that fires; its *Where to find it, and traps* section says where the value is usually found and which false positives to expect. Decide and document autonomously whenever the file covers the case. Ask the user only for a shape on that file's *Ask the user only when* list, or when the case is genuinely not covered by the written rules — "I am not confident" is not a reason to ask; "no rule addresses this" is. Report every uncovered case in your return as a **rubric gap**, naming the field, so the file can be completed. Batch the questions you do have.
+The rubric for every field lives in `hssi-field-definitions/fields/NN-<name>.md`. **Before you write a field, Read its file** and apply its *Rubric* stage by stage (within a stage top to bottom, stopping at the first rule that fires; a later stage always runs); its *Where to find it, and traps* section says where the value is usually found and which false positives to expect. Decide and document autonomously whenever the file covers the case. Ask the user only for a shape on that file's *Ask the user only when* list, or when the case is genuinely not covered by the written rules — "I am not confident" is not a reason to ask; "no rule addresses this" is. Report every uncovered case in your return as a **rubric gap**, naming the field, so the file can be completed. Batch the questions you do have.
 
 ---
 

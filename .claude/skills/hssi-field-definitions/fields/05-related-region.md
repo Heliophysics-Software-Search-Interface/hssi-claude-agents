@@ -77,7 +77,9 @@ attention on a tool that does nothing there, and costs the filter its trust.
 
 ## Rubric: include / exclude
 
-Apply per candidate region, top to bottom; stop at the first rule that fires. Walk **all 24 rows** on
+Apply per candidate region, top to bottom. Rules 1–4 decide each fine row — stop at the first of them
+that fires. Rule 5 then runs for every fine row that passed and is never skipped: its coarse row is
+added whether or not the coarse row has evidence of its own. Walk **all 24 rows** on
 every extraction and refresh, asking which new rows now apply — validating only the recorded values reads
 as complete while missing the point.
 

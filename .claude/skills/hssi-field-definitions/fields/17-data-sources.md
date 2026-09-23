@@ -70,7 +70,9 @@ software from exactly the people it serves.
 
 ## Rubric: include / exclude
 
-Apply per candidate row, top to bottom; stop at the first rule that fires. The vocabulary is small enough
+Apply per candidate row, top to bottom; stop at the first rule that fires, except that rule 10's
+plug-in-framework case is tested before rule 4 excludes a source reached only through another package.
+The vocabulary is small enough
 to walk whole: give every row a verdict on each extraction and refresh.
 
 1. **Only live rows, byte-exact.** A value must be a row of the live `/api/models/DataInput/rows/all/`

@@ -35,12 +35,16 @@ release it does not ship) sends a user to data the tool will not open.
 
 ## Rubric: include / exclude
 
-Apply to each candidate and to each incumbent entry; stop at the first rule that fires.
+Apply to each candidate and to each incumbent entry. Rule 1 screens everything. Then assess the
+candidate under the rule for its relationship to the software — rules 2–3 for data the software reads,
+rule 4 for data it ships, rule 5 for data it produced — and stop at the first that fires within that
+relationship; rule 2 never excludes a produced or shipped dataset. Rule 6 then selects within a versioned
+series admitted under rule 3 or 5; it never overrides rule 4's exact shipped release.
 
 1. **Not a dataset → not Field 28.** Fires for a publication (Field 14 or 27), software (Field 29 or
    30), a documentation page, or a tool's web interface.
-2. **Data the software cannot read → not Field 28.** Fires for a product in a level, format or
-   release the software does not handle, even from the same instrument: an unsupported processing
+2. **Input data the software cannot read → not Field 28.** Fires for a candidate **input** product in a
+   level, format or release the software does not handle, even from the same instrument: an unsupported processing
    level, a derived product (movies, spreadsheets) made from data it reads, a revised release it does
    not ship, or a sibling instrument's data with no reader in the code.
 3. **A dataset the software is built to read → include.** Evidence: a dedicated reader or loader in

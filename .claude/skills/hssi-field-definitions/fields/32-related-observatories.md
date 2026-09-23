@@ -86,7 +86,9 @@ apply them within the Field 31 stages where they fall.
    the mission's own archive, API or format, Field 17 also carries `Observatory/Mission-specific`. When
    it rests on something other than ingesting the mission's data (models trained on its observations),
    Field 17 is decided on its own terms. `Observatory/Mission-specific` in Field 17 with an empty Field 32
-   is a defect: name the observatory, or clear the data-source value.
+   needs its reason checked: when the mission's data access is evidenced but no SPASE row exists for the
+   observatory, the Field 17 value stands and the omission is documented (never a bare-name row); clear
+   the Field 17 value only when its own source claim is unsupported.
 
 7. **An unfamiliar name on the right row is kept.** A stored row that is the correct entity under the
    canonical authority stays even when its name is not the one users say (a mission's original full

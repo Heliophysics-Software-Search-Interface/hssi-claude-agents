@@ -67,7 +67,8 @@ misspelling makes the software findable only by someone who repeats the typo.
 ## Rubric: include / exclude
 
 Apply per candidate term, top to bottom. Rules 1–10 decide whether a term belongs — stop at the first
-of them that fires. Every term that belongs then passes through rules 11–12, which decide the row it
+of them that fires, except that a **project-declared** term is tested under rule 9 before rules 6–7,
+which apply only to terms the extractor proposes. Every term that belongs then passes through rules 11–12, which decide the row it
 binds (stop at the first that fires). Rules 13–14 cover incumbents and emptiness.
 
 1. **One keyword per entry.** Split comma- or semicolon-delimited strings into separate terms before

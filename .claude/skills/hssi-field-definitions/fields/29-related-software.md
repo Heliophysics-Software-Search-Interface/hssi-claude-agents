@@ -6,7 +6,7 @@
 
 ## What it is
 
-**Type:** Multi-entry URL (RelatedItem lookup — DOI URL preferred)
+**Type:** Multi-entry URL (RelatedItem lookup — repository URL preferred; a DOI only when the target has no public repository. The form's tooltip says "DOI URL preferred"; the URL-form rules below supersede it.)
 
 **What it is:** Software that performs similar tasks but does not necessarily link together (which would be 'interoperable software'). For example, two software that model the upper atmosphere of Earth but using different assumptions. Important software dependencies and software this work was forked from should also be included.
 

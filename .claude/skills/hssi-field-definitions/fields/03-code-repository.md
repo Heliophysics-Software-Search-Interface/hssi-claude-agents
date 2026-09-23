@@ -37,7 +37,9 @@ links for users of other entries, so it changes only when the software itself ha
 
 ## Rubric: include / exclude
 
-Apply top to bottom; stop at the first rule that fires. Record the evidence for the rule that fired, and
+Apply top to bottom; stop at the first rule that fires, except that rule 3 is tested before rule 2: when
+the stored URL redirects to the candidate, the difference is a move or rename and rule 3 (with its inbound
+sweep) governs. Record the evidence for the rule that fired, and
 record every URL considered and not used with the reason, so a later refresh does not re-propose it.
 
 1. **No public source repository → the page where a user obtains the software or requests access.**

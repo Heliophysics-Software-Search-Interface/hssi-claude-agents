@@ -42,8 +42,9 @@ the visitor loses the project's own citation guidance.
 
 ## Rubric: include / exclude
 
-Apply to each candidate and to the incumbent value; stop at the first rule that fires. Decide
-Fields 14 and 27 together.
+Apply to each candidate and to the incumbent value; stop at the first rule that fires, except that
+rule 4 is tested before rule 3: when the project's guidance is a per-component citation list, rule 3
+never selects a paper from it. Decide Fields 14 and 27 together.
 
 1. **Not a publication → never Field 14.** Fires for a software deposit DOI, concept or version (a
    `CITATION` file that holds only a Zenodo DOI is citing the code — Fields 2 and 12), a dataset

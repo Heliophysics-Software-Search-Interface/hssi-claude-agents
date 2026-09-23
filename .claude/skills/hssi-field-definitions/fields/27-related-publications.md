@@ -37,8 +37,9 @@ paper the project itself points to hides the science the code implements.
 
 ## Rubric: include / exclude
 
-Apply to each candidate and to each incumbent entry; stop at the first rule that fires. Decide Fields
-14 and 27 together.
+Apply to each candidate and to each incumbent entry; stop at the first rule that fires. For an
+**incumbent**, rules 1–2 are tested and then rule 7; rules 3–6 apply only to candidates for addition.
+Decide Fields 14 and 27 together.
 
 1. **Not a publication → not Field 27.** Fires for a software deposit (Field 2, 12, 29 or 30), a
    dataset (Field 28), a repository or documentation URL, or a presentation with no DOI and no
