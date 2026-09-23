@@ -16,7 +16,7 @@ This skill is a router. The substance lives in one file per field:
 fields/01-submitter.md … fields/33-logo.md      one file per field, uniform sections
 sources/vocabulary-authority.md                  live API wins; the ONLY field → model endpoint table
 sources/extraction-sources.md                    DataCite → Zenodo → SoMEF → PyHC cascade; literature routes
-sources/form-structure.md                        the form's three sections, requirement levels, agreement
+sources/form-structure.md                        the form's three sections and requirement levels
 ```
 
 ## How to use this skill

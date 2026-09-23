@@ -1,6 +1,6 @@
-# HSSI Resource Submission Form — structure and agreement
+# HSSI Resource Submission Form — structure
 
-<!-- Moved verbatim from resource_submission_form_fields.md lines 1-12 and 777-785 on 2026-09-22. -->
+<!-- Moved verbatim from resource_submission_form_fields.md lines 1-12 on 2026-09-22. The form's former Metadata Agreement was removed from the website and is not reproduced here. -->
 
 This document describes all fields in the Heliophysics Software Search Interface (HSSI) Resource Submission Form. The form is divided into three sections: basic information, additional data, and additional metadata.
 
@@ -10,11 +10,3 @@ The form collects metadata about heliophysics software packages for inclusion in
 - **MANDATORY** - Required to submit the form
 - **RECOMMENDED** - Strongly encouraged
 - **OPTIONAL** - Not required but helpful
-
-## Agreement
-
-### Metadata Agreement (MANDATORY)
-Before submission, you must agree to the following terms:
-
-"By submitting this form, you acknowledge and agree that any metadata you provide is submitted voluntarily and becomes part of the public domain. You waive all rights, claims, and interests to the submitted metadata, and grant unrestricted use, reproduction, modification, and distribution rights to the receiving party or its designees."
-

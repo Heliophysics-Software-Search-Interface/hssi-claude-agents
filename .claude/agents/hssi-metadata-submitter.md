@@ -86,7 +86,6 @@ Execute these steps in order:
   - Extracted value(s)
   - Whether the value is usable, "Not found", or ambiguous
 - Read `hssi-field-definitions/fields/NN-<name>.md` for **every field you map or verify** — its *Payload and roundtrip notes* section is written for this step and holds the binding, normalization and omission rules the payload skill no longer repeats; follow its pointers to paired fields
-- Read `hssi-field-definitions/sources/form-structure.md` once: every submission is made under the form's Metadata Agreement stated there, and the PREPARE report notes that
 
 ### Step 2: Build JSON Payload
 
