@@ -64,11 +64,21 @@ attestation of authorship.
    one a later CITATION.cff omits. If the stored link points at a defective duplicate row (a misspelled,
    identifier-less copy) of a person whose identified row already exists, send that person's stored ORCID
    so the entry binds the identified row; that is a relink, not a removal.
-2. **Handle-only credit → not an author.** A GitHub username or other handle with no real name is not an
-   author. A handle becomes a person only when a primary artifact carries the personal name: a commit
-   git-authored under that name, tied to the login by a GitHub noreply address
-   (`<id>+<login>@users.noreply.github.com`) or by the commit API's `author.login`. Never infer the person
-   from `github.com/<handle>` or from the handle's spelling. An unresolved handle is a documented omission.
+2. **Attested contributor known only by a handle → an author, recorded as the handle.** When an author
+   source in the candidate pool (CITATION.cff, `.zenodo.json`/Zenodo creators, AUTHORS) credits a GitHub
+   username or other handle and no human name can be established, the person is still an author. First
+   try to resolve the handle to a person: a personal name becomes assertable only when a primary artifact
+   carries it — a commit git-authored under that name, tied to the login by a GitHub noreply address
+   (`<id>+<login>@users.noreply.github.com`) or by the commit API's `author.login`. If that fails, record
+   **givenName = the exact login, capitalization verbatim, familyName = `(GitHub)`** (or the platform the
+   account is on, e.g. `(GitLab)`), provided the handle is **proven** — a noreply address encoding the
+   login, or the commit API attributing a commit to that account. When the string is certainly a username
+   (the project's own metadata classifies it as one, or a commit address's local part is the handle) but
+   no platform account can be established, record familyName **`(Username)`** instead. Never infer a human
+   name from the handle's spelling, from a profile display name, or from `github.com/<handle>`; never
+   carry an upstream literal such as `GithubUser` as a family name; assert no identifier and no
+   affiliation for a handle author. A handle that appears only in git history and in no author source is
+   a committer (rule 5), not an author.
 3. **Originator of a model, algorithm or predecessor code that this package reimplements, adapts or was
    inspired by → not an author** — unless this package's own metadata (`CITATION.cff`, package
    `authors`, Zenodo creators) names them as an author at the pinned revision or did so in a released
@@ -99,7 +109,9 @@ attestation of authorship.
 11. **Stored name matches no source (a typo, a wrong particle split such as `Darren de` / `Zeeuw`, an
     honorific in the given name) → record the correct form as the target and report the rename as
     NON-PATCHABLE.** It needs a database-side correction to a shared Person row, checked against every
-    entry that row serves.
+    entry that row serves. A legacy row with a blank given name and a bare handle as its family name (a bulk
+    contributor import) is corrected the same way: to the proven human name when a primary artifact
+    carries one, otherwise to `<login>` / `(GitHub)` per rule 2.
 12. **New author → the project's own spelling**, diacritics included as the project writes them, over a
     better-documented external form. Take the given/family split from the person's linked ORCID
     structured name, else from CITATION.cff `given-names`/`family-names`; keep surname particles with the
@@ -246,6 +258,11 @@ shortlog patterns.
 
 ## Payload and roundtrip notes
 
+- **Handle authors** are sent as `{"givenName": "<login>", "familyName": "(GitHub)"}` (or `(Username)`)
+  with no `identifier` and no `affiliation`. Because an identifier-less Person binds by an exact,
+  case-sensitive given+family match, the login's capitalization and the parenthesized platform label
+  must be reproduced exactly or a duplicate row is created.
+
 - **Shape:** `authors` is an array of Person objects
   `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}`; `givenName` and
   `familyName` are both required and non-empty.
@@ -303,10 +320,17 @@ shortlog patterns.
   rows carry no identifier, rule 15 fires: the dossier records the ORCIDs, the patch sends the authors
   without them, and the identifiers go to the database workflow. A third author whose five same-name
   records are all other people gets no identifier (rule 14).
-- **GitHub handles in a Zenodo creator list (georinex).** Three handles resolve to people through commits
-  git-authored under personal names; the fourth has only its handle and a noreply address in every
-  artifact, so rule 2 leaves it off as a documented omission. Named committers missing from the Zenodo
-  snapshot are not added (rule 5).
+- **GitHub handles in a Zenodo creator list (georinex, sunpy).** Handles that resolve to people through
+  commits git-authored under personal names are recorded as those people. A creator whose every artifact
+  carries only the handle and a noreply address encoding its login (`izzydrewlynn
+  <38845559+izzydrewlynn@users.noreply.github.com>`; sunpy's `eebbaaf`, `OussCHE`) is recorded as
+  `izzydrewlynn` / `(GitHub)` under rule 2 — an author, with no human name asserted. Named committers
+  missing from the creator list are not added (rule 5).
+- **A username with no platform account (pyspedas).** `CITATION.cff` lists `rale8469` with the literal
+  family name `GithubUser`; the commit API attributes its commit to no account and no such GitHub user
+  exists, but the commit address's local part is the handle. Rule 2 records `rale8469` / `(Username)`,
+  never the upstream `GithubUser` literal; two other handles in the same roster, proven through noreply
+  addresses, are recorded with `(GitHub)`, and three resolve to real people.
 - **A years-stale affiliation (hissw).** The software was begun at a university the author has since
   left, and his Person row serves several entries. Rule 19 keeps that university off; his stored past
   affiliation from the period of the catalogued releases stays (rule 17).
