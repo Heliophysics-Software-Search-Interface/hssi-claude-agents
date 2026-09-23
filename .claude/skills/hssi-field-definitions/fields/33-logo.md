@@ -41,33 +41,30 @@ never record the string a source hands you (a repo's `conf.py`/`README`, the PyH
 a DataCite/Zenodo record) without re-deriving it. Record the outcome — including every candidate image rejected, with its
 URL — so a later refresh does not reopen a settled choice.
 
-1. **A prior approved value that is still eligible → keep the image.** If a prior dossier records the
-   value as reviewed and approved **and** the image still qualifies under rule 2, don't re-raise it and
-   **do not propose a different image on refresh**; only a change of URL form is allowed (rules 7–9). Prior
-   approval does not make an excluded image eligible: a stored plot, screenshot or institutional mark is
-   removed under rule 4 or 5 like any other, with the earlier approval recorded in the dossier. If the
-   stored URL no longer serves the image, recover the same image under rules 7–10; if nothing recovers
-   it, rule 6 applies with the dead URL recorded. Fires on: the dossier records the logo as reviewed and
-   kept, and the image reads as this software's mark.
+1. **A stored logo → keep the image.** A refresh never removes a logo HSSI already holds, whatever
+   the image depicts: the earlier curation is the settled value. What a refresh may do is change the URL
+   form (rules 7–9, 11), recover the same image when the stored URL no longer serves it (rules 7–10; if
+   nothing recovers it, rule 6 with the dead URL recorded), and — only when the project has since adopted
+   a designed mark of its own — propose the swap in the diff as a separate, named change for the user to
+   accept or decline at the payload gate. Never swap silently. Fires on: HSSI stores a logo for the entry.
 
-2. **The project presents an image as its logo, and it reads as a logo → include it.** Only an image the
-   project presents as its logo qualifies: the docs `html_logo` (or the docs theme's logo option), the
-   PyHC registry `logo:` entry, a README header image used as branding, or a dedicated logo file the
-   project references (`logo.png`, `docs/logo/…`, `docs/**/_static/*logo*`). Look at the image: a wordmark,
-   an emblem, or a designed graphic for this software reads as a logo. Fires on: project presentation
-   evidence plus an image that reads as this software's mark.
+2. **The project presents an image as its logo → include it, whatever it depicts.** Presentation
+   evidence is the docs `html_logo` (or the docs theme's logo option), the PyHC registry `logo:` entry, a
+   README header image used as branding, or a dedicated logo file the project references (`logo.png`,
+   `docs/logo/…`, `docs/**/_static/*logo*`). The project's choice governs: a wordmark or emblem qualifies,
+   and so does a plot, photograph, or an institution's or mission's banner **when the project itself
+   presents it as its logo**. Record what the image depicts in the dossier so the choice is visible.
+   Fires on: presentation evidence for the image.
 
-3. **The project presents an image as its logo, but it is not a logo → exclude it.** A plot, screenshot,
-   photograph, data product, or an institution's or mission's banner is not made eligible by the project
-   designating it (registry `logo:`, `html_logo`, a README header): the field carries this software's
-   mark, and such an image would present a figure or another organisation's identity as that mark.
-   Record the image, where the project presents it and what it depicts as a rejected alternative, and
-   report the exclusion as a WARNING so a curator can adopt it deliberately. Fires on: presentation
-   evidence plus an image that is not a conventional mark.
+3. **Several images are presented → the one the project ranks first.** The docs `html_logo` outranks a
+   README header, which outranks a registry `logo:` entry maintained by a third party; a dedicated logo
+   file the docs use outranks a gallery figure. Record the others as alternatives. Fires on: more than
+   one image with presentation evidence.
 
 4. **An image the project does not present as its logo → exclude it.** Never a plot, screenshot,
-   diagram or data product — including a README hero figure, an example output, a test fixture, a
-   demonstration animation, or a photograph illustrating the docs — unless rule 3 applies. Record each
+   diagram or data product — an example output, a test fixture, a demonstration animation, or a
+   photograph illustrating the docs — that the project does not present as its logo (rule 2). A figure
+   in a README's hero position with nothing else presenting it as branding is a figure, not a logo. Record each
    candidate with its URL as a rejected alternative. Fires on: an image with no presentation evidence.
 
 5. **Another organization's mark → exclude it.** Never an institution's mark for software that has none
@@ -76,7 +73,7 @@ URL — so a later refresh does not reopen a settled choice.
    it would present that organization's identity as this software's. Record the URL as a rejected
    alternative so a curator can adopt it deliberately if they choose. Fires on: the mark belongs to an
    organization or parent project, and the project does not present it as this software's logo (if it
-   does, rule 3 fires first).
+   does, rule 2 fires first).
 
 6. **No logo found → a documented omission.** A documented omission is a fine outcome; never invent one.
    Record where you looked (every source in *Where to find it*) so the blank is evidenced rather than
@@ -128,8 +125,9 @@ URL — so a later refresh does not reopen a settled choice.
 
 ## Ask the user only when
 
-No listed shapes: every case is decided by the rubric. An image the project designates that is not a
-logo is excluded and reported under rule 3, not asked about.
+No listed shapes: every case is decided by the rubric. A stored logo is kept (rule 1); a project-presented
+image is included whatever it depicts (rule 2); a swap to a newly adopted mark is proposed in the diff, not
+asked separately.
 
 ## Where to find it, and traps
 
@@ -193,9 +191,8 @@ name and no `blob/` segment.
 ## Worked examples
 
 - **A registry-declared plot kept (LOWTRAN).** The PyHC registry's `logo:` is a README gallery figure —
-  transmittance and path radiance against wavelength — with no designed mark anywhere in the tree. That
-  is the rule-3 shape; the image is kept because the project presents it as its logo, and rule 1 now
-  settles it. The registry's branch URL is re-derived to a commit-pinned raw URL under rule 7.
+  transmittance and path radiance against wavelength — with no designed mark anywhere in the tree. The
+  project presents it as its logo, so rule 2 includes it, and once stored rule 1 keeps it. The registry's branch URL is re-derived to a commit-pinned raw URL under rule 7.
 - **A README hero plot excluded (WMM2015).** The only image in the tree is a declination and inclination
   contour plot under `tests/`, shown in hero position in the README, with no registry `logo:` behind it.
   Rule 4 fires: Field 33 stays empty, with the pinned candidate URL and its verification recorded.
