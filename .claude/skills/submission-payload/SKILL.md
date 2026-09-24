@@ -241,7 +241,7 @@ The field → model endpoint table lives in one place: `hssi-field-definitions/s
      existing row's semantic `type`; submitting the same URL under a different relation does not
      retype it.
    - Keyword: case-insensitive name match, created if missing
-   
+
    If a match is found with fewer fields, the DB record is enriched (empty fields filled in). If a match is found with conflicting fields, the existing DB values win.
 
 4. **SoftwareEditQueue creation** — A 90-day edit queue entry is created for each submission (outside the atomic block, after the serializer commits). The `queueId` is not returned in the response — look it up via `/api/models/SoftwareEditQueue/rows/all/` if you need it for verification.
