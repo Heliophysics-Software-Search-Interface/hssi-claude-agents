@@ -90,7 +90,7 @@ If a junk row is the *only* row for a real concept, say so explicitly: `The Virt
 
 ### A4. Apply the reconciliation
 
-- Correct each drifted list **inside its `vocab:` fence** in the owning field file. Outside the fences, this step edits only the items named below — the provenance lines, the Field 4 counts, the Field 16 sample count and date, the Field 31 vocabulary-state sentence and the `## Provenance` dates; every other sentence is hand-written guidance and is left alone.
+- Correct each drifted list **inside its `vocab:` fence** in the owning field file. Outside the fences, this step edits only the items named below — the provenance lines, the **Traps** notes and `> **Trap.**` callouts that belong to a list, the Field 4 counts, the Field 16 sample count and date, the Field 31 vocabulary-state sentence and the `## Provenance` dates; every other sentence is hand-written guidance and is left alone.
 - Refresh that list's provenance line to the run date and the targets actually checked:
   `*N values, snapshot YYYY-MM-DD, verified identical on https://hssi.hsdcloud.org and http://localhost. Live /api/models/<Model>/rows/all/ is authoritative.*`
 - Keep a short **Traps** note under any list with a byte-level hazard or a target divergence, and a `> **Trap.**` callout for any value removed as never-valid — the removal is the fix, but the note is what stops it being re-added.

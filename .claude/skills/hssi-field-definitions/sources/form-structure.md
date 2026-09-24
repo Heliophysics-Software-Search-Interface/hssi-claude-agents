@@ -1,6 +1,6 @@
 # HSSI Resource Submission Form — structure
 
-<!-- Moved verbatim from resource_submission_form_fields.md lines 1-12 on 2026-09-22. The form's former Metadata Agreement was removed from the website and is not reproduced here. -->
+<!-- Moved verbatim from resource_submission_form_fields.md lines 1-12 on 2026-09-22. -->
 
 This document describes all fields in the Heliophysics Software Search Interface (HSSI) Resource Submission Form. The form is divided into three sections: basic information, additional data, and additional metadata.
 

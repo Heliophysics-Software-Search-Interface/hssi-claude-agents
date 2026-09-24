@@ -19,8 +19,8 @@ it **produced**, each by DOI or permanent landing page.
 
 It links the software to the data it works with, so a visitor who knows a dataset can find the tool
 that reads it, and a visitor on the software's page learns exactly which data products it supports.
-A dataset the software cannot actually read (the wrong processing level, a derived movie, a revised
-release it does not ship) sends a user to data the tool will not open.
+An input dataset the software cannot actually read (the wrong processing level, a derived movie, a
+revised release it does not ship) sends a user to data the tool will not open.
 
 ## How it appears on the site
 
@@ -60,7 +60,9 @@ series admitted under rule 3 or 5; it never overrides rule 4's exact shipped rel
    data are published as independent release DOIs with no concept or series DOI linking them. Record
    the newest, not every release; a refresh moves it forward when a newer release appears.
 7. **Incumbent entry → keep** when rule 3, 4 or 5 still holds; remove it when rule 1 or 2 fires or it
-   no longer resolves.
+   no longer resolves. Within a rule-6 series only the selected newest release is kept: an incumbent that
+   is an older release of that same series is replaced by the newest, not kept beside it. Rule 4's exact
+   shipped release is never replaced by a newer release the software does not ship.
 8. **No identifier and no permanent landing page → empty, with the search recorded.** The field needs
    a URL; never invent one.
 
@@ -128,8 +130,8 @@ a longer URL passes validation and then fails at the database write.
   published as five release DOIs with no series DOI. Rule 6 records release 5.0 and notes that a later
   refresh should move it forward.
 - **The exact coefficients shipped.** WMM2015 ships the original World Magnetic Model 2015 coefficient
-  file; its first line identifies the December 2014 release. Rule 4 records that release's DOI; the
-  revised "version 2" DOI is excluded under rule 2.
+  file; its first line identifies the December 2014 release. Rule 4 records that release's DOI and, because it
+  fixes the exact shipped release, the revised "version 2" DOI the software does not ship is not recorded.
 - **Derived product rejected.** DASCutils reads raw all-sky FITS images; the closest deposit holds MP4
   movies compiled from those images. Rule 2 fires; the raw archive is an FTP tree with no DOI or
   landing page, so the field stays empty (rule 8).

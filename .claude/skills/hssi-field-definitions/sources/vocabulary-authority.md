@@ -79,4 +79,5 @@ Notes:
   closed lists raise on an unknown value; Fields 31–32 silently create rows (see above).
 
 To re-verify the snapshots against live and refresh them, use the `update-api-spec` skill (Step A);
-it rewrites only the fenced `vocab:` blocks in the field files.
+it rewrites the fenced `vocab:` blocks in the field files plus the supporting items its Step A4 lists
+(provenance lines, counts, trap notes), nothing else.

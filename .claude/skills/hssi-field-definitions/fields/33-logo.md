@@ -33,7 +33,9 @@ costs the user nothing, so an honest blank beats a borrowed or accidental image.
 
 ## Rubric: include / exclude
 
-Rules 1–6 choose **the image**: apply them top to bottom and stop at the first that fires. Rules 7–9
+Rules 1–6 choose **the image**. Rule 1 governs whenever HSSI already stores a logo. Otherwise assess
+**every** candidate image under rules 2, 4 and 5; when more than one survives, rule 3 selects; rule 6
+applies only when none survives. Rules 7–9
 choose **the URL form** for that image: test rule 8 (Git LFS) before rule 7, and rule 9 for an asset
 with no git host. Rule 10 applies to every value before it is
 recorded, and rules 11–12 govern a stored URL on refresh. Never record a URL you have not fetched, and
@@ -43,10 +45,13 @@ URL — so a later refresh does not reopen a settled choice.
 
 1. **A stored logo → keep the image.** A refresh never removes a logo HSSI already holds, whatever
    the image depicts: the earlier curation is the settled value. What a refresh may do is change the URL
-   form (rules 7–9, 11), recover the same image when the stored URL no longer serves it (rules 7–10; if
-   nothing recovers it, rule 6 with the dead URL recorded), and — only when the project has since adopted
-   a designed mark of its own — propose the swap in the diff as a separate, named change for the user to
-   accept or decline at the payload gate. Never swap silently. Fires on: HSSI stores a logo for the entry.
+   form (rules 7–9, 11), recover the same image when the stored URL no longer serves it (rules 7–10), and —
+   only when the project has since adopted a designed mark of its own — propose the swap in the diff as a
+   separate, named change for the user to accept or decline at the payload gate. When the stored URL is
+   dead and nothing recovers the same image, **propose clearing the value** in the diff the same way, as a
+   named change with the dead URL and every recovery attempt recorded; the stored value is never cleared
+   or swapped silently, and rule 6 never applies to a stored logo. Fires on: HSSI stores a logo for the
+   entry.
 
 2. **The project presents an image as its logo → include it, whatever it depicts.** Presentation
    evidence is the docs `html_logo` (or the docs theme's logo option), the PyHC registry `logo:` entry, a
@@ -77,7 +82,7 @@ URL — so a later refresh does not reopen a settled choice.
 
 6. **No logo found → a documented omission.** A documented omission is a fine outcome; never invent one.
    Record where you looked (every source in *Where to find it*) so the blank is evidenced rather than
-   unexamined. Fires on: no candidate survives rules 2–5.
+   unexamined. Fires on: HSSI stores no logo and no candidate survives rules 2–5.
 
 7. **Git-hosted asset (GitHub/GitLab) → pin it to the exact commit.** Resolve the commit SHA the file is
    at and record `https://raw.githubusercontent.com/<owner>/<repo>/<40-hex-sha>/<path>` (GitLab:
@@ -108,8 +113,9 @@ URL — so a later refresh does not reopen a settled choice.
     Keep the whole URL within 200 characters (the stored column's limit); a pinned raw URL is typically
     90–145. A pinned URL is longer than a branch one; if a specific case would exceed 200, say so rather
     than falling back to a branch reference. A source URL that does not return an image (404, HTML) is
-    never recorded; look for the same image elsewhere, and otherwise apply rule 6 with the dead URL
-    recorded. Fires on: every value before it is recorded.
+    never recorded as a new or changed value; look for the same image elsewhere, and otherwise apply
+    rule 6 (no stored logo) or rule 1's proposed clearing (stored logo) with the dead URL recorded. Fires
+    on: every new or changed value before it is recorded.
 
 11. **An incumbent on a branch or `/blob/` URL → repoint it at the commit-pinned URL for the same file.**
     A refresh is exactly where a stored logo URL goes stale. Propose

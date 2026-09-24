@@ -37,9 +37,11 @@ links for users of other entries, so it changes only when the software itself ha
 
 ## Rubric: include / exclude
 
-Apply top to bottom; stop at the first rule that fires, except that rule 3 is tested before rule 2: when
-the stored URL redirects to the candidate, the difference is a move or rename and rule 3 (with its inbound
-sweep) governs. Record the evidence for the rule that fired, and
+Apply top to bottom; stop at the first rule that fires. For a **stored** value, test the incumbent rules
+3–6 first — a rename or move (rule 3, with its inbound sweep), a stale ref (rule 4), an author-designated
+pinned form (rule 5), a cosmetic variant (rule 6) — and use rule 2 only when none of them governs; rule 2
+is for a value that points at something other than the repository, not for a repository URL in another
+form. Record the evidence for the rule that fired, and
 record every URL considered and not used with the reason, so a later refresh does not re-propose it.
 
 1. **No public source repository → the page where a user obtains the software or requests access.**
