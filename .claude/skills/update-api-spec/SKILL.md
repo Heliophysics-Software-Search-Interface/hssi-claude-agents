@@ -7,7 +7,8 @@ description: >
   lists may have drifted, or before trusting a value snapshot. Clones or pulls
   the hssi-website repo, reads the relevant source files, and updates
   submission-payload, submission-verification, update-payload, and the
-  hssi-field-definitions field files (their fenced vocab blocks).
+  hssi-field-definitions field files (their fenced vocab blocks and their
+  statements about how the website renders, filters and searches each field).
 ---
 
 # Update API Spec
@@ -17,6 +18,7 @@ Sync the reference files with the latest HSSI API source **and** the live contro
 **When to use:**
 - The HSSI API has changed (new fields, renamed keys, changed shapes, new quirks) and the `submission-payload`, `submission-verification`, or `update-payload` skills need updating. → Steps 1–5.
 - A controlled-value list may have drifted, or you want to re-date a snapshot before trusting it. → **Step A** (independent; needs no repo clone).
+- The website may have changed how a field renders, filters or searches, or the form's text and requirement levels — the field files state these as facts. → **Step B** (needs the repo clone; run it whenever `hssi-website` has new commits).
 
 **How often:** The API itself is relatively stable — run Steps 1–5 on failures or announced changes. **Vocabulary drift is different**: rows get added and edited through normal operation, so **run Step A before any batch of submissions or updates that leans on the documented value lists**, and whenever a submission fails with `Unknown value`.
 
@@ -102,9 +104,58 @@ Re-run the A2 diff against the edited field files and confirm zero doc-only and 
 
 ---
 
+## Step B: Re-verify the field files' site facts against hssi-website
+
+> The field files describe the website as it was on a recorded commit. The router
+> `hssi-field-definitions/SKILL.md` carries that commit in an HTML comment:
+> `<!-- site-facts: verified against hssi-website <sha> (<commit date>) on <run date> -->`.
+> Nothing detects website drift on its own; this step does.
+
+### B1. Get the source and the recorded commit
+
+Clone or pull `hssi-website` as in Step 1. Read the `site-facts:` line from the router and note its sha.
+
+### B2. Diff the watched files
+
+```bash
+cd <hssi-website> && git diff --stat <recorded-sha>..HEAD -- \
+  django/website/views/search.py \
+  frontend/filters \
+  django/website/templates/website/software_detail.html \
+  django/website/models/serializers/software.py \
+  django/website/forms/names.py \
+  django/website/forms/submission_data.py \
+  django/website/models/software.py django/website/models/vocab.py
+```
+
+If the diff is empty, move the router line forward to `HEAD` and today's date and stop. Otherwise, for
+each changed file, re-read it and reconcile every statement that depends on it:
+
+| Source file | What it decides | Where the field files state it |
+|---|---|---|
+| `views/search.py` | free-text tiers T1–T4 and their fields; `_FIELD_ALIAS_MAP` field-search codes and what each matches | router index **Search** and **Code** columns; each file's *Free-text search* and *Field search* bullets |
+| `frontend/filters/filterMenu.ts`, `filterGroup.ts`, `filterTab/*.ts` | which fields have a sidebar tab, what the tab lists, folding (Python/Fortran rows), parent–child inclusion, disabled tabs | router **Filter tab** column; each file's *Filter* bullet (Fields 4, 5, 13, 17, 22) |
+| `templates/website/software_detail.html` | detail-page sections, labels, link text and fallbacks (`UNKNOWN` → raw URL), what renders in parentheses, markdown rendering, header contents | each file's *Detail page* bullet |
+| `models/serializers/software.py` | JSON-LD (`applicationCategory`, `author`, `mentions`, `keywords` …) and the `/api/view/` readback shape | each file's *JSON-LD* bullet; *Readback* lines in *Payload and roundtrip notes* |
+| `forms/names.py` (`TTEXPL_*`, `TTBEST_*`) | the form's field descriptions and tooltips | each file's *What it is* / *How to fill it* text (quoted from the form) |
+| `forms/submission_data.py` | requirement level per field | router **Level** column; each file's header `Level:` |
+| `models/software.py`, `models/vocab.py` | field types, column caps (`URLField` 200, RelatedItem name 128), sorted M2M fields, `ControlledList` vs `ControlledGraphList` | *Payload and roundtrip notes*; Step A's model list (see Step 5b) |
+
+Reconcile by rewriting the statement to what the source now does; never soften a fact into "may". Where a
+rule rests on the fact (Field 5's coarse-parent rule rests on the Region filter not inheriting; Fields
+29/30's URL-form rule rests on the raw URL being the link text), say so in the report — the owner decides
+whether the rule changes, this step changes only the facts.
+
+### B3. Record and report
+
+Update the router's `site-facts:` line to the `HEAD` sha, its commit date and today's date. Report every
+changed file, every statement rewritten (file and line), and every rule whose premise moved.
+
+---
+
 ## Workflow (API source sync)
 
-Steps 1–6 below sync the **API contract** from source. They are independent of Step A — run either alone.
+Steps 1–6 below sync the **API contract** from source. They are independent of Steps A and B — run any alone.
 
 ### Step 1: Get the hssi-website Source
 

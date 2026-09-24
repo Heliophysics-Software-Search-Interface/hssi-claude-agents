@@ -27,7 +27,7 @@ id) is a dead end.
 
 ## How it appears on the site
 
-- **Detail page:** an "Awards" item in the "Licensing & Funding" section, one line per award: the award
+- **Detail page:** a "Funding Awards" item in the "Licensing & Funding" section, one line per award: the award
   name, then the award identifier in parentheses when stored, then "- " and the award's funder
   (`Award.funder`) when that is set.
 - **Free-text search:** award name at tier T4.5, award identifier at tier T4.6.

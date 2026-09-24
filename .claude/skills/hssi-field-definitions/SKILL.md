@@ -64,6 +64,12 @@ Level is the live form's requirement level. Filter tab and search columns descri
 (`hssi-website` frontend and `views/search.py`): T1–T4 are the free-text search tiers in rank order;
 the field-search code is the `code:"value"` syntax users can type.
 
+<!-- site-facts: verified against hssi-website 05915b5 (2026-09-22) on 2026-09-23 -->
+Every statement here and in the field files about how the website behaves — this table's Level, Filter
+tab, Search and Code columns, each file's *How it appears on the site* section, and the form text and
+tooltips quoted under *What it is* — was verified against the `hssi-website` commit in the line above.
+The `update-api-spec` skill's Step B re-verifies them and moves that line forward.
+
 | # | Field | Level | File | Vocabulary model | Filter tab | Search | Code |
 |---|---|---|---|---|---|---|---|
 | 1 | Submitter | MANDATORY | `fields/01-submitter.md` | — | — | — | — |
