@@ -164,7 +164,7 @@ Check only dynamic fields directly against the repo — no SoMEF, no deep code a
 | **Funders/Awards** | DataCite/Zenodo APIs (if concept DOI exists in HSSI data) |
 | **Related Publications** | DataCite/Zenodo APIs (if concept DOI exists) |
 
-Every row above is decided by its field file's *Rubric* — in particular `fields/33` (a refresh is exactly where a stored logo URL goes stale: repoint a branch or `blob/` URL to a commit SHA, never propose a different image) and `fields/23` (the development-status rules; GitHub `updated_at` is not commit activity). A refresh changes the **form** of a stored value only when the field file says so; swapping the asset or the wording behind a value is a value decision the file either settles or lists under *Ask the user only when*.
+Every row above is decided by its field file's *Rubric* — in particular `fields/33` (a refresh is exactly where a stored logo URL goes stale: repoint a branch or `blob/` URL to a commit SHA, and follow that file's recovery and proposed-replacement rules for a dead URL or a newly adopted mark — never swap or clear silently) and `fields/23` (the development-status rules; GitHub `updated_at` is not commit activity). A refresh changes the **form** of a stored value only when the field file says so; swapping the asset or the wording behind a value is a value decision the file either settles or lists under *Ask the user only when*.
 
 #### Enrich Mode (full pipeline)
 

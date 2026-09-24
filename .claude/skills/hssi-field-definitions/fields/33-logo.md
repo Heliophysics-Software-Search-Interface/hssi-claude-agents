@@ -43,8 +43,9 @@ never record the string a source hands you (a repo's `conf.py`/`README`, the PyH
 a DataCite/Zenodo record) without re-deriving it. Record the outcome — including every candidate image rejected, with its
 URL — so a later refresh does not reopen a settled choice.
 
-1. **A stored logo → keep the image.** A refresh never removes a logo HSSI already holds, whatever
-   the image depicts: the earlier curation is the settled value. What a refresh may do is change the URL
+1. **A stored logo → keep the image.** A refresh never silently removes a logo HSSI already holds,
+   whatever the image depicts: the earlier curation is the settled value, and the one exception — a
+   dead, unrecoverable URL — is only ever *proposed* for clearing, below. What a refresh may do is change the URL
    form (rules 7–9, 11), recover the same image when the stored URL no longer serves it (rules 7–10), and —
    only when the project has since adopted a designed mark of its own — propose the swap in the diff as a
    separate, named change for the user to accept or decline at the payload gate. When the stored URL is
@@ -131,9 +132,9 @@ URL — so a later refresh does not reopen a settled choice.
 
 ## Ask the user only when
 
-No listed shapes: every case is decided by the rubric. A stored logo is kept (rule 1); a project-presented
-image is included whatever it depicts (rule 2); a swap to a newly adopted mark is proposed in the diff, not
-asked separately.
+No listed shapes: every case is decided by the rubric. A stored logo is kept (rule 1), and a swap to a
+newly adopted mark or the clearing of a dead, unrecoverable URL is proposed in the diff, not asked
+separately; a project-presented image is included whatever it depicts (rule 2).
 
 ## Where to find it, and traps
 
