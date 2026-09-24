@@ -9,7 +9,6 @@ tools: Read, Glob, Grep, Bash, WebFetch, WebSearch
 model: opus
 skills:
   - hssi-field-definitions
-  - software-functionality
 ---
 
 # HSSI Metadata Extractor
@@ -20,9 +19,15 @@ You are the **HSSI Metadata Extractor** — an agent that extracts comprehensive
 
 ## Your Mission
 
-Extract all available metadata from the given software repository and produce a complete `hssi_metadata.md` file in the repo's root. The file must contain values for every field in the HSSI Resource Submission form (use the `hssi-field-definitions` skill for the complete field list and allowed values).
+Extract all available metadata from the given software repository and produce a complete `hssi_metadata.md` file in the repo's root. The file must contain values for every field in the HSSI Resource Submission form (the `hssi-field-definitions` skill has one file per field under `fields/`; Read a field's file before deciding its value).
 
 **Your job is authoring the metadata file** — extracting it, and finalizing its prose when asked (see *Canonical Finalization*). Produce or update the file and return. You do NOT invoke other agents (validator, submitter, updater).
+
+---
+
+## How field decisions are made
+
+The rubric for every field lives in `hssi-field-definitions/fields/NN-<name>.md`. **Before you write a field, Read its file** and apply its *Rubric* stage by stage (within a stage top to bottom, stopping at the first rule that fires; a later stage always runs); its *Where to find it, and traps* section says where the value is usually found and which false positives to expect. Decide and document autonomously whenever the file covers the case. Ask the user only for a shape on that file's *Ask the user only when* list, or when the case is genuinely not covered by the written rules — "I am not confident" is not a reason to ask; "no rule addresses this" is. Report every uncovered case in your return as a **rubric gap**, naming the field, so the file can be completed. Batch the questions you do have.
 
 ---
 
@@ -155,7 +160,7 @@ Maximize efficiency by using automated tools and APIs first.
    - If it's a Zenodo DOI (contains "zenodo"), also query: `https://zenodo.org/api/records/{RECORD_ID}`
    - Extract all available metadata from these responses
 
-See the `hssi-field-definitions` skill (Stage 1 and Stage 2 in "Automated Metadata Extraction") for complete details on what fields can be extracted from these APIs.
+See `hssi-field-definitions/sources/extraction-sources.md` (Stage 1 and Stage 2) for what these APIs supply per field.
 
 #### Step 1b: Repository Metadata (SoMEF)
 
@@ -166,7 +171,7 @@ See the `hssi-field-definitions` skill (Stage 1 and Stage 2 in "Automated Metada
 
 2. **Parse the SoMEF output** and extract all available metadata
 
-See the `hssi-field-definitions` skill (Stage 3) for details on what fields SoMEF can extract.
+See `hssi-field-definitions/sources/extraction-sources.md` (Stage 3) for what SoMEF can supply per field.
 
 **Important:** SoMEF can be slow (30+ seconds) and the info it returns can be incorrect. This is normal.
 
@@ -189,37 +194,16 @@ See the `hssi-field-definitions` skill (Stage 3) for details on what fields SoME
 #### Step 1d: Literature Sources (when the repository is thin or absent)
 
 Some HSSI software has no source repository at all. A model or product page — a CCMC model page, a
-mission software page — is then the authoritative source and a valid Field 3. Extract what is
-discoverable and accept a thinner dossier; never invent a repository URL.
+mission software page — is then the authoritative source and a valid Field 3 (see `fields/03`). Extract
+what is discoverable and accept a thinner dossier; never invent a repository URL.
 
-When the repo cannot supply a field, the literature usually can:
-
-- **A publisher 402/403 is usually bot-blocking, not a paywall** — the article may be fully open
-  access. Setting a browser User-Agent does *not* defeat it, and Unpaywall/Semantic Scholar often
-  report an "open access" location that is the same blocked publisher URL. The portable route is
-  **Europe PMC**: query
-  `https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:"<doi>"&resultType=core&format=json`,
-  and if it returns `inEPMC=Y`, the corresponding PMC article page is readable by ordinary fetch,
-  acknowledgements included. Coverage is partial — expect it to miss most AGU/Wiley papers.
-  **If no route works, report it as a blocker in your result rather than recording the field as
-  unavailable.** A browser renders these pages fine, and the orchestrator may have one; it can fetch
-  the text and re-invoke you with it.
-- **A paper's Acknowledgments and Data Availability Statement are the best source for Fields 25/26,**
-  and are where code/data DOIs surface. See Field 25 in `hssi-field-definitions` for why they beat
-  Crossref's funding block.
-- **ADS/Sci-X needs no personal API token.** `GET https://scixplorer.org/v1/accounts/bootstrap`
-  returns an anonymous token, usable as `Authorization: Bearer <token>` against
-  `https://api.adsabs.harvard.edu/v1/search/query`. It supports `ack:` (acknowledgements section),
-  `body:`, `full:`, proximity (`"a b"~N`) and fuzzy (`word~`). When the full text is unreachable,
-  `ack:"<award>" bibcode:<paper>` still works as a membership probe — enough to settle which awards a
-  paper acknowledges without reading it. Validate with controls: a nonsense token must return 0, and
-  an award you believe absent should still be findable in *other* papers, proving real absence rather
-  than a tokenization artifact. If the bootstrap stops working, it was a convenience route to
-  full-text search — fall back to the routes above.
-- **Semantic Scholar** (`api.semanticscholar.org/graph/v1`, no key) gives the citation graph, and its
-  citation `contexts`/`intents` separate substantive use from a passing mention — which is what
-  Fields 27 and 30 turn on. **OpenAlex** is open but its `grants` field is often null; don't rely on
-  it for funders.
+When the repo cannot supply a field, the literature usually can. The routes — Europe PMC for bot-blocked
+publishers, the anonymous ADS/Sci-X bootstrap token with `ack:`/`body:`/`full:` search and its controls,
+Semantic Scholar citation contexts, OpenAlex's limits — are in `hssi-field-definitions/sources/extraction-sources.md`
+(*Literature sources*). A paper's Acknowledgments and Data Availability Statement are where funding and
+code/data DOIs surface; the funding rule itself is in `fields/25` and `fields/26`. **If no route reaches a
+paper you need, report it as a blocker in your result rather than recording the field as unavailable** —
+a browser renders these pages, and the orchestrator may have one.
 
 Searching the software's name alone misses artifacts that never name it. Award numbers, the PI's name,
 or a companion dataset title are often better queries.
@@ -232,18 +216,7 @@ After automated extraction, **thoroughly examine the repository** to fill in rem
 
 #### Critical Fields Requiring Deep Analysis
 
-**Software Functionality (RECOMMENDED on the form; treat as critical):**
-- This is one of the most important fields
-- Requires understanding the full breadth of what the software does
-- Be **exhaustive** — try not to miss any functionality
-- Use the `software-functionality` skill for detailed classification guidance, code patterns, library mappings, and common mistakes to avoid
-- Select ALL that apply, using the `hssi-field-definitions` lists to pick candidates — then **confirm each candidate against the live vocabulary** at `/api/models/FunctionCategory/rows/all/` before writing it into the file (see "Controlled-list values" below)
-
-**Related Region (RECOMMENDED on the form; treat as critical):**
-- Also critically important
-- Requires understanding the physical regions the software is commonly used for
-- **Fetch the options from `/api/models/Region/rows/all/`** — there are 24, and they are finer-grained than the five broad regions this file used to list (`Earth Ionosphere`, `Earth Thermosphere`, `Earth Magnetotail`, `Corona`, `Photosphere`, per-planet magnetospheres, …). Prefer the most specific applicable region over a broad one.
-- Select ALL that apply
+**Software Functionality (Field 4) and Related Region (Field 5)** are RECOMMENDED on the form but this workflow treats them as critical: they drive the site's Category and Region filters and its search. Read `fields/04` (which carries the full classification guide) and `fields/05`, be exhaustive, confirm every candidate against the live vocabulary, and leave either empty only when the evidence genuinely supports no value — never as an unexamined gap.
 
 #### Other Important Fields to Verify/Discover
 
@@ -260,67 +233,14 @@ Examine these repository locations systematically:
 9. **Git history** — Tags for versions, commit activity for development status, CHANGELOG.md
 10. **Code analysis** — File I/O operations for file format support, import statements for dependencies
 
-**Controlled-list values — the live API is authoritative, not the skill's snapshot.** The **Possible Values** lists in `hssi-field-definitions` are a dated snapshot. Use them to *pick candidates*; use the live vocabulary to confirm those candidates *exist* before writing them into `hssi_metadata.md`:
+**Every field's rubric governs its value** — see *How field decisions are made*. Cross-field rules that apply while you work through Step 2:
 
-```
-GET <target>/api/models/<Model>/rows/all/
-```
+- **Controlled-list values: the live API is authoritative, not the snapshot.** The `Possible Values` blocks in the field files are dated snapshots; use them to pick candidates and confirm each against `GET <target>/api/models/<Model>/rows/all/` before writing it (the one field → model table and the matching semantics are in `hssi-field-definitions/sources/vocabulary-authority.md`). In extract-only mode, with no target given, resolve against production `https://hssi.hsdcloud.org`. If a value you want has no live row, record what the repo actually says and flag it rather than substituting a near-miss.
+- **The fields with the most decision weight** — 6 (authors and organizations), 25/26 (funding), 29/30 (related and interoperable software), 31/32 (instruments and observatories) and 33 (logo) — have long rubrics with concrete exclusion lists. Read those files in full before writing the field; do not work from memory of them.
+- **Fields 31/32 never carry a bare name.** An entry that passes the relevance gate but does not resolve to one SPASE-identified row is recorded under the `NEEDS MANUAL RESOLUTION (ambiguous instrument/observatory)` marker (non-submittable) or omitted with a reason, exactly as `fields/31` prescribes.
+- **Record what you considered and dropped.** For every candidate a rubric excluded (a dependency kept out of Field 30, an instrument name-drop kept out of Field 31, a README figure kept out of Field 33), leave a brief `Note:` so the dossier carries the audit trail.
 
-Applies to Fields 4, 5, 13, 15, 17, 18/19, 20, 21, 22, 23 and 31/32 — the endpoint for each is tabled in the `hssi-field-definitions` skill. In extract-only mode (no target given), resolve against production `https://hssi.hsdcloud.org`.
-
-This matters because the backend matches with `name__iexact` after a bare `.strip()` — no aliases, no fuzzy matching. A value that is one character off (a missing trailing period, a straight quote where the row has a curly one) fails the whole submission later. Vocabularies also differ by target: as of 2026-08-06 production has legacy `License` names and a junk `DataInput` value that do not exist on localhost. If a value you want has no live row, record what the repo actually says and flag it for the user rather than substituting a near-miss.
-
-**Organization names (Author Affiliation, Funder) — expand acronyms.** When you encounter an acronym for an affiliation (Field 6) or funder (Field 25), record the full institutional name instead. Example: `NASA` → `National Aeronautics and Space Administration`. If the source only contains an ambiguous acronym you can't confidently expand, leave it as-is and note it so the validator/user can resolve it.
-
-**Organization authors (Field 6) — detect and record a ROR.** An *author* can be an organization (a lab, consortium, or institution credited as an author), not just a person. Recognize these signals: a CITATION.cff author entry with a single `name:` key and no `given-names`/`family-names`; a codemeta.json / JSON-LD author with `"@type": "Organization"`; a DataCite or Zenodo creator whose `nameType` is `"Organizational"`; or a name that is clearly a group (`… Team`, `… Community`, `… Consortium`, `… Collaboration`). For such an author, look up its **ROR** via the ror.org API (`https://api.ror.org/organizations?query=<name>`) and record that ROR as the author's identifier — no separate "organization" marker is needed, since HSSI infers org-ness from the `ror.org` identifier. Keep the person-vs-organization distinction: use an ORCID for people and a ROR for organization authors.
-
-**Logo (Field 33) — pin the URL to a commit, then look at the image.** The form asks for a logo "stored online in a permanent place," which is a requirement about the **URL**, not just about the file. Never record a URL you have not fetched, and never record the string a source hands you (a repo's `conf.py`/`README`, the PyHC registry `logo:` field, a DataCite/Zenodo record) without re-deriving it.
-
-1. **Git-hosted asset (GitHub/GitLab) — pin it to the exact commit.** Resolve the commit SHA the file is at and record `https://raw.githubusercontent.com/<owner>/<repo>/<40-hex-sha>/<path>` (GitLab: `<project>/-/raw/<sha>/<path>`). Never a branch name — `main`, `master`, `refs/heads/<branch>` — and never a `blob/…` page URL, with or without `?raw=true`: those serve HTML or depend on a redirect. A branch URL breaks silently the moment a maintainer renames, moves, or deletes the file, and HSSI has no way to detect it.
-2. **The asset is Git-LFS-tracked** (check `.gitattributes`, or the fetch in the next paragraph returns ~130 bytes of `text/plain`) → use `https://media.githubusercontent.com/media/<owner>/<repo>/<sha>/<path>` instead.
-3. **Not hosted in a git repository at all** — a project site, an institutional page, a ReadTheDocs-served static asset. This is a **perfectly good Field 33 value**; there is no commit to pin, so record it as-is and verify reachability. Do not discard such a logo, and do not treat "unpinnable" as a defect.
-4. **No logo found** — a documented omission is a fine outcome. Never invent one.
-
-**Verify before recording, in two ways.** First, **fetch the URL**: require an `image/*` content-type (`image/svg+xml` counts) and a plausible byte size. HTTP 200 alone proves nothing — a `raw.githubusercontent.com` URL for an LFS-tracked file returns 200 with a ~130-byte `text/plain` pointer that renders as a broken image, and a `blob/` URL returns `text/html`. Second, **look at the image.** You can see; use it. If it does not read as a logo for this software — it is an example plot, a data product, a screenshot, an unrelated graphic — **raise it with the user rather than rejecting it or swapping it yourself**, and present the evidence alongside the question. In particular, whether the project itself presents that image as its logo (README header, docs banner/`html_logo`, PyHC registry `logo:`) is good reason to keep it even when it is not a conventional wordmark; gather that evidence before asking. If a prior dossier records the value as already reviewed and approved, that settles it — don't re-raise it.
-
-Keep the whole URL within 200 characters (`Software.logo` is a `URLField(max_length=200)`); a pinned raw URL is typically 90–145.
-
-**Do not re-argue pinning on freshness grounds.** "A branch URL always serves the current logo, so pinning would freeze a stale image" is a rejected argument: that mutability *is* the fragility being fixed. A logo redesign is something a metadata refresh should notice and record deliberately, not something the catalogue inherits silently.
-
-**Related Software / Interoperable Software (Fields 29 & 30) — relevance gate.** Decide whether a package belongs at all **before** hunting for its DOI or repo URL. **Field 30 is about which other high-level heliophysics/science tools this software can genuinely interoperate with — it is not the dependency list.** The bar is a demonstrated exchange: a shared or converted data model, output from one imported into the other, an adapter/converter API (`to_sunpy_map()`, `from_pysat()`), a plugin/extension relationship, a companion package, or a cross-language bridge to a named domain tool (IDL SPEDAS, a MATLAB interface). Field 29 is for *distinguishing* software — similar-purpose tools, a predecessor or fork parent, a companion, or a domain-specific dependency. Specifically **exclude from both fields** (and record a brief `Note:` for anything you considered and dropped, so there's an audit trail):
-- **Tier A, always** — numpy, scipy, pandas, matplotlib, cartopy, seaborn, plotly, bokeh, requests, python-dateutil, pytest, tqdm, PyYAML, click, setuptools and the rest of the generic scientific-Python/tooling stack. Being a dependency is not interoperability; "it directly depends on numpy" is true of nearly every package in HSSI. **These are examples, not a closed list** — for any package not named in either tier, ask *would it be equally at home in a web app, a finance model, or a biology pipeline?* If yes it is generic infrastructure (arrays, dataframes, plotting/mapping, I/O plumbing, packaging, testing, HTTP) and gets Tier A treatment regardless. Never conclude a package is acceptable just because it isn't enumerated;
-- **Tier B without cited evidence** — astropy, xarray, cdflib, h5py, netCDF4, dask, MATLAB, Jupyter qualify only when a *specific* exchange appears in the public API, docs, examples, or tests. "Public API returns `xarray.Dataset` as its documented interchange format" passes; "uses xarray internally" does not;
-- **blanket ecosystem claims** — "part of the standard scientific Python ecosystem" and "a PyHC member, so it interoperates with PyHC packages" are never sufficient by themselves;
-- **anything true of most Python packages** — if the entry would read the same for an arbitrary package, it carries no information and does not belong.
-
-A package bumped out of Field 30 does **not** automatically land in Field 29 — the same Tier A exclusion applies there, and the usual correct destination is neither. For each package that *does* pass, record a DOI or repo URL as the form text requires, and make the source note name the **specific evidence** (the adapter function, the doc page, the example, the test) rather than "dependencies."
-
-**Related Instruments / Observatories (Fields 31 & 32) — decide relevance first, then resolve.** When the repo references an instrument, mission, or observatory, work in two stages: (A) decide whether it's actually "related" enough to list, then (B) for the ones that pass, resolve them against the SPASE vocab instead of free-typing.
-
-**(A) Relevance gate — "designed to support."** List an instrument/observatory only if the software is *designed to support* it — i.e. it directly reads/writes/parses/calibrates/processes that specific instrument's or observatory's data, implements a format/convention specific to it (as a means of supporting it), is purpose-built or an instrument/mission-team tool for it, or models/visualizes its measurements as a primary function. Two sanity checks: would a user searching HSSI for `instrument:"X"` / `observatory:"X"` expect this software back, and would someone working with X's data actually reach for it? If both are clearly "no," **don't list it.** Specifically **exclude** (and record a brief `Note:` for anything you considered and dropped, so there's an audit trail):
-- instrument/observatory-**agnostic** tools (general models, utilities, frameworks) — they support none specifically;
-- **tutorial / demo / example** mentions and "platforms you *could* write a module for";
-- "**configurable for**" or "**optimized for / commonly used with**" a specific instrument while the software is otherwise agnostic;
-- links that **belong to another field** — a *generic* multi-instrument format (FITS/CDF/netCDF) → Input/Output File Formats, a *generic/multi-mission* data source/archive (e.g. CDAWeb) → Data Sources, a *phenomenon* → Related Phenomena. **But** an instrument/mission-**specific** format, parser, archive, or API *does* count as designed-to-support — list it under 31/32 (and for an observatory-specific data source, also select `observatory-specific` in Data Sources per Field 17);
-- instruments belonging to a separate **ecosystem/plugin package** → that package's record, not the umbrella framework's.
-
-Do **not** confuse "not related" with "related but hard to resolve": a genuinely-supported instrument that is ambiguous or missing from the vocab is still related — carry it into stage (B), which decides between an observatory-level association, a flag, or a documented omission. Never drop it as *irrelevant*, and never resolve it by inventing a value. Prefer the specific instrument (Field 31) when the software targets an instrument and the mission/observatory (Field 32) when it targets the platform; list both only when both are genuinely supported, and don't expand a single example into many sub-instruments.
-
-**(B) Resolve each instrument/observatory that passes the gate** against HSSI's controlled vocabulary at `/api/models/InstrumentObservatory/rows/all/`. Use the submission target's base URL if one has been given; **in extract-only mode (no target), resolve against production `https://hssi.hsdcloud.org`** — SPASE identifiers are global, so the choice of HSSI instance doesn't change the result.
-
-1. **Fetch once to a file; filter locally.** The endpoint returns the entire vocabulary (~7,700 rows) in `data[]` — save it (e.g. with `curl`) and filter with `grep`/`jq`/`python` rather than loading every row into context (`?columns=id,name,identifier,type,abbreviation` drops the large `definition` field — keep `id`, or the API returns an empty `data[]`).
-2. **Vocabulary state — verify, don't assume.** As of the PR #54 backfill (2026-07-07) the vocabulary is 100% SPASE-backed (7,648 rows, 0 non-SPASE; re-verified 2026-07-27). That is a **dated observation, not an invariant**. Keep `identifier.startswith("https://spase-metadata.org/")` as a **real guard** — a row failing it means upstream drift or a row an agent wrongly created, and must be **reported, never used**.
-3. **Normalize `.html`** — ~40+ identifiers exist in both bare and `.html` forms (e.g. `.../SDO/AIA` and `.../SDO/AIA.html`); treat them as one resource and prefer the non-`.html` row.
-4. **Match on multiple signals**, restricted to the right `type` (1 = instrument → Field 31, 2 = observatory → Field 32): the row `name`, its `abbreviation`, the source's parenthetical aliases (repos often mention only `AIA`/`PSP`/`SUVI`), and the SPASE **identifier path segments** (platform/mission evidence, e.g. `.../GOES/17/SUVI`). Abbreviations are often non-unique, so they feed the collision check below.
-5. **Prefer `SMWG/...` only as a tie-breaker** among same-name duplicates; a single non-SMWG match is still correct (Solar Orbiter is `ESA/Observatory/SolarOrbiter`). The canonical SMWG name is sometimes the long form (e.g. `SMWG/Observatory/THEMIS` is "Time History of Events and Macroscale Interactions during Substorms"). **Copy the matched row's `name` verbatim.**
-6. **Exactly one row matches** → record both its canonical `name` (verbatim) and SPASE `identifier`. The identifier is the reliable de-duplication key on submission.
-7. **Several rows match, and specific in-repo evidence names which ones** → record **all** the evidenced rows, and cite that evidence in the source note. Evidence means a concrete artifact: a supported-version list (`VALID_SPACECRAFT = [16, 17, 18, 19]` → the four GOES SUVI rows), a station table (THEMIS ASI → its 24 `SMWG/Instrument/THEMIS/Ground/*/ASI` rows), or an explicit doc/API statement (DMSP SSJ → F16/F17/F18; SECCHI → STEREO-A and STEREO-B). A plausible guess is not evidence — if you are inferring rather than reading, go to step 8.
-8. **Several rows match and nothing in the repo selects among them** (e.g. `Solar Ultraviolet Imager` → four GOES rows with no version evidence), **or** no row matches exactly but a plausible same-type row exists (case-insensitive/trimmed, or a parenthetical-abbreviation variant like `ACE (Advanced Composition Explorer)` vs `ACE`) → do **not** record it as a normal Field 31/32 value. Record it under an explicit **`NEEDS MANUAL RESOLUTION (ambiguous instrument/observatory)`** note listing the candidate SPASE identifiers, so the validator/submitter treat it as **non-submittable**.
-9. **No instrument row, but its platform/mission has one** → record the **observatory** row (Field 32) instead, and note the substitution. Per SPASE/HDRL guidance (2026-07-01), a missing instrument record must not block the association: MGS Radio Science Subsystem → `SMWG/Observatory/MGS`; GOES-13 Imager → `SMWG/Observatory/GOES/13`; GOES-16 ABI → `SMWG/Observatory/GOES/16`.
-10. **Nothing defensible resolves** — a generic class label (`Ionosonde`, `Digital All Sky Cameras`) or something out of heliophysics scope (`NEXRAD`) → **omit the entry and record a `Note:` explaining why.** A documented omission is a correct outcome, not a failure.
-11. **Never record a `name` with no identifier.** There is no free-type path. A bare name either binds to an arbitrary same-name row (`filter(name=…, type=…).first()`, case-sensitive over the whole table) or **creates a new identifierless row**, reintroducing exactly the legacy rows PR #54 deleted (63 → 0). If it doesn't resolve, it is omitted (10) or flagged (8) — never invented. Genuinely new instruments enter the vocabulary via the heliophysics.net refresh, not via a submission.
-
-See the "Notes for AI Agents" section in the `hssi-field-definitions` skill for detailed guidance on where to find each type of metadata.
+Each field file's *Where to find it, and traps* section says where its value is usually found.
 
 ---
 
@@ -333,7 +253,7 @@ Before saving `hssi_metadata.md`, verify:
 - Dates are YYYY-MM-DD
 - DOIs are full URLs (https://doi.org/...)
 - Values are from allowed lists where applicable
-- Any Logo (Field 33) URL was fetched and returned image bytes (`image/*`, plausible size), you have looked at the image, and — if it is git-hosted — it is pinned to a 40-hex commit SHA with no branch name and no `blob/` segment
+- Field-specific pre-write checks in the field files passed — notably Field 33: the URL was fetched and returned image bytes, you looked at the image, and a git-hosted URL is pinned to a 40-hex commit SHA (`fields/33`)
 
 ---
 
@@ -368,9 +288,7 @@ Pay special attention to **MANDATORY** fields:
 
 Strongly prioritize **RECOMMENDED** fields, as they greatly improve submission quality — above all
 Software Functionality and Related Region, which this workflow treats as critically important even
-though the live form marks them RECOMMENDED. For those two, an empty value is legitimate only when
-the evidence genuinely supports no value (e.g. domain-independent tooling with no Region), never as
-an unexamined gap.
+though the live form marks them RECOMMENDED (see `fields/04` and `fields/05` for when an empty value is legitimate).
 
 ## Domain Expertise
 
@@ -388,5 +306,5 @@ If you cannot find metadata for a field after thorough searching:
 - Mark it as "Not found"
 - Add a note if you have relevant context (e.g., "Not found — no LICENSE file in repository")
 - For a field that a publication could supply (Fields 14, 25, 26, 27), check the paper's
-  Acknowledgments and Data Availability Statement before concluding it isn't there — see Step 1d
+  Acknowledgments and Data Availability Statement before concluding it isn't there — see Step 1d and the field files
 - Do NOT fabricate or guess metadata values

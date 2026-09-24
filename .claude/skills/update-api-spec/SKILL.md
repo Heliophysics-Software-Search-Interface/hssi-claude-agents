@@ -6,8 +6,9 @@ description: >
   live HSSI vocabularies. Use when the HSSI API has changed, when allowed-value
   lists may have drifted, or before trusting a value snapshot. Clones or pulls
   the hssi-website repo, reads the relevant source files, and updates
-  submission-payload, submission-verification, update-payload,
-  hssi-field-definitions, and software-functionality.
+  submission-payload, submission-verification, update-payload, and the
+  hssi-field-definitions field files (their fenced vocab blocks and their
+  statements about how the website renders, filters and searches each field).
 ---
 
 # Update API Spec
@@ -17,16 +18,18 @@ Sync the reference files with the latest HSSI API source **and** the live contro
 **When to use:**
 - The HSSI API has changed (new fields, renamed keys, changed shapes, new quirks) and the `submission-payload`, `submission-verification`, or `update-payload` skills need updating. → Steps 1–5.
 - A controlled-value list may have drifted, or you want to re-date a snapshot before trusting it. → **Step A** (independent; needs no repo clone).
+- The website may have changed how a field renders, filters or searches, or the form's text and requirement levels — the field files state these as facts. → **Step B** (needs the repo clone; run it whenever `hssi-website` has new commits).
 
-**How often:** The API itself is relatively stable — run Steps 1–5 on failures or announced changes. **Vocabulary drift is different**: rows get added and edited through normal operation, so **Step A should be run before any campaign that leans on the documented value lists**, and whenever a submission fails with `Unknown value`.
+**How often:** The API itself is relatively stable — run Steps 1–5 on failures or announced changes. **Vocabulary drift is different**: rows get added and edited through normal operation, so **run Step A before any batch of submissions or updates that leans on the documented value lists**, and whenever a submission fails with `Unknown value`.
 
 ---
 
 ## Step A: Reconcile controlled vocabularies against live
 
-> **Verify assumptions before trusting them.** The **Possible Values** lists in
-> `resource_submission_form_fields.md` and the taxonomy counts in `software-functionality` are
-> **dated snapshots of an external system**, not invariants. Nothing in this repo detects drift on
+> **Verify assumptions before trusting them.** The **Possible Values** lists in the
+> `hssi-field-definitions/fields/*.md` files — each fenced between `<!-- vocab:<Model> begin -->` and
+> `<!-- vocab:<Model> end -->` — and the taxonomy counts at the top of `fields/04-software-functionality.md`
+> are **dated snapshots of an external system**, not invariants. Nothing in this repo detects drift on
 > its own. Start this step by re-checking, not by assuming the last audit still holds.
 
 ### A1. Fetch every vocabulary from **both** targets
@@ -44,6 +47,8 @@ for ENV in "prod https://hssi.hsdcloud.org" "local http://localhost"; do
            CpuArchitecture RepoStatus DataInput Phenomena License Keyword; do
     curl -s -m 60 -o "$OUT/$1/$M.json" "$2/api/models/$M/rows/all/"
   done
+  # InstrumentObservatory is ~7,700 rows; fetch the columns needed for the Field 31/32 vocabulary-state check only
+  curl -s -m 120 -o "$OUT/$1/InstrumentObservatory.json" "$2/api/models/InstrumentObservatory/rows/all/?columns=id,name,identifier,type"
 done
 echo "$OUT"
 ```
@@ -52,7 +57,7 @@ Notes: model names resolve case-insensitively (`CpuArchitecture` is the canonica
 
 ### A2. Diff each vocabulary against the documented list
 
-For each model, set-compare the live `name` values against the corresponding **Possible Values** list in `resource_submission_form_fields.md`, and report three classes separately:
+For each model, set-compare the live `name` values against the corresponding **Possible Values** list inside the `<!-- vocab:<Model> begin -->` … `<!-- vocab:<Model> end -->` block of the field file that owns it (the `Vocabulary:` header line of each `fields/NN-*.md` names its model; `FileFormat` is owned by `fields/18` and mirrored in `fields/19`), and report three classes separately:
 
 | Class | Meaning | Severity |
 |---|---|---|
@@ -63,9 +68,10 @@ For each model, set-compare the live `name` values against the corresponding **P
 Compare **case-insensitively after trimming** — that is exactly what the backend does — but report every other difference as breaking. Real examples caught this way: `The Virtual Solar Observatory` missing the stored trailing period, and straight `'Lesser'` where the License rows use curly `‘Lesser’`.
 
 Structural cases:
-- **`FunctionCategory`** is hierarchical. Build full names as `Parent:Child` from each row's `parents` before comparing; comparing bare names produces false duplicates. Also re-derive the counts quoted in `software-functionality` (rows, top-level, distinct names, recurring names).
+- **`FunctionCategory`** is hierarchical. Build full names as `Parent: Child` (space after the colon — the canonical form the API returns; compare after normalizing colon spacing) from each row's `parents` before comparing; comparing bare names produces false duplicates. Also re-derive the counts quoted at the top of `fields/04-software-functionality.md` (rows, top-level, distinct names, recurring names).
+- **`InstrumentObservatory`** is not listed in any field file (too large); instead re-verify the vocabulary-state sentence in `fields/31-related-instruments.md`: the row count and that every row's `identifier` starts with `https://spase-metadata.org/`. Report any row that fails that guard; re-date the sentence.
 - **`Region`** and **`Phenomena`** are graph lists that are currently *flat*. If a future refresh gives them parents, they'd need `Parent:Child` handling too — check before assuming.
-- **`Keyword`** is an **open** vocabulary (`_get_or_create_keyword` creates missing rows), so live-only keywords are expected and are not drift. Only refresh the sample count and date.
+- **`Keyword`** is an **open** vocabulary (`_get_or_create_keyword` creates missing rows), so live-only keywords are expected and are not drift. Only refresh the sample count and date in `fields/16`.
 
 ### A3. Flag likely data-entry junk — **report, never delete**
 
@@ -84,22 +90,72 @@ If a junk row is the *only* row for a real concept, say so explicitly: `The Virt
 
 ### A4. Apply the reconciliation
 
-- Correct each drifted list in `resource_submission_form_fields.md`.
+- Correct each drifted list **inside its `vocab:` fence** in the owning field file. Outside the fences, this step edits only the items named below — the provenance lines, the **Traps** notes and `> **Trap.**` callouts that belong to a list, the Field 4 counts, the Field 16 sample count and date, the Field 31 vocabulary-state sentence and the `## Provenance` dates; every other sentence is hand-written guidance and is left alone.
 - Refresh that list's provenance line to the run date and the targets actually checked:
   `*N values, snapshot YYYY-MM-DD, verified identical on https://hssi.hsdcloud.org and http://localhost. Live /api/models/<Model>/rows/all/ is authoritative.*`
 - Keep a short **Traps** note under any list with a byte-level hazard or a target divergence, and a `> **Trap.**` callout for any value removed as never-valid — the removal is the fix, but the note is what stops it being re-added.
-- Update the counts and date in `software-functionality/SKILL.md` if the taxonomy changed.
+- Update the counts and date at the top of `fields/04-software-functionality.md` if the taxonomy changed.
+- Add the run date to the owning field file's `## Provenance` section ("Vocabulary block re-verified YYYY-MM-DD").
 - Never edit `repos/*/hssi_metadata.md` from this skill. If reconciliation invalidates a value already recorded in canonical metadata files, **report the affected files and values** and let the orchestrator route the fix through the normal Updater pipeline.
 
 ### A5. Verify
 
-Re-run the A2 diff against the edited document and confirm zero doc-only and zero live-only entries for every list, except deliberately annotated target-divergent rows. Byte-check the known traps explicitly rather than eyeballing them.
+Re-run the A2 diff against the edited field files and confirm zero doc-only and zero live-only entries for every list, except deliberately annotated target-divergent rows. Byte-check the known traps explicitly rather than eyeballing them.
+
+---
+
+## Step B: Re-verify the field files' site facts against hssi-website
+
+> The field files describe the website as it was on a recorded commit. The router
+> `hssi-field-definitions/SKILL.md` carries that commit in an HTML comment:
+> `<!-- site-facts: verified against hssi-website <sha> (<commit date>) on <run date> -->`.
+> Nothing detects website drift on its own; this step does.
+
+### B1. Get the source and the recorded commit
+
+Clone or pull `hssi-website` as in Step 1. Read the `site-facts:` line from the router and note its sha.
+
+### B2. Diff the watched files
+
+```bash
+cd <hssi-website> && git diff --stat <recorded-sha>..HEAD -- \
+  django/website/views/search.py \
+  frontend/filters \
+  django/website/templates/website/software_detail.html \
+  django/website/models/serializers/software.py \
+  django/website/forms/names.py \
+  django/website/forms/submission_data.py \
+  django/website/models/software.py django/website/models/vocab.py
+```
+
+If the diff is empty, move the router line forward to `HEAD` and today's date and stop. Otherwise, for
+each changed file, re-read it and reconcile every statement that depends on it:
+
+| Source file | What it decides | Where the field files state it |
+|---|---|---|
+| `views/search.py` | free-text tiers T1–T4 and their fields; `_FIELD_ALIAS_MAP` field-search codes and what each matches | router index **Search** and **Code** columns; each file's *Free-text search* and *Field search* bullets |
+| `frontend/filters/filterMenu.ts`, `filterGroup.ts`, `filterTab/*.ts` | which fields have a sidebar tab, what the tab lists, folding (Python/Fortran rows), parent–child inclusion, disabled tabs | router **Filter tab** column; each file's *Filter* bullet (Fields 4, 5, 13, 17, 22) |
+| `templates/website/software_detail.html` | detail-page sections, labels, link text and fallbacks (`UNKNOWN` → raw URL), what renders in parentheses, markdown rendering, header contents | each file's *Detail page* bullet |
+| `models/serializers/software.py` | JSON-LD (`applicationCategory`, `author`, `mentions`, `keywords` …) and the `/api/view/` readback shape | each file's *JSON-LD* bullet; *Readback* lines in *Payload and roundtrip notes* |
+| `forms/names.py` (`TTEXPL_*`, `TTBEST_*`) | the form's field descriptions and tooltips | each file's *What it is* / *How to fill it* text (quoted from the form) |
+| `forms/submission_data.py` | requirement level per field | router **Level** column; each file's header `Level:` |
+| `models/software.py`, `models/vocab.py` | field types, column caps (`URLField` 200, RelatedItem name 128), sorted M2M fields, `ControlledList` vs `ControlledGraphList` | *Payload and roundtrip notes*; Step A's model list (see Step 5b) |
+
+Reconcile by rewriting the statement to what the source now does; never soften a fact into "may". Where a
+rule rests on the fact (Field 5's coarse-parent rule rests on the Region filter not inheriting; Fields
+29/30's URL-form rule rests on the raw URL being the link text), say so in the report — the owner decides
+whether the rule changes, this step changes only the facts.
+
+### B3. Record and report
+
+Update the router's `site-facts:` line to the `HEAD` sha, its commit date and today's date. Report every
+changed file, every statement rewritten (file and line), and every rule whose premise moved.
 
 ---
 
 ## Workflow (API source sync)
 
-Steps 1–6 below sync the **API contract** from source. They are independent of Step A — run either alone.
+Steps 1–6 below sync the **API contract** from source. They are independent of Steps A and B — run any alone.
 
 ### Step 1: Get the hssi-website Source
 
@@ -176,6 +232,7 @@ Update `submission-payload/SKILL.md`, `submission-verification/SKILL.md`, and `u
 - Update Known Backend Quirks with any new findings
 - Update the controlled-list endpoint table if endpoints changed
 - Update the known representation differences in `submission-verification`
+- Update the *Payload and roundtrip notes* section of any `hssi-field-definitions/fields/NN-*.md` whose field's key, shape or quirk changed
 - For `update-payload`: keep the PATCH endpoint contract, lookup endpoint, and field-shapes table aligned with `software_api.py` + `test_update_api.py`
 
 ### Step 5: Report Changes
