@@ -55,8 +55,7 @@ misspelling makes the software findable only by someone who repeats the typo.
 
 ## How it appears on the site
 
-- **Detail page:** a "Keywords" section with one plain (unlinked) tag per keyword, showing the stored
-  `name` as written.
+- **Detail page:** a "Keywords" section with one tag per keyword, showing the stored `name` as written and linking to the homepage's `keyword:"<name>"` field search.
 - **Filter:** none.
 - **Free-text search:** tier T2 (`keywords__name`), ranked above the controlled-vocabulary fields (T3).
 - **Field search:** `keyword:"…"` matches `keywords__name__icontains`.
@@ -69,7 +68,7 @@ misspelling makes the software findable only by someone who repeats the typo.
 Apply per candidate term, top to bottom. Rules 1–10 decide whether a term belongs — stop at the first
 of them that fires, except that a **project-declared** term is tested under rule 9 before rules 6–7,
 which apply only to terms the extractor proposes. Every term that belongs then passes through rules 11–12, which decide the row it
-binds (stop at the first that fires). Rules 13–14 cover incumbents and emptiness.
+binds (stop at the first that fires). Rules 13–14 cover incumbents and emptiness. Rule 15 then always runs on the finished set.
 
 1. **One keyword per entry.** Split comma- or semicolon-delimited strings into separate terms before
    applying anything else. Fires on: a candidate containing a list.
@@ -141,6 +140,8 @@ binds (stop at the first that fires). Rules 13–14 cover incumbents and emptine
 
 14. **Empty is legitimate** when no project-declared term survives and no domain term qualifies. Record
     the sources checked.
+
+15. **The PyHC package marker.** Every official PyHC package—software listed in any of `_data/projects_core.yml`, `_data/projects.yml` or `_data/projects_unevaluated.yml` in the PyHC registry (`https://github.com/heliophysicsPy/heliophysicsPy.github.io`, read live)—carries the keyword `pyhc package`, so a searcher can find every PyHC package with `keyword:"pyhc package"`. Add it to every such record, new or existing, even when no source lists it, and remove it from any other record. Write it exactly `pyhc package`, never `pyhc`, `PyHC package`, `pyhc-package`, `pyhc packages` or any other variant; a stored variant is removed, and on a PyHC package replaced with `pyhc package`. For this one term it overrides rules 1–14, including the exclusions in rules 2–7, row-minting in rule 12, incumbent handling in rule 13 and rule 14's empty outcome.
 
 ## Ask the user only when
 

@@ -93,7 +93,7 @@ Actively look for metadata the extractor might have missed. Each field file's *W
 
 1. **DOIs** the extractor missed — grep `doi` across the repo, README badges, `.zenodo.json`, `codemeta.json` (`fields/02`).
 2. **Unlisted authors** — every author source against the metadata, CONTRIBUTORS files, git shortlog patterns (`fields/06`).
-3. **Unlisted keywords** — repo topics, PyHC registry, package metadata (`fields/16`).
+3. **Unlisted keywords** — repo topics, PyHC registry, package metadata (`fields/16`). Apply `fields/16` rule 15 (the PyHC package marker) against the live registry: it is an ERROR if an official PyHC package lacks `pyhc package`, if software not in the registry carries it, or if any variant spelling of it (including `pyhc`) appears.
 4. **File formats** — grep the format indicators and format-library imports (`fields/18`, `fields/19`).
 5. **A logo recorded as "Not found" when one exists upstream** — nothing else catches this (`fields/33`).
 6. **Instruments and observatories** the software is genuinely designed to support but does not list, and over-inclusions that fail the relevance gate; every candidate resolves through the ladder in `fields/31` — a `name` with no SPASE `identifier` is always an ERROR, an evidenced multi-row expansion is correct, a documented omission is a passing outcome, and a `NEEDS MANUAL RESOLUTION` marker stays unresolved.
