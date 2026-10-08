@@ -73,9 +73,7 @@ The existing **`update-api-spec`** skill is the precedent/mechanism for re-synci
 ## Production architecture (as of 2026-06)
 
 - **Host:** AWS EC2, Ubuntu. The user connects with `ssh -i <key>.pem ubuntu@<ec2-host>`.
-- **Repo:** a clone of `hssi-website` at `~/hssi` (on the prod host). It legitimately carries a couple of
-  **uncommitted, production-only config edits** (e.g. `config/nginx/django.conf`, `django/hssi/settings.py`) —
-  leave those alone; they are not part of any PR.
+- **Repo:** a clone of `hssi-website` at `~/hssi` (on the prod host). Production's config (`config/nginx/django.conf`, `django/hssi/settings.py`) has been committed on `main` since 2026-09-14 (`dda8c62`), so the checkout should be **clean**: `git status --short` prints nothing. Treat any local change there as unexpected and ask the user about it. The reverse now holds on localhost, where a dev checkout carries uncommitted edits to those two files (`SITE_DOMAIN = "localhost"`, a conditional `DEBUG`, the local nginx config) that must never be committed.
 - **Docker:** the host uses **legacy Compose v1**, so the command is **`docker-compose`** (hyphen), not
   `docker compose`. Containers: `HSSI` (app) and `website_db` (Postgres, persistent volume — survives
   redeploys). `git pull` / redeploy do **not** import the CSVs; the DB persists untouched.
@@ -136,7 +134,7 @@ GitHub's committed CSVs are frequently **stale** relative to the live DB (mainta
 prod, run `fetch_vocab`, etc.). **Never open a CSV-change PR until `main` reflects current production**, or the
 eventual import will clobber that prod-only data.
 
-1. SSH to prod; confirm `git` state (`git rev-parse HEAD`, `git status`); note the prod-only config edits.
+1. SSH to prod; confirm `git` state (`git rev-parse HEAD`, `git status`); the working tree should be clean.
 2. **Export the live DB** (read-only) into the working tree, then pull a copy to local for inspection (tar +
    `scp`). Restore the prod working tree afterward (`git checkout -- django/website/config/db/`).
 3. Locally, create a `sync-prod-db-snapshot` branch off `main`, drop in the exported CSVs **normalized to LF**
@@ -203,8 +201,7 @@ All on the prod host, user-driven. Provide these as a runbook with explicit STOP
    (If the automated `hssi-db-backups` cron is live, a fresh nightly dump may already exist there;
    this manual dump is still worth taking immediately before a destructive import. To recover later,
    use that repo's `scripts/restore-db.sh <dump.sql.gz>`.)
-4. **Pull the merged main:** `git pull --ff-only origin main` (the prod-only config edits are untouched
-   because no PR changes them).
+4. **Pull the merged main:** `git pull --ff-only origin main` (the checkout is clean, so this fast-forwards).
 5. **Import — DESTRUCTIVE wipe-and-replace** (get explicit user approval immediately before):
    ```bash
    docker exec HSSI sh -lc 'cd /django && python manage.py shell -c "from website.admin.csv_export import remove_all_model_entries, import_db_csv; remove_all_model_entries(); import_db_csv()"'
@@ -250,12 +247,11 @@ All on the prod host, user-driven. Provide these as a runbook with explicit STOP
   those files (`software.csv`, the `software_*` through-tables, `submission_info.csv`) even when prod has
   not changed. **Do not abort on this alone.** Re-export prod and confirm **set-aware** equality: split
   comma-joined cells into sets, key through-tables by `(fk1, fk2, sort_value)` ignoring the integer `id`,
-  and ignore `date_modified`; a fresh export being line-identical to the *previous* export is a fast extra
+  and ignore `submission_info.date_modified` (but not `software.csv`'s, which is real data); a fresh export being line-identical to the *previous* export is a fast extra
   confirmation that prod is unchanged. If set-aware-equal, the import is safe. (Verbatim snapshots avoid the
   false positive but produce huge noisy PRs — ~2,400 lines vs ~90 for one new package — so if you reconcile,
   expect to re-confirm this on every future import.)
-- **Import resets `date_modified`.** The wipe-and-reimport sets `date_modified` (auto-now) on **every** row to
-  the import time; `date_created` / submission dates are preserved. Cosmetic but global — mention it.
+- **Import resets `SubmissionInfo.date_modified`, not `Software.date_modified`.** The wipe-and-reimport sets `SubmissionInfo.date_modified` (auto-now) on every row to the import time; submission dates are preserved, and neither the JSON-LD nor the homepage sort reads that column. `Software.date_modified` (hssi-website #104, the record's Last Modified date) is a plain column that the import carries through from `software.csv`, to the second (microseconds are dropped). Every PATCH stamps it, including Phase 2's localhost PATCH, so a change that should not move Last Modified dates (a catalogue-wide keyword, say) is made by editing the CSVs directly instead, as hssi-website #111 did.
 - **Vocabulary UUID churn.** `fetch_vocab` re-mints controlled-vocab UUIDs in prod, which cascades into the
   software M2M reference columns. Mirror prod's vocab (Phase 1 captures it); because PATCH payloads reference
   vocab by name/URL, they re-resolve correctly after a re-seed.
