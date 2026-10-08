@@ -311,7 +311,9 @@ Live HSSI holds `v1.6.1` (released 2025-09-05). Two releases have shipped since;
 ### 16. Keywords (OPTIONAL)
 
 **From the existing HSSI record — 18, shown here in the capitalisation HSSI's view renders rather than the lowercase it stores:**
-`Amda`, `Cdaweb`, `Cdf`, `Cdpp`, `Cnes`, `Esa`, `Nasa Api`, `Nasa Data`, `Plasma Physics`, `Pnst`, `Pyhc`, `Python 3`, `Satellite`, `Sciqlop`, `Space Physics`, `Space Plasma`, `Sscweb`, `Webservices`
+`Amda`, `Cdaweb`, `Cdf`, `Cdpp`, `Cnes`, `Esa`, `Nasa Api`, `Nasa Data`, `Plasma Physics`, `Pnst`, `Pyhc Package`, `Python 3`, `Satellite`, `Sciqlop`, `Space Physics`, `Space Plasma`, `Sscweb`, `Webservices`
+
+**PyHC membership keyword:** `pyhc package` (stored lower-case, rendered `Pyhc Package`) is HSSI's catalogue-wide marker for official PyHC packages, and Speasy is listed in the PyHC registry (`_data/projects.yml`). It replaced the ad hoc `pyhc` keyword this record used to carry; `pyhc` should not be restored.
 
 **From PyHC curated keywords and fresh repo evidence — 11 (set-union):**
 
@@ -329,7 +331,7 @@ Live HSSI holds `v1.6.1` (released 2025-09-05). Two releases have shipped since;
 | `hapi` | `speasy/core/hapi/` client (capabilities / catalog / info / data) `[main-branch, unreleased as of v1.7.1]` plus the released HAPI CSV codec; `tests/test_hapi.py`, `tests/test_hapi_codecs.py` |
 | `netcdf` | ISTP netCDF codec `speasy/core/codecs/bundled_codecs/istp/netcdf.py`, `tests/test_netcdf_codec.py` `[main-branch, unreleased as of v1.7.1]` |
 
-**Note — considered and dropped:** `general`, `local`, `remote`, `web_service` (PyHC keywords, but too generic to function as science keywords; `Webservices` already covers the last), `python3` / `python-3` (duplicates of the existing `Python 3`), `data_container` (implementation detail), `wasm` / `pyodide` (runtime platform, not a science keyword), and the GitHub topics already represented by existing values (`amda`, `cdaweb`, `cnes`, `esa`, `nasa-api`, `plasma-physics`, `pnst`, `pyhc`, `sciqlop`, `space-physics`, `space-plasma`, `sscweb`).
+**Note — considered and dropped:** `general`, `local`, `remote`, `web_service` (PyHC keywords, but too generic to function as science keywords; `Webservices` already covers the last), `python3` / `python-3` (duplicates of the existing `Python 3`), `data_container` (implementation detail), `wasm` / `pyodide` (runtime platform, not a science keyword), and the GitHub topics already represented by existing values (`amda`, `cdaweb`, `cnes`, `esa`, `nasa-api`, `plasma-physics`, `pnst`, `pyhc` (as `pyhc package`), `sciqlop`, `space-physics`, `space-plasma`, `sscweb`).
 
 *Casing note:* HSSI stores keywords in lowercase and title-cases them for display, so the Title-Case forms listed above are the rendered spelling, not the stored one. New values are written lowercase in their natural form.
 

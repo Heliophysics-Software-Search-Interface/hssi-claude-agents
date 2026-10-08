@@ -324,14 +324,13 @@ Case) and adds six distinct terms that reuse existing HSSI vocabulary entries.
 Retained: `cspice`, `ephemeris`, `geometry`, `hacktoberfest`, `jpl`, `naif`, `nasa`,
 `navigation`, `python`, `space`, `spice`, `spiceypy`, `toolkit`
 
-Additional values: `planetary science`, `coordinate transformations`, `time`, `orbit`, `wrapper`, `pyhc`
+Additional values: `planetary science`, `coordinate transformations`, `time`, `orbit`, `wrapper`, `pyhc package`
 
 Evidence for the additions — `planetary science`: README/description "essential tool … in the
 planetary science field"; `coordinate transformations`: the frame/coordinate conversion API (Field 4);
 `time`: SPICE time-system conversion (`str2et`, `et2utc`, `timout`, `unitim`, SCLK family);
 `orbit`: ephemeris/orbital-element API (`spkezr`, `oscelt`, `conics`, `prop2b`); `wrapper`:
-`README.rst` line 4 "SpiceyPy is a Python wrapper for the NAIF C SPICE Toolkit"; `pyhc`: SpiceyPy is
-a listed PyHC **community** package (`_data/projects.yml`). `hacktoberfest` is preserved even though
+`README.rst` line 4 "SpiceyPy is a Python wrapper for the NAIF C SPICE Toolkit"; `pyhc package`: SpiceyPy is a listed PyHC **community** package (`_data/projects.yml`), and `pyhc package` is HSSI's catalogue-wide marker for official PyHC packages. It replaced the ad hoc `pyhc` keyword this record used to carry; `pyhc` should not be restored. `hacktoberfest` is preserved even though
 it is no longer among the repository's GitHub topics — set-union never drops an existing entry.
 Current GitHub topics (`ephemeris`, `nasa`, `navigation`, `python`, `space`, `spice`, `toolkit`) and
 `pyproject.toml` keywords (`spiceypy`, `spice`, `cspice`, `naif`, `jpl`, `space`, `geometry`,
