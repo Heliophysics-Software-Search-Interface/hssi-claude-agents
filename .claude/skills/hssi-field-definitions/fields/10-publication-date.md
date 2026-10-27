@@ -20,12 +20,13 @@ not the date of the latest release (Field 12), of a DOI, or of a paper about the
 It tells a visitor how long the software has existed in public, which helps them judge its maturity
 and place it among older and newer tools. A date that jumps forward when a project first mints a DOI,
 or that records a paper's date instead of the code's, makes established software look new and
-misleads anyone comparing tools by age.
+misleads anyone comparing tools by age. On the homepage's Created Date sort, the same mistake moves it up among much newer tools.
 
 ## How it appears on the site
 
 - **Detail page:** a "Publication Date" item in the metadata block, formatted like `Jun 13, 2020`.
   Not shown when empty.
+- **Homepage sort:** the **Created Date** button (`?sort=create`) orders the whole catalog by this date, newest first. Software without a Publication Date comes last, and equal dates fall back to name order. The sort buttons are hidden while a search is active.
 - **JSON-LD:** `datePublished`.
 - **Search and filter:** not searched, no field-search code, no filter.
 
