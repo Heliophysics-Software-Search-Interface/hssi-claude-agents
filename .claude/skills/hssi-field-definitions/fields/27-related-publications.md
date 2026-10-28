@@ -18,8 +18,9 @@ and never a paper that merely cites it.
 
 ## Why it exists
 
+The field holds publications: documents of scientific merit written for, about or by the software.
 It gives a visitor the literature behind and around the software: where the method comes from, what
-the developers have presented about it, and real science done with it. A curated list tells them the
+the developers have published about it, and real science done with it. A curated list tells them the
 software is used and how. Padding it with every paper that happens to name the software turns it into
 an arbitrary, ever-growing citation index that hides the few entries worth reading; leaving out a
 paper the project itself points to hides the science the code implements.
@@ -41,14 +42,26 @@ Apply to each candidate and to each incumbent entry; stop at the first rule that
 **incumbent**, rules 1–2 are tested and then rule 7; rules 3–6 apply only to candidates for addition.
 Decide Fields 14 and 27 together.
 
-1. **Not a publication → not Field 27.** Fires for a software deposit (Field 2, 12, 29 or 30), a
-   dataset (Field 28), a repository or documentation URL, or a presentation with no DOI and no
-   permanent public landing page (a PDF shipped in the repository).
+**Eligible publication types.** Every rule below that admits or keeps an entry applies only to one of
+these: a peer-reviewed article (a JOSS paper included), a full paper in conference or workshop
+proceedings, a preprint, a technical report, a thesis, a book chapter, or a poster deposited as the
+poster itself (a Zenodo or ESS Open Archive record, say). A slide deck is eligible only when it reads
+as a substantial standalone document, with text and results a reader can follow without the talk; a
+deck of headings and images is not, and the user makes that call (see *Ask the user only when*). A
+conference or meeting abstract is never eligible, even when the poster or paper it announces would
+be: link the deposited poster or paper instead, and when neither is deposited, add nothing and record
+the abstract as weighed. The type makes an entry eligible; rules 2–7 decide whether it is included.
+
+1. **Not an eligible publication → not Field 27.** Fires for a software deposit (Field 2, 12, 29 or
+   30), a dataset (Field 28), a repository or documentation URL, a conference or meeting abstract (an
+   ADS meeting-abstract record or an abstract-book entry, for a talk or for a poster), a talk with no
+   document of its own, a slide deck the user has judged to fail the standalone test, or a document
+   with no DOI and no permanent public landing page (a PDF shipped in the repository).
 2. **The Field 14 paper → not also here.** Remove it from this field under any identifier (DOI, ADS
    URL, publisher URL).
-3. **The developers' own publication about the software → include.** Papers, posters, talks and
-   conference abstracts whose subject is this software, by its authors. Include also a presentation by
-   an author about the platform the software serves, with the dossier noting what it covers.
+3. **The developers' own publication about the software → include.** Its subject is this software
+   and its authors include the software's. Include also one by an author about the platform the
+   software serves, with the dossier noting what it covers.
 4. **A publication the project presents as the basis of, or a citation for, the software → include.**
    Evidence: the README or docs reference list for the method, model or algorithm; the code's own
    reference block; a second paper the project's citation guidance asks for; a per-component citation
@@ -68,10 +81,13 @@ Decide Fields 14 and 27 together.
    deliberate credit; also for papers found only through an author's publication list that use the
    same data or methods rather than the software. Record the ones weighed in the dossier so a later
    refresh does not rediscover them as new.
-7. **Incumbent entry → keep** when it is a real publication that describes, cites or uses the
-   software, even if it would not be added under rules 3–6. Remove an incumbent only when rule 1 or 2
-   fires, when it does not resolve, or when it is unrelated to this software. When an incumbent is a
-   non-DOI URL for a paper that has a DOI, replace it with the DOI.
+7. **Incumbent entry → keep** when it is an eligible publication that describes, cites or uses the
+   software, even if it would not be added under rules 3–6. Remove an incumbent only
+   when rule 1 or 2 fires, when it does not resolve, or when it is unrelated to this software. Removing
+   an incumbent because it is a meeting abstract or a talk, or a slide deck the user has judged to fail
+   the standalone test, needs the user's confirmation before it enters a patch (see *Ask the user
+   only when*). When an incumbent is a non-DOI URL for a paper that has a DOI, replace it with the
+   DOI.
 8. **Nothing qualifies → empty, with the search recorded.** Check the paper sources under *Where to
    find it* before recording "Not found".
 
@@ -80,17 +96,27 @@ permalink or arXiv abstract page, with the full citation in the dossier prose.
 
 ## Ask the user only when
 
-Nothing — the rubric decides every known case. A case no rule covers is a rubric gap: ask, and report
-it as one.
+- **A slide deck, as a candidate or an incumbent.** The standalone test (*Eligible publication
+  types*) needs a human read:
+  present the deck with a one-line account of its content and how much a reader can follow without
+  the talk.
+- **Removing an incumbent because it is a meeting abstract or a talk, or a slide deck the user has
+  judged to fail the standalone test** (rules 1 and 7). The rubric decides that an abstract or a talk
+  goes, and the user's judgment decides a deck; either way the user confirms each removal before it
+  enters a patch, separately from approving the final patch.
+
+Anything else is decided by the rubric. A case no rule covers is a rubric gap: ask, and report it as
+one.
 
 ## Where to find it, and traps
 
 **Sources, in priority order.**
 1. The project's own files: README and docs reference lists, citing/acknowledging pages, reference
    blocks in the code, `CITATION.cff` `references`.
-2. The developers' own deposits and abstracts: Zenodo creator-keyed search
+2. The developers' own deposits and papers: Zenodo creator-keyed search
    (`metadata.creators.person_or_org.name:"Family, Given"`, with a control — see Field 2), ADS/SciX
-   for conference abstracts.
+   for their papers. A meeting abstract found there points to a talk or poster: look for the
+   deposited poster or paper itself, and record the abstract as weighed (rule 1).
 3. The literature that uses the software: ADS/SciX `full:"<name>"` and `ack:"<name>"` (acknowledgements
    are indexed separately), DataCite `IsCitedBy` relations on the software's DOIs, and Semantic Scholar
    (`api.semanticscholar.org/graph/v1`, no key), whose citation `contexts`/`intents` separate
@@ -136,8 +162,12 @@ it as one.
   architecture and were written by its authors. Rule 3 includes both here, after
   Field 2 rule 1 removed one of them from Field 2.
 - **Users not added.** madrigalWeb has four third-party papers that used the package, none crediting
-  it in acknowledgements. Rule 6 excludes them; the two presentations by the software's authors are
-  included under rule 3.
+  it in acknowledgements. Rule 6 excludes them, and the dossier lists them as weighed.
+- **Meeting abstracts excluded.** A package's developers presented it at several AAS and AGU
+  meetings, and the search finds each presentation only as an ADS meeting abstract. Rule 1 excludes
+  every abstract. A presentation whose poster is deposited (a Zenodo record with the PDF) enters
+  through that deposit under rule 3; the rest add nothing, and the dossier records all of them as
+  weighed.
 - **Acknowledged use.** GEOrinex has eleven papers that use it; two credit it in their
   Acknowledgments (a real-time ionospheric assimilation model and a GNSS software paper built on it).
   Rule 5 includes those two; a topically close paper that names it only in the full text is excluded
@@ -156,3 +186,6 @@ it as one.
 - No regenerated blocks; hand-written.
 - Migrated from RSFF 654-662 on 2026-09-22.
 - Rubric authored 2026-09-22 from prior guidance and past refresh decisions.
+- Changed 2026-10-28: a new *Eligible publication types* paragraph governs every rule (meeting
+  abstracts and talks are not publications, deposited posters are, slide decks need a human read), and
+  removing an incumbent on these grounds needs the user's confirmation (rules 1 and 7, Ask list).
