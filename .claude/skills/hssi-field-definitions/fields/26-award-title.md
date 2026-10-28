@@ -96,7 +96,9 @@ qualifies, even when X wrote the software.**
     or a PATCH. A stored row with no funder takes it only through a PATCH; a POST reuses a matched row as
     it is. A stored row with a different funder keeps it, because a PATCH never replaces one (it returns 200
     and leaves the row as it is): that correction is NON-PATCHABLE (see the Ask list). A funder filled on a
-    stored row shows on every entry the row serves, so the PREPARE report names them.
+    stored row shows on every entry the row serves, so the PREPARE report names them. For a new
+    submission, the PREPARE report also names each award that will bind a stored row without taking the
+    sent funder, so the approval covers that limitation.
 
 ## Ask the user only when
 

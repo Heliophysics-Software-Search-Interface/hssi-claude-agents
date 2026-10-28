@@ -156,12 +156,19 @@ attestation of authorship.
       too (*Stored-row sharing* below).
 
     An ORCID that another Person row already carries binds that row instead, a relink (rule 1).
-16. **Linked ORCID for an author new to this entry → record and send it,** unless the catalogue already
-    holds this person as an identifier-less Person row. Judge an identifier-less row under this person's
-    name by the entries it serves: it is this person when an entry it serves credits this person in its
-    own author sources, and a namesake when its entries are another person's work. For a namesake, send
-    the ORCID; the new Person it creates is correct. For this person, an ORCID that no row carries would
-    create a second Person beside the existing row, so bind the row first and attach the ORCID second:
+16. **Linked ORCID for an author new to this entry → record and send it,** after two checks for an
+    ORCID that no row carries yet:
+    - **This entry's identifier-less authors.** On a PATCH, such an ORCID attaches to the entry's
+      identifier-less current author with the same full name, whichever author it was sent for. If that
+      author is another person, report the identity collision as NON-PATCHABLE; sending the ORCID would
+      give it to them. (If it is this person, the author is not new: rule 15.)
+    - **Identifier-less rows elsewhere.** Judge an identifier-less row under this person's name by the
+      entries it serves: it is this person when an entry it serves credits this person in its own author
+      sources, and a namesake when its entries are another person's work.
+
+    For a namesake, send the ORCID; the new Person it creates is correct. For this person, the ORCID
+    would create a second Person beside the existing row, so bind the row first and attach the ORCID
+    second:
     - **On an update,** two PATCHes approved as one plan. The first sends the author without the
       identifier under the row's exact stored given and family names, which binds the row; the second
       sends the author list again with the ORCID, which rule 15 attaches to the now-current row (*Binding
@@ -277,9 +284,10 @@ shortlog patterns.
 
 **Traps**
 - An ORCID that no Person carries creates a new Person unless, on a PATCH, exactly one current author of
-  the entry has no identifier and the same full name. An author new to the entry, a full name that
-  differs in any word or capitalization, and every POST get a new Person even when an identifier-less row
-  of that name exists (rules 15 and 16).
+  the entry has no identifier and the same full name; then it attaches to that author, even when it was
+  sent for someone else (rule 16). A full name that differs in any word or capitalization, an author new
+  to the entry with no such namesake on it, and every POST get a new Person, even when an
+  identifier-less row of that name exists elsewhere (rules 15 and 16).
 - A name sent without an identifier and with a given name binds only on an exact, case-sensitive
   given+family match; any spelling, case or split difference mints a duplicate.
 - The same person can appear under several commit identities (`, Ph.D` suffixes, numeric noreply
@@ -323,9 +331,10 @@ shortlog patterns.
   - *With an identifier:* match on the identifier only. A hit keeps its names, except that a blank given
     or family name is filled and, on a PATCH, a sent split of the same full name replaces the stored
     split. On a miss, a PATCH attaches the identifier to this entry's one current author with no
-    identifier and the same full name (two or more such authors are a 400 for the whole PATCH). Every
-    other miss creates a new Person, even when an identifier-less row of that name exists: any POST, an
-    author not yet on the entry, a full name that differs.
+    identifier and the same full name, whichever author item sent it (two or more such authors are a 400
+    for the whole PATCH). Every other miss creates a new Person, even when an identifier-less row of that
+    name exists elsewhere: any POST, and any PATCH where no identifier-less current author has that full
+    name.
   - *Without an identifier:* exact, case-sensitive given+family match, else create. Among rows with that
     exact split the binding is arbitrary.
   - *Empty or missing `givenName`* on a PATCH: see *Empty stored given name*.
