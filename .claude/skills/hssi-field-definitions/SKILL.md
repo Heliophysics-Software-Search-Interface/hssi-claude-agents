@@ -22,8 +22,9 @@ sources/form-structure.md                        the form's three sections and r
 ## How to use this skill
 
 **Before you decide, validate, or patch Field N, Read `fields/NN-*.md`.** Paths are relative to this
-skill's directory. A full extraction or refresh reads all 33 in order; a targeted update reads only the
-fields in play. Each field file has the same sections, in this order:
+skill's directory. A full extraction or full metadata refresh reads all 33 in order. A release update first reads
+every file's *Where to find it, and traps* to choose its fields; a release, refresh or targeted update
+reads in full only the fields in play. Each field file has the same sections, in this order:
 
 | Section | What it answers |
 |---|---|

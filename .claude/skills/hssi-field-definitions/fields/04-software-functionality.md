@@ -1,6 +1,6 @@
 # Field 4 — Software Functionality
 
-**Level:** RECOMMENDED · **API:** `softwareFunctionality[]` · **Change class:** enrich-only (refresh on request)
+**Level:** RECOMMENDED · **API:** `softwareFunctionality[]` · **Change class:** enrich-only (refreshed on request, and by a release update when a capability changed)
 **Vocabulary:** `/api/models/FunctionCategory/rows/all/`
 **Filter tab:** Category · **Free-text search tier:** T3 · **Field-search code:** `function`
 
@@ -235,11 +235,13 @@ complete the parent rows, and rules 12–15 govern the whole set.
 13. **Order is stored data.** Preserve the stored order; insert a new member inside its parent's block
     (after that family's existing members), and never reorder stored rows as a side effect.
 
-14. **Incumbents: enrich-only by default, refreshed on request.** Enrichment is identity-aware
+14. **Incumbents: enrich-only by default, refreshed on request or by a release update.** Enrichment is identity-aware
     set-union: keep every stored value and add the new ones, even when the field already holds some
     values. A refresh the user asks for re-derives every stored value under rules 1–11 and removes one the
     evidence contradicts (a case-insensitive sweep for the capability returns nothing, or rule 5 or 7
-    fires). A stored value a fair reading of the code supports is kept — removal needs evidence that it is
+    fires); a release update removes each stored value whose capability the changes removed or moved into
+    a separately distributed plug-in (rule 6), even when a changelog entry, a deprecation shim or a doc
+    page still names it. A stored value a fair reading of the code supports is kept — removal needs evidence that it is
     wrong, not that it is arguably imprecise.
 
 15. **Never invent; never leave it unexamined.** An empty value is legitimate only when the dossier
