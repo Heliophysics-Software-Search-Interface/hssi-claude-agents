@@ -47,7 +47,7 @@ accelerated or parallel tools.
 - **Filter tab:** none.
 - **Free-text search:** tier T4.7 (`cpu_architecture` name).
 - **Field search:** `cpu:"…"` matches `cpu_architecture__name__icontains`.
-- **JSON-LD:** emitted as `processorRequirements` (a list).
+- **JSON-LD:** emitted as `processorRequirements` (a single string when there is one value, else a list).
 
 ## Rubric: include / exclude
 

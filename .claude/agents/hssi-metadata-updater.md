@@ -134,7 +134,7 @@ Before extracting metadata, **always `git pull`** the repo to ensure it reflects
    ```
    GET <target_url>/api/list/software/?repo_url=<url>
    ```
-   Returns `{"data": [{"id": "<uuid>", "name": "..."}, ...]}`. Because the match is exact (case-insensitive only — no URL normalization on the server), try canonical variants in order before giving up: with/without trailing `/`, with/without `.git` suffix, and for GitHub `tree`/`blob` URLs the bare `https://github.com/<owner>/<repo>` form. Use the first variant that returns a non-empty `data` array.
+   Returns `{"data": [{"id": "<uuid>", "name": "...", "slug": "..."}, ...]}`. Because the match is exact (case-insensitive only — no URL normalization on the server), try canonical variants in order before giving up: with/without trailing `/`, with/without `.git` suffix, and for GitHub `tree`/`blob` URLs the bare `https://github.com/<owner>/<repo>` form. Use the first variant that returns a non-empty `data` array.
 2. **Fallback — search by name:**
    ```
    GET <target_url>/api/search/?q=<name>&mode=id

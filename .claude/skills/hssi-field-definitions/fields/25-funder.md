@@ -31,7 +31,8 @@ sponsor, an input mission's budget) gives a wrong answer to that question on eve
 - **Field search:** `funder:"…"` matches the funder name.
 - **Filter tab:** none.
 - **JSON-LD:** the `funding` items are built from the entry's Award rows (Field 26), each with its
-  `Award.funder` when set.
+  `Award.funder` when set. Each funder recorded here that is the funder of none of those awards adds a
+  `MonetaryGrant` holding only the funder.
 
 ## Rubric: include / exclude
 

@@ -121,12 +121,12 @@ GET /api/list/software/?repo_url=https://github.com/user/repo
 ```json
 {
   "data": [
-    { "id": "uuid", "name": "PackageName" }
+    { "id": "uuid", "name": "PackageName", "slug": "packagename" }
   ]
 }
 ```
 
-The response only includes `id` and `name` — not the repo URL or any other fields. With no `?repo_url=` filter, the endpoint returns all visible software.
+Each entry carries only `id`, `name` and `slug` (the detail endpoints accept the slug in place of the UUID) — not the repo URL or any other field. With no `?repo_url=` filter, the endpoint returns all visible software.
 
 **Behavior:** Pure exact-match — no URL normalization (no `.git` stripping, no trailing-slash collapse, no GitHub/GitLab path canonicalization). The agent must canonicalize the repo URL itself before calling this endpoint:
 
