@@ -213,8 +213,8 @@ is dropped. The only other names found, Warrick Ball and Asti Bhatt, are rejecte
   `.zenodo.json`, package authors) names him. The only fielded ORCID match for him,
   `0000-0002-4773-1017`, has no link to this work (rule 14).
 - **Asti Bhatt is not an author** (rule 7). She is co-author with Lamarche of the 2023 AGU abstract
-  about the software (Field 27), but she appears in no software-metadata source (`pyproject.toml`,
-  any Zenodo deposit, the JOSS byline) and has no commits.
+  about the software (weighed in Field 27), but she appears in no software-metadata source
+  (`pyproject.toml`, any Zenodo deposit, the JOSS byline) and has no commits.
 
 ### 7. Software Name (MANDATORY)
 amisrsynthdata
@@ -315,7 +315,8 @@ Module for generating synthetic AMISR data files
   the stored row. The number keeps the leading `v` the stored number used, matching the tag; PyPI's
   `1.2.0` is the same release written without it, and neither form should be "fixed" to the other.
   The view API's `amisrsynthdata - v1.2.0` is a render-time prefix, not the stored number.
-- **Superseded value.** HSSI held v1.1.8 until this update (Version Date 2024-11-17, Version PID
+- **Superseded value.** HSSI held v1.1.8 until the v1.2.0 update in October 2026 (Version Date
+  2024-11-17, Version PID
   `https://doi.org/10.5281/zenodo.14174414`, description "Minor release primarily to update
   documentation and how it is compiled on ReadTheDocs.  This should not introduce new
   functionality."). That description is v1.1.8's own release body; it is not carried onto v1.2.0.
@@ -538,7 +539,8 @@ Active
   is 1.2.0 on the same day. Under six months before 2026-10-27, so `Active`. From 2027-02-12 the
   middle band keeps a stored `Active`; from 2028-08-12, with no newer commit, rule 6 gives
   `Inactive`.
-- **Superseded value.** HSSI held `Inactive` until this update. It was chosen in July 2026, when the
+- **Superseded value.** HSSI held `Inactive` until the v1.2.0 update in October 2026. It was
+  chosen in July 2026, when the
   default branch had been quiet since November 2024 and the only later commits (on `develop` and
   `joss`, through 2024-12-03) were JOSS-review and Read the Docs fixes. Development resumed with the
   v1.2.0 work merged to `main` in August 2026, which supersedes it.
@@ -644,33 +646,56 @@ Administration:
 ## Section 3: Additional Metadata
 
 ### 27. Related Publications (OPTIONAL)
-- https://ui.adsabs.harvard.edu/abs/2023AGUFMSH33E3087L/abstract
 - https://doi.org/10.1029/2026JA035137
 
-- **The AGU abstract is included under Field 27 rule 3** (the developers' own publication about
-  the software): Lamarche, L. J. & Bhatt, A., "amisrsynthdata: Designing Expandability into
-  Packages", AGU Fall Meeting 2023, abstract SH33E-3087 (ADS `2023AGUFMSH33E3087L`). Its subject is
-  this software ("The amisrsynthdata package is a python package designed to generate synthetic
-  data files for the Advanced Modular Incoherent Scatter Radars (AMISR)."), and the software's
-  author presents it. It has no DOI (ADS lists only the bibcode), so the entry is its ADS abstract
-  permalink in the `/abs/<bibcode>/abstract` form. The ADS web page answers scripted requests with
-  a 405 human-verification page; the ADS API confirms that the record exists.
-- **The LLITED paper is included under rule 5** (a third-party publication that substantively uses
-  the software): Swanson, D. J., Clemmons, J. H., Liu, H., Bishop, R., Debchoudhury, S.,
-  Barjatya, A., & Bhatt, A. (2026), "High Latitude Thermosphere and Ionosphere Density Response to
-  the May 2024 Geomagnetic Storm Observed by the LLITED CubeSat Mission", *Journal of Geophysical
-  Research: Space Physics*, `10.1029/2026JA035137`. Its Availability Statement says "PFISR
-  plotting routines were adapted from publicly available code (Lamarche, 2024)", and that
-  reference is the amisrsynthdata JOSS paper. So the paper's own PFISR figures come from code
-  adapted from this software's plotting routines, and the paper credits that deliberately in its
-  data and software statement. That is use, not a passing citation (rule 6). It is also still news:
-  it is the only publication found citing the software. The words "amisrsynthdata" and "synthetic"
-  do not appear in the article's body text, only in its reference-list entry for the JOSS paper;
-  the credit is the citation. Its Acknowledgments credit no
+- **The LLITED paper is included.** Swanson, D. J., Clemmons, J. H., Liu, H., Bishop, R.,
+  Debchoudhury, S., Barjatya, A., & Bhatt, A. (2026), "High Latitude Thermosphere and Ionosphere
+  Density Response to the May 2024 Geomagnetic Storm Observed by the LLITED CubeSat Mission",
+  *Journal of Geophysical Research: Space Physics*, `10.1029/2026JA035137`. A peer-reviewed journal
+  article is an eligible publication (Field 27, *Eligible publication types*), and this one uses
+  the software: its Availability Statement says "PFISR plotting routines were adapted from publicly
+  available code (Lamarche, 2024)", and that reference is the amisrsynthdata JOSS paper. So the
+  paper's own PFISR figures come from code adapted from this software's plotting routines, and the
+  paper credits that deliberately in its data and software statement. That is substantive use
+  (rule 5), not a passing citation (rule 6), and it is still news: it is the only publication found
+  citing the software. As an entry already on the record it is kept under rule 7. The words
+  "amisrsynthdata" and "synthetic" do not appear in the article's body text, only in its
+  reference-list entry for the JOSS paper; the credit is the citation. Its Acknowledgments credit no
   software, and its NASA grant `80NSSC17K044` funds that study, not this software, so it is not a
-  Field 25/26 value. Wiley refuses scripted fetches of the article (403), but it is open access
-  and readable in a browser.
-- HSSI held no related publications until this update.
+  Field 25/26 value. Wiley refuses scripted fetches of the article (403), but it is open access and
+  readable in a browser.
+- **The 2023 AGU abstract is excluded under rule 1**, because a conference or meeting abstract is
+  never an eligible publication (Field 27, *Eligible publication types*): Lamarche, L. J. & Bhatt,
+  A., "amisrsynthdata: Designing Expandability into Packages", AGU Fall Meeting 2023 (AGU23), poster
+  SH33E-3087 in the session "Implementations in Python for Solar and Space Physics Poster", dated
+  2023-12-13 (ADS `2023AGUFMSH33E3087L`, permalink
+  `https://ui.adsabs.harvard.edu/abs/2023AGUFMSH33E3087L/abstract`; AGU meeting record
+  `Paper/1421366`). Its subject is this software and its first author is the software's author, so
+  a deposit of the poster itself would enter under rule 3; the abstract cannot. It was listed here
+  when v1.2.0 was recorded (October 2026), under an earlier version of the rule that admitted
+  conference abstracts.
+- **No deposit of the poster was found (searched 2026-10-28), so nothing replaces the abstract:**
+  - Zenodo: creator-keyed searches on `Lamarche, Leslie`, `Leslie Lamarche`, `Lamarche, L`, the
+    ORCID `0000-0001-7098-0524` and `Bhatt, Asti` together list the author's papers, datasets and
+    software deposits, including every amisrsynthdata release (the positive control), but no poster
+    or presentation. Title searches for "Designing Expandability" find nothing (control: a title
+    search for "Ion heating in the polar cap" finds that paper; a nonsense token finds nothing), and
+    poster-type searches for AMISR, PFISR and RISR find no poster by the developers.
+  - ESS Open Archive, through Crossref (`10.22541/essoar.*` and `10.1002/essoar.*`): author and
+    title queries return Lamarche's other ESSOAr preprints (the polar-cap patch studies and the
+    MANGO network paper, the positive control) but nothing on amisrsynthdata.
+  - The AGU23 meeting record itself: typed "Abstract", presented as an onsite poster, with its
+    iPoster URL, ESS Open Archive upload, ePoster, DOI, file and media fields all empty. No other
+    record in session SH33E has those fields populated either, so the empty fields are consistent
+    with no deposit but do not prove it on their own.
+  - DataCite and OpenAlex title searches find nothing (DataCite control:
+    `titles.title:amisrsynthdata` finds the software's deposits).
+  - The repository (`main`, `develop` and `joss`) and its documentation mention no AGU poster,
+    deposit or DOI for it.
+
+  A later refresh should add the poster under rule 3 only if a deposit of the poster itself
+  appears.
+- HSSI held no related publications before October 2026.
 - The publication that *describes* the software is the JOSS paper, which belongs in Field 14 and is
   recorded there (rule 2); Field 27 is for *other* publications that describe, cite, or use the
   software.
