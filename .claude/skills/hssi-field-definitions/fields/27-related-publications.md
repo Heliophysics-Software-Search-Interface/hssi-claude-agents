@@ -55,11 +55,14 @@ Decide Fields 14 and 27 together.
    list. **Excluded under this rule:** a paper the project lists only as further or useful reading
    ("Other references you might find useful"), and a reference for a file format the software merely
    reads.
-5. **A third-party publication that substantively uses the software → include.** Fires only when the
-   paper's own results or software are built with this software **and** it says so deliberately: in
-   its Acknowledgments, its Data Availability or Open Research statement, or a methods statement
-   naming the software for a specific result. Semantic Scholar citation contexts and intents help
-   separate this from a passing mention.
+5. **A third-party publication that substantively uses the software → include, while such uses are
+   still news.** Fires only when the paper's own results or software are built with this software
+   **and** it says so deliberately: in its Acknowledgments, its Data Availability or Open Research
+   statement, or a methods statement naming the software for a specific result. Semantic Scholar
+   citation contexts and intents help separate this from a passing mention. Uses are news while the
+   software's citing literature is small: each one shows a searcher how and where the software is
+   used. For widely used software, as with Astropy or SunPy, a list of users tells a searcher nothing:
+   add none, and say so in the dossier. Rules 3 and 4 apply at any size.
 6. **A third-party publication that merely cites or mentions the software → not added.** Fires for a
    name in a bibliography, a list of tools or dependencies, background text, or a full-text hit with no
    deliberate credit; also for papers found only through an author's publication list that use the
@@ -139,6 +142,9 @@ it as one.
   Acknowledgments (a real-time ionospheric assimilation model and a GNSS software paper built on it).
   Rule 5 includes those two; a topically close paper that names it only in the full text is excluded
   under rule 6 and recorded as weighed.
+- **Widely used.** SPEDAS's wiki links a bibliography of hundreds of refereed papers that used it.
+  Rule 5 adds none of them: a list of users says nothing about the software. Field 27 keeps the
+  publications rules 3 and 4 admit.
 - **Model paper as ADS permalink.** ReesAurora's code cites Sergienko and Ivanov (1993), the model it
   implements, in its reference block. Rule 4 includes it; it has no DOI, so the entry is its ADS
   abstract permalink.

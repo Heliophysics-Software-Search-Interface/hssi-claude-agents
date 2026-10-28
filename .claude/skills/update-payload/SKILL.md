@@ -229,6 +229,8 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 
 ## Field Classification
 
+This classification scopes `refresh` and `enrich`. A `release` update ignores it: any field whose evidence changed since the dossier read it is in scope (see the updater's Release Mode).
+
 ### Static fields (skip during refresh — these don't go stale)
 
 | # | Field | Why static |
@@ -277,7 +279,7 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | 31 | Related Instruments |
 | 32 | Related Observatories |
 
-*Software Functionality is enrich-only by default but can be refreshed if the user specifically requests it.
+*Software Functionality is enrich-only by default but can be refreshed if the user specifically requests it, and a release update re-derives it whenever what the software can do has changed since the dossier read it.
 
 ---
 

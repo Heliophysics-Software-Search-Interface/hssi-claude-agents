@@ -31,10 +31,11 @@ You will be given:
 
 Start by reading the metadata file in full, then begin validation.
 
-Full validation is the default. Use a focused recheck only when the same file and source revision already received a complete validation and the user subsequently changed a known set of fields. In focused mode:
+Full validation is the default. Use a focused recheck only when the same file and source revision already received a complete validation and the user, or an update that brought the dossier forward, subsequently changed a known set of fields. In focused mode:
 
 - Recheck the provenance header, global document structure, and all schema/format/cross-field constraints that can be affected by the edit.
 - Recheck the changed fields against their primary evidence and confirm that the user's chosen values were written exactly.
+- After an update brought a dossier forward, its earlier `PASS` stands in for the prior report; sweep quotations (rule 11) only in the sections it changed, and search the whole dossier for present-tense statements of any value it superseded.
 - Carry forward unaffected findings from the prior report; a focused recheck cannot erase an unresolved ERROR elsewhere.
 - Do not rerun extraction, SoMEF, or unrelated completeness searches.
 - When the recheck is the last one before the file is finalized to `PASS`, run **Phase 5 over the whole document**, not just the changed fields — stale decision scaffolding and run narration are usually somewhere other than the fields the user just changed. This recheck happens on every full refresh, so **the changed-field set may legitimately be empty**; when it is, Phase 5 plus the header and structural checks is the entire recheck, and that is a complete, reportable validation rather than a no-op to skip.
@@ -75,6 +76,8 @@ Check that values conform to expected formats. The per-field format rules are in
 
 ### Phase 3: Accuracy Validation
 
+A passage that names the revision its evidence was read at (an update that brought the dossier forward names the revision it read) is checked there; every other passage is checked at the header's Source Revision.
+
 Cross-reference each metadata value against primary sources. **For each of the 33 fields, Read its `fields/NN` file and:**
 
 1. Check the value against the sources listed under *Where to find it, and traps*, in that priority order, with the verification steps given there (resolve the DOI, `git remote -v`, `git tag --sort=-creatordate`, `curl -sIL` the logo and read the content-type, fetch the paper's acknowledgements…).
@@ -102,7 +105,7 @@ Actively look for metadata the extractor might have missed. Each field file's *W
 
 ### Phase 5: Canonical State
 
-`hssi_metadata.md` is a durable metadata dossier, not a report of the run that produced it — see *The Canonical Metadata File* in the orchestrator's instructions. **Run this phase only when the file is being finalized to `PASS`** (the orchestrator says so, or the file's header already claims `PASS`). While the header says `Pending`, the file is a working document and everything below is legitimate; do not raise these findings.
+`hssi_metadata.md` is a durable metadata dossier, not a report of the run that produced it — see *The Canonical Metadata File* in the orchestrator's instructions. **Run this phase only when the file is being finalized to `PASS`** (the orchestrator says so, or the file's header already claims `PASS`). While the header says `Pending` and this is not the final check before `PASS`, the file is a working document and everything below is legitimate; do not raise these findings.
 
 **Read the keep-list first. It governs.**
 
@@ -151,7 +154,7 @@ Produce your report in this exact format:
 **Repository:** [path or URL]
 **Validation Date:** [YYYY-MM-DD]
 **Validation Scope:** [FULL / FOCUSED — Fields NN, NN]
-**Canonical State:** [CLEAN / NEEDS FINALIZATION — Phase 5 ERROR count, or NOT CHECKED if the file is still Pending]
+**Canonical State:** [CLEAN / NEEDS FINALIZATION — Phase 5 ERROR count, or NOT CHECKED if the file is still Pending and this is not the final check before PASS]
 
 ---
 
@@ -229,4 +232,4 @@ A file NEEDS REVISION if there are any ERRORS. Warnings alone do not fail valida
 8. **Respect carried-over submitted values without weakening validation.** Lack of repository corroboration alone is not an ERROR when a value was seeded from the existing HSSI record or prior canonical file. Preserve subjective wording unless primary evidence shows it is factually wrong, materially incomplete, or misleading; a stylistic rewrite is not an improvement by default. This exception never excuses a missing mandatory value, malformed or unresolved identifier/URL, controlled-vocabulary miss, schema violation, cross-field inconsistency, or active contradiction from authoritative evidence — classify those at their normal severity.
 9. **Validate the final decision state.** A report on initial extracted candidates does not validate later user choices. If the user changes the file during reconciliation, perform a focused recheck before an update plan is approvable. Only the final user-approved file may be marked with a completed Validation Date and `Validation Status: PASS`; otherwise leave both validation header values `Pending`. `PASS` additionally requires that **Phase 5 found no ERRORs** — a file that still reads as a working document is not canonical, however correct its values are.
 10. **Judge canonical state by purpose, never by vocabulary.** Phase 5 exists to remove one run's execution history while preserving the metadata's reasoning history. Do not maintain or apply a forbidden-word list; the presence of a term like *considered*, *excluded*, *previously*, or *rejected* is at least as likely to mark durable rationale as cruft. When in doubt, keep.
-11. **Run a mechanical quotation-fidelity sweep — every time, before judging anything else about quotations.** Reading is not checking: byte-level sweeps find altered quotations (a re-cased line, "may be desired" promoted to "is desired", a dropped qualifier) that careful reading passes. Procedure: normalise the whole dossier's whitespace first (a per-line match silently skips every quotation that wraps across a newline), extract every string inside straight or curly double quotes, and test each byte-for-byte against (a) every tracked blob at the pinned source revision, (b) the `hssi-field-definitions` field files, (c) the live vocabulary rows' names and definitions, and (d) for quotations of external sources — papers, Zenodo/DataCite metadata, other repositories, live pages — the fetched source itself. Any quotation found in none of its claimed sources is an **ERROR** (altered or fabricated quotation), cited by dossier line and by the source's actual wording. Then ask what the misquote was doing: if the altered wording carried an argument for or against a value, report that the value is back in play and must be re-derived from the source's real wording — never let a quotation repair re-defend the incumbent. Elisions must be marked; an unmarked elision is an altered quotation. Report the counts: quotations extracted, verified, and unresolved.
+11. **Run a mechanical quotation-fidelity sweep — every time, before judging anything else about quotations.** Reading is not checking: byte-level sweeps find altered quotations (a re-cased line, "may be desired" promoted to "is desired", a dropped qualifier) that careful reading passes. Procedure: normalise the whole dossier's whitespace first (a per-line match silently skips every quotation that wraps across a newline), extract every string inside straight or curly double quotes, and test each byte-for-byte against (a) every tracked blob at the revision the quoting passage names, else at the pinned source revision, (b) the `hssi-field-definitions` field files, (c) the live vocabulary rows' names and definitions, and (d) for quotations of external sources — papers, Zenodo/DataCite metadata, other repositories, live pages — the fetched source itself. Any quotation found in none of its claimed sources is an **ERROR** (altered or fabricated quotation), cited by dossier line and by the source's actual wording. Then ask what the misquote was doing: if the altered wording carried an argument for or against a value, report that the value is back in play and must be re-derived from the source's real wording — never let a quotation repair re-defend the incumbent. Elisions must be marked; an unmarked elision is an altered quotation. Report the counts: quotations extracted, verified, and unresolved.

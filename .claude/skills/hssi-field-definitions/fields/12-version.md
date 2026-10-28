@@ -50,7 +50,8 @@ The four sub-fields are decided in four groups. Within each group apply the rule
 stop at the first that fires.
 
 **Before any rule: establish the release history from the pinned revision.** List tags in creation
-order, confirm each candidate is on the pin's own lineage (`git merge-base --is-ancestor <tag> <pin>`),
+order, confirm each candidate is on the pin's own lineage or on a release branch cut from it
+(`git merge-base <tag> <pin>` finds a shared commit; an orphan lineage shares none),
 read every GitHub release's `name` and `body`, and read PyPI's release list from its JSON API. Then
 identify which anomaly shape, if any, applies before deciding: an **orphan lineage** (a newer-looking
 tag on a pre-rewrite lineage that shares no history with the pin — it is older, not newer), a version
@@ -65,17 +66,18 @@ the answer.
    rows. Byte-identical duplicates collapse to one with no loss; distinct rows are replaced by the
    single row rules 3–6 select.
 2. **Unreleased code never gets a version** (for a new value; a stored version that was declared but
-   never released is handled by rule 4, not cleared here). Fires for: commits after the last release; a version
-   declared only on an unmerged branch; a tag whose tagged code still declares the previous version
-   and has no release; a PyPI file built from code not on the main line; release text drafted in a
-   wiki or a release-candidate branch with no tag. Record nothing for them; note in the dossier what
-   to check at the next refresh.
+   never released is handled by rule 4, not cleared here). Fires for: commits after the last release; a
+   version declared only on an unmerged branch; a tag whose tagged code still declares the previous
+   version and has no release; a PyPI file built from code on neither the pin's lineage nor a release
+   branch cut from it; release text drafted in a wiki or a release-candidate branch with no tag. Record
+   nothing for them; note in the dossier what to check at the next refresh.
 3. **A newer release than the stored one exists → replace the stored row.** "Newer" means a release
-   later in the main line's release order: a tag on the pin's lineage with a GitHub release or a PyPI
-   upload, or (for a project that does not tag) a PyPI upload of a version declared at a commit on the
-   pin's lineage. Replacing the row orphans the old `SoftwareVersion` row; that is accepted HSSI
-   behaviour and never a reason to keep a stale version. Write the new number in the same form the
-   stored number used (with or without a `v`).
+   later in the project's release order: a tag on the pin's lineage or on a release branch cut from it,
+   with a GitHub release or a PyPI upload, or (for a project that does not tag) a PyPI upload of a
+   version declared at a commit on either. Pre-releases (rc, alpha, beta, dev, or a GitHub release
+   marked pre-release) never count. Replacing the row orphans the old `SoftwareVersion` row; that is
+   accepted HSSI behaviour and never a reason to keep a stale version. Write the new number in the same
+   form the stored number used (with or without a `v`).
 4. **Otherwise keep the stored number.** This covers every case with no newer release:
    - a cosmetic difference in how the same release is written (`v0.9.1` versus `0.9.1`) — **never
      replace for it**, in either direction;
@@ -199,12 +201,16 @@ DOIs (Persistent Identifier, Version PID, Reference Publication) may be in:
 - Dates must be YYYY-MM-DD (Fields 10, 12).
 
 **Traps.**
-- **Orphan lineages.** Walk history with `git rev-list <pin>`, never `git log --all`, which also shows
-  tags on pre-rewrite lineages. A tag absent from the pin's history may still have been a real release
-  of an earlier lineage; its absence from the walk proves nothing about whether it happened.
-- **Backport tags.** A maintenance-branch release can be the newest by creation date while an earlier
-  creation is the higher main-line version. The current version is the newest release on the main
-  line; a backport tag is usually not an ancestor of the pin.
+- **Orphan lineages.** Walk history with `git rev-list <pin>` and the release branches cut from it,
+  never `git log --all`, which also shows tags on pre-rewrite lineages. A tag absent from the pin's
+  history may still have been a real release of an earlier lineage; its absence from the walk proves
+  nothing about whether it happened.
+- **Backport tags.** A maintenance release of a series the project has moved past (7.2.3 published
+  after 8.0.0) can be the newest by creation date; it never supersedes the current series. The release
+  notes or changelog say which series is current, not a version-string sort (Kaiju's `MAGE_1.5.0`
+  follows `MAGE_1.25.1`). Release branches themselves are normal: where every release is cut on one, no
+  release is an ancestor of the pin, and the newest release of the current series is the current
+  version.
 - **Changelog headings.** Prefixes vary within one file (`v2.4.0`, `2.3.0`); list headings with
   `^v?[0-9]+\.[0-9]+` or read them all. Changelog dates can disagree with tags and with each other.
 - **Unreleased notes.** Towncrier fragments (`changelog/<n>.<type>.rst`) and a changelog's

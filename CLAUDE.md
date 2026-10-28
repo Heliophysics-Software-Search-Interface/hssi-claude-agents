@@ -63,6 +63,7 @@ Determine the mode from the user's request:
 - **Extract and submit** — "submit pydarn to HSSI", "extract and submit"
 - **Extract and submit locally** — mentions localhost or local testing
 - **Update (refresh)** — "update sunpy on HSSI", "refresh sunpy's metadata", "check if sunpy is up to date"
+- **Release update** — a "New version of SunPy" issue, "sunpy released v8.0.1", or any request that would record a newer version than HSSI lists; this takes precedence over refresh and targeted unless the user asks for the version alone. It brings the entry and its dossier up to date with everything that changed; software without a `PASS` dossier gets a Full Metadata Refresh instead.
 - **Enrich** — "enrich sunpy on HSSI", "check what metadata sunpy is missing", "fill in sunpy's missing fields"
 - **Targeted update** — "change sunpy's name to SunPy on HSSI", "update sunpy's version to v6.1.0"
 - **Full metadata refresh (file-driven)** — "make sure X's metadata is complete and up to date", "do a thorough refresh of X". Runs the canonical-metadata-file pipeline (seeded Extractor → Validator → Updater `apply`), not just a quick dynamic-field check.
@@ -88,15 +89,16 @@ If ambiguous, ask which mode the user wants. If clear, proceed.
 9. On approval: invoke **submitter** in EXECUTE mode (payload file, target URL) → returns submission results
 10. Present results to user
 
-### Update / Enrich / Targeted
+### Update / Release / Enrich / Targeted
 
 1. Determine software identity (name, repo URL, or UUID) and mode from request
 2. Ensure repo freshness: `git pull` if exists, clone to `repos/` if URL given — skip for targeted mode
-3. Invoke **updater** in PREPARE mode (software ID, mode, repo path or targeted changes, target URL) → returns a diff and either an exact transient update plan or decisions/blockers
-4. If decisions are required, get the user's per-field choices and invoke PREPARE again. If the updater reconciles a metadata file, invoke the **validator** on its changed fields for a focused recheck, then invoke PREPARE with the passing report to produce the final plan.
+3. Invoke **updater** in PREPARE mode (software ID, mode, repo path or targeted changes, canonical dossier path, target URL) → returns a diff and either an exact transient update plan or decisions/blockers
+4. If decisions are required, get the user's per-field choices and invoke PREPARE again. If the updater reconciles a metadata file or brings a dossier forward, invoke the **validator** on its changed fields for a focused recheck — the last before `PASS`, so it includes Phase 5; say the dossier was `PASS` before the update set it to `Pending`. Send any ERRORs back to the updater and recheck. Then invoke PREPARE with the passing report to produce the final plan.
 5. Present the complete final diff, update plan, and exact nested `patch` to the user → get explicit approval
 6. If `patch` is non-empty, invoke **updater** in EXECUTE mode (update-plan path, exact target URL) → baseline check, PATCH, and roundtrip verification. If empty, skip EXECUTE.
 7. Present results to user
+8. If a dossier was brought forward, save it as Full Metadata Refresh step 11 does. A brought-forward value the user declined, or that EXECUTE did not apply, is a value correction: have the updater return its section to what HSSI holds, then recheck. If the user declined the plan, or EXECUTE applied none of an approved non-empty patch, restore the committed dossier instead. If the updater reported that the software has no `PASS` dossier, say so and offer a Full Metadata Refresh.
 
 ### Full Metadata Refresh (file-driven, via canonical metadata file)
 

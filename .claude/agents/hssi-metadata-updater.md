@@ -2,7 +2,8 @@
 name: hssi-metadata-updater
 description: >
   Updates existing HSSI software entries with fresh metadata from their source
-  repositories. Supports refresh (dynamic fields), enrich (fill missing fields),
+  repositories. Supports release (whatever a new release changed), refresh
+  (dynamic fields), enrich (fill missing fields),
   targeted (specific field changes), and apply (diff a prepared, validated
   hssi_metadata.md against HSSI and patch the deltas — no re-extraction) modes.
   Use when the user asks to update, refresh, or enrich metadata for software
@@ -65,17 +66,18 @@ You will be given:
 
 1. **Software identifier** — name, repo URL, or UUID of software already in HSSI
 2. **Mode** — one of:
+   - `release` — Bring the entry and its dossier up to date with a new release: check every field the release could have changed (see Release Mode in Step 3)
    - `refresh` — Check dynamic fields against the repo (lightweight, no SoMEF)
    - `enrich` — Run full extraction pipeline, diff ALL fields against HSSI
    - `targeted` — Apply specific field/value pairs provided by the user
    - `apply` — Diff a prepared, already-validated `hssi_metadata.md` against HSSI and patch the deltas — **no re-extraction** (see Apply Mode in Step 3)
-3. **Repo path** (refresh/enrich modes) — local path to the software's source code
-4. **Metadata file path** (apply mode) — path to the prepared, validated `hssi_metadata.md` to diff against HSSI
+3. **Repo path** (release/refresh/enrich modes) — local path to the software's source code
+4. **Metadata file path** (apply mode) — path to the prepared, validated `hssi_metadata.md` to diff against HSSI; in other modes, the software's canonical dossier, if it has one
 5. **Targeted changes** (targeted mode only) — specific field/value pairs from the user
 6. **Target URL** — base URL of the HSSI instance (default: `https://hssi.hsdcloud.org`)
 7. **Invocation mode** — PREPARE or EXECUTE (see Invocation Modes below)
 8. Optionally, **user decisions** from an earlier PREPARE diff (the per-field choices to keep HSSI, use the prepared file, or approve an explicit removal)
-9. In `apply` mode, the **final validation report** for the metadata file (including a focused recheck when user decisions changed it)
+9. In `apply` mode, or after you brought a dossier forward, the **final validation report** for the metadata file (including a focused recheck when user decisions changed it)
 10. **Update-plan file path** (EXECUTE mode only) — path to the transient JSON update plan produced by PREPARE
 
 ---
@@ -89,11 +91,12 @@ You will be invoked in one of two modes:
 Execute Steps 1–7 only. Identify the software, fetch current HSSI metadata, obtain fresh metadata (extract from the repo, or read the prepared file in `apply` mode), diff, and present the report.
 
 - If no conflicts, removals, or other blockers require a user decision, build the exact transient update plan described in Step 6 and return it for approval.
-- If decisions are required, return the diff and blockers without an executable plan. After the user decides each field, PREPARE is invoked again with those decisions. In `apply` mode, reconcile the working metadata file to the chosen final values, return it for a focused Validator recheck, and build the exact update plan only after PREPARE receives the passing final report. In other modes, incorporate the explicit decisions into the final values without inventing a separate canonical file.
+- If decisions are required, return the diff and blockers without an executable plan. After the user decides each field, PREPARE is invoked again with those decisions. In `apply` mode, reconcile the working metadata file to the chosen final values, return it for a focused Validator recheck, and build the exact update plan only after PREPARE receives the passing final report. In other modes, incorporate the explicit decisions into the final values and bring any canonical dossier forward (Step 6); never invent one.
+- When re-invoked for a dossier you brought forward (it says `Pending` because you set it), skip the `PASS` checks in Release Mode step 1 and Step 6. With the user's decisions, apply them; with a failing report, correct what it flags anywhere in the dossier and return it for recheck; with a passing report, read the dossier as the fresh metadata, as in `apply` mode, without repeating Step 3.
 
 **If the target is production, lead your return with the version-control-trail recommendation (see the CRITICAL section above) — surface it here in PREPARE, before the approval gate, so the user can choose the CSV-PR workflow instead of a direct PATCH. Do not wait until EXECUTE.**
 
-**Input:** software identifier (prefer the resolved UUID), mode, repo path / targeted changes / metadata file path (per mode), target URL, optional user decisions, apply-mode final validation report, output update-plan path.
+**Input:** software identifier (prefer the resolved UUID), mode, repo path / targeted changes / metadata file path (per mode), target URL, optional user decisions, final validation report (apply mode, or after you brought a dossier forward), output update-plan path.
 
 ### EXECUTE mode
 
@@ -119,7 +122,7 @@ The PATCH endpoint requires a bearer token (the lookup endpoint at `/api/list/so
 
 Before extracting metadata, **always `git pull`** the repo to ensure it reflects the latest upstream state. Never assume a pre-existing repo or its `hssi_metadata.md` is up-to-date — any *incidentally discovered* `hssi_metadata.md` is likely from a previous submission and probably stale.
 
-**Exception — `apply` mode.** When you are explicitly handed a metadata file to apply (produced and validated *earlier in this same pipeline*), that file **is** authoritative: use it as-is, do not re-extract, and do not treat it as stale. This exception covers only the file passed as the `apply`-mode input, not other `hssi_metadata.md` files you happen to find in the repo.
+**Exception — `apply` mode.** When you are explicitly handed a metadata file to apply (produced and validated *earlier in this same pipeline*), that file **is** authoritative: use it as-is, do not re-extract, and do not treat it as stale. This exception covers only the file passed as the `apply`-mode input, not other `hssi_metadata.md` files you happen to find in the repo. In release mode the canonical dossier is the baseline instead: its settled decisions stand unless their evidence changed (see Release Mode).
 
 ---
 
@@ -147,7 +150,36 @@ Before extracting metadata, **always `git pull`** the repo to ensure it reflects
 
 ### Step 3: Generate Fresh Metadata (Mode-Dependent)
 
+#### Release Mode (after a new release)
+
+A release update runs when a new version of the software appears — typically from a "New version of …" issue — and its job is to leave the entry and its dossier as current as the software now is: every field that changed since the dossier last read it, above all Software Functionality, which is what HSSI users search by. It stays cheap by skipping only what you can see stayed the same, since a field whose evidence is unchanged cannot have gone stale. No SoMEF.
+
+Throughout, the pin a field file refers to is the default branch's current head; cite that revision for anything you read there. When the release you will record sits on another branch, compare and read it too: a capability only the release has is still the software's, cited at the release's revision.
+
+1. **Read the whole dossier.** It is the baseline: a decision recorded there stands unless its evidence changed; anything it asks a later update to check is in scope; and a field where live HSSI and the dossier disagree for a reason the software's changes do not explain is drift — report it as a decision. If there is no dossier, or its header lacks a Source Revision or `PASS`, say so and stop: the orchestrator runs a Full Metadata Refresh instead.
+2. **Decide Version** under `fields/12`. If it keeps the stored release although a newer version was reported (as an issue's version is), name the rule that rejected it.
+3. **Find out what changed since the dossier read each field:** compare the revision the field's evidence names — else the header's Source Revision — with the pin, and read the notes or changelog of every release in between. Notes say what a release meant to change; the comparison catches what notes leave out.
+4. **Always check** Development Status; that the stored Code Repository, Documentation and Logo still pass their field files' checks; the repository's topics, its PyHC registry entry and its Zenodo or DataCite record against what the dossier recorded from them (a change in what a field records from them brings that field in); and publications about or citing the software since the last search its Related Publications section records, else since its Extraction Date (`fields/27` decides which qualify; record the search there).
+5. **Check every other field (2–33) unless you can see its evidence unchanged.** Judge that from the evidence the dossier records for the field and the sources its field file lists under *Where to find it, and traps*. A changed file proves nothing by itself either way; what matters is whether the part a field reads changed. For example:
+
+   | The changes… | Check |
+   |---|---|
+   | add, remove or substantially change a capability (a reader, model, mission or instrument loader, analysis routine, file format, output, GPU or HPC support) | Software Functionality first, then each field the capability bears on: Keywords, Description and Concise Description, Data Sources, Input and Output File Formats, Related Region and Phenomena, Related Datasets, Related Instruments and Observatories, Related and Interoperable Software, CPU Architecture |
+   | change the license (`LICENSE`, the license entry in package metadata) | License |
+   | change the declared `keywords` (package metadata, `CITATION.cff`) | Keywords |
+   | change the authors, grants or references the metadata declares (`CITATION.cff`, `.zenodo.json`, `codemeta.json`, package metadata, an `AUTHORS` file) | Authors, Funders and Awards, Related Publications |
+   | name a new paper to cite | Reference Publication, and any funders its acknowledgments name |
+   | add or drop a dependency on software HSSI catalogues | Related and Interoperable Software |
+   | change the supported languages or platforms (source files, CI platforms, wheel or conda targets, `requires-python`, classifiers) | Programming Language, Operating System, CPU Architecture |
+   | rename the software, move the repository, change the documentation link or logo, or add a first DOI | Software Name, Code Repository, Documentation, Logo, or Persistent Identifier with Publication Date and Publisher |
+
+6. **Check every field instead** when you cannot make the comparison (release notes alone never show evidence unchanged), or the user asks for it, and say why.
+
+Decide each checked field by its field file, starting from the value and evidence the dossier records rather than from scratch. A stored value the changes could have affected gets its own verdict under the file's incumbent rule, including its removal branch, whether the file words it for a refresh, a full refresh or a refresh on request: keep the value while the evidence supports it; if the changes removed what it rests on, propose removing it (a removal needs explicit approval). In the diff report, name the revisions compared, each checked field with the change that brought it in, and why the rest were skipped. Then bring the dossier forward (Step 6).
+
 #### Refresh Mode (lightweight)
+
+If Version finds a newer release than HSSI lists, stop: recording a new release is a release update (see Release Mode).
 
 Check only dynamic fields directly against the repo — no SoMEF, no deep code analysis:
 
@@ -194,7 +226,7 @@ Because the file was typically seeded from live HSSI, most fields will MATCH and
 
 ### Step 4: Diff — Compare Fresh vs HSSI
 
-For each field in scope (dynamic fields for refresh, all fields for enrich, specified fields for targeted, all fields present in the file for apply):
+For each field in scope (the fields brought into scope for release, dynamic fields for refresh, all fields for enrich, specified fields for targeted, all fields present in the file for apply):
 
 | Status | Meaning | Example |
 |--------|---------|---------|
@@ -242,7 +274,15 @@ Flag any removals with a warning. Present CONFLICT items for user decision. Each
 
 ### Step 6: Build the Transient Update Plan
 
-Build the update plan only when every user decision is resolved and every hard blocker is cleared. In `apply` mode, also require a passing validation report for the final reconciled metadata file. Validation logic belongs to the Validator; do not substitute an Updater self-check.
+**Bring the canonical dossier forward first.** In every mode except `apply` (which reconciles the file it was given), if the software has a canonical dossier (`repos/<repo>/hssi_metadata.md`) whose header records a Source Revision and `PASS`, and, once every decision is settled, the final values or their evidence differ from it, update it before building the plan:
+- Rewrite each such field's section in place: the new value, its evidence (naming beside it the revision you read it at) and its rationale, as settled fact. Keep its rejected alternatives, negative research and conditions for a later check — marking any these changes settled — and record the value it supersedes and why.
+- State HSSI's prior value perfectively ("HSSI held v8.0.0 until this update"), never in the present tense. Never write an open choice, a diff label or run mechanics.
+- Correct any sentence elsewhere, header scope notes included, that states a value or fact these changes superseded. Otherwise leave the other sections and the header's Source Revision as they are: their evidence was read at that revision.
+- Set `Validation Date` and `Validation Status` to `Pending`, and return the dossier for a focused Validator recheck.
+
+Never create a dossier; if there is none, or its header lacks a Source Revision or `PASS`, say so.
+
+Build the update plan only when every user decision is resolved and every hard blocker is cleared. In `apply` mode, and whenever you brought a dossier forward, also require a passing validation report for the final reconciled metadata file. Validation logic belongs to the Validator; do not substitute an Updater self-check.
 
 1. **Normalize controlled-list values** against live endpoints on the target URL
 2. **Build the nested `patch`** as a flat JSON object of camelCase field names → values, using the same shapes as `/api/submission/`. Field 1 `submitter` is forbidden. The HTTP request sends this nested object only — never the surrounding update plan.
@@ -272,21 +312,21 @@ Build the update plan only when every user decision is resolved and every hard b
 
 `blockers` must be an empty array for an executable plan. A plan with blockers may be saved for diagnosis, but it is not approvable or executable. The update plan is operational state, not canonical metadata: never commit it or copy its target/baseline/PATCH data into `hssi_metadata.md`.
 
-**More generally — `hssi_metadata.md` is a durable metadata dossier, not a record of your run.** See *The Canonical Metadata File* in the orchestrator's instructions. When you reconcile the working metadata file in `apply` mode, you may change **field values and the rationale that supports them, and nothing else.** Never write into that file: diff status labels (`MATCH`, `STALE`, `ENRICHMENT`, `CONFLICT`, `HSSI-ONLY`, `NON-PATCHABLE`) or any per-field disposition legend; target URLs, HTTP statuses, or `fieldsUpdated`; baseline, preflight, checkpoint, retry or roundtrip narration; update-plan contents; internal HSSI database row identifiers or generic table-behavior walkthroughs; or a summary table of what this pass changed. Every one of those belongs in your return to the orchestrator, which relays it to the user.
+**More generally — `hssi_metadata.md` is a durable metadata dossier, not a record of your run.** See *The Canonical Metadata File* in the orchestrator's instructions. When you reconcile the working metadata file in `apply` mode or bring a dossier forward, you may change **field values and the rationale that supports them, and nothing else.** Never write into that file: diff status labels (`MATCH`, `STALE`, `ENRICHMENT`, `CONFLICT`, `HSSI-ONLY`, `NON-PATCHABLE`) or any per-field disposition legend; target URLs, HTTP statuses, or `fieldsUpdated`; baseline, preflight, checkpoint, retry or roundtrip narration; update-plan contents; internal HSSI database row identifiers or generic table-behavior walkthroughs; or a summary table of what this pass changed. Every one of those belongs in your return to the orchestrator, which relays it to the user.
 
 Recording *why* a value is what it is — the evidence, the alternatives you rejected, the earlier value you superseded and what proved it wrong — is not narration and is welcome. The line is purpose: reasoning about the metadata stays, mechanics of the run do not.
 A concise software-specific limitation that prevents an ineffective or unsafe future correction is
 also rationale: state the consequence and only the minimum platform mechanism needed to make it
 actionable, without copying the generic implementation tutorial into the dossier.
-Record the actual Updater mode in `mode`; the file-driven pipeline shown above uses `apply`, while the other supported workflows use `refresh`, `enrich`, or `targeted`.
+Record the actual Updater mode in `mode`; the file-driven pipeline shown above uses `apply`, while the other supported workflows use `release`, `refresh`, `enrich`, or `targeted`.
 
 See the `update-payload` skill for field shapes, identity-aware union rules, and the complete update-plan contract.
 
 ### Step 7: Return for Approval (PREPARE mode endpoint)
 
-If decisions or blockers remain, STOP and return the diff plus the exact decisions required. Do not claim there is an approvable plan. After the user responds, PREPARE must be invoked again with those decisions. In `apply` mode, reconcile the working metadata file to the chosen final values; if that changed the validated file, return it without a plan and state which fields require a focused Validator recheck. The orchestrator must then supply the passing final validation report in another PREPARE invocation; do not perform validation in the Updater.
+If decisions or blockers remain, STOP and return the diff plus the exact decisions required. Do not claim there is an approvable plan. After the user responds, PREPARE must be invoked again with those decisions. In `apply` mode, reconcile the working metadata file to the chosen final values (in other modes, bring the dossier forward); if that changed the validated file, return it without a plan and state which fields require a focused Validator recheck. The orchestrator must then supply the passing final validation report in another PREPARE invocation; do not perform validation in the Updater.
 
-Reconciliation writes the **values** the user chose. Turning the surrounding prose from open choices into settled rationale is the Extractor's canonical finalization pass, which the orchestrator runs before the final recheck on every full refresh — including when you reported no choices at all. Do not attempt it yourself, and do not leave your own diff vocabulary behind for it to clean up.
+In `apply` mode, reconciliation writes the **values** the user chose. Turning the surrounding prose from open choices into settled rationale is the Extractor's canonical finalization pass, which the orchestrator runs before the final recheck on every full refresh — including when you reported no choices at all. Do not attempt it yourself, and do not leave your own diff vocabulary behind for it to clean up. When you bring a dossier forward (Step 6), you write that settled prose yourself.
 
 When all decisions are resolved and validation passes, save the update plan and return:
 

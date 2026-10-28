@@ -135,7 +135,8 @@ binds (stop at the first that fires). Rules 13–14 cover incumbents and emptine
     with no correctly spelled live row in any case, separator or plural variant.
 
 13. **Incumbents.** Give every stored keyword its own verdict on a refresh: remove it only under rules 2–5
-    (scope tag, failed domain test, unsupported, misspelled); keep every other stored keyword, including one
+    (scope tag, failed domain test, unsupported, misspelled), or when its only support was a capability the
+    software has since removed; keep every other stored keyword, including one
     that overlaps another field. Never remove or re-send a keyword to change only its case or separator.
 
 14. **Empty is legitimate** when no project-declared term survives and no domain term qualifies. Record
