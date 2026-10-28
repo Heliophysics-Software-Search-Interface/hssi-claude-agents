@@ -51,8 +51,8 @@ never selects a paper from it. Decide Fields 14 and 27 together.
    (Field 28) or a repository URL.
 2. **Poster, slide deck, talk or conference abstract → not Field 14.** Even when its whole subject is
    this software: the field's role is the paper-of-record (the JOSS-paper role). A deposited poster,
-   or a slide deck that passes Field 27's standalone test, goes to Field 27 under its rule 3; a talk
-   or a meeting abstract goes nowhere (Field 27 rule 1).
+   or a slide deck that passes Field 27's standalone test, goes to Field 27 when that field's
+   inclusion rubric admits it; a talk or a meeting abstract goes nowhere (Field 27 rule 1).
 3. **The project's own citation guidance names one paper for the software → that paper.** Evidence:
    `CITATION.cff` `preferred-citation`; a README or docs "Citing", "How to cite" or "Acknowledging"
    section; a JOSS badge. The project's designation decides even when the paper, strictly, describes

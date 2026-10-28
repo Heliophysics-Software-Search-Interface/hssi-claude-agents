@@ -80,10 +80,11 @@ Decide Fields 14 and 27 together.
    refresh does not rediscover them as new.
 7. **Incumbent entry → keep** when it is a real publication (rule 3's definition) that describes,
    cites or uses the software, even if it would not be added under rules 3–6. Remove an incumbent only
-   when rule 1 or 2 fires, when it does not resolve, or when it is unrelated to this software. A
-   removal because the incumbent is a meeting abstract, a talk or a slide deck goes to the user for
-   confirmation before it enters a patch (see *Ask the user only when*). When an incumbent is a
-   non-DOI URL for a paper that has a DOI, replace it with the DOI.
+   when rule 1 or 2 fires, when it does not resolve, or when it is unrelated to this software. Removing
+   an incumbent because it is a meeting abstract or a talk, or a slide deck the user has judged to fail
+   rule 3's standalone test, needs the user's confirmation before it enters a patch (see *Ask the user
+   only when*). When an incumbent is a non-DOI URL for a paper that has a DOI, replace it with the
+   DOI.
 8. **Nothing qualifies → empty, with the search recorded.** Check the paper sources under *Where to
    find it* before recording "Not found".
 
@@ -95,8 +96,10 @@ permalink or arXiv abstract page, with the full citation in the dossier prose.
 - **A slide deck, as a candidate or an incumbent.** Rule 3's standalone test needs a human read:
   present the deck with a one-line account of its content and how much a reader can follow without
   the talk.
-- **Removing an incumbent because it is a meeting abstract, a talk or a slide deck** (rules 1 and 7).
-  The rubric decides that the entry goes; the user confirms each removal before it enters a patch.
+- **Removing an incumbent because it is a meeting abstract or a talk, or a slide deck the user has
+  judged to fail the standalone test** (rules 1 and 7). The rubric decides that an abstract or a talk
+  goes, and the user's judgment decides a deck; either way the user confirms each removal before it
+  enters a patch, separately from approving the final patch.
 
 Anything else is decided by the rubric. A case no rule covers is a rubric gap: ask, and report it as
 one.
