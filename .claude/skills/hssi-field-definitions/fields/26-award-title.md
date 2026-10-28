@@ -137,8 +137,9 @@ qualifies, even when X wrote the software.**
 ## Payload and roundtrip notes
 
 - **Shape:** `award` is an array of Award objects `{name, identifier, funder}`; the API field is `award`,
-  **not** `awardTitle`. `identifier` is a string, not validated as a URL. `funder` is optional, an
-  Organization object `{name, identifier}`; an award item or a `funder` that is not an object is a 400.
+  **not** `awardTitle`. `identifier` is a string, not validated as a URL. `funder` is optional: an
+  Organization object `{name, identifier}`, or `null`. An award item that is not an object, or a non-null
+  `funder` that is not one, is a 400.
   The list replaces the entry's awards wholesale.
 - **Resolution:** with an identifier, match on the identifier only; on a hit the row is reused and the
   payload `name` is discarded; on a miss a new row is created with that name and identifier. Without an
@@ -146,7 +147,8 @@ qualifies, even when X wrote the software.**
 - **Funder:** resolved like any Organization (Field 25's resolution). A new row gets it on a POST or a
   PATCH. On a PATCH, a matched row with no funder gets it; a stored funder is never replaced, and a
   different one is ignored with a 200. A POST reuses a matched row as it is, so filling an existing row's
-  empty funder takes a PATCH. An empty or null `funder` is ignored. The funder renders beside the award
+  empty funder takes a PATCH. Only a `null` or `{}` `funder` is ignored; any other value that is not an
+  object, such as `""` or `[]`, is a 400 that fails the whole request. The funder renders beside the award
   on every entry the row serves and feeds their JSON-LD.
 - **`name` is required** and non-empty; an award object with no name 400s.
 - **Caps:** `Award.name` and `Award.identifier` are 128 characters. A longer `name` (after trimming) is a
