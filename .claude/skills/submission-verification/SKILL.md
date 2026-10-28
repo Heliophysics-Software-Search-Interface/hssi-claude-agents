@@ -24,6 +24,7 @@ Before submitting, confirm:
 - [ ] `authors` array is non-empty; each entry has `givenName` and `familyName`
 - [ ] `license` (if present) is a plain string, not an object
 - [ ] `publisher` (if present) uses `{name, identifier}` — no `publisherIdentifier` key
+- [ ] Each `award` entry is an object with a `name` of at most 128 characters; its `funder`, if present, is a `{name, identifier}` object
 - [ ] Submitter email appears valid (contains `@`)
 - [ ] Submitter email is the real submitter's email address — this is the genuine submission, not a test or probe
 - [ ] This is the one and only submission attempt for this metadata — not a test, probe, or iterative experiment
@@ -121,7 +122,7 @@ These differences are expected between submitted and stored forms:
 
 8. **`publisher` identifier** — Submitted `publisher.identifier` may be stored under a renamed key (e.g., `publisherIdentifier`) in the curator view, even though submission uses `identifier`.
 
-9. **`award` vs stored representation** — Award objects may be restructured.
+9. **`award` vs stored representation** — Award objects may be restructured. The curator data serializes each award row recursively (`name`, `identifier`, and `funder` as an Organization object). `/api/view/software/<id>/` renders each award as its name only; once the entry is visible, read its identifier and funder from `?view=jsonld` (`funding` items) or `/api/models/Award/rows/<id>/?recursive=true`. An award the submission matched to an existing row keeps that row's name and funder, or its lack of one, so a submitted `funder` that differs there or is absent is expected, not lost; a PATCH after publication can fill an empty one (`hssi-field-definitions/fields/26-award-title.md`).
 
 ### Verification Pass
 

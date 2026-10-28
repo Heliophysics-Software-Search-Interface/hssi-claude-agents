@@ -63,7 +63,8 @@ attestation of authorship.
 1. **Stored in HSSI as an author of this entry → keep.** No author is dropped in a refresh, including
    one a later CITATION.cff omits. If the stored link points at a defective duplicate row (a misspelled,
    identifier-less copy) of a person whose identified row already exists, send that person's stored ORCID
-   so the entry binds the identified row; that is a relink, not a removal.
+   under the identified row's stored name, so the entry binds the identified row; that is a relink, not a
+   removal.
 2. **Attested contributor known only by a handle → an author, recorded as the handle.** When an author
    source in the candidate pool (CITATION.cff, `.zenodo.json`/Zenodo creators, AUTHORS) credits a GitHub
    username or other handle and no human name can be established, the person is still an author. First
@@ -104,14 +105,25 @@ attestation of authorship.
 
 10. **Stored name matches a project source, or the person's ORCID primary, credit or other name → keep it
     and document any divergence.** A middle initial, a fuller given name or an unaccented spelling is a
-    style variant, not a correction. The stored name is not writable by PATCH, and the Person row is shared
+    style variant, not a correction. A PATCH cannot change a stored name's words or their capitalization
+    (the one name change it can make, the given/family split, is rule 11's), and the Person row is shared
     by the person's other entries.
-11. **Stored name matches no source (a typo, a wrong particle split such as `Darren de` / `Zeeuw`, an
-    honorific in the given name) → record the correct form as the target and report the rename as
-    NON-PATCHABLE.** It needs a database-side correction to a shared Person row, checked against every
-    entry that row serves. A legacy row with a blank given name and a bare handle as its family name (a bulk
-    contributor import) is corrected the same way: to the proven human name when a primary artifact
-    carries one, otherwise to `<login>` / `(GitHub)` per rule 2.
+11. **Stored name matches no source → record the correct form as the target.** How it lands depends on
+    what differs:
+    - **Only the split:** the same words, with the same capitalization and in the same order, divided
+      differently between given and family name (`Daniel da` / `Silva` for `Daniel` / `da Silva`). A
+      PATCH applies the sent split to a Person it resolves by identifier, so send the corrected split with
+      the row's stored identifier, or with a linked ORCID that rule 15 attaches in the same PATCH. The new
+      split shows on every entry the row serves. A row with no stored identifier and no linked ORCID cannot
+      be re-split through the API: sent without an identifier, a name binds only a row with exactly that
+      split, so any other split binds a different row or creates a new Person. Report that re-split as
+      NON-PATCHABLE.
+    - **Anything else is a rename, NON-PATCHABLE:** a typo, a changed, added or dropped word, an honorific
+      in the given name, or a capitalization change such as `Darren de` / `Zeeuw` for `Darren` /
+      `De Zeeuw`. It needs a database-side correction to a shared Person row, checked against every entry
+      that row serves. A legacy row with a blank given name and a bare handle as its family name (a bulk
+      contributor import) is corrected the same way: to the proven human name when a primary artifact
+      carries one, otherwise to `<login>` / `(GitHub)` per rule 2.
 12. **New author → the project's own spelling**, diacritics included as the project writes them, over a
     better-documented external form. Take the given/family split from the person's linked ORCID
     structured name, else from CITATION.cff `given-names`/`family-names`; keep surname particles with the
@@ -122,20 +134,46 @@ attestation of authorship.
 ### C. Identifier (person authors)
 
 13. **Stored ORCID → keep.** If it demonstrably belongs to a different person, record the right one and
-    report the change as NON-PATCHABLE.
+    report the change as NON-PATCHABLE: a PATCH never replaces a stored identifier, and sending the right
+    one creates a new Person for this entry while the wrong one stays on the person's other entries.
 14. **Candidate ORCID without independent identity linkage → do not record it.** The ORCID record itself
     must connect to this person or this work: its works list the software or its paper, its employment
     matches the commit address and the field of the work, its researcher URL leads to the contributor's
     GitHub account, or a project source or DOI record carries the ORCID beside this name. A name match
     alone is not enough, nor is a same-name, same-institution record with no works. Record the rejected
     candidate and the reason, so a later refresh neither re-hunts it nor adopts it.
-15. **Linked ORCID for an author stored without an identifier → record it in the dossier as the target and
-    report it as NON-PATCHABLE.** A Person sent with an ORCID that matches no row **creates a new Person,
-    even when a row with that name exists**, and the original row is orphaned from the entry. The Updater
-    never mints: it sends that author without the identifier and routes the ORCID to the database workflow.
-    The hazard belongs to the update path, not the value: a later refresh that finds the ORCID applied must
-    still not have sent it.
-16. **Linked ORCID for a new author, or one already stored on the row being bound → record and send it.**
+15. **Linked ORCID for an author of this entry stored without an identifier → record it and send it under
+    the stored full name.** On a PATCH, an ORCID that no Person carries attaches to this entry's one
+    current author who has no identifier and the same full name: the same words, with the same
+    capitalization and in the same order, however `givenName` and `familyName` split them. That row stays
+    on the entry, takes the ORCID and takes the sent split (rule 11). The sent words must be the stored
+    ones: a full name that differs in any word or capitalization makes the PATCH create a new Person with
+    the ORCID, and the stored row leaves the entry; a rename of the words is rule 11's. The ORCID is
+    NON-PATCHABLE when:
+    - two or more of the entry's identifier-less current authors share that full name (one person listed
+      twice under different splits, or namesakes): the whole PATCH fails with a 400;
+    - the row also serves entries by a different person of the same name: the ORCID would show on theirs
+      too (*Stored-row sharing* below).
+
+    An ORCID that another Person row already carries binds that row instead, a relink (rule 1).
+16. **Linked ORCID for an author new to this entry → record and send it,** unless the catalogue already
+    holds this person as an identifier-less Person row. Judge an identifier-less row under this person's
+    name by the entries it serves: it is this person when an entry it serves credits this person in its
+    own author sources, and a namesake when its entries are another person's work. For a namesake, send
+    the ORCID; the new Person it creates is correct. For this person, an ORCID that no row carries would
+    create a second Person beside the existing row, so bind the row first and attach the ORCID second:
+    - **On an update,** two PATCHes approved as one plan. The first sends the author without the
+      identifier under the row's exact stored given and family names, which binds the row; the second
+      sends the author list again with the ORCID, which rule 15 attaches to the now-current row (*Binding
+      an existing identifier-less row* below). The row keeps its stored words (rule 10 judges a
+      difference); the second PATCH may carry rule 11's re-split.
+    - **On a new submission,** a POST can only bind: send the author without the ORCID under the row's exact
+      stored given and family names, keep the ORCID in the dossier, and let rule 15 attach it in a later
+      update.
+
+    The bind is NON-PATCHABLE when another Person row has the same exact split: a name sent without an
+    identifier binds an arbitrary one of them. An ORCID that a row already carries binds that row on either
+    path; send it under that row's stored name.
 
 ### D. Affiliations
 
@@ -179,13 +217,14 @@ attestation of authorship.
     (`https://api.ror.org/organizations?query=<name>`) and record it as the author identifier; HSSI infers
     org-ness from the `ror.org` identifier, so no other marker exists. Use an ORCID for people and a ROR
     for organization authors; contributors remain person/ORCID-only.
-26. **Organization author already stored → send its stored given/family split exactly.** Without an
-    identifier, the Person match is exact and case-sensitive on both parts, so a different split of the
-    same string creates a duplicate row.
+26. **Organization author already stored → send its stored given/family split exactly.** Sent with its ROR,
+    a different split of the same words re-splits the shared row on a PATCH; without an identifier, the
+    Person match is exact and case-sensitive on both parts, so a different split of the same string
+    creates a duplicate row.
 27. **New organization author with a multi-token name → split on the first whitespace:** first token →
     `givenName`, the remainder → `familyName` ("The SunPy Community" → `The` / `SunPy Community`).
-28. **Single-token organization name (e.g. `NASA`) → cannot be encoded;** both name parts must be
-    non-empty. Put it on the Ask list; never guess a split.
+28. **Single-token organization name (e.g. `NASA`) → cannot be encoded;** a new author needs both name
+    parts non-empty. Put it on the Ask list; never guess a split.
 
 ### F. Order and refresh
 
@@ -197,11 +236,11 @@ attestation of authorship.
 
 ## Ask the user only when
 
-- **A NON-PATCHABLE correction to a shared row is needed** — an ORCID for a stored identifier-less
-  author, a rename or re-split of a stored name, an affiliation removal, a ROR for an identifier-less
-  Organization row, or the repair of an empty stored given name. The rubric decides the target value; the
-  user decides whether it goes through the database workflow. It is a hard blocker for canonical
-  completion until routed.
+- **A NON-PATCHABLE correction to a shared row is needed** — a rename of a stored name (rule 11, which
+  includes repairing a legacy blank-given row), a re-split or ORCID the API cannot apply (rules 11, 15
+  and 16), the replacement of a wrong stored ORCID (rule 13), an affiliation removal, or a ROR for an
+  identifier-less Organization row. The rubric decides the target value; the user decides whether it goes
+  through the database workflow. It is a hard blocker for canonical completion until routed.
 - **A single-token organization author name** that cannot be split into non-empty given and family names.
 
 ## Where to find it, and traps
@@ -237,9 +276,12 @@ shortlog patterns.
   reading `name` makes an existing record look empty. Run a positive control in the same query set.
 
 **Traps**
-- An ORCID sent for a stored identifier-less author mints a duplicate Person (rule 15).
-- A name sent without an identifier binds only on an exact, case-sensitive given+family match; any
-  spelling, case or split difference mints a duplicate.
+- An ORCID that no Person carries creates a new Person unless, on a PATCH, exactly one current author of
+  the entry has no identifier and the same full name. An author new to the entry, a full name that
+  differs in any word or capitalization, and every POST get a new Person even when an identifier-less row
+  of that name exists (rules 15 and 16).
+- A name sent without an identifier and with a given name binds only on an exact, case-sensitive
+  given+family match; any spelling, case or split difference mints a duplicate.
 - The same person can appear under several commit identities (`, Ph.D` suffixes, numeric noreply
   prefixes, machine hostnames); treat none as a second person.
 - A GitHub account whose login equals a stored string is often someone else.
@@ -264,22 +306,48 @@ shortlog patterns.
   must be reproduced exactly or a duplicate row is created.
 
 - **Shape:** `authors` is an array of Person objects
-  `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}`; `givenName` and
-  `familyName` are both required and non-empty.
+  `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}`. `familyName` is required
+  and non-empty. So is `givenName`, except on a PATCH for an author stored with an empty given name (see
+  *Empty stored given name*).
 - **Organization authors.** An author may be an organization (a lab, consortium, or institution credited
   as an author) rather than a person. To submit one, put its **ROR URL** in `identifier` (e.g.,
   `https://ror.org/03c3r2d17`). HSSI derives org-ness server-side purely from the `ror.org` identifier —
   there is no separate flag — and renders the author as a schema.org `Organization`, with its
-  affiliations as `parentOrganization`. `givenName` and `familyName` are still both required and
-  non-empty, and the stored name is `givenName + " " + familyName`, so split a new org name as rule 27
-  says. A single-token org name can't satisfy the non-empty `familyName` rule — flag it to the user rather
-  than guessing a split. This applies to **authors only**; contributors remain person/ORCID-only.
-- **Person resolution.** With an identifier: match on the identifier only; on a hit, only a *blank* given
-  or family name is filled in and a non-blank name is never overwritten; on a miss, a new Person is
-  created with no name fallback. Without an identifier: exact, case-sensitive given+family match, else
-  create. So sending name + ORCID is safe when that ORCID is already stored on a row, and mints when it is
-  on none.
-- **Renames are silent no-ops.** A corrected name for a matched Person returns 200 and changes nothing.
+  affiliations as `parentOrganization`. A new organization author still needs both `givenName` and
+  `familyName` non-empty, and the stored name is `givenName + " " + familyName`, so split a new org name
+  as rule 27 says. A single-token org name can't satisfy the non-empty `familyName` rule — flag it to the
+  user rather than guessing a split. This applies to **authors only**; contributors remain
+  person/ORCID-only.
+- **Person resolution.** "The same full name" means the same words, with the same capitalization and in
+  the same order, however `givenName` and `familyName` split them.
+  - *With an identifier:* match on the identifier only. A hit keeps its names, except that a blank given
+    or family name is filled and, on a PATCH, a sent split of the same full name replaces the stored
+    split. On a miss, a PATCH attaches the identifier to this entry's one current author with no
+    identifier and the same full name (two or more such authors are a 400 for the whole PATCH). Every
+    other miss creates a new Person, even when an identifier-less row of that name exists: any POST, an
+    author not yet on the entry, a full name that differs.
+  - *Without an identifier:* exact, case-sensitive given+family match, else create. Among rows with that
+    exact split the binding is arbitrary.
+  - *Empty or missing `givenName`* on a PATCH: see *Empty stored given name*.
+
+  So sending name + ORCID binds the row that carries the ORCID. When no row carries it, a PATCH attaches
+  it to the entry's own identifier-less row of the same full name, and anything else creates a Person.
+- **Renames are silent no-ops.** A Person matched by identifier keeps its words and their capitalization:
+  a different full name returns 200 and changes nothing beyond filling a blank name part. Only a re-split
+  of the same full name is applied, and only by a PATCH.
+- **Binding an existing identifier-less row (rule 16).** The identifier attaches only to a current author,
+  so an author new to the entry whose identifier-less row already serves other entries takes two PATCHes,
+  planned and approved together:
+  1. The first sends the author without `identifier`, under the row's exact stored `givenName` and
+     `familyName`, which binds the row. Check beforehand that no other Person row has that exact split and
+     no row carries the ORCID:
+     `GET /api/models/Person/rows/all/?columns=id,given_name,family_name,identifier`.
+  2. Once the first PATCH has made the row a current author, the second sends the complete author list
+     again with the ORCID on that author, and the ORCID attaches to the row.
+
+  Verify the binding by the row's id in `GET /api/data/software/<uid>/` `authors`, after each PATCH.
+  `update-payload` gives the plan shape and the checks between the two. A POST cannot attach an identifier
+  to an existing row, so a new submission sends that author without the ORCID.
 - **Affiliations accumulate.** Each sent affiliation is `.add()`ed to whichever Person row was resolved;
   re-sending an existing affiliation inserts nothing, and nothing is ever removed.
 - **Organization resolution** (affiliations): with an identifier, match on the identifier only, else
@@ -290,24 +358,35 @@ shortlog patterns.
   than `European Space Agency`), surface it in the verification report and ask the user before
   submitting. Do not auto-expand — the value should already be expanded upstream by the extractor.
 - **Full replacement.** `authors` is replaced by the submitted list (`.set()`), in the submitted order.
-- **Empty stored given name.** If any stored author has `givenName: ""`, the whole `authors` field is
-  unpatchable: re-sending it 400s the entire PATCH, and a corrected name creates a new Person. Leave
-  `authors` out of the patch and fix the row in the database first.
+- **Empty stored given name.** On a PATCH, send an author stored with an empty given name with `givenName`
+  empty or omitted and the stored family name. It resolves to this entry's one current author with an
+  empty given name and the same family-name words (case-sensitive), which is left unchanged except that a
+  sent identifier fills its empty one when no other Person holds it (otherwise the identifier is ignored,
+  with a 200). No such author, or several, is a 400 for the whole PATCH, and a Person with an empty given
+  name is never created. A non-empty `givenName` for that author is a different name: it lands only
+  as a rule 11 re-split of the same words through an identifier, and otherwise binds another row or
+  creates one. A POST rejects an empty `givenName`.
 - **Identity matching does not erase attribute differences.** Match authors by ORCID and then normalized
   name; for each matched author, union affiliations by ROR and then normalized organization name. Match
   organizations by their stable identifier before normalized/canonical name, then separately compare
   their labels and nested values. Do not mark two objects fully MATCH merely because their identifiers
   match.
-- **Respect PATCH capability limits.** The endpoint reuses existing people and organizations and does not
-  overwrite their nonblank names. It can add author affiliations but cannot remove an existing
-  affiliation. Classify a desired shared-entity rename or nested affiliation removal as NON-PATCHABLE,
-  omit it from `patch`, and make it a hard blocker for canonical completion until the user routes it
-  through the CSV/manual database workflow. Top-level relationship removals remain possible through a
-  complete approved replacement list.
+- **Respect PATCH capability limits.** The endpoint reuses existing people and organizations and never
+  renames them: a Person keeps its words and their capitalization, an Organization its nonblank name. On
+  a PATCH it can attach an ORCID to an identifier-less current author (rule 15), bind an existing row
+  before attaching one (rule 16), and re-split a Person it resolves by identifier (rule 11). It can add
+  author affiliations but cannot remove an existing affiliation. Classify a desired rename, a re-split or
+  ORCID those rules cannot apply, a stored ORCID's replacement, or a nested affiliation removal as
+  NON-PATCHABLE, omit it from `patch`, and make it a hard blocker for canonical completion until the user
+  routes it through the CSV/manual database workflow. Top-level relationship removals remain possible
+  through a complete approved replacement list.
 - **Refresh matching.** During refresh/enrich, match and dedupe organization authors by their ROR
   exactly as ORCID is used for people, and don't flag a `ror.org` author identifier as invalid.
-- **Stored-row sharing.** A Person row is shared by every entry that person authors; a database-side
-  change to it changes all of them. Check the row's other entries before routing a correction.
+- **Stored-row sharing.** A Person row is shared by every entry it serves, so an ORCID or a re-split that
+  a PATCH applies shows on all of them, as a database-side correction does (an added affiliation does
+  too; rule 19). Before sending an ORCID or a re-split for an existing row, or routing a correction to
+  one, find the row's other entries (its id in the `authors` of each listed entry's
+  `GET /api/data/software/<uid>/`) and check they are this person's.
 
 ## Worked examples
 
@@ -316,10 +395,20 @@ shortlog patterns.
   and those two; the contact names in the address blocks, the routine-level credits, the Fortran-original
   credit and the `$Author:` keyword are recorded as excluded with their roles.
 - **Verified ORCIDs for identifier-less stored authors (PyGS, PyAuroraX).** Fielded ORCID searches with
-  controls tie each author to a single record whose employment and works match. Because the stored Person
-  rows carry no identifier, rule 15 fires: the dossier records the ORCIDs, the patch sends the authors
-  without them, and the identifiers go to the database workflow. A third author whose five same-name
+  controls tie each author to a single record whose employment and works match. The stored Person rows
+  carry no identifier, so rule 15 sends each ORCID under the author's stored full name, and the PATCH
+  attaches it to the stored row instead of creating a new one. A third author whose five same-name
   records are all other people gets no identifier (rule 14).
+- **A split and a capitalization (CCSDSPy, Kamodo).** CCSDSPy's row stores `Daniel da` / `Silva` with an
+  ORCID whose record gives `Daniel` / `da Silva`: the same words split differently, so rule 11 sends the
+  corrected split with the stored ORCID and one PATCH re-splits the row. Kamodo's `Darren de` / `Zeeuw`
+  had to become `Darren` / `De Zeeuw`; the capital D makes that a rename, NON-PATCHABLE, so it went
+  through the database.
+- **An author new to the entry who already has a row (DKIST User Tools).** Thomas Robitaille is added to
+  DKIST User Tools with a linked ORCID that no row carries, while the catalogue holds an identifier-less
+  `Thomas` / `Robitaille` row that serves SunPy, which credits the same person. Rule 16 binds that row:
+  the first PATCH sends the author without the ORCID under the row's stored names, and the second sends
+  the list again with the ORCID, which then shows on SunPy too.
 - **GitHub handles in a Zenodo creator list (georinex, sunpy).** Handles that resolve to people through
   commits git-authored under personal names are recorded as those people. A creator whose every artifact
   carries only the handle and a noreply address encoding its login (`izzydrewlynn
@@ -343,3 +432,5 @@ shortlog patterns.
 - No regenerated blocks; hand-written.
 - Migrated from RSFF 225-240 on 2026-09-22.
 - Rubric authored 2026-09-22 from prior guidance and past refresh decisions.
+- Person resolution (rules 1, 10, 11, 13, 15, 16, 26 and 28 and the payload notes) re-verified against
+  hssi-website `fe169d72` (#126) on 2026-10-28.

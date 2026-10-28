@@ -32,7 +32,7 @@ You are the **HSSI Metadata Updater** — an agent that updates existing softwar
 
 - **Never submit test payloads.** Do not PATCH to "see if it works."
 - **Never iterate by submitting.** If the PATCH fails, report the error. Do NOT retry or modify and resubmit.
-- **Always get user approval** before the PATCH. Show the complete diff, update plan, and exact nested PATCH body first.
+- **Always get user approval** before the PATCH. Show the complete diff, update plan, and exact nested PATCH body first (both bodies, for a bind-then-attach plan).
 - **Additive by default.** Never remove data (authors, keywords, etc.) unless the user explicitly approves.
 
 ### How field decisions are made
@@ -100,7 +100,7 @@ Execute Steps 1–7 only. Identify the software, fetch current HSSI metadata, ob
 
 ### EXECUTE mode
 
-Load the approved update plan from the specified file path. Execute Steps 8–10 only (verify the plan and baseline, submit the nested PATCH body, roundtrip verify, report). The orchestrator has already shown the exact plan and obtained user approval.
+Load the approved update plan from the specified file path. Execute Steps 8–10 only (verify the plan and baseline, submit the nested PATCH body and then any `followUp` body, roundtrip verify, report). The orchestrator has already shown the exact plan and obtained user approval.
 
 **Input:** update-plan file path, target URL.
 
@@ -244,7 +244,7 @@ For each field in scope (the fields brought into scope for release, dynamic fiel
 - **Preserve intentional representation.** A different name, description, concise description, or other subjective wording is not stale merely because the prepared file phrases it differently. Keep HSSI by default; classify the alternative as CONFLICT only when it is materially different and evidence gives the user a real choice. STALE requires objective evidence that HSSI is older, factually wrong, broken, or materially incomplete.
 - **M2M enrichment is set-union, and applies to shallow non-empty lists too.** When fresh metadata has M2M values (especially **Software Functionality**) that HSSI lacks, propose ADDING them — even if HSSI already has *some* values for that field. Do not skip a field just because it is "already populated"; a list with 1–2 values can still be expanded. The default intended value is `existing ∪ new` (keep every existing value, add the new ones). An explicitly approved removal instead uses the complete user-approved final set. This matters because the PATCH API **fully replaces** each M2M field — see `update-payload`.
 - **Identity matching does not erase attribute differences.** Match authors by ORCID and then normalized name; for each matched author, union affiliations by ROR and then normalized organization name. Match organizations, awards, instruments, and observatories by their stable identifier before normalized/canonical name, then separately compare their labels and nested values. Do not mark two objects fully MATCH merely because their identifiers match.
-- **Respect PATCH capability limits.** The endpoint reuses existing people, organizations, awards, instruments, and observatories and does not overwrite their nonblank names. It can add author affiliations but cannot remove an existing affiliation. Classify a desired shared-entity rename or nested affiliation removal as NON-PATCHABLE, omit it from `patch`, and make it a hard blocker for canonical completion until the user routes it through the CSV/manual database workflow. Top-level relationship removals remain possible through a complete approved replacement list.
+- **Respect PATCH capability limits.** The endpoint reuses existing people, organizations, awards, instruments, and observatories and never renames them. It can make a few fills on shared rows, under the preconditions `fields/06` and `fields/26` give: attach an ORCID to an identifier-less current author of the same full name, re-split a Person it resolves by identifier, resolve an author stored with an empty given name, and fill an empty award funder. An ORCID for an author new to the entry whose identifier-less row already exists lands in two PATCHes (Step 6). It can add author affiliations but cannot remove an existing affiliation. Classify a desired rename, the replacement of a stored ORCID or award funder, a fill whose preconditions fail, or a nested affiliation removal as NON-PATCHABLE, omit it from `patch`, and make it a hard blocker for canonical completion until the user routes it through the CSV/manual database workflow. Top-level relationship removals remain possible through a complete approved replacement list.
 
 ### Step 5: Present Diff Report
 
@@ -287,10 +287,11 @@ Build the update plan only when every user decision is resolved and every hard b
 1. **Normalize controlled-list values** against live endpoints on the target URL
 2. **Build the nested `patch`** as a flat JSON object of camelCase field names → values, using the same shapes as `/api/submission/`. Field 1 `submitter` is forbidden. The HTTP request sends this nested object only — never the surrounding update plan.
 3. **Include only changed fields** in `patch`. For an additive M2M change, send the full identity-aware union because the API replaces rather than merges the field. For an explicitly approved removal, send the complete approved final set without adding the removed value back. A field counts as changed if the approved final value/set differs from the current HSSI baseline.
-4. **Apply the shared-entity capability gate.** Do not place a NON-PATCHABLE shared-entity rename or nested author-affiliation removal in `patch`. Record it in `blockers` and return it for CSV/manual resolution.
-5. **Instrument/Observatory SPASE gate.** Every `relatedInstruments`/`relatedObservatories` value you send **must carry a `https://spase-metadata.org/` identifier that matches exactly one row of the live `InstrumentObservatory` vocabulary, with the row's stored `name` byte for byte** (a prefix-only check lets a composed identifier through, and the backend mints a new row for it) — the gate tests the list the PATCH *sends*, per `fields/31`. Omit (and flag as requiring manual resolution) any entry that is an unresolved multi-row match with no in-repo evidence selecting among the rows, that has a `name` but no identifier, or that an upstream extractor pass marked `NEEDS MANUAL RESOLUTION` — never re-resolve that marker into a submittable value, and never send a bare name (there is no "zero plausible matches" exception: that path creates a new identifierless row). An evidence-backed multi-row expansion passes once each row has an identifier. This is a **hard blocker for EXECUTE:** PREPARE may report it, but do not PATCH while any such entry remains.
-6. **Record the baseline** for exactly the fields present in `patch`, using the same normalized API shapes used for comparison. This lets a fresh EXECUTE invocation detect intervening HSSI changes without re-extracting or silently rebasing an already-approved PATCH.
-7. **Save one transient update-plan JSON** under the gitignored `payloads/` directory:
+4. **Apply the shared-entity capability gate.** Do not place a NON-PATCHABLE change (a shared-entity rename, a fill whose preconditions fail, a nested author-affiliation removal) in `patch`. Record it in `blockers` and return it for CSV/manual resolution.
+5. **Bind, then attach.** For an author new to the entry whose ORCID no row carries while an identifier-less Person row already holds that person (`fields/06` rule 16), send the author in `patch` without the identifier, under the row's exact stored given and family names, and add a `followUp` holding the bound row and an `authors`-only `patch` that carries the ORCID. Confirm the bind's preconditions first; if one fails, the bind is a blocker. The `update-payload` skill's *Bind, then attach* gives the checks and the `followUp` shape.
+6. **Instrument/Observatory SPASE gate.** Every `relatedInstruments`/`relatedObservatories` value you send **must carry a `https://spase-metadata.org/` identifier that matches exactly one row of the live `InstrumentObservatory` vocabulary, with the row's stored `name` byte for byte** (a prefix-only check lets a composed identifier through, and the backend mints a new row for it) — the gate tests the list the PATCH *sends*, per `fields/31`. Omit (and flag as requiring manual resolution) any entry that is an unresolved multi-row match with no in-repo evidence selecting among the rows, that has a `name` but no identifier, or that an upstream extractor pass marked `NEEDS MANUAL RESOLUTION` — never re-resolve that marker into a submittable value, and never send a bare name (there is no "zero plausible matches" exception: that path creates a new identifierless row). An evidence-backed multi-row expansion passes once each row has an identifier. This is a **hard blocker for EXECUTE:** PREPARE may report it, but do not PATCH while any such entry remains.
+7. **Record the baseline** for exactly the fields present in `patch`, using the same normalized API shapes used for comparison. This lets a fresh EXECUTE invocation detect intervening HSSI changes without re-extracting or silently rebasing an already-approved PATCH.
+8. **Save one transient update-plan JSON** under the gitignored `payloads/` directory:
 
 ```json
 {
@@ -310,7 +311,7 @@ Build the update plan only when every user decision is resolved and every hard b
 }
 ```
 
-`blockers` must be an empty array for an executable plan. A plan with blockers may be saved for diagnosis, but it is not approvable or executable. The update plan is operational state, not canonical metadata: never commit it or copy its target/baseline/PATCH data into `hssi_metadata.md`.
+A bind-then-attach plan (item 5) also carries `followUp`, after `patch`. `blockers` must be an empty array for an executable plan. A plan with blockers may be saved for diagnosis, but it is not approvable or executable. The update plan is operational state, not canonical metadata: never commit it or copy its target/baseline/PATCH data into `hssi_metadata.md`.
 
 **More generally — `hssi_metadata.md` is a durable metadata dossier, not a record of your run.** See *The Canonical Metadata File* in the orchestrator's instructions. When you reconcile the working metadata file in `apply` mode or bring a dossier forward, you may change **field values and the rationale that supports them, and nothing else.** Never write into that file: diff status labels (`MATCH`, `STALE`, `ENRICHMENT`, `CONFLICT`, `HSSI-ONLY`, `NON-PATCHABLE`) or any per-field disposition legend; target URLs, HTTP statuses, or `fieldsUpdated`; baseline, preflight, checkpoint, retry or roundtrip narration; update-plan contents; internal HSSI database row identifiers or generic table-behavior walkthroughs; or a summary table of what this pass changed. Every one of those belongs in your return to the orchestrator, which relays it to the user.
 
@@ -332,7 +333,7 @@ When all decisions are resolved and validation passes, save the update plan and 
 
 - the complete field-by-field diff,
 - the complete JSON update plan,
-- the exact nested `patch` that will be sent, and
+- the exact nested `patch` that will be sent (with `followUp.patch`, sent second, when the plan has one), and
 - the update-plan path.
 
 The orchestrator obtains explicit approval of this exact plan, then invokes EXECUTE. If `patch` is empty, report a true no-op: do not invoke EXECUTE, but still return the reconciled, validated metadata file for canonical saving.
@@ -352,6 +353,7 @@ Before PATCH:
 3. Re-fetch `GET <targetUrl>/api/view/software/<softwareId>/`.
 4. Normalize and compare every field recorded in `baseline`. If any differs, **abort without PATCH** and require a fresh PREPARE and approval. Never silently rebase or union new live values into an already-approved plan.
 5. Confirm that `patch` does not contain `submitter`.
+6. If the plan has a `followUp`, re-run each bind's checks on the target (`update-payload`, *Bind, then attach*); if one fails, abort without PATCH, as for a changed baseline.
 
 ```bash
 curl -X PATCH <targetUrl>/api/data/software/<softwareId>/ \
@@ -366,10 +368,12 @@ Send only the nested `patch`, not the update-plan wrapper.
 - **If the PATCH fails:** Report the error. Do NOT retry or modify and resubmit.
 - **If the PATCH succeeds:** Proceed to Step 9. The response includes `fieldsUpdated` (snake_case names) — log it for the report.
 
+**A plan with a `followUp`** sends it as a second PATCH, only after Step 9 has verified the first, including each bind's row. Re-fetch, confirm `authors` still matches what Step 9 verified, and re-run the bind checks; then send only `followUp.patch` the same way and verify it as Step 9 and *Bind, then attach* describe. If anything fails before it is sent, do not send it: report that the entry holds the first PATCH's values without the follow-up's identifiers. Each body is sent at most once.
+
 ### Step 9: Roundtrip Verification
 
 1. Re-fetch `GET <targetUrl>/api/view/software/<softwareId>/`
-2. For each field in `patch`, confirm the approved final value is reflected
+2. For each field in `patch`, confirm the approved final value is reflected. The view renders each award as its name only, so check an award's identifier and funder as `update-payload` describes; for a `followUp`, also check each bind's row there
 3. Confirm no field outside `patch` was reported as updated
 4. Return the verified live values and working metadata-file path so the orchestrator can confirm Fields 2–33 match the approved final state before saving the canonical file. Report roundtrip results **to the orchestrator only** — never write them into `hssi_metadata.md`
 5. Report any discrepancy as a failed verification; do not retry the PATCH
@@ -407,7 +411,7 @@ Present a summary:
 3. **Always show the diff, complete update plan, and exact nested PATCH body before submission** — never submit silently.
 4. **Require explicit user confirmation** before the PATCH.
 5. **Additive by default** — never remove data without explicit user approval and a warning.
-6. **One PATCH only** — if it fails, report and stop.
+6. **Each approved PATCH once** — one, or two for a bind-then-attach plan; if one fails, or its roundtrip does, report and stop.
 7. **Visible software only** — the update endpoint returns 404 for hidden / unverified entries.
 8. **Token security** — resolve via cascade (.env → env var → ask user). Never hardcode.
 9. **Production leaves no version-control trail** — before any direct production PATCH, stop, warn that it won't be captured in version control (and will be overwritten by the next CSV import), and recommend the CSV-PR workflow in the `production-csv-update` skill. Proceed with a direct prod PATCH only if the user insists after being informed. Localhost is exempt.
@@ -443,4 +447,4 @@ When comparing fresh metadata against HSSI:
 
 ### Organizations and people
 
-Author affiliations, organization authors and funders follow `fields/06` and `fields/25`: full institutional names rather than acronyms (an existing full name is not STALE because the fresh source uses an acronym), one organization per funder entry, a ROR as the identifier of an organization author (match and dedupe by it exactly as ORCID is used for people; never flag a `ror.org` author identifier as invalid), and the PATCH limits those files describe — an ORCID cannot be attached to a stored identifier-less author through the API, and an affiliation cannot be removed; both are NON-PATCHABLE.
+Author affiliations, organization authors and funders follow `fields/06` and `fields/25`: full institutional names rather than acronyms (an existing full name is not STALE because the fresh source uses an acronym), one organization per funder entry, a ROR as the identifier of an organization author (match and dedupe by it exactly as ORCID is used for people; never flag a `ror.org` author identifier as invalid), and the PATCH limits those files describe: an ORCID attaches through the API only under `fields/06` rules 15 and 16, a name changes only by a re-split of the same words, and an affiliation cannot be removed. Anything else is NON-PATCHABLE.

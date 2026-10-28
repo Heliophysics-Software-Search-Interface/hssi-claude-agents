@@ -103,7 +103,7 @@ Run three sub-checks:
 
 **A. Completeness** — Every section with usable data maps to a payload field, or has an explicit justified omission. Flag any dropped content.
 
-**B. Format and types** — Required fields present and non-empty; objects/arrays match required shapes; dates are ISO `YYYY-MM-DD`; URLs are valid; `conciseDescription` is ≤200 characters.
+**B. Format and types** — Required fields present and non-empty; objects/arrays match required shapes; dates are ISO `YYYY-MM-DD`; URLs are valid; `conciseDescription` is ≤200 characters; each award `name` is ≤128 characters.
 
 **C. Controlled-list normalization** — For each controlled-list field (`softwareFunctionality`, `relatedRegion`, `programmingLanguage`, `inputFormats`, `outputFormats`, `operatingSystem`, `cpuArchitecture`, `developmentStatus`, `dataSources`, `relatedPhenomena`, `license`):
   - Fetch the corresponding endpoint on the target URL (the field → model table is `hssi-field-definitions/sources/vocabulary-authority.md`)

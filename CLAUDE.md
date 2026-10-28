@@ -95,8 +95,8 @@ If ambiguous, ask which mode the user wants. If clear, proceed.
 2. Ensure repo freshness: `git pull` if exists, clone to `repos/` if URL given — skip for targeted mode
 3. Invoke **updater** in PREPARE mode (software ID, mode, repo path or targeted changes, canonical dossier path, target URL) → returns a diff and either an exact transient update plan or decisions/blockers
 4. If decisions are required, get the user's per-field choices and invoke PREPARE again. If the updater reconciles a metadata file or brings a dossier forward, invoke the **validator** on its changed fields for a focused recheck — the last before `PASS`, so it includes Phase 5; say the dossier was `PASS` before the update set it to `Pending`. Send any ERRORs back to the updater and recheck. Then invoke PREPARE with the passing report to produce the final plan.
-5. Present the complete final diff, update plan, and exact nested `patch` to the user → get explicit approval
-6. If `patch` is non-empty, invoke **updater** in EXECUTE mode (update-plan path, exact target URL) → baseline check, PATCH, and roundtrip verification. If empty, skip EXECUTE.
+5. Present the complete final diff, update plan, and exact nested `patch` (and `followUp.patch`, when the plan binds an author's existing row before attaching an ORCID) to the user → get explicit approval
+6. If `patch` is non-empty, invoke **updater** in EXECUTE mode (update-plan path, exact target URL) → baseline check, PATCH, and roundtrip verification; a `followUp` PATCH goes second, only after the first verifies. If empty, skip EXECUTE.
 7. Present results to user
 8. If a dossier was brought forward, save it as Full Metadata Refresh step 11 does. A brought-forward value the user declined, or that EXECUTE did not apply, is a value correction: have the updater return its section to what HSSI holds, then recheck. If the user declined the plan, or EXECUTE applied none of an approved non-empty patch, restore the committed dossier instead. If the updater reported that the software has no `PASS` dossier, say so and offer a Full Metadata Refresh.
 
@@ -118,15 +118,15 @@ Use this when the goal is to make an entry's metadata **as complete and correct 
    - Then invoke PREPARE once more with the passing final report, to build the exact update plan or confirm a true no-op.
 
    Finalize before this last validation, never after: the prose the user approves and we commit must be prose the validator actually saw.
-9. Present the complete final diff, complete update plan, and exact nested `patch` to the user. Make clear that resolving Step 8 choices did not itself approve a PATCH; obtain explicit approval of this exact plan.
-10. If `patch` is non-empty, invoke the updater in EXECUTE mode with the update-plan path and exact target URL. It must verify the UUID, target, blocker state, and affected-field baseline before sending only the nested `patch`, then roundtrip-verify. If `patch` is empty, skip EXECUTE.
+9. Present the complete final diff, complete update plan, and exact nested `patch` (and `followUp.patch`, when the plan has one) to the user. Make clear that resolving Step 8 choices did not itself approve a PATCH; obtain explicit approval of this exact plan.
+10. If `patch` is non-empty, invoke the updater in EXECUTE mode with the update-plan path and exact target URL. It must verify the UUID, target, blocker state, and affected-field baseline before sending only the nested `patch`, then roundtrip-verify; a `followUp.patch` is sent second, only after that roundtrip passes. If `patch` is empty, skip EXECUTE.
 11. Confirm the working file's Fields 2–33 match the user-approved and, when patched, roundtrip-verified final state, and that the validator's final report carries no unresolved canonical-state findings. Record the final validation date and `Validation Status: PASS`, then save/commit `hssi_metadata.md` to the canonical `repos/` store. Do this even for a true no-op so the validated baseline remains useful for later drift checks. Report the PATCH and roundtrip results to the user; never write them into the metadata file. If confirming the file requires a value correction at this point, the prose must be finalized and revalidated again before `PASS` is recorded.
 
 ## Approval Gate Protocol
 
 Irreversible actions (POST /api/submission/, PATCH /api/data/software/<uid>/) **ALWAYS** require explicit user approval. The orchestrator:
 
-1. Shows the complete payload/diff to the user; for updates, this means the complete update plan and exact nested `patch`
+1. Shows the complete payload/diff to the user; for updates, this means the complete update plan and exact nested `patch`, plus its `followUp.patch` when it has one
 2. Asks for confirmation
 3. Only proceeds to EXECUTE phase after affirmative approval of that exact artifact
 4. Never auto-approves, regardless of tool permission settings

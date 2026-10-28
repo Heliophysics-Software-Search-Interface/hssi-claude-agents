@@ -12,7 +12,7 @@ user-invocable: false
 
 Build partial update payloads for existing HSSI software entries. Only changed fields are sent; omitted fields are preserved.
 
-> **WARNING: Every PATCH to `/api/data/software/<uid>/` modifies the production database permanently.** There is no undo. Build the payload correctly, get user approval, and submit once. Do not retry on failure.
+> **WARNING: Every PATCH to `/api/data/software/<uid>/` modifies the production database permanently.** There is no undo. Build the payload correctly, get user approval, and send each approved PATCH once. Do not retry on failure.
 
 ---
 
@@ -75,7 +75,7 @@ Content-Type: application/json
 
 **Error responses:**
 - `403` — Missing, malformed, or invalid bearer token; or `HSSI_UPDATE_TOKEN` unset on the server
-- `400` — Validation error (unknown field, wrong type, controlled-list miss, `submitter` provided)
+- `400` — Validation error (unknown field, wrong type, controlled-list miss, `submitter` provided, an award `name` over 128 characters, an author `identifier` that two or more of the entry's identifier-less authors could take, an empty `givenName` that matches no single blank-given current author)
 - `404` — Software not found, or not visible
 - `405` — Wrong HTTP method
 
@@ -87,18 +87,24 @@ Content-Type: application/json
 - `submitter` is rejected with 400 — partial updates cannot rewrite the submitter
 - Touches the most recent `SubmissionInfo` on success: sets `modification_description = "Partial update via API: <fields>"` and bumps `date_modified` (auto_now). Does NOT create a new SubmissionInfo
 - Does NOT send confirmation emails
-- Wrapped in `transaction.atomic()`
+- Wrapped in `transaction.atomic()`: a `400` raised while resolving authors or awards rolls back the whole PATCH
 
 **Shared structured-entity limitations:**
 
 - Top-level M2M associations such as `authors`, `funder`, `award`, `relatedInstruments`, and `relatedObservatories` are replaced by the complete submitted list.
-- People, organizations, awards, instruments, and observatories are shared database entities. When an identifier matches an existing entity, PATCH reuses it and does **not** overwrite its nonblank name. Identity matching therefore prevents duplicates but does not make a conflicting label equivalent or patchable.
+- People, organizations, awards, instruments, and observatories are shared database entities. When an identifier matches an existing entity, PATCH reuses it and does **not** rename it. Identity matching therefore prevents duplicates but does not make a conflicting label equivalent or patchable. "The same full name" below means the same words, with the same capitalization and in the same order, however `givenName` and `familyName` split them. A PATCH, unlike `POST /api/submission/`, also makes these fills and re-splits on shared rows:
+  - An author `identifier` that matches no Person attaches to the entry's one current author with no identifier and the same full name; two or more such authors are a `400`. An author not yet on the entry gets a new Person, even when an identifier-less row of that name exists elsewhere (see *Bind, then attach* under Transient Update Plan).
+  - A Person resolved by `identifier` takes the sent given/family split of the same full name. A different full name is ignored with a `200`.
+  - An author sent with an empty or missing `givenName` resolves to the entry's one current author stored with an empty given name and the same family name, left unchanged except that an identifier no Person holds fills its empty one. None or several is a `400`.
+  - An award's `funder` fills a matched Award row that has none. A stored funder is never replaced; a different one is ignored with a `200`.
+
+  `hssi-field-definitions/fields/06-authors.md` and `fields/26-award-title.md` give the preconditions and what still needs the database workflow.
 - Author affiliations are added to the matched Person; the endpoint does not remove existing affiliations. Union affiliations for matched authors. Treat any requested affiliation removal as NON-PATCHABLE.
 - Publications, datasets and software share `RelatedItem` rows matched by identifier alone. Reusing an
   identifier does **not** change the row's existing semantic `type`; moving a URL between relation
   fields can therefore leave JSON-LD with the old type. Treat the type correction as NON-PATCHABLE
   and verify the serialized type independently.
-- Omit shared-entity renames and nested affiliation removals from the PATCH and report them as hard blockers requiring the CSV/manual database workflow. Top-level association removals are still supported when the user approves the complete replacement list.
+- Omit from the PATCH, and report as hard blockers requiring the CSV/manual database workflow: shared-entity renames (a Person's changed full name, an organization's or award's changed name), the replacement of a stored author identifier or award funder, a fill or re-split whose preconditions above fail, and nested affiliation removals. Top-level association removals are still supported when the user approves the complete replacement list.
 
 ### GET /api/list/software/?repo_url=<url> — Software Lookup
 
@@ -150,6 +156,18 @@ PREPARE and EXECUTE communicate through a transient update-plan file under the g
   "patch": {
     "<only approved changed fields>": "<approved final API values>"
   },
+  "followUp": {
+    "binds": [
+      {
+        "author": "<givenName familyName, as patch sends it>",
+        "personId": "<id of the identifier-less Person row that patch binds>",
+        "identifier": "<the ORCID that followUp.patch attaches>"
+      }
+    ],
+    "patch": {
+      "authors": "<the complete final author list, carrying each bind's identifier>"
+    }
+  },
   "blockers": []
 }
 ```
@@ -158,11 +176,30 @@ PREPARE and EXECUTE communicate through a transient update-plan file under the g
 - `mode` records the actual Updater mode; the file-driven full-refresh workflow uses `apply`.
 - `baseline` contains exactly the fields in `patch`, represented in the same normalized API shapes used for comparison.
 - `patch` contains only changed metadata fields and never `submitter`.
+- `followUp` is present only for a bind-then-attach (below); omit it otherwise. Its `patch` carries `authors` only.
 - `blockers` must exist and be empty before the plan can be approved or executed.
-- The HTTP body is the nested `patch` object only, never the wrapper.
+- The HTTP bodies are the nested `patch` and, second, `followUp.patch`, never the wrapper.
 - The plan is disposable operational state. Do not commit it or treat it as the canonical metadata record.
 
 Immediately before PATCH, re-fetch the same UUID from the exact target and compare every recorded baseline field. Abort without sending anything if a value changed; return to PREPARE so the user can review and approve a newly based plan.
+
+### Bind, then attach
+
+An ORCID attaches only to an author already on the entry (`hssi-field-definitions/fields/06-authors.md` rules 15–16). For an author new to the entry whose person the catalogue already holds as an identifier-less Person row, the plan carries two PATCH bodies, shown and approved together:
+
+1. `patch`: every changed field, as in any plan, with each such author sent without `identifier` under the row's exact stored `givenName` and `familyName`. That binds the row.
+2. `followUp.patch`: `{"authors": [...]}` only. It is the author list from `patch`, except that each bound author now carries the ORCID, and the corrected split of the same full name when rule 11 calls for one.
+
+PREPARE records each bound row in `followUp.binds` after confirming from `GET /api/models/Person/rows/all/?columns=id,given_name,family_name,identifier` that the row has no identifier, that no other Person row has its exact split, and that no row carries the ORCID. If any check fails, the bind is NON-PATCHABLE: a blocker, not a `followUp`.
+
+EXECUTE runs the pair in order and stops at the first failure, sending nothing further:
+
+1. Run the usual checks (target, UUID, empty `blockers`, `baseline`), and re-run the PREPARE checks for each bind on the target.
+2. Send `patch` and roundtrip-verify it. Confirm in `GET /api/data/software/<uid>/` that each bind's `personId` sits in `authors` at that author's position.
+3. Re-fetch, confirm `authors` still matches what step 2 verified, re-run the bind checks, then send `followUp.patch`.
+4. Roundtrip-verify the final authors. Confirm each bind's `personId` is still at the same position in `authors` and now carries its identifier (`GET /api/models/Person/rows/<personId>/`).
+
+A stop after step 2 leaves the entry as `patch` made it, without the ORCID; report that state. Never resend either body.
 
 ---
 
@@ -182,7 +219,7 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | `referencePublication` | String (DOI URL) | |
 | `publicationDate` | String (`YYYY-MM-DD`) | |
 | `logo` | String URL | ≤200 chars (`URLField(max_length=200)`). A git-hosted URL must be commit-pinned (`raw.githubusercontent.com/<owner>/<repo>/<40-hex-sha>/<path>`, or `media.githubusercontent.com/media/…` for Git-LFS paths) — never a branch or a `/blob/` page. |
-| `authors` | Array of Person objects | `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}` |
+| `authors` | Array of Person objects | `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}`; `givenName` may be empty or omitted only for an author stored with an empty given name |
 | `publisher` | Organization object | `{name, identifier}` |
 | `license` | String | License name only — must match an existing `License.name` (case-insensitive) |
 | `version` | Object | `{number, releaseDate, description, versionPid}` |
@@ -201,7 +238,7 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | `relatedSoftware` | Array of strings (URLs) | real URLs only, each ≤128 chars (see note below) |
 | `interoperableSoftware` | Array of strings (URLs) | real URLs only, each ≤128 chars (see note below) |
 | `funder` | Array of Organization objects | `{name, identifier}` |
-| `award` | Array of Award objects | `{name, identifier}` (the API field is `award`, **not** `awardTitle`) |
+| `award` | Array of Award objects | `{name, identifier, funder}`, with `name` ≤128 chars and `funder` an optional Organization object `{name, identifier}` (the API field is `award`, **not** `awardTitle`) |
 | `relatedInstruments` | Array of Instrument objects | `{name, identifier}` |
 | `relatedObservatories` | Array of Observatory objects | `{name, identifier}` |
 
@@ -221,6 +258,7 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | Required fields | 5 (submitter, name, repo, authors, description) | None — any subset is valid |
 | Submitter | Required | **Rejected with 400** |
 | Field behavior | All fields set (missing = null) | Only provided fields updated; omitted fields untouched |
+| Shared Person and Award rows | Reused as stored: a matched Person only has blank names filled, an identifier never attaches to an existing identifier-less row, an empty `givenName` is a `400`, a matched award keeps its funder | Also attaches an identifier to the entry's identifier-less author of the same full name, re-splits a Person resolved by identifier, resolves an empty `givenName` to the entry's blank-given author, and fills a matched award's empty funder |
 | Email | Sends confirmation | No email |
 | SubmissionInfo | Creates new | Touches `modification_description` + `date_modified` on existing |
 | Reversibility | Creates permanent record | Modifies existing record permanently |
@@ -302,7 +340,7 @@ When comparing fresh metadata against HSSI data, classify each field as:
 - **M2M enrichment is identity-aware set-union** — to add values to an M2M field, send `existing ∪ new` (the API replaces the whole field, it does not merge). Expand shallow non-empty lists (e.g. Software Functionality with only 1–2 values) rather than skipping them as "already populated." If the user explicitly approves a removal, send the complete approved final set; do not union the removed member back in.
 - **Match structured entries by stable identity before name without ignoring attributes** — authors by ORCID, then normalized name; author affiliations and organizations by ROR, then normalized name; awards by identifier, then normalized name; instruments and observatories by normalized SPASE identifier, then canonical name. For matched authors, union affiliations. After identity matching, separately compare labels and nested values; route non-PATCHable shared-entity differences through the blocker rule above. Compare scalar controlled-value and URL collections as normalized sets.
 - **Submitter is out of scope** — never include Field 1 in an update diff, baseline, or PATCH.
-- **One PATCH only** — If it fails, report and stop. No retries.
+- **Each approved PATCH once** — a plan sends one PATCH, or two for a bind-then-attach. If one fails, or its roundtrip does, report and stop. No retries.
 - **Present the exact plan before submitting** — Always show the diff, complete update plan, and nested PATCH body the user is approving.
 
 ---
@@ -312,9 +350,10 @@ When comparing fresh metadata against HSSI data, classify each field as:
 After a successful update:
 
 1. Re-fetch `GET /api/view/software/<uid>/` from the target URL (no auth required)
-2. For each field that was updated, confirm the new value is reflected
+2. For each field that was updated, confirm the new value is reflected. The view renders each award as its name only, so check an award's identifier and funder in `?view=jsonld` (`funding` items) or its row (`GET /api/models/Award/rows/<id>/?recursive=true`, with the id from `GET /api/data/software/<uid>/`)
 3. Confirm the response did not report a field outside the nested `patch` as updated
-4. Report any discrepancies without retrying
+4. For a bind-then-attach, also make the row checks under *Bind, then attach*
+5. Report any discrepancies without retrying
 
 This is simpler than the submit verification because we only need to check the fields we changed, not all 33.
 
