@@ -49,8 +49,10 @@ never selects a paper from it. Decide Fields 14 and 27 together.
 1. **Not a publication → never Field 14.** Fires for a software deposit DOI, concept or version (a
    `CITATION` file that holds only a Zenodo DOI is citing the code — Fields 2 and 12), a dataset
    (Field 28) or a repository URL.
-2. **Poster, talk, presentation or conference abstract → Field 27, not 14.** Even when its whole
-   subject is this software: the field's role is the paper-of-record (the JOSS-paper role).
+2. **Poster, slide deck, talk or conference abstract → not Field 14.** Even when its whole subject is
+   this software: the field's role is the paper-of-record (the JOSS-paper role). A deposited poster,
+   or a slide deck that passes Field 27's standalone test, goes to Field 27 under its rule 3; a talk
+   or a meeting abstract goes nowhere (Field 27 rule 1).
 3. **The project's own citation guidance names one paper for the software → that paper.** Evidence:
    `CITATION.cff` `preferred-citation`; a README or docs "Citing", "How to cite" or "Acknowledging"
    section; a JOSS badge. The project's designation decides even when the paper, strictly, describes

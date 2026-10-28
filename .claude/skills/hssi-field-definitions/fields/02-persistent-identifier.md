@@ -53,9 +53,9 @@ those four always run after a rule-4 or rule-5 acceptance.
 1. **Not a software record → never Field 2.** Fires when the DOI's registration (DataCite
    `types.resourceTypeGeneral`, Zenodo `resource_type`) is a poster, presentation, article, preprint,
    thesis, report or dataset, however closely it describes the software. Route it by what it is: the
-   paper the project asks users to cite → Field 14; any other publication about the software (poster,
-   talk, conference abstract, paper) → Field 27; a dataset → Field 28. An incumbent of this kind is
-   cleared unless rule 5 supplies a replacement.
+   paper the project asks users to cite → Field 14; any other publication about the software → Field
+   27 when its rule 3 admits it (a meeting abstract or a bare talk never does); a dataset → Field 28.
+   An incumbent of this kind is cleared unless rule 5 supplies a replacement.
 2. **Software record of a different product → not Field 2.** Fires when the deposit archives other
    code: a dependency, a sibling package of the same umbrella project, a same-name package, or a
    review archive of a separate core library (evidence: the `IsSupplementTo` tree URL names another
