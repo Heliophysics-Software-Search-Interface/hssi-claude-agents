@@ -50,8 +50,10 @@ The four sub-fields are decided in four groups. Within each group apply the rule
 stop at the first that fires.
 
 **Before any rule: establish the release history from the pinned revision.** List tags in creation
-order, confirm each candidate is on the pin's own lineage or on a release branch cut from it
-(`git merge-base <tag> <pin>` finds a shared commit; an orphan lineage shares none),
+order, confirm each candidate is on the pin's own lineage or on a release branch cut from it — a
+branch the project cuts from its main line to publish releases from (`v8.0.x`, `release/8.0`), not a
+feature or development branch (`git merge-base <tag> <pin>` finds a shared commit; an orphan
+lineage shares none),
 read every GitHub release's `name` and `body`, and read PyPI's release list from its JSON API. Then
 identify which anomaly shape, if any, applies before deciding: an **orphan lineage** (a newer-looking
 tag on a pre-rewrite lineage that shares no history with the pin — it is older, not newer), a version
@@ -67,10 +69,10 @@ the answer.
    single row rules 3–6 select.
 2. **Unreleased code never gets a version** (for a new value; a stored version that was declared but
    never released is handled by rule 4, not cleared here). Fires for: commits after the last release; a
-   version declared only on an unmerged branch; a tag whose tagged code still declares the previous
-   version and has no release; a PyPI file built from code on neither the pin's lineage nor a release
-   branch cut from it; release text drafted in a wiki or a release-candidate branch with no tag. Record
-   nothing for them; note in the dossier what to check at the next refresh.
+   version declared only on an unmerged branch and never published; a tag whose tagged code still
+   declares the previous version and has no release; a PyPI file built from code on neither the pin's
+   lineage nor a release branch cut from it; release text drafted in a wiki or a release-candidate
+   branch with no tag. Record nothing for them; note in the dossier what to check at the next refresh.
 3. **A newer release than the stored one exists → replace the stored row.** "Newer" means a release
    later in the project's release order: a tag on the pin's lineage or on a release branch cut from it,
    with a GitHub release or a PyPI upload, or (for a project that does not tag) a PyPI upload of a
