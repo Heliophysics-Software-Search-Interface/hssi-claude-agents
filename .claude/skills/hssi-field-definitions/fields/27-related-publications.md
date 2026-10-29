@@ -68,17 +68,19 @@ the abstract as weighed. The type makes an entry eligible; rules 2–7 decide wh
    package's structure, or a paper the project's citation guidance asks for. Evidence: the README or
    docs reference list for the method, model or algorithm; the code's own reference block; a second
    paper the project's citation guidance asks for; a per-component citation list. **Count every
-   qualifying paper, whether or not HSSI lists it.** With five or fewer, list them all. With more,
-   list only those the README, docs or citation guidance presents as the whole package's foundation or
-   asks every user to cite, if they are five or fewer, and otherwise none: a long list buries the
-   publications actually about the software. A per-component citation list, or a request to cite the
-   references the routines give, counts with the rest and is never that exception. **Excluded
-   under this rule, and not counted:** a generic numerical, statistical or mathematical method, a
-   textbook or a table of standard constants, cited for one step of a computation (a
-   power-spectral-density estimator, a histogram bin-width rule, a spline interpolation); a paper
-   cited only by an example or tutorial; a paper the project lists only as further or useful reading
-   ("Other references you might find useful"); and a reference for a file format the software merely
-   reads.
+   qualifying paper, whether or not HSSI lists it.** When a small number qualify, list them all. When
+   many do, list none of them except a few the README, docs or citation guidance presents as the whole
+   package's foundation or asks every user to cite: a long list buries the publications actually
+   about the software. One or two is clearly a small number, and four (irispy) is within it; some
+   forty (PyRFU) is clearly many. Between those, decide from a searcher's view, whether a visitor
+   would be glad to see these papers or would have to sift through them, and record the reasoning in
+   the dossier. A per-component citation list, or a request to cite the references the routines
+   give, counts with the rest and is never that exception. **Excluded under this rule, and not
+   counted:** a generic numerical, statistical or mathematical method, a textbook or a table of
+   standard constants, cited for one step of a computation (a power-spectral-density estimator, a
+   histogram bin-width rule, a spline interpolation); a paper cited only by an example or tutorial; a
+   paper the project lists only as further or useful reading ("Other references you might find
+   useful"); and a reference for a file format the software merely reads.
 5. **A third-party publication that substantively uses the software → include, while such uses are
    still news.** Fires only when the paper's own results or software are built with this software
    **and** it says so deliberately: in its Acknowledgments, its Data Availability or Open Research
@@ -191,14 +193,14 @@ one.
   abstract permalink.
 - **Two method papers listed.** solarmach's code cites exactly two method papers: Poljančić Beljan
   et al. (2017) for the differential-rotation rate its backmapping uses, and Thompson (2006) for the
-  coordinate conversion that places the elements of its 3D figures. Two is few, so rule 4 lists
-  both.
+  coordinate conversion that places the elements of its 3D figures. Two is clearly a small number,
+  so rule 4 lists both.
 - **Too many method papers to list.** PyRFU cites some 48 method, model and numerical papers, nearly
   all in the reference blocks of the routines they motivated: the curlometer, minimum variance
   analysis, the bow-shock and magnetopause models, Welch's spectral estimator and more. Its README
   asks users to cite the software deposit and, as well, the methods the routines' references give;
-  that second request counts with the rest. Far more than five qualify even without the generic
-  ones, so rule 4 lists none of them.
+  that second request counts with the rest. Some forty qualify even without the generic ones,
+  clearly many, so rule 4 lists none of them.
 - **Further reading excluded.** pyflct's docs list a methods paper under "Other references you might
   find useful". Rule 4's further-reading exclusion fires; the two algorithm references stay.
 
@@ -211,6 +213,6 @@ one.
   abstracts and talks are not publications, deposited posters are, slide decks need a human read), and
   removing an incumbent on these grounds needs the user's confirmation (rules 1 and 7, Ask list).
 - Changed 2026-10-29 (the maintainer's ruling on PyRFU): rule 4 lists the method, model and cited
-  papers only when five or fewer qualify; with more, only the few the project presents as the whole
+  papers only when a small number qualify; with many, only a few the project presents as the whole
   package's foundation or asks every user to cite. Generic numerical, statistical or mathematical
   references, textbooks and papers cited only by an example are not listed.
