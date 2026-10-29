@@ -22,9 +22,9 @@ The field holds publications: documents of scientific merit written for, about o
 It gives a visitor the literature behind and around the software: where the method comes from, what
 the developers have published about it, and real science done with it. A curated list tells them the
 software is used and how. Padding it with every paper that happens to name the software turns it into
-an arbitrary, ever-growing citation index that hides the few entries worth reading, and listing the
-method paper behind each routine of a library does the same; leaving out the few papers the software
-is built on hides the science the code implements.
+an arbitrary, ever-growing citation index that hides the few entries worth reading, and a long list
+of the method papers its code cites does the same; leaving out the few papers the software is built
+on hides the science the code implements.
 
 ## How it appears on the site
 
@@ -64,21 +64,21 @@ the abstract as weighed. The type makes an entry eligible; rules 2–7 decide wh
    and its authors include the software's. Include also one by an author about the platform the
    software serves, with the dossier noting what it covers.
 4. **A publication the project presents as the basis of the software, or asks users to cite for it →
-   include.** The basis is the few method or model papers the software as a whole is built on: the
-   papers behind the one or two published methods or models a package implements, or a small set the
-   README, docs or citation guidance presents as the package's foundation. Evidence: the README or
-   docs reference list for the method, model or algorithm; the code's own reference block, when the
-   code cites only a few method papers and they carry the software's central computation; a second
-   paper the project's citation guidance asks for; a per-component citation list. **Excluded under
-   this rule:** the per-routine method references of a multi-method library, where each routine cites
-   the papers behind it — none is listed, however strong one looks alone, because each motivated one
-   routine rather than the software and together they bury the publications actually about it; a
-   generic numerical, statistical or mathematical method, a textbook or a table of standard
-   constants, cited for one step of a computation (a power-spectral-density estimator, a histogram
-   bin-width rule, a spline interpolation); a paper the project lists only as further or useful
-   reading ("Other references you might find useful"); and a reference for a file format the software
-   merely reads. A per-component citation list is a request to cite, not a set of per-routine
-   references, and stays under this rule.
+   include while few qualify.** It is a method or model paper the code implements, whatever the
+   package's structure, or a paper the project's citation guidance asks for. Evidence: the README or
+   docs reference list for the method, model or algorithm; the code's own reference block; a second
+   paper the project's citation guidance asks for; a per-component citation list. **Count every
+   qualifying paper, whether or not HSSI lists it.** With five or fewer, list them all. With more,
+   list only those the README, docs or citation guidance presents as the whole package's foundation or
+   asks every user to cite, if they are five or fewer, and otherwise none: a long list buries the
+   publications actually about the software. A per-component citation list, or a request to cite the
+   references the routines give, counts with the rest and is never that exception. **Excluded
+   under this rule, and not counted:** a generic numerical, statistical or mathematical method, a
+   textbook or a table of standard constants, cited for one step of a computation (a
+   power-spectral-density estimator, a histogram bin-width rule, a spline interpolation); a paper
+   cited only by an example or tutorial; a paper the project lists only as further or useful reading
+   ("Other references you might find useful"); and a reference for a file format the software merely
+   reads.
 5. **A third-party publication that substantively uses the software → include, while such uses are
    still news.** Fires only when the paper's own results or software are built with this software
    **and** it says so deliberately: in its Acknowledgments, its Data Availability or Open Research
@@ -115,11 +115,6 @@ permalink or arXiv abstract page, with the full citation in the dossier prose.
   judged to fail the standalone test** (rules 1 and 7). The rubric decides that an abstract or a talk
   goes, and the user's judgment decides a deck; either way the user confirms each removal before it
   enters a patch, separately from approving the final patch.
-- **A small toolkit of published methods, as candidates** (rule 4). A package that offers a few
-  published algorithms or models, each in its own routine, and whose project does not itself present
-  their papers as its foundation, sits between a package built on one or two methods and a
-  multi-method library: present the papers with the routine each one motivated and where the project
-  names the methods. Either end is decided by rule 4 without asking.
 
 Anything else is decided by the rubric. A case no rule covers is a rubric gap: ask, and report it as
 one.
@@ -196,13 +191,14 @@ one.
   abstract permalink.
 - **Two method papers listed.** solarmach's code cites exactly two method papers: Poljančić Beljan
   et al. (2017) for the differential-rotation rate its backmapping uses, and Thompson (2006) for the
-  coordinate conversion that places the elements of its 3D figures. Both carry the computation the
-  package exists to perform, so rule 4 includes both.
-- **Per-routine method references not listed.** PyRFU cites some 48 method, model and numerical
-  papers, nearly all in the reference blocks of the routines they motivated: the curlometer, minimum
-  variance analysis, the bow-shock and magnetopause models, Welch's spectral estimator and more. None
-  is the basis of the library as a whole, so rule 4 lists none of them; the generic numerical ones
-  also fail on their own ground.
+  coordinate conversion that places the elements of its 3D figures. Two is few, so rule 4 lists
+  both.
+- **Too many method papers to list.** PyRFU cites some 48 method, model and numerical papers, nearly
+  all in the reference blocks of the routines they motivated: the curlometer, minimum variance
+  analysis, the bow-shock and magnetopause models, Welch's spectral estimator and more. Its README
+  asks users to cite the software deposit and, as well, the methods the routines' references give;
+  that second request counts with the rest. Far more than five qualify even without the generic
+  ones, so rule 4 lists none of them.
 - **Further reading excluded.** pyflct's docs list a methods paper under "Other references you might
   find useful". Rule 4's further-reading exclusion fires; the two algorithm references stay.
 
@@ -214,7 +210,7 @@ one.
 - Changed 2026-10-28: a new *Eligible publication types* paragraph governs every rule (meeting
   abstracts and talks are not publications, deposited posters are, slide decks need a human read), and
   removing an incumbent on these grounds needs the user's confirmation (rules 1 and 7, Ask list).
-- Changed 2026-10-29: rule 4 admits only the few method or model papers the software as a whole is
-  built on. A multi-method library's per-routine method references, and generic numerical,
-  statistical or mathematical references and textbooks, are not listed (the maintainer's ruling on
-  PyRFU), and a small toolkit of published methods joins the Ask list.
+- Changed 2026-10-29 (the maintainer's ruling on PyRFU): rule 4 lists the method, model and cited
+  papers only when five or fewer qualify; with more, only the few the project presents as the whole
+  package's foundation or asks every user to cite. Generic numerical, statistical or mathematical
+  references, textbooks and papers cited only by an example are not listed.

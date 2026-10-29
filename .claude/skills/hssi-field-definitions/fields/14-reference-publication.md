@@ -58,11 +58,12 @@ never selects a paper from it. Decide Fields 14 and 27 together.
    section; a JOSS badge. The project's designation decides even when the paper, strictly, describes
    a core library the software is built around. When the guidance names several papers, Field 14
    takes the software paper (for example the JOSS article), or else the first listed, and the rest go
-   to Field 27. The guidance must be this software's own: a citation request in vendored third-party
-   code does not count.
+   to Field 27 when Field 27 rule 4 admits them. The guidance must be this software's own: a citation
+   request in vendored third-party code does not count.
 4. **Per-component citation lists with no single paper for the package → empty.** Fires when the
    project deliberately asks users of each tool or product to cite a different set of papers.
-   Promoting one would override that guidance; all the listed papers go to Field 27.
+   Promoting one would override that guidance; the listed papers go to Field 27 when Field 27 rule 4
+   admits them.
 5. **A paper about the method, model, format or algorithm, or about a different product → not
    Field 14.** Fires for a paper the software implements or wraps but that does not describe this
    software (it may predate the code), and for a paper describing another package the software
