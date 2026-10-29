@@ -4,7 +4,7 @@
 **Repository:** https://github.com/sunpy/ndcube
 **Source Revision:** ac348c6fd2832dfb7b587cfdbb2a41ccb343f80f
 **Extraction Date:** 2026-09-08
-**Validation Date:** 2026-09-08
+**Validation Date:** 2026-10-29
 **Validation Status:** PASS
 
 ---
@@ -23,6 +23,20 @@ prefixed (`v2.4.0`, `2.3.0`, `2.2.0`, `v2.1.0`, `v2.0.3`, `v2.0.2`, `2.0.1`, `2.
 digit-anchored pattern skips the first section and makes the file look as though it stops at
 `2.3.0 (2025-01-14)`. It does not. Note too that the same `v2.4.0` section is dated `2025-12-09` at
 the pin and `2026-01-14` at tag `v2.4.1`, the date having been revised on the release branch.
+
+Throughout this file, "this refresh" means the full refresh behind the 2026-09-08 extraction; the
+later release update is named by its version, v2.4.3. Fields 2, 6, 12, 16, 23, 26, 27 and 30 also
+cite evidence read after the pin, for v2.4.3, and each such claim names the revision or date it was
+read at. Two later revisions were read: the default branch's head
+`f4d58976f8d5b69f662f85071576e9aefa32eca8` (`Updates from the package template (#1012)`, committed
+2026-10-28), of which the pin above is an ancestor, and tag `v2.4.3`, commit
+`c6f103d7e6130c5c315eabdcdaa294dd87d2fc5b` on the `2.4` release branch, which is not an ancestor of
+`main`. Between the pin and `f4d58976` the default branch took 45 commits: bug fixes, the towncrier
+fragments recording them, and updates from the package template. None of them touches the `[project]`
+table of `pyproject.toml`, `.zenodo.json`, `.mailmap`, the licence files, `docs/logo/` or the CI test
+environments, and none adds or removes a capability this file describes. The package code at `v2.4.3`
+differs from `f4d58976` only by the line wrapping of one import in
+`ndcube/visualization/descriptor.py`. Every other claim in this file is read at the pin.
 
 The project's own wiki records this release workflow: the release checklist instructs the
 maintainer to "Create and change onto a new release branch from master labeled with the release
@@ -80,16 +94,18 @@ Note the ordering trap: the newest deposit is **v2.0.4**, not the highest versio
 deposited two months after v2.1.3 because it was a backport release. A concept DOI resolves to its
 newest deposit, so `10.5281/zenodo.5715150` presents as `sunpy/ndcube: v2.0.4`, version `v2.0.4`,
 issued 2023-09-08, `resourceTypeGeneral: Software`, publisher Zenodo, with 22 creators (DataCite
-metadata for the concept DOI, read 2026-09-08).
+metadata for the concept DOI, read 2026-09-08, and unchanged when read again on 2026-10-29).
 
 **The deposits stopped, and not because releases stopped.** The newest deposit was published
-2023-09-08. Releases have continued since: GitHub release objects exist for `v2.3.4` (published
-2025-10-06) and `v2.4.0` (published 2026-01-14), and PyPI carries 2.3.5, 2.4.0 and 2.4.1. No Zenodo
-deposit corresponds to any of them.
+2023-09-08. Releases have continued since: GitHub release objects exist for many of them, from
+`v2.1.4` and `v2.2.0` (both published 2023-11-17) to `v2.4.3` (published 2026-10-27), and PyPI
+carries 2.3.5 and 2.4.0 through 2.4.3. No Zenodo deposit corresponds to any of them: read again on
+2026-10-29, the concept still lists the same nine versions and still presents as
+`sunpy/ndcube: v2.0.4`.
 
 **Why the deposits stopped is undetermined, and this file makes no claim about it.** The obvious
 explanation — that the GitHub-release-triggered integration ceased to fire — is not what the
-evidence shows: two post-2023 releases *do* have release objects and still produced no deposit, and
+evidence shows: releases after the cutoff *do* have release objects and still produced no deposit, and
 the cutoff precedes by more than two years the missing release objects discussed under Field 12, so
 that gap cannot account for it. The state of the integration on Zenodo's or GitHub's side is a third
 party's configuration, invisible from the repository and unverifiable here; it is deliberately not
@@ -109,9 +125,9 @@ preference is for the papers.
 block headed *Software*, built by content-negotiating the recorded DOI. A concept DOI resolves to its
 most recently *created* deposit, and the v2.0.4 backport was deposited after v2.1.3, so the concept
 presents as `sunpy/ndcube: v2.0.4` — meaning that block cites **ndcube v2.0.4 (2023)** beside a
-Field 12 that reads v2.4.1. That mismatch is a known and accepted consequence of the value, not an
+Field 12 that reads v2.4.3. That mismatch is a known and accepted consequence of the value, not an
 oversight in it. A reader who follows the DOI reaches a real, citable, authoritative Zenodo record for
-this exact software; a reader who compares it against the version field sees a four-release gap. The
+this exact software; a reader who compares it against the version field sees the gap from v2.0.4 to v2.4.3. The
 gap can only close if the project deposits again, which is outside this catalogue's control.
 
 **The two alternatives, considered and not determinative.** Neither is refuted by the decision. Both
@@ -313,8 +329,8 @@ or intended for" — wording that explicitly licenses a "commonly used for" read
 "implements physics for" one. Under that reading the two cleared values were defensible, and the
 supporting evidence is genuine: ndcube is a SunPy Project affiliated package; the PyHC registry tags
 it `heliosphere` and `solar`; its own gallery examples work on SDO/AIA solar images; and the packages
-built on ndcube that Field 30 names — sunraster, the DKIST user tools, irispy, punchbowl, HERMES Core
-and eispac — are solar and heliophysics tools. (Field 30 also lists astropy and specutils, which are
+built on ndcube that Field 30 names — sunraster, the DKIST user tools, irispy, punchbowl, HERMES Core,
+SWxSOC, eispac and sunkit-spex — are solar and heliophysics tools. (Field 30 also lists astropy and specutils, which are
 general-astronomy rather than solar, so the ecosystem argument is strong but not uniform.) A visitor
 filtering HSSI for
 solar-environment software would arguably be glad to be handed the standard container for solar
@@ -351,9 +367,46 @@ Khetarpal 6, Eero Vaher 1.
 >
 > **Dan Foreman-Mackey.** `.zenodo.json` credits him as `Dan F-M`, and the repository's `.mailmap`
 > does not canonicalize that string. The git author line is `Dan F-M <foreman.mackey@gmail.com>`,
-> whose address supplies the surname. HSSI stores the expanded `Dan Foreman-Mackey`, which is kept.
-> **No identifier is recorded** — the ORCID-to-address link is not independently established here, so
-> it is left absent rather than guessed.
+> whose address supplies the surname. HSSI stores the expanded `Dan Foreman-Mackey`, which is kept;
+> his ORCID record's primary name is `Daniel Foreman-Mackey`, and the shorter given name is a style
+> variant, not a correction.
+> **His ORCID, `https://orcid.org/0000-0002-9328-5652`, is recorded, on a link through his GitHub
+> account rather than his name.** GitHub's commit API attributes his one ndcube commit
+> (`88d6953b3c6f22a7db132c8120e0c8d9bbff24bc`, 2023-07-25) to the account `dfm` (account id 350282),
+> whose profile gives the name Dan Foreman-Mackey and the website `https://dfm.io`. That ORCID
+> record's only researcher URL is `http://dfm.io`, and that site links `https://github.com/dfm`, so the
+> record leads back to the account that made the commit (all read 2026-10-29). An earlier pass withheld
+> the identifier because it had only the commit address to go on; the account-level link is new
+> evidence, not a re-weighing of the old.
+> **His affiliations come from that record's employment, read whole:** Flatiron Institute, department
+> Center for Computational Astrophysics, role Research Scientist, from 2017-09-25 with no end date, New
+> York, US, with no organization identifier attached. It covers his 2023 commit. The institution is
+> recorded with its ROR, `https://ror.org/00sekdz59`, whose display name is exactly "Flatiron
+> Institute" (the only result of a ROR search for that name, run beside a control search that found
+> Montana State University). The department is recorded as the catalogue's existing organization
+> `Center for Computational Astrophysics, Flatiron Institute`, which carries no identifier; a ROR
+> search for "Center for Computational Astrophysics" returned no organization.
+>
+> **Roy Smart.** `.zenodo.json` credits him as `Roy Smart`, with no ORCID and no affiliation. His four
+> ndcube commits, made between 2018-10-08 and 2018-10-15 as `Roy Smart <roytsmart@gmail.com>` and each
+> titled "Addressing sunpy/irispy/#107", are attributed by GitHub's commit API to the account
+> `roytsmart` (account id 2699765). **His ORCID, `https://orcid.org/0000-0002-9997-5515`, is
+> recorded.** That ORCID record (primary name `Roy Smart`, credit name `Roy T. Smart`) gives a single
+> researcher URL, `http://roytsmart.github.io`: the GitHub Pages site of that same account, which links
+> both `https://github.com/roytsmart` and this ORCID (read 2026-10-29). The record lists no ndcube
+> work, but the link runs through the account that made the commits rather than through the name, and
+> Crossref's record for his 2022 ESIS paper in ApJ (`10.3847/1538-4357/ac8eaa`) carries the same ORCID
+> beside "Roy T. Smart".
+> **His affiliation, Montana State University (`https://ror.org/02w0trx84`), is recorded from a paper
+> byline covering the period of his contribution.** His SPIE paper "Confocal microscopy for
+> high-precision non-contact optical measurements" (`10.1117/12.2319597`, ADS `2018SPIE10747E..0AJ`),
+> published 2018-09-19, a month before his ndcube commits, gives "Montana State Univ. (United States)"
+> for him, and the 2022 ESIS paper's byline gives Montana State University again. His ORCID record lists
+> no employment, and no ndcube source names an institution for him.
+> His ndcube commits were made for an irispy issue, and irispy's own release deposits credit him as
+> `Roy Smart`, Montana State University (for example `10.5281/zenodo.23023081`, irispy v0.9.1post1).
+> He has a single person record in this catalogue, so its identifier and affiliation show on every
+> entry that credits him, whichever entry's metadata supplied them.
 >
 > **Three name forms where the repository and HSSI disagree.** `.mailmap` at the pin canonicalizes
 > `Samuel J. Van Kooten`, `Andrew Leonard` and `Matthew J. West`; HSSI stores `Sam Van Kooten`,
@@ -381,26 +434,59 @@ Khetarpal 6, Eero Vaher 1.
 > commit address `mateo.inchaurrandieta@gmail.com` establishes it. No source gives him an ORCID or
 > affiliation.
 >
-> **Ten stored authors carry no identifier**: Mihail Bankov, Ankit Baruah, Dan Foreman-Mackey, Mateo
-> Inchaurrandieta, Baptiste Pellorce, Aoife Maria Ryan, Gabe Shafiq, Sanvi Sharma, Roy Smart and
-> Shelbe Timothy. This is correct, not a gap: `.zenodo.json` gives an `orcid` key for none of them,
-> and no other source in the repository does either. **Never attach an ORCID to one of these people
-> as part of a field update** — an identifier arriving for an already-stored identifier-less person
-> does not fill in their record, it creates a second one and strands the original. If an ORCID is
-> ever established for one of them it is a database-side correction, not a patch value.
+> **Identifiers for the authors stored without one.** Ten stored authors carried no identifier when
+> this file was extracted: Mihail Bankov, Ankit Baruah, Dan Foreman-Mackey, Mateo Inchaurrandieta,
+> Baptiste Pellorce, Aoife Maria Ryan, Gabe Shafiq, Sanvi Sharma, Roy Smart and Shelbe Timothy. No
+> ndcube source supplies one for any of them — `.zenodo.json` gives an `orcid` key for none, and
+> nothing else in the repository does either — so an identifier can come only from outside the
+> repository, and only on evidence that ties the ORCID record to the contributor rather than to the
+> name. On 2026-10-29 a fielded ORCID search (`given-names:` and `family-name:` together) was run for
+> each, with Roy Smart's own record returned as the positive control, and every candidate was tested
+> against the contributor's commit identity:
+> - **Roy Smart and Dan Foreman-Mackey: linked, and recorded** (see their notes above). For each,
+>   GitHub attributes the ndcube commits to an account that the ORCID record's researcher URL leads
+>   back to.
+> - **Mihail Bankov, Ankit Baruah, Mateo Inchaurrandieta, Baptiste Pellorce and Gabe Shafiq:** no ORCID
+>   record under the name (`Gabriel Shafiq` was tried as well). The spelling `Mikhail Bankov` returns
+>   one record, `0000-0003-2414-8221`, with no works, no researcher URL and no institution: a bare
+>   match on a different spelling of the name, rejected.
+> - **Aoife Maria Ryan:** two candidates, both rejected. `0000-0003-2942-2429` (`Aoife Maria Ryan`)
+>   lists no works, no researcher URL and no employment: a bare name match. `0009-0008-2499-654X`
+>   (`Aoife M Ryan`) shares only an institution with her commit address `ryana38@tcd.ie`: its one
+>   employment is a Research Assistant post in Occupational Therapy at Trinity College Dublin
+>   (2023–2024), its education there is in occupational therapy and paediatrics (from 2019), and it
+>   lists no works and no researcher URL, while her ndcube commits (March 2018) add WCS axis-type
+>   mappings used in ground-based radio astronomy. A same-name, same-institution record with no works
+>   does not establish identity, and this one's field does not match the work. None of the seven other `Aoife Ryan` records lists an ndcube, SunPy or astropy
+>   work or a link to her GitHub account, `aoife-maria`.
+> - **Sanvi Sharma:** one candidate, `0009-0004-7284-7064` (`Sanvi Narayan Satyanarayan Sharma`), with
+>   no works and no researcher URL: a bare name match, rejected.
+> - **Shelbe Timothy:** one candidate, `0009-0009-4687-4452` (`Shelbe Timothy`), with an employment at
+>   Lockheed Martin (Advanced Technology Center, Research Scientist Sr, undated) that fits his
+>   `shelbe@lmsal.com` commit address, but with no works and no researcher URL. That is again a
+>   same-name, same-institution record with no works, so it is not recorded. A later refresh that
+>   finds a work, or a link to the GitHub account his commits are attributed to (`shelbej`), on that
+>   record can revisit it.
+>
+> This passage formerly said never to attach an ORCID to one of these people in a field update,
+> because an identifier sent for a stored person without one created a second person record and
+> stranded the first. That limitation no longer holds: an established ORCID is now sent for the
+> person's existing record, which takes it. Because the record is shared, check the other entries it
+> serves before sending one.
 >
 > **The JOSS paper is not usable as an identifier source.** `joss_paper/paper.md` at the pin lists
 > "Will T. Barnes" with `orcid: 0000-0001-6874-2594` — which is Albert Shih's ORCID, not Will
 > Barnes's (`0000-0001-9642-6089`, as stored). Take identifiers from `.zenodo.json`, not the paper.
 
-**Stored authors, kept unchanged** (name — identifier — affiliations as stored):
+**Stored authors** (name — identifier — affiliations as stored; Dan Foreman-Mackey's and Roy Smart's
+identifiers and affiliations rest on the evidence read on 2026-10-29 that the notes above set out):
 
 1. **Mihail Bankov** — no identifier
 2. **Will Barnes** — https://orcid.org/0000-0001-9642-6089 — American University (https://ror.org/052w4zt36); Department of Physics, American University; Goddard Space Flight Center (https://ror.org/0171mag52); United States Naval Research Laboratory (https://ror.org/04d23a975)
 3. **Ankit Baruah** — no identifier — Workato Gmbh, Germany
 4. **Samuel Bennett** — https://orcid.org/0000-0001-6420-4422 — Aperio Software Ltd.; University of Sheffield (https://ror.org/05krs5044)
 5. **Adwait Bhope** — https://orcid.org/0000-0002-7133-8776 — Savitribai Phule Pune University (https://ror.org/044g6d731); Uptycs India Pvt. Ltd., India
-6. **Dan Foreman-Mackey** — no identifier
+6. **Dan Foreman-Mackey** — https://orcid.org/0000-0002-9328-5652 — Center for Computational Astrophysics, Flatiron Institute; Flatiron Institute (https://ror.org/00sekdz59)
 7. **Nabil Freij** — https://orcid.org/0000-0002-6253-082X — Bay Area Environmental Research Institute (https://ror.org/024tt5x58); Lockheed Martin Solar and Astrophysics Laboratory; SETI Institute (https://ror.org/02dxgk712)
 8. **Laura Hayes** — https://orcid.org/0000-0002-6835-2390 — Dublin Institute for Advanced Studies (https://ror.org/051sx6d27); European Space Research and Technology Centre (https://ror.org/03h3jqn23)
 9. **Derek Homeier** — https://orcid.org/0000-0002-8546-9128 — Aperio Software Ltd.
@@ -420,7 +506,7 @@ Khetarpal 6, Eero Vaher 1.
 23. **Gabe Shafiq** — no identifier
 24. **Sanvi Sharma** — no identifier
 25. **Yash Sharma** — https://orcid.org/0000-0002-7861-9677 — Indian Institute of Technology, Kharagpur (https://ror.org/03w5sq511); Meta Platforms Inc., UK
-26. **Roy Smart** — no identifier
+26. **Roy Smart** — https://orcid.org/0000-0002-9997-5515 — Montana State University (https://ror.org/02w0trx84)
 27. **David Stansby** — https://orcid.org/0000-0002-1365-1908 — Advanced Research Computing Centre, University College London, UK; Department of Mechanical Engineering, University College London; Imperial College London (https://ror.org/041kmwe10); Mullard Space Science Laboratory, University College London; University College London (https://ror.org/02jx3x895)
 28. **Kris Akira Stern** — https://orcid.org/0000-0003-1613-8947 — University of Hong Kong (https://ror.org/02zhqgq86)
 29. **Shelbe Timothy** — no identifier
@@ -430,15 +516,16 @@ Khetarpal 6, Eero Vaher 1.
 **One stored affiliation is narrower than its source, and that is left as it is.** `.zenodo.json` at
 the pin gives Baptiste Pellorce's affiliation as the single packed string
 `"1 - Claude Bernard Lyon 1 University, France 2 - Institute of Theoretical Astrophysics, Norway"`,
-naming two institutions in one field. HSSI stores only the first. The second is not added here, for
-two independent reasons. He is stored without an identifier, so he resolves by name onto an existing
-shared person record, and this entry does not mutate shared records — his affiliations are whatever
-that record already holds. And the Institute of Theoretical Astrophysics is a department of the
-University of Oslo with no ROR of its own (an exact-name ROR search on 2026-09-08 returned no
-matching organization), so recording it would mint a new identifier-less Organization row — the same
-durable cost that decided Lund Observatory for Eero Vaher below and `Daniel K. Inouye Solar
-Telescope` in Field 25. A later refresh should read the single affiliation as this decision rather
-than as an incomplete reading of the source.
+naming two institutions in one field. HSSI stores only the first. The second is not added here. The
+Institute of Theoretical Astrophysics is a department of the University of Oslo with no ROR of its
+own (an exact-name ROR search on 2026-09-08 returned no matching organization), so recording it would
+mint a new identifier-less Organization row — the same durable cost that decided Lund Observatory for
+Eero Vaher below and `Daniel K. Inouye Solar Telescope` in Field 25. A second reason this paragraph
+once gave — that he is matched to his stored record by name, and that this entry does not change
+shared records — no longer holds: an author's stored record is now selected directly, and this
+entry's metadata adds affiliations to two such records, Roy Smart's and Dan Foreman-Mackey's. A later
+refresh should read the single affiliation as this decision rather than as an incomplete reading of
+the source.
 
 **Authors added by this refresh** (all four are credited in `.zenodo.json` at the pin and all four
 have commits in the pin's ancestry):
@@ -466,9 +553,7 @@ have commits in the pin's ancestry):
     account-level link across the two repositories, plus SunPy's own ORCID assertion), not a
     re-weighing of the same facts. Do not re-open it as an unproven association. No affiliation is
     recorded: neither project's source gives her one, and the catalogue's person record for this
-    ORCID carries none either. Note that she is an author *added* by this refresh rather than one
-    already stored identifier-less, so the caution above about identifiers arriving for stored
-    identifier-less people does not apply to her.
+    ORCID carries none either.
 34. **Piyush Sharma** — https://orcid.org/0009-0005-1579-5787
     The same evidence chain. ndcube's `.zenodo.json` credits him with no ORCID and no affiliation,
     and `.mailmap` at the pin maps his GitHub handle `ViciousEagle03 <piyushsharma04321@gmail.com>`
@@ -575,43 +660,84 @@ No ROR was available to record in its place: a ROR search for Zenodo on 2026-09-
 organization at all.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** v2.4.1
-- **Version Date:** 2026-06-10
-- **Version Description:** Bug-fix release. Fixes compatibility with gwcs >= 1.0, which required raising the minimum supported gwcs to 0.24 and consequently asdf to >= 3.3.0 and scipy to >= 1.14.1. Adds a gallery example showing how to change the resolution of an NDCube using `NDCube.reproject_to`.
+- **Version Number:** v2.4.3
+- **Version Date:** 2026-10-27
+- **Version Description:** the indented block below, exactly, with its four-space indent removed
+  from each line (its blank lines are part of it).
+
+    ## Breaking Changes
+
+    - Slicing an `~ndcube.NDCube` or a `~ndcube.NDCubeSequence` to a length-0 axis (e.g. `cube[2:2]` or `cube[10:1]`) now raises an `IndexError` instead of returning a cube whose WCS cannot describe it, and so does slicing `~ndcube.NDCubeSequence.index_as_cube` with a step along the common axis, which used to be ignored.
+
+    ## Bug Fixes
+
+    - Fix bug in `ndcube.wcs.tools.unwrap_wcs_to_fitswcs` when used on a resampled `astropy.wcs.WCS` with `preserve_units=True`.
+    - Fix slicing `~ndcube.NDCube`, `~ndcube.NDCubeSequence` (including `~ndcube.NDCubeSequence.index_as_cube`), `~ndcube.NDCollection` and `~ndcube.NDMeta` with negative or out-of-range indices, which gave wrong world coordinates or raised errors with axis-aware metadata.
+    - A failed slice of an `~ndcube.NDCube` no longer empties its `meta`.
+    - `~ndcube.NDCollection.aligned_axis_physical_types` now returns the physical types in the order of the collection's first member, instead of an order that changed from run to run.
+    - Fixed `~ndcube.NDCube.crop` and `~ndcube.NDCube.crop_by_values` returning the wrong pixels when a crop point lies on a pixel edge.
+    - Fixed `~ndcube.NDCube.rebin` modifying input data and masks when propagating uncertainties over masked samples, and made the default uncertainty propagation helper preserve its input arrays.
+    - Deep copies of `~ndcube.ExtraCoords`, `~ndcube.GlobalCoords` and `~ndcube.visualization.BasePlotter` no longer copy their parent cube. This reduces memory use in operations such as arithmetic and `~ndcube.NDCube.to`.
+
 - **Version PID:** Not found
 
-HSSI held `v2.3.4` (2025-10-06) until this refresh — three releases behind. The current release is
-**v2.4.1**, and establishing that took care because this project's release evidence is scattered:
+HSSI held `v2.4.1` (2026-06-10) until this update. Two releases have followed it, v2.4.2
+(2026-09-17) and v2.4.3 (2026-10-27), and **v2.4.3** is the current release: a newer release than the
+stored one, so it replaces it (rule 3). The release evidence was read on 2026-10-29:
 
-- **Tags.** The repository carried 59 tags when its tag list was read on 2026-09-08. `v2.4.1`
-  points (through annotation) at commit `efb8f08b`, tag date 2026-06-10. It is *not* an ancestor of
-  the pin, because it lives on the `2.4` release branch. `v2.5dev` also exists but is a development
-  marker, not a release.
-- **PyPI.** The `ndcube` project's `info.version` is `2.4.1`, its newest file upload is
-  2026-06-10T16:17, and its `project_urls["Source Code"]` is this repository — so the PyPI project
-  is certainly this software. 2.3.5 (2025-12-03) and 2.4.0 (2026-01-14) sit between the value HSSI
-  held before this refresh and the current one.
-- **GitHub release objects are incomplete and must not be used as the release list.** The GitHub
-  releases API returned 31 of them when read on 2026-09-08, the newest `v2.4.0`, with **no release
-  object for `v2.4.1` and none for `v2.3.5` either**. That count is quoted, where Field 23 declines
-  to quote a PyPI release total, because here the number is the argument: 31 release objects against
-  59 tags and a longer PyPI history is what demonstrates the incompleteness. Both of those releases
-  are real — each has a tag, a PyPI upload and a changelog section. This is a release-object gap,
-  not a release gap. It does **not** explain the Zenodo deposit cutoff described under Field 2: that
-  cutoff falls in 2023, and the two releases that followed it and *do* carry release objects
-  (`v2.3.4`, `v2.4.0`) produced no deposit either.
-- **Changelog.** The description above is condensed from the `2.4.1 (2026-06-10)` section of
-  `CHANGELOG.rst` **read at tag `v2.4.1`** — it contains one bug fix and one documentation entry,
-  and both are represented. That compiled section does not exist at the pin, where the compiled
-  changelog reaches `v2.4.0 (2025-12-09)` (see the scope note). The release's *content* is present
-  at the pin nonetheless, uncompiled: the `changelog/` directory there holds three files — its
-  towncrier `README.rst` and two loose fragments, `changelog/931.bugfix.rst` and
-  `changelog/893.doc.rst` — which correspond one-to-one to v2.4.1's bug fix and documentation
-  entries and carry the same wording as the compiled section, down to the misspelling `concequenty`.
-  The compiled form differs only by towncrier's list formatting and its appended pull-request links.
-- **Version PID.** None: the newest Zenodo deposit is v2.0.4 (Field 2), so no DOI exists for this or
-  any recent release. The DOI recorded in Field 2 is the *concept* DOI for the software as a whole;
-  it is not a version identifier for v2.4.1 and must not be copied into this line.
+- **Tags.** The repository carries 61 tags. `v2.4.3` is an annotated tag, made by Stuart Mumford at
+  2026-10-27T15:53:21Z, on commit `c6f103d7e6130c5c315eabdcdaa294dd87d2fc5b` ("Release v2.4.3",
+  committed 2026-10-27T15:44:20Z). Like every 2.4 release it lives on the `2.4` release branch, whose
+  merge base with `main` is `6b3259939bb663b5eac6c4f52111076f1447ebd4`, the "render changelog for 2.4"
+  commit named in the scope note; `v2.4.1` and `v2.4.2` are its ancestors on that branch, and none of
+  the three is an ancestor of `main`. There is no 2.5 release: `v2.5dev`, on that same branch-point
+  commit, marks the start of 2.5 development on `main` and is not a release (rule 2), and PyPI has no
+  2.5 upload.
+- **PyPI.** `info.version` is `2.4.3`; its wheel and sdist were uploaded at 2026-10-27T16:01:17Z and
+  16:01:19Z, and neither is yanked. `project_urls["Source Code"]` is this repository, so the PyPI
+  project is certainly this software. 2.4.2's files were uploaded on 2026-09-17.
+- **GitHub release objects.** `v2.4.3` has one, named `v2.4.3`, published 2026-10-27T16:10:21Z and not
+  marked a pre-release. The list as a whole is still incomplete and must not be used as the release
+  list: read on 2026-10-29 it held 34 release objects against 61 tags, and `v2.3.5` still has none.
+  `v2.4.1` now has one, but it was published on 2026-09-17, beside `v2.4.2`'s, three months after the
+  release it describes; v2.4.1's tag and PyPI upload are both dated 2026-06-10, and that remains its
+  release date. These gaps do **not** explain the Zenodo deposit cutoff described under Field 2:
+  many releases after that cutoff carry release objects and produced no deposit.
+- **Version Date.** 2026-10-27 is the UTC day of the release object's `published_at` (rule 7), and the
+  tag (15:53Z) and the PyPI upload (16:01Z) fall on the same day; the CHANGELOG heading
+  `2.4.3 (2026-10-27)` agrees.
+- **Version Description (rules 13–15).** The release's name is the bare tag, so the text comes from
+  its body, which is the `2.4.3 (2026-10-27)` section of `CHANGELOG.rst` at the tag as towncrier
+  compiled it, rendered to markdown: one breaking change and eight bug fixes. Kept verbatim, under the
+  body's own two section headings: the breaking change, since slicing to a length-0 axis now raises
+  `IndexError` (behaviour a user can hit), and seven bug fixes, each a fault a user could meet —
+  `unwrap_wcs_to_fitswcs` on a resampled WCS with `preserve_units=True` (#976), slicing with negative
+  or out-of-range indices and a failed slice emptying `meta` (#979), the order of
+  `aligned_axis_physical_types` (#983), `crop` and `crop_by_values` on a pixel edge (#984), `rebin`
+  altering its inputs (#990), and deep copies that copied the parent cube (#996). Dropped whole under
+  rule 14: #995, whose `CHANGELOG.rst` entry at the tag reads "Replace use of the deprecated
+  ``sanitize_slices`` function in astropy with the updated version of
+  `~astropy.utils.shapes.simplify_basic_index`.", an internal refactor with no effect a user sees. Also dropped are the body's opening heading `# 2.4.3 (2026-10-27)`, which only repeats the
+  number and date shown beside the description, and the pull-request link that ends each item.
+- **How the text is represented, so a later refresh does not "fix" it.** The release body wraps each
+  Sphinx cross-reference in `<span class="title-ref">…</span>` and escapes its underscores
+  (`index\_as\_cube`). HSSI's release-notes renderer strips `span` tags, so each reference is
+  written here as a markdown code span with its underscores unescaped — the backticks the CHANGELOG
+  itself uses — and the body's doubled spaces are single. Item by item, the words are the CHANGELOG's
+  own.
+- **The superseded description.** The v2.4.1 row's description ("Bug-fix release. Fixes
+  compatibility with gwcs >= 1.0, …") summarised that release's changelog in words of its own rather
+  than quoting it. It described v2.4.1 alone and was replaced with the number, not carried forward
+  (rule 10).
+- **Version PID.** None: there is still no Zenodo deposit after v2.0.4 (Field 2), so no DOI exists for
+  v2.4.3 or any recent release. The DOI recorded in Field 2 is the *concept* DOI for the software as a
+  whole; it is not a version identifier and must not be copied into this line.
+- **Changelog fragments on `main`.** `changelog/` at `f4d58976` holds loose towncrier fragments —
+  `893.doc.rst`, `931.bugfix.rst`, `973.bugfix.rst` and the nine fragments from `976.bugfix.rst` to
+  `996.bugfix.rst` — whose entries appear in the compiled 2.4.1, 2.4.2 and 2.4.3 sections at tag
+  `v2.4.3`. They describe released code that was compiled into the changelog on the release branch,
+  not unreleased work; compare fragments with the release tags before reading them as notes for an
+  upcoming release.
 
 There is no in-tree version literal to cross-check against — `pyproject.toml` declares
 `dynamic = ["version"]` and `setuptools_scm` writes `ndcube/_version.py` at build time.
@@ -699,10 +825,10 @@ was never a storable field value and is dropped.
   - coordinates
   - data analysis
   - data container
-  - heliosphere
   - multi dimensional data
   - ndcube
   - plotting
+  - pyhc package
   - python
   - solar
   - spectral data
@@ -710,21 +836,51 @@ was never a storable field value and is dropped.
   - wcs
   - world coordinate system
 
-The fifteen values HSSI held before this refresh are all kept, and are written here in their
-**stored** spelling —
+The fifteen values HSSI held before this refresh were all kept then; one of them, `heliosphere`, is
+removed for v2.4.3 (below). The values are written here in their **stored** spelling —
 lower case throughout. The catalogue page title-cases keywords for display, so a rendered value like
 "World Coordinate System" or "Wcs" is a presentation artifact and must not be copied back as if it
 were the stored string.
 
-Six of the stored values are the PyHC registry's own keywords for this project, with the registry's
-underscores expanded into spaces:
+Six of the values HSSI held came from the PyHC registry's own keywords for this project, with the
+registry's underscores expanded into spaces:
 `keywords: ["coordinates", "data_analysis", "data_container", "heliosphere", "plotting", "solar"]`
 (`_data/projects.yml` in the `heliophysicsPy/heliophysicsPy.github.io` repository at commit
-`bd18e66b`, entry `- name: "NDCube"`). The PyHC domain keywords are worth a caution for a later
-refresh, because registry keywords propagate to packages that do not really touch the domain: here
-`heliosphere` and `solar` are *not* supported by anything in ndcube's own code (see Fields 5 and 22)
-and rest entirely on the ecosystem the package serves. They are kept because a keyword is a search
-aid rather than a capability claim, but they should not be cited as evidence for the science fields.
+`bd18e66b`, entry `- name: "NDCube"`). Registry keywords propagate to packages that do not touch the
+domain, so the two domain tags among them stay only where ndcube's own code or description works in
+that domain, never because the registry lists them. Neither rests on a capability in ndcube's code
+(see Fields 5 and 22), and they should not be cited as evidence for the science fields.
+- **`solar` is kept.** ndcube's own documentation works on solar data: the gallery example
+  `examples/changing_resolution_via_reproject.py` opens "We start by creating an NDCube from sample
+  solar data provided by SunPy.", `docs/explaining_ndcube/arithmetic.rst` describes a subtraction as
+  "a common step in many solar image analyses", `docs/explaining_ndcube/slicing.rst` crops a cube in
+  helioprojective coordinates, and the package presents itself as a SunPy Project affiliated package.
+  A solar physicist searching the keyword would be glad to find the data container that the solar
+  packages in Field 30 are built on. This is the keyword's domain test, which ndcube's own
+  documentation passes; Field 5 judged the same gallery evidence not determinative for a region,
+  because a region must be where the physics the software handles happens (Field 5's rule 4), and
+  holding other people's solar data does not meet that test.
+- **`heliosphere` is removed**; HSSI held it until this update. Nothing in ndcube's code or
+  documentation works in the heliosphere: at `f4d58976` the stem `heliosph` occurs only in
+  `joss_paper/paper.md` and `joss_paper/paper.bib`, inside the PUNCH mission's full name, while
+  `solar` matches the documentation and examples. Its only support was the registry tag, and someone
+  searching the keyword for heliospheric software would find a general array container out of place.
+  Considered and not determinative: Daniel Ryan's 2019 funding proposal (`2019hdee.prop....2R`, Field
+  26) calls ndcube's classes tools for "astronomical and heliospheric data analysis", but that is
+  NASA's word for heliophysics data in general — the only instrument the abstract names is IRIS,
+  whose spectroscopy is of the solar chromosphere — and a proposal is not the project's own
+  description of the software. PUNCH's pipeline, the closest heliospheric use, is recorded where it
+  belongs, in Field 30. The reason first given for keeping both tags, that a keyword is a search aid
+  rather than a capability claim, is superseded: a registry domain tag stays only on the domain test.
+
+**`pyhc package` is the catalogue's marker for the packages the PyHC registry lists**, and ndcube is
+one of them: its entry is in `_data/projects.yml`, read at the registry's head
+`f7b0421b08c2cbc614a8d68372b42428d3a53cb2` on 2026-10-29. Every such entry carries the keyword, written
+exactly so, whatever its other sources say, which is why it is recorded here although no ndcube source
+declares it. HSSI holds it, and it was not among the seventeen values this file recorded when it was
+extracted. The repository topics and the registry entry's own keywords were read again on 2026-10-29
+and are unchanged; the registry entry differs from its `bd18e66b` form only by an added `hssi:` link
+to this catalogue's page.
 
 **Two values are added by this refresh**, both from the repository's own self-description:
 - **astropy** — a repository topic (on 2026-09-08 the repository's topics were `astropy`, `nddata`,
@@ -758,8 +914,9 @@ package tree at the pin — reaches no Python file at all; its single hit is the
 a prose README. There is no archive client, no query interface, no HTTP or FTP code of any kind.
 
 **The asymmetry that decided it.** The field's own instruction pairs the observatory-specific value
-with the Related Observatory field: "If observatory-specific, select 'observatory-specific' and
-indicate the observatory/mission name in the Related Observatory field." That pairing cannot be
+with the Related Observatory field: a submitter whose software's data source is observatory specific
+is told to select that value and to name the observatory, mission or group of instruments in the
+Related Observatory field. That pairing cannot be
 satisfied here — Field 32 is empty and, for the reasons set out there, correctly so. A value whose
 prescribed companion field must remain empty is a value the field's own definition does not support.
 
@@ -925,19 +1082,21 @@ empty value is the correct one rather than a gap awaiting a better-fitting row.
 it. The selected row's stored definition is "The project has reached a stable, usable state and is
 being actively developed.", and both halves hold:
 
-- *Stable and usable*: a long series of PyPI releases whose newest member is 2.4.1 (Field 12), a
+- *Stable and usable*: a long series of PyPI releases whose newest member is 2.4.3 (Field 12), a
   documented public API and a full documentation site. No release total is quoted: it is a
   third-party count that is wrong again at every release, and nothing here rests on it. Contrast the
   release-object count under Field 12, which is quoted and date-bound because there the number
   itself carries the argument.
-- *Actively developed*: the pinned commit is dated 2026-09-03, and 99 commits land in the twelve
-  months preceding it (`git rev-list --count --since=2025-09-08 <pin>`). The repository is not
-  archived and not disabled; issues and pull requests are open and being filed.
+- *Actively developed*: the last commit on the default branch is `f4d58976`, committed 2026-10-28,
+  and v2.4.3 was released on 2026-10-27 (both read 2026-10-29). When this field was first decided, the
+  pin's commit was dated 2026-09-03, with 99 commits in the twelve months before it
+  (`git rev-list --count --since=2025-09-08 <pin>`). The repository is not archived and not disabled,
+  and pull requests are still being filed and merged.
 
 **Alternatives rejected.** `Inactive` and `Unsupported` both require that development has stopped,
 which the commit history refutes. The sharpest test is `Unsupported`'s own stored definition — "The
 project has reached a stable, usable state but the author(s) have ceased all work on it. A new
-maintainer may be desired." — and the 99 commits counted above contradict *ceased all work*
+maintainer may be desired." — and the commit and release dates above contradict *ceased all work*
 outright. `Inactive` fails on the same evidence, its definition turning on the project no longer
 being actively developed. `WIP`, `Concept` and `Suspended` all describe a project
 with no stable public release. `Moved` describes a relocated project — worth noting that the
@@ -978,7 +1137,8 @@ Solar Orbiter/SPICE (grant 80NSSC19K1000).
 ```
 
 NASA funds two of the three named sources (the HDEE program and the Solar Orbiter/SPICE grant), and
-the stored organization name is already the expanded, non-acronym form the field asks for.
+the stored organization name is already the expanded, non-acronym form the field asks for. The HTM
+award recorded in Field 26, from NASA's Heliophysics Tools and Methods program, is NASA's as well.
 
 **Settled: the Daniel K. Inouye Solar Telescope is not recorded as a funder.** The acknowledgement
 names DKIST as a source of financial support, so it was a legitimate Field 25 candidate and the prior
@@ -1010,13 +1170,16 @@ is recorded as such in Field 26.
   **Award Number:** Not found
 - **Award Title:** Solar Orbiter/SPICE
   **Award Number:** 80NSSC19K1000
+- **Award Title:** Unifying SunPy Analysis workflows across Solar and Heliospheric Data
+  **Award Number:** 24-HTM24-0010
 
-Both awards are recorded, and both come straight from the acknowledgement quoted under Field 25.
-`Solar Orbiter/SPICE` is unchanged, identifier and all. The HDEE program carries no award number
-because the acknowledgement attaches `80NSSC19K1000` to Solar Orbiter/SPICE alone and gives no number
-for the program — the number is absent from the source, not merely unrecorded here. Both are named
-rather than one because this field's stored value is the complete set of the entry's awards: a later
-refresh that lists only one of the two would detach the other from the entry.
+The first two come straight from the acknowledgement quoted under Field 25, and the third from NASA's
+proposal record, as set out below. Each is NASA's (Field 25). `Solar Orbiter/SPICE` is unchanged,
+identifier and all. The HDEE program carries no award number because the acknowledgement attaches
+`80NSSC19K1000` to Solar Orbiter/SPICE alone and gives no number for the program — the number is
+absent from that source; the grant record that is very probably this award is discussed below. All
+three are named because this field's stored value is the complete set of the entry's awards: a later
+refresh that lists only some of them would detach the others from the entry.
 
 **The second award reached this entry as a row with an empty title.** It carried no title, no
 identifier and no funder. An award with no title is not a value any submission or update path can
@@ -1046,6 +1209,60 @@ blank would have remained for whoever looked next. Correcting the row that alrea
 the same information without the duplicate. This option was known and decided against; it was not
 overlooked.
 
+**Unifying SunPy Analysis workflows across Solar and Heliospheric Data (24-HTM24-0010) — added for
+v2.4.3, with NASA as its funder.** Daniel F. Ryan's talk at DASH on 2026-10-06, whose slides are a
+Field 27 publication (`https://doi.org/10.5281/zenodo.23172238`), states "SunPy recently won a 3-year
+NASA Heliophysics Tools and Methods maintenance award, including for ndcube." That is the developers'
+own statement attributing an award to this software, made in a document this record counts among
+their publications, so it qualifies as a funding source; slides that were not a publication in their
+own right would not. The slides give the award no title or number. NASA's proposal record supplies
+both: ADS `2024htm..prop...10M`, "Unifying SunPy Analysis workflows across Solar and Heliospheric
+Data", NASA Proposal ID 24-HTM24-0010, submitted by Sarah Mueller of NumFOCUS, Inc., which has held
+NASA grants for the SunPy Project before (`80NSSC20K0724`, and `80NSSC22K1058`, which USAspending
+describes as "STRENGTHENING THE FOUNDATIONS OF THE SUNPY ECOSYSTEM"). Its abstract makes expanding NDCube one of its two aims — "This
+proposal will enhance NDCube's capabilities, increasing its usability while preserving its general
+applicability to diverse datasets." — which matches the more user-friendly, coordinate-type-specific
+API the slides announce as ndcube's next feature. Of ADS's Heliophysics Tools and Methods proposal
+records, it is the only one whose subject is SunPy, and it names ndcube as what it funds, so it is
+recorded under its own title, with its proposal number as the identifier, the form NASA's record
+gives. Two links are inference and should be read as such: that this record is the award the slides
+mean (the slides call it a maintenance award and do not name it), and that ADS's record is of a
+funded proposal. ADS held eight 2024 Heliophysics Tools and Methods records when read on 2026-10-29,
+a selection-sized set, and its HDEE proposal records below match grants that were awarded. No grant
+number could be matched. USAspending, searched on 2026-10-29 for grants whose description contains
+`SunPy` or `NDCube`, with a nonsense keyword as the control (it returned none), holds no award under
+the proposal's title, and its 2025 NASA grants to NumFOCUS carry only generic program text
+(`80NSSC26K0105`, 2025-10-01 to 2028-09-30, is a three-year grant of that kind). If a NASA record later
+gives this award's grant number, record it here; it cannot be added to the stored award by an
+update, since an award sent with a different identifier creates a new row. The grant `80NSSC25K7933`
+(Smithsonian Institution, 2025-06-01 to 2028-05-31), whose USAspending description reads
+"24-OSTFL24-0057 ENHANCING CONSISTENCY AND DISCOVERABILITY ACROSS THE SUNPY ECOSYSTEM", is from a
+different program and names no package, and is not recorded.
+
+**Older NASA grant records found by the same search.**
+`80NSSC20K0173` (Catholic University of America, 2020-02-22 to 2021-02-21) is the award for Daniel
+Ryan's 2019 Heliophysics Data Environment Enhancement proposal "Supporting Heliophysics Data Analysis
+and Software Development with the Development of NDCube, a Generalized N-dimensional Coordinate-aware
+Data Class" (NASA proposal 19-HDEE19_2-0002, ADS `2019hdee.prop....2R`). Its USAspending
+description is, word for word, the first four sentences of that proposal's abstract, beginning "THIS
+WORK ENHANCES THE NDCUBE PACKAGE TO MEET THE NEEDS OF THE HELIOPHYSICS COMMUNITY" and repeating the
+abstract's doubled "COORDINATES COORDINATES" (read 2026-10-29). It is therefore an HDEE award whose
+subject is ndcube, and very probably the support the acknowledgement above credits to NASA's
+Heliophysics Data Environment Enhancement program without a number. The stored award keeps the
+acknowledgement's program-level title and no number: an update cannot number it, because an award
+sent with an identifier binds a row by that identifier alone, so sending one would create a new
+award row rather than add the number to the existing one. `80NSSC20K0181` (University Corporation for
+Atmospheric Research, 2019-11-01 to 2021-12-31), described "SUNPY SUPPORT FOR MULTIDIMENSIONAL DATA AND
+SPECTROPOLARIMETRIC ANALYSIS", does not name ndcube and is not attributed to it here.
+`80NSSC21K0304` (Johns Hopkins University, 2021-01-01 to 2023-06-30) is described as creating
+adapters to convert between the common data models of SpacePy, NDCube/SunPy and HAPI — the opening
+sentence of HDEE proposal 20-HDEE20_2-0008 (ADS `2020hdee.prop....8V`). It funds converters between
+ndcube's data model and others', not ndcube itself, so it is not funding for this software and is
+excluded. Daniel Ryan's 2020 HDEE proposal for solar X-ray spectroscopy tools (20-HDEE20_2-0009, ADS
+`2020hdee.prop....9R`) names ndcube only as one of the "previously funded HDEE projects" it will work
+with, which corroborates the HDEE funding above; it proposes a different product, and no
+USAspending grant was found for it.
+
 ---
 
 ## Section 3: Additional Metadata
@@ -1054,8 +1271,10 @@ overlooked.
 - **DOIs:**
   - https://doi.org/10.3847/1538-4357/ace0bd
   - https://doi.org/10.5281/zenodo.7020102
+  - https://doi.org/10.5281/zenodo.23172238
 
-HSSI held the first of these before this refresh; the second is added.
+HSSI held the first of these before this refresh, which added the second; the third is added for
+v2.4.3.
 
 **The ApJ paper — kept, unchanged.** This is the second of the two references
 `docs/acknowledging.rst` asks users to cite: *Ryan, Mumford et al., "A Unified Framework for
@@ -1088,14 +1307,72 @@ proposal explains the software's API in a way neither paper does. Preserved here
 refresh reads the case for removing SEP-0012 as one already made and answered, not as a fresh
 discovery.
 
+**The DASH 2026 slides — added for v2.4.3.** Daniel F. Ryan, "ndcube: an endeavour towards
+interoperability and cross-field collaboration in astronomy", a talk at DASH on 2026-10-06 whose
+slides were deposited on Zenodo on 2026-10-05 (typed "Presentation", CC-BY-4.0), concept DOI
+`https://doi.org/10.5281/zenodo.23172238`. Its author is ndcube's lead developer and its subject is
+ndcube, so it is the developers' own publication about the software (rule 3). A slide deck is
+eligible only when it stands on its own as a document, and the catalogue's maintainer read this one
+and judged on 2026-10-29 that it does. Its 21 frames are bullet points and code rather than prose, but
+a reader can follow them without the talk: what ndcube is and its three data classes; its
+operations — visualisation, slicing, cropping, rebinning, reprojection and arithmetic — listed, with
+code for plotting, slicing, cropping and arithmetic but none for rebinning or reprojection; what is
+new (arithmetic with astropy `NDData`, with code for `fill_masked` and `to_nddata`; saving to ASDF;
+axis-aligned metadata in `NDMeta`, each with code); how centralising those operations reduces
+maintenance for the packages built on ndcube; and what comes next — NASA funding (Field 26) and a
+planned coordinate-type-specific API, shown as current against proposed code, which neither paper
+covers. The
+concept DOI is recorded, as for SEP-0012: DataCite gives 23172238 a `HasVersion` relation to the
+single deposit 23172239 (read 2026-10-29), so the two resolve to the same slides unless the deck is
+deposited again.
+
 **The software concept DOI is not placed in this field.** One option for Field 2 would have put
 `10.5281/zenodo.5715150` here instead of there; it is recorded in Field 2, where a software
 identifier belongs. See Field 2.
 
-**Considered and rejected: citing papers generally.** The JOSS and ApJ papers are cited by a large
-and growing literature that uses ndcube through downstream packages. Enumerating those here would
-add no discriminating information and would go stale immediately. This field is for publications the
-developers prioritize, and they have said which two those are.
+**The three recorded entries are publications in the sense this field requires:** a peer-reviewed
+article, a DOI-registered technical document, and a deposited slide deck judged to stand on its own
+(above). None is a meeting abstract or a talk without a document of its own.
+
+**Considered and rejected: the papers that cite or acknowledge ndcube.** An earlier version of this
+paragraph rested this rejection on "a large and growing literature" citing ndcube; a search does not
+bear that out, and the rejection rests instead on what the citing papers say. An ADS acknowledgements
+search, `ack:"ndcube"`, returned three papers when run on 2026-10-29, and each names ndcube inside a
+roll-call of the packages its work used: Ryan et al. 2025, "One-second variations in non-thermal X-ray
+source morphologies in an X-class solar flare", *A&A* 703, L12 (`10.1051/0004-6361/202554358`), beside
+sunpy, xrayvision and stixpy; Ryan et al. 2025, "Solar Orbiter's 2024 Major Flare Campaigns: An
+Overview", *Solar Physics* 300, 152 (`10.1007/s11207-025-02561-6`), beside sunpy, sunraster, sospice
+and fiasco; and The SunPy Community et al. 2020, "The SunPy Project: Open Source Development and
+Status of the Version 1.0 Core Package", *ApJ* 890, 68 (`10.3847/1538-4357/ab4f7a`), beside GWCS,
+matplotlib and numpy. Each reading rests on the acknowledgement text ADS indexes, from which those
+lists are taken; the A&A article itself could not be fetched to read whole (its publisher refused
+the request, and neither arXiv nor Europe PMC holds a copy). A list of tools is a mention, not a deliberate credit for a result, so none is
+added. Papers that cite the JOSS or ApJ paper without naming ndcube in their indexed text — Kerr et
+al. 2026 (*Nature Astronomy*, `10.1038/s41550-025-02747-9`) and Patel et al. 2024 (IEEE SSIAI,
+`10.1109/SSIAI59505.2024.10508701`) among them — are citations, and are not added either. A paper
+that credits ndcube for a specific result, in its acknowledgements, data availability statement or
+methods, would qualify.
+
+**Also weighed and not added: the developers' meeting abstracts and proposals.** ADS holds two meeting
+abstracts by ndcube's developers about the package — "NDCube: An N-Dimensional Data Analysis Tool For
+Current and Future Missions" (2018 Triennial Earth-Sun Summit, abstract 307.111, `2018tess.conf30711R`;
+ADS types it as a proceedings entry, but it is a numbered meeting abstract of some three hundred
+words) and "ndcube v2.1.1: Enhancing Analysis Capabilities for N-dimensional Astronomical
+Coordinate-aware Data in Python" (54th Meeting of the Solar Physics Division, 2023, abstract 110.18,
+`2023SPD....5411018R`). A meeting abstract is never an eligible publication, and Zenodo searches for
+either title returned no deposited poster or paper. The NASA proposal records ADS holds about ndcube
+are funding proposals, not publications (see Field 26). ADS's record `2024ascl.soft05024R` is the
+package's entry in the Astrophysics Source Code Library, a software record rather than a
+publication.
+
+**Search recorded (2026-10-29), for publications since this field's 2026-09-08 extraction.** ADS
+full-text (`full:"ndcube"`) and acknowledgements (`ack:"ndcube"`) searches restricted to records
+entered since 2026-09-08, and the citations of the JOSS paper (`2023JOSS....8.5296R`) and the ApJ
+paper (`2023ApJ...956...44R`) entered since then, returned nothing; over the same window
+`full:"sunpy"` returned records and a nonsense token returned none. ADS's newest title-or-abstract
+match for ndcube predates the window. A Zenodo search for `ndcube`, across all versions and newest
+first, found one new record, the DASH 2026 slides above; Zenodo's title search for `ndcube` returns
+those slides and SEP-0012.
 
 ### 28. Related Datasets (OPTIONAL)
 - **Value:** No value
@@ -1164,6 +1441,8 @@ infrastructure, and its presence is what makes ndcube's regridding capability re
   - https://github.com/HERMES-SOC/hermes_core
   - https://github.com/astropy/specutils
   - https://github.com/USNavalResearchLaboratory/eispac
+  - https://github.com/swxsoc/swxsoc
+  - https://github.com/sunpy/sunkit-spex
 
 **HSSI held no values for this field before this refresh**, which was the largest single gap in the
 record: ndcube's whole purpose is to be the data model other tools exchange, so an empty
@@ -1194,7 +1473,26 @@ one exists, so that the link text a visitor sees is legible.
   `ndcube is also used in the data pipeline of the PUNCH mission`. For sunraster, DKIST User Tools,
   irispy, punchbowl and HERMES Core the URL above is the entry's own stored repository URL in this
   catalogue; specutils and eispac have no entry here, so their canonical GitHub repositories are
-  used, as the field instructions allow.
+  used, as the field instructions allow. Read again on 2026-10-29 at each repository's default
+  branch, all seven still declare ndcube — punchbowl's declaration is now
+  `"ndcube >= 2.4.0, <= 2.4.2"` — sunpy's packaging still carries `"ndcube>=2.3.0"`, and jdaviz's
+  `pyproject.toml` dependency list still does not include it. (jdaviz's `tox.ini`, at `9e9f9f31`,
+  installs ndcube from git for its `devdeps` test environment only: a test-matrix entry, not a
+  dependency.)
+- **SWxSOC** and **sunkit-spex** — two more packages built on the NDCube data model, read on
+  2026-10-29 at their default branches. SWxSOC (`swxsoc/swxsoc` at `fcadbf2d`) imports
+  `from ndcube import NDCollection, NDCube` in `swxsoc/swxdata.py`, whose `SWXData` class takes its
+  spectra as an `ndcube.NDCollection` of `ndcube.NDCube` objects, and its packaging declares
+  `'ndcube>=2.2.0'` — the same ground as HERMES Core. SWxSOC's own catalogue entry lists ndcube as
+  interoperable, so the relation now runs both ways, and the URL recorded is that entry's stored
+  repository URL. sunkit-spex (`sunpy/sunkit-spex` at `92782fb8`) defines `class Spectrum(NDCube)` in
+  `sunkit_spex/spectrum/spectrum.py`, as its 0.5.0 release does, and declares `"ndcube>=2.3"`; it has
+  no entry in this catalogue, so its GitHub repository is used. Neither was recorded when this field
+  was first filled. Both also have Zenodo concept DOIs — SWxSOC `https://doi.org/10.5281/zenodo.15546486`
+  (presenting `swxsoc/swxsoc: 0.2.3`) and sunkit-spex `https://doi.org/10.5281/zenodo.11526911`
+  (presenting v0.5.0), read at DataCite on 2026-10-29 — and the repository form is recorded instead
+  because the site shows the raw URL as the link text, legible as a repository URL and not as a DOI
+  (Field 29's rule 13, which Field 30's rule 11 applies).
 - Note on irispy's two names: the repository was renamed, and as of 2026-09-08
   `https://github.com/LM-SAL/irispy-lmsal` redirects to `https://github.com/LM-SAL/irispy` while
   `irispy-lmsal` remains the distribution name declared in its packaging. The current repository URL
