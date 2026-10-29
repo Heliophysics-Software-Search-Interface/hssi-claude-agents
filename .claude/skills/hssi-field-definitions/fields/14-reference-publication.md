@@ -66,8 +66,7 @@ never selects a paper from it. Decide Fields 14 and 27 together.
 5. **A paper about the method, model, format or algorithm, or about a different product → not
    Field 14.** Fires for a paper the software implements or wraps but that does not describe this
    software (it may predate the code), and for a paper describing another package the software
-   consumes or feeds. It goes to Field 27 when the project presents it as a reference for the
-   software (Field 27 rule 4).
+   consumes or feeds. It goes to Field 27 when Field 27 rule 4 admits it.
 6. **No guidance, but a paper by the developers describes this software → that paper.** Fires for a
    peer-reviewed paper that names the software in its title or presents its code in a dedicated
    section, and to which the project's documentation or its authors point. A paper that describes this
