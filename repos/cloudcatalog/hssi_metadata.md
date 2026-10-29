@@ -57,17 +57,27 @@ Per-value evidence:
 | Value | Evidence |
 |---|---|
 | Data Processing and Analysis | Parent category of the three subcategories below. |
-| ...: Data Access and Retrieval | `CatalogRegistry`, `CloudCatalog.request_cloud_catalog()`, `get_entry()`, `sample_file()`, `stream()`, `stream_uri()`, `EntireCatalogSearch.search_by_id/title/keywords()` in `src/cloudcatalog/main.py`; release 1.3.1 adds `CloudCatalog.ls_wildcard()`, which selects the file keys of a returned index that match a filename wildcard (PR #46; all read at `a3c2509`). |
-| ...: File Format Conversion | `update_catalog_from_csv()` ingests `cat.csv` and writes `catalog.json` (`src/cloudcatalog/updater/catalog_updater.py`); `cloudcat_indexer.write_indexes()` converts `catalog.json` into per-id HTML index pages (`src/cloudcatalog/generators/cloudcat_indexer.py`). Both present at the source revision and at `a3c2509`. *(A third converter, `cloudcatalog-manifest2indices`, shipped in the 1.2.1 package. PR #39, "Moved ops tools to heliocloud_tools repo", deleted `generators/manifest2indices.py` in the source-revision merge, and release 1.3.1, whose package contents equal `a3c2509`, does not contain it; `pyproject.toml` still declares the console script, which therefore fails. Never relied on as evidence here.)* |
+| ...: Data Access and Retrieval | `CatalogRegistry`, `CloudCatalog.request_cloud_catalog()`, `get_entry()`, `sample_file()`, `stream()`, `stream_uri()`, `EntireCatalogSearch.search_by_id/title/keywords()` in `src/cloudcatalog/main.py`; release 1.3.1 adds `CloudCatalog.ls_wildcard()`, which selects the file keys of a returned index that match a filename wildcard (PR #46; all read at `a3c2509`); release 1.3.3 adds `CloudCatalog.hapi_request_cloud_catalog()`, `hapi_metadata()` and `hapi_cloudcatalog()`, which return the same index records in HAPI-style forms (read at `59142c7`). |
+| ...: File Format Conversion | `update_catalog_from_csv()` ingests `cat.csv` and writes `catalog.json` (`src/cloudcatalog/updater/catalog_updater.py`); `cloudcat_indexer.write_indexes()` converts `catalog.json` into per-id HTML index pages (`src/cloudcatalog/generators/cloudcat_indexer.py`). Both present at the source revision and at `a3c2509`. *(A third converter, `cloudcatalog-manifest2indices`, shipped in the 1.2.1 package. PR #39, "Moved ops tools to heliocloud_tools repo", deleted `generators/manifest2indices.py` in the source-revision merge, and neither release 1.3.1 (whose package contents equal `a3c2509`) nor release 1.3.3 (equal to `59142c7`) contains it; `pyproject.toml` still declares the console script, which therefore fails. Never relied on as evidence here.)* |
 | ...: Processing | Index post-processing in `request_cloud_catalog()`: spec-version-dependent fixups (synthesises a `stop` column for pre-0.5 indices), `#`-prefixed header stripping, positional column normalisation, multi-year frame concatenation, ISO-8601 parsing and time-range filtering; `validate_and_fix_timestamp()` repairs malformed timestamps. |
 | Servers and Environments | Parent category of the two subcategories below. |
 | ...: Distribution/Access | The package *is* the access layer for a decentralised, serverless data-distribution standard: "RESTful & serverless (indices are flat files alongside their datasets)" (`README.md`); `docs/cloudcatalog-spec.md` section 2 defines the global `HelioDataRegistry.json` bucket registry; `src/cloudcatalog/validators/validate_cloudcatalog_api.py` (renamed `validate_apiheliocloud.py` by PR #43 with its content unchanged; read at `a3c2509`) exercises the public service endpoint `https://api.heliocloud.org/cloudcatalog?id=`. |
 | ...: Data servers processing and handling | Server-side catalog maintenance tooling: `updater/catalog_updater.py` (safe merge/update of `catalog.json`), `updater/recatalog.py` (bulk relocation of holdings, rewriting both `catalog.json` and every index CSV, with backups), `updater/version_file.py` (versioned backups), `validators/validation.py` (`Validator` — JSON-Schema validation of global/local catalogs, ID-uniqueness checks, index-file reachability), `validators/validator.py` (spec compliance of new entries). PR #43 renamed these two `validation_class.py` and `validate_json.py` respectively, with their content unchanged, deleted the overlapping `validate_cloudcatalog.py` script, and added a verbose option to `catalog_updater.py` (read at `a3c2509`). |
 
-**At release 1.3.1** (`1c7b8db..a3c2509`, the code PyPI 1.3.1 ships): besides the wildcard filter and
-the renames above, PR #44 makes lookups that find nothing log the miss and return `None` or an empty
-result instead of raising. Neither the filter, which is retrieval, nor the error handling adds a
-category, and every value above keeps its evidence.
+**At releases 1.3.1 and 1.3.3** (`1c7b8db..a3c2509`, the code PyPI 1.3.1 ships, then
+`a3c2509..59142c7`, the code 1.3.3 adds): besides the wildcard filter and the renames above, PR #44
+makes lookups that find nothing log the miss and return `None` or an empty result instead of raising.
+Release 1.3.3 adds HAPI-style returns in `src/cloudcatalog/main.py` at `59142c7`:
+`CloudCatalog.hapi_request_cloud_catalog()` returns the index records of a time range as a NumPy
+structured array (`start`, `stop`, `datakey`, `filesize`), `hapi_metadata()` reshapes a dataset's
+catalog entry (its id, title, start and stop) into a HAPI 3.1-style metadata dictionary that describes
+the index columns and lists no files, and `hapi_cloudcatalog()` returns a dataset's index records, as
+the usual DataFrame, together with that metadata. The array and the dictionary are returned, not
+written to a file; with `cache=True`, `hapi_request_cloud_catalog()` caches the yearly index CSVs it
+fetches, as `request_cloud_catalog()` does. `hapi_request_cloud_catalog()` and `hapi_cloudcatalog()`
+hand back the same file listings, as an array and as the usual DataFrame, and `hapi_metadata()`
+describes them; all are retrieval. Neither the filter, the error handling nor the HAPI-style
+returns adds a category, and every value above keeps its evidence.
 
 **Considered and excluded:**
 - `Data Processing and Analysis: Time Series Analysis` — the temporal filtering in
@@ -167,10 +177,10 @@ Author order is significant and is: Antunes, Jeschke, Shumate, Knowles.
   1. Git history — 6 commits authored as `Peter Shumate <peter.shumate@jhuapl.edu>` /
      `peter.shumate <peter.shumate@jhuapl.edu>` (`8c00867` "#6: Update MIT License",
      `66337eb` "#10: Add GitHub issue templates", plus merges).
-  2. ORCID 0009-0003-6088-5437 — "Peter **Shumate**", Research Software Engineer at Johns
+  2. ORCID 0009-0003-6088-5437 — "Peter **Shumate**" (emphasis added), Research Software Engineer at Johns
      Hopkins University Applied Physics Laboratory from 2023-08 (ROR `029pp9z10`).
   3. Zenodo 10.5281/zenodo.13887203 ("HelioCloud as a replicable open science architecture",
-     Gateways 2024) lists creator "**Shumate**, Peter" alongside Antunes and Jeschke.
+     Gateways 2024) lists creator "**Shumate**, Peter" (emphasis added) alongside Antunes and Jeschke.
   No source anywhere spells it "Schumate".
 - **Previous incorrect value:** this record previously held the misspelling **`Schumate`** with no
   identifier. Corrected to `Shumate` with the ORCID above, preserving the author's existing
@@ -283,20 +293,22 @@ and `pyproject.toml` `[project.scripts]`; without it the description covered onl
 omitted roughly half the shipped software.
 
 *Scope note:* the final paragraph describes the software as released at the version this record
-carries, 1.3.1, whose package contents equal `a3c2509`, and it does not name
+carries, 1.3.3, whose package contents equal `59142c7`, and it does not name
 `cloudcatalog-manifest2indices`. While the record carried 1.2.1, the paragraph ended with the clause
 "; and cloudcatalog-manifest2indices converts an AWS Manifest.csv to individual [dataID]_[YYYY].csv
 indices", which was true of the 1.2.1 package. PR #39 (2026-07-21) moved the converter to the
-`heliocloud_tools` repository, and 1.3.1 contains no `generators/manifest2indices.py`, so the console
-script that `pyproject.toml` and the README still list fails. Field 8 rule 2 drops a claim whose
-module does not exist at the pin, even when the README makes it; removing the clause moved the final
-"and" onto the `cloudcatalog-gui` item and changed no other word. Restore the clause only if the
-converter returns to this package.
+`heliocloud_tools` repository, and neither 1.3.1 nor 1.3.3 contains `generators/manifest2indices.py`,
+so the console script that `pyproject.toml` and the README still list fails. Field 8 rule 2 drops a
+claim whose module does not exist at the pin, even when the README makes it; removing the clause moved
+the final "and" onto the `cloudcatalog-gui` item and changed no other word. Restore the clause only if
+the converter returns to this package. The HAPI-style returns that 1.3.3 adds (Field 4) appear in
+neither the README nor the package description, which are unchanged at `59142c7`, so rule 3 does not
+fire and the description stands (rule 6).
 
 *Why the `cloudcatalog-gui` clause is kept.* The `cloudcatalog-gui` entry point targets
 `cloudcatalog.catalogtools.catalog_updater:updater_gui`, and no `catalogtools` module exists in the
-1.2.1 or 1.3.1 wheel or in any commit, so the command fails in both releases. The GUI itself ships
-intact as `cloudcatalog.updater.updater_gui.updater_gui()`, a Tkinter form that drives
+1.2.1, 1.3.1 or 1.3.3 wheel or in any commit, so the command fails in all three releases. The GUI
+itself ships intact as `cloudcatalog.updater.updater_gui.updater_gui()`, a Tkinter form that drives
 `update_catalog_from_json()`: the capability the clause describes is in the code, and only the
 console-script wiring is broken. Drop the clause under rule 2 only if a release removes that module.
 
@@ -347,44 +359,40 @@ software DOI exists (Field 2).
 ---
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** 1.3.1
-- **Version Date:** 2026-09-23
+- **Version Number:** 1.3.3
+- **Version Date:** 2026-10-21
 - **Version Description:** Not found
 - **Version PID:** Not found
 
 Evidence, and the traps avoided:
 
 - **PyPI is the release list.** The project has no git tags, no GitHub releases and no changelog.
-  `https://pypi.org/pypi/cloudcatalog/json` (read 2026-10-28) lists 0.4 (2023-10-26), 0.5
+  `https://pypi.org/pypi/cloudcatalog/json` (read 2026-10-29) lists 0.4 (2023-10-26), 0.5
   (2024-03-12), 0.6.1 (2024-08-21), 1.0.0 (2024-09-04), 1.0.2 (2025-02-19), 1.1.0 (2025-06-02), 1.2.1
-  (2026-03-31), 1.3.0 (2026-09-21), 1.3.1 (2026-09-23) and 1.3.3 (2026-10-21), none yanked. For a
-  project that does not tag, Field 12 rule 3 counts a PyPI upload of a version declared at a commit on
-  the default branch's lineage or on a release branch cut from it.
-- **1.3.1 is that release.** Commit `fe916cb` (2026-09-21, merged by PR #46) sets
-  `version = "1.3.1"` on `develop`, and the 1.3.1 sdist, uploaded 2026-09-23T20:58:58Z (the wheel at
-  20:58:57Z), matches the tree of `develop` at `a3c2509` (merged 2026-09-23T19:31:20Z) file for file
-  in `src/`, `tests/` and `pyproject.toml`. The date is that upload's UTC day (rule 7).
-- **Not 1.3.3.** PyPI's newest release, 1.3.3 (wheel 2026-10-21T18:29:02Z, sdist 18:29:04Z), was
-  built from `59142c7`
-  ("new module with HAPI-style returns", 2026-10-21T18:26:20Z), the one commit on the branch
-  `48-hapi`, which is the only place 1.3.3 is declared; its sdist matches that commit file for file.
-  The branch is a feature branch, not a release branch: it is named for the open issue #48 ("convert
-  CC to HAPI format"), follows the project's issue-numbered branch convention (`5-test_cascade`,
-  `21-err2warn` and `45-wildcards` were each merged into `develop` by pull request), has no pull
-  request, and is one commit ahead of `develop`. A PyPI file built from code on neither the default
-  branch's lineage nor a release branch is unreleased code for this field (rule 2). No 1.3.2 was
-  declared or uploaded. **For a later update:** record the newest PyPI version declared at a
-  `develop` commit; when the HAPI-style module reaches `develop`, check Fields 4, 8, 17, 29 and 30
-  against it.
-- **Not 1.3.0.** The source tree of the 1.3.0 sdist (wheel 2026-09-21T17:02:39Z, sdist 17:02:41Z)
-  matches `762e019`, the merge of PR #44 three minutes earlier, apart from an extra `_hapitime.py`,
-  and no commit declares its version string; `fe916cb` sets 1.3.1 about 42 minutes later. 1.3.1
-  supersedes it in any case.
+  (2026-03-31), 1.3.0 (2026-09-21), 1.3.1 (2026-09-23) and 1.3.3 (2026-10-21), none yanked and none a
+  pre-release. Under Field 12 rule 3, a PyPI upload of the project's own package that is neither
+  yanked nor a pre-release is a release, whichever branch it was built from.
+- **1.3.3 is the newest release.** Its wheel and sdist were uploaded at 2026-10-21T18:29:02Z and
+  18:29:04Z, and with no tag the date is that upload's UTC day (rule 7). The sdist matches commit
+  `59142c7` ("new module with HAPI-style returns", 2026-10-21T18:26:20Z) file for file in `src/`,
+  `tests/` and `pyproject.toml`, and that commit is the only one that declares 1.3.3. No 1.3.2 was
+  declared or uploaded.
+- **The default branch lags the release.** `59142c7` is the single commit on the feature branch
+  `48-hapi`, named for the open issue #48 ("convert CC to HAPI format"), one commit ahead of
+  `develop` and with no pull request; `develop` stops at `a3c2509` (2026-09-23), which declares 1.3.1.
+  `a3c2509` is an ancestor of `59142c7`, and the two differ only in `pyproject.toml`,
+  `src/cloudcatalog/__init__.py`, `src/cloudcatalog/main.py` and `tests/test_hapi.py`, so this record
+  reads the HAPI-style returns at `59142c7` (Fields 4, 8, 16, 17, 19, 29 and 30) and everything else
+  at `a3c2509`. **When `48-hapi` merges into `develop`**, or `develop` moves past it, re-read those
+  fields at the merged revision and move the record's citations of `59142c7` to the default branch.
+- **1.3.0** — the source tree of its sdist (wheel 2026-09-21T17:02:39Z, sdist 17:02:41Z) matches
+  `762e019`, the merge of PR #44 three minutes earlier, apart from an extra `_hapitime.py`, and no
+  commit declares its version string; `fe916cb` sets 1.3.1 about 42 minutes later. It is a release
+  under the same rule, and 1.3.1 and 1.3.3 supersede it.
 - **Version Description empty.** Rule 10 derives a new release's description afresh, and rules
   13–16 take it only from a GitHub release title or body or a changelog entry, of which CloudCatalog
-  has none. The pull-request descriptions in the range (PR #44 explains the switch from raised errors
-  to logged `None` results) are not release notes, and a summary composed from them or from commit
-  subjects is never recorded (rule 15).
+  has none. The commit subject of `59142c7` and the text of issue #48 are not release notes, and a
+  summary composed from commits or pull requests is never recorded (rule 15).
 - **Version PID:** no per-version DOI exists (see Field 2).
 - **Declared but never released, settled.** `develop` declared 1.2.2 (`a50a73f`, 2026-03-31) and then
   1.2.3 (`a3ab434`, 2026-07-07); neither was uploaded, tagged or released. Automated metadata
@@ -395,11 +403,17 @@ Evidence, and the traps avoided:
   about four hours fifty minutes before `a50a73f` bumped `develop` to 1.2.2 (2026-03-31T16:25:33Z),
   the same shape 1.3.0 shows.
 
-**Previous values.** Before 1.3.1, HSSI held version 1.2.1 (2026-03-31) with a description
-summarising the 32 non-merge commits `9d74d3c..db81e17`. That summary was composed from commit
-subjects, which Field 12 never records (rule 15), and it is not carried onto 1.3.1 (rule 10). Before
-1.2.1 the record held 1.1.0 dated 2025-09-04, a date PyPI contradicts: 1.1.0 was published
-2025-06-02.
+**Previous values.** HSSI held 1.3.1 (2026-09-23), with no description and no PID, until this update.
+That value followed the earlier reading of rule 2, under which a PyPI file built from code on neither
+the default branch's lineage nor a release branch was unreleased code: 1.3.1, declared on `develop` by
+`fe916cb` (merged by PR #46) and uploaded 2026-09-23 with an sdist matching `develop` at `a3c2509`,
+was then the newest qualifying release, and 1.3.3 was set aside as a feature-branch build. Field 12
+was revised on 2026-10-29 to count every PyPI upload of the package that is neither yanked nor a
+pre-release, whichever branch built it, so 1.3.3 replaces 1.3.1. Before 1.3.1, HSSI held version
+1.2.1 (2026-03-31) with a description summarising the 32 non-merge commits `9d74d3c..db81e17`. That
+summary was composed from commit subjects, which Field 12 never records (rule 15), and it was not
+carried onto 1.3.1 (rule 10). Before 1.2.1 the record held 1.1.0 dated 2025-09-04, a date PyPI
+contradicts: 1.1.0 was published 2025-06-02.
 
 ---
 
@@ -488,8 +502,12 @@ Dropped as low-value or ambiguous: `general`, `remote`, `fair`, `big data`, `spe
 in the PyHC registry; CloudCatalog's entry is in `_data/projects.yml`. It binds the existing
 `pyhc package` keyword row.
 
-The sources above are those of release 1.3.1 (`a3c2509`), read 2026-10-28; on that date the
-repository had no GitHub topics.
+The sources above are unchanged at release 1.3.3 (`59142c7`), read 2026-10-29; on that date the
+repository had no GitHub topics. `hapi` was considered for the HAPI-style returns 1.3.3 adds
+(Field 4) and not added: the package neither serves nor consumes HAPI data and only mimics HAPI's
+metadata and array forms, so the keyword would promise HAPI support the record lacks (rule 4); the
+Field 30 HAPI Client entry rests on a stated structural equivalence only, and the relations to the
+HAPI specification and to HAPI Client are carried by Fields 29 and 30.
 
 ---
 
@@ -510,18 +528,21 @@ repository had no GitHub topics.
   URLs)"; `validators/validate_cloudcatalog_api.py` (renamed `validate_apiheliocloud.py` by PR #43)
   queries `https://api.heliocloud.org/...`.
 
-At `a3c2509` (release 1.3.1) the fetch cascade in `main.py`, which PR #44 restructured to return
-`None` instead of raising, reaches the same S3 (unsigned, signed, region-pinned), HTTP(S) and
-local-file sources.
+At `a3c2509` (release 1.3.1) and `59142c7` (release 1.3.3) the fetch cascade in `main.py`, which
+PR #44 restructured to return `None` instead of raising, reaches the same S3 (unsigned, signed,
+region-pinned), HTTP(S) and local-file sources; 1.3.3's `hapi_request_cloud_catalog()` fetches its
+yearly index files through the same `fetch_S3orURL()`.
 
 **Considered and excluded:**
 - `CDAWeb` — the repository's CDAWeb references (`generators/find_in_catalog.py`,
   `validators/find_collection.py`) filter CloudCatalog's *own* `collections` tag for the string
   "CDAWeb"; the mirrored CDAWeb data is reached as ordinary S3 objects, never through CDAWeb's
   services.
-- `HAPI` — the package is only "HAPI-like" in query shape and borrows HAPI's time format
-  (spec section 5). `tests/test_hapi.py` is an explicit stub whose converter body is commented out
-  and whose `CloudCatalogToHAPIConverter` returns its input unchanged. No HAPI client exists.
+- `HAPI` — the package is "HAPI-like" in query shape, borrows HAPI's time format (spec section 5)
+  and, from release 1.3.3, returns index records and metadata in HAPI-style forms (Field 4, at
+  `59142c7`), but no code in it requests data from a HAPI server. At `a3c2509`, `tests/test_hapi.py`
+  was a stub whose converter body was commented out; at `59142c7` it checks only the HAPI-style
+  returns.
 - `Observatory/Mission-specific` — the software is dataset- and mission-agnostic (Fields 31–32).
 
 ---
@@ -551,14 +572,16 @@ downstream reader, not to this package.
 - **csv** — `updater/recatalog.py` `update_index()` rewrites the `[id]_[YYYY].csv` index files when
   holdings are relocated, and `cloudspider.spider(create_manifest=True)` writes `manifest_spider.txt`
   via `DataFrame.to_csv()` (both read at `a3c2509`). The `cloudcatalog-manifest2indices` converter,
-  which wrote `[dataID]_[YYYY].csv` indices in 1.2.1, is absent from 1.3.1 (Field 8) and is not part of
-  this evidence.
+  which wrote `[dataID]_[YYYY].csv` indices in 1.2.1, is absent from 1.3.1 and 1.3.3 (Field 8) and is
+  not part of this evidence.
 - **JSON** — `update_catalog_from_json()` / `update_catalog_from_csv()` write `catalog.json`
   (`json.dump(..., indent=4)`); `generators/catalog_editor.write_catalog()` does the same under a
   file lock; `CloudCatalog(cache=True)` writes a cached `catalog.json`.
 - **Other** — `generators/cloudcat_indexer.write_indexes()` generates per-dataset
   `[id]_index.html` pages; HTML is not in the format vocabulary, which is what `Other` covers.
-  Not claimed: the plain-text `spiderout.txt` report, which is a log rather than a data file.
+  Not claimed: the plain-text `spiderout.txt` report, which is a log rather than a data file, and the
+  HAPI-style metadata and arrays that 1.3.3 adds (Field 4), which are returned in memory and written
+  to no file.
 
 ---
 
@@ -600,10 +623,10 @@ Active
   corroborates that releases exist and nothing more.
 - The Zenodo DASH 2025 record's custom field `code:developmentStatus = {"id": "active"}` — the
   author's own declaration.
-- Dated anchors (read 2026-10-28): the last commit on the default branch `develop` is `a3c2509`,
+- Dated anchors (read 2026-10-29): the last commit on the default branch `develop` is `a3c2509`,
   2026-09-23T19:31:20Z, less than six months before that reading, so rule 6 gives `Active`; the
-  newest release is 1.3.1 of 2026-09-23 (Field 12), followed by a PyPI upload from a feature branch
-  on 2026-10-21; the repository is not archived and has 19 open issues.
+  newest release is 1.3.3 of 2026-10-21 (Field 12), built from the feature branch `48-hapi`; the
+  repository is not archived and has 19 open issues.
 - In production: "already used for 2 Petabytes of publicly available NASA and
   scientist-contributed data" (`README.md`).
 - Not `WIP` — there are ten published PyPI releases and a stable public API. The "beta, use at
@@ -800,7 +823,7 @@ found no deposited poster or paper.
 
 - the dataset record itself states the data is served from
   `s3://gov-nasa-hdrl-data1/contrib/euvml/` with "a sample Python Jupyter Notebook … for accessing
-  them via the **'cloudcatalog' Python client**";
+  them via the **'cloudcatalog' Python client**" (emphasis added);
 - this repository tests directly against it — `tests/test_hdrl.py::test_hdrl_euv` requests dataset
   id `euvml_stereoa_171`, and `test_search` asserts `search_by_id("EUVML_STEREO")` returns 10
   entries.
@@ -834,7 +857,9 @@ Each entry is distinguishing, with a specific artifact cited:
    itself on and borrows from. `README.md`: enabling "HAPI-like" data ID + time range queries;
    `docs/CloudCatalog-Demo.ipynb`: "like HAPI, it is both a specification and an accompanying
    Python API"; `docs/cloudcatalog-spec.md` section 5: "the SCR Time format (**taken from the HAPI
-   Time format**) is a subset of the ISO 8601 standard". The specification's concept DOI,
+   Time format**) is a subset of the ISO 8601 standard" (emphasis added); and from release 1.3.3, `hapi_metadata()`
+   builds metadata labelled `"HAPI": "3.1"` (`src/cloudcatalog/main.py` at `59142c7`). The
+   specification's concept DOI,
    10.5281/zenodo.4757596 (the badge in its repository's README; DataCite lists it with `HasVersion`
    relations), is passed over for the repository URL because the site shows the raw URL as link text
    (rule 13).
@@ -842,17 +867,25 @@ Each entry is distinguishing, with a specific artifact cited:
 **Considered and excluded:**
 - https://github.com/heliocloud-data/sunpy-cloudcatalog — recorded in Field 30 only. Its relation to
   this software is the plug-in exchange itself, which belongs in Field 30 alone (rule 3).
-- `hapiclient` — release 1.3.1 ships `_hapitime.txt`, a text file reproducing hapiclient's `hapitime`
-  functions (its own imports and examples name `hapiclient`); as a `.txt` file it cannot be imported,
-  and nothing in the package uses it. The HAPI-style returns of the unreleased `48-hapi` branch
-  (Field 12) do not use it either. Functionality planned but not shipped is not a relation (rule 7).
-  The HAPI specification itself is entry 3.
+- `hapiclient` (HAPI Client) — recorded in Field 30 only, for the hapiclient-shaped returns that 1.3.3
+  adds; it has no Field 29 ground of its own. Releases 1.3.1 and 1.3.3 ship `_hapitime.txt`, an unused
+  copy of hapiclient's `hapitime.py`, shipped as un-importable text: not a dependency, and no code
+  path imports or calls it. Against `hapiclient/hapitime.py` at `e990889` it has the same four
+  functions and the `hapiclient.util` import, differing mainly in quote style, a `logging` parameter
+  and the imports of `log` and `warnings`. Rule 9's "wraps or vendors" does not say whether a shipped
+  but inert copy counts; this record reads it as code the software can run, and by the site-user test
+  a copy that nothing can import, which gives a user none of hapiclient's functions, gives Field 29 no
+  ground. The copy was made inert in the repository: `fe916cb` (2026-09-21) added it as an importable
+  `_hapitime.py`, and `752f4f9` renamed it to `_hapitime.txt` six minutes later. What the project
+  plans is wider: the demo notebook lists "add hooks to PySpedas & HAPI?" among future items, and what
+  ships in 1.3.3 is returns that import no HAPI package. The HAPI specification itself is entry 3.
 
 ---
 
 ### 30. Interoperable Software (OPTIONAL)
 - https://github.com/lasp/cdflib
 - https://github.com/heliocloud-data/sunpy-cloudcatalog
+- https://github.com/hapi-server/client-python
 
 **Canonical URL.** cdflib's repository moved from `MAVENSDC/cdflib` to `lasp/cdflib`:
 `https://github.com/MAVENSDC/cdflib` returns HTTP 301 redirecting to
@@ -880,6 +913,23 @@ presents it as a SunPy-affiliated Fido client for CloudCatalog. The developers n
 on 2026-10-28, so the entry is its repository root (Field 29 rule 12); if it gains an entry, use that
 entry's stored `code_repository_url` (rule 11).
 
+**HAPI Client (hapiclient)** is admitted on the converted data model of the HAPI-style returns that
+release 1.3.3 adds (rule 7). At `59142c7`, the docstring of `CloudCatalog.hapi_request_cloud_catalog()`
+says its NumPy structured array is "equivalent in structure to the arrays returned by
+``_parse_csv()`` and ``_parse_csv_missing_length()`` in hapi_get.py". Those two functions are
+hapiclient's CSV parsers, in `hapiclient/get.py` of `hapi-server/client-python` (read at `e990889`,
+2026-08-12); the file name the docstring gives differs from hapiclient's, but the function names match
+it. `hapi_metadata()` adds HAPI 3.1 info-style metadata describing the same columns. So 1.3.3 converts
+CloudCatalog's index records into hapiclient's data model, and states so in its public API, which is
+the evidence rule 7 needs; rule 5 does not fire, because the project's own documentation names the
+partner's functions. What the record does not claim: the package imports no HAPI package, no
+document, example or test passes these returns to hapiclient (the `59142c7` test checks that records
+come back and that the metadata's status is OK), and `hapi_cloudcatalog()` returns the usual DataFrame
+rather than the array. Remove the entry if a later release drops the HAPI-style returns. The URL is
+the stored repository URL of HSSI's HAPI Client entry (Field 29 rule 11); that entry's persistent
+identifier, 10.5281/zenodo.5553155, is passed over because the site shows the raw URL as link text
+(Field 29 rule 13).
+
 **Considered and excluded:**
 - `pandas` — not listed even though the public API returns `DataFrame`s. Being a dependency is not
   interoperability.
@@ -891,14 +941,15 @@ entry's stored `code_repository_url` (rule 11).
   never used in any cell. An unused import is not a demonstrated exchange.
 - `SunPy` — the Fido exchange is performed by sunpy-cloudcatalog, not by this package, which never
   imports sunpy; listing SunPy would infer a pairing through a third package (rule 5).
-- `PySPEDAS` and a HAPI client — explicitly future work, not implemented.
-  `docs/CloudCatalog-Demo.ipynb` lists "add hooks to PySpedas & HAPI?" among future items and
-  states: "Future: We'd love to work hook for CloudCatalog calls into other packages (esp.
-  PySpedas and HAPI) so the cloud-stored data is fetchable within user's preferred toolsets."
-  `tests/test_hapi.py` is a stub with its converter body commented out. Release 1.3.1's
-  `ls_wildcard()` is called a "pyspedas-like wildcard routine" in its commit message, an idiom with no
-  PySPEDAS import or exchange. The HAPI-style returns exist only on the unreleased `48-hapi` branch
-  (Field 12); re-check a HAPI exchange when that branch reaches `develop`.
+- `PySPEDAS` — explicitly future work, not implemented. `docs/CloudCatalog-Demo.ipynb` lists "add
+  hooks to PySpedas & HAPI?" among future items and states: "Future: We'd love to work hook for
+  CloudCatalog calls into other packages (esp. PySpedas and HAPI) so the cloud-stored data is
+  fetchable within user's preferred toolsets." Release 1.3.1's `ls_wildcard()` is called a
+  "pyspedas-like wildcard routine" in its commit message, an idiom with no PySPEDAS import or
+  exchange. The hapiclient-shaped returns of 1.3.3, recorded above, appear to begin the HAPI half of
+  that plan: issue #48, whose branch built 1.3.3, reads "Make cloudcatalog return a HAPI-style numpy
+  array, rather than its current Pandas dataframe. Ultimately, convert cloudcatalog to be a HAPI
+  package."
 - `AWS Athena` — genuinely documented as a query path over the CSV indices
   (`docs/cloudcatalog-spec.md` sections 4.4 and 4.5), but it is a proprietary managed service with
   no repository or DOI to link, and it queries the index files rather than interoperating with the
@@ -979,7 +1030,7 @@ source supports.
    PyHC is a manually curated registry and the highest-priority naming source. It is unambiguous.
 2. **The lead author's own publication title** — Zenodo 10.5281/zenodo.17398630,
    *"**CloudCatalog**: an API plus Tools for Lazy Indexing of Millions of Cloud-Stored Data
-   Files"* (Alex Antunes, DASH 2025), whose metadata sets `code:codeRepository` to this
+   Files"* (Alex Antunes, DASH 2025; emphasis added), whose metadata sets `code:codeRepository` to this
    repository. The author separates the proper noun (`CloudCatalog`) from the descriptor ("an API
    plus Tools") — and "plus Tools" shows the software is *not* only an API.
 3. **Repository, distribution and import name** is `cloudcatalog` in every channel: the GitHub
@@ -988,7 +1039,7 @@ source supports.
    (`import cloudcatalog`), and the Sphinx project (`docs/conf.py` `project = "cloudcatalog"`,
    `docs/index.rst` "cloudcatalog Documentation").
 4. **GitHub About**: "**CloudCatalog** specification and API for providing and accessing cloud
-   data" — again the name followed by a descriptor.
+   data" (emphasis added) — again the name followed by a descriptor.
 5. **The specification's own title** is its section 1 heading, "The generalized Cloud Catalog
    specification for large cloud datasets" (`docs/cloudcatalog-spec.md`); its prose writes the name
    `CloudCatalog`, and the primary API class is `class CloudCatalog`.
@@ -1012,7 +1063,7 @@ the *specification* (a document). Three things defeat it:
   contains the specification documents (`docs/cloudcatalog-spec.md`, `-1.1.md`, and four earlier
   versions), the client API, generator/updater tools, validators and six console scripts. Naming
   the record "CloudCatalog API" names one component of what is catalogued. The author's own title
-  makes the same point: "an API **plus Tools**".
+  makes the same point: "an API **plus Tools**" (emphasis added).
 - **Even the README H1 parses the other way.** `CloudCatalog (cloudcatalog) API` reads as
   *proper noun* + *(import name)* + *common-noun descriptor*, exactly as the GitHub About line
   does. Nowhere is "CloudCatalog API" used as a unit — hence the zero-hit search.
