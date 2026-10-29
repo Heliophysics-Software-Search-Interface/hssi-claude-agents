@@ -12,9 +12,9 @@
 
 **How to fill it:** Enter the URLs — ideally DOIs — for all notable publications the software is cited in, one URL per entry (the form's "+ add" button adds a field per URL). Only a URL is accepted per entry; free-text citations are rejected. For a publication with no DOI, use any permanent link (e.g., its ADS abstract page, `https://ui.adsabs.harvard.edu/abs/<bibcode>/abstract`) and record the full citation in the dossier prose instead.
 
-In practice: the developers' own publications about the software, the papers the project presents as
-the basis of the software, and third-party papers that substantively use it — never the Field 14 paper,
-and never a paper that merely cites it.
+In practice: the developers' own publications about the software, the few papers the project presents
+as the basis of the software, and third-party papers that substantively use it — never the Field 14
+paper, and never a paper that merely cites it.
 
 ## Why it exists
 
@@ -22,8 +22,9 @@ The field holds publications: documents of scientific merit written for, about o
 It gives a visitor the literature behind and around the software: where the method comes from, what
 the developers have published about it, and real science done with it. A curated list tells them the
 software is used and how. Padding it with every paper that happens to name the software turns it into
-an arbitrary, ever-growing citation index that hides the few entries worth reading; leaving out a
-paper the project itself points to hides the science the code implements.
+an arbitrary, ever-growing citation index that hides the few entries worth reading, and a long list
+of the method papers its code cites does the same; leaving out the few papers the software is built
+on hides the science the code implements.
 
 ## How it appears on the site
 
@@ -62,12 +63,26 @@ the abstract as weighed. The type makes an entry eligible; rules 2–7 decide wh
 3. **The developers' own publication about the software → include.** Its subject is this software
    and its authors include the software's. Include also one by an author about the platform the
    software serves, with the dossier noting what it covers.
-4. **A publication the project presents as the basis of, or a citation for, the software → include.**
-   Evidence: the README or docs reference list for the method, model or algorithm; the code's own
-   reference block; a second paper the project's citation guidance asks for; a per-component citation
-   list. **Excluded under this rule:** a paper the project lists only as further or useful reading
-   ("Other references you might find useful"), and a reference for a file format the software merely
-   reads.
+4. **A publication the project presents as the basis of the software, or asks users to cite for it →
+   include while the list stays useful.** It is a method or model paper the code implements,
+   whatever the package's structure, or a paper the project's citation guidance asks for. Evidence:
+   the README or docs reference list for the method, model or algorithm; the code's own reference
+   block; a second paper the project's citation guidance asks for; a per-component citation list.
+   **Judge the list as a whole, from a searcher's view, and record the reasoning in the dossier.**
+   Count every qualifying paper, whether or not HSSI lists it, and weigh how much each explains the
+   software's purpose or an important capability, how incidental it is, and whether the combined list
+   stays useful to a visitor or makes them sift. The count informs the judgment without deciding it:
+   two papers behind the software's core computation are listed (solarmach); some forty, each behind
+   one routine, are not (PyRFU). When the list would be too long, list none of it except a few the
+   README, docs or citation guidance presents as the whole package's foundation or asks every user to
+   cite: a long list buries the publications actually about the software. A per-component citation
+   list, or a request to cite the references the routines give, counts with the rest and is never
+   that exception. **Excluded under this rule, and not counted:** a generic numerical, statistical or
+   mathematical method, a textbook or a table of standard constants, cited for one step of a
+   computation (a power-spectral-density estimator, a histogram bin-width rule, a spline
+   interpolation); a paper cited only by an example or tutorial; a paper the project lists only as
+   further or useful reading ("Other references you might find useful"); and a reference for a file
+   format the software merely reads.
 5. **A third-party publication that substantively uses the software → include, while such uses are
    still news.** Fires only when the paper's own results or software are built with this software
    **and** it says so deliberately: in its Acknowledgments, its Data Availability or Open Research
@@ -75,7 +90,7 @@ the abstract as weighed. The type makes an entry eligible; rules 2–7 decide wh
    citation contexts and intents help separate this from a passing mention. Uses are news while the
    software's citing literature is small: each one shows a searcher how and where the software is
    used. For widely used software, as with Astropy or SunPy, a list of users tells a searcher nothing:
-   add none, and say so in the dossier. Rules 3 and 4 apply at any size.
+   add none, and say so in the dossier. Rules 3 and 4 apply however widely the software is used.
 6. **A third-party publication that merely cites or mentions the software → not added.** Fires for a
    name in a bibliography, a list of tools or dependencies, background text, or a full-text hit with no
    deliberate credit; also for papers found only through an author's publication list that use the
@@ -178,6 +193,17 @@ one.
 - **Model paper as ADS permalink.** ReesAurora's code cites Sergienko and Ivanov (1993), the model it
   implements, in its reference block. Rule 4 includes it; it has no DOI, so the entry is its ADS
   abstract permalink.
+- **Two method papers listed.** solarmach's code cites exactly two method papers: Poljančić Beljan
+  et al. (2017) for the differential-rotation rate its backmapping uses, and Thompson (2006) for the
+  coordinate conversion that places the elements of its 3D figures. Both explain how the package
+  computes what it exists to show, and a list of two stays useful, so rule 4 lists both.
+- **Too many method papers to list.** PyRFU cites some 48 method, model and numerical papers, nearly
+  all in the reference blocks of the routines they motivated: the curlometer, minimum variance
+  analysis, the bow-shock and magnetopause models, Welch's spectral estimator and more. Its README
+  asks users to cite the software deposit and, as well, the methods the routines' references give;
+  that second request counts with the rest. Some forty qualify even without the generic ones, each
+  incidental to the library as a whole, and together they would bury the papers about it, so rule 4
+  lists none of them.
 - **Further reading excluded.** pyflct's docs list a methods paper under "Other references you might
   find useful". Rule 4's further-reading exclusion fires; the two algorithm references stay.
 
@@ -189,3 +215,8 @@ one.
 - Changed 2026-10-28: a new *Eligible publication types* paragraph governs every rule (meeting
   abstracts and talks are not publications, deposited posters are, slide decks need a human read), and
   removing an incumbent on these grounds needs the user's confirmation (rules 1 and 7, Ask list).
+- Changed 2026-10-29 (the maintainer's ruling on PyRFU): rule 4 lists the method, model and cited
+  papers only while, judged as a list from a searcher's view, they stay useful; when the list would
+  be too long, only a few the project presents as the whole package's foundation or asks every user
+  to cite. Generic numerical, statistical or mathematical references, textbooks and papers cited
+  only by an example are not listed.
