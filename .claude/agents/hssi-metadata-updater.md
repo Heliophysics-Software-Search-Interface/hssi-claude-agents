@@ -154,7 +154,7 @@ Before extracting metadata, **always `git pull`** the repo to ensure it reflects
 
 A release update runs when a new version of the software appears — typically from a "New version of …" issue — and its job is to leave the entry and its dossier as current as the software now is: every field that changed since the dossier last read it, above all Software Functionality, which is what HSSI users search by. It stays cheap by skipping only what you can see stayed the same, since a field whose evidence is unchanged cannot have gone stale. No SoMEF.
 
-Throughout, the pin a field file refers to is the default branch's current head; cite that revision for anything you read there. When the release you will record sits on another branch, compare and read it too: a capability only the release has is still the software's, cited at the release's revision.
+Throughout, the pin a field file refers to is the default branch's current head; cite that revision for anything you read there. When the release you will record sits on another branch, compare and read it too: a capability only the release has is still the software's, cited at the release's revision; when no commit holds the release's code, read its published files and cite them.
 
 1. **Read the whole dossier.** It is the baseline: a decision recorded there stands unless its evidence changed; anything it asks a later update to check is in scope; and a field where live HSSI and the dossier disagree for a reason the software's changes do not explain is drift — report it as a decision. If there is no dossier, or its header lacks a Source Revision or `PASS`, say so and stop: the orchestrator runs a Full Metadata Refresh instead.
 2. **Decide Version** under `fields/12`. If it keeps the stored release although a newer version was reported (as an issue's version is), name the rule that rejected it.
@@ -185,7 +185,7 @@ Check only dynamic fields directly against the repo — no SoMEF, no deep code a
 
 | Field | How to check |
 |-------|-------------|
-| **Version** | Git tags (`git tag --sort=-v:refname`), pyproject.toml, setup.cfg, Zenodo API |
+| **Version** | GitHub releases, git tags in creation order (`git tag --sort=-creatordate`), PyPI's JSON release list, Zenodo API — decided by `fields/12` |
 | **Authors** | CITATION.cff, Zenodo API, codemeta.json |
 | **License** | LICENSE file, pyproject.toml classifiers |
 | **Development Status** | Last commit date on the default branch, archived flag, README status badge — rules in `fields/23` |

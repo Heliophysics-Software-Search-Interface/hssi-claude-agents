@@ -59,7 +59,8 @@ read every GitHub release's `name` and `body`, and read PyPI's release list from
 upload of the project's own package needs no lineage check: unless it is yanked or a pre-release, it is
 a release whichever branch it was built from, if any. When its build commit is off the pin's lineage,
 read the other fields' evidence at that commit, or in the published files when no commit holds the
-code, and record in the dossier that the repository lags the release. Then
+code (cited as `<version> sdist, path:line`), and record in the dossier that the repository lags the
+release. Then
 identify which anomaly shape, if any, applies before deciding: an **orphan lineage** (a newer-looking
 tag on a pre-rewrite lineage that shares no history with the pin — it is older, not newer), a version
 **declared but never released** (in package metadata only: no tag, no release, no PyPI file), or a
@@ -75,9 +76,10 @@ the answer.
 2. **Unreleased code never gets a version** (for a new value; a stored version that was declared but
    never released is handled by rule 4, not cleared here). Fires for: commits after the last release; a
    version declared only on an unmerged branch and never published; a tag whose tagged code still
-   declares the previous version and has no release; a pre-release or a yanked PyPI file; release text
-   drafted in a wiki or a release-candidate branch with no tag. Record nothing for them; note in the
-   dossier what to check at the next refresh.
+   declares the previous version and has no release; a pre-release (PEP 440 `rc`, `a`, `b`, `dev`) or a
+   PyPI upload whose files the JSON API marks `yanked`; release text drafted in a wiki or a
+   release-candidate branch with no tag. Record nothing for them; note in the dossier what to check at
+   the next refresh.
 3. **A newer release than the stored one exists → replace the stored row.** "Newer" means a release
    later in the project's release order, not upload order (*Backport tags*): a tag on the pin's lineage
    or on a release branch cut from it, with a GitHub release or a PyPI upload, or a PyPI upload of the
@@ -178,10 +180,11 @@ it as one.
 ## Where to find it, and traps
 
 **Sources, in priority order.** Version information may be in:
-- Git tags
-- Release notes
-- Package version files
-- CHANGELOG.md
+- GitHub releases and git tags (in creation order)
+- PyPI's release list (JSON API; rule 3 says which uploads count)
+- Release notes and CHANGELOG.md (for the description)
+- Package version files, only to confirm what a tag's code declares or to spot a version declared but
+  never released (a declared version is not a release)
 
 DOIs (Persistent Identifier, Version PID, Reference Publication) may be in:
 - CITATION.cff
@@ -203,7 +206,8 @@ DOIs (Persistent Identifier, Version PID, Reference Publication) may be in:
 - **PyPI JSON API is authoritative** for upload dates and the release list
   (`https://pypi.org/pypi/<name>/json`, `upload_time_iso_8601`). The HTML project page returns 200 even
   for packages that do not exist. A JSON 200 proves the name is taken, not that it is this software:
-  match `info.project_urls`/`home_page` to the repository.
+  match `info.project_urls`/`home_page` to the repository, or to the home page its own package
+  metadata declares.
 - For Version PID: verify the DOI resolves (`curl -s -o /dev/null -w "%{http_code}" https://doi.org/{DOI}`)
   and cross-check against CITATION.cff, README badges, codemeta.json; read DataCite's `version` for it.
 - Dates must be YYYY-MM-DD (Fields 10, 12).

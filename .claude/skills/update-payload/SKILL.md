@@ -263,7 +263,7 @@ This classification scopes `refresh` and `enrich`. A `release` update ignores it
 | # | Field | What changes | How to detect |
 |---|-------|-------------|--------------|
 | 6 | Authors | New contributors | CITATION.cff, Zenodo API |
-| 12 | Version | New releases | Git tags, pyproject.toml, Zenodo API |
+| 12 | Version | New releases | GitHub releases, git tags, PyPI's release list, Zenodo API (decided by `fields/12`) |
 | 13 | Programming Language | Language additions | File extensions, repo stats |
 | 15 | License | License type changes | LICENSE file, pyproject.toml |
 | 16 | Keywords | New topics | PyHC registry, repo topics |
