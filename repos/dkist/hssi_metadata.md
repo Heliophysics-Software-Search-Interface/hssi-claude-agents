@@ -4,11 +4,16 @@
 **Repository:** https://github.com/DKISTDC/dkist
 **Source Revision:** 8ce3cc9b34116e4d58211ed2824629f2828c3e0f
 **Extraction Date:** 2026-07-30
-**Validation Date:** 2026-08-20
+**Validation Date:** 2026-10-29
 **Validation Status:** PASS
 Metadata for the DKIST User Tools (`dkist`) Python package, derived from the repository at the source
-revision above (tag `v1.18.0` plus 8 commits) together with the project's own Zenodo/DataCite release
-metadata, PyPI, conda-forge, ror.org and ORCID. Every field carries its evidence. Controlled-list
+revision above (commit `8fec76d`, the original `v1.18.0` tag, plus 8 commits) together with the
+project's own Zenodo/DataCite release metadata, PyPI, conda-forge, ror.org and ORCID. On 2026-08-20
+the project re-pointed its `v1.18.0` tag to `8fa6aed` on its `1.18` release branch, so that revision
+no longer sits 8 commits after the tag in upstream terms. Sections whose evidence was re-read after
+that revision name the revision they cite: the default branch at
+`2a4b15ba7ea5ae33970e43716192f5b4236905a0` or the release tag `v1.18.1`
+(`9ad7a3ba12e9ecda4f611bfec2ec902d62697d62`). Every field carries its evidence. Controlled-list
 values are quoted verbatim from the HSSI controlled vocabularies; Fields 31 and 32 are resolved to
 SPASE identifiers.
 
@@ -26,10 +31,11 @@ https://doi.org/10.5281/zenodo.18494047
 - This is the Zenodo **concept** DOI, which is what the field asks for ("the concept DOI for all
   versions"). An earlier record held `https://zenodo.org/records/18494048` — a version-record URL for
   v1.17.0, which is neither a DOI nor a concept identifier.
-- Evidence: both dkist Zenodo records report `conceptdoi = 10.5281/zenodo.18494047` and
-  `conceptrecid = 18494047`; DataCite for `10.5281/zenodo.18494047` resolves to the latest version
-  (v1.18.0) and carries `IsVersionOf` relations from the version DOIs. The version-specific DOI belongs
-  in Field 12 (Version PID), not here.
+- Evidence: every dkist Zenodo version record (v1.17.0, v1.18.0 and v1.18.1) reports
+  `conceptdoi = 10.5281/zenodo.18494047` and `conceptrecid = 18494047`. DataCite for
+  `10.5281/zenodo.18494047` lists the three version DOIs as `HasVersion` (the v1.18.1 DOI carries
+  `IsVersionOf` back to it), and in October 2026 it reported `version = "v1.18.1"`, the latest
+  release. The version-specific DOI belongs in Field 12 (Version PID), not here.
 
 ### 3. Code Repository (MANDATORY)
 https://github.com/DKISTDC/dkist
@@ -37,7 +43,7 @@ https://github.com/DKISTDC/dkist
 *Evidence:* `pyproject.toml` `[project.urls]` `Homepage` / `Source Code`, and `.cruft.json`
 `sourcecode_url`.
 
-### 4. Software Functionality (MANDATORY)
+### 4. Software Functionality (RECOMMENDED)
 
 - Coordinate Transforms
 - Coordinate Transforms: Mission-Specific
@@ -191,7 +197,7 @@ source. Both were removed; the reasons are recorded here so the omission is not 
   carry a time axis and spectral axes, but the package provides no time-series, energy-spectrum or
   time-frequency analysis routines.
 
-### 5. Related Region (MANDATORY)
+### 5. Related Region (RECOMMENDED)
 - Solar Environment
 - Photosphere
 - Chromosphere
@@ -211,20 +217,23 @@ instrument specifically.
 
 ### 6. Authors (MANDATORY)
 
-**14 authors.** The project's own release metadata for v1.18.0 — the Zenodo record, mirrored by
-DataCite — credits 13 people. One further author is an organization, credited in the repository itself
+**16 authors.** The project's own release metadata for v1.18.1 — the Zenodo record, mirrored by
+DataCite — credits 15 people. One further author is an organization, credited in the repository itself
 by `pyproject.toml`, `LICENSE.rst` and `docs/conf.py`. Stuart J. Mumford is credited in both places and
-counted once, giving 14. There is no `CITATION.cff`, `codemeta.json` or `.zenodo.json` in the
-repository, so the release record is the most complete author list available and no credited author is
-omitted.
+counted once, giving 16. There is no `CITATION.cff`, `codemeta.json` or `.zenodo.json` in the
+repository (at `2a4b15b` or at `v1.18.1`), so the release record is the most complete author list
+available and no credited author is omitted. The v1.18.1 record credits two creators the v1.18.0 record
+did not, Thomas Robitaille and Soumyaranjan Dash, who are authors 15 and 16 below.
 
 Affiliations come from two kinds of source, distinguished per author below: those given directly in the
-**DKIST release metadata** (Mumford's Aperio Software Ltd.; the National Solar Observatory affiliations,
-corroborated by `@nso.edu` commit addresses; Freij's SETI Institute and Lockheed Martin Solar and
-Astrophysics Laboratory; Dencheva's and Jamieson's Space Telescope Science Institute), and those
-**documented in other authoritative sources** where the DKIST record credits the author with no
-affiliation at all (Leonard's Aperio Software Ltd., Van Kooten's Southwest Research Institute, and
-Freij's third affiliation, Bay Area Environmental Research Institute).
+**DKIST release metadata** (Mumford's Aperio Software Ltd.; the National Solar Observatory affiliations
+of Johansson, Eigenbrot, Larson and Dash, corroborated by `@nso.edu` commit addresses or, for Dash, by
+his ORCID employment; Freij's SETI Institute and Lockheed Martin Solar and Astrophysics Laboratory;
+Dencheva's and Jamieson's Space Telescope Science Institute), and those **documented in other
+authoritative sources** where the DKIST record gives no such affiliation (Leonard's Aperio Software
+Ltd., Van Kooten's Southwest Research Institute, Derks's National Solar Observatory, resting on her
+institutional commit address, and Freij's third affiliation, Bay Area Environmental Research
+Institute).
 
 1. **Stuart J. Mumford** — https://orcid.org/0000-0003-4217-4642
    - Affiliation: Aperio Software Ltd. (no ROR found)
@@ -291,8 +300,9 @@ Freij's third affiliation, Bay Area Environmental Research Institute).
    - Affiliation: National Solar Observatory — https://ror.org/00b9pg524
    - *Evidence:* Zenodo/DataCite creator (no affiliation given there). The affiliation rests on
      separate repository evidence: her commits are authored as `alysaderks <aderks@nso.edu>`, an
-     institutional National Solar Observatory address matching the `@nso.edu` addresses of the three
-     other NSO-affiliated authors (Johansson, Eigenbrot, Larson).
+     institutional National Solar Observatory address matching the `@nso.edu` commit addresses of
+     Johansson, Eigenbrot and Larson, whose National Solar Observatory affiliation the release metadata
+     gives.
    - *ORCID candidate reviewed and rejected — not an unexplored gap.* The sole ORCID record for this
      name, https://orcid.org/0000-0001-5847-8902, has no employments, works or keywords, so nothing
      corroborates the binding and a wrong person-to-ORCID link is costly to repair. Do not adopt it in
@@ -354,11 +364,46 @@ Freij's third affiliation, Bay Area Environmental Research Institute).
       as `William Jamieson <wjamieson@stsci.edu>`. Nine ORCID records share the name; only this one has
       an STScI employment.
 
-**Two repository contributors are deliberately not credited.** `git shortlog -sne --all` and the
-GitHub contributor list show two people who appear in no authorship source — neither the Zenodo
-v1.18.0 creator list nor the 14 authors above: `Thomas Robitaille <thomas.robitaille@gmail.com>`
-(2 commits: `60264cc` 2026-07-07 and `0db7b0e` 2026-07-06, both substantive bug fixes) and
-`Zach Burnett <zachary.r.burnett@gmail.com>` (1 commit, `bf3dc0a` 2024-08-26, PR #422).
+15. **Thomas Robitaille** — https://orcid.org/0000-0002-8642-1329
+    - No affiliation asserted.
+    - *Evidence:* Zenodo/DataCite creator for v1.18.1 (absent from the v1.17.0 and v1.18.0 creator
+      lists). His commits here are authored as `Thomas Robitaille <thomas.robitaille@gmail.com>`
+      (`0db7b0e` 2026-07-06 and `60264cc` 2026-07-07, fixes to how datasets are loaded and assembled
+      into dask arrays).
+    - *Identification:* GitHub's commit API attributes `60264cc` to the account `astrofrog`, and the
+      ORCID record `0000-0002-8642-1329` (name "Thomas Robitaille", credit name "Thomas P. Robitaille")
+      lists `http://github.com/astrofrog` among its researcher URLs; its works include the Astropy and
+      SunPy papers. It is the only record a fielded ORCID search returns for the name.
+    - *Affiliation:* none is asserted. The DKIST release metadata gives none, his ORCID employments
+      (Max-Planck-Institute for Astronomy 2011–2015, Harvard-Smithsonian Center for Astrophysics
+      2008–2011) ended years before this package's releases, his GitHub profile names no company, and
+      SunPy's v8.0.1 Zenodo record also credits him with no affiliation. A past institution would also
+      lengthen his credit on SunPy, which shares his author record (next point).
+    - *Same person as on SunPy:* the catalogue's SunPy entry credits him too, through the author record
+      credited here, so the ORCID above identifies him on both entries. That entry's Thomas Robitaille
+      is this person: SunPy's `.zenodo.json` (at `ed70935`) lists "Thomas Robitaille" as a creator, his
+      SunPy commits are authored from the same `thomas.robitaille@gmail.com` address as his commits
+      here, and GitHub's commit API attributes SunPy commit `654afcb` to the same `astrofrog` account.
+16. **Soumyaranjan Dash** — https://orcid.org/0000-0003-0103-6569
+    - Affiliation: National Solar Observatory — https://ror.org/00b9pg524
+    - *Evidence:* Zenodo/DataCite creator for v1.18.1 with affiliation "National Solar Observatory"
+      (absent from the v1.17.0 and v1.18.0 creator lists). His commits are authored as
+      `Soumyaranjan Dash <51014191+sr-dash@users.noreply.github.com>` (PR #747 `e6a89a7` and PR #748
+      `2876544` on the default branch); GitHub's commit API attributes `2876544` to the account
+      `sr-dash`, whose profile names the company "National Solar Observatory" and the site
+      `https://sr-dash.github.io/index.html`.
+    - *Identification:* the ORCID record `0000-0003-0103-6569` ("Soumyaranjan Dash") lists the
+      researcher URL `https://sr-dash.github.io/` and the employment "Brinson Postdoctoral Research
+      Associate" at the National Solar Observatory, 2025–present, disambiguated to ROR `00b9pg524`. The
+      only other record a fielded search returns for the name, `0009-0005-2346-9965` (search-index
+      institutions Indian Institute of Science Education and Research Mohali and Utkal University), has
+      no link to this work and is not used.
+
+**Two repository contributors are deliberately not credited.** They have commits in the repository
+but appear in no authorship source — neither the Zenodo v1.18.1 creator list nor the 16 authors above:
+`Zach Burnett <zachary.r.burnett@gmail.com>` (1 commit, `bf3dc0a` 2024-08-26, PR #422) and
+`Jim Arnow <jimarnow@gmail.com>` (1 commit, `2a4b15b` 2026-10-15, PR #771, which adds
+`dkist.net.globus.use_transfer_client`).
 
 Field 6 is headed "Authors" and defined as "The author(s) of this software". It has no contributor
 sub-field and no wording that extends it to everyone who has landed a commit, so it records **credited
@@ -366,11 +411,12 @@ authors**, not all contributors — and the authoritative statement of whom this
 own archival creator list, which the DKIST team controls through its GitHub-Zenodo release process.
 Crediting people the project has not credited would assert authorship on the project's behalf.
 
-The two cases differ, and one is worth revisiting. Robitaille's commits post-date the v1.18.0 release
-(2026-06-23) whose Zenodo record supplied the creator list, so his absence is a timing artifact — this
-record's source revision contains those commits (2 of the 8 after the tag), and the next release's
-creator list should settle it; if it credits him, he should be added then. Burnett's commit predates
-both archived releases, so his absence from the v1.17.0 *and* v1.18.0 creator lists is a persistent
+The two cases differ, and one is worth revisiting. Arnow's commit post-dates the v1.18.1 release
+(2026-08-21) whose Zenodo record supplied the creator list, so his absence is a timing artifact: the
+next release's creator list should settle it, and if it credits him he should be added then. Thomas
+Robitaille was in the same position after v1.18.0, whose creator list predated his July 2026 commits,
+and the v1.18.1 list settled it by crediting him (author 15). Burnett's commit predates every archived
+release, so his absence from the v1.17.0, v1.18.0 *and* v1.18.1 creator lists is a persistent
 editorial state rather than a timing gap.
 
 All organization names are spelled out rather than abbreviated.
@@ -443,8 +489,8 @@ The three candidates as evaluated:
 | Candidate | Date | Assessment |
 |---|---|---|
 | GitHub repository creation | 2017-11-30 | Verifiable, but not a publication of software, and it corresponds to **no version at all** — so it fails the "initial version of the software" half outright. |
-| First PyPI upload, `0.1.dev254` | 2019-04-09 | A publication, but a one-off: it is the **only** `dev`-style release in the project's entire 53-version PyPI history, a single file, with **no matching git tag**, followed by 11½ months of silence. It reads as a name-reservation or trial upload rather than a published version of the software. |
-| First tagged release, `v0.1a1` | 2020-03-27 | **Selected.** The first version the project deliberately cut: it exists as both a git tag and a PyPI release, and it opens the unbroken release series that runs to 1.18.0. Being an alpha does not disqualify it — it is unambiguously the initial version, and its upload is a genuine publication. |
+| First PyPI upload, `0.1.dev254` | 2019-04-09 | A publication, but a one-off: it is the **only** `dev`-style release in the project's entire PyPI history, a single file, with **no matching git tag**, followed by 11½ months of silence. It reads as a name-reservation or trial upload rather than a published version of the software. |
+| First tagged release, `v0.1a1` | 2020-03-27 | **Selected.** The first version the project deliberately cut: it exists as both a git tag and a PyPI release, and it opens the unbroken release series that runs to 1.18.1. Being an alpha does not disqualify it — it is unambiguously the initial version, and its upload is a genuine publication. |
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
@@ -452,39 +498,49 @@ The three candidates as evaluated:
 
 An earlier record used the bare URL `https://zenodo.org/records/18494048` as the organization name and
 identifier. That is a Zenodo version-record URL, not a publisher name. DataCite reports
-`publisher = "Zenodo"` for both dkist DOIs, and this field's instructions name Zenodo as the correct
-entry for software whose DOI came from the GitHub-Zenodo workflow — which this is: the Zenodo records
-are `isSupplementTo` `https://github.com/DKISTDC/dkist/tree/v1.18.0`.
+`publisher = "Zenodo"` for the concept DOI and the dkist version DOIs, and this field's instructions
+name Zenodo as the correct entry for software whose DOI came from the GitHub-Zenodo workflow — which
+this is: each Zenodo version record is `isSupplementTo` the GitHub tree of its release tag, the latest
+being `https://github.com/DKISTDC/dkist/tree/v1.18.1`.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** 1.18.0
-- **Version Date:** 2026-06-23
-- **Version PID:** https://doi.org/10.5281/zenodo.20819708
-- **Version Description:** Adds limited file-saving capability to `Dataset`, `TiledDataset` and
-  `Inversion` via `dkist.save_dataset()`, for datasets modified by slicing or masking but whose data
-  values are unchanged. Generated ASDF files now include observation frames, calibration frames and
-  recipe run configuration information. `DKISTFileManager.quality_report()` gains a `format` argument
-  so callers can download either the existing PDF report or the new JSON report. Backwards
-  incompatible: bumps the required `asdf`, `asdf-astropy` and `asdf-coordinates-schemas` versions.
-  Fixes `Inversion` slicing so it also slices `Profiles`, and `TiledDataset.tiles_shape` for flat
-  (flattened or sliced) `TiledDataset`s.
+- **Version Number:** 1.18.1
+- **Version Date:** 2026-08-21
+- **Version PID:** https://doi.org/10.5281/zenodo.22047512
+- **Version Description:** Fix coordinate clipping behaviour of Ravel model.
 
-- 1.18.0 is the current release, superseding the 1.17.0 an earlier record held. Independently
-  confirmed in four places: the repository tag `v1.18.0`; the GitHub release `v1.18.0`, published
-  `2026-06-23T20:15:19Z`; the Zenodo version record `20819708` with `version = "v1.18.0"`,
-  `publication_date = 2026-06-23` and DOI `10.5281/zenodo.20819708`; and DataCite for the concept DOI,
-  which reports `version = "v1.18.0"` and a single `Issued` date of `2026-06-23`. `CHANGELOG.rst`
-  carries the matching `1.18` section.
-- The version number is recorded as the bare `1.18.0`, and the version PID as a full DOI URL as the
-  field requires.
-- *Date discrepancy resolved:* `CHANGELOG.rst` heads the section "1.18 (2026-06-09)" (the towncrier
-  build date from when the release PR was prepared) and Zenodo's copy of the same text reads
-  "1.18 (2026-06-26)". Neither is the release date. `2026-06-23` is used because the GitHub release
-  publication and the Zenodo/DataCite `Issued` date agree on it.
-- *Distribution-channel lag:* PyPI and conda-forge both still show `1.17.0` as their newest artifact,
-  so 1.18.0 was released and archived on GitHub and Zenodo without reaching those channels. The
-  repository page and the DOI record are the authoritative sources this field points at, so 1.18.0 is
-  used; the lag is recorded here so the discrepancy is not mistaken for an error.
+- 1.18.1 is the newest release, superseding 1.18.0 (released 2026-06-23, version DOI
+  `10.5281/zenodo.20819708`), which HSSI held until this update. This patch release was cut on a release
+  branch: `v1.18.1` tags `9ad7a3b` on the `1.18` branch, which was cut from the default branch
+  at `8fec76d` ("Prepare for release of v1.18 (#728)", the merge base of `1.18` and `main`). The GitHub
+  release `v1.18.1` is not a pre-release, targets `1.18` and was published `2026-08-21T15:19:11Z`; PyPI
+  received `dkist` 1.18.1 at `2026-08-21T15:42:45Z`; the Zenodo version record `22047512` has
+  `version = "v1.18.1"`, `publication_date = 2026-08-21` and `isSupplementTo`
+  `https://github.com/DKISTDC/dkist/tree/v1.18.1`. No later release exists: there is no newer tag or
+  GitHub release, and the default branch's commits after the branch point (to `2a4b15b`) are
+  unreleased; their towncrier fragments in `changelog/` describe work for a future release and are not
+  used here.
+- *Tag history:* on 2026-08-20 the project re-pointed `v1.18.0` from `8fec76d` on the default branch to
+  `8fa6aed` on `1.18` (a signed annotated tag) and uploaded 1.18.0 to PyPI that day; the GitHub release
+  `v1.18.0` keeps its 2026-06-23 publication date. `v1.18.1` is the single commit after the re-pointed
+  tag, the Ravel fix from PR #751, which the default branch carries separately as `e71f49b`.
+- The version number is recorded as the bare `1.18.1`, the form the stored 1.18.0 used, although the
+  tag writes `v1.18.1`; the version PID is a full DOI URL as the field requires.
+- *Date:* the GitHub release's publication day in UTC, corroborated by the PyPI upload and the Zenodo
+  deposit on the same day. The `CHANGELOG.rst` heading "1.18.1 (2026-08-26)" on the default branch is
+  not the release date and is not used.
+- *Description:* the release title is only the tag name, so the text comes from the release body,
+  whose single item, under "Bug Fixes", is kept verbatim; `CHANGELOG.rst` carries the same item. The
+  fix makes the `dkist.wcs.models.Ravel` model return NaN for pixel coordinates outside the array,
+  where it previously clipped indices past the upper edge to the last pixel (`dkist/wcs/models.py` and
+  `test_ravel_oob_nan` at `9ad7a3b`). The body's closing "**Full Changelog**" comparison link is a
+  generated pointer and is dropped.
+- *PID:* `10.5281/zenodo.22047512` is the version DOI of exactly this release: it is one of the concept
+  DOI's `HasVersion` entries, and its deposit carries `version = "v1.18.1"` and the `tree/v1.18.1`
+  link.
+- *Distribution channels:* PyPI carries 1.18.0 and 1.18.1, while conda-forge still showed 1.17.0 as its
+  newest version in October 2026. The GitHub release and the DOI record are the authoritative sources
+  this field points at; the conda-forge lag is recorded so it is not mistaken for an error.
 
 ### 13. Programming Language (RECOMMENDED)
 - Python 3.x
@@ -496,10 +552,15 @@ records `use_compiled_extensions: "n"` (pure Python).
 (`.circleci/codecov_upload.sh`, `.circleci/early_exit.sh`). Excluded — this field is for the languages
 "most important for the software", not build glue.
 
-### 14. Reference Publication (RECOMMENDED)
+### 14. Reference Publication (OPTIONAL)
 Not found — the repository contains no `CITATION.cff`, no `codemeta.json`, and no "how to cite"
-section in `README.rst`, `CONTRIBUTING.md` or the documentation; there is no JOSS or software paper
-referenced anywhere in the source tree. The citable artifact is the Zenodo concept DOI in Field 2.
+section in `README.rst`, `CONTRIBUTING.md` or the documentation (rechecked at `2a4b15b`); there is no
+JOSS or software paper referenced anywhere in the source tree, and the literature search recorded
+under Field 27 found no peer-reviewed paper describing the package. The developers' presentations
+about it, a 2018 slide deck and five meeting abstracts, are not a reference publication, and the 2016
+DKIST Data Center papers that two of its authors co-wrote describe the Data Center rather than this
+package; Field 27 records how each was weighed. The citable artifact is the Zenodo concept DOI in
+Field 2.
 
 ### 15. License (RECOMMENDED)
 - **License:** BSD 3-Clause "New" or "Revised" License
@@ -612,8 +673,9 @@ the package.
 - Mac
 - Windows
 
-*Evidence:* `.github/workflows/main.yml` runs the test matrix as `- linux: py314`, `- macos: py313`,
-`- windows: py312`, `- linux: py311`, `- linux: py311-oldestdeps`. Windows support is actively
+*Evidence:* `.github/workflows/ci.yml` (formerly `main.yml`) runs the test matrix as `- linux: py314`,
+`- windows: py312`, `- macos: py313`, `- linux: py311`, `- linux: py311-oldestdeps`, at both `v1.18.1`
+and `2a4b15b`. Windows support is actively
 maintained (CHANGELOG 1.17.0: "Fixes the format of paths being passed to `ds.files.download()` on
 Windows so that globus can understand it").
 
@@ -645,10 +707,11 @@ instead because they are what CI actually verifies.
 ### 23. Development Status (RECOMMENDED)
 Active
 
-*Evidence:* release `v1.18.0` on 2026-06-23; source revision
-`8ce3cc9b34116e4d58211ed2824629f2828c3e0f` dated 2026-07-17 with 8 commits after the tag; a weekly
-scheduled CI cron plus mypy, docs, benchmark and downstream-test workflows; a live towncrier changelog
-with four unreleased fragments in `changelog/`; the GitHub repository is not archived. This matches
+*Evidence:* release `v1.18.1` on 2026-08-21; the last commit on the default branch is `2a4b15b`,
+dated 2026-10-15; a weekly scheduled CI cron plus mypy, docs, benchmark and downstream-test workflows;
+a live towncrier changelog with unreleased fragments in `changelog/`; the GitHub repository is not
+archived, and the README carries no repostatus.org badge or status statement. The software has
+reached a stable, usable state and was last committed to on 2026-10-15, which places it in
 repostatus.org "Active": reached a stable, usable state and being actively developed.
 
 ### 24. Documentation (RECOMMENDED)
@@ -677,9 +740,100 @@ DataCite record.
 ## Section 3: Additional Metadata
 
 ### 27. Related Publications (OPTIONAL)
-Not found — the repository cites no publications. There is no `CITATION.cff`, no bibliography in the
-documentation, and the DataCite record's only related identifiers are the GitHub source tree
-(`IsSupplementTo`) and the concept DOI (`IsVersionOf`).
+- https://doi.org/10.1117/12.2231899
+
+Berukoff, S., Hays, T., Reardon, K., Spiess, DJ, Watson, F. & Wiant, S., "Petascale cyberinfrastructure
+for ground-based solar physics: approach of the DKIST data center", Proceedings of SPIE 9913, Software
+and Cyberinfrastructure for Astronomy IV (2016). Its subject is the DKIST Data Center, the platform
+this package is the Python client of: the paper gives an overview of the functions the Data Center was
+to provide for the roughly 3 PB of data a year DKIST would produce (calibration, long-term data
+management and open distribution) and of the approach its team was taking to build them. It is a paper
+of the Data Center team that develops this package (`docs/topic_guides/usertools.rst`), and two of its
+authors, DJ Spiess and Fraser Watson, are credited authors of the package (Field 6); Watson is also on
+the byline of the 2019 abstract about the package listed below. It predates the package, whose
+repository was created in November 2017, so it describes the platform the package serves rather than
+the package itself.
+
+The repository itself cites no publications: there is no `CITATION.cff` and no bibliography in the
+documentation, and the DataCite records' related identifiers are the GitHub source trees
+(`IsSupplementTo`) and the concept and version DOIs (`HasVersion` / `IsVersionOf`).
+
+*Considered and not added:*
+- The developers' presentations about the package that survive only as meeting abstracts. A meeting
+  abstract is not an eligible publication, and no poster or paper version of any of these is
+  deposited:
+  - Mumford, S., Watson, F. & Davey, A. R., "DKIST User Tools for Level 1 Data", American Astronomical
+    Society Meeting #234 (2019), `2019AAS...23420401M`.
+  - Mumford, S. J., "DKIST User Tools", American Astronomical Society Meeting #238 (2021),
+    `2021AAS...23831306M`.
+  - Mumford, S. & Davey, A., "DKIST Level 1 Data and Using it in Python", 54th Meeting of the Solar
+    Physics Division (2023), `2023SPD....5440504M`.
+  - Davey, A. R., Mumford, S. & Leonard, A. J., "Enhancing DKIST Data Access and Usability with
+    Python-Based User Tools", AGU Fall Meeting (2024), `2024AGUFMSH23D2986D`.
+  - Davey, A., Mumford, S., Leonard, A. & DKIST Data Center Team, "The DKIST Data Center Python User
+    Tools: Enhancing DKIST Data Usability", 246th Meeting of the American Astronomical Society (2025),
+    `2025AAS...24634006D`.
+
+  Each one's subject is the package itself: the 2019 and 2021 abstracts open "The DKIST user tools aim
+  to lower the barrier of entry to scientific discovery with the DKIST level one data", the 2023 one
+  opens "The DKIST Python tools aim to lower the barrier of entry to scientific discovery with the
+  DKIST level one data", the 2024 one states that the Data Center "has created a set of Python based
+  User Tools which allow the user to easily find, filter and download data sets", and the 2025 one
+  describes "a set of modular, open-source utilities developed by the DKIST Data Center". A deposited
+  poster or paper of any of them would therefore qualify.
+- Mumford, S. J., "Developing End User Tools for DKIST", Python in Astronomy 2018,
+  `https://doi.org/10.5281/zenodo.1244673` — the slides of a talk on the package's design, deposited as
+  a 22-slide PDF. The deck is headings, short bullets, code and images, about 700 words in all, with
+  several slides holding a single phrase or only an image, so it does not read as a standalone document
+  a reader can follow without the talk.
+- Watson, F. T., Berukoff, S. J., Hays, T., Reardon, K., Speiss, D. J. & Wiant, S. (the byline's
+  spelling of DJ Spiess), "Calibration development strategies for the Daniel K. Inouye Solar Telescope
+  (DKIST) data center", Proceedings of SPIE 9910, Observatory Operations: Strategies, Processes, and
+  Systems VI (2016), `https://doi.org/10.1117/12.2233179` — by the same Data Center team, but its subject
+  is the Data Center's calibration pipelines, the separate Level 0 → Level 1 workflows whose output this
+  package reads (Field 4 records that the package performs no calibration), not the services the
+  package uses.
+- Papers on the DKIST telescope whose bylines include some of the package's credited authors: Erik
+  Johansson's SPIE papers on the telescope's construction, wavefront correction and adaptive optics
+  (2014 onward), "The Daniel K. Inouye Solar Telescope - Observatory Overview" (Solar Physics 295, 172,
+  2020, `https://doi.org/10.1007/s11207-020-01736-7`), and the 2022 and 2024 SPIE papers on the
+  observatory's status and operations commissioning. They describe the telescope and its operations,
+  not the package or the Data Center it serves.
+- Other meeting abstracts bylined by credited authors, on the Data Center's plans (2015–2016), on
+  instrument calibration and Level 1 pipelines and data (2025–2026), and on DKIST science, are not
+  eligible publications, and none is about the package.
+- Graham, B. J., Greenfield, P. & Dencheva, N., "ASDF - Advanced Scientific Data Format", Data, Analysis
+  and Software in Heliophysics (DASH) 2023, `https://doi.org/10.5281/zenodo.8415578` — by two of the
+  package's credited authors, but its subject is the ASDF format and its Python library, which this
+  package uses for its dataset files, not the package.
+- Davey, A., "VSO / DKIST Perspective on the DaSH Environment", DASH 2023,
+  `https://doi.org/10.5281/zenodo.8412235` (a slide deck on the DASH environment), and Davey, A. &
+  DKIST Data Center Team, "The Daniel K Inouye Solar Telescope (DKIST) Data Center", Third Triennial
+  Earth-Sun Summit (2022), `2022tess.conf11904D` (a meeting abstract about the Data Center). Neither
+  byline names a credited author of the package, and neither is about the package.
+- Davey, A. & DKIST Data Center Team, "The DKIST Data Center Portal and Tools for Working with DKIST
+  Level 1 Data", 54th Meeting of the Solar Physics Division (2023), `2023SPD....5410804D` — a meeting
+  abstract whose subject is the Data Center's web portal; it mentions the Python tools only as the
+  subject of Mumford's talk at the same meeting, and its byline names none of this package's credited
+  authors.
+- Ryan, D. F., Mumford, S., Barnes, W. T. et al., "A Unified Framework for Manipulating N-dimensional
+  Astronomical Data and Coordinate Transformations" (ApJ 956, 44, 2023,
+  `https://doi.org/10.3847/1538-4357/ace0bd`) — the ndcube paper. Its full text matches the package
+  name, but its subject is ndcube, which this package builds on rather than the reverse, so it is
+  neither about this software nor a use of it.
+- Bauer, A. E. et al., "Petabytes to Science" (`2019arXiv190505116B`) — a community white paper on
+  petabyte-scale astronomy data whose full text matches the package name; it presents no results built
+  with the package.
+- Developers' publications: the items above are what ADS searches for DKIST papers and abstracts
+  bylined by any of the package's credited authors, and Zenodo creator searches for Mumford, Leonard and
+  Davey with "DKIST", returned that bear on the package or the Data Center.
+- Literature use: ADS full-text and acknowledgement searches for `dkist user tools`, `dkist python`,
+  `DKIST python tools`, `dkist package`, `DKISTDC`, the concept DOI and the documentation path found no
+  paper that credits results to this package. Three 2026 papers whose acknowledgements name DKIST
+  (`2026Natur.656..595K`, `2026ApJ..1008...29P`, `2026ApJ..1008...44Z`) contain none of those package
+  phrases, `dkist.net` or `load_dataset` in their full text. Controls: a nonsense phrase returned
+  nothing, and `ack:"sunpy"` returned recent papers. The searches were run in October 2026; a later
+  update searches from then.
 
 ### 28. Related Datasets (OPTIONAL)
 Not found — no dataset DOI is referenced in the repository.
@@ -802,10 +956,12 @@ searchable instrument values. Beyond search: `dkist.TiledDataset` exists for VBI
 `docs/examples/example_cryo_plots.md` and `docs/examples/reproject_vbi_mosaic.md` are
 instrument-specific guides.
 
-**No instrument record exists.** A scan of the whole controlled instrument/observatory vocabulary for
-`dkist`, `inouye`, `nirsp`, `visp`, `vbi`, `vtf`, `broadband`, `spectro-polarim` and `cryo` returns
-only observatory-type records for DKIST itself — there is none of instrument type for VBI, ViSP,
-DL-NIRSP, Cryo-NIRSP or VTF. Following SPASE/HDRL guidance that a missing instrument record must not
+**No instrument record exists.** Searching the controlled instrument/observatory vocabulary for
+`dkist`, `inouye`, `nirsp`, `visp`, `vbi`, `vtf`, `broadband`, `spectro-polarim` and `cryo` finds no
+instrument-type record for VBI, ViSP, DL-NIRSP, Cryo-NIRSP or VTF (rechecked in October 2026). The
+only DKIST match is the observatory record in Field 32; the other matches are unrelated resources
+(`broadband` matches the GO-ABOVE observatory and the TIMED/SABER instrument, `spectro-polarim` the
+NAOJ instrument "SFT/T2 full-disk infrared full-Stokes spectro-polarimeter"). Following SPASE/HDRL guidance that a missing instrument record must not
 block a software association, these instruments are represented by the DKIST observatory record in
 Field 32. No instrument name is recorded without a `https://spase-metadata.org/` identifier, and no
 new instrument value is invented; a genuinely new instrument enters the vocabulary through its
@@ -817,10 +973,14 @@ upstream refresh.
   and no code path. Not yet supported.
 - **WFC** (wavefront correction) — never referenced. The only related item is the seeing metric
   `FriedParameter` / `Average Fried Parameter`, which is dataset quality metadata, not WFC data.
-- **SDO/AIA** — appears only in `dkist/tests/generate_aia_dataset.py` (a test-fixture generator that
-  fetches `aia.lev1_euv_12s` from JSOC to build synthetic datasets) and in
-  `docs/examples/vbi_extents.md`, which draws VBI field-of-view outlines over an AIA context image.
-  Test fixtures and a demonstration context image, not designed-to-support.
+- **SDO/AIA** — appears in `dkist/tests/generate_aia_dataset.py` (a test-fixture generator that
+  fetches `aia.lev1_euv_12s` from JSOC to build synthetic datasets); in two documentation examples that
+  draw a DKIST field of view over an AIA context image, `docs/examples/vbi_extents.md` (VBI) and, at
+  `2a4b15b`, `docs/examples/visp_extents.md` (ViSP raster positions); in
+  `docs/tutorial/2_search_and_asdf_download.md`, whose combined `Fido` search for ViSP and AIA data
+  shows that `Fido` queries other clients alongside the DKIST one; and in a passing pointer to the
+  sunpy gallery in `docs/examples/reproject_vbi_mosaic.md`. AIA data come through sunpy's own clients,
+  not this package. Test fixtures and demonstration context, not designed-to-support.
 - **SOHO/EIT** — appears only as static test FITS files in `dkist/data/test/EIT/` and in
   `dkist/tests/generate_eit_test_dataset.py` / `generate_eit_tiled_dataset.py`. Test fixtures only.
 - Generic multi-instrument concerns are routed elsewhere as the field instructs: FITS and ASDF →
@@ -837,12 +997,14 @@ implements DKIST's WCS conventions and ASDF schemas, and talks to DKIST's own se
 transfer services. This is also where the four supported instruments from Field 31 are carried.
 Cross-listed with `Observatory/Mission-specific` in Field 17, as this field requires.
 
-**Canonical identifier.** The vocabulary contains this resource in two forms — the bare
-`https://spase-metadata.org/SMWG/Observatory/DKIST`, named "Daniel K Inouye Solar Telescope", and an
-`.html`-suffixed duplicate named "Daniel K Inouye Solar Telescope (DKIST)". An earlier record used the
-`.html` form. The bare identifier is used here because it is the canonical one and its name is the
-canonical SPASE name; roughly 40 other identifiers exist in both forms, and the two denote the same
-resource, so this is a naming normalization rather than a change of meaning.
+**Canonical identifier.** The bare `https://spase-metadata.org/SMWG/Observatory/DKIST`, named "Daniel K
+Inouye Solar Telescope" with the abbreviation "DKIST", is the canonical SPASE identifier and carries
+the canonical SPASE name. An earlier record used an `.html`-suffixed duplicate of it named "Daniel K
+Inouye Solar Telescope (DKIST)"; the two denoted the same resource, so the move to the bare identifier
+was a naming normalization rather than a change of meaning. By October 2026 the vocabulary no longer
+held the `.html` form, leaving the bare record as the only DKIST observatory entry. HSSI's view API
+renders the observatory as "Daniel K Inouye Solar Telescope (DKIST)" by appending that abbreviation to
+the stored name, which is not a sign of the old duplicate.
 
 *No other observatory qualifies.* SDO and SOHO were considered and excluded for the test-fixture and
 demonstration-context reasons given in Field 31.
