@@ -375,7 +375,7 @@ instrument's data *is*.
 146. **Priyank Lodha**
 147. **Sam Van Kooten** | ORCID: https://orcid.org/0000-0002-4472-8517 | Southwest Research Institute  *(.zenodo.json roster form: Samuel J. Van Kooten)*
 148. **Shivansh Mishra**
-149. **Thomas Robitaille**
+149. **Thomas Robitaille** | ORCID: https://orcid.org/0000-0002-8642-1329
 150. **Tom Augspurger**
 151. **Yash Krishan**
 152. **Abijith Bahuleyan**
