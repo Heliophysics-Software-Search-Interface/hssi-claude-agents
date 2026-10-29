@@ -4,7 +4,7 @@
 **Repository:** https://github.com/hapi-server/client-python
 **Source Revision:** aafecdb33f528c45304d8f1a33f405893f6dc842
 **Extraction Date:** 2026-08-04
-**Validation Date:** 2026-08-04
+**Validation Date:** 2026-10-29
 **Validation Status:** PASS
 
 **Scope note.** `hapiclient` is a *protocol-generic* client: it implements the HAPI (Heliophysics
@@ -19,8 +19,8 @@ agent tempted to add specific instruments or missions from the demo file should 
 The repository at this revision differs structurally from its 0.2.x layout, which matters when
 following file references in older notes: `setup.py` no longer exists (replaced by
 `pyproject.toml`), the test suite lives in a top-level `test/` rather than `hapiclient/test/`, CI
-has moved to `.github/workflows/pyhc-actions.yml`, and `misc/` now holds the release tooling. Six
-releases shipped between 2026-05-02 and 2026-07-22.
+has moved to `.github/workflows/pyhc-actions.yml`, and `misc/` now holds the release tooling. By this
+revision six releases had shipped, between 2026-05-02 and 2026-07-22.
 
 ---
 
@@ -39,8 +39,10 @@ releases shipped between 2026-05-02 and 2026-07-22.
 
 **Evidence.** This is the Zenodo *concept* DOI — the all-versions identifier. It is declared in the
 repository's own `.zenodo.json` (`related_identifiers`, `relation: isVersionOf`), is returned as
-`conceptdoi` by every Zenodo version record in the series, and currently resolves to the 0.3.2
-version record.
+`conceptdoi` by every Zenodo version record in the series, the 0.3.3 record included. A concept DOI
+presents the newest deposit, so what it shows moves with each release: on 2026-10-28 it resolved to
+the 0.3.3 version record (`10.5281/zenodo.21892809`) and DataCite's concept record gave `version`
+0.3.3, where at this dossier's extraction it presented 0.3.2.
 
 **Why the concept DOI and not a version DOI.** Field 2 asks for the identifier of the software as a
 whole; the version-specific DOI belongs in Field 12 (Version PID), where it is recorded.
@@ -96,9 +98,9 @@ to resolve.
   requests (`n_parallel` default 5, asserted `> 1`), and the code comment itself notes it "does not
   often lead to significant speed-up". Concurrent HTTP fetching is not high-performance computing.
 - *Data Processing and Analysis: File Format Conversion* — literally the package reads CSV/binary
-  and writes `.npy`/`.pkl` cache files (`hapiclient/util.py::write_atomic`), but that is an internal
-  caching mechanism, not a user-facing conversion feature: there is no API by which a user asks
-  hapiclient to convert file A into file B. The formats involved are recorded in Fields 18 and 19
+  and writes `.npy`/`.pkl` cache files (`hapiclient/util.py::write_atomic`), but that is the
+  response cache, not a conversion feature: there is no API by which a user asks hapiclient to
+  convert file A into file B. The formats involved are recorded in Fields 18 and 19
   instead.
 - *Data Processing and Analysis: Data Reduction* — parameter selection (`subset_meta`) and time-range
   trimming do reduce data volume, but the category means averaging/binning/downsampling, none of
@@ -123,6 +125,13 @@ to resolve.
   parameter list, not a transform. The package performs no coordinate conversion.
 - *Mission-related* (any subcategory) — the package is protocol-generic and belongs to no mission's
   ground system.
+
+**0.3.3 changes no value here** (read at `e990889180a80ecfb277271bff6cdb1e088521c0`). PR #108
+extends the response cache to the `/catalog` and `/capabilities` endpoints (`hapiclient/catalog.py`
+and `hapiclient/capabilities.py` now go through `cache.meta_cache_read` and `meta_cache_write`), and
+PR #107 removes a warning from the fallback to CSV when a server does not offer binary. Both refine
+how the package retrieves data, which *Data Access and Retrieval* already records; neither adds a
+capability that another category describes.
 
 **Parent-present invariant.** Both selected subcategories — *Data Access and Retrieval* and
 *Processing* — sit under `Data Processing and Analysis`, which is itself selected, so the
@@ -356,69 +365,123 @@ submission form gives for a publisher with no ROR. Do not reintroduce the CERN R
 
 ### 12. Version (RECOMMENDED)
 
-- **Version Number:** 0.3.2
-- **Version Date:** 2026-07-22
-- **Version PID:** https://doi.org/10.5281/zenodo.21496990
-- **Version Description:** Suppresses the spurious pandas "Could not infer format" warning raised when parsing HAPI timestamps (issue #103, PR #104); adopts standard-library logging practice, with a NullHandler and application-controlled propagation, in place of unconditionally disabled propagation; and migrates packaging from setup.py to pyproject.toml.
+- **Version Number:** 0.3.3
+- **Version Date:** 2026-08-11
+- **Version PID:** https://doi.org/10.5281/zenodo.21892809
+- **Version Description:**
+  - Don't warn if binary not available
+  - Cache catalog and capabilities
 
-**Previous value:** `v0.2.9` (released 2026-06-08). Superseded — six releases have shipped since,
-ending at 0.3.2.
+**Previous values.** HSSI held 0.3.2 (released 2026-07-22, Version PID
+https://doi.org/10.5281/zenodo.21496990) until the 0.3.3 update, and v0.2.9 (released 2026-06-08)
+before that. Each was superseded by a newer release (Field 12 rule 3).
 
-**Why 0.3.2 and not 0.3.3b0.** Both tags exist, both have GitHub releases, and — confusingly — the
-`0.3.3b0` GitHub release was published thirty seconds *before* the `0.3.2` release, with its
-`prerelease` flag set to false. None of that makes it the current release:
+**Why 0.3.3** (read at `e990889180a80ecfb277271bff6cdb1e088521c0`, the head of `master`, and at the
+tagged commit `c40f02afb02cff6fdbf4c99ed0dcc8fd11ac578f`). The tags `v0.3.3` and `0.3.3` both point
+at `c40f02a` ("Last 0.3.3 commit", 2026-08-11), which lies on `master`'s own lineage:
+`git merge-base --is-ancestor 0.3.3 e990889` holds, and so does `0.3.2` → `0.3.3`. At that commit
+`hapiclient/__init__.py` sets `__version__ = '0.3.3'` and `pyproject.toml` sets `version = "0.3.3"`.
+The GitHub release `0.3.3` ("Release 0.3.3") is neither a draft nor marked as a pre-release, and
+PyPI's JSON API gives `0.3.3` as `info.version`, with a sdist that is not yanked. The remote's other
+branches are issue branches (`105-catch-json-error-response`, `94-cache-files-can-be-corrupted-…`
+and the like) and a Copilot branch; none is a release branch.
+
+**Nothing newer had been released on 2026-10-28.** PyPI's newest upload is `0.3.3`, and no later
+tag exists. The four commits after the tag (`3d164af` through `e990889`, 2026-08-11 to 2026-08-12)
+are unreleased: `pyproject.toml` and `__version__` still say `0.3.3` at `e990889`, while
+`CHANGES.txt` has opened a `v0.3.4b0` heading holding "Set Accept-Encoding headers in request." A
+later refresh should look for a 0.3.4 release.
+
+**`b` versions are pre-releases and are never recorded.** The project tags its betas and publishes
+them on GitHub and Zenodo, so they look like releases. `0.3.3b0` was the case in point: its GitHub
+release was published 2026-07-22T16:05:11Z, thirty seconds *before* the `0.3.2` release, with its
+`prerelease` flag set to false, and Zenodo minted a version DOI for it (`10.5281/zenodo.21496985`).
+The 0.3.3 release of 2026-08-11 superseded it, which settles that tag; the reasoning holds for every
+later `b` tag:
 
 1. **The project's own release process says `b` versions are not releases.** The `Makefile` header
    documents two separate procedures. Under "Beta versions" it states in the heading:
    *"Beta versions (not released to pypi.org)."* Under "Releases" step 1 is *"Remove the 'b' in the
    version in CHANGES.txt"*, and step 4 is to create the **next** `b0` version and commit it, which
    "will update the version information in the repository to indicate it is now in a pre-release
-   state." `0.3.3b0` at `HEAD` is precisely that post-release development marker — set by commit
-   `fbcfe2f`, "Update version for next release", made two minutes after the 0.3.2 release commit.
-2. **`0.3.3b0` was never published to PyPI.** The PyPI project's newest release is `0.3.2`
-   (sdist uploaded 2026-07-22T16:06:10Z); there is no `0.3.3b0` file at all.
+   state." `0.3.3b0` was that post-release development marker, set by commit `fbcfe2f`, "Update
+   version for next release", two minutes after the 0.3.2 release commit. The `0.3.3b0` tag itself
+   points at `944374b`, the commit just before the 0.3.2 release commit.
+2. **`0.3.3b0` was never published to PyPI.** PyPI has no `0.3.3b0` file. (Some much older betas
+   were uploaded — `0.0.9b0`, `0.1.5b4`, `0.1.9b2`, `0.1.9b3` — and are pre-releases all the same.)
 3. **The `prerelease=false` flag is a tooling artifact, not a statement.** The `gh-release` target
    is `gh release create $(VERSION) --target master --notes "Release $(VERSION)" --title "Release
    $(VERSION)"` — it never passes `--prerelease`, so *every* GitHub release this project has ever
    made reports `prerelease=false`, betas included. The flag carries no information here.
-4. **Zenodo's concept DOI resolves to 0.3.2.** Zenodo minted version DOIs for both
-   (`10.5281/zenodo.21496985` for 0.3.3b0, `10.5281/zenodo.21496990` for 0.3.2), and the concept DOI
-   `10.5281/zenodo.5553155` currently resolves to the 0.3.2 record.
+4. **Zenodo's concept DOI presented 0.3.2, not 0.3.3b0, while those were the two newest deposits**
+   (`10.5281/zenodo.21496985` for 0.3.3b0, `10.5281/zenodo.21496990` for 0.3.2). That corroborates
+   rather than decides: a concept presents the most recently created deposit, and the 0.3.2 deposit
+   was created thirty seconds later.
 
-**`0.3.2`, bare, is the exact version string.** It is `__version__` in `hapiclient/__init__.py` at
-the release commit, the PyPI release name, the GitHub release tag, and DataCite's `version`
-attribute. The version is that number alone — never `v`-prefixed, and never combined with the
-software name.
+**`0.3.3`, bare, is the exact version string.** It is `__version__` in `hapiclient/__init__.py` at
+the tagged commit, the PyPI release name, the GitHub release tag, and DataCite's `version`
+attribute for the Version PID, and it keeps the bare form the superseded `0.3.2` was stored in. The
+version is that number alone — never `v`-prefixed, and never combined with the software name.
 
 **Tag-naming inconsistency, for future reference.** Each release produces **two** git tags, because
 `make version-tag` runs `git tag -a v$(VERSION)` while `make gh-release` runs
 `gh release create $(VERSION)` with the bare number. Both `v0.3.2` and `0.3.2` therefore point at
-commit `ff91cda93e578bffa996ea827d781d6de4d86d7f`. Older releases (through `v0.3.0`) have only the
-`v`-prefixed tag because the GitHub releases for them were made by hand. Do not read the duplication
-as two different releases.
+commit `ff91cda93e578bffa996ea827d781d6de4d86d7f`, and both `v0.3.3` (annotated) and `0.3.3`
+(lightweight) at `c40f02afb02cff6fdbf4c99ed0dcc8fd11ac578f`. Older releases (through `v0.3.0`) have
+only the `v`-prefixed tag because the GitHub releases for them were made by hand. Do not read the
+duplication as two different releases.
 
-**Version Date — 2026-07-22, corroborated four ways.** The `0.3.2` tag commit `ff91cda` is dated
-2026-07-22 12:05:38 -0400 (16:05:38 UTC); the GitHub release was published 2026-07-22T16:05:41Z; the
-Zenodo version record was created 2026-07-22T16:05:46Z; the PyPI sdist was uploaded
-2026-07-22T16:06:10Z. All four fall within 35 seconds of one another on the same UTC day.
+**Version Date — 2026-08-11, the release event's UTC day.** The GitHub release `0.3.3` was published
+2026-08-11T18:01:01Z. The tagged commit `c40f02a` is dated 2026-08-11 14:00:58 -0400 (18:00:58 UTC),
+the annotated tag `v0.3.3` one second later; the Zenodo version record was created
+2026-08-11T18:01:06Z and the PyPI sdist was uploaded 2026-08-11T18:03:34Z. All fall on the same UTC
+day.
 
 **Version PID — verified, and Zenodo's own metadata for it is partly wrong.** The Zenodo version
-record 21496990 carries `version: "0.3.2"` and `conceptdoi: 10.5281/zenodo.5553155`, which fixes the
-mapping unambiguously. But that same record reports `publication_date: 2021-10-06` and
-`license: other-open`, and DataCite mirrors both (`publicationYear: 2021`, `dates: [{2021-10-06,
-Issued}]`, `rightsList: [Other (Open)]`). **Both are Zenodo-side errors inherited verbatim from the
+record 21892809 carries `version: "0.3.3"`, `conceptdoi: 10.5281/zenodo.5553155` and the file
+`hapi-server/client-python-0.3.3.zip`; DataCite gives the DOI `version` 0.3.3 and an `IsVersionOf`
+relation to the concept, and the concept's `HasVersion` list includes it. That fixes the mapping
+unambiguously. But the same record reports `publication_date: 2021-10-06` and `license:
+other-open`, and DataCite mirrors both (`publicationYear: 2021`, `dates: [{2021-10-06, Issued}]`,
+`rightsList: [Other (Open)]`). **Both are Zenodo-side errors inherited verbatim from the
 repository's hand-maintained `.zenodo.json`, which hard-codes a 2021 publication date and
 `"license": "other-open"` for every deposit in the series.** The Version Date above and the License
 in Field 15 are therefore derived from the repository and the release artifacts, not copied from the
 DOI record. Anything auto-filled from this DOI must be re-checked against the repository.
 
-**Version Description sourcing.** `CHANGES.txt` gives a single line for v0.3.2
-("Date parsing warning https://github.com/hapi-server/client-python/pull/104") and the GitHub release
-body is the auto-generated "Release 0.3.2", so neither alone is a usable summary. The description
-above is that line expanded with the verifiable `0.3.1..0.3.2` source diff: the
-`warnings.catch_warnings()` filter added in `hapiclient/hapitime.py::hapitime2datetime`, the
-NullHandler/propagation rework in `hapiclient/log.py`, and the deletion of `setup.py` in favour of
-`pyproject.toml`.
+**Version Description — the release's own words.** The GitHub release's name and body are both the
+auto-generated "Release 0.3.3", and the Zenodo deposit's description is the package description
+"Python client for HAPI", so neither carries release notes (Field 12 rule 16). The text therefore
+comes from `CHANGES.txt` at the tagged commit (rule 13), which ends:
+
+```
+v0.3.3b0:
+	2026-07-22 -- Makefile and related updates
+	2026-08-10 -- Don't warn if binary not available
+v0.3.3:
+	2026-08-11 -- Cache catalog and capabilities https://github.com/hapi-server/client-python/pull/108
+```
+
+Both headings belong to 0.3.3. `v0.3.3b0` is the development heading that the `Makefile`'s release
+step 4 opens after each release; step 1 says to remove its "b" at release time, and for 0.3.3 the
+maintainer instead added a separate `v0.3.3` heading below it. The `0.3.3b0` tag (`944374b`) carries
+the heading empty, `fbcfe2f` reopened it empty after the 0.3.2 release, and both entries under it
+were committed inside the `0.3.2..0.3.3` range (`aafecdb`, 2026-07-22; `646a99e`, "do not warn
+(#107)", 2026-08-10). Filtered for the site user (rule 14):
+
+- "Makefile and related updates" is a build chore and is dropped.
+- "Don't warn if binary not available" is kept: when a server's `/capabilities` response does not
+  offer the binary transport format, the client now falls back to CSV without the warning it used to
+  print (`hapiclient/data.py::_get_format`, where the warning call is commented out).
+- "Cache catalog and capabilities" is kept: `/catalog` and `/capabilities` responses are now cached
+  as `/info` responses already were (PR #108).
+
+The two kept items are recorded verbatim, as markdown bullets in the changelog's order, without their
+date prefixes and with the #108 item's trailing pull-request link dropped (rule 15).
+
+**Superseded description, not repeated.** The 0.3.2 row's description was a summary composed from
+that release's `CHANGES.txt` line and the `0.3.1..0.3.2` source diff. A composed summary is never
+recorded (rule 15), and one release's description is never carried onto a newer number (rule 10).
 
 ---
 
@@ -439,28 +502,31 @@ correct, and `Python 2.x` should not be restored.
 2. **The file that carried the Python 2 support was deleted.** `setup.py` — which held the Python 2
    dependency branch cited as the original justification for this value — was removed in the
    `0.3.1..0.3.2` diff and replaced by `pyproject.toml`.
-3. **No supported Python floor admits Python 2.** `pyproject.toml` at `HEAD` declares
-   `requires-python = ">=3.8"`; the released 0.3.2 declared `>=3.5`. Neither permits 2.x. (The
-   `>=3.5` visible on PyPI is the 0.3.2 sdist's metadata, not stale data — the bump to `>=3.8`
-   landed after that release and will first appear on PyPI with 0.3.3.)
+3. **No supported Python floor admits Python 2.** `pyproject.toml` declares
+   `requires-python = ">=3.8"` at the 0.3.3 tag and at `e990889`, and PyPI's metadata for 0.3.3
+   carries the same floor; the 0.3.2 release had declared `>=3.5`. Neither permits 2.x.
 4. **No test target is Python 2.** `tox.ini` `envlist = py38,py39,py310,py311,py312,py313,py314`;
    the `py27` environment that once justified this value is gone. `.travis.yml` runs Python 3.8
    only, and `.github/workflows/pyhc-actions.yml` runs the PyHC PHEP 3 and environment-compatibility
    checks.
-5. **Python-3-only syntax makes the package uncompilable under Python 2.** `hapiclient/util.py`
-   uses f-strings at lines 478, 515, 518 and 522 (in `write_atomic`), and `hapiclient/data.py`
-   uses one at line 25 (`log(f'Using STOP = {STOP}')`). f-strings are a **parse**-time construct,
-   so either module alone is a `SyntaxError` under Python 2 regardless of whether the enclosing
-   function is ever called. `hapiclient/data.py` is reached from the public `hapi()` entry point,
-   so the package cannot even be imported under Python 2.
+5. **Python-3-only syntax makes the package uncompilable under Python 2.** At `e990889`,
+   `hapiclient/util.py` uses f-strings at lines 482, 519, 522 and 526 (in `write_atomic`),
+   `hapiclient/data.py` uses one at line 26 (`log(f'Using STOP = {stop}')`), and
+   `hapiclient/cache.py`, since 0.3.3, two more at lines 131 and 133. f-strings are a
+   **parse**-time construct, so any one of these modules alone is a `SyntaxError` under Python 2
+   regardless of whether the enclosing function is ever called. `hapiclient/data.py` is reached
+   from the public `hapi()` entry point, so the package cannot even be imported under Python 2.
 
-**The counter-evidence, and why it does not save the value.** Four `sys.version_info` guards
-survive in the source: `hapiclient/__init__.py` (`if sys.version_info[0] < 3: reload(sys)`),
-`hapiclient/get.py` line 148, `hapiclient/data.py` line 239 (`if sys.version_info < (3, ):`), and a
-`<= (3, 5)` branch in `hapiclient/util.py::unicode_error_message`. The first three are **unreachable
-dead code** — they can never execute, because the module graph fails to compile under Python 2 — and
-the fourth is a Python 3.5 check, not a Python 2 one. Vestigial compatibility branches are evidence
-of history, not of support.
+**The counter-evidence, and why it does not save the value.** Two `sys.version_info` branches that
+could be read as Python 2 support survive at `e990889`: `hapiclient/get.py` line 148
+(`if sys.version_info[0] < 3:`), which is **unreachable dead code** — it can never execute, because
+the module graph fails to compile under Python 2 — and a `<= (3, 5)` branch in
+`hapiclient/util.py::unicode_error_message` (line 101), which is a Python 3.5 check, not a Python 2
+one. (`hapiclient/__init__.py` line 21, `sys.version_info < (3, 10)`, is a macOS warning filter for
+Python 3.) Two more that this section once listed were deleted in 0.3.3: the `reload(sys)` /
+`setdefaultencoding` block in `hapiclient/__init__.py` and the `sys.version_info < (3, )` trimming
+branch in `hapiclient/data.py::_get_chunks`. Vestigial compatibility branches are evidence of
+history, not of support.
 
 **Not selected:** any other programming language. `Python 3.x` is the only applicable value — the
 package is pure Python; there are no compiled extensions, no bundled C/Fortran, and no other
@@ -468,7 +534,7 @@ language in the source tree.
 
 ---
 
-### 14. Reference Publication (RECOMMENDED)
+### 14. Reference Publication (OPTIONAL)
 - **Value:** https://doi.org/10.1029/2021JA029534
 
 **Verified.** The DOI resolves to Weigel, R. S., Vandegriff, J., Faden, J., King, T., Roberts, D. A.,
@@ -511,6 +577,7 @@ is an upstream error in the repository's Zenodo configuration, not a different l
 - hapi
 - heliophysics
 - metadata
+- pyhc package
 - python
 - time series
 - web service
@@ -531,6 +598,12 @@ subsets it, it is cached independently of the data, and the README devotes a "Me
 section to it. `python` — the package is pure Python (`pyproject.toml`, an all-`.py` source tree, no
 compiled extensions).
 
+**`pyhc package` is the PyHC package marker (Field 16 rule 15).** HAPI Client is listed in the PyHC
+registry's `_data/projects_core.yml` (read 2026-10-28), so the record carries `pyhc package`, written
+exactly so, which lets a searcher find every PyHC package with `keyword:"pyhc package"`. It rests on
+that rule rather than on any term the project declares, and the rule overrides the keyword
+exclusions that would otherwise apply to it.
+
 **`line_plots`, `plotting` and `spectra` were once recorded here, and are deliberately not keywords
 of this record.** They describe capabilities that live entirely in the separate `hapiplot` package,
 not in `hapiclient`, which is the same fact Fields 4, 8 and 9 all rest on: `hapiclient/__init__.py`
@@ -550,11 +623,11 @@ it belongs: Field 29 (Related Software) and Field 30 (Interoperable Software) bo
 `https://github.com/hapi-server/plot-python`, and Field 8's Description names the optional hapiplot
 package explicitly.
 
-**Considered and rejected:** `cdaweb`, `omniweb`, `sscweb` (duplicate Field 17);
-`csv`, `json` (duplicate Fields 18/19); `data access` (a synonym of the recorded `data_retrieval` —
-note that `data_retrieval` and `data retrieval` are two distinct terms in the keyword vocabulary, and
-the underscore form recorded here, which is the form PyHC uses, is the correct one for this record);
-`space physics` (a synonym of the recorded `heliophysics`).
+**Considered and rejected:** `cdaweb`, `omniweb`, `sscweb` (duplicate Field 17); `csv` (duplicates
+Fields 18/19) and `json` (duplicates Field 19); `data access` (a synonym of the recorded
+`data_retrieval` — note that `data_retrieval` and `data retrieval` are two distinct terms in the
+keyword vocabulary, and the underscore form recorded here, which is the form PyHC uses, is the
+correct one for this record); `space physics` (a synonym of the recorded `heliophysics`).
 
 ---
 
@@ -594,31 +667,47 @@ http://hapi-server.org/servers/.
 
 **Values:**
 - **csv**
-- **JSON**
 - **Other**
 
-**Evidence.** With the default `cache=True`, a HAPI response is written to disk and then parsed from
-that file, so these are genuinely files the software reads, not only wire formats.
+**Evidence** (read at `e990889`; `hapiclient/get.py` is unchanged since this dossier's source
+revision). With the default `cache=True`, a HAPI **data** response is written to disk and then
+parsed from that file, so CSV and binary are genuinely files the software reads, not only wire
+formats. Since 0.3.3 those files sit in a `data/` subdirectory of the server's cache directory
+(`cache.py::data_cache_paths`, which passes `endpoint='data'` to `request2path`).
 - `csv` — `hapiclient/get.py::get_csv` retrieves the response to `<root>.csv`
   (`data_cache_paths(...)['csv']`) and `_parse_csv` / `_parse_csv_missing_length` read it with
   `pandas.read_csv`, falling back to `np.genfromtxt`.
-- `JSON` — HAPI `/catalog`, `/info` and `/capabilities` responses are parsed as JSON
-  (`util.py::urlopen(..., parse_json=True)`, `util.py::jsonparse`), and the cached `.json` metadata
-  file written by `cache.py::meta_cache_write` is read back on a later run.
 - `Other` — covers the **HAPI binary transport format**, which is the package's *default*
   (`hapiopts()` sets `'format': 'binary'`) and for which the format vocabulary offers no more
   specific value. `get_binary` retrieves it to `<root>.bin` and `_parse_binary` reads it with
-  `np.fromfile`/`np.frombuffer` against a dtype derived from the parameter metadata. `Other` also
-  covers the NumPy `.npy` and pickle `.pkl` cache artifacts read back by
-  `cache.py::data_cache_read_npy` and `meta_cache_read`.
+  `np.fromfile`/`np.frombuffer` against a dtype derived from the parameter metadata.
+
+**`JSON` removed.** HSSI held `csv`, `JSON` and `Other` until the 0.3.3 update. `JSON` is not an
+input file format of this package: JSON reaches it only as the bodies of HAPI `/catalog`, `/info`
+and `/capabilities` responses, which `util.py::urlopen(..., parse_json=True)` decodes in memory with
+`json.loads`; the package has no `json.load` call, so it never reads a JSON file. The `.json` copies
+that `cache.py::meta_cache_write` saves are never read back — `meta_cache_read` opens only the
+`.pkl` copy, at this dossier's source revision as at `e990889` — so an earlier version of this
+section was wrong to rest `JSON` partly on them. Fetching data over a network API into memory is the
+shape Field 18 rule 9 names as having no input file format, and rule 5's evidence is a reader that
+opens the format, which this package has for CSV and binary files but not for JSON. The JSON the
+package *writes* is recorded in Field 19.
+
+**Cache files read back are not inputs either.** `Other` once also rested on the NumPy `.npy` and
+pickle `.pkl` cache files that `cache.py::data_cache_read_npy` and `meta_cache_read` read back when
+`usecache=True`. Those are the package reading its own saved files back, which Field 18 rule 4
+excludes; they are outputs (Field 19), not input formats. Rule 4 turns on the re-reading, not on
+the file: the `.npy` and `.pkl` files hold results the package already produced, whereas the `.csv`
+and `.bin` files are read because they hold the server's data response, parsed there for the first
+time. `Other` stands on the HAPI binary format alone.
 
 **Why the previous "Not applicable" was wrong.** This field was once recorded as "Not applicable —
-data is retrieved from servers, not read from files". That is only true when caching is disabled;
-caching is on by default, and even with it off the package still parses CSV, JSON and binary
-payloads.
+data is retrieved from servers, not read from files". That holds only when caching is disabled
+(then the CSV and binary responses are parsed from in-memory buffers); caching is on by default, and
+then they are read from the files they are saved to.
 
-**Rejected:** `ascii` (`csv` is the precise term for what is parsed), and `CDF`, `FITS`, `HDF5`,
-`netCDF3/4`, `IDL.sav`, `ISTP-Compliant`, `Zarr` — the package reads none of them.
+**Rejected:** `JSON` (above); `ascii` (`csv` is the precise term for what is parsed); and `CDF`,
+`FITS`, `HDF5`, `netCDF3/4`, `IDL.sav`, `ISTP-Compliant`, `Zarr` — the package reads none of them.
 
 ---
 
@@ -629,14 +718,31 @@ payloads.
 - **JSON**
 - **Other**
 
-**Evidence.** Every generated file goes through `hapiclient/util.py::write_atomic`, which dispatches
-on suffix and writes to a temporary path before `os.replace`:
+**Evidence** (read at `e990889`). Every generated file goes through
+`hapiclient/util.py::write_atomic`, which dispatches on suffix and writes to a temporary path before
+`os.replace`. Since 0.3.3 the cache directory is laid out by endpoint (`cache.py::request2path`):
+data files under `<server>/data/`, `/info` metadata under `<server>/info/`, and — new in 0.3.3 (PR
+#108) — the `/catalog` and `/capabilities` responses under `<server>/catalog/` and
+`<server>/capabilities/`.
 - `csv` — the retrieved CSV response is written to `<root>.csv` by `util.py::urlretrieve`.
 - `JSON` — `cache.py::meta_cache_write` writes the dataset metadata to `<root>.json` with
-  `json.dump(data, f, indent=2)`.
+  `json.dump(data, f, indent=2)`, and since 0.3.3 the `/catalog` and `/capabilities` responses
+  too.
 - `Other` — the NumPy `.npy` data cache (`numpy.save`, via `cache.py::data_cache_write`), the
   pickle `.pkl` metadata caches (`pickle.dump(..., protocol=2)`), and the raw `.bin` HAPI binary
   response, none of which has a more specific value in the format vocabulary.
+
+**Why saved responses are outputs here, not bookkeeping.** Every file above is written to the
+response cache, and Field 19 rule 3 excludes internal bookkeeping — files that are not a data
+product a user asks for. These are. The cache is a public, documented option: `hapi()`'s docstring
+gives "`cache` (``True``) - Save responses and processed responses in cachedir", and `cachedir`
+is the user's to set (by default a `hapi-data` directory under the system temporary directory,
+`cache.py::cachedir`). The metadata `hapi()` returns names the saved files
+for the user: `cache.py::data_cache_write` adds `x_dataFile` (the `.csv` or `.bin` response),
+`x_dataFileParsed` (the `.npy` array), `x_metaFile` (the `.json` metadata) and `x_metaFileParsed`
+(the `.pkl` metadata) to it. Rule 6 therefore admits them, as writes to user-facing files. Field 18
+reaches the opposite verdict on the `.npy` and `.pkl` files only as *inputs*, where reading them
+back is the package reading its own cache (Field 18 rule 4).
 
 **Why the previous "Not applicable" was wrong.** This field was once recorded as no more than the
 package "returns in-memory data structures". It does return NumPy arrays and dicts, but it also
@@ -703,16 +809,22 @@ outcomes as inconsistent, nor "correct" one to match the other.
 ### 23. Development Status (RECOMMENDED)
 - **Active**
 
-**Evidence from release and commit cadence.** Six releases in under three months —
-v0.2.7 (2026-05-02), v0.2.8 (2026-06-04), v0.2.9 (2026-06-08), v0.3.0 (2026-07-08),
-0.3.1 (2026-07-09), 0.3.2 (2026-07-22) — each with a corresponding PyPI upload and Zenodo deposit.
-The most recent commit on `master` is 2026-07-22. Substantive work in that window includes a
-packaging migration to `pyproject.toml`, a logging rework, atomic cache writes fixing corruption
-from interrupted downloads (issue #94), a NumPy fallback for failed pandas CSV reads (PR #98), and
-the addition of PyHC compliance workflows. The PyHC registry rates the project "Good" on all six
-axes (community, documentation, testing, software maturity, Python 3, license).
+**Evidence from release and commit cadence** (read 2026-10-28). Seven releases between 2026-05-02
+and 2026-08-11 — v0.2.7 (2026-05-02), v0.2.8 (2026-06-04), v0.2.9 (2026-06-08), v0.3.0
+(2026-07-08), 0.3.1 (2026-07-09), 0.3.2 (2026-07-22), 0.3.3 (2026-08-11) — each with a
+corresponding PyPI upload and Zenodo deposit. The most recent commit on `master` is
+`e990889180a80ecfb277271bff6cdb1e088521c0`, dated 2026-08-12 (21:37:09 UTC). The repository is not
+archived, and the README carries no repostatus badge or status statement. Substantive work in that
+window includes a packaging migration to `pyproject.toml`, a logging rework, atomic cache writes
+fixing corruption from interrupted downloads (issue #94), a NumPy fallback for failed pandas CSV
+reads (PR #98), caching of the `/catalog` and `/capabilities` responses (PR #108), and the addition
+of PyHC compliance workflows. The PyHC registry rates the project "Good" on all six axes (community,
+documentation, testing, software maturity, Python 3, license).
 
-`Active` — "reached a stable, usable state and being actively developed" — is exactly right.
+`Active` — "The project has reached a stable, usable state and is being actively developed." — is
+exactly right: with a
+last default-branch commit on 2026-08-12 and a last release on 2026-08-11, the project sits inside
+Field 23 rule 6's six-month window.
 
 ---
 
@@ -759,17 +871,101 @@ research applies.
 ## Section 3: Additional Metadata
 
 ### 27. Related Publications (OPTIONAL)
-- **Not found**
+- **Value:** https://doi.org/10.1029/2024EA003937
 
-**Negative research.** The repository cites no publications. The only publication tied to this
-software is the JGR HAPI standard paper, and it is already recorded in Field 14 (Reference
-Publication), so listing it again here would duplicate it.
+**Included — a third-party paper that uses this package.** Majirský, A., Mackovjak, Š., Kostárová,
+S., and Amrich, S. (2025), *"Extreme Space Weather Events of the Past 30 Years: Preparation for Data
+From Mission Vigil"*, **Earth and Space Science**, February 2025 (10.1029/2024EA003937). None of its
+four authors is an author of this software. Describing a script the paper uses, it states: "It also
+utilizes the hapiclient Python package (B. Weigel, Vandegriff, et al., 2021)." The sentence before
+it credits HAPI itself, and the next one continues with what else the script employs. The paper also
+says that the data its pipeline obtained for the four most extreme events it identifies are
+published on Zenodo. Its reference list carries the `hapi-server/client-python` software beside the
+HAPI standard paper. That is a deliberate, cited statement, in a sentence of its own, that the
+paper's own software is built on this package, so Field 27 rule 5 includes it. The rule's condition
+that such uses still be news holds: the works found that name the package are few, and each is
+recorded in this section. The quoted sentence was confirmed in Semantic Scholar's citation context
+for the paper; the surrounding text was read only in the ADS full-text index, which drops
+punctuation, because the publisher's site blocks automated reading, so the section that holds the
+passage was not seen there.
 
-One candidate was investigated and rejected: the 2019 ESSOAr item "Interoperability for Heliophysics
-and Planetary Time Series Data via HAPI" (10.1002/essoar.10501378.1), found via the ORCID record of
-author Jon Vandegriff. It is not cited anywhere in this repository, its DOI no longer resolves in
-DataCite, and its subject is the HAPI standard rather than this client — the same ground the Field 14
-paper covers authoritatively.
+**The developers' HAPI-platform publications are not added — a settled decision.** Field 27 rule 3
+admits, beside the developers' own publications about this software, "one by an author about the
+platform the software serves". The user settled on 2026-10-29 that for this record that one is the
+Field 14 reference publication, the JGR paper describing the HAPI standard, which rule 2 keeps out
+of this field. The developers' other publications about HAPI are therefore not added; they belong to
+the HAPI standard rather than to this client, and a Python client's record listing them would put a
+platform's whole output in front of a searcher looking for the client. Weighed and excluded on that
+ground (found by a creator-keyed Zenodo search for Weigel, Vandegriff and Faden on 2026-10-28):
+
+- Posters: 10.5281/zenodo.14270996 (2024, "The HAPI Protocol: A Standard Access Mechanism for Time
+  Series Data"); 10.5281/zenodo.14527276 (2024, "Impacting Open Science via Interoperable Data Access
+  with the Heliophysics Application Programmer's Interface (HAPI)"); 10.5281/zenodo.15042846 (2025,
+  "Simplifying Access to Space Weather Data using the HAPI Data Access Standard");
+  10.5281/zenodo.21245292 (2026, GEM, "Easy Access to Heliophysics Data with HAPI" — the one that
+  shows this package itself, in an example prompt asking for a script that uses `hapiclient`).
+- The ESSOAr preprint 10.1002/essoar.10501378.1 (Vandegriff, Weigel, Faden et al., posted
+  2019-12-12, "Interoperability for Heliophysics and Planetary Time Series Data via HAPI"), which
+  also appears among Jon Vandegriff's ORCID works.
+- The working paper 10.5281/zenodo.4752107 (2021, "A Plan for Further Promulgation and Development of
+  the Heliophysics Application Programmer's Interface (HAPI)") and the HAPI 3.3.1 specification
+  deposit 10.5281/zenodo.17516129 (2025).
+- Talk decks: 10.5281/zenodo.8422472 (2023, "HAPI - A Standard Time Series Data Access API for
+  Heliophysics and Planetary Data"), 10.5281/zenodo.11114385 (2024, "HAPI: The story of a uniform
+  data access mechanism built in Heliophysics …"), 10.5281/zenodo.17387480 (DASH 2025,
+  "Interoperable Heliophysics Data Access via HAPI"), 10.5281/zenodo.17421195 (2025, "Issues Related
+  to Metadata and Metadata Standards Identified while Developing the HAPI Specification and Using
+  HAPI Data"), 10.5281/zenodo.21793481 (COSPAR 2026, "Efficient Space Weather Data Access Using
+  HAPI"), 10.5281/zenodo.23088029 (2026, "Making Ground Data Discoverable: Mapping from HAPI to
+  SPASE 2") and 10.5281/zenodo.23144432 (DASH 2026, "Future Directions for the HAPI
+  Specification").
+
+The same search found deposits that mention HAPI but are about other subjects, so they are neither
+about this software nor about its platform: 10.5281/zenodo.15632921 and 10.5281/zenodo.17457042
+("A Standard for Units in Heliophysics", a units recommendation drawn up by the HAPI, SPASE and ISTP
+metadata groups) and 10.5281/zenodo.18749828 ("HDRL Show and Tell: Community Connections and
+Operations", a set of short talks of which one covers HAPI).
+
+**Corrected negative research — the ESSOAr preprint.** An earlier version of this section rejected
+the ESSOAr item partly because "its DOI no longer resolves in DataCite". That was wrong: it is a
+Crossref DOI, for a posted-content preprint, and it resolves (to essopenarchive.org). It is excluded
+on the platform ground above instead.
+
+**Also weighed and not added.**
+- Grimes, E. W., et al. (2022), "The Space Physics Environment Data Analysis System in Python",
+  *Frontiers in Astronomy and Space Sciences* (10.3389/fspas.2022.1020815). Its abstract names
+  `hapiclient` in a list of the open-source projects PySPEDAS is built from ("PyTplot, cdflib,
+  hapiclient, etc.") — a dependency mention, which rule 6 excludes.
+- MacDonald, E., et al. (2026), "Crowdsourced aurora observations during geomagnetic superstorms:
+  the Aurorasaurus open science database", *Frontiers in Astronomy and Space Sciences*, 2026-10-09
+  (10.3389/fspas.2026.1883317). Its methods state that "The entire workflow was implemented in
+  Python using supporting scientific libraries", then list seven — pandas, matplotlib, aacgmv2,
+  hapiclient, cartopy, seaborn and spacy — citing the v0.2.7 software deposit
+  (10.5281/zenodo.19980024) for hapiclient. That is a list of tools, which rule 6 excludes. Unlike
+  the Vigil paper, it never says what hapiclient does in the workflow.
+- The 2022 *Frontiers* paper on VirES for Swarm (10.3389/fspas.2022.1002697, "Python tools for
+  ESA’s Swarm mission: VirES for Swarm and surrounding ecosystem") says its own client is "very
+  similar in usage pattern and ethos to broader data access libraries such as hapiclient" and cites
+  the concept DOI. A comparison in background text is a mention (rule 6).
+- Barnum, J., et al. (2023), "Python in Heliophysics Community (PyHC): Current status and future
+  outlook", *Advances in Space Research* (10.1016/j.asr.2022.10.006). An ecosystem review whose
+  reference list cites the v0.2.1 software deposit; none of its authors is an author of this
+  software, and it reports no results built with the package (rule 6).
+- The COSPAR 2026 meeting abstract "Efficient Space Weather Data Access Using HAPI" (ADS
+  2026cosp...46.3461V). A meeting abstract is never an eligible publication (rule 1); its talk deck is
+  the 10.5281/zenodo.21793481 entry above.
+
+**Search recorded (2026-10-28).** ADS full-text searches for `hapiclient`, for `"HAPI client"`, and
+for `client-python` with `hapi`, restricted to records entered since 2026-08-04, returned nothing;
+the controls `sunpy` and `pyspedas` over the same window returned hits, and a nonsense token
+returned none. Over all records, the `hapiclient` full-text search returned the Vigil and PySPEDAS
+papers, and an acknowledgements search for `hapiclient` and a full-text search for the concept DOI
+returned nothing. An OpenAlex full-text search (`fulltext.search:hapiclient`, 2026-10-29) returned
+four works: the Vigil, PySPEDAS, Aurorasaurus and VirES papers; the controls `sunpy` and `pyspedas`
+returned hits the same day, and a nonsense token returned none. The PyHC review was found through
+its citation of the v0.2.1 deposit. DataCite reports no citations of the concept DOI. The repository
+cites no publications, and the JGR HAPI standard paper is recorded in Field 14, not here. This field
+was recorded as empty before the 0.3.3 update.
 
 ---
 
