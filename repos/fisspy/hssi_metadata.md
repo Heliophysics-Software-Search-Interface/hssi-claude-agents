@@ -4,16 +4,22 @@
 **Repository:** https://github.com/SNU-sunday/fisspy
 **Source Revision:** 8e7770420123e79b899de484db045dbdb919cfd6
 **Extraction Date:** 2026-08-03
-**Validation Date:** 2026-08-23
+**Validation Date:** 2026-10-29
 **Validation Status:** PASS
 
 ---
 
 ## Scope notes — read these before using the evidence below
 
+**Which revision a line citation refers to.** Unqualified line citations are at the header's Source
+Revision, `8e77704`. Passages that name `38910db` cite that revision, and passages that cite "the 1.4.5
+sdist" cite that PyPI archive, whose code no commit holds (Field 12).
+
 **The repository has no machine-readable metadata file.** There is no `CITATION.cff`, no
-`codemeta.json`, no `.zenodo.json`, no `AUTHORS`, no `CONTRIBUTORS`, no `CHANGELOG`/`NEWS`/`HISTORY`,
-and no `.github/workflows` (no CI configuration) anywhere in the tree at any revision. Every value
+`codemeta.json`, no `.zenodo.json`, no `AUTHORS`, no `CONTRIBUTORS` and no `CHANGELOG`/`NEWS`/`HISTORY`
+anywhere in the tree at any revision, and no CI configuration at the evidence revisions: an
+`appveyor.yml` AppVeyor config was tracked from 2017-02 (`bb5a45d`) to 2019-05, when `43bbebd`
+removed it, and there has never been a `.github/workflows` or `.travis.yml`. Every value
 below therefore rests on `setup.py`, `README.md`, `LICENSE.txt`, the Python source itself, the
 project's own web documentation at `http://fiss.snu.ac.kr`, the PyPI and conda-forge release
 channels, the PyHC registry, ORCID, Crossref and the GitHub API. Absence of a citation file is a
@@ -37,8 +43,7 @@ are build/editor artifacts: `.DS_Store` (5), `__pycache__/*.pyc` for Python 3.6/
 and editor backups `fisspy/io/read.py~` and `fisspy/io/.read.py.un~`. Several commit subjects in the
 1.2.x–1.3.0 range are `backup` and `abc`. None of this is metadata; it is noted only so a later
 reader does not mine `.pyc` files or `read.py~` for API evidence, and because it bears on the
-Development Status reasoning (Field 23) and on why the version description (Field 12) had to be
-derived from a diff.
+Development Status reasoning (Field 23) and on why Field 12 records no version description.
 
 **The project's web host is HTTP-only.** `http://fiss.snu.ac.kr` serves the documentation and the
 data archive correctly, but `https://fiss.snu.ac.kr` resets the connection. Any future agent
@@ -88,15 +93,15 @@ software DOI.
 
 Carried over unchanged from the existing HSSI record and independently confirmed: it is the clone
 origin of the working tree, the `dev_url` in the conda-forge feedstock recipe, and the repository the
-project's documentation links to. The GitHub API reports it as active and unarchived, default branch
-`master`, last push 2025-07-18, 4 stars, 2 forks, 0 open issues.
+project's documentation links to. The GitHub API reports it as active, unarchived and not renamed,
+default branch `master`, last push 2026-09-16 (the 1.4.3 merge `38910db`; read 2026-10-28).
 
 Rejected alternative: `http://fiss.snu.ac.kr`, which `setup.py` gives as `url=` and PyPI reports as
 `home_page`. That is the project home page and documentation host, not the source repository; it
 belongs in Field 24. `https://pypi.org/project/fisspy/` and
 `https://anaconda.org/conda-forge/fisspy` are distribution channels, not repositories.
 
-### 4. Software Functionality (MANDATORY)
+### 4. Software Functionality (RECOMMENDED)
 
 Twenty-seven values, each written verbatim in the canonical `Parent: Child` form the
 `FunctionCategory` vocabulary uses. Every subcategory has its parent category listed alongside it.
@@ -151,14 +156,14 @@ spectra, the latter by matrix-multiplying PCA coefficients against a basis-profi
 
 *`Data Processing and Analysis: Calibration`* — `fisspy/correction/correction.py` exports 18
 correction functions, including `wvCalib` (line 79) with three wavelength-calibration methods
-(`simple` from header, `center` from the main line, `photo` from a photospheric line),
-`get_InstShift` (line 36, "offset value of the instrumental shift caused by the seeing and vibration
-of the spectrograph"), `corSLA`/`corStrayLight` (lines 314/360, stray-light and spatial-resolution
+(`simple` from header, `center` from the main line, `photo` from a photospheric line), `get_InstShift`
+(line 36, "offsert [sic] value of the instrumental shift caused by the seeing and vibration of the
+spectrograph"), `corSLA`/`corStrayLight` (lines 314/360, stray-light and spatial-resolution
 degradation correction), `corAsymmetry`, `get_TauH2O`/`corTlines` (line 463, telluric H₂O line
-removal), `get_TauS`/`corSline`, `wvRecalib` and `normalizeProfile`.
-`fisspy/preprocess/proc_base.py` adds `calFlat` (line 554: flat-field and slit-pattern construction,
-gain calibration, atlas subtraction), `get_tilt`/`tilt_correction` (lines 299/474),
-`get_curve_par`/`curvature_correction` (lines 413/498) and `wv_calib_atlas` (line 1198).
+removal), `get_TauS`/`corSline`, `wvRecalib` and `normalizeProfile`. `fisspy/preprocess/proc_base.py`
+adds `calFlat` (line 554: flat-field and slit-pattern construction, gain calibration, atlas
+subtraction), `get_tilt`/`tilt_correction` (lines 299/474), `get_curve_par`/`curvature_correction`
+(lines 413/498) and `wv_calib_atlas` (line 1198).
 
 *`Data Processing and Analysis: Data Access and Retrieval`* — `fisspy/data/download.py` exposes
 `search(year, month, day)` (line 11), which scrapes the observation index at
@@ -255,9 +260,10 @@ merely a package that happens to read FISS files; it is the instrument team's ow
 `fisspy/preprocess/proc_gui.py:26 prepGUI` is a 3,484-line PyQt5 application that walks an operator
 through the FISS calibration run step by step and writes the calibration and `proc` products;
 `fisspy/image/raster_set.py:320 makeCatalogFiles()` writes the JSON records, quick-look images,
-movies and ZIP bundles published on the project's own data catalogue. The taxonomy's dividing line —
-"a package that *reads* MMS data is Data Processing and Analysis; a package that is *part of the MMS
-ground system* is Mission-related" — puts fisspy on the ground-system side. (FISS is a ground-based
+movies and ZIP bundles published on the project's own data catalogue. The taxonomy draws its line
+between a package that reads MMS data, which belongs under Data Processing and Analysis, and a
+package that is part of the MMS ground system, which is Mission-related; that line puts fisspy on the
+ground-system side. (FISS is a ground-based
 instrument rather than a spacecraft payload; `Mission-related` is nevertheless the vocabulary's only
 term for instrument-team pipeline and archive software, and HSSI uses it for ground observatories
 elsewhere.)
@@ -315,6 +321,45 @@ width from temperature and microturbulence (`Dwidth`, line 65), the inverse mapp
 and turbulent speed from the Hα and Ca II Doppler widths (`Dw2TnXi`, line 90), source functions via
 `_Sfromx` (line 313) and `scipy.special.expn` exponential integrals, and radiative loss (`RadLoss`,
 line 1084; `_RadLossBase`, line 1116).
+
+**The 1.4.x additions earn no new value.** Everything 1.4.0–1.4.5 added maps onto values already
+listed above. What 1.4.0–1.4.3 added is read at `38910db`. `align3D` and `align3DtwoCams`
+(`fisspy/align/alignment.py:552`, `:637`) resample whole (y, x, λ) cubes of one or both cameras onto
+the co-aligned frame and write them as `*_aligned.fts` FITS files (`:632-633`) —
+`Data Processing and Analysis: Image Processing` and `Data Processing and Analysis: Processing`.
+`detrend` and `pfcurve` (`fisspy/analysis/wave_anal.py:7`, `:14`) remove a polynomial trend under a
+Tukey window — `Data Processing and Analysis: Time Series Analysis`. `WaveCoherency`
+(`fisspy/analysis/wavelet.py:684`) now builds both wavelet transforms from the two input series and
+adds `signif_coh` (`:833`, a Monte Carlo red-noise significance test through `cal_signif_coh`,
+`:921`), `signif_crossPower` (`:839`) and a `plot` of coherence with its significance contour and
+phase arrows (`:873`) — `Data Processing and Analysis: Wavelet Analysis` and
+`Data Visualization: 2D Graphics`. The preprocessing helpers `raw2sp`, `rawYF2` and `calShift`
+(`fisspy/preprocess/proc_base.py:1639`, `:1722`, `:1759`) and the calibration GUI
+(`fisspy/preprocess/proc_gui.py:3219`) now accept 2-D single-position frames as well as 3-D scans,
+while `PCA_compression_new` declines 2-D data (`proc_base.py:1485`) —
+`Data Processing and Analysis: Calibration` and `Mission-related: Science Data Processing`. No live
+`FunctionCategory` row names a capability beyond these. `align3D` maps pixels through the same
+image-plane rotation, `CoordinateTransform` (`alignment.py:683`), so the `Coordinate Transforms`
+rejection below stands.
+
+1.4.5 adds `fisspy/preprocess/proc_inline.py` in the 1.4.5 sdist, with the class `runPrep` (line 18):
+a scripted form of the calibration run that `prepGUI` walks an operator through. It builds master
+flats and fringe patterns (`calMasterFlat`, line 405, writing `FISS_FLAT*`, `FISS_yFringe*` and
+`FISS_xFringe*` FITS files at lines 664, 676 and 687), preprocesses every raw frame
+(`_runProc4target`, line 172, writing FITS at line 385) and PCA-compresses the results
+(`_runComp4Target`, line 122, through `PCA_compression_new`) —
+`Data Processing and Analysis: Calibration`, `Data Processing and Analysis: Data Reduction`,
+`Data Processing and Analysis: Processing`, `Mission-related: Calibration` and
+`Mission-related: Science Data Processing`. Its `joblib` parallelism across observation targets
+(`runProc` and `runComp`, lines 96 and 109) is the same single-node multicore work-sharing as the
+inversion's, which the `Servers and Environments` rejection below already covers. In the same sdist,
+`readFrame` (`fisspy/read/readbase.py:90-93`) and the `singleBand` raster viewer
+(`fisspy/image/interactive_image.py:180-181`) accept a single slit position, so the package can read
+and display sit-and-stare data; on issue #55 (2026-09-22) the maintainer wrote that "the current
+version can preprocess sit-and-stare data, but does not support PCA compression". No stored value lost
+its capability: no public function or class present at `8e77704` is missing at `38910db` or in the
+1.4.5 sdist; two private `Wavelet` helpers (`_chisquareInv`, `_chisquareSolve`) became module-level
+functions (`wavelet.py:1005`, `:1039` at `38910db`).
 
 **Considered and rejected, with reasons.** These are recorded so they are not re-proposed.
 
@@ -384,7 +429,7 @@ line 1084; `_RadLossBase`, line 1116).
   `multiprocessing.cpu_count()` is single-node multicore work-sharing inside the inversion, which is
   not `High Performance Computing` in this taxonomy's sense.
 
-### 5. Related Region (MANDATORY)
+### 5. Related Region (RECOMMENDED)
 
 - `Chromosphere`
 - `Photosphere`
@@ -402,7 +447,7 @@ fisspy models, and the field guidance prefers the most specific applicable regio
   off those two lines, and `fisspy/read/read_factory.py:280` selects a band-specific colour map per
   line.
 - The photosphere is modelled explicitly, not incidentally. `fisspy/read/readbase.py:16
-  Photolinewv()` exists "To specify the spectral line used to determine photospheric velocity" and
+  Photolinewv()` exists "To specicy [sic] the spectral line used to determine photospheric velocity" and
   returns photospheric line wavelengths 6559.580 Å (Hα band) and 8536.165/8548.079 Å (Ca II band);
   `fisspy/correction/correction.py:163 wvCalib_w_photo()` calibrates wavelength using that
   photospheric line; and the inversion's three layers are one photospheric plus two chromospheric,
@@ -489,7 +534,7 @@ dependable remedy rather than repeating the attempt.
 
 `fisspy`
 
-The stored value, retained deliberately. Field 7 asks for "the name of the software package as
+The stored value, retained deliberately. Field 7 asks for "The name of the software package as
 listed on the code repository": the repository is `SNU-sunday/fisspy`, the PyPI distribution is
 `fisspy`, the conda-forge package is `fisspy`, and the importable package directory is `fisspy/`.
 
@@ -551,6 +596,10 @@ clause is load-bearing in the code, not editorial colour: the plate scale is har
 `self.xDelt = 0.16` / `self.yDelt = 0.16` at `fisspy/read/read_factory.py:234-235` and `:712`, and
 `fisspy/correction/get_inform.py:6 get_lineName()` recognises only the instrument's own band set.
 
+The 1.4.x additions (Field 4) change nothing this description or the concise description (Field 9)
+says: `align3D` is further co-alignment, the coherence significance tests are further wavelet
+analysis, and 1.4.5's `runPrep` is a scripted form of the calibration pipeline already named.
+
 ### 9. Concise Description (OPTIONAL)
 
 > The Python Package for data analysis of the GST/FISS instrument: reading, calibrating, aligning,
@@ -568,10 +617,10 @@ long description, which would cut mid-sentence inside the instrument's descripti
 
 `2017-02-24`
 
-The field is "date of first broadcast/publication … used for the initial version of the software",
-so this is the date fisspy first became publicly installable: the PyPI upload of version 0.7.2,
-timestamped `2017-02-24T12:31:07Z` in the PyPI JSON API's release history (the earliest of the 34
-releases from 0.7.2 through 1.3.0).
+The field asks for the date of first broadcast or publication, used for the initial version of the
+software, so this is the date fisspy first became publicly installable: the PyPI upload of version 0.7.2,
+timestamped `2017-02-24T12:31:07Z` in the PyPI JSON API's release history (the earliest of the 39
+releases from 0.7.2 through 1.4.5, read 2026-10-28).
 
 Rejected alternatives, with reasons:
 
@@ -584,14 +633,15 @@ Rejected alternatives, with reasons:
   as `2019-07-01T06:56:59Z`; the `conda-forge/fisspy-feedstock` repository's `created_at` and first
   commit are both 2019-07-01 as well. Later than PyPI, and conda-forge is the project's
   *recommended* channel but not its first.
-- `2025-07-18` — the current release; that is Field 12's version date, not the first publication.
+- `2026-09-21` — the release Field 12 records (1.4.5); that is Field 12's version date, not the first
+  publication.
 
 ### 11. Publisher (RECOMMENDED)
 
 - **Organization:** GitHub
 - **Publisher Identifier:** `https://github.com`
 
-Field 11 directs that "if no DOI has been obtained, indicate the repository host, such as GitHub or
+Field 11 directs that "If no DOI has been obtained, indicate the repository host, such as GitHub or
 GitLab", and no DOI exists (Field 2). A URL rather than a ROR is used because ROR has no record for
 GitHub at all — a registry query for that name returns nothing — and the field permits a URL when no
 ROR exists.
@@ -604,46 +654,83 @@ author's institution and the documentation host; it publishes the data, not the 
 
 ### 12. Version (RECOMMENDED)
 
-- **Version Number:** `1.3.0`
-- **Version Date:** `2025-07-18`
+- **Version Number:** `1.4.5`
+- **Version Date:** `2026-09-21`
 - **Version PID:** Not found
-- **Version Description:** Exposes the multilayer spectral inversion API at package level —
-  `fisspy.inversion` now provides `MLSI4file`, `MLSI4profile` and `IMLSI`, where previously the
-  subpackage had an empty `__init__.py` and its contents were reachable only through private module
-  paths. Reworks observation-catalogue generation in `fisspy.image.raster_set`: the
-  `makeRecDataJSON` class is replaced by `makeOBSmovie`, `__all__` now exports both `makeRasterSet`
-  and `makeOBSmovie`, and two new module-level helpers appear, `upateJSON` and a module-level
-  `saveJSON` function. The module's other module-level helpers `flipInv`, `pjsonIMGtag` and `zipComp`
-  pre-date this release — each is byte-identical between v1.2.1 and this revision — and are not
-  part of what 1.3.0 added. Adds `PCA_compression_new` and `cloud` to `fisspy.preprocess.proc_base`.
-  Fixes a colour-map attribute typo (`cm.ㄴfe` → `cm.fe`) that raised an `AttributeError` for any
-  `FISS` object opened on the Fe I band.
+- **Version Description:** Not recorded — fisspy publishes no release notes (see below).
 
-**Version number and date.** `setup.py` and `fisspy/__init__.py:15` both declare `1.3.0`; PyPI's
-latest release is `1.3.0`, uploaded `2025-07-18T04:23:38Z`; conda-forge's `fisspy-1.3.0` was built
-`2025-07-18T04:41:43Z` from a recipe pinning `{% set version = "1.3.0" %}` and the sdist checksum
-`2cfbc15e744428950e858bf2b2116e0a8862ed9c7966f6d6dd2d93be33cd9038`. The recorded revision
-`8e77704` is dated `2025-07-18 17:11:59 +0900`, the same day. The version number is recorded **bare**
-as `1.3.0`; HSSI's read API renders a `name - version` display string, and copying that rendered
-form back into the stored field would corrupt it.
+**Version number and date.** `1.4.5` is fisspy's newest release on PyPI. Its wheel,
+`fisspy-1.4.5-py3-none-any.whl`, was uploaded `2026-09-21T08:18:46Z` and its sdist one second later;
+neither file is yanked and neither is a pre-release. conda-forge built
+`noarch/fisspy-1.4.5-pyhd8ed1ab_0.conda` from it at 08:27 UTC the same day. No `1.4.4` was ever
+uploaded. In the 1.4.5 sdist, `setup.py:5` and `fisspy/__init__.py:15` both declare `1.4.5`. fisspy
+tags nothing and publishes no GitHub releases, so the release event is that PyPI upload and the date
+is its UTC day. The number is recorded **bare** as `1.4.5`; HSSI's read API renders a
+`name - version` display string, and copying that rendered form back into the stored field would
+corrupt it.
 
-**Do not report 1.2.2.** The merge commit at HEAD reads "Merge pull request #49 from
-SNU-sunday/v1.2.2", and a stale `origin/v1.2.2` branch exists, but the tree it merged declares
-`1.3.0` in both `setup.py` and `fisspy/__init__.py`, and `1.2.2` was never released to PyPI or
-conda-forge. The branch name is simply wrong.
+**The repository lags the release.** No commit on any branch declares `1.4.4` or `1.4.5` (every remote
+branch was read, and `git log --all -G` over `setup.py` and `fisspy/__init__.py` finds neither, read
+2026-10-28), and the 1.4.5 sdist carries code that no commit holds. The 1.4.3 sdist matches the
+default branch's head, `38910db`: every file in its `fisspy/` package is byte-identical to the file at
+that commit, and it only leaves out files the repository also tracks there (`__pycache__/*.pyc`,
+`.DS_Store` files, editor backups, `.projectignore`, the two `.npz` tables and the `analysis/sample/`
+series). Against it, the 1.4.5 sdist adds `fisspy/preprocess/proc_inline.py` and changes
+`fisspy/preprocess/proc_base.py`, `fisspy/preprocess/proc_gui.py`, `fisspy/read/readbase.py`,
+`fisspy/image/interactive_image.py`, `fisspy/__init__.py` and `fisspy/preprocess/__init__.py`, besides
+the version in `setup.py`; what that code adds is assessed under Field 4. Evidence for 1.4.5 alone is
+therefore cited "in the 1.4.5 sdist", by path and line, rather than at a commit. **Check at the next
+refresh** whether `fisspy/preprocess/proc_inline.py` has reached the repository
+(`git log --all -- fisspy/preprocess/proc_inline.py`), so that evidence for later releases can be
+cited at a commit instead of in an sdist; the recorded version no longer depends on it. Search by that
+path, not by the class name `runPrep`: an earlier 17-line stub of the same class name lived in
+`fisspy/preprocess/prep.py` in 2023 (commits `ef3095a` and `1108a47`), so `git log -S runPrep` returns
+false hits.
 
-**Version PID is empty** as a direct consequence of Field 2 — no DOI exists for any version.
+**1.4.3 was considered first, and superseded.** This record first settled on `1.4.3` (2026-09-16),
+the newest release declared at a commit: `38910db`, the merge of pull request #54 from the `v1.4.3`
+branch, declares it, and its PyPI wheel was uploaded `2026-09-16T08:14:28Z`. 1.4.5 was then left out
+because the version rubric did not record a PyPI file built from code on neither the default branch's
+lineage nor a release branch cut from it. On 2026-10-29 the user ruled that a PyPI upload of the
+project's own package that is neither yanked nor a pre-release is a release, whichever branch or
+commit it was built from and including code that no commit holds, with releases ordered by the
+current series' version order. Under that ruling 1.4.5 is the newest release, and this field records
+it.
 
-**Provenance of the version description, and why one had to be derived.** Upstream publishes no
-release notes of any kind: there is no `CHANGELOG`, `NEWS`, `HISTORY` or `whatsnew` file at any
-revision, the repository has **no git tags and no GitHub releases** (neither GitHub's tag nor its release listing holds anything), PyPI
-carries no description body (`description_content_type: null`), and the commit subjects across this
-release range are `backup` and `abc`. The description above is therefore derived from the complete
-`origin/v1.2.1..8e77704` diff, restricted to source files: `fisspy/inversion/__init__.py` (+1 line,
-the new public import), `fisspy/image/raster_set.py` (795 lines changed), `fisspy/preprocess/proc_base.py`
-(+153), `fisspy/preprocess/proc_gui.py` (34), `fisspy/read/read_factory.py` (1 line, the typo fix),
-`fisspy/image/__init__.py` (whitespace only), and the two version declarations. A future agent
-refreshing this record should expect to derive the next version description the same way.
+**Releases since 1.3.0.** `1.4.0`, `1.4.1` and `1.4.2` were uploaded on 2026-08-28 (00:18, 03:04 and
+07:34 UTC), first declared at commits `f32d6a1`, `6db3343` and `d756812` on `master`'s lineage; then
+`1.4.3` on 2026-09-16 and `1.4.5` on 2026-09-21.
+
+**Branch and pull-request names do not track versions.** The `v1.2.2` branch first carried the 1.3.0
+tree (merged at `8e77704` as "Merge pull request #49 from SNU-sunday/v1.2.2") and later the 1.4.1 and
+1.4.2 code (pull requests #50 and #52 came from it, and it ends at `d756812`, declaring `1.4.2`); the
+`v1.4.0` branch also ends declaring `1.4.2`. `1.2.2` itself was never released to PyPI or
+conda-forge. Read the declared version and the PyPI release list, never a branch name.
+
+**Version PID is empty** as a direct consequence of Field 2 — no DOI exists for any version, 1.4.5
+included (DataCite and Zenodo still hold no fisspy record, read 2026-10-28, with `sunpy` returning
+records at both as a control).
+
+**Why no version description is recorded.** The field records only a release's own words — its
+title, its body or its changelog entry — and fisspy publishes none of them: the repository has **no
+git tags and no GitHub releases** (neither GitHub's tag nor its release listing holds anything), there
+is no `CHANGELOG`, `NEWS`, `HISTORY` or `whatsnew` file at any revision, PyPI carries no description
+body for 1.4.5 (`description_content_type: null`, and the 1.4.5 sdist's `PKG-INFO` has none), and the
+documentation site at `http://fiss.snu.ac.kr/fisspy/` has no version-history page. The commit subjects
+between 1.3.0 and 1.4.3 (`8e77704..38910db`) — `debug preprocess`, `add 3d alignment`,
+`Update version`, `fix`, `fix alignOffset`, `bf` and the merges — are not release notes, and no commit
+records 1.4.5 at all; a summary composed from commit subjects or from a diff would be a curator's
+account, which this field never records. What the 1.4.x releases added is recorded where it bears on
+the metadata, under Field 4.
+
+**Superseded value.** HSSI held `1.3.0` (2025-07-18) until the 1.4.5 release update. Its
+description had been derived from the `origin/v1.2.1..8e77704` source diff: it described the
+package-level exposure of the multilayer spectral inversion API (`MLSI4file`, `MLSI4profile`,
+`IMLSI`), the replacement of `makeRecDataJSON` by `makeOBSmovie` with the new `upateJSON` and
+`saveJSON` helpers, the addition of `PCA_compression_new` and `cloud`, and the `cm.ㄴfe` → `cm.fe`
+colour-map typo fix. However carefully attributed, that was a curator's account of the range rather
+than upstream's words, so a later refresh should not derive the next description that way: it stays
+empty unless upstream begins publishing release notes.
 
 ### 13. Programming Language (RECOMMENDED)
 
@@ -665,11 +752,11 @@ optical-flow routine is "the python function of dave_multi.pro IDL code written 
 this repository. The project's actual IDL code lives in the separate repository recorded under
 Field 29.
 
-### 14. Reference Publication (RECOMMENDED)
+### 14. Reference Publication (OPTIONAL)
 
 **Not found — fisspy has no publication that describes the software.**
 
-This is a considered determination, not an unfinished search. Field 14 asks for "the DOI for the
+This is a considered determination, not an unfinished search. Field 14 asks for "The DOI for the
 publication describing the software, sometimes used as the preferred citation for the software". No
 such paper exists: there is no JOSS, A&C, SoftwareX or similar software paper; the README contains no
 "how to cite" section; and the project's own acknowledgement page
@@ -744,6 +831,7 @@ The HSSI record previously carried no keywords. All lowercase, one term per entr
 - `gui`
 - `fits`
 - `python`
+- `pyhc package`
 
 Each term is earned by code or by curated upstream metadata: `imaging spectroscopy` is the
 instrument's observing mode (the instrument page: "we can obtain the data including not only spectral
@@ -765,6 +853,16 @@ Also rejected: `sun` (subsumed by `solar physics`), `spectra` (subsumed by `spec
 `sunspots` and `mhd waves` (science topics of papers *using* fisspy, not capabilities of the package
 — fisspy contains no sunspot or wave-mode-specific code), and `numba` (declared as a dependency but
 never imported; see Field 21).
+
+**`pyhc package`** is the catalogue's marker for official PyHC packages, and fisspy is one: it is
+listed in the PyHC registry's `_data/projects.yml` (read 2026-10-28). The keywords rubric therefore
+requires the term, spelled exactly `pyhc package`, whatever its other rules say; it is the one term in
+the list not earned by code or upstream metadata.
+
+The 1.4.x additions described under Field 4 — 3-D cube alignment, wavelet-coherence significance
+testing and polynomial detrending, and 1.4.5's scripted calibration pipeline — are covered by
+`image alignment`, `wavelet analysis`, `time series analysis`, `calibration` and `data reduction`, so
+no term was added for them.
 
 ### 17. Data Sources (OPTIONAL)
 
@@ -835,6 +933,17 @@ values), is the Torrence & Compo wavelet demonstration series and is referenced 
 `netCDF4`, `scipy.io.readsav`, `zarr` or `read_csv` import exists, and no ISTP conventions are
 implemented (FISS headers are the instrument's own convention).
 
+The 1.4.x additions add no format. They read and write FITS frames, plus the NumPy `.npz`
+alignment-parameter file (`align3D`, via `readAlignPars`) and the solar atlas `.npz` that `runPrep`
+reaches through `wv_calib_atlas`. Both `.npz` inputs are already counted under `Other`, and the
+outputs are FITS only. At `38910db`, `align3D` reads its parameter file through `readAlignPars`
+(`fisspy/align/alignment.py:580`), which calls `np.load` (`:223`), and writes `*_aligned.fts` cubes.
+In the 1.4.5 sdist, `runPrep.calMasterFlat` calls `wv_calib_atlas`
+(`fisspy/preprocess/proc_inline.py:616`), which loads `solar_atlas.npz` through `read_atlas`
+(`fisspy/preprocess/proc_base.py:1200`, `:1111-1117`). `runPrep` otherwise reads raw, bias-dark and
+calibration FITS frames and writes FITS flats, fringe patterns, `proc` files and, through
+`PCA_compression_new`, compressed products (Field 19).
+
 ### 19. Output File Formats (RECOMMENDED)
 
 - `FITS`
@@ -871,7 +980,7 @@ relitigated: `fisspy/makevideo.py:99` writes a temporary text file `img_list.tmp
 frames. It is a transient argument file consumed immediately by the external ffmpeg binary and
 deleted, not a data product, so it does not make ascii a supported output format. `CDF`, `HDF5`,
 `netCDF3/4`, `IDL.sav`, `ISTP-Compliant`, `csv` and `Zarr` are all unsupported for output for the
-same reasons as Field 18.
+same reasons as Field 18. The 1.4.x additions write FITS only (Field 18).
 
 ### 20. Operating System (RECOMMENDED)
 
@@ -880,18 +989,20 @@ same reasons as Field 18.
 Note that the `OperatingSystem` vocabulary spells this value out in full: `OS Independent` is not a
 valid value and would be rejected, so the abbreviated form must never be substituted here.
 
-Evidence: the conda-forge recipe builds `noarch: python`, which asserts platform independence and
-produces one artifact for all platforms (`noarch/fisspy-1.3.0-pyhd8ed1ab_0.conda`); PyPI ships only
-`fisspy-1.3.0-py3-none-any.whl`, whose `none-any` tags assert no ABI or platform dependency; the
+Evidence: the conda-forge recipe builds `noarch: python`, which asserts platform independence, and
+every conda-forge artifact is a single `noarch/` build for all platforms (for the recorded release,
+`noarch/fisspy-1.4.5-pyhd8ed1ab_0.conda`); every wheel on PyPI is `py3-none-any` (for 1.4.5,
+`fisspy-1.4.5-py3-none-any.whl`), tags that assert no ABI or platform dependency; the
 package is 100% Python with no compiled extension; and no module branches on `sys.platform`,
 `os.name` or a path separator. All paths are built with `os.path.join`. Development happens on macOS
 (the tracked `.DS_Store` files) while the FISS site's installation guide targets miniforge/mamba
 generically.
 
-`Linux`, `Mac` and `Windows` were considered and rejected as individually-listed values: they would
-be a less precise restatement of what `Operating System Independent` already asserts, and no CI
-matrix exists to substantiate a per-platform claim (the repository has no `.github/workflows`, no
-`.travis.yml` and no other CI configuration at any revision). The only platform-sensitive element is
+`Linux`, `Mac` and `Windows` were considered and rejected as individually-listed values: they would be
+a less precise restatement of what `Operating System Independent` already asserts, and no CI matrix
+exists to substantiate a per-platform claim (there is no CI configuration at the evidence revisions;
+an `appveyor.yml` AppVeyor config was tracked from 2017-02 to 2019-05 and removed in `43bbebd`, and
+there has never been a `.github/workflows` or `.travis.yml`). The only platform-sensitive element is
 the external `ffmpeg` binary needed for movie export, which is a declared dependency in both
 `setup.py` and the conda recipe and is available on all three platforms.
 
@@ -954,26 +1065,32 @@ An exact `RepoStatus` vocabulary value; the HSSI record previously carried no de
 Per repostatus.org, Active means "reached a stable, usable state and is being actively developed",
 which fits:
 
-- Stable and usable: 34 PyPI releases from 0.7.2 (2017) to 1.3.0, 20 distinct conda-forge versions
-  (21 build artifacts; one version was rebuilt), a documented public API, and a complete user manual
-  at `http://fiss.snu.ac.kr/fisspy/`.
-- Actively developed: 398 commits; releases 1.0.0 through 1.1.5 through 2024 (fourteen in 2024
-  alone), then 1.2.0, 1.2.1 (2025-04-03) and 1.3.0 (2025-07-18). Last push to `master`
-  2025-07-18, about a year before this extraction. Not archived; zero open issues.
+- Stable and usable: 39 PyPI releases from 0.7.2 (2017) to 1.4.5 (2026-09-21), 23 distinct
+  conda-forge versions (24 build artifacts; one version was rebuilt), a documented public API, and a
+  complete user manual at `http://fiss.snu.ac.kr/fisspy/`.
+- Actively developed: 409 commits at `38910db`. Releases 1.0.0 through 1.1.5 came through 2024
+  (sixteen in 2024 alone), then 1.2.0, 1.2.1 (2025-04-03) and 1.3.0 (2025-07-18), then 1.4.0, 1.4.1
+  and 1.4.2 (all 2026-08-28), 1.4.3 (2026-09-16) and 1.4.5 (2026-09-21). The last commit on `master`
+  is `38910db`, 2026-09-16 (read 2026-10-28), well under six months before the reading, which is what
+  makes the value `Active` under the recency rule. Not archived; the maintainer answered the one open
+  issue, #55 (an installation report against 1.4.5), the day it was filed and the day after
+  (2026-09-22 and 2026-09-23).
 - PyHC's curated assessment rates `software_maturity` **Good** and `python3` **Good**.
 
 Counter-evidence weighed and found insufficient to downgrade: PyHC rates `community` and `testing`
 as "Requires improvement" and `documentation` as "Partially met"; there are no automated tests and no
 CI; a colour-map typo (`cm.ㄴfe`) shipped in released version 1.2.1 and survived until 1.3.0; and
-several commits in the current release range are titled `backup`. These describe development
-*practice*, not project *status* — none of the vocabulary's alternatives fits better. `Inactive`
-would require development to have stopped (a 2025 release contradicts it); `WIP` would require no
-stable public release (34 releases contradict it); `Unsupported`, `Abandoned`, `Suspended` and
-`Moved` are all contradicted by the 2025 release cadence and the live documentation site.
+several commit subjects in the 1.2.x–1.4.3 history are `backup`, `abc`, `fix` or `bf`. These describe
+development *practice*, not project *status* — none of the vocabulary's alternatives fits better.
+`Inactive` would require development to have stopped (the 2026 releases contradict it); `WIP` would
+require no stable public release (39 releases contradict it); `Unsupported`, `Abandoned`, `Suspended`
+and `Moved` are all contradicted by the 2026 release cadence and the live documentation site.
 
-Re-examine this field if the next refresh finds no release after 1.3.0 and no commits for a
-multi-year span — the 2020-07 to 2024-04 gap in the release history shows this project's cadence is
-bursty, so a single quiet year is not evidence of inactivity.
+Dated anchors for the next refresh: last commit on `master` 2026-09-16 (`38910db`); last PyPI release
+1.4.5, 2026-09-21. The condition this field was earlier left to watch for — no release after 1.3.0
+and a multi-year silence — did not arise. The cadence is bursty (the release history has a gap from
+2020-07 to 2024-04), so a refresh should re-apply the recency rule to the last commit date rather than
+read a quiet year as inactivity.
 
 ### 24. Documentation (RECOMMENDED)
 
@@ -1010,7 +1127,7 @@ fill incorrectly:
 
 - The repository contains no funding statement. `docs/acknowledge.html` is the project's own
   acknowledgement page and prescribes nothing: "There is no rule how to acknowledge and it's fully up
-  to you."
+  to you".
 - There is no `AUTHORS`, `CONTRIBUTING`, `CITATION.cff` or `codemeta.json` in which funding might be
   declared, and no DOI record to inherit `fundingReferences` from.
 - **The National Research Foundation of Korea does not appear anywhere, and was specifically looked
@@ -1048,8 +1165,9 @@ repository at any revision.
 
 ### 27. Related Publications (OPTIONAL)
 
-Three entries, each tied to a specific implemented capability rather than merely
-sharing a subject with the software.
+Six entries. Five are tied to a specific implemented capability rather than merely sharing a subject
+with the software: three papers on FISS and its methods, and two method papers the code cites in its
+own reference blocks. The sixth is a third-party paper that states it used the software.
 
 1. **`https://doi.org/10.1007/s11207-012-0147-x`** — Chae, J., Park, H.-M., Ahn, K., Yang, H.,
    Park, Y.-D., Nah, J., Jang, B. H., Cho, K.-S., Cao, W., & Goode, P. R. (2013). *Fast Imaging Solar
@@ -1079,35 +1197,81 @@ sharing a subject with the software.
    Kubo, M. (2025). *Calibration of the Fast Imaging Solar Spectrograph: Fringe Reduction Using the
    Wavelet Transform.* Journal of the Korean Astronomical Society, 58, 63–70. The DOI is registered and resolves, and is
    self-asserted on the first author's ORCID record — the same
-   `0000-0003-3540-4112` recorded as fisspy's author in Field 6. This is the strongest of the three
-   because it is by the software's author *and* reports that the pipeline it describes is integrated
+   `0000-0003-3540-4112` recorded as fisspy's author in Field 6. This is the strongest of the first
+   three because it is by the software's author *and* reports that the pipeline it describes is integrated
    into FISSpy; the implementation is `cal_fringeGauss` and `cal_fringeSimple`
    (`fisspy/preprocess/proc_base.py:149,197`) together with the wavelet-domain fringe subtraction
    inside `calFlat`.
 
+4. **`https://doi.org/10.1175/1520-0477(1998)079%3C0061:APGTWA%3E2.0.CO;2`** — Torrence, C., & Compo,
+   G. P. (1998). *A Practical Guide to Wavelet Analysis.* Bulletin of the American Meteorological
+   Society, 79, 61–78 (confirmed against Crossref). This is the algorithm `fisspy/analysis/wavelet.py`
+   implements, and the module cites it in its own reference blocks: at `38910db` six "References"
+   sections name it, in the docstrings of the `Wavelet` class (line 74), `iwavelet` (202),
+   `_motherFunc` (264), `_motherParam` (336), `waveSignif` (458) and `WaveCoherency.__init__` (736),
+   each beside `http://paos.colorado.edu/research/wavelets/`. The module's provenance statements at
+   the same revision credit the IDL originals by C. Torrence — `WAVELET.PRO` (lines 69, 197, 259,
+   331), `WAVE_SIGNIF.PRO` (453) and `WAVE_COHERENCY.PRO` (732). (E. Predybaylo's
+   `waveletFunctions.py` is the widely circulated Python port of those same IDL routines and is
+   externally known background to this algorithm's history, but fisspy never mentions it: the strings
+   `Predybaylo` and `waveletFunctions` appear nowhere in the source tree, so no such provenance should
+   be attributed to the module.) The bare DOI, `10.1175/1520-0477(1998)079<0061:APGTWA>2.0.CO;2`,
+   contains `<`, `>` and `;`, which do not survive an unencoded URL field; the entry is therefore the
+   percent-encoded form, which resolves to the article and is 67 characters long.
+
+   **An earlier rejection, superseded.** The first extraction of this dossier considered this paper and
+   deliberately left it out, for two reasons: it is a meteorology methods paper that neither
+   describes, cites nor uses fisspy, and its raw DOI does not survive an unencoded URL field. Neither
+   reason holds. Field 27 includes a publication that the code cites in its own reference block for
+   the method it implements, whatever the paper's subject and whether or not it mentions the software,
+   and the percent-encoded DOI resolves. The question was reopened when the 1.4.x range added `ar1`
+   with its own References block (entry 5). The six Torrence & Compo blocks were already present at
+   `8e77704` (lines 70, 196, 258, 330, 452, 790) and are unchanged by 1.4.x apart from shifted line
+   numbers.
+
+5. **`https://doi.org/10.1175/1520-0442(1996)009%3C3373:MCSDIO%3E2.0.CO;2`** — Allen, M. R., & Smith,
+   L. A. (1996). *Monte Carlo SSA: Detecting irregular oscillations in the Presence of Colored Noise.*
+   Journal of Climate, 9(12), 3373–3404 (confirmed against Crossref; percent-encoded for the same
+   reason as entry 4, 67 characters). The 1.4.x range added `ar1`, first present in 1.4.0; at
+   `38910db` it sits at `fisspy/analysis/wavelet.py:1053`, and every line number in this entry is at
+   that revision. Its docstring calls it the "Allen and Smith autoregressive lag-1 autocorrelation
+   coefficient". The function cites this paper in its References block (line 1080), and it follows the
+   paper in estimating the squared mean of a finite AR(1) segment (line 1108, "According to Allen &
+   Smith (1996), footnote 4"). `ar1` supplies the red-noise model behind the new wavelet-coherence
+   significance tests. `WaveCoherency.signif_crossPower()` calls it directly (lines 864–865), and
+   `signif_coh()` calls it through `cal_signif_coh()` (lines 834 and 922–923), which then draws Monte
+   Carlo red-noise series with `rednoise` (line 931). The same docstring's second reference, a
+   madsci.org web answer, is not a publication and is not listed.
+
+6. **`https://doi.org/10.48550/arXiv.2609.18025`** — Zhang, Z., Li, Q., Yurchyshyn, V. B., Yi, K.,
+   Wang, H., Cao, W., & Shen, B. (2026). *Physics-Informed Neural Networks for Fast Multilayer Spectral
+   Inversion of Hα 6562.8 Å and Ca II 8542.1 Å Spectra.* arXiv:2609.18025, a preprint (v1 of
+   2026-09-16). The DOI is arXiv's DataCite DOI, of resource type Preprint, and resolves to the arXiv
+   abstract page. This is a third-party use of the software: its Section 3.2, "Data Reduction and
+   Preprocessing", states that "The raw FISS data are reduced with the standard FISS reduction pipeline
+   implemented in the FISSPy package", so the calibrated spectral cubes every one of its results rests
+   on were produced with fisspy. A methods statement naming the software for a specific result
+   qualifies a third-party paper while the software's citing literature is as small as fisspy's. Its
+   subject, accelerating the multilayer spectral inversion of entry 2, is also what `fisspy/inversion/`
+   implements, although the paper does not say which inversion implementation it ran. Its
+   acknowledgments credit BBSO/GST operations, the authors' own NSF and NASA grants and NJIT's Wulver
+   computing cluster, none of them support for fisspy, so Fields 25 and 26 are unaffected.
+
+**Literature search, 2026-10-28.** An ADS/SciX full-text search for `fisspy` (`full:"fisspy"`, which
+is case-insensitive; adding `ack:"fisspy"` finds nothing more) returns three records: entries 3 and 6
+above, and Lee et al. 2022, weighed below. Controls: a nonsense token returned 0 records, and
+`full:"sunkit-image"`, a comparable package name, returned records. Neither DataCite nor Zenodo holds
+a fisspy record (both return records for `sunpy`), so there are no `IsCitedBy` relations to follow.
+
 **Considered and deliberately not listed.**
 
-- **Torrence, C., & Compo, G. P. (1998). *A Practical Guide to Wavelet Analysis.* Bulletin of the
-  American Meteorological Society, 79, 61–78.** DOI `10.1175/1520-0477(1998)079<0061:APGTWA>2.0.CO;2`
-  (confirmed against Crossref). This is the algorithm `fisspy/analysis/wavelet.py` implements, cited six
-  times in its docstrings (lines 70, 196, 258, 330, 452, 790) along with
-  `http://paos.colorado.edu/research/wavelets/`. The module's own provenance statements credit the
-  IDL originals by C. Torrence — `WAVELET.PRO` (lines 65, 191, 253, 325), `WAVE_SIGNIF.PRO` (line
-  447) and `WAVE_COHERENCY.PRO` (line 786) — and nothing else. (E. Predybaylo's `waveletFunctions.py`
-  is the widely-circulated Python port of those same IDL routines and is externally-known background
-  to this algorithm's history, but fisspy never mentions it: the strings `Predybaylo` and
-  `waveletFunctions` appear nowhere in the source tree, so no such provenance should be attributed to
-  the module.) The paper is recorded here rather than listed for two reasons: it is a meteorology
-  methods paper that neither describes, cites nor uses this software, and its DOI contains raw `<`,
-  `>` and `;` characters, which do not survive an unencoded
-  URL field — the percent-encoded form
-  `https://doi.org/10.1175/1520-0477(1998)079%3C0061:APGTWA%3E2.0.CO;2` resolves and would be the
-  form that would be required if it were ever added. The DOI is preserved above so that judgement
-  never has to be re-researched.
 - **A DAVE optical-flow reference.** `fisspy/analysis/ofe.py:20` credits only an IDL implementation —
   "This is the python function of dave_multi.pro IDL code written by J. Chae (2009)" — not a
   publication. The Differential Affine Velocity Estimator originates in the literature, but the
   package cites no paper for it, so no DOI is asserted here rather than guessing at one.
+- **A Grinsted reference.** `ar1` credits "A. Grinsteds' substitutions" in a code comment
+  (`fisspy/analysis/wavelet.py:1096` at `38910db`) but cites no paper for them, so, as with DAVE, no
+  DOI is asserted.
 - **`https://ui.adsabs.harvard.edu/abs/2023ApJ...958..131K`**, the second example publication link in
   `fisspy/image/raster_set.py:1049` (Kwak et al. 2023, ApJ 958, 131, *Spectroscopic Detection of
   Alfvénic Waves in the Chromospheric Fibrils of a Solar-quiet Region*, per the FISS publication
@@ -1117,6 +1281,15 @@ sharing a subject with the software.
 - **The 60-entry FISS publication list** at `http://fiss.snu.ac.kr/publication/`. These are science
   papers using FISS observations. Listing them would flood the field with work related to the
   instrument rather than to the software, and none of them describes, cites or is cited by fisspy.
+- **Lee, K.-S., Chae, J., Park, E., Moon, Y.-J., Kwak, H., & Cho, K. (2022). *Deep Learning-based Fast
+  Spectral Inversion of Hα and Ca II 8542 Line Spectra.* The Astrophysical Journal, 940, 147,
+  `https://doi.org/10.3847/1538-4357/ac9c60`.** It mentions fisspy twice: as an entry, with the
+  documentation URL, in its AAS "Software" list, and in a closing statement that its trained model and
+  code would be added to the FISSPy package. That addition has not happened: fisspy contains no
+  machine-learning code at `38910db` (`sklearn`, `tensorflow`, `torch` and `keras` match no word in
+  the package source, against 13 files importing `scipy`). A tools list and a statement of planned
+  work are not a credited use of the software for a result, so the paper is not listed; it is recorded
+  so a later search does not rediscover it as new.
 
 ### 28. Related Datasets (OPTIONAL)
 
@@ -1136,8 +1309,8 @@ URL is the correct form here.
 
 Considered alternatives:
 
-- **Chae et al. 2013 (`https://doi.org/10.1007/s11207-012-0147-x`)** as "the publication that
-  described the dataset", which is Field 28's stated minimum. Rejected as the value here because it
+- **Chae et al. 2013 (`https://doi.org/10.1007/s11207-012-0147-x`)** as the publication
+  describing the dataset. Rejected as the value here because it
   is already recorded in Field 27 and points at the instrument paper rather than at the data; a
   direct pointer to the archive carries more information for a user. The DOI is recorded here only so
   this alternative does not have to be re-investigated.
@@ -1165,7 +1338,7 @@ and the raster viewers, down to the same PCA `_c.fts`/`_p.fts` file convention. 
 lineage: several fisspy routines are explicit ports of J. Chae's IDL code
 (`fisspy/align/base.py:38-39` from `ALIGNOFFSET.PRO`, `fisspy/analysis/ofe.py:20` from
 `dave_multi.pro`). FISS-IDL was last pushed 2019-07-05, so fisspy is effectively its successor.
-This is exactly Field 29's "software that performs similar tasks" plus a predecessor relationship.
+This is exactly Field 29's "Software that performs similar tasks" plus a predecessor relationship.
 
 **Considered and rejected.**
 
@@ -1198,6 +1371,11 @@ This is exactly Field 29's "software that performs similar tasks" plus a predece
 - **IDL Astronomy User's Library (`https://idlastro.gsfc.nasa.gov/`) and SolarSoft
   (`http://www.lmsal.com/solarsoft/`)** — linked from the FISS site's IDL page as prerequisites *of
   FISS-IDL*. They are not fisspy dependencies and belong, if anywhere, on FISS-IDL's own record.
+
+The 1.4.x additions (Field 4) add no dependency. `install_requires` is unchanged from `8e77704`
+through the 1.4.5 sdist, and apart from the standard library and fisspy itself the new code imports
+only `numpy`, `scipy`, `matplotlib`, `astropy`, `interpolation`, `statsmodels` and `joblib`, each
+weighed in this field or, for astropy, in Field 30.
 
 ### 30. Interoperable Software (OPTIONAL)
 
@@ -1257,6 +1435,9 @@ becomes a correct entry and this note should be revisited.
 - **"It is a PyHC community package, so it interoperates with PyHC packages"** — fisspy *is* in the
   PyHC community registry (see Field 16 and Field 23), but ecosystem membership is never sufficient
   on its own and was not used as evidence for any entry.
+
+The 1.4.x additions (Field 4) bring no new exchange with other software: they add no dependency
+(Field 29), and `sunpy` is still imported only for `url_exists`.
 
 ### 31. Related Instruments (OPTIONAL)
 
@@ -1399,7 +1580,8 @@ the field ever be populated from the two assets described above, note that only 
 were read in full: it appears in `_data/projects.yml` (not in `projects_core.yml`, not in
 `projects_unevaluated.yml`) with `description: "Fast Imaging Solar Spectrograph (FISS) on the New
 Solar Telescope."`, `code: "https://github.com/SNU-sunday/fisspy"`, `contact: "Juhyeong Kang"`,
-`keywords: ["solar","specific"]`, and no `docs`, `url` or `logo` fields. Its curated quality ratings
+`keywords: ["solar","specific"]`, an `hssi:` link to this entry, and no `docs`, `url` or `logo` fields
+(read 2026-10-28). Its curated quality ratings
 are community "Requires improvement", documentation "Partially met", testing "Requires improvement",
 software_maturity "Good", python3 "Good", license "Good". Two points to carry forward: the registry
 description still says "New Solar Telescope", the telescope's pre-2017 name (it is now the Goode Solar
@@ -1415,10 +1597,10 @@ repository, and its `documentation` value pointed at the GitHub `docs/` source d
 the rendered manual (see Field 24). Its `download_url`,
 `https://github.com/SNU-sunday/fisspy/releases`, is an empty page — the repository has no releases.
 
-**Distribution channels, for reference.** PyPI `https://pypi.org/project/fisspy/` (34 releases,
-2017-02-24 to 2025-07-18) and conda-forge `https://anaconda.org/conda-forge/fisspy` (20 distinct
-versions in 21 build artifacts — `0.9.70` was rebuilt, `py_0` then `py_1` — from 2019-07-01 to
-2025-07-18, feedstock `conda-forge/fisspy-feedstock`, recipe maintainer `jhkang0301`).
+**Distribution channels, for reference.** PyPI `https://pypi.org/project/fisspy/` (39 releases,
+2017-02-24 to 2026-09-21) and conda-forge `https://anaconda.org/conda-forge/fisspy` (23 distinct
+versions in 24 build artifacts — `0.9.70` was rebuilt, `py_0` then `py_1` — from 2019-07-01 to
+2026-09-21, read 2026-10-28; feedstock `conda-forge/fisspy-feedstock`, recipe maintainer `jhkang0301`).
 The project's README recommends conda-forge via mamba as the primary installation route and calls pip
 "not the recommended method". Neither channel is recorded in a metadata field — HSSI has no
 distribution-channel field — but both were the authoritative sources for Fields 10, 12, 20 and 21.
