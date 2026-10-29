@@ -13,8 +13,8 @@
 **How to fill it:** Enter the URLs — ideally DOIs — for all notable publications the software is cited in, one URL per entry (the form's "+ add" button adds a field per URL). Only a URL is accepted per entry; free-text citations are rejected. For a publication with no DOI, use any permanent link (e.g., its ADS abstract page, `https://ui.adsabs.harvard.edu/abs/<bibcode>/abstract`) and record the full citation in the dossier prose instead.
 
 In practice: the developers' own publications about the software, the few papers the project presents
-as the basis of the software, and third-party papers that substantively use it — never the Field 14
-paper, and never a paper that merely cites it.
+as the basis of the software, and papers that substantively use it, whoever wrote them — never the
+Field 14 paper, and never a paper that merely cites it.
 
 ## Why it exists
 
@@ -83,15 +83,17 @@ the abstract as weighed. The type makes an entry eligible; rules 2–7 decide wh
    interpolation); a paper cited only by an example or tutorial; a paper the project lists only as
    further or useful reading ("Other references you might find useful"); and a reference for a file
    format the software merely reads.
-5. **A third-party publication that substantively uses the software → include, while such uses are
-   still news.** Fires only when the paper's own results or software are built with this software
-   **and** it says so deliberately: in its Acknowledgments, its Data Availability or Open Research
-   statement, or a methods statement naming the software for a specific result. Semantic Scholar
-   citation contexts and intents help separate this from a passing mention. Uses are news while the
-   software's citing literature is small: each one shows a searcher how and where the software is
-   used. For widely used software, as with Astropy or SunPy, a list of users tells a searcher nothing:
-   add none, and say so in the dossier. Rules 3 and 4 apply however widely the software is used.
-6. **A third-party publication that merely cites or mentions the software → not added.** Fires for a
+5. **A publication that substantively uses the software → include, whoever wrote it, while such
+   uses are still news.** Fires only when the paper's own results or software are built with this
+   software **and** it says so deliberately: in its Acknowledgments, its Data Availability or Open
+   Research statement, or a methods statement naming the software for a specific result. Authorship
+   plays no part: a paper by the software's developers that uses it but is not about it is judged on
+   this same test. Semantic Scholar citation contexts and intents help separate this from a passing
+   mention. Uses are news while the software's citing literature is small: each one shows a searcher
+   how and where the software is used. For widely used software, as with Astropy or SunPy, a list of
+   users tells a searcher nothing: add none, and say so in the dossier. Rules 3 and 4 apply however
+   widely the software is used.
+6. **A publication that merely cites or mentions the software → not added.** Fires for a
    name in a bibliography, a list of tools or dependencies, background text, or a full-text hit with no
    deliberate credit; also for papers found only through an author's publication list that use the
    same data or methods rather than the software. Record the ones weighed in the dossier so a later
@@ -187,6 +189,9 @@ one.
   Acknowledgments (a real-time ionospheric assimilation model and a GNSS software paper built on it).
   Rule 5 includes those two; a topically close paper that names it only in the full text is excluded
   under rule 6 and recorded as weighed.
+- **Developer-led use.** Kovac et al. (2026), the Citizen CATE 2024 paper in Solar Physics, is led
+  by a solpolpy author but is not about solpolpy; its §8.3 converts the eclipse images "using
+  solpolpy". Rule 5 includes it on the same test as anyone's paper.
 - **Widely used.** SPEDAS's wiki links a bibliography of hundreds of refereed papers that used it.
   Rule 5 adds none of them: a list of users says nothing about the software. Field 27 keeps the
   publications rules 3 and 4 admit.
@@ -220,3 +225,7 @@ one.
   be too long, only a few the project presents as the whole package's foundation or asks every user
   to cite. Generic numerical, statistical or mathematical references, textbooks and papers cited
   only by an example are not listed.
+- Changed 2026-10-29: rules 5 and 6 no longer turn on authorship. Rule 5 includes any eligible paper
+  whose own results or software are built with this software and that credits it deliberately,
+  whoever wrote it, the developers included; rule 6 excludes a mere citation or mention by anyone.
+  Rule 3, for the developers' papers about the software, is unchanged.
