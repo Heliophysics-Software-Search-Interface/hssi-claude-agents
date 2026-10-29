@@ -182,9 +182,10 @@ Read these specific files:
 2. **`concept/import_submission.json`** — HSSI developers' curated example payload. Authoritative template for the new-format payload shape; cross-reference with the serializer source.
 
 3. **`django/website/models/serializers/submission.py`** — The DRF `SubmissionSerializer`. Authoritative field mapping and transformation logic for both `POST /api/submission/` (full create) and `PATCH /api/data/software/<uid>/` (partial update — same serializer with `partial=True`). Pay special attention to:
-   - `to_internal_value_user()` — required field validation (skipped under `partial=True`)
-   - `_get_or_create_person()` — Person dedup and field names (`given_name`/`family_name`)
+   - `to_internal_value_user()` — required field validation (skipped under `partial=True`) and the shape checks, including each award's `name` length and `funder` object
+   - `_get_or_create_person()` / `_get_selected_person()` / `_get_blank_given_author()`, with `_name_words()` and `_take_sent_names()` — Person dedup and field names (`given_name`/`family_name`). The two paths differ: `updating` is `self.instance`, which only PATCH sets, and it enables `personId` (a POST rejects the key), the identifier attach, the name changes and the empty-given-name match. `_apply_user_fields()` rejects an author list that names one Person twice
    - `_get_or_create_org()` — Organization dedup
+   - `_get_or_create_award()` — Award dedup and the funder fill (on new rows for both paths, on matched rows only for PATCH)
    - License handling (plain string input, `License.objects.filter(name__iexact=...)`)
    - Version object handling (`number`, `release_date`, `description`, `version_pid`)
    - `update_user()` / `_apply_user_fields()` — the partial-update branch invoked by PATCH
@@ -205,7 +206,7 @@ Read these specific files:
 
 9. **`django/website/views/api/permissions.py`** — `HasUpdateToken` bearer-token permission class used by `SoftwareDetailAPI.patch()`. Uses `secrets.compare_digest`; fails closed when `HSSI_UPDATE_TOKEN` is unset.
 
-10. **`django/website/test_update_api.py`** — Regression tests for `PATCH /api/data/software/<uid>/` and the `/api/list/software/?repo_url=` lookup. Treat as the authoritative behavioral spec for the update path: response shape, error codes, M2M replacement, `null`-clears-scalar, empty-list-clears-M2M, `submitter` rejection, token unset/invalid.
+10. **`django/website/test_update_api.py`** — Regression tests for `PATCH /api/data/software/<uid>/` and the `/api/list/software/?repo_url=` lookup. Treat as the authoritative behavioral spec for the update path: response shape, error codes, M2M replacement, `null`-clears-scalar, empty-list-clears-M2M, `submitter` rejection, token unset/invalid, and the shared-row rules for people and awards (`PersonRowTests`, `AwardRowTests`).
 
 ### Step 3: Compare Against Current Skills
 

@@ -51,7 +51,10 @@ source still matches**, and if anything has moved, adapt the workflow and tell t
   `./django:/django`, and `website_db` (Postgres) on a persistent named volume. The mount means container
   path `/django/website/config/db/` == host `~/hssi/django/website/config/db/`.
 - **Person matching** — `django/website/models/serializers/submission.py` `_get_or_create_person`
-  (matches by `identifier` first, else by exact name; only fills blank names).
+  (matches on `identifier` alone when one is sent, else on the exact name. A POST only fills blank names; a
+  PATCH can also select a row by `personId`, attach an identifier to the entry's identifier-less author of
+  the same full name, and respell a row it resolves by identifier or `personId` — see
+  `hssi-field-definitions/fields/06-authors.md`).
 
 The existing **`update-api-spec`** skill is the precedent/mechanism for re-syncing reference material from
 `hssi-website` source when it has drifted — use it if the API or these internals have changed materially.
@@ -223,13 +226,18 @@ All on the prod host, user-driven. Provide these as a runbook with explicit STOP
   CSVs, and normalize to LF when committing.
 - **Prod ↔ GitHub drift is real and dangerous.** Do Phase 1 first, every time. A wipe-and-replace import of
   stale CSVs deletes real production submissions and vocabulary.
-- **The serializer can't attach an ORCID to a name-matched person.** `_get_or_create_person` matches by
-  `identifier` (ORCID/URL) first, else by exact given+family name, and **only fills blank names**. So replaying
-  an author payload against a prod-seeded DB can **silently drop the ORCIDs your payload intended** when prod
-  already has a name-only person record (its record wins). Catch this by comparing the result **by identifier**
-  against the curated `hssi_metadata.md`, and **restore lost identifiers by editing `person.csv` directly**
-  (the API cannot). Affiliations are added with `.add()` and **accumulate** (can create duplicates). Some
-  curated enrichments may not exist as payload files at all — diff against the curated source to catch losses.
+- **The serializer reuses existing Person rows, so compare authors by identifier.** `_get_or_create_person`
+  matches on `identifier` (ORCID/URL) alone when one is sent, else on the exact given+family name. On a PATCH,
+  an ORCID that no row carries attaches to the entry's own identifier-less author of the same full name, or to
+  the row a `personId` selects; anywhere else (an author new to the entry, a full name that differs, a POST)
+  it creates a new Person beside any same-name row. A matched row keeps its words (only another spelling of
+  the same full name lands, and not one with fewer accents in total), and an author sent with an empty given name
+  keeps its row unchanged apart from filling an empty identifier. So a replayed
+  author payload can still diverge from the curated `hssi_metadata.md`: catch it by comparing the result
+  **by identifier**, and **restore what the API cannot apply by editing `person.csv` directly**
+  (`hssi-field-definitions/fields/06-authors.md` says what that is). Affiliations are added with `.add()` and
+  **accumulate** (can create duplicates). Some curated enrichments may not exist as payload files at all —
+  diff against the curated source to catch losses.
 - **Diff reconciliation.** After re-seed → edit → export, the raw diff carries noise that must be stripped so
   the PR shows only intended changes:
   - Pure **row reordering** in unrelated tables (e.g. `instrument_observatory`) — revert to `main`.

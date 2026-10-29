@@ -87,8 +87,10 @@ Each submission object **must** include these five fields:
   }
 ]
 ```
-- `givenName` and `familyName` are required per author
-- DB hard match is on `identifier` (when present); falls back to `givenName` + `familyName`
+- `givenName` and `familyName` are required and non-empty per author (an empty `givenName` is a `400` on POST)
+- DB hard match is on `identifier` when one is sent, with no name fallback: an identifier no Person carries creates a new Person, even when an identifier-less row of that name exists. Without one, the match is on the exact `givenName` + `familyName`. See Known Backend Quirks.
+- Never send `personId`: it selects a Person row only on a PATCH, and a POST rejects the key with a `400`, even when it is empty or `null`
+- List each person once: two authors that resolve to the same Person (the same `identifier`, or without one the same `givenName` and `familyName`) are a `400`
 
 ### `description` (string)
 ```json
@@ -128,8 +130,9 @@ Each submission object **must** include these five fields:
 **Relevance gate and SPASE resolution:** the single authoritative procedure is `hssi-field-definitions/fields/31-related-instruments.md` (Field 32 defers to it). Entries reach the payload only after passing it; never emit a `name` without a SPASE `identifier`.
 
 ### Award
-- `name` (required) — string
+- `name` (required) — string, ≤128 characters (a longer one is a `400`)
 - `identifier` — string (award number/code — not validated as URL)
+- `funder` — Organization object `{name, identifier}`, optional. A POST sets it only on an award it creates; see Known Backend Quirks.
 
 ### Version
 - `number` (required) — string (semantic version)
@@ -168,7 +171,7 @@ Each submission object **must** include these five fields:
 | 23 | Development Status | `developmentStatus` | String |
 | 24 | Documentation | `documentation` | String (URL) |
 | 25 | Funder | `funder[]` | Array of Organization objects |
-| 26 | Award Title | `award[]` | Array of Award objects `{name, identifier}` |
+| 26 | Award Title | `award[]` | Array of Award objects `{name, identifier, funder}` |
 | 27 | Related Publications | `relatedPublications[]` | Array of strings (URLs) |
 | 28 | Related Datasets | `relatedDatasets[]` | Array of strings (URLs) |
 | 29 | Related Software | `relatedSoftware[]` | Array of strings (URLs) |
@@ -232,17 +235,17 @@ The field → model endpoint table lives in one place: `hssi-field-definitions/s
 2. **Email notifications** — The endpoint sends a confirmation email to the submitter after the DB commit, via `email_existing_edit_link()`. The email send happens **outside** the atomic transaction (after it commits), so an email failure will NOT roll back the submission — but it can still produce an error response even though the DB record was created. Always check the record exists before concluding that a submission failed.
 
 3. **Object deduplication** — The backend matches existing DB records:
-   - Person: by `identifier` (ORCID for a person, or ROR for an organization author) first, then by `givenName`+`familyName`
+   - Person: with an `identifier` (ORCID for a person, or ROR for an organization author), by the identifier only; a miss creates a new Person even when an identifier-less row of that name exists. Without one, by exact, case-sensitive `givenName`+`familyName`. A POST never attaches an identifier to an existing row, never selects one by `personId` and never respells a stored name; a PATCH can (`update-payload`), so a new submission sends an author whose identifier-less row already exists without the ORCID (`hssi-field-definitions/fields/06-authors.md` rule 16)
    - Submitter: by `email` (case-insensitive)
    - Organization: by `identifier` first, then by `name` (case-insensitive)
    - InstrumentObservatory: by `identifier` first, then by `name`+`type`. **The name fallback is a case-sensitive exact match** (`filter(name=..., type=...).first()`, unlike the case-insensitive matching used for most other models), so any drift in spelling, casing, or an embedded abbreviation (`Parker Solar Probe (PSP)` vs the canonical `Parker Solar Probe`) silently creates a **duplicate** row. And because it takes `.first()`, a name that exactly matches **several** identically-named rows (e.g. the four `Solar Ultraviolet Imager` GOES rows) binds to an **arbitrary** one — which is why a collision must be omitted entirely, not sent as a bare name (see the resolution steps under Instrument / Observatory). Always send the SPASE `identifier` to bind to the canonical entry reliably.
-   - Award: by `identifier` first, then by `name` (case-insensitive)
+   - Award: with an `identifier`, by the identifier only; without one, by `name` (case-insensitive). A matched award is reused as it is (its name and funder unchanged), so `funder` applies only to an award the POST creates; filling an existing award's empty funder takes a PATCH
    - RelatedItem (publications/datasets/software): by `identifier` (URL). Reuse preserves the
      existing row's semantic `type`; submitting the same URL under a different relation does not
      retype it.
    - Keyword: case-insensitive name match, created if missing
 
-   If a match is found with fewer fields, the DB record is enriched (empty fields filled in). If a match is found with conflicting fields, the existing DB values win.
+   A Person or Organization matched by identifier has its empty names filled in; every other match is reused unchanged. If a match is found with conflicting fields, the existing DB values win.
 
 4. **SoftwareEditQueue creation** — A 90-day edit queue entry is created for each submission (outside the atomic block, after the serializer commits). The `queueId` is not returned in the response — look it up via `/api/models/SoftwareEditQueue/rows/all/` if you need it for verification.
 

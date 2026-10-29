@@ -59,7 +59,9 @@ misspelling makes the software findable only by someone who repeats the typo.
 - **Filter:** none.
 - **Free-text search:** tier T2 (`keywords__name`), ranked above the controlled-vocabulary fields (T3).
 - **Field search:** `keyword:"…"` matches `keywords__name__icontains`.
-- **JSON-LD:** each keyword is emitted in `keywords` as a `DefinedTerm` carrying its name.
+- **JSON-LD:** each keyword is emitted in `keywords` as a plain string, its stored `name`, after the
+  controlled-vocabulary terms of Fields 4, 17, 18, 19 and 22. A keyword whose name matches one of those
+  terms' names, ignoring case, is left out.
 - **The `/api/view/` JSON and the ORM's `str()` title-case keywords** (`Keyword.__str__` returns
   `name.title()`); the stored `name` is what the detail page shows and what every comparison must use.
 

@@ -31,7 +31,9 @@ publisher link.
 - **Free-text search:** tier T4.1 on publisher name and abbreviation.
 - **Field search:** `publisher:"…"` matches the publisher name.
 - **Filter tab:** none.
-- **JSON-LD:** `publisher` is an `Organization` with name, and identifier when stored.
+- **JSON-LD:** `publisher` is an `Organization` with its name and identifier, emitted only when the
+  stored identifier contains `doi.org`, `ror.org`, `orcid.org` or `zenodo.org`. A publisher with no
+  identifier, or with any other (`https://github.com`), is left out of the JSON-LD.
 
 ## Rubric: include / exclude
 

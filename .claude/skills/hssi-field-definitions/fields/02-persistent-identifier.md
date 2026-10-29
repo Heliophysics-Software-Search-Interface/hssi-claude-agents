@@ -35,7 +35,8 @@ Fields 10, 11, 12 and 15.
   heading. When Field 14 also holds a DOI, both citations show with a notice to cite both; with
   neither Field 2 nor a Field 14 identifier there is no DOI button and no citation section at all.
 - **JSON-LD:** the value is the entry's `@id` (falling back to the latest Version PID, then the code
-  repository URL) and an `identifier` PropertyValue named `DOI: <doi>`.
+  repository URL) and an `identifier` PropertyValue with the URL as its `@id` and `url`; for a doi.org
+  URL its `value` is `doi:<doi>`.
 - **Search:** not in the free-text tiers; `pid:"…"` matches it by substring.
 - **Filter:** none.
 

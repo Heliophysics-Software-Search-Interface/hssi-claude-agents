@@ -39,7 +39,8 @@ id) is a dead end.
 ## Rubric: include / exclude
 
 Decide each candidate award with rules 1–8, top to bottom — **stop at the first rule that fires**. Then
-settle each recorded award's title with rules 9–12 and its identifier and binding with rules 13–15.
+settle each recorded award's title with rules 9–12 and its identifier, binding and funder with rules
+13–16.
 
 **The funding rule: record a funder/award only when a source attributes funding to this software, or to
 the project or center whose product this software is (CITATION/README/Zenodo funding, a paper naming the
@@ -87,15 +88,25 @@ qualifies, even when X wrote the software.**
 14. **Correct a typo in a source's number only when the agency's own record resolves the corrected number
     and the uncorrected one resolves to nothing** (NSF `125908` → `1259508`), and record both in the dossier.
 15. **Existing Award row → bind it and accept its stored title.** A matched row keeps its name; a better
-    title for it is a NON-PATCHABLE rename of a shared row (see the Ask list). **No existing row → send
-    the title, number and funder the rubric chose**; the PREPARE report states that EXECUTE will create
-    the row, and approval of the exact payload covers that creation.
+    title for it is a NON-PATCHABLE rename of a shared row (see the Ask list). Its funder follows rule 16.
+    **No existing row → send the title, number and funder the rubric chose**; the PREPARE report states
+    that EXECUTE will create the row, and approval of the exact payload covers that creation.
+16. **Each award's `funder` → the organization that made the award, sent as Field 25 records it** (its
+    name and ROR), so it binds the same Organization row. A new row takes it when it is created, by a POST
+    or a PATCH. A stored row with no funder takes it only through a PATCH; a POST reuses a matched row as
+    it is. A stored row with a different funder keeps it, because a PATCH never replaces one (it returns 200
+    and leaves the row as it is): that correction is NON-PATCHABLE (see the Ask list). A funder filled on a
+    stored row shows on every entry the row serves, so the PREPARE report names them. For a new
+    submission, the PREPARE report also names each award that will bind a stored row without taking the
+    sent funder, so the approval covers that limitation.
 
 ## Ask the user only when
 
-- **A shared Award row needs a rename or a funder link.** Award rows are shared across software entries,
-  so a rename changes every entry on the row; it is NON-PATCHABLE and goes through the database workflow.
-  Name every entry the row serves (query the row's `softwares` reverse relation, not the name string).
+- **A shared Award row needs a rename, or a funder other than the one it stores.** Award rows are shared
+  across software entries, so either change shows on every entry on the row, and a PATCH makes neither:
+  it never overwrites an award's name or replaces its funder. It is NON-PATCHABLE and goes through the
+  database workflow. Name every entry the row serves (its id in the `award` of each listed entry's
+  `GET /api/data/software/<uid>/`, or the row's `softwares` reverse relation; never the name string).
 - **A title is still over 128 characters** after rule 11.
 
 ## Where to find it, and traps
@@ -127,18 +138,31 @@ qualifies, even when X wrote the software.**
 
 ## Payload and roundtrip notes
 
-- **Shape:** `award` is an array of Award objects `{name, identifier}`; the API field is `award`, **not**
-  `awardTitle`. `identifier` is a string, not validated as a URL. The list replaces the entry's awards
-  wholesale.
+- **Shape:** `award` is an array of Award objects `{name, identifier, funder}`; the API field is `award`,
+  **not** `awardTitle`. `identifier` is a string, not validated as a URL. `funder` is optional: an
+  Organization object `{name, identifier}`, or `null`. An award item that is not an object, or a non-null
+  `funder` that is not one, is a 400.
+  The list replaces the entry's awards wholesale.
 - **Resolution:** with an identifier, match on the identifier only; on a hit the row is reused and the
   payload `name` is discarded; on a miss a new row is created with that name and identifier. Without an
   identifier, `name__iexact`, else create.
+- **Funder:** resolved like any Organization (Field 25's resolution). A new row gets it on a POST or a
+  PATCH. On a PATCH, a matched row with no funder gets it; a stored funder is never replaced, and a
+  different one is ignored with a 200. A POST reuses a matched row as it is, so filling an existing row's
+  empty funder takes a PATCH. Only a `null` or `{}` `funder` is ignored; any other value that is not an
+  object, such as `""` or `[]`, is a 400 that fails the whole request. The funder renders beside the award
+  on every entry the row serves and feeds their JSON-LD.
 - **`name` is required** and non-empty; an award object with no name 400s.
-- **Caps:** `Award.name` and `Award.identifier` are 128 characters; the serializer does not check length,
-  so an over-length value fails at the database write with a 500 and rolls back the whole PATCH.
-- **Award.funder is DB-only.** It renders beside the award on the detail page and feeds JSON-LD, but no API
-  path writes it; a newly created Award row has no funder until a database-side correction sets it.
+- **Caps:** `Award.name` and `Award.identifier` are 128 characters. A longer `name` (after trimming) is a
+  400 (`award.name`) on both POST and PATCH, even when the identifier binds an existing row. The
+  identifier's length is not checked, so a longer one fails at the database write with a 500 and rolls
+  back the whole request.
 - **Renames are NON-PATCHABLE.** A matched Award row's name is never overwritten through the API.
+- **Readback:** `GET /api/view/software/<uid>/` renders each award as its name only. Read an award's
+  identifier and funder from the JSON-LD (`?view=jsonld`, where each `funding` item that comes from an
+  award carries its `identifier` and `funder` when they are set) or from its row
+  (`GET /api/models/Award/rows/<id>/?recursive=true`, with the id from the `award` list of
+  `GET /api/data/software/<uid>/`).
 
 ## Worked examples
 
@@ -164,3 +188,5 @@ qualifies, even when X wrote the software.**
 - No regenerated blocks; hand-written.
 - Migrated from RSFF 637-651 on 2026-09-22.
 - Rubric authored 2026-09-22 from prior guidance and past refresh decisions.
+- Award funder and title cap (rules 15 and 16, the Ask list and the payload notes) re-verified against
+  hssi-website `fe169d72` (#126) on 2026-10-28.

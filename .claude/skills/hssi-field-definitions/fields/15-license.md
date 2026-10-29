@@ -77,8 +77,7 @@ points the user at the wrong text. A blank on well-licensed software hides a fac
 - **Free-text search:** tier T4.7 (`license` name).
 - **Field search:** `license:"…"` matches `license__name__icontains`.
 - **JSON-LD:** `license` is emitted as an object with `@id`/`url` set to the row URL and `name`, only
-  when the row has a URL; the catalogue-record wrapper also carries the row URL. `Other` and
-  `Restricted` therefore emit no licence.
+  when the row has a URL. `Other` and `Restricted` therefore emit no licence.
 
 ## Rubric: include / exclude
 

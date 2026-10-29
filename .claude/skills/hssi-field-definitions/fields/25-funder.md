@@ -31,7 +31,8 @@ sponsor, an input mission's budget) gives a wrong answer to that question on eve
 - **Field search:** `funder:"…"` matches the funder name.
 - **Filter tab:** none.
 - **JSON-LD:** the `funding` items are built from the entry's Award rows (Field 26), each with its
-  `Award.funder` when set.
+  `Award.funder` when set. Each funder recorded here that is the funder of none of those awards adds a
+  `MonetaryGrant` holding only the funder.
 
 ## Rubric: include / exclude
 
@@ -149,7 +150,7 @@ alternatives, so a later refresh doesn't reintroduce them from Crossref.
   `name`. The API path used by agents does not strip; send the name without the parenthetical.
 - **Organization rows are shared** across authors' affiliations, publishers and funders of every entry.
 - **Award.funder is separate.** The funder shown beside each award on the detail page is `Award.funder`,
-  which no API path can write; this field does not set it (see Field 26).
+  which each `award` item's own `funder` sets (Field 26 rule 16); this field does not set it.
 
 ## Worked examples
 
@@ -178,3 +179,4 @@ alternatives, so a later refresh doesn't reintroduce them from Crossref.
 - No regenerated blocks; hand-written.
 - Migrated from RSFF 624-636 on 2026-09-22.
 - Rubric authored 2026-09-22 from prior guidance and past refresh decisions.
+- The *Award.funder is separate* note re-verified against hssi-website `fe169d72` (#126) on 2026-10-28.
