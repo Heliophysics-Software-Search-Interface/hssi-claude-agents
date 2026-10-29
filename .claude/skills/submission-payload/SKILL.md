@@ -89,6 +89,8 @@ Each submission object **must** include these five fields:
 ```
 - `givenName` and `familyName` are required and non-empty per author (an empty `givenName` is a `400` on POST)
 - DB hard match is on `identifier` when one is sent, with no name fallback: an identifier no Person carries creates a new Person, even when an identifier-less row of that name exists. Without one, the match is on the exact `givenName` + `familyName`. See Known Backend Quirks.
+- Never send `personId`: it selects a Person row only on a PATCH, and a POST rejects the key with a `400`, even when it is empty or `null`
+- List each person once: two authors that resolve to the same Person (the same `identifier`, or without one the same `givenName` and `familyName`) are a `400`
 
 ### `description` (string)
 ```json
@@ -233,7 +235,7 @@ The field → model endpoint table lives in one place: `hssi-field-definitions/s
 2. **Email notifications** — The endpoint sends a confirmation email to the submitter after the DB commit, via `email_existing_edit_link()`. The email send happens **outside** the atomic transaction (after it commits), so an email failure will NOT roll back the submission — but it can still produce an error response even though the DB record was created. Always check the record exists before concluding that a submission failed.
 
 3. **Object deduplication** — The backend matches existing DB records:
-   - Person: with an `identifier` (ORCID for a person, or ROR for an organization author), by the identifier only; a miss creates a new Person even when an identifier-less row of that name exists. Without one, by exact, case-sensitive `givenName`+`familyName`. A POST never attaches an identifier to an existing row and never re-splits a stored name; a PATCH can do both (`update-payload`), so a new submission sends an author whose identifier-less row already exists without the ORCID (`hssi-field-definitions/fields/06-authors.md` rule 16)
+   - Person: with an `identifier` (ORCID for a person, or ROR for an organization author), by the identifier only; a miss creates a new Person even when an identifier-less row of that name exists. Without one, by exact, case-sensitive `givenName`+`familyName`. A POST never attaches an identifier to an existing row, never selects one by `personId` and never respells a stored name; a PATCH can (`update-payload`), so a new submission sends an author whose identifier-less row already exists without the ORCID (`hssi-field-definitions/fields/06-authors.md` rule 16)
    - Submitter: by `email` (case-insensitive)
    - Organization: by `identifier` first, then by `name` (case-insensitive)
    - InstrumentObservatory: by `identifier` first, then by `name`+`type`. **The name fallback is a case-sensitive exact match** (`filter(name=..., type=...).first()`, unlike the case-insensitive matching used for most other models), so any drift in spelling, casing, or an embedded abbreviation (`Parker Solar Probe (PSP)` vs the canonical `Parker Solar Probe`) silently creates a **duplicate** row. And because it takes `.first()`, a name that exactly matches **several** identically-named rows (e.g. the four `Solar Ultraviolet Imager` GOES rows) binds to an **arbitrary** one — which is why a collision must be omitted entirely, not sent as a bare name (see the resolution steps under Instrument / Observatory). Always send the SPASE `identifier` to bind to the canonical entry reliably.

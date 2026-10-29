@@ -183,7 +183,7 @@ Read these specific files:
 
 3. **`django/website/models/serializers/submission.py`** — The DRF `SubmissionSerializer`. Authoritative field mapping and transformation logic for both `POST /api/submission/` (full create) and `PATCH /api/data/software/<uid>/` (partial update — same serializer with `partial=True`). Pay special attention to:
    - `to_internal_value_user()` — required field validation (skipped under `partial=True`) and the shape checks, including each award's `name` length and `funder` object
-   - `_get_or_create_person()` / `_get_blank_given_author()` — Person dedup and field names (`given_name`/`family_name`). The two paths differ: `updating` is `self.instance`, which only PATCH sets, and it enables the identifier attach, the re-split and the empty-given-name match
+   - `_get_or_create_person()` / `_get_selected_person()` / `_get_blank_given_author()`, with `_name_words()` and `_take_sent_names()` — Person dedup and field names (`given_name`/`family_name`). The two paths differ: `updating` is `self.instance`, which only PATCH sets, and it enables `personId` (a POST rejects the key), the identifier attach, the name changes and the empty-given-name match. `_apply_user_fields()` rejects an author list that names one Person twice
    - `_get_or_create_org()` — Organization dedup
    - `_get_or_create_award()` — Award dedup and the funder fill (on new rows for both paths, on matched rows only for PATCH)
    - License handling (plain string input, `License.objects.filter(name__iexact=...)`)
