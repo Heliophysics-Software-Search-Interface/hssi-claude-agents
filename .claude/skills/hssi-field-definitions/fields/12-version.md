@@ -299,5 +299,3 @@ documented convention to match the rest of the payload.
 - No regenerated blocks; hand-written.
 - Migrated from RSFF 290-304 on 2026-09-22.
 - Rubric authored 2026-09-22 from prior guidance and past refresh decisions.
-- Changed 2026-10-29: a PyPI upload that is neither yanked nor a pre-release is a release whichever
-  branch it was built from (rules 2, 3 and 7).

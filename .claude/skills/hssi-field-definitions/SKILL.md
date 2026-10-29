@@ -38,6 +38,9 @@ reads in full only the fields in play. Each field file has the same sections, in
 | Worked examples | short cases that illustrate the rules |
 | Provenance | what is regenerated and when it was last verified |
 
+Keep instruction-edit history in Git. Reserve `Provenance` for source origins, regenerated content
+and verification dates; put lasting rationale in the relevant rule or worked example.
+
 **Deciding versus asking.** Decide and document autonomously whenever the field file covers the case.
 Ask the user only (a) for a shape listed in that file's *Ask the user only when* section, or (b) when the
 case is genuinely not covered by the written rules and is therefore ambiguous. "I am not confident" is
