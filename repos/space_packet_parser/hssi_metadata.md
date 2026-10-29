@@ -4,15 +4,15 @@
 **Repository:** https://github.com/lasp/space_packet_parser
 **Source Revision:** e76f14151c15ab73d810c4b35970a6269d643d3c
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-07-28
+**Validation Date:** 2026-10-29
 **Validation Status:** PASS
 
 **How to read this file.** The values here were reconciled against the entry's previously recorded
 metadata and then gap-filled and corrected from the source repository at the revision above, the
 Zenodo/DataCite records for the concept DOI, PyPI, the PyHC community registry, ORCID, and SoMEF.
-No earlier canonical dossier existed for this software. Previously recorded values are preserved
-unless an evidence-cited justification for superseding one is given in the field, and multi-valued
-fields are set-unions of the earlier values and newly evidenced ones.
+Passages brought forward to a later release name the revision they were read at. Previously recorded
+values are preserved unless an evidence-cited justification for superseding one is given in the field,
+and multi-valued fields are set-unions of the earlier values and newly evidenced ones.
 
 ---
 
@@ -27,7 +27,17 @@ fields are set-unions of the earlier values and newly evidenced ones.
 - **Persistent Identifier:** https://doi.org/10.5281/zenodo.7735001
 - **Source:** Preserved from the existing HSSI record and confirmed as the Zenodo *concept* DOI
   (`conceptdoi: 10.5281/zenodo.7735001`, `conceptrecid: 7735001`) by the Zenodo and DataCite APIs, and
-  by the README DOI badge.
+  by the README DOI badge. Since commit `ae1338f` (read at `b14d4e23c70dd678170074c486eb5b9dea0b8cfc`),
+  `CITATION.cff` also declares it under `identifiers` (`type: doi`, `value: 10.5281/zenodo.7735001`,
+  "Concept DOI resolving to the latest release of space_packet_parser").
+- **Note (a second concept DOI, considered and not selected):** `10.5281/zenodo.7734999` is also a
+  software concept DOI for this code. Its only version, `10.5281/zenodo.7735000` (4.0.1, issued
+  2023-03-10, creators Gavin Medley and Michael Chambliss), is `IsSupplementTo`
+  `https://github.com/medley56/space_packet_parser/tree/4.0.1`, the repository's location before it moved
+  to `lasp` (`https://github.com/medley56/space_packet_parser` now redirects to
+  `https://github.com/lasp/space_packet_parser`). Every later deposit, from 4.0.2 (2023-03-14) on, is a
+  version of `10.5281/zenodo.7735001`. With two concept DOIs passing Field 2 rule 5, rule 7 selects the one
+  the project's own files cite: the README badge and `CITATION.cff` both cite `10.5281/zenodo.7735001`.
 
 ### 3. Code Repository (MANDATORY)
 - **Code Repository:** https://github.com/lasp/space_packet_parser
@@ -35,7 +45,7 @@ fields are set-unions of the earlier values and newly evidenced ones.
   (`repository-code`), `pyproject.toml` (`[project.urls] repository`), `meta.yaml` (`home`/`dev_url`),
   the Zenodo record's `code:codeRepository` custom field, and SoMEF.
 
-### 4. Software Functionality (MANDATORY)
+### 4. Software Functionality (RECOMMENDED)
 - **Values:**
   - Data Processing and Analysis
   - Data Processing and Analysis:Calibration
@@ -117,7 +127,7 @@ fields are set-unions of the earlier values and newly evidenced ones.
   A future reviewer should not "fix" this apparent asymmetry: the two fields are answering different
   questions.
 
-### 5. Related Region (MANDATORY)
+### 5. Related Region (RECOMMENDED)
 - **Values:**
   - Earth Atmosphere
   - Earth Magnetosphere
@@ -183,7 +193,7 @@ fields are set-unions of the earlier values and newly evidenced ones.
   pairing matches the existing stored Greg Lucas HSSI record. This is explicitly *not* a claim that his ORCID
   record lists University of Colorado Boulder.
 - **Note:** Greg Lucas's Person record is shared with other HSSI entries; his five stored affiliations are
-  preserved untouched and must not be pruned by this update. Repository contributors who are not credited as
+  preserved untouched and must not be pruned. Repository contributors who are not credited as
   authors in `CITATION.cff` (e.g. bot and Copilot commits in the git history) are intentionally excluded.
 - **Completed correction (2026-07-28):** Gavin Medley had two HSSI Person records — the ORCID-bearing one used
   here, and a second, identifier-less record used by SpiceyPy. They were consolidated into the ORCID-bearing
@@ -219,10 +229,10 @@ fields are set-unions of the earlier values and newly evidenced ones.
   XTCE schema and for internal structural consistency, and provides a command line interface (spp) for
   describing XTCE documents, inspecting packet files, and validating definitions.
 
-- **Note:** The earlier description is preserved verbatim as the opening text; two
-  sentences are appended to cover capabilities added in the 6.x series that the stored text predates. No
-  stored wording was reworded or removed. If the maintainers prefer the shorter author-written abstract
-  exactly as stored, the appended text can be dropped without affecting any other field.
+- **Note:** The description HSSI held before the 2026-07-28 refresh is preserved verbatim as the opening
+  text, and none of its wording was reworded or removed. Two sentences were appended to cover capabilities
+  added in the 6.x series that the earlier text predates. The two appended sentences are separable from the
+  author-written opening text, and the append was accepted.
 - **Source:** The preserved opening text is the author-written abstract in `CITATION.cff` (also the Zenodo and
   DataCite abstract). The appended sentences are supported by `space_packet_parser/generators/`
   (`ccsds_generator`, `fixed_length_generator`, `udp_generator`, plus the documented custom-generator pattern
@@ -230,14 +240,15 @@ fields are set-unions of the earlier values and newly evidenced ones.
   `space_packet_parser/xarr.py::create_dataset()`, `XtcePacketDefinition.write_xml()` / `to_xml_tree()`,
   `space_packet_parser/xtce/validation.py::validate_xtce()`, and the `spp` entry point in
   `space_packet_parser/cli.py` (`describe-xtce`, `describe-packets`, `parse`, `validate`) — all introduced or
-  expanded in the 6.0.0–6.1.2 changelog entries in `docs/source/changelog.md`.
+  expanded in the 6.0.0–6.1.2 changelog entries in `docs/source/changelog.md` (now `CHANGELOG.md`).
 
 ### 9. Concise Description (OPTIONAL)
 - **Concise Description:** A generalized, configurable Python library for decoding CCSDS telemetry packets, including complex and polymorphic structures, from files, buffers, or sockets using XTCE packet structure definitions.
 - **Note:** 199 characters, within the 200-character limit.
-- **Replacement justification:** The stored value is not a description at all — it is a mechanical truncation
-  of the long description that ends mid-word ("It supports compl"), so it fails the field's purpose of
-  providing a readable standalone preview and renders as a broken sentence in the HSSI UI. The replacement is
+- **Replacement justification:** The value HSSI held before the 2026-07-28 refresh was not a description at
+  all — it was a mechanical truncation of the long description that ended mid-word ("It supports compl"), so
+  it failed the field's purpose of providing a readable standalone preview and rendered as a broken sentence
+  in the HSSI UI. The replacement is
   a complete, self-contained sentence drawn from the same author-written abstract wording ("generalized,
   configurable", "complex and polymorphic", the file/buffer/socket input sources, "XTCE standard for packet
   structure definitions") plus the repository's own one-line summary in `pyproject.toml`/`CITATION.cff`
@@ -247,11 +258,12 @@ fields are set-unions of the earlier values and newly evidenced ones.
 ### 10. Publication Date (RECOMMENDED)
 - **Publication Date:** 2022-09-22
 - **Previous incorrect value:** 2025-09-04.
-- **Replacement justification:** The field is defined as the date of first broadcast/publication and is
-  "used for the initial version of the software." The stored 2025-09-04 is the release date of version
-  6.0.0 — the version that was current when the entry was first submitted — not the software's first
-  publication. This software was first published under a predecessor name, so first publication predates the
-  current repository. `docs/source/changelog.md:201-207` ("Historical Changes (`lasp_packets`)") states that
+- **Replacement justification:** The field is defined as the date of first broadcast/publication, and its
+  form guidance reads "Used for the initial version of the software." The 2025-09-04 that HSSI held before
+  the 2026-07-28 refresh is the release date of version 6.0.0 — the version that was current when the entry
+  was first submitted — not the software's first publication. This software was first published under a
+  predecessor name, so first publication predates the current repository. `docs/source/changelog.md:201-207`
+  (now `CHANGELOG.md`; heading "Historical Changes (`lasp_packets`)") states that
   "Changes documented in v3.0 and earlier correspond to development efforts undertaken before this library was
   moved to GitHub (it was previously known as `lasp_packets`)" and that "None of the git history is available
   for these versions as the git history was truncated in preparation for the move to GitHub"; the changelog
@@ -261,16 +273,20 @@ fields are set-unions of the earlier values and newly evidenced ones.
   **2022-09-22 the earliest confirmed public publication** of this software.
 - **Note (dates considered and not selected):** 2023-03-10 is the first release under the *current* name
   (first open-source commit `bc1da47c1af74c929a4b13133df1c223001f031b`, "First commit to open source project";
-  oldest git tag `4.0.1`; oldest `space-packet-parser` PyPI upload 2023-03-10T16:54:49Z), and 2023-03-14 is
-  the first Zenodo deposit (oldest version DOI `10.5281/zenodo.7735002`, v4.0.2). Both are recorded here for
-  the record but not selected, because both postdate the confirmed first publication under the predecessor
-  name.
+  oldest git tag `4.0.1`; oldest `space-packet-parser` PyPI upload 2023-03-10T16:54:49Z) and the date of
+  the first Zenodo deposit, `10.5281/zenodo.7735000` (4.0.1), the only version under the separate concept
+  DOI `10.5281/zenodo.7734999` (see Field 2). 2023-03-14 is the first deposit under the current concept DOI
+  (`10.5281/zenodo.7735002`, 4.0.2). Both dates are recorded here for the record but not selected, because
+  both postdate the confirmed first publication under the predecessor name. An earlier revision of this
+  note called the 2023-03-14 deposit the first Zenodo deposit; it had missed the 4.0.1 deposit under the
+  other concept DOI.
 - **Note (caveat):** Changelog versions 1.0 through 2.0 are all dated "Unknown" and have no public
   distribution trace, so they may predate 2022-09-22; that date is the earliest *confirmable* public release,
   not necessarily the absolute first.
 - **Note (mapping pitfall for future refreshes):** The concept DOI's DataCite
-  `dates[dateType=Issued]` is 2026-04-03, because a Zenodo concept DOI mirrors its *latest* version rather
-  than its first. That field must not be used as the publication date for this entry.
+  `dates[dateType=Issued]` follows its *latest* version rather than its first: it read 2026-04-03 while
+  6.1.2 was the newest deposit, and 2026-09-13 once 6.2.0 was deposited. That field must not be used as the
+  publication date for this entry.
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
@@ -279,28 +295,78 @@ fields are set-unions of the earlier values and newly evidenced ones.
   concept DOI, which is the correct publisher for a GitHub–Zenodo archived release.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** 6.1.2
-- **Version Date:** 2026-04-02
-- **Version Description:** Bug-fix release: prevents `BinaryParameter` truncation in `create_dataset`
-  (issue #246).
-- **Version PID:** https://doi.org/10.5281/zenodo.19392826
-- **Previous incorrect values, all four subfields.** The earlier version record was not a bare number: it
-  held `6.0.0`, release date 2025-09-04, version PID `https://doi.org/10.5281/zenodo.17055485`, and a
-  `description` that was a **verbatim copy of the software description** rather than a version note. The
-  version date, description and PID above therefore supersede those values, and that stale description was
-  a second copy-paste corruption in this entry alongside the truncated Concise Description.
-- **Replacement justification:** 6.1.2 is the latest authoritative release and five independent primary
-  sources agree: the newest git tag is `6.1.2` (2026-04-02); `pyproject.toml`, `CITATION.cff`, and `meta.yaml`
-  all declare `version = 6.1.2`; the newest PyPI release is 6.1.2 (uploaded 2026-04-02T22:26:54Z); the
-  DataCite record for the concept DOI reports `version: 6.1.2`; and `docs/source/changelog.md` records
-  "## [6.1.2] - 2026-04-02". The stored `6.0.0` is two minor and two patch releases behind
-  (6.0.0 → 6.0.1 → 6.1.0 → 6.1.1 → 6.1.2). The version PID is the Zenodo version DOI for the 6.1.2 record
-  (`10.5281/zenodo.19392826`), distinct from the concept DOI in Field 2. The version description is taken
-  verbatim in substance from the 6.1.2 changelog entry.
-- **Note:** The version number is recorded in its bare stored form (`6.1.2`). HSSI's view layer renders it as
-  `Space Packet Parser - 6.1.2`; that rendered string must never be written back. Zenodo's record for 6.1.2
-  carries `publication_date: 2026-04-03` (archive timestamp); the release date used here is 2026-04-02, which
-  is what the git tag, the GitHub release, and PyPI all report.
+- **Version Number:** 6.2.0
+- **Version Date:** 2026-09-13
+- **Version Description:** the indented block below, exactly, with its four-space indent removed
+  from each line (its blank lines are part of it).
+
+    ### Security
+
+    - Fix a local file read vulnerability (CWE-73) and a Server-Side Request Forgery vulnerability (CWE-918) in `validate_xtce`. A document-supplied `xsi:schemaLocation` is now treated as untrusted: absolute and relative local filesystem paths are rejected (use `local_xsd` for a local schema), and schema URLs are fetched only over `https` from an allowlisted host (default `www.omg.org`), with requests to internal/link-local addresses (e.g. `169.254.169.254`, `127.0.0.1`) always blocked. Downloaded content is size-capped and is written to the cache only after it validates as an XSD, so a non-schema response can no longer be persisted to disk. [#266](https://github.com/lasp/space_packet_parser/issues/266)
+
+    ### Added
+
+    - Bundle the standard OMG XTCE 1.2 schema with the package so documents referencing it validate offline with no network request.
+    - Add `allowed_schema_hosts`, `allow_insecure_http`, and `allow_schema_download` options to `validate_xtce` (and the corresponding `--allowed-schema-host`, `--allow-insecure-http`, and `--no-schema-download` flags to `spp validate`). The allowlist may also be set via the `SPP_ALLOWED_SCHEMA_HOSTS` environment variable, and insecure http via `SPP_ALLOW_INSECURE_HTTP`. The default allowlist is exported as `DEFAULT_ALLOWED_SCHEMA_HOSTS`.
+    - Support multiple `<xtce:Unit>` elements within an `<xtce:UnitSet>`, so parameter types can declare compound units. Applies to every parameter type, both when reading an XTCE document and when serializing one back out. [#47](https://github.com/lasp/space_packet_parser/issues/47)
+
+    ### Changed
+
+    - Widen the `unit` attribute of parameter types from `str | None` to `str | tuple[str, ...] | None`. An `<xtce:UnitSet>` containing more than one `<xtce:Unit>` previously emitted a warning and joined the units into a single space-separated string; it now yields a tuple of the individual unit strings. Definitions declaring a single unit are unaffected. [#47](https://github.com/lasp/space_packet_parser/issues/47)
+
+- **Version PID:** https://doi.org/10.5281/zenodo.22732164
+
+HSSI held `6.1.2` (release date 2026-04-02, version PID `https://doi.org/10.5281/zenodo.19392826`) until
+this update. **6.2.0** is the current release: a newer release than the 6.1.2 HSSI held, so it replaces that
+row (rule 3) rather than being added beside it, because Field 12 describes one release, the newest the
+project has released, and not the release history. The number is written bare, as the tag, PyPI and the
+package metadata write it and as HSSI wrote 6.1.2. The release evidence was read on 2026-10-29, at `main`
+head `b14d4e23c70dd678170074c486eb5b9dea0b8cfc`:
+
+- **Tags.** `6.2.0` is the newest tag by creation date, on commit
+  `8a43eb1cf1c94445060c08f2fdbebb90306594cd` ("Prepare 6.2.0 release", 2026-09-13T04:02:01Z), an ancestor
+  of `main`; `6.1.2` is an ancestor of `6.2.0`. The tagged code declares `version = "6.2.0"` in
+  `pyproject.toml` and `version: '6.2.0'` in `CITATION.cff`. No tag follows it, and the user-facing changes
+  made on `main` since are listed under the CHANGELOG's `[Unreleased]` heading: they are not a release
+  (rule 2).
+- **GitHub release.** `6.2.0`, named `6.2.0`, published 2026-09-13T04:19:30Z from `main`, not a
+  pre-release.
+- **PyPI.** `info.version` is `6.2.0`; its wheel and sdist were uploaded at 2026-09-13T04:19:41Z and
+  04:19:42Z, and neither is yanked. `project_urls` name this repository.
+- **Version PID.** `10.5281/zenodo.22732164` is the 6.2.0 deposit: DataCite gives its `version` as `6.2.0`,
+  `IsSupplementTo https://github.com/lasp/space_packet_parser/tree/6.2.0` and
+  `IsVersionOf 10.5281/zenodo.7735001`, issued 2026-09-13, and it is the newest entry in the concept's
+  `HasVersion` list (rule 17).
+- **Version Date.** 2026-09-13 is the UTC day of the release's `published_at` (rule 7). The tag commit,
+  the PyPI upload and the Zenodo deposit fall on the same UTC day, and `CITATION.cff` `date-released`
+  (added after the release, in commit `ae1338f`) and the CHANGELOG heading `[6.2.0] - 2026-09-13` agree.
+  The `release/6.2` merge commit `e6359c6` shows 2026-09-12 because its timestamp is in Mountain time
+  (−0600); that local day does not override the release's UTC day (rule 8).
+- **Version Description (rules 13–16).** The release's name is the bare tag, and its body is GitHub's
+  auto-generated pull-request list ("What's Changed", "New Contributors", "Full Changelog"), which rule 16
+  rules out, so the text comes from the `[6.2.0] - 2026-09-13` section of `CHANGELOG.md` at the tag (the
+  section is identical at `b14d4e2`). Kept verbatim under the changelog's own headings, with each item's
+  hard line wraps joined and its trailing issue link kept: the security fix to `validate_xtce` (#266); the
+  three Added items, which bundle the XTCE 1.2 schema, add the schema-host options and flags, and support
+  several `<xtce:Unit>` elements (#47); and the Changed item that widens `unit` (#47). Each is behaviour or
+  API a user meets. Dropped whole under rule 14: the two documentation items under Changed (the split of
+  the user documentation into Getting Started and a User Guide, and the benchmarking documentation
+  refresh), four documentation corrections under Fixed (the `root_container_name` docstrings, the
+  duplicated table of contents, the in-browser demo's sidebar, and the user-documentation inaccuracies),
+  and the devcontainer `CLAUDE_CONFIG_DIR` fix. The last Fixed item, that `validate_xtce(local_xsd=...)`
+  and `spp validate --local-xsd` "again accept absolute paths", is dropped too: the regression it repairs
+  never reached a release, so no user could hit it. `space_packet_parser/xtce/validation.py` is identical
+  at `6.1.2` and at `d21e9f6^`, the commit before the schema-validation hardening; 6.1.2 opens a
+  `local_xsd` path directly, and the `DISALLOWED_SCHEMA_LOCATION` code the item's second sentence names
+  first appears in 6.2.0. With every Fixed item dropped, the `### Fixed` heading goes too.
+- **Previous values.** The 6.1.2 row's description, "Bug-fix release: prevents `BinaryParameter`
+  truncation in `create_dataset` (issue #246).", restated that release's changelog entry ("Prevent
+  BinaryParameter truncation in `create_dataset`.") in other words rather than quoting it; nothing from it
+  is carried onto 6.2.0 (rule 10). Before 6.1.2 the record held `6.0.0` (release date 2025-09-04, version
+  PID `https://doi.org/10.5281/zenodo.17055485`) with a description that was a verbatim copy of the
+  software description rather than a version note; that row was replaced at the 2026-07-28 refresh.
+- **Note:** The version number is recorded in its bare stored form (`6.2.0`). HSSI's view layer renders it
+  as `Space Packet Parser - 6.2.0`; that rendered string must never be written back.
 
 ### 13. Programming Language (RECOMMENDED)
 - **Values:**
@@ -313,7 +379,7 @@ fields are set-unions of the earlier values and newly evidenced ones.
   XML documents and the JavaScript/HTML Pyodide in-browser demo under `docs/source/_static/`. `Javascript` was
   not added, because that code is a documentation demo asset rather than part of the library.
 
-### 14. Reference Publication (RECOMMENDED)
+### 14. Reference Publication (OPTIONAL)
 - **Reference Publication:** Not found
 - **Source:** No reference publication exists. `CITATION.cff` has no `preferred-citation`, the README's only
   citation pointer is the Zenodo DOI badge, and the DataCite record for the concept DOI contains no
@@ -351,6 +417,7 @@ fields are set-unions of the earlier values and newly evidenced ones.
   - packet parsing
   - packets
   - parsing
+  - pyhc package
   - python
   - science
   - space
@@ -360,10 +427,13 @@ fields are set-unions of the earlier values and newly evidenced ones.
   - xml
   - xtce
 - **Note:** All ten previously recorded keywords are preserved (compared by normalized lowercase
-  identity, not display casing); fourteen are added: `binary data`, `data decoding`, `data encoding`,
-  `data extraction`, `data manipulation`, `data processing`, `data transformation`, `heliophysics`,
-  `packet inspection`, `packet parsing`, `space data systems`, `space packet protocol`, `telemetry`, `xml`.
-- **Source:** The ten stored keywords match the GitHub repository topics exactly. Eleven of the additions are
+  identity, not display casing); fourteen were added at the 2026-07-28 refresh: `binary data`,
+  `data decoding`, `data encoding`, `data extraction`, `data manipulation`, `data processing`,
+  `data transformation`, `heliophysics`, `packet inspection`, `packet parsing`, `space data systems`,
+  `space packet protocol`, `telemetry`, `xml`. The 25th value, `pyhc package`, is explained in the note
+  below.
+- **Source:** The ten keywords HSSI held before the 2026-07-28 refresh match the GitHub repository topics
+  exactly. Eleven of the additions are
   declared by the authors themselves in `pyproject.toml` `keywords` (lines 17–34): `space data systems`,
   `space packet protocol`, `packet parsing`, `packet inspection`, `data processing`, `data extraction`,
   `data manipulation`, `data transformation`, `data encoding`, `data decoding`, and `binary data`. The PyHC
@@ -376,6 +446,15 @@ fields are set-unions of the earlier values and newly evidenced ones.
   both organizations are already represented as author affiliations in Field 6.
 - **Note:** Keywords are stored lowercase and rendered Title Case by the HSSI view layer; the values above are
   the stored forms.
+- **Note (`pyhc package`, Field 16 rule 15):** Space Packet Parser is listed, as `space-packet-parser`, in
+  the PyHC registry's `_data/projects.yml` (read at `heliophysicsPy/heliophysicsPy.github.io` commit
+  `f7b0421b08c2cbc614a8d68372b42428d3a53cb2`, 2026-10-29), so the record carries `pyhc package`, which
+  binds the existing keyword row of exactly that spelling. HSSI held it before this file did; an earlier
+  revision of this list left it out.
+- **Note (sources re-read 2026-10-29, at `b14d4e23c70dd678170074c486eb5b9dea0b8cfc`):** the
+  `pyproject.toml` `keywords`, the ten repository topics and the registry entry's `keywords` are unchanged
+  since the 2026-07-28 extraction (the registry entry gained only an `hssi:` link); `CITATION.cff`
+  declares no keywords, and the 6.2.0 deposit carries no subjects.
 
 ### 17. Data Sources (OPTIONAL)
 - **Values:**
@@ -425,9 +504,9 @@ fields are set-unions of the earlier values and newly evidenced ones.
   `[windows-latest, ubuntu-latest, macos-latest]` across Python 3.10–3.14 on every push, pull request, and
   nightly schedule, which is direct verification on all three platforms. `pyproject.toml` also declares the
   `Operating System :: OS Independent` classifier and the conda recipe builds `noarch: python`.
-- **Note:** The generic `OS Independent` / `Operating System Independent` values were not added on top of the
-  three concrete, CI-verified platforms to avoid a redundant and partly duplicated selection; the pure-Python
-  packaging evidence is recorded above should a curator prefer them.
+- **Note:** The generic `OS Independent` / `Operating System Independent` values were not selected: on top
+  of the three concrete, CI-verified platforms they would make a redundant and partly duplicated selection.
+  The pure-Python packaging evidence is recorded above.
 
 ### 21. CPU Architecture (RECOMMENDED)
 - **Values:**
@@ -438,7 +517,8 @@ fields are set-unions of the earlier values and newly evidenced ones.
   `packages = ["space_packet_parser"]`; conda recipe declares `noarch: python`), so `CPU Independent` is the
   primary value. `x86-64` and `Apple Silicon arm64` are recorded as concretely verified because the CI matrix
   exercises the test suite on GitHub's `ubuntu-latest` and `windows-latest` (x86-64) and `macos-latest`
-  (Apple Silicon arm64) runners.
+  (Apple Silicon arm64) runners. This breadth is settled: `CPU Independent` with the two architectures the
+  CI runners verify, alongside the three CI-verified operating systems Field 20 records.
 
 ### 22. Related Phenomena (OPTIONAL)
 - **Related Phenomena:** Not found
@@ -449,12 +529,16 @@ fields are set-unions of the earlier values and newly evidenced ones.
 
 ### 23. Development Status (RECOMMENDED)
 - **Development Status:** Active
-- **Source:** repostatus.org "Active" (stable, usable, and under active development) is supported by
-  `pyproject.toml`'s `Development Status :: 5 - Production/Stable` classifier, five releases in the last
-  eleven months (6.0.0 2025-09-04, 6.0.1 2025-11-06, 6.1.0 2026-01-21, 6.1.1 2026-03-31, 6.1.2 2026-04-02),
-  commits continuing past the latest release (HEAD `e76f141` dated 2026-07-07), a nightly scheduled CI job,
-  and the PyHC registry rating this package "Good" for software maturity, testing, documentation, and
-  community.
+- **Source:** Field 23 rule 6 (recency, for software that has reached a stable, usable state). Read on
+  2026-10-29: the last commit on the default branch `main` is `b14d4e23c70dd678170074c486eb5b9dea0b8cfc`,
+  dated 2026-10-28, and the last release is 6.2.0 (2026-09-13), so the last commit is under six months old.
+  Rules 1–4 do not fire: the repository is not archived, nothing points to a new location, and the README
+  carries no repostatus.org badge (its badges are Conda, PyPI, DOI, CI, codecov and two Read the Docs build
+  badges) and no status statement. The release series (6.0.0 on 2025-09-04 through 6.2.0 on 2026-09-13)
+  shows a stable, usable state, and a nightly scheduled CI job runs the test suite on `main`
+  (`.github/workflows/ci.yml`); `pyproject.toml`'s `Development Status :: 5 - Production/Stable` classifier
+  corroborates that stable releases exist but is not itself a repostatus term. At the 2026-07-28 extraction
+  the anchors were commit `e76f141` (2026-07-07) and release 6.1.2 (2026-04-02), which gave the same value.
 
 ### 24. Documentation (RECOMMENDED)
 - **Documentation:** https://space-packet-parser.readthedocs.io
@@ -483,9 +567,60 @@ fields are set-unions of the earlier values and newly evidenced ones.
 
 ### 27. Related Publications (OPTIONAL)
 - **Related Publications:** Not found
-- **Source:** The repository cites no papers describing or using the library, and the DataCite record's
-  `relatedIdentifiers` contain only the GitHub tag URL (`IsSupplementTo`) and sibling version DOIs
-  (`HasVersion`) — no publication relations.
+- **Source:** No eligible publication describes, cites or uses Space Packet Parser (rule 8). The repository
+  cites no paper about the library or its method: at `b14d4e23c70dd678170074c486eb5b9dea0b8cfc`,
+  `CITATION.cff` has no `references` or `preferred-citation`, no documentation page carries a reference
+  list or a citing-works page, and the README's only references are the format standards weighed below.
+  The DataCite records of the concept DOI and of all 25 of its version DOIs carry no publication relation:
+  their only related identifiers are the GitHub tag URL (`IsSupplementTo`) and the version links
+  (`HasVersion`/`IsVersionOf`).
+- **Weighed and not recorded:**
+  - The README's "Resources" list links three CCSDS documents on XTCE: the XTCE Green Book (Informational
+    Report, `https://public.ccsds.org/Pubs/660x2g2.pdf`), the XTCE Element Description Green Book
+    (`https://public.ccsds.org/Pubs/660x1g2.pdf`) and the XTCE Blue Book (Recommended Standard,
+    `https://public.ccsds.org/Pubs/660x0b2.pdf`). They are standards-body specifications of a file format,
+    the XTCE packet-definition format the library reads and writes (the project describes itself as "based
+    on the XTCE packet format description standard"), which the project lists as resources. They are not
+    publications that describe, cite or use the software, so they do not belong in this field.
+  - "Forging a Path to Multi-Institution, Open-Source Mission Software for Science" (Jon Vandegriff and
+    Greg Lucas, NASA SMD Software Workshop 2024; Zenodo presentation
+    `https://doi.org/10.5281/zenodo.11114328`), found through a creator-keyed search on Greg Lucas's ORCID:
+    a slide deck on shared, open-source mission data-system software whose text names CCSDSPy but never
+    Space Packet Parser, so it is not about this software.
+  - "Transitioning to the Cloud: Insights from the Emirate Mars Mission Science Data System" (Bryan Harter,
+    Greg Lucas, Gavin Medley et al., DASH 2023; ADS `2023dash.confE..47H` and `2023dash.confE..58H`, Zenodo
+    presentations `https://doi.org/10.5281/zenodo.8412932` and `https://doi.org/10.5281/zenodo.8419823`):
+    two versions of a slide deck on the Emirates Mars Mission's cloud science data system. Neither deck's
+    slide or note text mentions packets, a parser, XTCE or CCSDS, so it is not about this software.
+  - "AWS Native Science Data Processing Center for the Libera Mission" (Matt Watwood, Gavin Medley et al.,
+    AGU Fall Meeting 2024, ADS `2024AGUFMIN51F2424W`): a meeting abstract, which rule 1 excludes, and its
+    text does not name the software.
+  - Two IMAP mission papers co-authored by Greg Lucas, "Science and Mission Operations of the Interstellar
+    Mapping and Acceleration Probe (IMAP)" (ADS `2026SSRv..222...37R`) and "Space Weather Science to Enhance
+    Forecasting with the NASA IMAP Active Link for Real-Time (I-ALiRT) System" (ADS `2025SSRv..221..117L`):
+    ADS holds the full text of both (a `body:"packet"` probe finds each), and neither names the software, a
+    parser, Python or XTCE.
+  - "The Emirates Mars Ultraviolet Spectrometer (EMUS) for the EMM Mission" (ADS `2021SSRv..217...79H`,
+    `https://doi.org/10.1007/s11214-021-00854-3`) is the only ADS hit for the predecessor name
+    `lasp_packets`, and it is a tokenization artifact: the matched text is "(LASP). After packets are
+    extracted from the L0 files", not the package.
+  - OpenAlex's three full-text hits for "space packet parser" are a software deposit
+    (`rudywasfound/aethelix`, `https://doi.org/10.5281/zenodo.19536795`; rule 1) and two unrelated papers,
+    on messaging-application encryption and on attack-tactic identification.
+- **Search record.** Searched on 2026-10-29 with no lower date bound; no earlier search had been recorded.
+  ADS/SciX `full:` queries for "space packet parser", `space_packet_parser`, `space-packet-parser`,
+  `SpacePacketParser`, `lasp/space_packet_parser` and `zenodo.7735001`, and `ack:` queries for "space packet
+  parser" and `space_packet_parser`, return nothing, and `full:"lasp_packets"` returns only the EMUS
+  artifact above; a nonsense-token control returned 0, and `full:"sunpy"` and `full:"pyspedas"` returned
+  hits. ADS author searches for Gavin Medley, Michael Chambliss and Greg Lucas (Lucas's restricted to XTCE,
+  CCSDS or packet terms) find no paper about the software. Zenodo creator-keyed searches on the three
+  authors' ORCIDs find the software's own deposits, unrelated software and the 2024 deck above; a Zenodo
+  search for "space packet parser" finds only the software's own record. DataCite records no citations of
+  the concept DOI or of any version DOI, and OpenAlex records none for the concept work; OpenAlex full-text
+  search, checked with `sunpy` (hits) and a nonsense token (0), finds only the three hits above, and
+  Crossref's bibliographic search returns only general XTCE and packet-parsing literature. Semantic Scholar
+  could not be queried (rate-limited on every attempt), so the next search should cover it for all years;
+  the other sources can start from 2026-10-29.
 
 ### 28. Related Datasets (OPTIONAL)
 - **Related Datasets:** Not found
@@ -579,38 +714,3 @@ fields are set-unions of the earlier values and newly evidenced ones.
 - **Note:** SoMEF reported a logo of
   `https://lasp.colorado.edu/ctim/files/2023/01/CTIM_LOGO_350x100_centered_transparent.png`; that is the CTIM
   mission patch from the README's "Missions using" section, not this software's logo, and was rejected.
-
----
-
-## Changes to Stored Values (decided)
-
-Every item below changes a value that HSSI currently stores. Nothing was silently overwritten; the supporting
-evidence is recorded in the corresponding field above. All open questions from the first extraction pass have
-been decided and are recorded here as resolved.
-
-- **Field 12 Version — REPLACE `6.0.0` with `6.1.2`** (plus version date 2026-04-02, the 6.1.2 changelog
-  description, and version DOI `https://doi.org/10.5281/zenodo.19392826`). Confirmed by git tags,
-  `pyproject.toml`, `CITATION.cff`, `meta.yaml`, PyPI, DataCite, and the changelog. **Decided: replace, not
-  append** — 123 of the 124 HSSI entries store exactly one version, so Field 12 represents the current
-  release rather than release history.
-- **Field 10 Publication Date — REPLACE 2025-09-04 with 2022-09-22.** The stored value was the 6.0.0 release
-  date, not first publication. 2022-09-22 is the earliest confirmed public release, made under the
-  predecessor name `lasp_packets` (`docs/source/changelog.md:201-207` establishes the lineage; PyPI
-  `lasp-packets` 2.1 was uploaded 2022-09-22T23:04:04Z). 2023-03-10 (first release under the current name)
-  and 2023-03-14 (first Zenodo deposit) were considered and not selected because they postdate it.
-- **Field 9 Concise Description — REPLACE the mid-word truncation** ("...It supports compl") with a complete
-  199-character standalone sentence.
-- **Field 8 Description — APPEND two sentences** covering 6.x capabilities (built-in and custom packet bytes
-  generators, calibration, Xarray Dataset creation, XTCE construction/serialization, XTCE validation, the
-  `spp` CLI). The stored text is preserved verbatim and unedited. **Decided: the append is accepted.**
-- **Field 6 Authors — ADD affiliations** for Gavin Medley and Michael Chambliss (Laboratory for Atmospheric
-  and Space Physics, University of Colorado Boulder). **Decided: keep both organizations for both authors** —
-  Medley's ORCID record attests both directly; Chambliss's attests LASP directly, with University of Colorado
-  Boulder added as a documented parent-organization inference. No author is added or removed, and Greg
-  Lucas's five existing affiliations on his shared Person record are preserved untouched.
-- **Additive-only enrichments** (no stored value altered): Field 4 Software Functionality (+8, all stored
-  values kept), Field 5 Related Region (+`Interplanetary Space`), Field 16 Keywords (10 → 24), and the
-  previously-empty Fields 17, 18, 19, 20, 21, 23, 29, 30, and 33.
-- **Decided, no change:** Field 20/21 breadth is kept as recorded (the three CI-verified operating systems;
-  `CPU Independent` plus the two CI-verified architectures). Field 33's logo *asset* is unchanged; only its
-  URL form is, from a branch reference to a commit-pinned raw URL.
