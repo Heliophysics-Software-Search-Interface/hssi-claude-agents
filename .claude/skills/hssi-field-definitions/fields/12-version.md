@@ -25,10 +25,11 @@ it as a separate version row attached to the entry.
 
 It tells a visitor what the current release is, when it came out, what changed in it, and how to cite
 exactly that release. A stale version makes the whole record look unmaintained and undermines trust in
-the other fields; an invented version (for unreleased code, or a PyPI-only build) sends people looking
-for something that does not exist. Release notes the project did not write, or notes from a different
-release, are read as the maintainers' own account and mislead. A version DOI attached to the wrong
-number makes a reader download a different release than the one they think they are citing.
+the other fields, and a published upload is what users install, so omitting one makes it look stale; an
+invented version (for unreleased code) sends people looking for something that does not exist. Release
+notes the project did not write, or notes from a different release, are read as the maintainers' own
+account and mislead. A version DOI attached to the wrong number makes a reader download a different
+release than the one they think they are citing.
 
 ## How it appears on the site
 
@@ -50,11 +51,15 @@ The four sub-fields are decided in four groups. Within each group apply the rule
 stop at the first that fires.
 
 **Before any rule: establish the release history from the pinned revision.** List tags in creation
-order, confirm each candidate is on the pin's own lineage or on a release branch cut from it — a
+order, confirm each candidate tag is on the pin's own lineage or on a release branch cut from it — a
 branch the project cuts from its main line to publish releases from (`v8.0.x`, `release/8.0`), not a
 feature or development branch (`git merge-base <tag> <pin>` finds a shared commit; an orphan
 lineage shares none),
-read every GitHub release's `name` and `body`, and read PyPI's release list from its JSON API. Then
+read every GitHub release's `name` and `body`, and read PyPI's release list from its JSON API. A PyPI
+upload of the project's own package needs no lineage check: unless it is yanked or a pre-release, it is
+a release whichever branch it was built from, if any. When its build commit is off the pin's lineage,
+read the other fields' evidence at that commit, or in the published files when no commit holds the
+code, and record in the dossier that the repository lags the release. Then
 identify which anomaly shape, if any, applies before deciding: an **orphan lineage** (a newer-looking
 tag on a pre-rewrite lineage that shares no history with the pin — it is older, not newer), a version
 **declared but never released** (in package metadata only: no tag, no release, no PyPI file), or a
@@ -70,16 +75,17 @@ the answer.
 2. **Unreleased code never gets a version** (for a new value; a stored version that was declared but
    never released is handled by rule 4, not cleared here). Fires for: commits after the last release; a
    version declared only on an unmerged branch and never published; a tag whose tagged code still
-   declares the previous version and has no release; a PyPI file built from code on neither the pin's
-   lineage nor a release branch cut from it; release text drafted in a wiki or a release-candidate
-   branch with no tag. Record nothing for them; note in the dossier what to check at the next refresh.
+   declares the previous version and has no release; a pre-release or a yanked PyPI file; release text
+   drafted in a wiki or a release-candidate branch with no tag. Record nothing for them; note in the
+   dossier what to check at the next refresh.
 3. **A newer release than the stored one exists → replace the stored row.** "Newer" means a release
-   later in the project's release order: a tag on the pin's lineage or on a release branch cut from it,
-   with a GitHub release or a PyPI upload, or (for a project that does not tag) a PyPI upload of a
-   version declared at a commit on either. Pre-releases (rc, alpha, beta, dev, or a GitHub release
-   marked pre-release) never count. Replacing the row orphans the old `SoftwareVersion` row; that is
-   accepted HSSI behaviour and never a reason to keep a stale version. Write the new number in the same
-   form the stored number used (with or without a `v`).
+   later in the project's release order, not upload order (*Backport tags*): a tag on the pin's lineage
+   or on a release branch cut from it, with a GitHub release or a PyPI upload, or a PyPI upload of the
+   project's package, tagged or not and not yanked, built from any branch or from code no commit holds.
+   Pre-releases (rc, alpha, beta, dev, or a GitHub release marked pre-release) never count. Replacing
+   the row orphans the old `SoftwareVersion` row; that is accepted HSSI behaviour and never a reason to
+   keep a stale version. Write the new number in the same form the stored number used (with or without
+   a `v`).
 4. **Otherwise keep the stored number.** This covers every case with no newer release:
    - a cosmetic difference in how the same release is written (`v0.9.1` versus `0.9.1`) — **never
      replace for it**, in either direction;
@@ -101,7 +107,7 @@ repository identify, and keep the other's history in the dossier only.
 ### Version Date
 
 7. **The release event's UTC calendar day.** Use the GitHub release `published_at`; without a release
-   object, the annotated tag's date or the tagged commit's date in UTC; for an untagged project, the
+   object, the annotated tag's date or the tagged commit's date in UTC; for a release with no tag, the
    PyPI upload of that version. Corroborate with the PyPI upload time and the Zenodo version deposit.
    When a PyPI timestamp crosses midnight UTC a few minutes after the release, the release day stands.
 8. **These never override the release event when they disagree:** a tagged commit dated weeks before
@@ -279,9 +285,15 @@ documented convention to match the rest of the payload.
   history, so the `v1.0.1..v1.1.0` range is undefined. The stored 1.1.0 description is tested against
   the commits reachable from `v1.1.0` and matches the GitHub release name `rename, refactor`; it is
   kept (rule 11).
+- **Upload from a feature branch.** CloudCatalog does not tag; `develop` declares 1.3.1, and 1.3.3 was
+  uploaded to PyPI from 59142c7, the single commit on unmerged feature branch `48-hapi`. Rule 3 records
+  1.3.3, dated by its upload (rule 7); the other fields are read at 59142c7, and the dossier records
+  that `develop` lags the release.
 
 ## Provenance
 
 - No regenerated blocks; hand-written.
 - Migrated from RSFF 290-304 on 2026-09-22.
 - Rubric authored 2026-09-22 from prior guidance and past refresh decisions.
+- Changed 2026-10-29: a PyPI upload that is neither yanked nor a pre-release is a release whichever
+  branch it was built from (rules 2, 3 and 7).
