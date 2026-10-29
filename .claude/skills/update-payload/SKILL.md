@@ -92,20 +92,15 @@ Content-Type: application/json
 **Shared structured-entity limitations:**
 
 - Top-level M2M associations such as `authors`, `funder`, `award`, `relatedInstruments`, and `relatedObservatories` are replaced by the complete submitted list.
-- People, organizations, awards, instruments, and observatories are shared database entities. When an identifier matches an existing entity, PATCH reuses it and does **not** rename it. Identity matching therefore prevents duplicates but does not make a conflicting label equivalent or patchable. "The same full name" below means the same words in the same order, ignoring capitalization, accents and hyphens, however `givenName` and `familyName` split them. A PATCH, unlike `POST /api/submission/`, also makes these fills and name changes on shared rows:
-  - An author `personId` selects the existing Person row with that id, whatever entries it serves, with no name fallback and no new row. The sent names must spell its full name, an empty `givenName` is accepted only for a row stored without one, and an `identifier` may only fill the row's empty one or repeat it; anything else is a `400`. A POST rejects the key, even empty or `null` (see *Authors selected by `personId`* under Transient Update Plan).
-  - An author `identifier` that matches no Person, sent without `personId`, attaches to the entry's one current author with no identifier and the same full name, even when the author item that sent it is a different person; two or more such authors are a `400`. With no such current author, it creates a new Person, even when an identifier-less row of that name exists elsewhere.
-  - A Person resolved by `identifier` or selected by `personId` takes the sent given and family names when they spell the same full name, unless they carry fewer accents than the stored ones. Resolved by `identifier`, a different full name is ignored with a `200`.
-  - An author sent without `personId` and with an empty or missing `givenName` resolves to the entry's one current author stored with an empty given name and the same family-name words, left unchanged except that an identifier no Person holds fills its empty one. None or several is a `400`.
-  - An award's `funder` fills a matched Award row that has none. A stored funder is never replaced; a different one is ignored with a `200`.
-
-  `hssi-field-definitions/fields/06-authors.md` and `fields/26-award-title.md` give the preconditions and what still needs the database workflow.
+- People, organizations, awards, instruments, and observatories are shared database entities. When an identifier matches an existing entity, PATCH reuses it and does **not** rename it. Identity matching therefore prevents duplicates but does not make a conflicting label equivalent or patchable. A PATCH, unlike `POST /api/submission/`, also makes these changes on shared rows:
+  - Authors: it selects an existing Person row by `personId` (a POST rejects the key), attaches an unheld ORCID to the entry's identifier-less author of the same full name, gives a row it resolves by identifier or `personId` another spelling of the same full name, and resolves an empty `givenName` to the entry's blank-given author. `hssi-field-definitions/fields/06-authors.md` (*Person resolution* and the notes after it) gives the exact rules and their `400`s.
+  - An award's `funder` fills a matched Award row that has none. A stored funder is never replaced; a different one is ignored with a `200` (`fields/26-award-title.md`).
 - Author affiliations are added to the matched Person; the endpoint does not remove existing affiliations. Union affiliations for matched authors. Treat any requested affiliation removal as NON-PATCHABLE.
 - Publications, datasets and software share `RelatedItem` rows matched by identifier alone. Reusing an
   identifier does **not** change the row's existing semantic `type`; moving a URL between relation
   fields can therefore leave JSON-LD with the old type. Treat the type correction as NON-PATCHABLE
   and verify the serialized type independently.
-- Omit from the PATCH, and report as hard blockers requiring the CSV/manual database workflow: shared-entity renames (a Person's changed full name, an organization's or award's changed name), the replacement of a stored author identifier or award funder, a fill or name change whose preconditions above fail (an accent removal among them), and nested affiliation removals. Top-level association removals are still supported when the user approves the complete replacement list.
+- Omit from the PATCH, and report as hard blockers requiring the CSV/manual database workflow: shared-entity renames (a Person's changed full name, an organization's or award's changed name), the replacement of a stored author identifier or award funder, a fill or name change that `fields/06` or `fields/26` marks NON-PATCHABLE, and nested affiliation removals. Top-level association removals are still supported when the user approves the complete replacement list.
 
 ### GET /api/list/software/?repo_url=<url> — Software Lookup
 
@@ -173,9 +168,9 @@ Immediately before PATCH, re-fetch the same UUID from the exact target and compa
 
 ### Authors selected by `personId`
 
-An author item in `patch` may carry `personId`, the id of an existing Person row, to add an author whose identifier-less row already serves other entries and fill its ORCID, to give an ORCID to one of several same-name identifier-less authors, or to respell a row that has no identifier (`hssi-field-definitions/fields/06-authors.md` rules 11, 15 and 16, and its *Selecting a row by `personId`*). Take the id from the `authors` of `GET /api/data/software/<uid>/` or `GET /api/view/software/<uid>/` for a row on a visible entry, else from `GET /api/models/Person/rows/all/?columns=id,given_name,family_name,identifier`. Before putting it in `patch`, PREPARE confirms that:
+Each author whose row stays on the entry, and each new author whose row already exists, is sent with that row's `personId` (`hssi-field-definitions/fields/06-authors.md` rules 16 and 30, and its *Selecting a row by `personId`*). Take the id from the `authors` of `GET /api/data/software/<uid>/`, or for a row new to the entry from an entry it serves or `GET /api/models/Person/rows/all/?columns=id,given_name,family_name,identifier`. Before putting it in `patch`, PREPARE confirms that:
 
-1. the row is this person, by the entries it serves: a namesake's row with the same full name binds without error, so this check is the only guard;
+1. a row new to the entry is this person, by the entries it serves: a namesake's row with the same full name binds without error;
 2. the sent names spell the row's stored full name;
 3. for an ORCID, the row has no identifier or the same one, and no other Person row carries it.
 
@@ -199,7 +194,7 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | `referencePublication` | String (DOI URL) | |
 | `publicationDate` | String (`YYYY-MM-DD`) | |
 | `logo` | String URL | ≤200 chars (`URLField(max_length=200)`). A git-hosted URL must be commit-pinned (`raw.githubusercontent.com/<owner>/<repo>/<40-hex-sha>/<path>`, or `media.githubusercontent.com/media/…` for Git-LFS paths) — never a branch or a `/blob/` page. |
-| `authors` | Array of Person objects | `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}`, plus an optional `personId` (an existing Person row's id; see *Authors selected by `personId`*); `givenName` may be empty or omitted only for an author stored with an empty given name; each Person row at most once |
+| `authors` | Array of Person objects | `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}`, plus `personId` for an existing Person row (see *Authors selected by `personId`*); `givenName` may be empty or omitted only for an author stored with an empty given name; each Person row at most once |
 | `publisher` | Organization object | `{name, identifier}` |
 | `license` | String | License name only — must match an existing `License.name` (case-insensitive) |
 | `version` | Object | `{number, releaseDate, description, versionPid}` |
@@ -332,7 +327,7 @@ After a successful update:
 1. Re-fetch `GET /api/view/software/<uid>/` from the target URL (no auth required)
 2. For each field that was updated, confirm the new value is reflected. The view renders each award as its name only, so check an award's identifier and funder in `?view=jsonld` (`funding` items) or its row (`GET /api/models/Award/rows/<id>/?recursive=true`, with the id from `GET /api/data/software/<uid>/`)
 3. Confirm the response did not report a field outside the nested `patch` as updated
-4. For an author sent with `personId`, also make the row checks under *Authors selected by `personId`*
+4. Check the authors' rows as *Authors selected by `personId`* describes
 5. Report any discrepancies without retrying
 
 This is simpler than the submit verification because we only need to check the fields we changed, not all 33.

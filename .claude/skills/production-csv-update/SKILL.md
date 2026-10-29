@@ -231,7 +231,7 @@ All on the prod host, user-driven. Provide these as a runbook with explicit STOP
   an ORCID that no row carries attaches to the entry's own identifier-less author of the same full name, or to
   the row a `personId` selects; anywhere else (an author new to the entry, a full name that differs, a POST)
   it creates a new Person beside any same-name row. A matched row keeps its words (only another spelling of
-  the same full name lands, and never one with fewer accents), and an author sent with an empty given name
+  the same full name lands, and not one with fewer accents in total), and an author sent with an empty given name
   keeps its row unchanged apart from filling an empty identifier. So a replayed
   author payload can still diverge from the curated `hssi_metadata.md`: catch it by comparing the result
   **by identifier**, and **restore what the API cannot apply by editing `person.csv` directly**
