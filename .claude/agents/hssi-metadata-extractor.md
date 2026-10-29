@@ -230,7 +230,7 @@ Examine these repository locations systematically:
 6. **Package metadata files** — setup.py, pyproject.toml, setup.cfg, package.json, DESCRIPTION, Project.toml
 7. **Documentation** — docs/ folder, readthedocs config
 8. **CI/CD configurations** — .github/workflows/, .travis.yml (operating system info)
-9. **Git history** — Tags for versions, commit activity for development status, CHANGELOG.md
+9. **Git history** — Tags, GitHub releases and PyPI's release list for versions (`fields/12`), commit activity for development status, CHANGELOG.md
 10. **Code analysis** — File I/O operations for file format support, import statements for dependencies
 
 **Every field's rubric governs its value** — see *How field decisions are made*. Cross-field rules that apply while you work through Step 2:
