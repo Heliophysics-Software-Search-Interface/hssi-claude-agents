@@ -4,7 +4,7 @@
 **Repository:** https://github.com/JHUAPL/kaipy
 **Source Revision:** 0028c69c52a91ff378a5798708daaba4cdfb5790
 **Extraction Date:** 2026-09-04
-**Validation Date:** 2026-09-05
+**Validation Date:** 2026-10-29
 **Validation Status:** PASS
 
 ---
@@ -16,7 +16,12 @@ turns on that division of labour — Kaipy is not the simulation, but it is not 
 library either, and several fields (Software Functionality, Related Region, Related Software) are
 decided by asking which half of the pair a given capability really belongs to. The pinned revision
 is tag `kaipy-1.1.4`, which is also the tip of `master`; three branches exist and one of them,
-`dev_h5concat`, is unmerged, which matters for Development Status and Version. `external_contrib` is
+`dev_h5concat`, is unmerged, which matters for Development Status and Version. The current release,
+1.1.5, was published to PyPI from `dev_h5concat` at `c9957a6`, with uncommitted edits that pin the
+dependency lists of `setup.py` and `pyproject.toml`, so `master` lags it; the tree at `c9957a6`
+differs from the pin in four files only, and Field 12 sets out what each change bears on.
+Repository evidence below is read at the pin unless a passage names `c9957a6` or the 1.1.5 sdist.
+`external_contrib` is
 **not** a second unmerged branch: it is an ancestor of `master`, and its tip `4e98d39` ("Merged in
 external_contrib (pull request #18)") is the `kaipy-1.1.3` tag commit itself.
 
@@ -63,11 +68,15 @@ Confirmed reachable, and confirmed as the project's own statement of record: `CI
 pin carries `repository-code: "https://github.com/JHUAPL/kaipy"`, and the Zenodo deposit's
 `isSupplementTo` points into the same repository.
 
-**Do not take the repository URL from `setup.py`.** That file still carries the pre-migration
-Bitbucket location, `url='https://bitbucket.org/aplkaiju/kaipy/src/master/',`, and a comment in
-`kaipy/scripts/preproc/cda2wind.py` still points at `https://bitbucket.org/aplkaiju/kaiju/wiki/Gamerasphere`.
-The project developed on Bitbucket first — the commit history at the pin begins 2024-05-16, while
-the GitHub repository was created 2025-06-11 — so these are stale in-repo values, not alternatives.
+**Do not take the repository URL from `setup.py` at the pin.** There it still carries the
+pre-migration Bitbucket location, `url='https://bitbucket.org/aplkaiju/kaipy/src/master/',`, and a
+comment in `kaipy/scripts/preproc/cda2wind.py` still points at
+`https://bitbucket.org/aplkaiju/kaiju/wiki/Gamerasphere`. The project developed on Bitbucket first —
+the commit history at the pin begins 2024-05-16, while the GitHub repository was created 2025-06-11 —
+so these are stale in-repo values, not alternatives. The 1.1.5 release corrects the first of them: at
+`c9957a6`, `setup.py` reads `url='https://github.com/JHUAPL/kaipy',` (commit `77ffa89` "Updated url"),
+and PyPI's metadata for 1.1.5 gives `Homepage: https://github.com/JHUAPL/kaipy` where 1.1.4's gave the
+Bitbucket URL. The `cda2wind.py` comment is unchanged at `c9957a6`.
 
 ### 4. Software Functionality (RECOMMENDED — treated as critical)
 
@@ -187,8 +196,13 @@ recorded alongside it.
   `pyproject.toml`'s `[project.scripts]` (which lists 50 entries), and its `dash`,
   `dash_bootstrap_components`, `flask_caching` and `pyqt5` dependencies are declared in `setup.py`
   and `requirements.txt` but not in `pyproject.toml`. Because `pyproject.toml` carries a `[project]`
-  table, that is the metadata a `pip install kaipy` uses — so the module ships but the command and
-  its dependencies do not get wired up. The capability is real and in the shipped source; the
+  table, that is the metadata the 1.1.4 wheel was built from (its dependency list on PyPI is exactly
+  `pyproject.toml`'s) — so in 1.1.4 the module ships but the command and its dependencies do not get
+  wired up. The 1.1.5 wheel wires up the dependencies but still not the command. Its shipped build
+  files declare a pinned list of 26 dependencies (1.1.5 sdist, pyproject.toml:22–49 and
+  setup.py:21–48) — as a set, the list `requirements.txt` carries at `c9957a6` — which includes
+  `dash`, `dash-bootstrap-components`, `Flask-Caching` and `PyQt5`, while its `entry_points.txt`
+  lists 50 commands, none of them `mageDash`. The capability is real and in the shipped source; the
   packaging is inconsistent. It is also undocumented: `docs/source/scripts.rst` autoprograms the
   other quicklook scripts and omits this one.
 - **Data Guided.** `kaipy/solarWind/` exists to turn observations into model boundary conditions:
@@ -515,7 +529,16 @@ field: it is not the first publication, and it was not the current one either (1
 2025-12-12). The form's "first publication" wording governs, which is what settles it in favour of
 the PyPI 1.0.0 upload.
 
+**The 1.0.0 upload is now yanked on PyPI, and it still dates the first publication.** Both 1.0.0
+files carry the yank reason "Please stay tuned for an open-source release of the kaipy software.", and
+the 1.0.0 wheel's own metadata gives `License: MIT` and the Bitbucket home page. Yanking hides a
+release from dependency resolution without deleting it or its upload record, so on 2024-06-26 the
+package was publicly published and installable under this name, which is what the first-release
+anchor asks. Recorded so a later refresh does not move the date for the yank alone.
+
 Alternatives considered:
+- *2024-09-27*, the upload of 1.0.1, the earliest PyPI release that is not yanked — rejected because
+  yanking 1.0.0 did not unpublish it; the first public upload remains 2024-06-26.
 - *2024-05-16*, the first commit in the pinned ancestry ("Initial commit", Michael Wiltberger) —
   rejected because that history was private on Bitbucket at the time and a commit is not a
   publication.
@@ -536,34 +559,121 @@ Field 2 proves the GitHub–Zenodo workflow was used, so Zenodo — not GitHub �
 
 ### 12. Version (RECOMMENDED)
 
-- **Version Number:** v1.1.4
-- **Version Date:** 2025-12-12
+- **Version Number:** v1.1.5
+- **Version Date:** 2026-02-13
 - **Version Description:** *(deliberately empty — see below)*
-- **Version PID:** https://doi.org/10.5281/zenodo.17914543
+- **Version PID:** *(deliberately empty — see below)*
 
-**Why 1.1.4.** It is the pinned revision, it is a real annotated release (tag `kaipy-1.1.4`, GitHub
-release "Kaipy 1.1.4" published 2025-12-12), and it has its own Zenodo version DOI. The `v` prefix
-follows the `v1.1.3` convention this entry carried before the refresh; the underlying
-`pyproject.toml` and
-`CITATION.cff` both say `1.1.4` without a prefix, and the Zenodo record's `version` field says
-`kaipy-1.1.4`, so the prefix is a display convention rather than a source value.
+**Why 1.1.5.** A PyPI upload of the project's own package that is neither yanked nor a pre-release is
+a release, whichever branch or commit it was built from and whether or not the project tags it; that
+is the catalogue's version rule as its maintainer settled it on 2026-10-29. `kaipy 1.1.5` qualifies on
+each count. PyPI's JSON API lists `kaipy-1.1.5-py3-none-any.whl` and `kaipy-1.1.5.tar.gz`, uploaded
+2026-02-13T16:46:45Z and 2026-02-13T16:46:47Z, neither of them yanked; `1.1.5` carries no pre-release
+suffix; and the PyPI project's `Homepage` is `https://github.com/JHUAPL/kaipy`, so this is the
+project's own package. It follows 1.1.4 in Kaipy's single release series. The `v` prefix follows the
+form this entry already used (`v1.1.4`, `v1.1.3`); `pyproject.toml`, `setup.py` and PyPI write `1.1.5`.
 
-**Why the version date is 2025-12-12 and not 2025-12-03.** `CITATION.cff` at the pin says
-`date-released: 2025-12-03`, but the tag, the GitHub release and the Zenodo deposit are all dated
-2025-12-12 and the PyPI wheel was uploaded 2025-12-10. The `CITATION.cff` date was written before the
-release actually happened and is stale by nine days; the three concurring release artefacts win.
-**Recorded so a later refresh does not "correct" the date back to the CITATION.cff value.**
+**Which code 1.1.5 is.** The release was built from the unmerged branch `dev_h5concat`, not from
+`master`. Of the 176 files under `kaipy/` and `tests/` in the 1.1.5 wheel, 175 are byte-identical to
+the tree at `dev_h5concat` commit `c9957a6` ("Merged in req.txt_fix (pull request #31)", 2026-02-09),
+which declares `version = "1.1.5"` in `pyproject.toml` and `version='1.1.5'` in `setup.py`; the 176th
+is a stray compiled `kaipy/scripts/__pycache__/__init__.cpython-312.pyc` that no commit tracks. Against
+the pin, the same comparison finds `kaipy/transform.py` different. `c9957a6` is the branch's newest
+commit before the upload, and the next one, `690c41a` (2026-03-23), adds
+`kaipy/scripts/postproc/mergeGAM.py`, which the wheel does not contain — so `c9957a6` is the
+release's revision, and evidence about 1.1.5 is cited at it.
 
-**The Version Description is deliberately empty, and that is the source-faithful choice.** The
-GitHub release body for `kaipy-1.1.4` contains only the boilerplate package description and a compare
-link — it states no changes at all — and neither `CITATION.cff` nor the Zenodo 1.1.4 deposit carries
-a change list. Where the release record says nothing about what changed, asserting nothing is
-asserting what the source says.
+**The release is `c9957a6`'s code plus uncommitted edits to its two build files.** The 1.1.5 sdist's
+`setup.py` and `pyproject.toml` match no file on any ref in the repository. Each differs from
+`c9957a6`'s only in its dependency list, which the shipped files pin to 26 named versions (1.1.5
+sdist, pyproject.toml:22–49; 1.1.5 sdist, setup.py:21–48), where `c9957a6`'s lists are unpinned and
+its `pyproject.toml` has no `dash`. As a set, the pinned list is the one `requirements.txt` carries at
+`c9957a6`, and it is what the wheel declares. The sdist's `README.md`, `LICENSE.md` and `MANIFEST.in`
+are `c9957a6`'s.
 
-**Considered and not selected: a synthesised description built from the release range.** It was fully
-derived, every clause was attributable to a named commit, and it is kept here in full so a later
-refresh can see that it was available and declined rather than never produced. The candidate text
-was:
+**What 1.1.5 changes relative to `kaipy-1.1.4`, and which fields that bears on.** The tree at
+`c9957a6` differs from the pin in four files only, through six commits (`77ffa89`, `0c80983`,
+`cae50f7`, `9a19284`, `de65189`, `c9957a6`):
+- `kaipy/transform.py` — `GSEtoGSM` tested `len(outvec.x > 1)` where it meant `len(outvec.x) > 1`,
+  and 1.1.5 corrects it (`9a19284` "GSEtoGSM transform bugfix"). The transform existed before and
+  still exists, so Field 4's `Coordinate Transforms: Magnetospheric` is unchanged.
+- `setup.py` — at `c9957a6`, the version, and the Bitbucket `url` replaced by the GitHub repository
+  (Field 3). The shipped file also pins `install_requires` (1.1.5 sdist, setup.py:21–48).
+- `pyproject.toml` — the commit changes the version only; the shipped file also replaces the
+  dependency list with the pinned one (1.1.5 sdist, pyproject.toml:22–49). `requires-python`, the
+  classifiers, `keywords`, the licence text and the `[project.scripts]` table are the same in the
+  commit, the shipped file and the pin, so Fields 13, 15, 16, 20 and 21 are unaffected.
+- `requirements.txt` — every dependency is now pinned to a version, and `pytplot-mpl-temp==2.2.73` is
+  new. The shipped build files carry the same 26 names, so the 1.1.5 wheel installs `mageDash`'s
+  dependencies (Field 4) and declares `pytplot-mpl-temp` directly (Field 30). Neither changes a
+  value, and no dependency on software HSSI catalogues was added or dropped.
+
+`CITATION.cff`, the README, the documentation, the satellite-comparison configurations and every other
+module are byte-identical at `c9957a6` and at the pin, so no other field's evidence moved. `CITATION.cff`
+at `c9957a6` still says `version: "1.1.4"` and `date-released: 2025-12-03`; it was not updated for 1.1.5.
+
+**Why the version date is 2026-02-13.** 1.1.5 has no tag and no GitHub release, so its release event
+is the PyPI upload, whose UTC calendar day is 2026-02-13 (the wheel at 16:46:45Z). The build commit
+`c9957a6` is dated 2026-02-09; that is when the code was committed, not when it was released, and it
+does not override the upload.
+
+**The Version Description is deliberately empty.** There is no release title or body to draw on — no
+GitHub release and no tag — and no changelog: the tree at `c9957a6` has no CHANGELOG, release-notes or
+history file. PyPI's project description for 1.1.5 is the README, identical to 1.1.4's; it describes
+the package and how to install it, not what changed. A summary composed from the commit subjects
+above (a `GSEtoGSM` fix, a URL update, pinned requirements) would be a curator's account of the range
+presented as the project's release notes, and is not recorded.
+
+**The Version PID is deliberately empty.** No Zenodo deposit exists for 1.1.5: the concept DOI's
+`HasVersion` list names only the 1.1.2, 1.1.3 and 1.1.4 deposits, and the concept resolves to the
+1.1.4 record. The project's Zenodo deposits come from its GitHub releases, and 1.1.5 has none. The
+1.1.4 version DOI identifies 1.1.4 and is not carried onto 1.1.5. Should a 1.1.5 deposit appear, its
+version DOI becomes this value.
+
+**Superseded: why 1.1.5 was not recorded before.** HSSI held v1.1.4 until this update, and this
+dossier then argued against 1.1.5. PyPI already carried the 1.1.5 wheel uploaded 2026-02-13, and
+`dev_h5concat` already declared `version = "1.1.5"`; but there was no `kaipy-1.1.5` tag, no GitHub
+release and no Zenodo deposit, and the code was not on `master`, so recording 1.1.5 was judged to
+describe a state of the software that the repository's release record did not acknowledge, with
+"Worth revisiting at the next refresh if 1.1.5 gets tagged" as the condition for a later check.
+That followed the version rule then in force, which excluded a PyPI file built from code on neither
+the pinned lineage nor a release branch cut from it, and which, for a project that tags its releases,
+counted only tagged ones. The rule changed on 2026-10-29: a PyPI upload of the project's own package
+that is neither yanked nor a pre-release is a release whatever branch it came from and whether or not
+it is tagged.
+Nothing about 1.1.5 changed — it is still untagged — but under the current rule it is the current
+release, and the tag is no longer the condition.
+
+**`master` lags the release, and what to re-check when `dev_h5concat` merges.** `master` still ends at
+`0028c69` (`kaipy-1.1.4`), declares 1.1.4 and lacks the `GSEtoGSM` fix. `dev_h5concat` has moved past
+the release: `690c41a` ("Adds capability to merge output files from segment subdirs", 2026-03-23),
+`0c853a9`, `343844f` and `aba86dd` ("Adds VDS version for merging", 2026-03-30) add
+`kaipy/scripts/postproc/mergeGAM.py` and `kaipy/scripts/postproc/mergeGAMVDS.py` and register them in
+`pyproject.toml` and `setup.py`, none of it released. When that branch merges to `master`, or a later
+version is tagged or uploaded, re-check Field 12 (number, date, any release notes, and a version DOI if
+a GitHub release brings a Zenodo deposit), Field 4 and Fields 18–19 for the segment-merge scripts,
+Field 6 against `CITATION.cff`, and the in-repo URLs under Field 3.
+
+**The previously stored version, v1.1.4, preserved for the record.** Number `v1.1.4`, release date
+2025-12-12, PID `https://doi.org/10.5281/zenodo.17914543`, description empty. It was correct while
+1.1.4 was the newest release, and its sub-values were settled as follows, so the reasoning is kept in
+case a later refresh has to reason about 1.1.4 again.
+- *Why 1.1.4 then.* It is the pinned revision and a real annotated release (tag `kaipy-1.1.4`, GitHub
+  release "Kaipy 1.1.4" published 2025-12-12) with its own Zenodo version DOI. The `v` prefix followed
+  the `v1.1.3` convention the entry carried before; `pyproject.toml` and `CITATION.cff` at the pin both
+  say `1.1.4` without a prefix, and the Zenodo record's `version` field says `kaipy-1.1.4`.
+- *Its date was 2025-12-12, not 2025-12-03.* `CITATION.cff` at the pin says
+  `date-released: 2025-12-03`, but the tag, the GitHub release and the Zenodo deposit are all dated
+  2025-12-12 and the PyPI wheel was uploaded 2025-12-10. The `CITATION.cff` date was written before the
+  release actually happened and is stale by nine days; the three concurring release artefacts won.
+- *Its description was deliberately empty.* The GitHub release body for `kaipy-1.1.4` contains only
+  the boilerplate package description and a compare link — it states no changes at all — and neither
+  `CITATION.cff` nor the Zenodo 1.1.4 deposit carries a change list.
+
+**Considered and not selected for 1.1.4: a synthesised description built from the release range.** It
+was fully derived, every clause was attributable to a named commit, and it is kept here in full so a
+later refresh can see that it was available and declined rather than never produced. The candidate
+text was:
 
 > Adds the mageDash live MAGE run dashboard; adds a CITATION.cff author list so Zenodo DOIs carry
 > real names and ORCIDs; adds mono/diffuse auroral precipitation plotting options to REMIX; fixes
@@ -589,25 +699,15 @@ otherwise there is none, and that every clause is checkable against a named comm
 which prevailed, is that a synthesis puts words in the project's mouth: on the rendered page the
 sentence would read as the project's own release note while being a curator's reading of a commit
 range, and a field describing a release is the wrong place for that when the release itself is
-silent. The five clauses remain available above if a later refresh judges otherwise, and the commit
-attributions mean it would not have to be re-derived.
+silent. The same reasoning keeps 1.1.5's description empty.
 
-**Why 1.1.4 replaces the v1.1.3 the record held before this refresh, rather than sitting alongside
-it.** This field describes the current version of the software, and carrying two makes the entry
-ambiguous. Nothing is lost by replacing — 1.1.3's number, date, PID and description are preserved in
-this dossier immediately below. Replacing a version also leaves the superseded row orphaned in HSSI,
-which has been accepted as normal behaviour for this platform and is not a reason to avoid the
-change.
+**Why each newer version replaces the stored one rather than sitting alongside it.** This field
+describes the current version of the software, and carrying two makes the entry ambiguous. Nothing is
+lost by replacing — the superseded versions' number, date, PID and description are preserved in this
+dossier. Replacing a version also leaves the superseded row orphaned in HSSI, which has been accepted
+as normal behaviour for this platform and is not a reason to avoid the change.
 
-**Why not 1.1.5.** PyPI carries `kaipy-1.1.5-py3-none-any.whl` uploaded 2026-02-13, and the unmerged
-branch `dev_h5concat` declares `version = "1.1.5"` in `pyproject.toml`. But there is no `kaipy-1.1.5`
-tag, no GitHub release, no Zenodo deposit, and the code is not on `master` — recording it would point
-the Version PID at nothing and would describe a state of the software that the repository's release
-record does not acknowledge. 1.1.4 is the last version the project actually released. **Worth
-revisiting at the next refresh if 1.1.5 gets tagged**, since the PyPI wheel shows the project is
-already building it.
-
-**The previously stored version, preserved for the record.** Number `v1.1.3`, release date
+**The version stored before 1.1.4, preserved for the record.** Number `v1.1.3`, release date
 2025-09-30, PID `https://doi.org/10.5281/zenodo.17236774`, description
 `First contribution from outside core development team.  Minor bug fixes.` (two spaces, as stored).
 That description matches neither the name nor the body of any GitHub release, so it was checked
@@ -621,8 +721,8 @@ body has no changelog at all. Clause by clause:
   which threads a new optional `doVert=False` keyword through `plotPlane`, `plotXY` and `plotXZ` to
   allow a vertical colorbar. That is an added feature, not a bug fix.
 So the superseded description was a mostly-attributable synthesis with one inaccurate clause —
-worth knowing, but not itself the reason it was replaced, since the decision above replaces the whole
-row regardless.
+worth knowing, but not itself the reason it was replaced, since 1.1.4 replaced the whole row
+regardless.
 
 ### 13. Programming Language (RECOMMENDED)
 **Python 3.x**
@@ -664,7 +764,8 @@ There is no paper describing Kaipy. This is a settled conclusion, not an unsearc
 - The 37-line `README.md` has no citation section.
 - The Zenodo deposits carry no `isDescribedBy`, `isSupplementedBy` or `Cites` relation to any
   article; the only related identifier is the `isSupplementTo` link back to the GitHub tag.
-- A literature search over full text (`full:"kaipy"`) returns 14 records; the only one of
+- A literature search over full text (`full:"kaipy"`) returns 14 records (the same 14 when re-run on
+  2026-10-29); the only one of
   `doctype` "software" is the Zenodo deposit itself, which is Field 2, and no article among them
   describes the package. `title:"kaipy"` returns exactly that one Zenodo record.
 
@@ -673,8 +774,8 @@ Packages for Center for Geospace Storms Model Analysis and Cloud-Based Accessibi
 and JupyterLab" (Wiltberger, Smith, Winter, Sorathia, Merkin, Rodig; AGU Fall Meeting 2023; bibcode
 `2023AGUFMSH33E3094W`), whose abstract states "We first discuss the design and implementation of the
 Python package, kaipy, that facilitates the exploration and manipulation of CGS model data." It has
-no DOI and an abstract is not a reference publication; it is carried into
-Field 27 instead.
+no DOI, and a meeting abstract is not a publication: it is not a reference publication here, and
+Field 27 does not list it either (see Field 27, where its removal is recorded).
 
 ### 15. License (RECOMMENDED)
 **BSD 3-Clause "New" or "Revised" License**
@@ -707,8 +808,14 @@ entry does.
 
 ### 16. Keywords (OPTIONAL)
 
-**Recorded keywords (19).** Stored spellings are lower-case; the site renders them title-cased, so
+**Recorded keywords (20).** Stored spellings are lower-case; the site renders them title-cased, so
 the values below are the stored forms and are what a later refresh should compare against.
+
+The PyHC package marker (1): `pyhc package`. Every package listed in the PyHC registry carries it,
+written exactly so, so that `keyword:"pyhc package"` finds every PyHC package; Kaipy qualifies
+because it is listed in the registry's `_data/projects.yml` (an entry that now also links back to
+this HSSI record). The marker follows from that listing alone, not from the keyword judgements
+below, and none of them bears on it.
 
 Carried over from the record as it stood before this refresh (12): `2d graphics`, `cgs`,
 `data analysis`, `geospace`, `hdf5`, `heliosphere`, `kaiju`, `mage`, `magnetosphere`, `plotting`,
@@ -717,7 +824,7 @@ Carried over from the record as it stood before this refresh (12): `2d graphics`
 Added (7): `space weather`, `geospace modeling`, `GAMERA`, `REMIX`, `magnetohydrodynamics`,
 `ionosphere`, `model-data comparison`.
 
-Removed (1): `local` — HSSI held it before this refresh, and it is deliberately not among the 19
+Removed (1): `local` — HSSI held it before this refresh, and it is deliberately not among the 20
 recorded above.
 
 **Where the retained ones come from.** `cgs`, `mage` and `kaiju` are the project's own
@@ -794,9 +901,9 @@ three recorded above; the evidence is below.
 - **Observatory/Mission-specific** — already recorded and well earned. `kaipy/satcomp/sc_cdasws_strs.json`
   (27 spacecraft) and `sc_helio.json` (5) hard-code per-spacecraft dataset identifiers, variable names
   and coordinate systems, and `kaipy/supermage.py` fetches station data through the SuperMAG API
-  (`import supermag_api as smapi`). The form's instruction — "If observatory-specific, select
-  'observatory-specific' and indicate the observatory/mission name in the Related Observatory field"
-  — is exactly the pattern here, and Field 32 carries the names.
+  (`import supermag_api as smapi`). The form's guidance for an observatory-specific source — select
+  the observatory-specific row and name the observatory, mission or group of instruments in the
+  Related Observatory field — is exactly the pattern here, and Field 32 carries the names.
 
 **Why `HAPI` was removed.** There is no HAPI support at the pin. `git grep -Fil -- "hapi" <pin>`,
 run with no pathspec so that it covers **every tracked file**, returns no match and exits 1 — a true
@@ -991,42 +1098,46 @@ functionality for."
 ### 23. Development Status (RECOMMENDED)
 **Active**
 
-This field held no value before this refresh, so any value here is an addition.
+This field held no value before the 2026-09 refresh, which recorded `Active`.
 
 The two candidate definitions, quoted from the vocabulary rows themselves:
 - **Active** — "The project has reached a stable, usable state and is being actively developed."
 - **Inactive** — "The project has reached a stable, usable state but is no longer being actively
   developed; support/maintenance will be provided as time allows."
 
-Both halves of "stable, usable" are satisfied either way: fourteen PyPI releases since 2024-06-26,
-four tagged GitHub releases, three Zenodo deposits, published documentation and a test suite.
+Both share the precondition that the software has reached a stable, usable state, and Kaipy has:
+fourteen PyPI releases since 2024-06-26 (the first, 1.0.0, since yanked), four tagged GitHub
+releases, three Zenodo deposits, published documentation and a test suite.
 
-The question is whether development is ongoing. The evidence cuts both ways and is set out in full,
-because the answer was not obvious from either side alone.
+**What decides it: recency on the default branch.** No project statement decides the value. The
+repository is not archived, the README carries no repostatus badge, and nothing in the README or the
+documentation describes the project as moved, deprecated or maintained only as time allows. So the
+value rests on the last commit to `master`, the default branch: `0028c69`, 2025-12-12. Under six
+months from that date a project is `Active`; from six to twenty-four months a stored `Active` or
+`Inactive` is kept, because a quiet stretch shorter than two years is not evidence that development
+has stopped; from twenty-four months it is `Inactive`. Measured on 2026-10-29, `master` is in the
+middle band, so the stored `Active` stands.
 
-*What carried the decision.* `kaipy 1.1.5` was uploaded to PyPI on 2026-02-13, a real release two
-months into the current year. The branch `dev_h5concat` carries work through 2026-03-30 and already declares
-`version = "1.1.5"`. The repository was last pushed 2026-03-30 and its metadata was last touched
-2026-06-02. It is not archived and has three open issues, so it is neither closed nor abandoned by
-its maintainers.
+**Other dated activity, recorded so a later refresh can re-apply the rule from anchors rather than
+from an elapsed span.** The current release, 1.1.5, was uploaded to PyPI on 2026-02-13 from
+`dev_h5concat`, and that branch carries commits through 2026-03-30 (`aba86dd`), which is also the last
+push anywhere in the repository. Development is continuing, just off the default branch; that
+corroborates `Active`, but it is not what the rule measures.
 
-*Considered and not determinative — the case for Inactive.* `master` has had no commit since
-2025-12-12: 463 commits in the pinned ancestry, 213 in 2024, 250 in 2025 and **zero in 2026**. The
-last tagged release is 1.1.4, from December 2025, and nothing had been pushed anywhere in the
-repository for five months as of this extraction. That is a real signal and it is kept on the record
-rather than dismissed — a later refresh should be able to see that the quiet `master` branch was
-known and weighed, not overlooked.
+*Considered and not determinative — the case for `Inactive`.* `master` has had no commit since
+2025-12-12: 463 commits in the pinned ancestry, 213 in 2024, 250 in 2025 and **zero in 2026**. That is
+a real signal and it is kept on the record rather than dismissed — a later refresh should be able to
+see that the quiet `master` branch was known and weighed, not overlooked. Under the recency rule it
+moves the value only once it reaches twenty-four months. There is also no maintainer statement of
+reduced support, which is what `Inactive` describes, and from the searcher's side presenting Kaipy as
+no longer developed would be the more misleading of the two.
 
-**Active is recorded**, because the definitions turn on whether the project is being developed, not
-on where that development has landed: a project that shipped a release and pushed branch work in the
-current year is being developed, whatever its default branch shows. There is also no maintainer
-statement of reduced support, no archive flag and no deprecation notice, which is what `Inactive`
-describes, and a five-month quiet spell on a research-group package is unremarkable. From the
-searcher's side, presenting Kaipy as no longer developed would be the more misleading of the two.
-
-**What would change this.** `master` going another release cycle without a merge, with no new PyPI
-upload and no branch activity, would move the balance to `Inactive`. The next refresh should re-check
-the branch tips and the PyPI upload dates rather than assuming this conclusion still holds.
+**What would change this.** `master` reaching 2027-12-12 without a new commit makes the value
+`Inactive`. A status statement by the maintainers, a pointer to a successor, or archiving the
+repository would decide it sooner, each under its own rule. A merge of `dev_h5concat` into `master`
+moves the anchor forward. An earlier version of this section rested `Active` on the 2026 PyPI upload
+and branch work and expected `Inactive` after one more quiet release cycle; that criterion is
+superseded by the recency rule above.
 
 ### 24. Documentation (RECOMMENDED)
 https://kaipy-docs.readthedocs.io/en/latest/
@@ -1072,9 +1183,10 @@ implementation of the Python package, kaipy, that facilitates the exploration an
 model data."; the AGU 2025 abstract `2025AGUFMSM33D2439W` says "a suite of tools for analysis and
 visualization—packaged in the Kaipy Python library—has also been released to support community
 research"; and Kaipy's own README describes MAGE as developed by the NASA DRIVE Center for Geospace
-Storms, linking the centre's site. On the award side, an acknowledgements-field search finds 85
-papers acknowledging `80NSSC22M0163`, of which 72 also acknowledge "Center for Geospace Storms", so
-the number is the CGS award rather than a coincidental match; a nonsense control token returns zero,
+Storms, linking the centre's site. On the award side, an acknowledgements-field search in 2026-09
+found 85 papers acknowledging `80NSSC22M0163`, of which 72 also acknowledged "Center for Geospace
+Storms" (both counts grow as papers are indexed), so the number is the CGS award rather than a
+coincidental match; a nonsense control token returns zero,
 so that search is discriminating.
 
 *The weakness, stated plainly.* **No source found says this award funded Kaipy itself.** The sources
@@ -1144,8 +1256,7 @@ different DRIVE center's award. **Recorded because the superficial evidence is g
 
 ### 27. Related Publications (OPTIONAL)
 
-**Recorded values (3).** HSSI held no value for this field before this refresh, so all three are
-additions.
+**Recorded value (1).** HSSI held no value for this field before the 2026-09 refresh.
 
 1. https://doi.org/10.3389/fspas.2025.1663738 — Keesee, Merkin, Wiltberger, Hale, Winter and Rao,
    "Center for geospace storms graduate student workshop", *Frontiers in Astronomy and Space
@@ -1155,48 +1266,69 @@ additions.
    there, and footnote 4 is `https://kaipy-docs.readthedocs.io/en/latest/`, which independently
    corroborates Field 24 — and "The students worked through a curated set of Jupyter notebooks, which
    introduced key functionality in kaipy for reading and plotting data fields."
-2. https://doi.org/10.5281/zenodo.17427356 — De Zeeuw, Rastaetter, Kuznetsova, Wiltberger and Merkin,
-   "Advanced Visualization Tools at the CCMC: Contributed and CCMC Developed" (2025-10-20). Three of
-   its five authors are Kaipy authors or contributors. It records that Kaipy is being surfaced
-   through CCMC: "An example of one such tool is kaipy from the Center for Geospace Storms (CGS)."
-   That is a fact about the software's reach that appears nowhere else in the record.
-3. https://ui.adsabs.harvard.edu/abs/2023AGUFMSH33E3094W/abstract — Wiltberger, Smith, Winter,
-   Sorathia, Merkin and Rodig, "Developing Python Packages for Center for Geospace Storms Model
-   Analysis and Cloud-Based Accessibility using ParaView and JupyterLab", AGU Fall Meeting 2023. This
-   is the closest thing that exists to a paper *about* Kaipy — "We first discuss the design and
-   implementation of the Python package, kaipy, that facilitates the exploration and manipulation of
-   CGS model data." It has no DOI, so the ADS abstract permalink is used, which the form explicitly
-   allows for a publication with no DOI. Note that this URL returns 405 to a plain command-line
-   fetch; it renders normally in a browser, so a validator seeing that status should not treat it as
-   broken.
 
-**How these three were chosen, and what was left out.** The form defines the field as "Publications
-that describe, cite, or use the software that the software developer prioritizes but are different
-from the reference publication." Kaipy's own repository prioritises nothing — `CITATION.cff` has no
-`preferred-citation` and the README has no citation section — so which publications the developers would
-prioritise had to be inferred, and the criterion applied was: the publication must be *about* Kaipy in some
-substantive way, and Kaipy's own authors must be behind it. All three pass; each is co-authored by
-Kaipy authors and each says something about the package that the metadata does not otherwise record
-(how it is taught, where it is served, how it was designed).
+**Two entries recorded at the 2026-09 refresh were removed by this update, because neither is a
+publication.** This field holds documents of scientific merit written for, about or by the software:
+peer-reviewed articles, full proceedings and workshop papers, preprints, reports, theses, book
+chapters and deposited posters. A conference or meeting abstract never qualifies, and a slide deck
+qualifies only when it reads as a substantial standalone document. The catalogue's maintainer
+confirmed both removals on 2026-10-29.
+- https://ui.adsabs.harvard.edu/abs/2023AGUFMSH33E3094W/abstract — Wiltberger, Smith, Winter,
+  Sorathia, Merkin and Rodig, "Developing Python Packages for Center for Geospace Storms Model
+  Analysis and Cloud-Based Accessibility using ParaView and JupyterLab", AGU Fall Meeting 2023. It is
+  the closest thing that exists to a paper *about* Kaipy — "We first discuss the design and
+  implementation of the Python package, kaipy, that facilitates the exploration and manipulation of
+  CGS model data." — but it is a meeting abstract (ADS doctype `abstract`), and nothing deposited
+  stands behind it: a Zenodo title search returns no record and a Crossref bibliographic search finds
+  no poster or paper, so there was nothing to link in its place. Its text remains evidence under
+  Fields 25 and 30.
+- https://doi.org/10.5281/zenodo.17427356 — De Zeeuw, Rastaetter, Kuznetsova, Wiltberger and Merkin,
+  "Advanced Visualization Tools at the CCMC: Contributed and CCMC Developed" (DASH 2025, dated
+  2025-10-20). The deposit is a Zenodo `Presentation` whose only file is the 16-slide
+  `DASH2025-De Zeeuw.pdf`; ADS indexes it as `2025dash.confE..37D` with doctype `inproceedings`, but no
+  paper exists beyond the slides. The slides are bullets and screenshots, mostly about Kamodo; four
+  cover Kaipy, showing CCMC serving Kaipy quicklook and custom plots of contributed MAGE runs with the
+  plotting script provided. The catalogue's maintainer judged that it does not read as a standalone
+  document, so it is not a publication here. The fact it carried — that Kaipy is surfaced through
+  CCMC, "An example of one such tool is
+  kaipy from the Center for Geospace Storms (CGS)." in the deposit's description — is kept here as
+  context, not as an entry.
 
-A full-text literature search (`full:"kaipy"`) returns 14 records. Of the eleven not listed above,
-ten were rejected for the reasons below and the eleventh is the software's own Zenodo deposit:
+**How the recorded publication was chosen, and what was left out.** The form defines the field as
+"Publications that describe, cite, or use the software that the software developer prioritizes but
+are different from the reference publication." Kaipy's own repository prioritises nothing —
+`CITATION.cff` has no `preferred-citation` and the README has no citation section — so which
+publications the developers would prioritise had to be inferred, and the criterion applied was: the
+publication must be *about* Kaipy in some substantive way, and Kaipy's own authors must be behind it.
+The Frontiers paper passes: it is co-authored by Kaipy authors and records something about the package
+that the metadata does not otherwise say — how it is taught.
+
+**The literature search, last run on 2026-10-29.** ADS full-text `full:"kaipy"` returns 14 records,
+the same 14 as at the 2026-09-04 extraction (the newest entered 2026-07-01), and `ack:"kaipy"` returns
+0, so no paper credits Kaipy in its acknowledgements. A nonsense token returns 0 and
+`full:"gcmprocpy"` returns 2, one of them entered 2026-09-20, so the query discriminates and the index
+is current. Zenodo's search for `kaipy` returns 4 records: the Kaipy 1.1.4 deposit, the DASH 2025
+deck above, "Multifluid Supplemental Files" (a data deposit by Lyon, Merkin, Sorathia and Wiltberger,
+not a publication) and an unrelated article whose author's surname is Kaipy. DataCite holds no
+relation to any Kaipy DOI beyond the concept's own versions.
+
+Of the 13 ADS records not recorded above, none qualifies:
 - Five research papers that mention Kaipy only in passing while presenting MAGE science results —
   `2024GeoRL..5110772S`, `2023JGRA..12831923B`, `2025GeoRL..5217469S`, `2023JGRA..12831594S`,
-  `2025JGRA..13033884L`. These *use* the software, but a Related Publications list that grows with
-  every MAGE paper stops being a curated pointer and becomes a citation count; from the searcher's
-  side, three publications that explain the software beat eleven that merely used it.
-- Three further conference abstracts — `2025AMS...10549296W`, `2025AGUFMSH23G2637K`,
-  `2025AGUFMSM33D2439W` — all of which mention Kaipy in one clause while being about MAGE science or
-  CGS programmes. Only the 2023 abstract is substantially about the package itself.
+  `2025JGRA..13033884L`. These *use* the software, but none credits it in its acknowledgements, and a
+  Related Publications list that grows with every MAGE paper stops being a curated pointer and becomes
+  a citation count; from the searcher's side, a publication that explains the software is worth more
+  than a list of papers that merely used it.
+- Four meeting abstracts — `2023AGUFMSH33E3094W` (removed above), `2025AMS...10549296W`,
+  `2025AGUFMSH23G2637K` and `2025AGUFMSM33D2439W`. None is a publication; the last three also mention
+  Kaipy in one clause while being about MAGE science or CGS programmes.
+- `2025dash.confE..37D`, the DASH 2025 slide deck removed above.
 - `2026SpWea..2404922C`, "Advancing Heliophysics and Space Weather Modeling Through Open Science" —
   a large community position paper in which Kaipy is one of many named examples.
 - `1993JMoSt.295..113D`, an X-ray study of organic silicon compounds, which matched only because of
   an unrelated string in its text. Recorded because it is an instructive false positive from
   full-text search.
-
-That eleventh record, the Zenodo deposit, is deliberately not listed here: it is the software's own
-DOI and belongs in Field 2.
+- `2025zndo..15801040W`, the software's own Zenodo concept record, which belongs in Field 2.
 
 ### 28. Related Datasets (OPTIONAL)
 **Not found.**
@@ -1285,10 +1417,11 @@ All four URLs are reachable and all are within the 128-character limit that appl
   claim of companionship gets — and because the cost of being wrong is a
   pointer to a genuinely adjacent package, not a false capability claim.
 
-  **The abstract is deliberately not carried into Field 27.** It has no DOI; it is not indexed in
-  ADS, where a title search for "Advancing Space Weather Research with kaipy and gcmprocpy" returns
-  0 records while the same query form returns exactly 1 for the AGU 2023 abstract's title
-  (`2023AGUFMSH33E3094W`), so the zero is a real absence rather than a failed query; and the Confex
+  **The abstract is deliberately not carried into Field 27.** A meeting abstract is never a Field 27
+  entry. It also has no DOI; it is not indexed in ADS, where a title search for "Advancing Space
+  Weather Research with kaipy and gcmprocpy" returns 0 records while the same query form returns
+  exactly 1 for the AGU 2023 abstract's title (`2023AGUFMSH33E3094W`), so the zero is a real
+  absence rather than a failed query; and the Confex
   program URL is a conference-program page rather than a persistent identifier. Reading it needs a
   browser — the page loads its program client-side, so a plain fetch returns only the loading
   shell.
@@ -1334,7 +1467,7 @@ should not have to re-reason it.
 - *numpy, scipy, pandas, matplotlib, cartopy, plotly, jupyterlab, pytest, alive_progress,
   progressbar, cmasher, configparser, slack_sdk, PyQt5, dash, dash_bootstrap_components,
   flask_caching, sphinx-rtd-theme, sphinxcontrib-autoprogram* — generic infrastructure. The
-  guidance's own words are "Never list these (Tier A), no exceptions:", and for the ones not
+  guidance's own words are "Tier A — never list, no exceptions.", and for the ones not
   enumerated there the test is whether the package would be equally at home in a web app, a finance
   model or a biology pipeline. Every one of these passes that test, so all get Tier A treatment. That
   they appear in `pyproject.toml` is not an argument — it is the argument the guidance rejects.
@@ -1378,8 +1511,13 @@ Each of the four clears it with a named artefact.
   specified time range via pyspedas". This is the tplot-variable exchange the guidance names as its
   worked example of genuine interoperability, and the fact that a release was spent on
   "Compatibility with both pyspedas 1.5 and 2.0" (commit `c57cc76`) shows the project maintains the
-  interface deliberately. Note that `pytplot` is not itself a declared dependency; it arrives with
-  PySPEDAS, which is why PySPEDAS rather than PyTplot is the entry.
+  interface deliberately. `pytplot` is not among the dependencies `pyproject.toml` declares; through
+  1.1.4 it arrived only with PySPEDAS, and the 1.1.5 wheel declares `pytplot-mpl-temp==2.2.73`
+  directly (1.1.5 sdist, pyproject.toml:40 and setup.py:39; `requirements.txt` at `c9957a6` carries
+  the same pin). Either way the exchange is the PySPEDAS loader's
+  tplot output read back through `get_data`, which is why PySPEDAS rather than PyTplot is the entry:
+  a dependency declaration is not itself evidence of interoperability,
+  and PyTplot has no HSSI entry of its own.
 - **ParaView.** Kaipy ships a dedicated adapter package, `kaipy/paraview/`, documented as "Paraview
   Package" in `docs/source/package.rst`, whose `pvGam.py` and `pvutils.py` build ParaView pipelines
   through `import paraview.simple as pvs` — programmable filters that compute Alfvén and sound speeds
@@ -1683,7 +1821,7 @@ verbatim from the matched rows.
 
 | Name (verbatim) | SPASE identifier |
 |---|---|
-| 1994-022A | https://spase-metadata.org/SMWG/Observatory/GOES/8 |
+| Geostationary Operational Environmental Satellite 8 | https://spase-metadata.org/SMWG/Observatory/GOES/8 |
 | 1995-025A | https://spase-metadata.org/SMWG/Observatory/GOES/9 |
 | 1997-019A | https://spase-metadata.org/SMWG/Observatory/GOES/10 |
 | 2000-022A | https://spase-metadata.org/SMWG/Observatory/GOES/11 |
@@ -1742,13 +1880,16 @@ unsupported — each row in the table above is evidenced by its own dataset iden
 and coordinate frames.
 
 **Three costs of this choice, stated fairly and accepted.**
-1. **Five of the GOES rows have unreadable names.** GOES 8 through 12 are named by COSPAR
-   designator — `1994-022A`, `1995-025A`, `1997-019A`, `2000-022A`, `2001-031A` — in the vocabulary
-   itself. Recorded as they are, they display on Kaipy's page as five opaque strings. The names must
+1. **Four of the GOES rows have unreadable names.** GOES 9 through 12 are named by COSPAR
+   designator — `1995-025A`, `1997-019A`, `2000-022A`, `2001-031A` — in the vocabulary itself.
+   Recorded as they are, they display on Kaipy's page as four opaque strings. The GOES 8 row was
+   named by its designator too, `1994-022A`, when this field was recorded; the vocabulary has since
+   renamed that row "Geostationary Operational Environmental Satellite 8", the name copied above.
+   Its identifier did not change, so the entry's link to the row did not either. The names must
    still be copied verbatim, because the identifier is what binds and inventing a friendlier name
    would create a duplicate row; but a reader will not know what they are looking at. This is an
    upstream vocabulary problem worth reporting there, and it is a real and accepted cost of recording
-   these five.
+   these four.
 2. **Twenty-nine observatories is a lot of rows on one entry.** It is defensible only because each
    one is individually evidenced.
 3. **The GOES-8 through GOES-12 support is historical.** Those spacecraft stopped operating years
@@ -1788,7 +1929,7 @@ and coordinate frames.
 ### 33. Logo (OPTIONAL)
 https://raw.githubusercontent.com/JHUAPL/kaipy/0028c69c52a91ff378a5798708daaba4cdfb5790/docs/source/_static/kaipy-logo.png
 
-**This logo was added by this refresh** — HSSI held no logo for the entry before it.
+**This logo was added by the 2026-09 refresh** — HSSI held no logo for the entry before it.
 
 The image is the project's own logo, not an example figure: `docs/source/conf.py` sets
 `html_logo = '_static/kaipy-logo.png'` with `'logo_only': True`, so it is the banner the
