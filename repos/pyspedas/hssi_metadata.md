@@ -4,10 +4,25 @@
 **Repository:** https://github.com/spedas/pyspedas
 **Source Revision:** bbfdd632a0eb42953a8c83a489c140b13c508927
 **Extraction Date:** 2026-08-11
-**Validation Date:** 2026-08-23
+**Validation Date:** 2026-11-01
 **Validation Status:** PASS
-> **Scope note.** PySPEDAS is a multi-mission framework: the `pyspedas/projects/` tree carries 37
-> per-project subpackages, and the analysis, coordinate-transform, particle, geopack and plotting
+
+*Unqualified citations are at the header's Source Revision `bbfdd632` (on `master`, just after the
+2.1.4 tag). Passages that name `v2.2.2` cite that release's tag, commit
+`0a919ad70501a97cfc6c662adb77ad1f04aa555e`; passages that name `5a1086ad` cite `master` head
+`5a1086addb04fca179dbde8aaae39af506abe64d` (committed 2026-10-29T00:37:10Z).*
+
+**Release scope note (Fields 4, 5, 16–22 and 28–32).** These fields describe the release users
+install, read at the `v2.2.2` tag, which is on `master`'s own lineage. Code that reaches `master`
+after a release counts once it ships; the catalogue maintainer set this scope for the release updates
+of 2026-10-29. On that date `master` held one such capability: a GOES-R level 1b loader
+(`pyspedas/projects/goes/goes_l1.py`, pull request #1540, commit `ac35a09e`) that reads netCDF files.
+GOES is already recorded in Field 32 and netCDF in Field 18, so it would add no value by itself, but
+the next release update should read it for Fields 4 and 31.
+
+> **Scope note.** PySPEDAS is a multi-mission framework: the `pyspedas/projects/` tree carries 41
+> per-project subpackages at `v2.2.2` (37 at the Source Revision; DMSP, Galileo, Juno and SWFO
+> arrived in 2.2.0 and 2.2.1), and the analysis, coordinate-transform, particle, geopack and plotting
 > capabilities are shared across all of them. Several fields below (notably Software Functionality,
 > Related Region, Related Instruments and Related Observatories) are therefore best read as the union
 > of what those projects need, not as a description of one instrument or one mission.
@@ -30,8 +45,8 @@
 ### 2. Persistent Identifier (RECOMMENDED)
 - **DOI:** https://doi.org/10.5281/zenodo.17634923
 - Source: Concept DOI (all versions), declared in `pyproject.toml` `[project.urls] Concept_DOI` and in
-  `CITATION.cff` (`doi:`). Confirmed against DataCite, which resolves it with `version: 2.1.4`,
-  publisher Zenodo, and an `IsVersionOf` link from the current versioned DOI.
+  `CITATION.cff` (`doi:`). Confirmed against DataCite, which on 2026-10-29 resolves it with
+  `version: 2.2.2`, publisher Zenodo, and an `IsVersionOf` link from the current versioned DOI.
 
 ### 3. Code Repository (MANDATORY)
 - **URL:** https://github.com/spedas/pyspedas
@@ -39,12 +54,13 @@
   `code:codeRepository` custom field on the 2.1.4 record; the PyHC core registry `code` field. All
   three agree, and the URL resolves.
 
-### 4. Software Functionality (MANDATORY)
+### 4. Software Functionality (RECOMMENDED)
 - Coordinate Transforms
 - Coordinate Transforms: Ionospheric
 - Coordinate Transforms: Magnetospheric
 - Coordinate Transforms: Mission-Specific
 - Coordinate Transforms: Planetary
+- Coordinate Transforms: Heliospheric
 - Data Processing and Analysis
 - Data Processing and Analysis: 2D Slices
 - Data Processing and Analysis: 3D Particle Distribution Processing
@@ -143,15 +159,43 @@ den_fairfield, Lopez, TAG14), `utilities/mpause_2.py`, `mpause_t96.py`, `utiliti
   `plots/mms_overview_plot.py` and `projects/themis/ground/ask.py` are mission analysis products
   rather than generic utilities.
 
+**Evidence for `Coordinate Transforms: Heliospheric`, added with the 2.2.2 release.** Release 2.1.5
+added heliocentric frames to the core transform engine (its notes: "Add heliocentric coordinate
+transforms, update documentation", pull request #1439). At `v2.2.2`, `cotrans_tools/cotrans.py`
+documents its systems as "GSE, GSEQ, GSM, SM, GEI, GEO, MAG, J2000, HEE, HAE, HEEQ" and accepts
+`"hee"`, `"hae"` and `"heeq"` for `coord_in` and `coord_out`; `cotrans_tools/cotrans_lib.py`
+implements `subgse2hee`, `subhee2gse`, `subgei2hae`, `subhae2gei`, `subgseq2heeq` and
+`subheeq2gseq`, and the `position=True` option applies the Earth–Sun change of origin to position
+vectors using Astropy's bundled solar-system ephemeris. `docs/source/coords.rst` lists HEE
+(Heliocentric Earth Ecliptic), HAE (Heliocentric Aries Ecliptic) and HEEQ (Heliocentric Earth
+Equatorial) with their axis definitions. These are heliospheric systems in this row's sense, and a
+user selects them through the documented `coord_out` keyword. The same release added GSEQ, a
+geocentric solar-equatorial frame that `Coordinate Transforms: Magnetospheric` already covers. HSSI
+held this field without the Heliospheric row until this update.
+
+**The other capabilities added from 2.1.5 to 2.2.2 add no value here.** `time_interpolate` and its
+IDL-named wrapper `tinterpol_mxn` (time-series interpolation), `interpolate_rotation` (interpolating
+time series of rotation matrices and quaternions), the DAS2 utilities and the Juno, Galileo, DMSP and
+SWFO loaders (data access), user preference files (configuration), and new plot options (filling
+between lines, grid backgrounds, wrapped axis titles, asymmetric error bars) all fall under values
+already recorded. No capability was removed: between the Source Revision and `v2.2.2` no file was
+deleted, and the only renames are the Kyoto and MMS configuration modules.
+
 **Considered and not selected.** Recording these so a later refresh does not re-propose them without
 new evidence.
 
-- `Coordinate Transforms: Heliospheric` and `Coordinate Transforms: Solar` — PySPEDAS *loads* data
-  that is already expressed in RTN (PSP `mag_RTN*`, Solar Orbiter `rtn-normal`, STEREO `coord='RTN'`),
-  but a full-text search finds no transform to or from RTN, HCI, HAE, HEE, Carrington, Stonyhurst or
-  helioprojective coordinates. `cotrans.py` documents its supported set as exactly
-  `gse, gsm, sm, gei, geo, mag, j2000`. Reading data in a heliospheric frame is not transforming to
-  one.
+- `Coordinate Transforms: Solar` — still not selected at `v2.2.2`. This row is for converting between
+  solar coordinate systems such as Carrington, Stonyhurst, helioprojective and heliographic latitude
+  and longitude, the coordinates of features on the solar disk. A case-insensitive search of the
+  `v2.2.2` tree for "carrington", "stonyhurst" and "helioprojective" finds nothing. The one
+  solar-equatorial frame PySPEDAS has, HEEQ, is the Cartesian form of Stonyhurst heliographic
+  coordinates, used here for heliocentric positions and vectors; that is what the Heliospheric row
+  records, and HSSI's Field 4 classification guidance lists Stonyhurst among the heliospheric systems
+  as well as the solar ones. The Heliospheric row was likewise rejected before
+  2.1.5: at the Source Revision `cotrans.py` documented its supported set as exactly
+  `gse, gsm, sm, gei, geo, mag, j2000`, and PySPEDAS only *loaded* data already expressed in RTN (PSP
+  `mag_RTN*`, Solar Orbiter `rtn-normal`, STEREO `coord='RTN'`). There is still no RTN or HCI
+  transform at `v2.2.2`.
 - `Data Processing and Analysis: Image Processing` — PySPEDAS loads image-bearing products (THEMIS
   all-sky keograms and full images via `themis/ground/ask.py`, IMAGE FUV/EUV, Polar UVI/VIS/PIXIE,
   TWINS imager, ERG/ISEE OMTI all-sky imagers) and renders SECS/EICS vector and contour maps, but it
@@ -192,7 +236,7 @@ new evidence.
   `Mission-related: Science Data Processing`; the specific value is the better fit for THEMIS
   spin-model and calibration processing, so only the specific one is recorded.
 
-### 5. Related Region (MANDATORY)
+### 5. Related Region (RECOMMENDED)
 - Earth Atmosphere
 - Earth Auroral Subregion
 - Earth Inner Magnetosphere
@@ -207,13 +251,14 @@ new evidence.
 - Planetary Magnetospheres
 - Solar Environment
 - Solar Wind
+- Jupiter Magnetosphere
 
-**Why fourteen regions rather than the coarser five.** The five previously stored values (Earth
+**Why fifteen regions rather than the coarser five.** The five previously stored values (Earth
 Atmosphere, Earth Magnetosphere, Interplanetary Space, Planetary Magnetospheres, Solar Environment)
 are the keys of the TTL-export mapping in the HSSI codebase, not the selectable vocabulary. The
 selectable vocabulary offers 24 values (as of 2026-08-11), and the guidance is to prefer the most
 specific applicable region. The five are retained because they remain true at the coarse level; the
-nine additions below each rest on repository evidence, and none of the five was replaced.
+ten additions below each rest on repository evidence, and none of the five was replaced.
 
 - **Earth Ionosphere** — `geopack/ttrace2endpoint.py` traces field lines to the northern and southern
   ionosphere and `tplot_tools/MPLPlotter/tplot_map.py` maps those footpoints;
@@ -254,6 +299,16 @@ nine additions below each rest on repository evidence, and none of the five was 
   solar-wind plasma instruments with dedicated load routines.
 - **Mars Magnetosphere** — `projects/maven/` loads MAG, STATIC, SWIA, SWEA, SEP, LPW, NGIMS, EUV and
   IUVS data, i.e. the induced Martian magnetosphere and its ionosphere.
+- **Jupiter Magnetosphere** (added with the 2.2.2 release, and last in the list because it was
+  appended to the stored order) — release 2.2.0 added Juno and Galileo projects ("Added Juno and
+  Galileo projects, DAS2 server utilities."). At `v2.2.2`, `projects/juno/load.py` and
+  `projects/galileo/load.py` load each mission's magnetometer data (`Juno/FGM/MagComponents`, the
+  field magnitude and the electron cyclotron frequency; `Galileo/MAG/Magnitude` and `Galileo/MAG/Fce`)
+  and its Jovicentric ephemeris, which gives the spacecraft's magnetic latitude, local time, L-shell
+  and Io phase in Jupiter's magnetosphere (`projects/juno/README.md`, `projects/galileo/README.md`).
+  That is magnetospheric data from the Jovian system, the same footing on which MAVEN earns Mars
+  Magnetosphere. `Planetary Magnetospheres` is already recorded as its coarse row. HSSI held this
+  field without it until this update.
 
 **Considered and not selected.**
 
@@ -262,13 +317,18 @@ nine additions below each rest on repository evidence, and none of the five was 
   and energetic particles) plus orbit data, and its STEREO module loads MAG, PLASTIC, SWEA, STE,
   SEPT, HET, LET, SIT and WAVES — no LASCO, no SECCHI, no EUV imager. Parker Solar Probe does fly
   through the corona, but PySPEDAS provides no corona-specific analysis; `Solar Environment` already
-  covers the near-Sun in-situ missions.
+  covers the near-Sun in-situ missions. The SWFO module added in 2.2.1 does not change this: its
+  `README.md` says "CCOR FITS images are not handled by this in situ loader.", so the mission's
+  coronagraph is not supported.
 - **Earth Lower and Middle Atmosphere** — BARREL balloons fly in the stratosphere, but their science
   target is magnetospheric electron precipitation, not the neutral middle atmosphere; no module
   models or analyses lower/middle atmospheric quantities.
-- **Jupiter**, **Saturn**, **Uranus**, **Neptune Magnetosphere** — the Ulysses module loads that
-  mission's heliospheric in-situ datasets, which happen to span its Jupiter flyby, but there is no
-  outer-planet-specific functionality, coordinate system or model.
+- **Saturn**, **Uranus**, **Neptune Magnetosphere** — no module loads data from any of these systems:
+  a case-insensitive search of the `v2.2.2` tree for "saturn", "uranus", "neptune" and "cassini"
+  finds nothing, and Voyager appears only in the CDAWeb tutorial noted under Heliosheath below.
+  Jupiter was rejected on the same grounds until 2.2.0: before the Juno and Galileo loaders, the only
+  Jovian data was the Ulysses module's heliospheric in-situ record, which happens to span that
+  mission's Jupiter flyby.
 - **Heliosheath** — no Voyager or IBEX support. Voyager appears in this repository only as a CDAWeb
   GUI tutorial example (`docs/source/cdaweb.rst`, `cdagui_tools/tests/test_cdagui.py`), which is a
   demonstration of the generic CDAWeb browser rather than mission support.
@@ -449,6 +509,11 @@ nine additions below each rest on repository evidence, and none of the five was 
   README's PyTplot section, which records that from PySPEDAS 2.0 the external `pytplot` /
   `pytplot-mpl-temp` packages are no longer required because their functionality now lives in
   `pyspedas/tplot_tools/`. No wording change is warranted for this release.
+- Re-checked at `v2.2.2`: `pyspedas/projects/` holds 41 subpackages, the four new ones (DMSP, Galileo,
+  Juno, SWFO) also absent from the README's unchanged 33-entry list, so "more than 35" still holds.
+  Every other claim still stands, and the `CITATION.cff` abstract the opening sentence quotes is
+  unchanged. The new heliocentric frames sit within "coordinate transformations"; the description is
+  kept as stored (Field 8 rule 6).
 
 ### 9. Concise Description (OPTIONAL)
 - **Concise Description:** Python framework for multi-mission heliophysics data retrieval, analysis,
@@ -461,7 +526,8 @@ nine additions below each rest on repository evidence, and none of the five was 
 - **Publication Date:** 2016-10-11
 - Source: the repository's first commit, `9bb0757e66fba434a09335833fe278e302d5fe62`, "Turning project
   into pypi package", dated 2016-10-11. Deliberately *not* taken from DataCite or `CITATION.cff`:
-  the DOI record's `Issued` date tracks the most recent Zenodo deposit (currently 2026-08-05) and
+  the DOI record's `Issued` date tracks the most recent Zenodo deposit (2026-10-21, the 2.2.2
+  deposit) and
   `CITATION.cff`'s `date-released` (2025-11-07) describes a later software release, neither of which
   is the date of first publication of this software.
 
@@ -472,38 +538,55 @@ nine additions below each rest on repository evidence, and none of the five was 
   correct entry because the DOIs were minted through the GitHub–Zenodo workflow.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** 2.1.4
-- **Version Date:** 2026-08-06
-- **Version Description:** PySPEDAS 2.1.4 supersedes 2.1.2 and rolls up the intervening 2.1.3
-  release. From 2.1.3: customizable basemap plotting with ionospheric footpoint traces and station
-  field-of-view overlays (`tplot_map`), more efficient MMS SDC burst-interval queries, improved
-  handling of input and output coordinate systems and units in the field-line tracing routines, and a
-  `quiet` flag to suppress progress messages in the coordinate-transform routines. New in 2.1.4: an
-  option for load routines to apply THEMIS eclipse spin-model corrections; general-purpose TAI/Unix
-  time converters with the MMS TAI wrappers rewired through them; reworked and cached MMS fast-survey
-  and burst-segment queries; retry handling for HTTP 429 responses from the MAVEN and MMS SDC
-  servers; a keyword to disable MAVEN KP file downloads; a fix to HPCA multiply-charged (He++) flux
-  conversion; correct propagation of spectrogram pseudovariable options such as ytitle and zlog;
-  support for dividing a time series by a scalar; preservation of `store_data` input dictionaries;
-  and an initial pre-commit configuration.
-- **Version PID:** https://doi.org/10.5281/zenodo.21812086
-- Source: git tag `v2.1.4` at commit `8eb4272ad4d586e6ea84404c671d45810b421334`; `pyproject.toml`
-  `version = "2.1.4"` and `[project.urls] Versioned_DOI`; the GitHub release notes for `v2.1.3` and
-  `v2.1.4`; and `git log v2.1.2..v2.1.4`. The intervening release `v2.1.3` is commit
-  `66c874565da0626c4377a20d549e9d07dba3382b`, whose GitHub release was published 2026-06-25.
-- **How the version date was chosen, and the two dates that disagree with it.** 2026-08-06 is the
-  date of the release commit itself (`8eb4272a`, authored and committed 2026-08-06 09:23:54 −0700),
-  which is also the day the GitHub release object was created (2026-08-06T16:23:54Z). Two other
-  candidate dates exist and were rejected: GitHub reports `published_at` 2026-08-07T21:26:15Z, which
-  is when the release became publicly visible rather than when it was cut, a day later than the
-  release commit; and Zenodo/DataCite record an `Issued` / `publication_date` of
-  2026-08-05, which is *earlier* than the release commit and earlier than the Zenodo record's own
-  creation timestamp (2026-08-07T23:33:50Z) and is therefore not supported by any repository
-  artifact. Zenodo's deposit metadata is known to reproduce upstream errors verbatim, so the
-  repository-derived date is preferred. The same reasoning was applied to the previous stored version
-  (2.1.2, dated 2026-06-08), where the release commit and the GitHub release date happened to agree.
+- **Version Number:** 2.2.2
+- **Version Date:** 2026-10-21
+- **Version Description:** exactly the text in the block below: three lines, each beginning `* `,
+  joined by single newlines.
+
+```text
+* fix: reset right_axis per pseudovariable, so it doesn't set for all p…
+* 550 add functionality for filling in underover lines
+* Fix netcdf missing value handling
+```
+
+- **Version PID:** https://doi.org/10.5281/zenodo.23543425
+- **Why 2.2.2** (read at the `v2.2.2` tag and at `master` head `5a1086ad`). The lightweight tag
+  `v2.2.2` points at `0a919ad7`, an ancestor of `master` head (`git merge-base --is-ancestor` holds),
+  whose `pyproject.toml` declares `version = "2.2.2"` and
+  `Versioned_DOI = "https://doi.org/10.5281/zenodo.23543425"`. The GitHub release "PySPEDAS v2.2.2"
+  was published 2026-10-21T22:04:36Z and is neither a draft nor a pre-release. PyPI's JSON API gives
+  `2.2.2` as `info.version`, with a wheel and an sdist uploaded from 2026-10-21T22:05:52Z, neither
+  yanked, and its `project_urls` name this repository. DataCite resolves
+  `10.5281/zenodo.23543425` with `version: 2.2.2` and an `IsVersionOf` link to the concept DOI. The
+  number is written bare, the form this entry has always used and the form `pyproject.toml` and PyPI
+  write; the tag carries a `v`.
+- **Nothing newer had been released on 2026-10-29.** `master` head `5a1086ad` still declares
+  `version = "2.2.2"`. Its four commits after the tag (test and CI changes, a typo fix, and the GOES-R
+  level 1b loader noted in the header) are unreleased (rule 2), and no later tag, GitHub release or
+  PyPI upload exists.
+- **Releases between 2.1.4 and 2.2.2**, all superseded by 2.2.2 (rule 3): 2.1.5 (GitHub release
+  published 2026-09-10), 2.2.0 (2026-09-22) and 2.2.1 (2026-10-19). Each is tagged on `master`'s
+  lineage, released on GitHub and uploaded to PyPI.
+- **Version date.** 2026-10-21 is the UTC day of the GitHub release's `published_at` (rule 7). The
+  tagged commit (2026-10-21 15:03:59 −0700, which is 22:03:59 UTC), the PyPI upload, the Zenodo
+  deposit (created 2026-10-21T22:09:31Z) and DataCite's `Issued` date all fall on the same UTC day,
+  so no source disagrees for this release.
+- **Version description.** The release body is GitHub's generated list of pull requests under
+  "What's Changed". The value keeps three of its four items word for word, without their trailing
+  `by @user in …/pull/N` credits: the right-axis fix, the new option to fill between plotted lines
+  and the netCDF missing-value fix are each something a user can hit or use (rule 14). The fourth item,
+  "Pin certifi>=2026.10.19", is a dependency pin and is dropped, as are the "What's Changed" heading
+  and the "Full Changelog" link (rules 14 and 16). The first item ends in "p…" because GitHub cut the
+  pull request's title short when it generated the notes. The release's own text is kept as it stands
+  rather than completed from the pull request (rule 15), and a later refresh must not "repair" it.
+  The release name, "PySPEDAS v2.2.2", says nothing beyond the tag (rule 13).
+- **Previous values.** HSSI held 2.1.4 (dated 2026-08-06, Version PID
+  `https://doi.org/10.5281/zenodo.21812086`) until this update; a newer release superseded it
+  (rule 3). Its description was a curator's summary rolling up the 2.1.3 and 2.1.4 notes, which
+  rule 15 does not allow and rule 10 does not carry onto 2.2.2. Its date was the 2.1.4 release
+  commit's day; that release was published on GitHub on 2026-08-07, the date rule 7 now takes.
 - **Stored form versus displayed form.** The value stored for the version number is the bare string
-  `2.1.4`. The read API renders it with the software name prefixed, as `PySPEDAS - 2.1.4`; that
+  `2.2.2`. The read API renders it with the software name prefixed, as `PySPEDAS - 2.2.2`; that
   prefix is a display transform and must never be written back into the version field.
 - **Known side effect of changing this field.** Replacing the version replaces the underlying version
   record rather than editing it, leaving the previous one unreferenced. This has been reviewed and
@@ -519,8 +602,10 @@ nine additions below each rest on repository evidence, and none of the five was 
 
 ### 14. Reference Publication (RECOMMENDED)
 - **DOI:** https://doi.org/10.3389/fspas.2022.1020815
-- Title: "The Space Physics Environment Data Analysis System in Python" (Angelopoulos et al.,
-  *Frontiers in Astronomy and Space Sciences*, 2023).
+- Title: "The Space Physics Environment Data Analysis System in Python" (Grimes et al.,
+  *Frontiers in Astronomy and Space Sciences* 9, 2022; published 2022-10-06). An earlier revision of
+  this record credited it to "Angelopoulos et al." and dated it 2023; Crossref lists Eric W. Grimes
+  first of sixteen authors, with Vassilis Angelopoulos sixth.
 - Source: the `IsDescribedBy` related identifier on both the concept DOI and the 2.1.4 versioned DOI
   in DataCite, and the `isDescribedBy` relation in the Zenodo record.
 
@@ -532,8 +617,10 @@ nine additions below each rest on repository evidence, and none of the five was 
   `MIT License` with SPDX identifier `mit`. The URI recorded here is the one the HSSI licence entry
   itself carries (`https://spdx.org/licenses/MIT`); note that DataCite instead publishes
   `https://opensource.org/licenses/MIT` for the same licence, and that the DOI record additionally
-  asserts "Copyright (C) 2026, Regents of the University of California (unless otherwise noted in
-  source code)", which is a copyright statement rather than a second licence.
+  asserts "Copyright 2026, UC Regents et al", which is a copyright statement rather than a second
+  licence. (The 2.1.4 deposit worded it "Copyright (C) 2026, Regents of the University of California
+  (unless otherwise noted in source code)".) `LICENSE.txt` and the package metadata are unchanged at
+  `v2.2.2`.
 
 ---
 
@@ -584,6 +671,7 @@ nine additions below each rest on repository evidence, and none of the five was 
 - pitch angle distributions
 - plasma
 - poes
+- pyhc package
 - python
 - python package
 - pytplot
@@ -600,6 +688,7 @@ nine additions below each rest on repository evidence, and none of the five was 
 - space weather
 - spectrograms
 - spedas
+- swfo
 - themis
 - time series analysis
 - tools
@@ -612,8 +701,22 @@ nine additions below each rest on repository evidence, and none of the five was 
   one legacy entry `IDL SPEDAS`. The web view renders them in Title Case (`Ace`, `Idl Spedas`, …);
   that is a display transform. Comparisons against any other source must be done on the
   case-normalized string, or the same keyword will look like drift.
+- **`pyhc package`.** PySPEDAS is listed in the PyHC registry's `_data/projects_core.yml` (as
+  `pySPEDAS`), so it carries the catalogue's PyHC marker keyword, written exactly `pyhc package`
+  (Field 16 rule 15). HSSI already stored it; this record omitted it until the 2.2.2 release update.
+- **`swfo`.** Release 2.2.1 added a loader for NOAA's Space Weather Follow-On mission
+  (`pyspedas.projects.swfo`, with `mag()`, `swips()` and `stis()`). No observatory row exists for
+  SWFO (see Related Observatories), so neither Field 31 nor Field 32 can carry it, and without a
+  keyword a searcher typing the mission's name would not find PySPEDAS. It is added as the mission
+  name the project uses for the module (rule 10), written lower-case; no keyword row for it, or for
+  a variant of it, existed before this update (rule 12). The other three missions added in 2.2.0 and
+  2.2.1 (Juno, Galileo and DMSP) are recorded in Related Observatories, so they are not repeated here
+  (rule 6).
 - **Coverage.** Every keyword declared in `pyproject.toml` at 2.1.4 (50 terms) is present here after
-  case normalization; the release added no new package keyword relative to the stored set. The
+  case normalization; the release added no new package keyword relative to the stored set.
+  `pyproject.toml`'s keywords and `CITATION.cff` are unchanged at `v2.2.2`, and the repository's
+  GitHub topics on 2026-10-29 (`heliophysics`, `python`, `science-research`, `space`,
+  `space-physics`) are all already present (`science-research` as `science research`). The
   remainder are capability and data-service terms added when the record was enriched
   (`cdaweb`, `coordinate transformations`, `hapi`, `heliosphere`, `IDL SPEDAS`, `particle moments`,
   `pitch angle distributions`, `plasma`, `python`, `pytplot`, `science research`, `solar wind`,
@@ -624,12 +727,17 @@ nine additions below each rest on repository evidence, and none of the five was 
   `Parker Solar Probe` and `Solar Orbiter`, which are the long forms of the PSP and SOLO
   abbreviations already in that list. The other twelve are `plotting`, `line plots`,
   `spectrogram plots`, `particles`, `moments`, `fields`, `coordinates`, `data access`,
-  `magnetic field modeling`, `geomagnetic`, `GMAG` and `IUGONET`. Mission names belong in Related
-  Observatories, where they are recorded with SPASE identifiers, and all but the last of those
-  twelve are near-synonyms of terms already present, which would create near-duplicate rows in an
-  open vocabulary that never rejects a value; `IUGONET` is a data-network label whose exclusion is
-  reasoned out as a documented omission under Related Observatories. This trimming is a settled
-  decision, not an omission to repair.
+  `magnetic field modeling`, `geomagnetic`, `GMAG` and `IUGONET`. When this record was curated in
+  August 2026 they were left out for this record's own reasons: the missions are recorded in Related
+  Observatories with SPASE identifiers, all but the last of the twelve are near-synonyms of terms
+  already present here, and `IUGONET` is a data-network label whose exclusion is reasoned out as a
+  documented omission under Related Observatories.
+- **The trim is a settled user decision for PySPEDAS only.** Field 16 rule 9 includes a project's
+  own declared keywords even when they overlap another field, so on its own it would add most of these
+  thirty terms. On 2026-10-29 the catalogue maintainer, with rule 9 in view, decided to keep the
+  August trim for this record. The decision is specific to PySPEDAS and sets no precedent: other
+  software applies rule 9 as written. A later update should not re-propose the thirty terms unless
+  the project's keyword list changes.
 
 ### 17. Data Sources (OPTIONAL)
 - CDAWeb
@@ -643,6 +751,7 @@ nine additions below each rest on repository evidence, and none of the five was 
 - S3/Cloud-aware
 - VirES
 - WDC
+- das2
 
 - Source for the values carried forward: `cdagui_tools/` wraps `cdasws` for CDAWeb;
   `hapi_tools/hapi.py` wraps `hapiclient`; `projects/omni/` loads the OMNI record; `vires/load.py`
@@ -661,30 +770,56 @@ nine additions below each rest on repository evidence, and none of the five was 
     and `projects/themis/ground/gmag.py` queries `themis.ssl.berkeley.edu/gmag/gmag_json.php` for the
     ground magnetometer station list), the UCLA SECS server (`projects/secs/config.py`,
     `http://vmo.igpp.ucla.edu/data1/SECS/`), the University of New Hampshire MICA server
-    (`projects/mica/config.py`, `http://mirl.unh.edu/ULF/cdf/`) and the ISEE/Nagoya ERG Science
+    (`projects/mica/config.py`, `http://mirl.unh.edu/ULF/cdf/`), the ISEE/Nagoya ERG Science
     Center endpoint behind the ERG modules (`projects/erg/config.py`,
-    `https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/`). Worth recording so it is not misread later:
+    `https://ergsc.isee.nagoya-u.ac.jp/data/ergsc/`), and ESA's Cluster Science Archive, from which
+    `projects/cluster/load_csa.py` requests products at `https://csa.esac.esa.int/csa-sl-tap/data?`
+    (an earlier revision of this list omitted it). Worth recording so it is not misread later:
     `projects/themis/config.py` also carries a UCLA THEMIS mirror
     (`https://themis-data.igpp.ucla.edu/`) and an SPDF path, but both are commented out — the active
     THEMIS server is Berkeley's, and UCLA's role here is SECS, not THEMIS.
   - `Other` — the general, multi-mission services with no row of their own: the SPDF file tree, used
     as the default or fallback archive by many project modules; NOAA's NCEI archive
     (`projects/goes/config.py`, `projects/poes/config.py`); and EarthScope's FDSN service
-    (`pyspedas/mth5/load_fdsn.py`, `client="EARTHSCOPE"`).
+    (`pyspedas/mth5/load_fdsn.py`, `client="EARTHSCOPE"`). The two archives serve the modules added
+    in 2.2.1 as well: at `v2.2.2` the DMSP module reads the SPDF tree
+    (`projects/dmsp/config.py`, `https://spdf.gsfc.nasa.gov/pub/data/dmsp/`), and the SWFO module
+    reads NOAA's archive (`projects/swfo/config.py`,
+    `https://archive.data.noaa.gov/satellite-spaceweather/`), which `docs/source/swfo.rst` calls "the
+    NOAA NCEI SOLAR-1 archive".
 - **Evidence for `GFZ` and `WDC`.** `GFZ` — `projects/noaa/noaa_load_kp.py` takes a `gfz` keyword
   and switches to the GFZ (Helmholtz Centre Potsdam) archive via `CONFIG['gfz_remote_data_dir']`,
   and it does so automatically for years from 2018 onward;
   `projects/kyoto/load_geomagnetic_indices.py` lists `"gfz"` among its selectable sources.
   `WDC` — `projects/kyoto/load_dst.py` and `load_ae.py` download the Dst and AE indices directly
   from the World Data Center for Geomagnetism, Kyoto at `https://wdc.kugi.kyoto-u.ac.jp/`.
+- **Evidence for `das2`, added with the 2.2.2 release.** Release 2.2.0 added "DAS2 server utilities"
+  alongside the Juno and Galileo projects. At `v2.2.2`, `pyspedas/utilities/das2/` holds a client of
+  its own for the das2 protocol: `das2ascii.py` requests data, `das2info.py` requests dataset listings,
+  peer servers and dataset definitions, and `das2tplot.py` turns the responses into tplot variables;
+  its `README.md` says "Currently, functions in this directory support DAS 2.1 server API, but only
+  ASCII responses." `projects/juno/load.py` and `projects/galileo/load.py` use it against the
+  University of Iowa server, `https://jupiter.physics.uiowa.edu/das/server` (`projects/juno/config.py`,
+  `projects/galileo/config.py`). HSSI held this field without `das2` until this update.
 - **Considered and not selected.** `SSCWeb` — `projects/themis/state_tools/ssc.py` and `ssc_pre.py`
   are documented as loading "THEMIS current/past orbit data from CDAWeb/SSCWeb", but the path they
   build is the CDAWeb file tree (`https://cdaweb.gsfc.nasa.gov/pub/data/themis/thc/ssc/`) and there
   is no SSCWeb web-service client in the dependency set, so `CDAWeb` already covers it.
-  `Madrigal`, `AMDA` and `TAP` — no references anywhere in the tree. `das2` — the only occurrences are the University of Iowa HAPI
-  endpoint `http://planet.physics.uiowa.edu/das/das2Server/hapi`, printed in an error message in
-  `hapi_tools/hapi.py` and listed among the known HAPI servers in `docs/source/hapi.rst`; PySPEDAS
-  reaches that server over HAPI, not over the das2 protocol.
+  `Madrigal` and `AMDA` — no references anywhere in the tree, at the Source Revision or at
+  `v2.2.2`. `TAP` — the one Table Access Protocol endpoint the tree touches is the Cluster Science
+  Archive's: `projects/cluster/load_csa.py` builds its requests on
+  `https://csa.esac.esa.int/csa-sl-tap/data?`, a path under that archive's TAP server, and it was
+  already there at the Source Revision. But the request is a product download
+  (`retrieval_type=PRODUCT` with `DATASET_ID`, start and end dates), not a TAP table query: no ADQL
+  appears anywhere in the tree. The project's own `pyspedas/projects/cluster/AGENTS.md`, new by
+  `v2.2.2`, calls it "one CSA TAP query"; that names the server, but the request is a fixed
+  product-download URL for one mission's archive rather than a client of the protocol. The archive is
+  the Cluster mission's own, so `Observatory/Mission-specific` carries it (above). An earlier revision of this record said `TAP` had
+  no references anywhere in the tree; that was wrong. `das2` was rejected before 2.2.0 because the
+  only occurrences were the University of Iowa HAPI endpoint
+  `http://planet.physics.uiowa.edu/das/das2Server/hapi`, printed in an error message in
+  `hapi_tools/hapi.py` and listed among the known HAPI servers in `docs/source/hapi.rst`, which
+  PySPEDAS reaches over HAPI. The das2 client added in 2.2.0 superseded that (see above).
 - **Trap worth remembering.** The Virtual Solar Observatory entry in this vocabulary ends with a
   full stop (`The Virtual Solar Observatory.`). It is not selected here — PySPEDAS has no VSO client
   — but any future addition must copy the trailing period or it will not match.
@@ -726,7 +861,13 @@ nine additions below each rest on repository evidence, and none of the five was 
   spherical/Cartesian conversion helpers in nine files under `particles/spd_part_products/` and
   `projects/erg/`. This is a relevance correction, not a vocabulary miss: `FITS` does exist as a row
   in the live `FileFormat` vocabulary, so a future refresh that finds the value available should not
-  read its absence here as a resolution failure.
+  read its absence here as a resolution failure. Re-checked at `v2.2.2`: the only new "fits" hits are
+  the words "spin fits" in `pyspedas/projects/themis/spacecraft/AGENTS.md`, the Wind `3dp_emfits_e0`
+  datatype name again, now also in `pyspedas/projects/wind/AGENTS.md`, a sentence in
+  `docs/source/devguide.rst` ("only if it fits the runtime and reliability criteria") and the SWFO
+  module's `README.md`, which says "CCOR FITS images are not handled by this in situ loader." The
+  modules added from 2.1.5 to 2.2.2 bring no new format: DMSP reads CDF, SWFO reads gzip-compressed
+  netCDF, and the DAS2 utilities parse das2's ASCII responses (`ascii`).
 - **Considered and not selected.** `Zarr` — no Zarr use; the cloud support streams CDF and netCDF
   objects through `fsspec`/`s3fs` rather than a chunked array store. (The only textual matches for
   "zarr" anywhere in the source tree are the local variables `bzarr` and `bzarra` in
@@ -797,14 +938,19 @@ nine additions below each rest on repository evidence, and none of the five was 
   vocabulary is closed and rejects unknown values, so phenomena that PySPEDAS supports but that have
   no row here — substorms, radiation-belt dynamics, magnetic reconnection, plasma waves — would have
   to be represented through Keywords instead, which is the only open vocabulary in the form.
+- **Re-checked at `v2.2.2`.** The SWFO module added in 2.2.1 loads that mission's L1 solar-wind
+  plasma, magnetic field and energetic-particle data, which `Solar Wind` already covers, and
+  `docs/source/swfo.rst` says "CCOR coronagraph images are outside this loader's scope.", so it gives
+  `Solar Corona` no support. The DMSP, Juno and Galileo modules add no row either.
 
 ### 23. Development Status (RECOMMENDED)
 - **Status:** Active
-- Source: the repostatus.org "Active" badge in `README.md`; `pyproject.toml` classifier
-  `Development Status :: 5 - Production/Stable`; Zenodo's `code:developmentStatus` of "active"; 97
-  commits and two tagged releases (2.1.3 and 2.1.4) between the previously recorded version and the
-  `v2.1.4` tag; the PyHC core registry rates community, documentation, testing, software
-  maturity, Python 3 support and license all "Good".
+- Source: the repostatus.org "Active" badge in `README.md`, still present at `master` head
+  `5a1086ad` (rule 3); `pyproject.toml` classifier `Development Status :: 5 - Production/Stable`;
+  Zenodo's `code:developmentStatus` of "active" on the 2.2.2 deposit; the PyHC core registry rates
+  community, documentation, testing, software maturity, Python 3 support and license all "Good".
+  Dated anchors: the last commit on `master` is `5a1086ad` of 2026-10-29 (00:37 UTC), the latest
+  release is 2.2.2 of 2026-10-21, and the repository is not archived.
 
 ### 24. Documentation (RECOMMENDED)
 - **URL:** https://pyspedas.readthedocs.io
@@ -838,10 +984,112 @@ nine additions below each rest on repository evidence, and none of the five was 
 ## Section 3: Additional Metadata
 
 ### 27. Related Publications (OPTIONAL)
-Not found. The Angelopoulos et al. (2023) *Frontiers* paper is the reference publication and is
-recorded in Field 14; it is the only publication either DOI record relates to
-(`IsDescribedBy`). The repository's `README.md` and documentation cite no further publications as
-developer priorities, and the DOI records carry no other publication-type related identifier.
+- https://doi.org/10.1007/s11214-018-0576-4
+
+**Why it is listed (rule 3, second sentence).** This is Angelopoulos et al. (2019), "The Space
+Physics Environment Data Analysis System (SPEDAS)", *Space Science Reviews* 215, article 9. Rule 3
+includes a paper "by an author about the platform the software serves". Seven of this paper's first
+eleven authors (Angelopoulos, Drozdov, Grimes, Hatzigeorgiu, Lewis, McTiernan and Russell) are among
+this record's authors in Field 6. Its subject is SPEDAS, which its abstract calls "a grass-roots
+software development platform", and PySPEDAS serves that platform as its Python implementation:
+
+- **The paper counts PySPEDAS as part of SPEDAS.** Its abbreviation list defines PySPEDAS as "Python
+  version of SPEDAS", and its Introduction's roadmap names "the staged-development of a Python
+  version of SPEDAS, PySPEDAS" as one of the platform's ongoing efforts. Two paragraphs of Section 6,
+  "SPEDAS Expansion Plans", describe it: one as "a complete rewrite of the SPEDAS functions using
+  Python", the other as the proof-of-concept tools and libraries built at CU/LASP, UCB/SSL and UCLA.
+  The Concluding Remarks list it among the SPEDAS team's interfaces to other tools ("Autoplot,
+  CDAWeb, PySPEDAS, HAPI"), and a "PySPEDAS contributor" credit line names A. DeWolfe, B. Harter and
+  E. Lucas, the last two of them authors in Field 6.
+- **PySPEDAS's own metadata points the same way.** Its `pyproject.toml` gives the SPEDAS wiki
+  (`https://spedas.org/wiki/`) as its `Information` URL; it is funded under the SPEDAS Community
+  Support award (Field 26); and it shares IDL SPEDAS's tplot data model, save files and local data
+  directory (Field 30).
+
+**What it covers.** The SPEDAS framework as built in IDL: its design philosophy and history; its two
+main modes of use, command line and GUI, with a less common web-services mode built on either; the
+crib-sheets, command sequences users share to reproduce an analysis; the plug-in architecture
+through which mission teams contribute their own data-ingestion and calibration tools; and its data
+access, ingesting ISTP-compatible products from SPDF and from the missions' own data portals and
+mirror sites, with HAPI-server loading (`hapi_load_data`) already in the release the paper describes
+and fuller HAPI incorporation described as planned. That is the design PySPEDAS carries into Python.
+For PySPEDAS itself it records the project's origin, as proof-of-concept Python tools for loading
+and plotting THEMIS/ARTEMIS and ground magnetometer data. A searcher reading about PySPEDAS would be
+glad to find the paper on the platform it implements, and as a single entry it buries nothing. IDL
+SPEDAS the software is linked from Field 29; this is the platform's publication. HSSI held this
+field empty until this update, and this record's 2026-08-23 revision had not weighed the paper.
+
+**Everything else weighed.** Every other DOI or identifier in this section names something weighed
+and not listed; none of them is a value.
+
+- **The reference publication is not repeated here.** Grimes et al. (2022), *Frontiers in Astronomy
+  and Space Sciences*, is recorded in Field 14 (rule 2). It is the only publication either DOI record
+  relates to (`IsDescribedBy`), and DataCite records no `IsCitedBy` relation on the concept DOI or
+  the 2.2.2 DOI.
+
+**Literature search of 2026-10-29, all years.** No earlier search was recorded for this field, so
+this one covers every year; a later update needs to search only from this date.
+
+- **The project's own files.** At `v2.2.2` the top-level `README.md` and `docs/source/` give no
+  reference list or citation guidance for the package as a whole, and `CITATION.cff` has no
+  `references`; its one request, "If you use this software, please cite it using the metadata from
+  this file.", points to the software deposit (Field 2). The docs give a full reference for one
+  routine, Torrence and Compo (1998) for `wavelet98` (`docs/source/analysis.rst`), which is counted
+  under rule 4 below. `docs/source/vires.rst` reproduces Swarm references only as viresclient's
+  example output, and the KOMPSAT module's own `README.md` links the paper describing the SOSMAG
+  magnetometer whose data that module loads (`10.1007/s11214-020-00742-2`). Neither of those two is
+  a method or model the code implements, so rule 4 does not count them.
+- **Method and model papers (rule 4): none listed.** At `v2.2.2` the code cites at least twenty
+  papers and books, each in the docstring or a comment of the one routine it motivated: Torrence and
+  Compo (1998) for the wavelet routines; Means (1972) and Samson and Olson (1980) for `twavpol`; Fu
+  et al. (2015) and Paschmann and Daly (1998) for `find_magnetic_nulls`; Chanteur (1998) for the
+  linear gradient estimator; Shue et al. (1998) for the boundary-normal transforms; Fairfield (1971)
+  for `mpause_2`; Tsyganenko (1995) for `mpause_t96`; Tsyganenko (2001) and Tsyganenko and Sitnov
+  (2004) in the `geopack` wrappers; and, for the neutral-sheet models in
+  `analysis/neutral_sheet.py`, Zhu and Xu (1994), Wang and Xu (1994), a paper by Xu on the displaced
+  equatorial neutral sheet, Sibeck, Lopez and Roelof (1991), Fairfield (1980), Lopez (1990) and
+  Tsyganenko, Andreeva and Gordeev (2015); Gershman et al. (2017) for the MMS DES photoelectron
+  model (`projects/mms/particles/mms_part_des_photoelectrons.py`); and Hilmer et al. (2000) for the
+  ERG flux-unit conversion (`projects/erg/satellite/erg/particle/erg_convert_flux_units.py`). Not
+  counted: the `lingradest` docstring's credit to A. Runov (2003) for the original IDL routine, and
+  a 2015 GRL article that a comment in `tplot_tools/tplot_math/pwr_spec.py` names only as the plot
+  it compares against. Each counted paper is incidental to a multi-method library taken as a whole.
+  Nothing in the README, the docs or the citation guidance presents any of them as the package's
+  foundation or asks every user to cite them, and listed together they would bury the publications
+  about PySPEDAS, so rule 4 lists none.
+- **Other publications by the developers (rule 3): none listed.** Three about PySPEDAS are deposited
+  on Zenodo, all slide decks by Jim Lewis. On 2026-10-29 the catalogue maintainer judged that none
+  reads as a substantial standalone document, so none is an eligible publication (rule 1):
+  - `10.5281/zenodo.8416186` — "PySPEDAS, Astropy, and Coordinate Transformations" (2023, for a DASH
+    panel on package interoperability): five text-only slides on why the team ported IDL SPEDAS's
+    coordinate transforms rather than adopting Astropy.
+  - `10.5281/zenodo.14147190` — "PySPEDAS updates for Fall 2024" (2024): eleven slides on the state
+    of PySPEDAS 1.7.0 and the plans for 2.0. Zenodo stores its creator as "James, Lewis", so a
+    creator search for "Lewis, James" does not find it; a title search does.
+  - `10.5281/zenodo.17382064` — "Augmenting PySPEDAS development and usage with LLM technology"
+    (2025): fifteen slides, about half of them screenshots of chatbot conversations, on using large
+    language models to develop PySPEDAS and plans for a PySPEDAS chatbot.
+
+  Otherwise the developers' talks and posters exist only as meeting abstracts, which are never
+  eligible (rule 1): ADS holds AGU abstracts from 2018, 2019 and 2021 to 2025 (for example
+  `2018AGUFMIN11B0629G`, "Pyspedas, a Python Implementation of SPEDAS") and a 2021 COSPAR abstract.
+  None has a deposited poster or paper: Zenodo holds none, and Crossref, which registers ESS Open
+  Archive deposits, returns no work with "pyspedas" in its metadata (the control query "sunpy essoar"
+  returns 9). `2024ascl.soft05005G` is an ASCL software record, and the NASA HDEE and HTM proposal
+  abstracts that name PySPEDAS are not publications.
+- **Papers that use PySPEDAS (rule 5): none added.** PySPEDAS is widely used. On 2026-10-29 ADS
+  returned 171 records with "pyspedas" in the full text, 126 of them refereed, and 51 that name it in
+  their acknowledgements (controls: a nonsense token returned 0 and "spacepy" 172). A list of users that
+  long tells a searcher nothing about the software, so rule 5 adds none, whoever wrote the paper.
+- **Other publications weighed and not added.**
+  - `10.48550/arXiv.2601.07605` — Weigel et al. (2026), "Coordinate Systems and Transforms in Space
+    Physics: Terms, Definitions, Implementations, and Recommendations for Reproducibility". It names
+    PySPEDAS in its full text, but its subject is coordinate-system definitions across many sources
+    and packages, not this software (rule 6).
+  - `10.5281/zenodo.8411161` — Grimes and Harris (2023), "Computational notebooks for accessing and
+    analyzing data at the Space Physics Data Facility", a presentation whose subject is notebooks for
+    SPDF data in general, PySPEDAS's among them, rather than PySPEDAS. Nor does rule 3's second
+    sentence admit it: SPDF is a data service PySPEDAS reads (Field 17), not a platform it serves.
 
 ### 28. Related Datasets (OPTIONAL)
 Not found. PySPEDAS retrieves a very large number of heliophysics datasets at run time, but it
@@ -895,7 +1143,7 @@ which is the field designed for that relationship.
   `~/mms_auth_info.sav` MMS credential cache that IDL SPEDAS writes (PySPEDAS's own cache is a
   Python pickle); 2.1.4 added reading of IDL `.sav` files carrying MMS fast-survey intervals;
   `README.md` states that the `SPEDAS_DATA_DIR` local data directory "will also be used by IDL (if
-  you're running a recent copy of the bleeding edge)"; and `utilities/libs.py` reimplements IDL
+  you’re running a recent copy of the bleeding edge)"; and `utilities/libs.py` reimplements IDL
   SPEDAS's `libs` routine-search command. IDL SPEDAS is also listed in Field 29 as the parent
   project; listing it here as well records the distinct fact that the two tools exchange data.
 - https://github.com/pydata/xarray — xarray. The exchange is a documented public API rather than
@@ -929,8 +1177,9 @@ Sixty-five instrument rows are recorded. They are a deliberately bounded subset,
 
 **Instruments outside that boundary are still supported by PySPEDAS, and their support is recorded
 at mission level in Field 32.** This list is not a statement that the unlisted instruments are
-unsupported. PySPEDAS loads data from far more instruments than are listed here: the 37 projects
-under `pyspedas/projects/` between them cover the instrument suites of dozens of missions and ground
+unsupported. PySPEDAS loads data from far more instruments than are listed here: the 41 projects
+under `pyspedas/projects/` at `v2.2.2` between them cover the instrument suites of dozens of
+missions and ground
 networks, and those missions and networks are either recorded in Related Observatories or their
 absence is documented there. The instrument field records the narrower fact that PySPEDAS
 does instrument-specific science processing for these particular instruments — which is what a user
@@ -1227,6 +1476,18 @@ reasoning so a later refresh does not re-propose them without new evidence.
   `costep_postprocessing.py` and `erne_postprocessing.py`, and `akebono/pws_postprocessing.py`, all
   contain a docstring reading "Placeholder for … post-processing" and return their input unchanged.
   A file named `*_postprocessing.py` must be opened before it is counted.
+- **Juno, Galileo, DMSP and SWFO instruments (modules added in 2.2.0 and 2.2.1).** At `v2.2.2` each
+  module only loads. `projects/juno/load.py` and `projects/galileo/load.py` request ASCII data from
+  the University of Iowa das2 server and turn it into tplot variables; `projects/dmsp/load.py` loads
+  the SSJ, SSIES and SSM CDF products from SPDF; and `projects/swfo/load.py` reads MAG, SWiPS and STIS
+  netCDF files and, as its `README.md` says, "Quality flags are retained; the loader does not mask
+  data by quality flag." Rows exist for several of these instruments, among them the Juno
+  `Fluxgate Magnetometer` (`https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/Juno/FGM`), the
+  `Galileo Magnetometer` (`https://spase-metadata.org/CNES/Instrument/CDPP-AMDA/Galileo/MAG`) and
+  per-spacecraft DMSP SSJ5, SSI/ES-3 and SSM rows under
+  `https://spase-metadata.org/SMWG/Instrument/DMSP_5D-3/`, so this is a boundary exclusion, not a
+  resolution failure. SWFO has no instrument row at all. Juno, Galileo and DMSP are recorded at
+  mission level in Field 32; SWFO's absence from that vocabulary is documented there.
 
 **Identifier form.** All 65 identifiers above are `https://spase-metadata.org/` identifiers of
 instrument type, each in the bare registered form. That is a property of the rows
@@ -1245,11 +1506,11 @@ that, and it is keyed on SPASE identifiers.
 
 ### 32. Related Observatories (OPTIONAL)
 
-Forty-two observatories are recorded, in the three tables below. Every entry carries a SPASE
+Forty-five observatories are recorded, in the four tables below. Every entry carries a SPASE
 identifier; none is free-typed. Every value already stored is retained — this is a union, and
 nothing is removed.
 
-**Currently recorded (30).** Names are copied exactly as stored.
+**Stored before the August 2026 refresh (30).** Names are copied exactly as stored.
 
 | Name | SPASE identifier |
 |---|---|
@@ -1394,6 +1655,28 @@ recorded, so that support is discoverable rather than silently dropped.
   the POES tests have no candidate row at all. That is a gap in the vocabulary, not an omission in
   this record.
 
+**Missions added in 2.2.0 and 2.2.1 (3).** Each has its own `pyspedas/projects/<name>/` subpackage
+at `v2.2.2` and resolves to one SMWG mission row. HSSI held this field without them until this update.
+
+| Name (verbatim from the vocabulary) | SPASE identifier | Repository evidence (`v2.2.2`) |
+|---|---|---|
+| Defense Meteorological Satellite Program | https://spase-metadata.org/SMWG/Observatory/DMSP | `pyspedas/projects/dmsp/` with `ssj()`, `ssies()` and `ssm()`, loading SPDF CDF products for spacecraft F06–F09 and F12–F18 (`projects/dmsp/README.md`) |
+| Galileo Orbiter-Probe | https://spase-metadata.org/SMWG/Observatory/Galileo | `pyspedas/projects/galileo/load.py`: Jovicentric ephemeris and magnetometer data from the University of Iowa das2 server |
+| Juno Orbiter | https://spase-metadata.org/SMWG/Observatory/Juno | `pyspedas/projects/juno/load.py`: Jovicentric, moon co-rotational, geocentric and heliocentric ephemeris, attitude, and FGM magnetometer data from the University of Iowa das2 server |
+
+Resolution notes for those three:
+
+- **CNES twins are not added.** Juno also has `https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/Juno`
+  (named `Juno`), and Galileo has `https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/Galileo`
+  (`Galileo Orbiter`) and `https://spase-metadata.org/CNES/Observatory/CDPP-Archive/Galileo`
+  (`Galileo`). Each denotes the same mission as its SMWG row, so recording both would count the
+  mission twice; the SMWG row is kept, chosen by identifier. The SMWG Galileo row's name,
+  `Galileo Orbiter-Probe`, reads oddly but belongs to the mission's canonical row, so it stays.
+- **DMSP at mission level.** The loader names individual spacecraft, and per-spacecraft rows exist
+  (`SMWG/Observatory/DMSP_5D-2/F08` to `F14`, and `SMWG/Observatory/DMSP_5D-3/F15` to `F19` and
+  `S20`), but this field associates at mission level, as it does for GOES and NOAA POES, and no DMSP
+  instrument is recorded in Field 31 that would call for the per-spacecraft rows.
+
 **Documented omissions.** These are things PySPEDAS touches that were considered and deliberately not
 recorded here; the reasoning is kept so the same candidates are not re-proposed.
 
@@ -1413,9 +1696,16 @@ recorded here; the reasoning is kept so the same candidates are not re-proposed.
   and, for years from 2018 onward, from GFZ Potsdam. The reasoning is
   the same as for the Kyoto indices: these are derived global indices rather than one observatory's
   measurements, and the relationship is captured by the `GFZ` value in Data Sources (Field 17)
-  rather than by an observatory association. With this omission recorded, each of the 37
-  `pyspedas/projects/` subpackages maps either to an observatory recorded above or to a documented
-  omission in this list.
+  rather than by an observatory association. With this omission and SWFO's (next) recorded, each of
+  the 41 `pyspedas/projects/` subpackages at `v2.2.2` maps either to an observatory recorded above or
+  to a documented omission in this list.
+- **NOAA Space Weather Follow-On, SWFO (`pyspedas/projects/swfo/`, added in 2.2.1)** — PySPEDAS loads
+  the mission's MAG, SWiPS and STIS in situ data, but the vocabulary has no row for the mission or
+  any of its instruments. On 2026-10-29 a search of all four columns (`name`, `abbreviation`,
+  `identifier`, `definition`) for the whole words "SWFO", "SOLAR-1", "SWiPS", "STIS" and "CCOR" and
+  the phrase "Space Weather Follow" found nothing, while the same search found eight rows for
+  "DSCOVR" and none for a nonsense token. The mission is carried instead by the keyword `swfo`
+  (Field 16). A later update should look for a SWFO row.
 - **Ground magnetometer partner networks reached through the THEMIS archive** —
   `projects/themis/ground/gmag.py` ships convenience station lists grouped by network (THEMIS GBO,
   TGO, DTU, University of Alaska, MACCS, USGS, Athabasca, THEMIS EPO, Falcon, McMAC, NRCan, STEP,
@@ -1452,7 +1742,7 @@ recorded here; the reasoning is kept so the same candidates are not re-proposed.
 - **Voyager** — appears only as the worked example in the CDAWeb browser tutorial
   (`docs/source/cdaweb.rst` and `cdagui_tools/tests/test_cdagui.py`). A tutorial name-drop of the
   generic CDAWeb interface is not mission support.
-- **Individual GOES, NOAA POES, Cluster, MMS, THEMIS and Van Allen Probes spacecraft** — per-satellite
+- **Individual GOES, NOAA POES, DMSP, Cluster, MMS, THEMIS and Van Allen Probes spacecraft** — per-satellite
   observatory rows exist for all of these, but this field associates at mission level, so they are
   not expanded. Field 31 does use per-spacecraft granularity, because SPASE namespaces science
   instruments beneath their spacecraft rather than at mission level; the two fields differ on
