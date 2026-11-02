@@ -53,7 +53,8 @@ source still matches**, and if anything has moved, adapt the workflow and tell t
 - **Person matching** — `django/website/models/serializers/submission.py` `_get_or_create_person`
   (matches on `identifier` alone when one is sent, else on the exact name. A POST only fills blank names; a
   PATCH can also select a row by `personId`, attach an identifier to the entry's identifier-less author of
-  the same full name, and respell a row it resolves by identifier or `personId` — see
+  the same full name, respell a row it resolves by identifier or `personId`, and rename a row it selects
+  by `personId` with `"rename": true` — see
   `hssi-field-definitions/fields/06-authors.md`).
 
 The existing **`update-api-spec`** skill is the precedent/mechanism for re-syncing reference material from
@@ -230,8 +231,8 @@ All on the prod host, user-driven. Provide these as a runbook with explicit STOP
   matches on `identifier` (ORCID/URL) alone when one is sent, else on the exact given+family name. On a PATCH,
   an ORCID that no row carries attaches to the entry's own identifier-less author of the same full name, or to
   the row a `personId` selects; anywhere else (an author new to the entry, a full name that differs, a POST)
-  it creates a new Person beside any same-name row. A matched row keeps its words (only another spelling of
-  the same full name lands, and not one with fewer accents in total), and an author sent with an empty given name
+  it creates a new Person beside any same-name row. A matched row's names change only as
+  `fields/06` rule 11 allows, and an author sent with an empty given name
   keeps its row unchanged apart from filling an empty identifier. So a replayed
   author payload can still diverge from the curated `hssi_metadata.md`: catch it by comparing the result
   **by identifier**, and **restore what the API cannot apply by editing `person.csv` directly**
