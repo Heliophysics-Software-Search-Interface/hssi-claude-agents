@@ -116,15 +116,14 @@ attestation of authorship.
       entry the row serves. Sent names with fewer accent marks in total than the stored ones are not
       applied at all, even with `"rename": true`, so removing accents is NON-PATCHABLE.
     - **Anything else is a rename:** a misspelled, changed, added or dropped word, or an honorific in the
-      given name. **Pending hssi-website #153's deployment, every rename is NON-PATCHABLE:** it needs a
-      database-side correction to the shared Person row, checked against every entry that row serves.
-      Once #153 is deployed, send the corrected names with the row's `personId` and `"rename": true`
-      (*Renaming a row by `personId`* below); the new name shows on every entry the row serves, so first
-      check each of them is this person's (*Stored-row sharing*). A row that also serves a namesake's
-      entries, or a target name another Person row already holds, stays NON-PATCHABLE. A legacy row with
-      a blank given name and a bare handle as its family name (a bulk contributor import) is corrected the
-      same way: to the proven human name when a primary artifact carries one, otherwise to `<login>` /
-      `(GitHub)` per rule 2.
+      given name. Send the corrected names with the row's `personId` and `"rename": true` (*Renaming a
+      row by `personId`* below); the new name shows on every entry the row serves, so first check each of
+      them is this person's (*Stored-row sharing*). A rename is NON-PATCHABLE, and needs a database-side
+      correction checked against every entry the row serves, when the row also serves a namesake's
+      entries or another Person row already holds the target name. The `UNKNOWN` placeholder row is never
+      renamed (rule 30). A legacy row with a blank given name and a bare handle as its family name (a bulk
+      contributor import) is corrected the same way: to the proven human name when a primary artifact
+      carries one, otherwise to `<login>` / `(GitHub)` per rule 2.
 12. **New author → the project's own spelling**, diacritics included as the project writes them, over a
     better-documented external form. Take the given/family split from the person's linked ORCID
     structured name, else from CITATION.cff `given-names`/`family-names`; keep surname particles with the
@@ -371,11 +370,11 @@ shortlog patterns.
     `GET /api/data/software/<uid>/` `authors` at that author's position.
 
   A POST rejects `personId`, so a new submission sends such an author without the ORCID (rule 16).
-- **Renaming a row by `personId` (rule 11; pending hssi-website #153's deployment, until which a rename
-  is NON-PATCHABLE).** An author item with `personId` and `"rename": true` gives the row sent names with
-  other words, taken exactly as sent, accents included; the 400 for other words without the flag says
-  how to rename. Sent names with the same words are handled as *Name changes* says, flag or not.
-  - `rename` must be a JSON boolean; any other value is a 400, even when the names
+- **Renaming a row by `personId` (rule 11).** An author item with `personId` and `"rename": true` gives
+  the row sent names with other words, taken as sent (trimmed), accents included; the 400 for other words
+  without the flag says how to rename. Sent names with the same words are handled as *Name changes*
+  says, flag or not.
+  - `rename` must be a JSON boolean; any other value, `null` included, is a 400, even when the names
     match. `rename` without `personId` is a 400 too.
   - Nothing checks the row against an ORCID: the flag alone authorizes the rename, and a wrong
     `personId` renames that person everywhere. Rename only a row the entry lists, by the id at that
@@ -416,7 +415,7 @@ shortlog patterns.
   match.
 - **Respect PATCH capability limits.** The endpoint reuses existing people and organizations: an
   Organization keeps its nonblank name, and a Person its words unless a `personId` item renames it
-  (rule 11; pending hssi-website #153's deployment). On a PATCH it can fill the empty ORCID of a row it
+  (rule 11). On a PATCH it can fill the empty ORCID of a row it
   selects by `personId` (rules 15 and 16), and give such a row another spelling of the same words unless
   the sent names carry fewer accents in total (rule 11). It can add author affiliations but cannot remove
   an existing affiliation. Classify a rename rule 11 cannot send, an accent removal, an
@@ -478,5 +477,5 @@ shortlog patterns.
 - Rubric authored 2026-09-22 from prior guidance and past refresh decisions.
 - Person resolution (rules 1, 10, 11, 13, 15, 16, 26 and 28, the traps and the payload notes)
   re-verified against hssi-website `f3f1a2ea` (#146) on 2026-10-28.
-- Renaming (rules 10 and 11, *Renaming a row by `personId`*) written on 2026-11-02 against the agreed
-  design of hssi-website PR #153, before its merge and deployment; re-check it against what ships.
+- Renaming (rules 10, 11 and 30, *Renaming a row by `personId`*) verified against hssi-website `13bc5d9e`
+  (#153) on 2026-11-02.

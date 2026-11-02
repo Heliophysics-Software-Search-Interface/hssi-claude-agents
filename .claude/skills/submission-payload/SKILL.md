@@ -89,7 +89,7 @@ Each submission object **must** include these five fields:
 ```
 - `givenName` and `familyName` are required and non-empty per author (an empty `givenName` is a `400` on POST)
 - DB hard match is on `identifier` when one is sent, with no name fallback: an identifier no Person carries creates a new Person, even when an identifier-less row of that name exists. Without one, the match is on the exact `givenName` + `familyName`. See Known Backend Quirks.
-- Never send `personId` or `rename`: they select and rename a Person row only on a PATCH, and a POST rejects `personId` with a `400`, even when it is empty or `null` (and, once hssi-website #153 is deployed, any `rename`)
+- Never send `personId` or `rename`: they select and rename a Person row only on a PATCH, and a POST rejects either key with a `400`, `personId` even when it is empty or `null`
 - List each person once: two authors that resolve to the same Person (the same `identifier`, or without one the same `givenName` and `familyName`) are a `400`
 
 ### `description` (string)
