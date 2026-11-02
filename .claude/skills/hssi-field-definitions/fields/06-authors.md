@@ -105,8 +105,8 @@ attestation of authorship.
 
 10. **Stored name matches a project source, or the person's ORCID primary, credit or other name → keep it
     and document any divergence.** A middle initial, a fuller given name or an unaccented spelling is a
-    style variant, not a correction. A PATCH cannot change a stored name's words (the spelling changes it
-    can make are rule 11's), and the Person row is shared by the person's other entries.
+    style variant, not a correction: never send it as a rule 11 rename, since the Person row is shared by
+    the person's other entries.
 11. **Stored name matches no source → record the correct form as the target.** How it lands depends on
     what differs:
     - **The same full name, spelled differently** (*Person resolution* below defines it): a different
@@ -114,12 +114,17 @@ attestation of authorship.
       `Darren` / `De Zeeuw`), accents or hyphens. A PATCH gives the sent names to the row it selects by
       `personId`, so send the corrected names with the row's `personId` (rule 30); they show on every
       entry the row serves. Sent names with fewer accent marks in total than the stored ones are not
-      applied at all, so removing accents is NON-PATCHABLE.
-    - **Anything else is a rename, NON-PATCHABLE:** a misspelled, changed, added or dropped word, or an
-      honorific in the given name. It needs a database-side correction to a shared Person row, checked
-      against every entry that row serves. A legacy row with a blank given name and a bare handle as its
-      family name (a bulk contributor import) is corrected the same way: to the proven human name when a
-      primary artifact carries one, otherwise to `<login>` / `(GitHub)` per rule 2.
+      applied at all, even with `"rename": true`, so removing accents is NON-PATCHABLE.
+    - **Anything else is a rename:** a misspelled, changed, added or dropped word, or an honorific in the
+      given name. **Pending hssi-website #153's deployment, every rename is NON-PATCHABLE:** it needs a
+      database-side correction to the shared Person row, checked against every entry that row serves.
+      Once #153 is deployed, send the corrected names with the row's `personId` and `"rename": true`
+      (*Renaming a row by `personId`* below); the new name shows on every entry the row serves, so first
+      check each of them is this person's (*Stored-row sharing*). A row that also serves a namesake's
+      entries, or a target name another Person row already holds, stays NON-PATCHABLE. A legacy row with
+      a blank given name and a bare handle as its family name (a bulk contributor import) is corrected the
+      same way: to the proven human name when a primary artifact carries one, otherwise to `<login>` /
+      `(GitHub)` per rule 2.
 12. **New author → the project's own spelling**, diacritics included as the project writes them, over a
     better-documented external form. Take the given/family split from the person's linked ORCID
     structured name, else from CITATION.cff `given-names`/`family-names`; keep surname particles with the
@@ -227,7 +232,7 @@ attestation of authorship.
 
 ## Ask the user only when
 
-- **A NON-PATCHABLE correction to a shared row is needed** — a rename of a stored name or an accent
+- **A NON-PATCHABLE correction to a shared row is needed** — a rename the API cannot apply or an accent
   removal (rule 11, which includes repairing a legacy blank-given row), an ORCID or bind the API cannot
   apply (rules 15 and 16), the replacement of a wrong stored ORCID (rule 13), an affiliation removal, or a
   ROR for an identifier-less Organization row. The rubric decides the target value; the user decides whether it goes
@@ -277,6 +282,7 @@ shortlog patterns.
   case-sensitive given+family match; any spelling, case or split difference mints a duplicate.
 - A `personId` naming the wrong row fails only when that row's name or identifier conflicts with what is
   sent; a namesake's identifier-less row of the same full name binds without error and takes the ORCID.
+  With `"rename": true` it never fails on the name: the wrong row is renamed on every entry it serves.
 - The same person can appear under several commit identities (`, Ph.D` suffixes, numeric noreply
   prefixes, machine hostnames); treat none as a second person.
 - A GitHub account whose login equals a stored string is often someone else.
@@ -302,8 +308,9 @@ shortlog patterns.
 
 - **Shape:** `authors` is an array of Person objects
   `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}`, and on a PATCH an
-  optional `personId` (*Selecting a row by `personId`*); a POST rejects any `personId` key with a 400,
-  even an empty or `null` one. `familyName` is required and non-empty. So is `givenName`, except on a
+  optional `personId` (*Selecting a row by `personId`*) and, beside it, `"rename": true` (*Renaming a
+  row by `personId`*); a POST rejects any `personId` key with a 400, even an empty or `null` one, and
+  any `rename` key. `familyName` is required and non-empty. So is `givenName`, except on a
   PATCH for an author stored with an empty given name (see *Empty stored given name*).
 - **Organization authors.** An author may be an organization (a lab, consortium, or institution credited
   as an author) rather than a person. To submit one, put its **ROR URL** in `identifier` (e.g.,
@@ -336,22 +343,22 @@ shortlog patterns.
 - **Name changes.** A PATCH gives a Person it resolves by identifier, or selects by `personId`, the sent
   names when they spell the same full name, so one PATCH can change the split, capitalization, accents
   and hyphens together. Sent names with fewer accent marks in total than the stored ones are not applied
-  at all, with a 200. A different full name is never applied: by identifier it
-  returns 200 and changes nothing beyond filling a blank name part, and with `personId` it is a 400. A
-  POST changes no stored name beyond filling a blank part. So send a kept author under its stored names
-  exactly unless rule 11 corrects them: any other spelling sent with an identifier or `personId`
-  rewrites the shared row.
+  at all, with a 200. A different full name is applied only as a rename (*Renaming a row by
+  `personId`*): by identifier it returns 200 and changes nothing beyond filling a blank name part, and
+  with `personId` but without `"rename": true` it is a 400. A POST changes no stored name beyond filling
+  a blank part. So send a kept author under its stored names exactly unless rule 11 corrects them: any
+  other spelling sent with an identifier or `personId` rewrites the shared row.
 - **Selecting a row by `personId` (rules 11, 15, 16 and 30).** On a PATCH, an author item with `personId`
   binds the existing Person row with that id, whatever entries it serves, and never falls back to a name
   match or creates a row. Every author whose row stays on the entry goes this way (rule 30), and so does
   an author new to the entry whose row already exists (rule 16).
-  - The id must name an existing Person, and the sent names must spell its full name; otherwise the whole
-    PATCH is a 400, and a name error gives the stored name. An empty or missing `givenName` is accepted
-    only for a row stored without one.
+  - The id must name an existing Person, and the sent names must spell its full name unless the item
+    renames it; otherwise the whole PATCH is a 400, and a name error gives the stored name. An empty or
+    missing `givenName` is accepted only for a row stored without one.
   - A sent `identifier` fills the row's empty one or repeats its stored one; one that differs from the
     stored identifier, or that another Person holds, is a 400. Omitted or empty, it leaves the row's
     identifier as it is.
-  - The row takes the sent names (*Name changes*).
+  - The row takes the sent names (*Name changes*, *Renaming a row by `personId`*).
   - Take the id from the `authors` of `GET /api/data/software/<uid>/` or `GET /api/view/software/<uid>/`
     for a row on a visible entry, else from
     `GET /api/models/Person/rows/all/?columns=id,given_name,family_name,identifier`. Before sending it
@@ -360,6 +367,24 @@ shortlog patterns.
     `GET /api/data/software/<uid>/` `authors` at that author's position.
 
   A POST rejects `personId`, so a new submission sends such an author without the ORCID (rule 16).
+- **Renaming a row by `personId` (rule 11; pending hssi-website #153's deployment, until which a rename
+  is NON-PATCHABLE).** An author item with `personId` and `"rename": true` gives the row sent names with
+  other words, taken exactly as sent, accents included; the 400 for other words without the flag says
+  how to rename. Sent names with the same words are handled as *Name changes* says, flag or not.
+  - `rename` must be a JSON boolean; any other value is a 400, even when the names
+    match. `rename` without `personId` is a 400 too.
+  - Nothing checks the row against an ORCID: the flag alone authorizes the rename, and a wrong
+    `personId` renames that person everywhere. Rename only a row the entry lists, by the id at that
+    author's position in its own `GET /api/data/software/<uid>/` `authors`, and confirm its stored name
+    and identifier are the ones being corrected.
+  - Renaming into a full name another Person row holds leaves two look-alike rows; it does not merge
+    them. Check `GET /api/models/Person/rows/all/?columns=id,given_name,family_name,identifier` first:
+    if that row is this person, relink to it (rule 1) and correct the misspelled row database-side.
+  - The rename rolls back with the rest of a failed PATCH. It is not logged, and it does not change the
+    `date_modified` of the other entries the row serves.
+  - A Person whose stored given name is `UNKNOWN` (the Submitter/Curator default row) cannot be selected
+    by `personId` at all, with or without `rename`: a 400. An author on such a row cannot be sent as rule
+    30 requires, so report it as NON-PATCHABLE.
 - **Affiliations accumulate.** Each sent affiliation is `.add()`ed to whichever Person row was resolved;
   re-sending an existing affiliation inserts nothing, and nothing is ever removed.
 - **Organization resolution** (affiliations): with an identifier, match on the identifier only, else
@@ -385,11 +410,12 @@ shortlog patterns.
   organizations by their stable identifier before normalized/canonical name, then separately compare
   their labels and nested values. Do not mark two objects fully MATCH merely because their identifiers
   match.
-- **Respect PATCH capability limits.** The endpoint reuses existing people and organizations and never
-  renames them: a Person keeps its words, an Organization its nonblank name. On a PATCH it can fill the
-  empty ORCID of a row it selects by `personId` (rules 15 and 16), and give such a row another spelling of
-  the same words unless the sent names carry fewer accents in total (rule 11). It can add author
-  affiliations but cannot remove an existing affiliation. Classify a desired rename or accent removal, an
+- **Respect PATCH capability limits.** The endpoint reuses existing people and organizations: an
+  Organization keeps its nonblank name, and a Person its words unless a `personId` item renames it
+  (rule 11; pending hssi-website #153's deployment). On a PATCH it can fill the empty ORCID of a row it
+  selects by `personId` (rules 15 and 16), and give such a row another spelling of the same words unless
+  the sent names carry fewer accents in total (rule 11). It can add author affiliations but cannot remove
+  an existing affiliation. Classify a rename rule 11 cannot send, an accent removal, an
   ORCID or bind those rules cannot apply, a stored ORCID's replacement, or a nested affiliation removal as
   NON-PATCHABLE, omit it from `patch`, and make it a hard blocker for canonical completion until the user
   routes it through the CSV/manual database workflow. Top-level relationship removals remain possible
@@ -448,3 +474,5 @@ shortlog patterns.
 - Rubric authored 2026-09-22 from prior guidance and past refresh decisions.
 - Person resolution (rules 1, 10, 11, 13, 15, 16, 26 and 28, the traps and the payload notes)
   re-verified against hssi-website `f3f1a2ea` (#146) on 2026-10-28.
+- Renaming (rules 10 and 11, *Renaming a row by `personId`*) written on 2026-11-02 against the agreed
+  design of hssi-website PR #153, before its merge and deployment; re-check it against what ships.
