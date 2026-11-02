@@ -75,7 +75,7 @@ Content-Type: application/json
 
 **Error responses:**
 - `403` — Missing, malformed, or invalid bearer token; or `HSSI_UPDATE_TOKEN` unset on the server
-- `400` — Validation error (unknown field, wrong type, controlled-list miss, `submitter` provided, an award `name` over 128 characters, an author `identifier` that two or more of the entry's identifier-less authors could take, an empty `givenName` that matches no single blank-given current author, an author `personId` whose Person does not exist or does not fit the sent name or identifier, an author list that names one Person twice, an author `rename` that is not a boolean or has no `personId`, a `personId` whose Person's given name is `UNKNOWN`)
+- `400` — Validation error (unknown field, wrong type, controlled-list miss, `submitter` provided, an award `name` over 128 characters, an author `identifier` that two or more of the entry's identifier-less authors could take, an empty `givenName` that matches no single blank-given current author, an author `personId` whose Person does not exist or does not fit the sent name or identifier, an author list that names one Person twice, an author `rename` that is not a boolean or has no `personId`, a `personId` whose Person's given name is `UNKNOWN`, an unknown key or wrong shape inside an `authors` entry or its `affiliation` objects, keyed by its path such as `authors[1].affiliation[0].identifer`)
 - `404` — Software not found, or not visible
 - `405` — Wrong HTTP method
 
@@ -85,6 +85,7 @@ Content-Type: application/json
 - For M2M fields (authors, keywords, etc.), the provided list **fully replaces** that field — the API does **not** merge. To *add* to an M2M field without dropping anything, send the full intended identity-aware set = **`existing ∪ new`** (fetch the current values, union in the new ones). This is why enriching a shallow-but-non-empty M2M list (e.g. adding Software Functionality values to an entry that already has one) still requires sending the existing values alongside the new ones.
 - Empty list `[]` clears the M2M; `null` clears nullable scalars
 - `submitter` is rejected with 400 — partial updates cannot rewrite the submitter
+- Unknown keys are a 400 at the top level and inside `authors` entries and their `affiliation` objects (`hssi-field-definitions/fields/06-authors.md` *Shape*). Keys inside `publisher`, `funder`, `award`, `version`, `relatedInstruments` and `relatedObservatories` objects are not checked, so a typo there is silently ignored
 - Touches the most recent `SubmissionInfo` on success: sets `modification_description = "Partial update via API: <fields>"` and bumps `date_modified` (auto_now). Does NOT create a new SubmissionInfo
 - Does NOT send confirmation emails
 - Wrapped in `transaction.atomic()`: a PATCH that fails leaves the entry, and any people or other shared rows it would have changed, as they were
@@ -195,7 +196,7 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | `referencePublication` | String (DOI URL) | |
 | `publicationDate` | String (`YYYY-MM-DD`) | |
 | `logo` | String URL | ≤200 chars (`URLField(max_length=200)`). A git-hosted URL must be commit-pinned (`raw.githubusercontent.com/<owner>/<repo>/<40-hex-sha>/<path>`, or `media.githubusercontent.com/media/…` for Git-LFS paths) — never a branch or a `/blob/` page. |
-| `authors` | Array of Person objects | `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}`, plus `personId` for an existing Person row (see *Authors selected by `personId`*) and, for a rename, `"rename": true` beside it; `givenName` may be empty or omitted only for an author stored with an empty given name; each Person row at most once |
+| `authors` | Array of Person objects | `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}`, plus `personId` for an existing Person row (see *Authors selected by `personId`*) and, for a rename, `"rename": true` beside it; no other author or affiliation key, the `id` a read gives an author included (send it as `personId`); `givenName` may be empty or omitted only for an author stored with an empty given name; each Person row at most once |
 | `publisher` | Organization object | `{name, identifier}` |
 | `license` | String | License name only — must match an existing `License.name` (case-insensitive) |
 | `version` | Object | `{number, releaseDate, description, versionPid}` |

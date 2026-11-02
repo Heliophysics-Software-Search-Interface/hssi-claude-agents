@@ -113,8 +113,12 @@ attestation of authorship.
       split (`Daniel da` / `Silva` for `Daniel` / `da Silva`), capitalization (`Darren de` / `Zeeuw` for
       `Darren` / `De Zeeuw`), accents or hyphens. A PATCH gives the sent names to the row it selects by
       `personId`, so send the corrected names with the row's `personId` (rule 30); they show on every
-      entry the row serves. Sent names with fewer accent marks in total than the stored ones are not
-      applied at all, even with `"rename": true`, so removing accents is NON-PATCHABLE.
+      entry the row serves. Sent names with fewer accent marks in total than the stored ones are applied
+      only with `"rename": true` (*Renaming a row by `personId`*), so removing an accent is a rename.
+      Remove one only when the stored accent is itself wrong: no source writes the name with it, the
+      person's ORCID record and own bylines included. An unaccented spelling of a name any source writes
+      with the accent is rule 10's style variant, never a reason to strip it, and a source that drops every
+      accent (an ASCII-only file, a commit name) proves nothing.
     - **Anything else is a rename:** a misspelled, changed, added or dropped word, or an honorific in the
       given name. Send the corrected names with the row's `personId` and `"rename": true` (*Renaming a
       row by `personId`* below); the new name shows on every entry the row serves, so first check each of
@@ -242,10 +246,10 @@ attestation of authorship.
 
 ## Ask the user only when
 
-- **A NON-PATCHABLE correction to a shared row is needed** — a rename the API cannot apply or a
-  same-words accent removal (rule 11, which includes repairing a legacy blank-given row), an ORCID or
-  bind the API cannot apply (rules 15 and 16), the replacement of a wrong stored ORCID (rule 13), an affiliation removal, or a
-  ROR for an identifier-less Organization row. The rubric decides the target value; the user decides whether it goes
+- **A NON-PATCHABLE correction to a shared row is needed** — a rename the API cannot apply (rule 11, which
+  includes repairing a legacy blank-given row), an ORCID or bind the API cannot apply (rules 15 and 16),
+  the replacement of a wrong stored ORCID (rule 13), an affiliation removal, or a ROR for an
+  identifier-less Organization row. The rubric decides the target value; the user decides whether it goes
   through the database workflow. It is a hard blocker for canonical completion until routed.
 - **A rename's corrected full name is already on another Person row whose identity is unresolved**
   (rule 11): whether it is this person (relink) or a namesake (rename).
@@ -324,6 +328,12 @@ shortlog patterns.
   row by `personId`*); a POST rejects any `personId` key with a 400, even an empty or `null` one, and
   any `rename` key. `familyName` is required and non-empty. So is `givenName`, except on a
   PATCH for an author stored with an empty given name (see *Empty stored given name*).
+  - On a PATCH, an author item carries no other key and an affiliation object only `name` and
+    `identifier`. Any other key, the `id` a read gives an author included, is a 400 keyed by its path
+    (`{"authors[1].affiliation[0].identifer": "Unknown field."}`), and so is an author item that is not
+    an object, an `affiliation` that is not an array (`null` is accepted) or an affiliation item that is
+    not an object. A POST ignores unknown keys, so a typo there silently drops the value. Build each
+    author item from these keys; never copy one from a read.
 - **Organization authors.** An author may be an organization (a lab, consortium, or institution credited
   as an author) rather than a person. To submit one, put its **ROR URL** in `identifier` (e.g.,
   `https://ror.org/03c3r2d17`). HSSI derives org-ness server-side purely from the `ror.org` identifier —
@@ -353,13 +363,13 @@ shortlog patterns.
   it, a PATCH attaches it to the entry's own identifier-less row of the same full name, and anything else
   creates a Person. With `personId`, the ORCID goes to the selected row or the PATCH fails.
 - **Name changes.** A PATCH gives a Person it resolves by identifier, or selects by `personId`, the sent
-  names when they spell the same full name, so one PATCH can change the split, capitalization, accents
-  and hyphens together. Sent names with fewer accent marks in total than the stored ones are not applied
-  at all, with a 200. A different full name is applied only as a rename (*Renaming a row by
-  `personId`*): by identifier it returns 200 and changes nothing beyond filling a blank name part, and
-  with `personId` but without `"rename": true` it is a 400. A POST changes no stored name beyond filling
-  a blank part. So send a kept author under its stored names exactly unless rule 11 corrects them: any
-  other spelling sent with an identifier or `personId` rewrites the shared row.
+  names when they spell the same full name, so one PATCH can change the split, capitalization, accents and
+  hyphens together. Sent names with fewer accent marks in total than the stored ones are not applied at
+  all, with a 200, unless a `personId` item sets `"rename": true`. A different full name is applied only
+  as a rename (*Renaming a row by `personId`*): by identifier it returns 200 and changes nothing beyond
+  filling a blank name part, and with `personId` but without `"rename": true` it is a 400. A POST changes
+  no stored name beyond filling a blank part. So send a kept author under its stored names exactly unless
+  rule 11 corrects them: any other spelling sent with an identifier or `personId` rewrites the shared row.
 - **Selecting a row by `personId` (rules 11, 15, 16 and 30).** On a PATCH, an author item with `personId`
   binds the existing Person row with that id, whatever entries it serves, and never falls back to a name
   match or creates a row. Every author whose row stays on the entry goes this way (rule 30), and so does
@@ -380,9 +390,9 @@ shortlog patterns.
 
   A POST rejects `personId`, so a new submission sends such an author without the ORCID (rule 16).
 - **Renaming a row by `personId` (rule 11).** An author item with `personId` and `"rename": true` gives
-  the row sent names with other words, taken as sent (trimmed), accents included; the 400 for other words
-  without the flag says how to rename. Sent names with the same words are handled as *Name changes*
-  says, flag or not.
+  the row the sent names as sent (trimmed), accents included, whether or not the words differ, so it can
+  also remove an accent (rule 11 says when). Without the flag, other words are a 400 that says how to
+  rename, and the same words land as *Name changes* says.
   - `rename` must be a JSON boolean; any other value, `null` included, is a 400, even when the names
     match. `rename` without `personId` is a 400 too.
   - Nothing checks the row against an ORCID: the flag alone authorizes the rename, and a wrong
@@ -435,15 +445,13 @@ shortlog patterns.
   their labels and nested values. Do not mark two objects fully MATCH merely because their identifiers
   match.
 - **Respect PATCH capability limits.** The endpoint reuses existing people and organizations: an
-  Organization keeps its nonblank name, and a Person its words unless a `personId` item renames it
-  (rule 11). On a PATCH it can fill the empty ORCID of a row it
-  selects by `personId` (rules 15 and 16), and give such a row another spelling of the same words unless
-  the sent names carry fewer accents in total (rule 11). It can add author affiliations but cannot remove
-  an existing affiliation. Classify a rename rule 11 cannot send, a same-words accent removal, an
-  ORCID or bind those rules cannot apply, a stored ORCID's replacement, or a nested affiliation removal as
-  NON-PATCHABLE, omit it from `patch`, and make it a hard blocker for canonical completion until the user
-  routes it through the CSV/manual database workflow. Top-level relationship removals remain possible
-  through a complete approved replacement list.
+  Organization keeps its nonblank name, and a Person its words unless a `personId` item renames it (rule
+  11). On a PATCH it can fill the empty ORCID of a row it selects by `personId` (rules 15 and 16), and
+  change such a row's names as rule 11 says. It can add author affiliations but cannot remove an existing
+  affiliation. Classify a rename rule 11 cannot send, an ORCID or bind those rules cannot apply, a stored
+  ORCID's replacement, or a nested affiliation removal as NON-PATCHABLE, omit it from `patch`, and make it
+  a hard blocker for canonical completion until the user routes it through the CSV/manual database
+  workflow. Top-level relationship removals remain possible through a complete approved replacement list.
 - **Refresh matching.** During refresh/enrich, match and dedupe organization authors by their ROR
   exactly as ORCID is used for people, and don't flag a `ror.org` author identifier as invalid.
 - **Stored-row sharing.** A Person row is shared by every entry it serves, so an ORCID or a name change
@@ -500,4 +508,5 @@ shortlog patterns.
 - Person resolution (rules 1, 10, 11, 13, 15, 16, 26 and 28, the traps and the payload notes)
   re-verified against hssi-website `f3f1a2ea` (#146) on 2026-10-28.
 - Renaming and splitting (rules 10, 11, 15 and 30, *Renaming a row by `personId`*, *Splitting a row
-  namesakes share*) verified against hssi-website `13bc5d9e` (#153) on 2026-11-02.
+  namesakes share*) and the PATCH author-key check (*Shape*) verified against hssi-website `877f9069`
+  (#153, #154 and #155) on 2026-11-02.

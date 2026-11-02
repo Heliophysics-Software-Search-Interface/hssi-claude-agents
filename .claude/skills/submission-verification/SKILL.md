@@ -22,7 +22,7 @@ Before submitting, confirm:
 - [ ] Each object contains all five required fields: `submitter`, `softwareName`, `codeRepositoryUrl`, `authors`, `description`
 - [ ] `submitter` array is non-empty; each entry has `email` and `person` with `givenName`/`familyName`
 - [ ] `authors` array is non-empty; each entry has `givenName` and `familyName`
-- [ ] No author carries a `personId` or `rename` key, and no two authors share an `identifier` or, without one, a `givenName` and `familyName`
+- [ ] No author carries a key but `givenName`, `familyName`, `identifier` and `affiliation`, nor an affiliation a key but `name` and `identifier`: a POST rejects `personId` and `rename` and silently ignores any other key, so a typo drops its value. No two authors share an `identifier` or, without one, a `givenName` and `familyName`
 - [ ] `license` (if present) is a plain string, not an object
 - [ ] `publisher` (if present) uses `{name, identifier}` — no `publisherIdentifier` key
 - [ ] Each `award` entry is an object with a `name` of at most 128 characters; its `funder`, if present, is a `{name, identifier}` object
