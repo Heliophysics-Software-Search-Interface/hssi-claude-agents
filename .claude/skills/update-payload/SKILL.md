@@ -75,7 +75,7 @@ Content-Type: application/json
 
 **Error responses:**
 - `403` — Missing, malformed, or invalid bearer token; or `HSSI_UPDATE_TOKEN` unset on the server
-- `400` — Validation error (unknown field, wrong type, controlled-list miss, `submitter` provided, an award `name` over 128 characters, an author `identifier` that two or more of the entry's identifier-less authors could take, an empty `givenName` that matches no single blank-given current author, an author `personId` whose Person does not exist or does not fit the sent name or identifier, an author list that names one Person twice)
+- `400` — Validation error (unknown field, wrong type, controlled-list miss, `submitter` provided, an award `name` over 128 characters, an author `identifier` that two or more of the entry's identifier-less authors could take, an empty `givenName` that matches no single blank-given current author, an author `personId` whose Person does not exist or does not fit the sent name or identifier, an author list that names one Person twice; once hssi-website #153 is deployed, also an author `rename` that is not a boolean or has no `personId`, and a `personId` whose Person's given name is `UNKNOWN`)
 - `404` — Software not found, or not visible
 - `405` — Wrong HTTP method
 
@@ -93,14 +93,14 @@ Content-Type: application/json
 
 - Top-level M2M associations such as `authors`, `funder`, `award`, `relatedInstruments`, and `relatedObservatories` are replaced by the complete submitted list.
 - People, organizations, awards, instruments, and observatories are shared database entities. When an identifier matches an existing entity, PATCH reuses it and does **not** rename it. Identity matching therefore prevents duplicates but does not make a conflicting label equivalent or patchable. A PATCH, unlike `POST /api/submission/`, also makes these changes on shared rows:
-  - Authors: it selects an existing Person row by `personId` (a POST rejects the key), attaches an unheld ORCID to the entry's identifier-less author of the same full name, gives a row it resolves by identifier or `personId` another spelling of the same full name, and resolves an empty `givenName` to the entry's blank-given author. `hssi-field-definitions/fields/06-authors.md` (*Person resolution* and the notes after it) gives the exact rules and their `400`s.
+  - Authors: it selects an existing Person row by `personId` (a POST rejects the key), attaches an unheld ORCID to the entry's identifier-less author of the same full name, gives a row it resolves by identifier or `personId` another spelling of the same full name, renames a row it selects by `personId` when the item sets `"rename": true` (pending hssi-website #153's deployment), and resolves an empty `givenName` to the entry's blank-given author. `hssi-field-definitions/fields/06-authors.md` (*Person resolution* and the notes after it) gives the exact rules and their `400`s.
   - An award's `funder` fills a matched Award row that has none. A stored funder is never replaced; a different one is ignored with a `200` (`fields/26-award-title.md`).
 - Author affiliations are added to the matched Person; the endpoint does not remove existing affiliations. Union affiliations for matched authors. Treat any requested affiliation removal as NON-PATCHABLE.
 - Publications, datasets and software share `RelatedItem` rows matched by identifier alone. Reusing an
   identifier does **not** change the row's existing semantic `type`; moving a URL between relation
   fields can therefore leave JSON-LD with the old type. Treat the type correction as NON-PATCHABLE
   and verify the serialized type independently.
-- Omit from the PATCH, and report as hard blockers requiring the CSV/manual database workflow: shared-entity renames (a Person's changed full name, an organization's or award's changed name), the replacement of a stored author identifier or award funder, a fill or name change that `fields/06` or `fields/26` marks NON-PATCHABLE, and nested affiliation removals. Top-level association removals are still supported when the user approves the complete replacement list.
+- Omit from the PATCH, and report as hard blockers requiring the CSV/manual database workflow: shared-entity renames (a Person's changed full name that `fields/06` rule 11 cannot send, which until hssi-website #153 is deployed is every one; an organization's or award's changed name), the replacement of a stored author identifier or award funder, a fill or name change that `fields/06` or `fields/26` marks NON-PATCHABLE, and nested affiliation removals. Top-level association removals are still supported when the user approves the complete replacement list.
 
 ### GET /api/list/software/?repo_url=<url> — Software Lookup
 
@@ -171,7 +171,7 @@ Immediately before PATCH, re-fetch the same UUID from the exact target and compa
 Each author whose row stays on the entry, and each new author whose row already exists, is sent with that row's `personId` (`hssi-field-definitions/fields/06-authors.md` rules 16 and 30, and its *Selecting a row by `personId`*). Take the id from the `authors` of `GET /api/data/software/<uid>/`, or for a row new to the entry from an entry it serves or `GET /api/models/Person/rows/all/?columns=id,given_name,family_name,identifier`. Before putting it in `patch`, PREPARE confirms that:
 
 1. a row new to the entry is this person, by the entries it serves: a namesake's row with the same full name binds without error;
-2. the sent names spell the row's stored full name;
+2. the sent names spell the row's stored full name, or, for a rename, the row is the one this entry lists at that author's position and passes rule 11's checks (*Renaming a row by `personId`*);
 3. for an ORCID, the row has no identifier or the same one, and no other Person row carries it.
 
 A failed check makes that change NON-PATCHABLE: a blocker. Roundtrip verification then confirms that each `personId` sits in the `authors` of `GET /api/data/software/<uid>/` at its author's position, with the sent identifier and names (`GET /api/models/Person/rows/<personId>/`).
@@ -194,7 +194,7 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | `referencePublication` | String (DOI URL) | |
 | `publicationDate` | String (`YYYY-MM-DD`) | |
 | `logo` | String URL | ≤200 chars (`URLField(max_length=200)`). A git-hosted URL must be commit-pinned (`raw.githubusercontent.com/<owner>/<repo>/<40-hex-sha>/<path>`, or `media.githubusercontent.com/media/…` for Git-LFS paths) — never a branch or a `/blob/` page. |
-| `authors` | Array of Person objects | `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}`, plus `personId` for an existing Person row (see *Authors selected by `personId`*); `givenName` may be empty or omitted only for an author stored with an empty given name; each Person row at most once |
+| `authors` | Array of Person objects | `{givenName, familyName, identifier, affiliation: [{name, identifier}, ...]}`, plus `personId` for an existing Person row (see *Authors selected by `personId`*) and, for a rename, `"rename": true` beside it; `givenName` may be empty or omitted only for an author stored with an empty given name; each Person row at most once |
 | `publisher` | Organization object | `{name, identifier}` |
 | `license` | String | License name only — must match an existing `License.name` (case-insensitive) |
 | `version` | Object | `{number, releaseDate, description, versionPid}` |
@@ -233,7 +233,7 @@ The PATCH body uses the **same key names and shapes** as the `/api/submission/` 
 | Required fields | 5 (submitter, name, repo, authors, description) | None — any subset is valid |
 | Submitter | Required | **Rejected with 400** |
 | Field behavior | All fields set (missing = null) | Only provided fields updated; omitted fields untouched |
-| Shared Person and Award rows | Reused as stored: a matched Person only has blank names filled, an identifier never attaches to an existing identifier-less row, an empty `givenName` or any `personId` is a `400`, a matched award keeps its funder | Also selects an existing Person by `personId`, attaches an identifier to the entry's identifier-less author of the same full name, gives a Person resolved by identifier or `personId` the sent spelling of its full name, resolves an empty `givenName` to the entry's blank-given author, and fills a matched award's empty funder |
+| Shared Person and Award rows | Reused as stored: a matched Person only has blank names filled, an identifier never attaches to an existing identifier-less row, an empty `givenName` or any `personId` is a `400` (and, with #153, any `rename`), a matched award keeps its funder | Also selects an existing Person by `personId`, attaches an identifier to the entry's identifier-less author of the same full name, gives a Person resolved by identifier or `personId` the sent spelling of its full name, resolves an empty `givenName` to the entry's blank-given author, and fills a matched award's empty funder; once hssi-website #153 is deployed, renames a `personId` row sent with `"rename": true` |
 | Email | Sends confirmation | No email |
 | SubmissionInfo | Creates new | Touches `modification_description` + `date_modified` on existing |
 | Reversibility | Creates permanent record | Modifies existing record permanently |
