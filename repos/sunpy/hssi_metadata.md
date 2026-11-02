@@ -505,7 +505,7 @@ instrument's data *is*.
      - *Identity:* a proven platform handle with no published human name. The git author is
        `eebbaaf <147119367+eebbaaf@users.noreply.github.com>`, whose noreply address encodes account ID 147119367 and
        login `eebbaaf`. Capitalization is preserved verbatim. **No human name is asserted.**
-256. **graham** *(unchanged — see note)*
+256. **graham**
      - *A distinct contributor — do not conflate with creator 69.* GitHub's commit API attributes this
        contributor's commit `1e2a628abe9c1f420bf7ae174ec1fc5433b2183b` to account **`grahamasam`
        (ID 107145436)**, and the git address is `grahamasam@gmail.com`. This is **not** creator 69
@@ -513,20 +513,22 @@ instrument's data *is*.
        `.mailmap` aliases `Brett` and `Brett Graham` to `Brett J Graham` and deliberately declines to
        alias `graham`, and `.zenodo.json` lists the two as separate creators. Because both are authors of
        *this* software, merging them would additionally breach the one-author-per-software constraint and
-       lose a slot. The stored string is that account's display name, not the handle, so it carries no
-       platform label. **A future audit must not propose this merge.**
+       lose a slot. The stored string is the name this contributor commits under (the git author name of
+       that commit; `.mailmap` gives `graham` no other name), not the account's login, so it is not a
+       proven handle and carries no platform label. **A future audit must not propose this merge.**
 257. **pradeep**
 258. **resakra (GitHub)** *(stored as givenName `resakra`, familyName `(GitHub)`)*
      - *Identity:* a proven platform handle with no published human name. The git author is
        `resakra <69106920+resakra@users.noreply.github.com>`, whose noreply address encodes account ID 69106920 and
        login `resakra`. Capitalization is preserved verbatim. **No human name is asserted.**
-259. **yasintoda** *(unchanged — see note)*
+259. **yasintoda**
      - *No platform identity resolves.* Examined under both prongs of the platform-attribution standard
        and neither is satisfied: `gh api users/yasintoda` returns 404, and GitHub's commit API attributes
-       commit `49abb2a9106bf3d7464de08d171b595f0b176447` to **no account**. The git address is
-       `yasintoda@riseup.net`, whose local part equals the string — suggestive of a username, but a
-       display name matching an email local part does not by itself prove handle status, and no platform
-       identity resolves. Retained exactly as stored, with **no label**, unless stronger evidence appears.
+       commit `32df88c8bfaf0271d2bbf38d2e8cf89cf99b27c9`, this contributor's one commit at the pinned
+       revision, to **no account**. The git address is `yasintoda@riseup.net`, whose local part equals the
+       string — suggestive of a username, but a commit author name matching an email local part does not
+       by itself prove handle status, and no platform identity resolves. Retained exactly as stored, with
+       **no label**, unless stronger evidence appears.
 260. **Raphael Attié** | ORCID: https://orcid.org/0000-0003-4312-6298  *(.zenodo.json roster form: Raphael Attie)*
 261. **Sophie A. Murray** | ORCID: https://orcid.org/0000-0002-9378-5315
 262. **Jonas Sinjan** | ORCID: https://orcid.org/0000-0002-5387-636X | Max Planck Institute for Solar System Research
@@ -559,14 +561,30 @@ instrument's data *is*.
   people who wrote the software — correctly omits them. No ORCID or affiliation exists for them in
   any repository source, so name-only entries are the complete and correct record; do not invent one.
 - **Eight contributors are recorded under the name HSSI stores, not the `.zenodo.json` form**, with
-  the roster spelling shown in parentheses on those lines. Identity was established by ORCID, which
-  matches exactly in all eight cases: Keith Hughitt (0000-0003-0787-9559), Andrew J. Leonard
-  (0000-0001-5270-7487), Michael Kirk (0000-0001-9874-1429), James Mason (0000-0002-3783-5509),
-  Johan Lauritz Freiherr von Forstner (0000-0002-1390-4776), Nicholas A. Murphy
-  (0000-0001-6628-8033), Sam Van Kooten (0000-0002-4472-8517), Paul Wright (0000-0001-9021-611X).
-  These are shared person records used by other HSSI entries, and the submission API does not rename
-  a person, so switching them to the roster spelling would be both risky and ineffective. A future
-  refresh should match these authors on ORCID and leave the names alone.
+  the roster spelling shown in parentheses on those lines. They are not the only such authors: others,
+  including Mark C. M. Cheung and Raphael Attié, differ from the roster too and have their own notes.
+  Identity was established by ORCID, which matches exactly in all eight cases: Keith Hughitt
+  (0000-0003-0787-9559), Andrew J. Leonard (0000-0001-5270-7487), Michael Kirk (0000-0001-9874-1429),
+  James Mason (0000-0002-3783-5509), Johan Lauritz Freiherr von Forstner (0000-0002-1390-4776),
+  Nicholas A. Murphy (0000-0001-6628-8033), Sam Van Kooten (0000-0002-4472-8517), Paul Wright
+  (0000-0001-9021-611X).
+  These are shared person records used by other HSSI entries, and each roster form differs from the
+  stored name only in style — an added or dropped initial, or a fuller or shorter form of the given
+  name. Seven of the stored forms also match a source for the person, which is Field 6 rule 10's
+  first ground for keeping a name: Mason's and Forstner's are their ORCID primary names, Wright's is
+  his ORCID primary name and an ORCID other name, Murphy's is his ORCID credit name, Van Kooten's is
+  an ORCID other name, and Hughitt's and Leonard's are the forms `docs/references.bib` gives in the
+  2015 SunPy paper's author list (`Hughitt, Keith`; `Leonard, Andrew J.`), although their ORCID
+  records read "V. Keith Hughitt" and "Andrew Leonard". Kirk's stored "Michael Kirk" matches neither
+  his ORCID names ("Michael Freelove Kirk", credit name "Michael S. F. Kirk") nor any sunpy source,
+  which give `Michael S Kirk` (`.zenodo.json`, `.mailmap`), `Kirk, Michael S.` (`docs/references.bib`,
+  the 2015 SunPy paper and the 2020 JOSS paper) or `Kirk, Michael S. F.` (`docs/references.bib`, the
+  2020 ApJ paper; `CITATION.cff` gives given-names `Michael S. F.`); "Michael Kirk" appears
+  only as a commit alias that `.mailmap` rewrites to "Michael S Kirk" (:133). It is kept under rule
+  10's second ground: dropped middle initials are a style variant, not a correction, and are never
+  sent as a rule 11 rename, since the person record is shared. Renaming a shared record to the roster
+  spelling would change the name on every entry it serves, so a future refresh should match these
+  authors on ORCID and leave all eight names alone.
 - One upstream data defect is deliberately not copied: `.zenodo.json` currently wraps Raahul Singh's
   affiliation in zero-width space characters (U+200B). The clean string
   "Indian Institute of Information Technology, Sri City" is recorded instead. Do not "correct" it back.
@@ -630,36 +648,56 @@ instrument's data *is*.
 - **Raphael Attié is recorded under the accented spelling HSSI holds, not the roster's `Raphael
   Attie`.** His shared person record carries `Attié`, the spelling punchbowl's `CITATION.cff` gives
   him (`family-names: "Attié"`). The unaccented form, which `.zenodo.json` and his ORCID record use,
-  is a style variant of the same name rather than a correction (Field 6 rule 10), and the API cannot
-  take an accent off a shared person record in any case. This dossier recorded `Raphael Attie` until
-  the shared record took the accented form; do not restore the roster spelling.
+  is a style variant of the same name rather than a correction (Field 6 rule 10). This dossier
+  recorded `Raphael Attie` until the shared record took the accented form; do not restore the roster
+  spelling.
 - **Raphael Attié's ORCID comes from HSSI's stored record, not from `.zenodo.json`.** The roster gives
   no identifier for them, while HSSI holds https://orcid.org/0000-0003-4312-6298, which matches the
   public ORCID record for this person; it is recorded here because it is real and the roster's silence
   is simply an omission. A future refresh reading only the roster will not find it and must not delete
   it as unsourced. No affiliation is recorded for them, for the reason above.
-- **A standing hazard for any future author update.** Replacing
-  this author list through the API is unsafe while any stored author record carries an empty given name:
-  an author update re-sends the entire list, the API rejects an empty given or family name, and the whole
-  field fails. **Ten** stored author records are in that state: `Himanshu`, `Jacob`, `Ankit`, `Hardik`,
-  `Mika`, `Nakshatra`, `graham`, `pradeep`, `yasintoda` and `_Gagan`. Six further creators whose strings
-  are proven platform handles — `Naman9639`, `Airmansmith97`, `OussCHE`, `eebbaaf`, `resakra` and
-  `FreyaJain` — carry that handle as their given name and so are not affected.
+- **Ten authors are recorded with an empty given name, and that is their correct form.** `Himanshu`,
+  `Jacob`, `Ankit`, `Hardik`, `Mika`, `Nakshatra`, `graham`, `pradeep`, `yasintoda` and `_Gagan` are
+  each stored in HSSI (read 2026-11-02) as a family name alone, with no identifier. Six further
+  creators whose strings are proven platform handles — `Naman9639`, `Airmansmith97`, `OussCHE`,
+  `eebbaaf`, `resakra` and `FreyaJain` — are a different case: they carry the handle as their given
+  name and `(GitHub)` as their family name (Field 6 rule 2).
 
-  Those ten are deliberate, not unfinished work. Each stored string is the contributor's *display name*,
-  not a handle — GitHub's commit API names a different account for each (`himanshukgp`, `sudozer`,
-  no-account, `pythonicforge`, `tal66`, `naxatra2`, `grahamasam`, `gmrpr321`, no-account, `seika-afk`) —
-  and four of them are canonicalized to exactly these mononyms by this repository's own `.mailmap`
-  (`Himanshu`←`himanshukgp` at :86, `Jacob`←`sudozer` at :93, `Mika`←`tal66` at :138,
-  `Ankit`←`ankit` at :35). `_Gagan` cannot be a handle at all, since GitHub logins may not begin with an
-  underscore.
+  Those ten are deliberate, not unfinished work. All ten are exactly the creator strings `.zenodo.json`
+  gives at revision ed70935, so each stored name matches the project's own author source and is kept
+  as it stands (Field 6 rule 10). Each is also the name the contributor commits under or the name this
+  repository's `.mailmap` gives them, and none is a proven handle. GitHub's commit API attributes a
+  commit by each of eight of them to an account whose login is a different string (`Himanshu`→`himanshukgp`,
+  `Jacob`→`sudozer`, `Hardik`→`pythonicforge`, `Mika`→`tal66`, `Nakshatra`→`naxatra2`,
+  `graham`→`grahamasam`, `pradeep`→`gmrpr321`, `_Gagan`→`seika-afk`), and `_Gagan` could not be a
+  login in any case, since GitHub logins may not begin with an underscore. It attributes `Ankit`'s
+  three commits at the pin (303d517 among them) and `yasintoda`'s one (32df88c) to no account, and no
+  GitHub account `yasintoda` exists (read 2026-11-02); that string matches its commit address's local
+  part, which is suggestive of a username but proves no handle (see its own note). Four of the ten are
+  canonicalized to exactly these mononyms by this repository's own `.mailmap` (`Himanshu`←`himanshukgp`
+  at :86, `Jacob`←`sudozer` at :93, `Mika`←`tal66` at :138, `Ankit`←`ankit` at :35).
 
-  **Substituting an invented given name for any of the ten is still not a workaround and must not be
-  tried** — they carry no identifier, so an author is matched by exact agreement on both name parts, and a
-  substituted name would silently create a duplicate person instead of matching the existing record.
-  **Substituting the *handle* is also wrong**: the handle is a different string from the stored display
-  name, so it would likewise fail to match, and it would misrepresent a person's chosen name as a
-  username. Fixing this properly needs the API-side change tracked in issue #68, not a metadata edit.
+  **They are sent exactly as stored:** each with its own record's `personId`, an empty given name and
+  the stored family name (Field 6 rule 30 and *Empty stored given name*), so an update that re-sends
+  the whole author list keeps all ten. An author sent without a `personId` and with an empty given name
+  binds the one current author of this software stored with an empty given name and that family name,
+  and the update is rejected if there is none or more than one. The ten family names are all different,
+  so each such author resolves to its own record, and `graham` cannot resolve to Brett J Graham, who is
+  stored with a given name.
+
+  **Do not invent a given name for any of the ten, and do not substitute the handle.** Either one
+  replaces the name the project records for the contributor with a form that `.zenodo.json`, the
+  project's author roster, does not give them. Sent without a `personId`, an author with a given name
+  binds only a record with exactly that given and family name and otherwise creates a new person, so
+  the entry would lose its existing record and list either a new duplicate or whichever record already
+  carries that exact name. Sent with the record's `personId`, a name with different words is rejected
+  unless the item also sets `"rename": true`, and a rename rewrites the shared record on every entry it
+  serves. No rename is warranted here: the stored names match the project's own sources (rule 10), and
+  Field 6 rule 11's repair of a legacy blank-given record (to a proven human name, else to `<login>` /
+  `(GitHub)`) applies only to a record whose stored string is a bare handle, and none of the ten is
+  proven to be one: eight differ from the login of the account their commits are attributed to (and
+  `_Gagan` could not be a login at all), and `Ankit` and `yasintoda` resolve to no account. Where a handle
+  exists, the handle form would also misrepresent the name a contributor commits under as a username.
 
 ### 7. Software Name (MANDATORY)
 - **Name:** SunPy
@@ -801,8 +839,10 @@ instrument's data *is*.
 - wcs
 - Source: `pyproject.toml` `keywords` (`solar physics`, `solar`, `science`, `sun`, `wcs`,
   `coordinates`), the GitHub repository topics (`astronomy`, `astropy`, `hacktoberfest`, `python`,
-  `solar`, `solar-physics`, `sun`, `sunpy`), the PyHC core registry keyword list, and the DataCite
-  subjects. Keywords are stored lower case; HSSI displays them title-cased, so `Astronomy`, `Fits`,
+  `solar`, `solar-physics`, `sun`, `sunpy`), and the PyHC core registry keyword list. The DOI records
+  supply none: DataCite's `subjects` array is empty for the concept DOI and for the v8.0.1 and v8.0.0
+  version DOIs, and the v8.0.1 Zenodo record carries no keywords (read 2026-11-02). Keywords are
+  stored lower case; HSSI displays them title-cased, so `Astronomy`, `Fits`,
   `Wcs`, `Sunpy`, `Science`, `Hacktoberfest` and `Pyhc Package` in the rendered record are the same
   values as these.
 - `pyhc package` is the PyHC package marker, which Field 16 rule 15 gives every official PyHC
@@ -821,6 +861,14 @@ instrument's data *is*.
 - `hacktoberfest` and `science` carry little scientific signal but are genuine GitHub topics and
   `pyproject.toml` keywords respectively, and both are already stored; they are kept rather than
   removed for tidiness.
+- `time series` and `heliophysics` are stored keywords that none of the keyword sources above carries,
+  and both are kept as incumbents: Field 16 rule 13 removes a stored keyword only under rules 2–5 or when its only
+  support was a capability the software has since removed, and neither applies. `time series`
+  rests on `README.rst` ("data containers for image and time series data") and the
+  `sunpy/timeseries/` subpackage. `heliophysics` appears at the pin only in names: the Heliophysics
+  Event Knowledgebase, which the HEK client (`sunpy/net/hek/hek.py`) queries, and the LEXI instrument
+  in two CDAWeb dataset descriptions. That support is thin, but the term is no scope tag, registry-only
+  domain tag, unsupported term or misspelling, so no removal rule fires.
 
 ### 17. Data Sources (OPTIONAL)
 - The Virtual Solar Observatory.
