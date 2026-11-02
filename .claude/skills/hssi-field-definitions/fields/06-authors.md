@@ -418,21 +418,23 @@ shortlog patterns.
     entries it serves → relink: send them with that row's `personId` (rule 30). No ORCID is needed.
   - **Otherwise, create their row** from a verified ORCID that no row carries: send them without
     `personId`, with their names, that ORCID and their affiliations. The ORCID matches no row and no
-    identifier-less current author takes it, so the PATCH creates their row; their later entries send
-    that row's `personId`. Each such entry needs all of these, checked at PREPARE and rechecked before
-    EXECUTE (`personChecks` in `update-payload`):
+    identifier-less current author takes it, so the PATCH creates their row. Only that one PATCH needs
+    these checks, made at PREPARE and rechecked before EXECUTE (`personChecks` in `update-payload`):
     - both name parts are non-empty, since an empty `givenName` resolves to the entry's blank-given author
       (*Empty stored given name*) and can keep the shared row;
     - the shared row carries an identifier, and no other identifier-less current author of the entry has
       the same full name: either would take the ORCID (rule 16), and listing that author too is a 400;
     - the ORCID is still on no row.
+
+    The moving person's later entries then take the relink branch to the new row.
   - **The shared row carries no identifier, and the move creates a row** → first give the shared row the
     ORCID of the person who keeps it, by `personId` on one of their entries (rule 15), as an update cycle
     of its own: PREPARE, approval, EXECUTE. Then PREPARE the move fresh from the state that PATCH left; a
     plan prepared earlier would correctly fail its baseline check. Tell the user at the first approval
     that the kept person's ORCID shows on the moving person's entries until the second EXECUTE.
-  - With no destination row, no such ORCID, or a failed check, the split is NON-PATCHABLE: a name sent
-    without an identifier binds a row with that exact split, here the shared row.
+  - The split is NON-PATCHABLE only when neither branch is available: no verified row of the moving
+    person's to relink to, and no create path whose checks all hold. A name sent without an identifier
+    binds a row with that exact split, here the shared row.
 - **Affiliations accumulate.** Each sent affiliation is `.add()`ed to whichever Person row was resolved;
   re-sending an existing affiliation inserts nothing, and nothing is ever removed.
 - **Organization resolution** (affiliations): with an identifier, match on the identifier only, else
