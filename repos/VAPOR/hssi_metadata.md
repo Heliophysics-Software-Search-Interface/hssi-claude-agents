@@ -4,7 +4,7 @@
 **Repository:** https://github.com/NCAR/VAPOR
 **Source Revision:** 9250664aec645aadab5b5cc29fdbf670a7d4f080
 **Extraction Date:** 2026-07-23
-**Validation Date:** 2026-08-20
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 ---
 
@@ -148,7 +148,7 @@ VAPOR is the Visualization and Analysis Platform for Ocean, Atmosphere, and Sola
 ### 10. Publication Date (RECOMMENDED)
 2017-06-14
 
-- **Source note:** 2017-06-14 is the earliest verifiable public GitHub repository date and is used as a proxy because VAPOR source evidence predates it and no authoritative initial-release date was found. This replaces the clearly semantically incorrect rolling Weekly release date previously used in Field 10; that release date is retained only as the Field 12 Version Date.
+- **Source note:** 2017-06-14 is the earliest verifiable public GitHub repository date and is used as a proxy because VAPOR source evidence predates it and no authoritative initial-release date was found. This replaces the date of the rolling Weekly pre-release build that Field 10 held before the 2026-07-23 extraction, which is not a publication date of the software; the Weekly build is not a release, so Field 12 does not record it either.
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
@@ -157,26 +157,42 @@ VAPOR is the Visualization and Analysis Platform for Ocean, Atmosphere, and Sola
 - **Source note:** Retained from the existing HSSI record and confirmed by current DataCite metadata.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** NCAR/VAPOR - Weekly
-- **Version Date:** 2026-07-20
-- **Version Description:** Current untested Weekly prerelease build of VAPOR 3.11.0 (w61), built from commit 9250664aec645aadab5b5cc29fdbf670a7d4f080. The release warns that Weekly installers may not be stable.
-- **Version PID:** https://doi.org/10.5281/zenodo.21460699
+- **Version Number:** 3.10.1
+- **Version Date:** 2025-05-19
+- **Version Description:**
+  * Fix VAPOR freezes after rendering #3768
+  * Fix warning and invalid animation state
+  * Fix Open session from command line broken #3772
+- **Version PID:** https://doi.org/10.5281/zenodo.15466071
 
-- **Source note:** The seeded version label was retained. Date, description, underlying 3.11.0 asset version, commit, and version DOI were refreshed from the current GitHub Weekly release and latest Zenodo/DataCite version. The official Zenodo version string is “Weekly”. The README badge DOI https://doi.org/10.5281/zenodo.13332956 is stale and identifies v3.9.3, so it is not proposed as the current Version PID.
+The description is exactly these three `* ` bullet lines, joined by single newlines.
+
+*Why 3.10.1 and not `Weekly` (rules 2 and 3):* VAPOR publishes a rolling GitHub release on the moving tag `Weekly`. GitHub flags it as a pre-release, and its body reads "Weekly installers are untested an may not be stable." (the typo is the project's). The tag is re-pointed and the release republished with each build, so the label names no fixed build: the build HSSI recorded was w61 (Zenodo deposit dated 2026-07-20), while on 2026-11-02 the release, republished 2026-10-12, carried w73 installers of `VAPOR-3.11.0` built from `9250664aec645aadab5b5cc29fdbf670a7d4f080`. A GitHub release marked pre-release is unreleased code and never a release (rules 2 and 3), and a row for it would carry a date, notes and a PID that go stale every week. The 3.11.0 the weekly builds carry is declared in `CMakeLists.txt` (lines 46–49) at `9250664` but not yet released. 3.10.1 is the newest release: its GitHub release (tag `3.10.1`, name `3.10.1`), published 2025-05-19T17:13:11Z, is neither a draft nor a pre-release; the tag points to commit `040899c79006599bc9b47ae8567499c313115f3a` ("bump version"), an ancestor of `9250664`, where `CMakeLists.txt` declares 3.10.1. The tag `v3.10.1` points to the same commit and names the same release. Every GitHub release published after it is a build of the Weekly pre-release. The NCAR conda channel (`ncar-vapor/vapor`) stops at 3.10.0, and the PyPI project named `vapor` is an unrelated package (`https://github.com/xiaket/vapor`), so neither lists a newer release. The number is written without a `v`, as the GitHub release's tag and name and the CMake version write it.
+
+*Version date* 2025-05-19 is the GitHub release's UTC publication day (rule 7); both tags and the Zenodo deposit (publication date 2025-05-19) agree.
+
+*Version description* (rules 13–16): the release name is the bare number and the repository has no changelog file at the tag, so the text comes from the release body, a "What's Changed" list of four items. Three are kept verbatim, each a fix a user can hit (commits `d39843b`, `75e482f` and `f116ef6` in the `3.10.0..v3.10.1` range). "Upgrade conda" (`650f087`) is a packaging chore and is dropped (rule 14), as are the "What's Changed" heading, each item's trailing credit naming its author and pull request and the "Full Changelog" compare link.
+
+*Version PID* (rule 17): `10.5281/zenodo.15466071` is this release's GitHub-integration deposit. Its Zenodo `version` is `v3.10.1` and its title `NCAR/VAPOR: 3.10.1`, it carries `IsSupplementTo https://github.com/NCAR/VAPOR/tree/v3.10.1`, and the concept's `HasVersion` list includes it. The DOI resolves. The README badge DOI `10.5281/zenodo.13332956` identifies v3.9.3 and is stale, so it is not the Version PID.
+
+*Superseded value.* HSSI held `Weekly` (release date 2026-07-20, version PID `https://doi.org/10.5281/zenodo.21460699`) until the 3.10.1 release update; an earlier revision of this file wrote the number as `NCAR/VAPOR - Weekly`, which is how the view API renders a version, not the stored number. The label had been carried over from the seeded record, and its description, "Current untested Weekly prerelease build of VAPOR 3.11.0 (w61), built from commit 9250664aec645aadab5b5cc29fdbf670a7d4f080. The release warns that Weekly installers may not be stable.", was a curator's summary rather than the release's own words (rule 15). Do not re-propose `Weekly`, and do not treat the weekly Zenodo deposits as versions: every one carries the version string `Weekly`.
+
+*For the next release update:* the default branch carries 3.11.0 work that has reached users only in the weekly pre-release builds, including a rectilinear-grid volume renderer (`eb20d0f`), transfer-function and keyframing updates (`a991cb7`) and Marimo support for the Python API's interactive widgets (`43b85ed`). Record 3.11.0 once a GitHub release that is not a pre-release publishes it.
 
 ### 13. Programming Language (RECOMMENDED)
 - C
 - C++
-- IDL
-- Java
-- Javascript
-- MATLAB
 - Other
 - Python 3.x
-- Rust
-- SQL
 
-- **Source note:** Set-union policy retains every existing HSSI value. Current GitHub/SoMEF language analysis directly confirms C++, C, Python, IDL, and JavaScript; Other covers substantial GLSL, NCL, CMake, Shell, Perl, Objective-C++, and related code. The carried-over Java, MATLAB, Rust, and SQL values are not substantiated by current GitHub language statistics and should be re-examined during the next full refresh rather than silently treated as newly evidenced.
+- **Source note:** Rule 4 counts the language a user writes plus the code that carries the science, read at `9250664`. C++ is the application and its libraries (`apps/`, `lib/`). Python 3.x is the Python API (`apps/pythonapi`; the conda recipe pins `python=3.9`). C is the C-callable VDC interface built into the VDC library (`include/vapor/VDC_c.h`, an `extern "C"` API implemented in `lib/vdc/VDC_c.cpp`). Other is GLSL, the shader language of the renderers (`share/shaders/*.vert`, `*.frag`, `*.geom`), which has no row.
+
+*Removed in the 3.10.1 release update (rule 9), after an earlier revision of this file asked for these carried-over values to be re-examined:*
+- **Java, MATLAB, Rust, SQL:** the tree at `9250664` contains no `.java`, `.m`, `.rs` or `.sql` file, and GitHub's language statistics list none of these languages; they had been carried over from the seeded record.
+- **IDL:** the only IDL code is `share/examples/idl/`, 27 example procedures; its `README.txt` says they demonstrate "how to read and write VDF files from IDL". The procedures call `vdc_*` routines (for example `vdc_bufreadcreate` in `AddCurlVDF.pro`, line 154), which nothing in this tree defines for IDL. This tree has no `lib/idl` and no CMake target for IDL wrappers; the `BUILD_IDL_WRAPPERS` placeholder survives only in `scripts/vapor-setup.*.sed`, which no CMake file references. Examples for an interface nothing builds are not a supported front end (rule 4).
+- **Javascript:** `apps/pythonapi/vapor/widget.js` and `widget-jquery.js` are the browser side of the Jupyter widget. Users write Python, and the rendering runs in C++ and GLSL, so the widget's client code is neither the language a user writes nor the science core (rule 4).
+
+Not counted, so a later refresh does not add them: CMake, shell and Perl (`buildutils/*.pl`) are build tooling; the NCL scripts in `share/examples/NCL/` are examples run with NCL itself; Objective-C++ (`*.mm`) is macOS platform code for the C++ application.
 
 ### 14. Reference Publication (RECOMMENDED)
 https://doi.org/10.3390/atmos10090488
@@ -240,14 +256,14 @@ https://doi.org/10.3390/atmos10090488
 - Mac
 - Windows
 
-- **Source note:** The README states most UNIX and Windows systems. Current Weekly release assets provide x86-64 Linux AppImage, x86 macOS, Apple Silicon macOS, and win64 installers.
+- **Source note:** The README states most UNIX and Windows systems. The 3.10.1 release ships x86-64 Linux AppImage, x86 macOS, Apple Silicon macOS, and win64 installers (`VAPOR-3.10.1-x86_64.AppImage`, `VAPOR3-3.10.1-macOSx86.dmg`, `VAPOR3-3.10.1-AppleSilicon.dmg`, `VAPOR3-3.10.1-win64.exe`), and the Weekly pre-release builds ship the same four.
 
 ### 21. CPU Architecture (RECOMMENDED)
 - x86-64
 - Apple Silicon arm64
 - GPU
 
-- **Source note:** Current Weekly asset names directly confirm x86-64 and Apple Silicon arm64 builds. The README requires modern 3D graphics hardware, supporting GPU.
+- **Source note:** The 3.10.1 release's installer names, which the Weekly pre-release builds repeat, directly confirm x86-64 and Apple Silicon arm64 builds. The README requires modern 3D graphics hardware, supporting GPU.
 
 ### 22. Related Phenomena (OPTIONAL)
 Not found
@@ -257,7 +273,7 @@ Not found
 ### 23. Development Status (RECOMMENDED)
 Active
 
-- **Source note:** The repository is actively maintained; the current default-branch revision is included in the current Weekly release, and the documentation repository is also current.
+- **Source note:** The repository is actively maintained; the current default-branch revision is included in the current Weekly release, and the documentation repository is also current. Rule 6 anchors: the last commit on `main` is `9250664`, dated 2026-06-02T08:21:50−06:00, and the last release is 3.10.1, published 2025-05-19. The repository is not archived, and the README carries no repostatus.org badge or status statement.
 
 ### 24. Documentation (RECOMMENDED)
 https://ncar.github.io/VaporDocumentationWebsite/
@@ -265,12 +281,12 @@ https://ncar.github.io/VaporDocumentationWebsite/
 - **Source note:** Added from the repository contribution guide and current release links. This project documentation site is more authoritative than the GitHub wiki URL guessed by SoMEF.
 
 ### 25. Funder (OPTIONAL)
-1. **Organization:** National Science Foundation
+1. **Organization:** U.S. National Science Foundation
    - **Funder Identifier:** https://ror.org/021nxhr62
 2. **Organization:** Korea Institute of Science and Technology Information
    - **Funder Identifier:** https://ror.org/01k4yrm29
 
-- **Source note:** Added from the current README; organization names were expanded and ROR identifiers resolved through the ROR API.
+- **Source note:** Added from the current README; organization names were expanded and ROR identifiers resolved through the ROR API. HSSI's organization row for `https://ror.org/021nxhr62` is named `U.S. National Science Foundation`, ROR's display name, which rule 9 makes the name of a ROR-keyed row; an earlier revision of this file wrote `National Science Foundation`, which did not match it.
 
 ### 26. Award Title (OPTIONAL)
 1. **Award Title:** ITR:  Gleaning Insight into Large Time-Varying Scientific and Engineering Data
@@ -290,6 +306,8 @@ https://ncar.github.io/VaporDocumentationWebsite/
 Not found
 
 - **Source note:** The repository prioritizes one publication, recorded in Field 14; no separate developer-prioritized publications were found.
+
+*Search for publications since the 2026-07-23 extraction, made 2026-11-02:* Semantic Scholar's list of works citing the Field 14 paper, a Crossref bibliographic search for the VAPOR platform, and a Crossref author search for John Clyne. No new publication by VAPOR's developers about VAPOR appeared (rule 3). VAPOR is widely used: the works citing the Field 14 paper span atmospheric, ocean and solar research and keep appearing, so under rule 5 a list of papers that use it would not help a searcher, and none is added. Papers seen in this search, such as Kuridze et al. 2026 (https://doi.org/10.1038/s41586-026-10871-3) and Liu et al. 2026 (https://doi.org/10.3847/1538-4357/ae88ec), were weighed under that rule and not added.
 
 ### 28. Related Datasets (OPTIONAL)
 - **Dataset:** VAPOR Sample Data
