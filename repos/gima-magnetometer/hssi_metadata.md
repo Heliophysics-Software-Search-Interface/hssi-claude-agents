@@ -5,7 +5,7 @@
 **Repository:** https://github.com/space-physics/gima-magnetometer
 **Source Revision:** 040503a3d7055787cf0b363beb94c92b6d6469b6
 **Extraction Date:** 2026-08-30
-**Validation Date:** 2026-08-31
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -408,6 +408,21 @@ the packaging version on either lineage.
 correspondence. There is no DOI for 0.6.2, and the repository being archived means none will be
 minted.
 
+**0.6.2 was declared but never released, and nothing has been released since it.** Read on
+2026-11-02 at the pin: the pinned ancestry carries no tag at all, the repository's only
+GitHub release object is `v1.0` (name `initial release`, empty body, published
+`2017-03-13T06:12:48Z`), and PyPI's JSON API knows no distribution of this package under any of its
+names (see *Cross-cutting notes*). The stored number is therefore kept under the declared-but-never-released
+case of the version rubric, not as the newest release: no release succeeds it, so there is nothing
+to replace it with. Its date and description cannot come from a release event, because there
+is none; they are the introducing commit's, and that commit's time, `2018-07-08T12:01:42-04:00`, is
+`16:01:42Z` on the same UTC day.
+
+The `v1.0` release is older than 0.6.2, not newer: it was published about sixteen months before 0.6.2
+was declared, its tag lies on the orphan lineage, and the code it labels declares `0.6`. A check that
+compares the latest tag or release with this record will keep reporting `v1.0` as a new version; it
+is the same 2017 release weighed here, and the answer stays 0.6.2.
+
 ### 13. Programming Language (RECOMMENDED)
 **Value:** Python 3.x
 
@@ -486,6 +501,7 @@ the source header, is `http://www.apache.org/licenses/LICENSE-2.0`.
 - magnetometer
 - ground magnetometer
 - auroral electrojet
+- pyhc package
 
 The first four are unchanged and fully evidenced: `setup.cfg` declares `keywords =` /
 `  magnetometer` / `  geomagnetic`, and the GitHub repository carries the topics `geophysics`,
@@ -509,6 +525,12 @@ reuses an existing keyword row.
 **Considered and not added:** a geographic keyword such as `alaska`. The vocabulary carries no such
 row, so adding one would mint a permanent new row for little discovery value; the place is already
 carried by the description, the observatory association and the software name.
+
+**`pyhc package`** is the PyHC package marker, carried by every official PyHC package so that a
+searcher can list them all with `keyword:"pyhc package"`. GIMAmag is listed in the PyHC registry's
+`_data/projects_unevaluated.yml` (read 2026-11-02; see *Cross-cutting notes*), which is one of the
+three registry lists that qualify, so the record carries the term, written exactly so. HSSI carried
+it before this list recorded it.
 
 **`poker-flat-research-range` was also considered and rejected**, even though the vocabulary does
 carry that row, so nothing new would have had to be minted. Poker Flat is the software's
@@ -682,6 +704,16 @@ Field 14 — including the positive and negative controls that show the searches
 tokenisation trap that makes a hyphenated-name search look like seventeen false hits. Independently,
 the citation graph holds no record at all for `10.5281/zenodo.376876`, so the DOI has no tracked
 citations either.
+
+**Searched again on 2026-11-02, covering everything since the 2026-08-30 extraction**, and still
+nothing qualifies. ADS full-text queries for `full:"GIMAmag"`, `full:"space-physics/gima-magnetometer"`,
+`full:"zenodo.376876"` and `full:"GIMA Magnetometer tools"`, each over the whole index with no date
+restriction, return no papers, and `citations(doi:"10.5281/zenodo.376876")` returns none. DataCite
+reports a citation count of zero for the DOI, and the Zenodo record is unchanged since 2020. The
+controls held: `full:"github.com/space-physics" entdate:[2026-08-30 TO *]` returns a paper entered
+since the extraction (an unrelated thermospheric-airglow study, bibcode `2026JGRA..13134990K`), so
+the index has been taking in new full text from this GitHub organisation, while a nonsense token
+returns nothing.
 
 ### 28. Related Datasets (OPTIONAL)
 **Value:** Not found
@@ -893,7 +925,12 @@ entry is:
   description: UAF Geophysical Institute magnetometer network data read and plot
   contact: Michael Hirsch
   keywords: ["ionosphere_thermosphere_mesosphere","specific"]
+  hssi: "https://hssi.hsdcloud.org/software/gimamag/"
 ```
+
+The `hssi:` line was added to the registry on 2026-10-01, when the registry began linking project
+titles to their HSSI pages; it points back to this record and changes no field. The entry was last
+read on 2026-11-02, still in the unevaluated list.
 
 That is the source for the software name (Field 7), corroborates the concise description (Field 9)
 and the author contact (Field 6), and supplies the ITM domain tag weighed under Field 5. A future
