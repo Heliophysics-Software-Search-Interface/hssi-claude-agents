@@ -168,7 +168,7 @@ Immediately before PATCH, re-fetch the same UUID from the exact target and compa
 
 ### Authors selected by `personId`
 
-Each author whose row stays on the entry, and each new author whose row already exists, is sent with that row's `personId` (`hssi-field-definitions/fields/06-authors.md` rules 16 and 30, and its *Selecting a row by `personId`*). Take the id from the `authors` of `GET /api/data/software/<uid>/`, or for a row new to the entry from an entry it serves or `GET /api/models/Person/rows/all/?columns=id,given_name,family_name,identifier`. Before putting it in `patch`, PREPARE confirms that:
+Each author whose row stays on the entry, and each new author whose row already exists, is sent with that row's `personId` (`hssi-field-definitions/fields/06-authors.md` rules 16 and 30, and its *Selecting a row by `personId`*); the `UNKNOWN` placeholder row is the one exception, sent by name as rule 30 says. Take the id from the `authors` of `GET /api/data/software/<uid>/`, or for a row new to the entry from an entry it serves or `GET /api/models/Person/rows/all/?columns=id,given_name,family_name,identifier`. Before putting it in `patch`, PREPARE confirms that:
 
 1. a row new to the entry is this person, by the entries it serves: a namesake's row with the same full name binds without error;
 2. the sent names spell the row's stored full name, or, for a rename, the row is the one this entry lists at that author's position and passes rule 11's checks (*Renaming a row by `personId`*);

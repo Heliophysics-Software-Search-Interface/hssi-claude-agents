@@ -228,7 +228,11 @@ attestation of authorship.
 30. **The PATCH carries the complete intended author list.** `authors` is replaced wholesale, so an author
     left out is removed from the entry. Send each author whose row stays on the entry with that row's
     `personId` (the ids are in `GET /api/data/software/<uid>/` `authors`, in order): a name sent without
-    one binds an arbitrary row with that exact split, not necessarily the entry's own.
+    one binds an arbitrary row with that exact split, not necessarily the entry's own. The one exception
+    is the `UNKNOWN` placeholder row, which a `personId` cannot select (*Renaming a row by `personId`*):
+    when the real author is known, the correct list replaces the placeholder with that author; otherwise
+    keep it by sending `{"givenName": "UNKNOWN", "familyName": "UNKNOWN"}` with no `personId` and no
+    identifier, which binds the placeholder by its exact name.
 
 ## Ask the user only when
 
@@ -382,9 +386,9 @@ shortlog patterns.
     if that row is this person, relink to it (rule 1) and correct the misspelled row database-side.
   - The rename rolls back with the rest of a failed PATCH. It is not logged, and it does not change the
     `date_modified` of the other entries the row serves.
-  - A Person whose stored given name is `UNKNOWN` (the Submitter/Curator default row) cannot be selected
-    by `personId` at all, with or without `rename`: a 400. An author on such a row cannot be sent as rule
-    30 requires, so report it as NON-PATCHABLE.
+  - The `UNKNOWN` placeholder (the Person whose stored given name is `UNKNOWN`, the Submitter/Curator
+    default row) cannot be selected by `personId`, with or without `rename`: a 400. Never rename it. An
+    entry that lists it stays patchable as rule 30 says.
 - **Affiliations accumulate.** Each sent affiliation is `.add()`ed to whichever Person row was resolved;
   re-sending an existing affiliation inserts nothing, and nothing is ever removed.
 - **Organization resolution** (affiliations): with an identifier, match on the identifier only, else
