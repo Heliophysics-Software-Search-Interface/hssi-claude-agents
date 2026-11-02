@@ -4,7 +4,7 @@
 **Repository:** https://github.com/sunpy/sunpy
 **Source Revision:** ed70935fa156a05f81926e4a2f4a0ea25dc37f36
 **Extraction Date:** 2026-08-13
-**Validation Date:** 2026-08-23
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 **Scope note.** sunpy is a general-purpose solar-physics library whose instrument coverage lives in
 data-driven subpackages (`sunpy/map/sources/`, `sunpy/timeseries/sources/`, `sunpy/net/`) rather than
@@ -25,15 +25,15 @@ does not re-propose it.
 - **DOI:** https://doi.org/10.5281/zenodo.591887
 - Source: Zenodo concept DOI covering all versions, cited as the software citation in `CITATION.rst`
   (`.. _Zenodo DOI: https://doi.org/10.5281/zenodo.591887`) and confirmed against the DataCite record,
-  which resolves and reports `version: v8.0.0`, `publicationYear: 2026`.
+  which resolves and, read on 2026-11-02, reports `version: v8.0.1`, `publicationYear: 2026`.
 - The concept DOI is correct here rather than a version DOI: it always resolves to the newest release,
-  which is what a software-level persistent identifier should do. The v8.0.0 version-specific DOI is
+  which is what a software-level persistent identifier should do. The v8.0.1 version-specific DOI is
   recorded separately in Field 12 (Version PID), which is where a per-release identifier belongs.
 
 ### 3. Code Repository (MANDATORY)
 - **URL:** https://github.com/sunpy/sunpy
 - Source: `pyproject.toml` `[project.urls] "Source Code"`, the PyHC core registry `code:` field, and
-  the DataCite `relatedIdentifiers` entry `IsSupplementTo https://github.com/sunpy/sunpy/tree/v8.0.0`.
+  the DataCite `relatedIdentifiers` entry `IsSupplementTo https://github.com/sunpy/sunpy/tree/v8.0.1`.
   Verified to resolve; default branch `main`.
 
 ### 4. Software Functionality (MANDATORY)
@@ -527,7 +527,7 @@ instrument's data *is*.
        `yasintoda@riseup.net`, whose local part equals the string — suggestive of a username, but a
        display name matching an email local part does not by itself prove handle status, and no platform
        identity resolves. Retained exactly as stored, with **no label**, unless stronger evidence appears.
-260. **Raphael Attie** | ORCID: https://orcid.org/0000-0003-4312-6298
+260. **Raphael Attié** | ORCID: https://orcid.org/0000-0003-4312-6298  *(.zenodo.json roster form: Raphael Attie)*
 261. **Sophie A. Murray** | ORCID: https://orcid.org/0000-0002-9378-5315
 262. **Jonas Sinjan** | ORCID: https://orcid.org/0000-0002-5387-636X | Max Planck Institute for Solar System Research
 263. **Herman le Roux** | ORCID: https://orcid.org/0000-0002-1805-0706 | Dublin Institute for Advanced Studies & Technological University of the Shannon: Midlands Midwest
@@ -627,7 +627,13 @@ instrument's data *is*.
   result of this entry's own attribution rather than another entry's, both institutions are recorded
   here. The Korea institute is therefore not foreign drift and must not be stripped, and the long
   `.zenodo.json` address string must not be restored in its place.
-- **Raphael Attie's ORCID comes from HSSI's stored record, not from `.zenodo.json`.** The roster gives
+- **Raphael Attié is recorded under the accented spelling HSSI holds, not the roster's `Raphael
+  Attie`.** His shared person record carries `Attié`, the spelling punchbowl's `CITATION.cff` gives
+  him (`family-names: "Attié"`). The unaccented form, which `.zenodo.json` and his ORCID record use,
+  is a style variant of the same name rather than a correction (Field 6 rule 10), and the API cannot
+  take an accent off a shared person record in any case. This dossier recorded `Raphael Attie` until
+  the shared record took the accented form; do not restore the roster spelling.
+- **Raphael Attié's ORCID comes from HSSI's stored record, not from `.zenodo.json`.** The roster gives
   no identifier for them, while HSSI holds https://orcid.org/0000-0003-4312-6298, which matches the
   public ORCID record for this person; it is recorded here because it is real and the roster's silence
   is simply an omission. A future refresh reading only the roster will not find it and must not delete
@@ -689,33 +695,44 @@ instrument's data *is*.
 - Source: DataCite `publisher` for 10.5281/zenodo.591887.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** v8.0.0
-- **Version Date:** 2026-06-30
-- **Version PID:** https://doi.org/10.5281/zenodo.21073705
-- **Version Description:** SunPy 8.0.0 is a major release. Breaking changes: the `reference_date`
-  property of `AIAMap` and `HMIMap` now returns a value on the same time scale as `date`, to prevent
-  subtle user error; minimum dependency versions were raised across the board (astropy >=7.0.0,
-  numpy >=2.0.0, matplotlib >=3.10.0, scipy >=1.14.0, pandas >=2.3.0, spiceypy >=7.0.0, drms >=0.8.0,
-  reproject >=0.14.0 among others). New features: the Solar Orbiter Archive can be queried through
-  `Fido` with no extra install because the `sunpy-soar` package has been merged into sunpy; new map
-  sources `PHIMap` for the Solar Orbiter Polarimetric and Helioseismic Imager and `METISMap` for the
-  Metis coronagraph (with a default `mask` property and a gallery example); `astropy.table.QTable`
-  objects holding `SkyCoord`s in `sunpy.coordinates` frames can be saved to and read back from FITS;
-  `get_horizons_coord` can print the JPL Horizons response; and sunpy can be built for free-threaded
-  Python. Fixes include SIP distortion information no longer being ignored when building a Map WCS,
-  thread-safety corrections in the `SphericalScreen`, `PlanarScreen`, `propagate_with_solar_surface`
-  and `transform_with_sun_center` context managers, corrected Level 1 detection in `EITMap`, corrected
-  SUIT colormap values, a SPICE time-conversion error of up to 1.6 ms, an updated ADAPT filename
-  pattern, and a SOLARNET client switch to the `solarnet.oma.be` host.
-- Source: git tag `v8.0.0` (commit-dated 2026-06-30), the 8.0.0 section of `CHANGELOG.rst`, the PyPI
-  release of 8.0.0 uploaded 2026-06-30T12:08:05Z, and Zenodo record 21073705 (`version: v8.0.0`,
-  `publication_date: 2026-06-30`), whose parent is the concept DOI in Field 2.
-- **Supersedes the stored `v7.1.2` / 2026-04-19 / no Version PID.** Three tags were created after
-  `v7.1.2` and before the release: `v8.1dev` is a development marker and `v8.0.0rc1` and `v8.0.0rc2`
-  are release candidates. Only `v8.0.0` is an authoritative version. The earlier note "Not found for v7.1.2" was correct for that
-  release but must not be carried forward: Zenodo does now mint a version DOI for 8.0.0, and
-  10.5281/zenodo.21073705 resolves.
-- **Write the number as `v8.0.0`, with the leading `v` and no software-name prefix.** HSSI prefixes
+- **Version Number:** v8.0.1
+- **Version Date:** 2026-10-09
+- **Version PID:** https://doi.org/10.5281/zenodo.23257912
+- **Version Description:**
+  - Fix bug in `sunpy.net.vso.vso.VSOClient` where unparsable times would cause a crash. Now unparsable times are replaced with a dummy value and the entry is masked, similar to how missing values are already treated.
+  - Fixed a bug that prevented our coordinates context managers from applying to threads spawned within them (e.g., for parallel processing).
+  - Fixed `sunpy.map.sources.SUITMap` modifying the `DATE-OBS` keyword rather than the `T_OBS` keyword used to construct the `.date` property.
+  - Fix debug logging so enabling it does not cause an error from the `sunpy.net.scraper.Scraper` due to `parse` using standard lib logging.
+  - Fixed `sunpy.map.GenericMap` occasionally returning properties such as `.wcs` built from out of date metadata. After editing `.meta`, accessing other attributes before `.wcs` could cause `.wcs` to be served from the cache rather than rebuilt.
+  - Fixed `sunpy.io.special.srs.read_srs` failing to read SRS files with both mixed-case column headers and sections containing `None`.
+- Source: the annotated tag `v8.0.1` (tagged 2026-10-08T21:37:47Z on commit
+  b97a28db6e47fbc38369fb49b59162fb7e310aee), the GitHub release `v8.0.1` (published
+  2026-10-09T08:05:01Z, not a pre-release), the PyPI upload of 8.0.1 (2026-10-08T22:06:26Z, not
+  yanked), and Zenodo record 23257912 (`version: v8.0.1`, `publication_date: 2026-10-09`,
+  `IsSupplementTo https://github.com/sunpy/sunpy/tree/v8.0.1`), whose parent is the concept DOI in
+  Field 2. Read on 2026-11-02; no later tag, GitHub release or PyPI upload exists.
+- **sunpy cuts its releases on release branches.** The `v8.0.1` commit sits on the `8.0` branch, cut
+  from `main` at the `v8.1dev` development marker (0429344b54992853f2ddbda1b093ea092e79f834), and is not
+  an ancestor of `main`. Release branches are normal here, so a release absent from `main`'s history
+  is still the current version. `main` after the release (edd0449c375ea109ec74bfe0f3fefc6781861e28,
+  2026-10-28) carries unreleased 8.1 work as towncrier fragments under `changelog/`; those are not
+  release notes, and nothing in them is recorded in any field until a release ships it.
+- **The date is the GitHub release's publication day**, which the Zenodo deposit shares. The release
+  was prepared the evening before: the 8.0.1 heading in `CHANGELOG.rst` reads `8.0.1 (2026-10-08)`,
+  and the tag and the PyPI upload both fall on 2026-10-08 UTC. Field 12 dates a release by its
+  published GitHub release, so 2026-10-09 stands; do not "correct" it to 2026-10-08.
+- **The description is the release's own Bug Fixes items, verbatim.** They are the six items under
+  "Bug Fixes" in the v8.0.1 release body, identical to the 8.0.1 section of `CHANGELOG.rst` at the tag.
+  The Sphinx roles and literals are written as markdown code spans (the leading `~` of a role is markup,
+  not a word) and each item's trailing pull-request link is dropped; the words are unchanged. Left out
+  whole as housekeeping a user does not meet: the Documentation item (corrected docstring parameter
+  names, #8705) and both Internal Changes items (expanded `METISMap` tests, #8683; removing the
+  deprecated `inplace` keyword of `pandas.DataFrame.sort_index` behind a `Pandas4Warning`, #8809).
+- **Supersedes v8.0.0 / 2026-06-30 / https://doi.org/10.5281/zenodo.21073705**, which HSSI held until
+  this update, together with a description of the 8.0.0 release. 8.0.1 is the bug-fix release of the
+  same 8.0 series, so that description does not carry over. Before 8.0.0, `v8.1dev` (a development
+  marker) and `v8.0.0rc1`/`v8.0.0rc2` (release candidates) were tagged; none is a release.
+- **Write the number as `v8.0.1`, with the leading `v` and no software-name prefix.** HSSI prefixes
   the software name when it renders this field — the stored `SoftwareVersion.number` was `v7.1.2`
   while the record displayed `SunPy - v7.1.2`. The name and separator are added at render time and the
   `v` belongs to the value, so copying a rendered string back into this field would corrupt the record.
@@ -772,6 +789,7 @@ instrument's data *is*.
 - heliosphere
 - image processing
 - magnetogram
+- pyhc package
 - python
 - science
 - solar
@@ -785,7 +803,11 @@ instrument's data *is*.
   `coordinates`), the GitHub repository topics (`astronomy`, `astropy`, `hacktoberfest`, `python`,
   `solar`, `solar-physics`, `sun`, `sunpy`), the PyHC core registry keyword list, and the DataCite
   subjects. Keywords are stored lower case; HSSI displays them title-cased, so `Astronomy`, `Fits`,
-  `Wcs`, `Sunpy`, `Science` and `Hacktoberfest` in the rendered record are the same values as these.
+  `Wcs`, `Sunpy`, `Science`, `Hacktoberfest` and `Pyhc Package` in the rendered record are the same
+  values as these.
+- `pyhc package` is the PyHC package marker, which Field 16 rule 15 gives every official PyHC
+  package, written exactly so. sunpy is listed in the PyHC registry's `_data/projects_core.yml` (as
+  `SunPy`; read 2026-11-02). HSSI held it before this dossier recorded it.
 - `coronagraph`, `magnetogram`, `solar imaging` and `coronal holes` are recorded here although the
   earlier record omitted them, and each reuses a keyword row that already exists rather than minting a
   near-duplicate — the keyword list is an open vocabulary, where an unknown value is created rather
@@ -927,10 +949,12 @@ instrument's data *is*.
 
 ### 23. Development Status (RECOMMENDED)
 - **Status:** Active
-- Source: the repostatus.org "Project Status: Active" badge in `README.rst`; a v8.0.0 release on
-  2026-06-30; commits through 2026-08-13 on `main` (the pinned revision is that day's cruft-update
-  merge); all six PyHC core quality ratings "Good"; `pyproject.toml` classifier
-  `Development Status :: 5 - Production/Stable`; GitHub reports the repository as not archived.
+- Source: the repostatus.org "Project Status: Active" badge in `README.rst`, present at `v8.0.1` and
+  at `main` edd0449c375ea109ec74bfe0f3fefc6781861e28, which is the project's own declaration and decides
+  the value; the v8.0.1 release on 2026-10-09; commits through 2026-10-28 on `main` (edd0449c3 is that
+  day's head); all six PyHC core quality ratings "Good"; `pyproject.toml` classifier
+  `Development Status :: 5 - Production/Stable`; GitHub reports the repository as not archived
+  (read 2026-11-02).
 
 ### 24. Documentation (RECOMMENDED)
 - **URL:** https://docs.sunpy.org
@@ -1008,7 +1032,25 @@ instrument's data *is*.
   solar data analysis" (The SunPy Community 2023, Frontiers in Astronomy and Space Sciences).
 - Source: the "Other SunPy publications" section of `CITATION.rst`, which lists exactly these three
   alongside the reference publication. At the pinned revision the list is exactly these three, and
-  all three DOIs resolve.
+  all three DOIs resolve. `CITATION.rst` is unchanged at `v8.0.1` and at `main` edd0449c3.
+- **sunpy is widely used, so papers that merely use it are not listed** (Field 27 rule 5): a list of
+  its users would tell a searcher nothing. Only publications about sunpy itself, or ones its citation
+  guidance names, are candidates.
+- **Search for newer publications, run 2026-11-02 over entries since 2026-08-01.** ADS
+  `title:"sunpy"` returns nothing; ADS `abs:"sunpy"` (meeting abstracts excluded) returns two records;
+  Zenodo `title:sunpy` over publications from 2026-08-01 returns the v8.0.1 software deposit and one
+  poster. A nonsense title token returns 0 on both services. None is added:
+  - https://doi.org/10.5281/zenodo.23059886 — Mansky, Inglis, Patel, Oien, Davey, Spencer and Ireland,
+    "The Virtual Solar Observatory 2.0: New APIs, SunPy Integration and TAP Access" (poster, 2026). Its
+    subject is the VSO 2.0 service. Its "SunPy client" is a `VSO2Client` imported from
+    `sunpy.net.vso2`, a module sunpy does not contain at `v8.0.1` or at `main` edd0449c3; the poster
+    builds on sunpy's `Fido` search and fetch, which is use (rule 5), not a publication about sunpy.
+  - https://doi.org/10.1117/12.3104602 — Jerse et al., "From IDL to Python: a modular,
+    standards-compliant re-engineering of the IBIS2.0 data-reduction pipeline" (SPIE, 2026). The IBIS
+    pipeline names sunpy in its abstract; it is not about sunpy (rules 5–6).
+  - https://doi.org/10.1007/978-3-031-36027-5_19 — Grycuk and Scherer, "Sun Magnetograms Retrieval
+    from Vast Collections Through Small Hash Codes" (2023, newly indexed). A retrieval method whose
+    abstract names sunpy; not about sunpy (rules 5–6).
 
 ### 28. Related Datasets (OPTIONAL)
 Not found
@@ -1131,7 +1173,7 @@ identifier is the de-duplication key. Grouped by platform, with the code evidenc
 - **Solar Ultraviolet Imager** — SPASE: https://spase-metadata.org/NOAA/Instrument/GOES/17/SUVI
 - **Solar Ultraviolet Imager** — SPASE: https://spase-metadata.org/NOAA/Instrument/GOES/18/SUVI
 
-**GOES XRS — `sunpy/timeseries/sources/goes.py` (`XRSTimeSeries`) and the `XRSClient`, whose supported list is `goes_number = [2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]`. The vocabulary contains XRS instrument rows for only four of those satellites, and all four are recorded. GOES 2, 6–12 and 16–18 have no XRS instrument row; their association is carried by the GOES observatory row in Field 32. The three GOES 13/14/15 rows share the name `Solar X-ray Sensor on GOES` and are distinguished only by identifier.**
+**GOES XRS — `sunpy/timeseries/sources/goes.py` (`XRSTimeSeries`) and the `XRSClient`, whose supported list is `goes_number = [2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]`. The vocabulary contains XRS instrument rows for only four of those satellites, and all four are recorded. GOES 2, 6–12 and 16–18 have no XRS instrument row; their association is carried by the GOES observatory row in Field 32. The three GOES 13/14/15 rows share the name `Solar X-ray Sensor on GOES` and are distinguished only by identifier. The list is the same at `v8.0.1`. `main` after the release (edd0449c3) adds 19 to it, unreleased; the vocabulary has no GOES-19 XRS row (GOES 19 has only an observatory row and the SUVI row), so that addition changes nothing here when it ships unless such a row appears.**
 - **Solar X-ray Monitor on GOES 5** — SPASE: https://spase-metadata.org/SMWG/Instrument/GOES/5/XRS
 - **Solar X-ray Sensor on GOES** — SPASE: https://spase-metadata.org/SMWG/Instrument/GOES/13/XRS
 - **Solar X-ray Sensor on GOES** — SPASE: https://spase-metadata.org/SMWG/Instrument/GOES/14/XRS
