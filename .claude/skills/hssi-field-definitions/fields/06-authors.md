@@ -143,9 +143,13 @@ attestation of authorship.
 
 ### C. Identifier (person authors)
 
-13. **Stored ORCID → keep.** If it demonstrably belongs to a different person, record the right one and
-    report the change as NON-PATCHABLE: a PATCH never replaces a stored identifier, and sending the right
-    one creates a new Person for this entry while the wrong one stays on the person's other entries.
+13. **Stored ORCID → keep.** If it demonstrably belongs to a different person, record the right one.
+    - **The row is this person's and only its identifier is wrong → NON-PATCHABLE:** a PATCH never
+      replaces a stored identifier, and sending the right one creates a new Person for this entry while
+      the wrong one stays on the person's other entries.
+    - **The row is the other person's** (its identifier and the entries it serves are theirs) **and this
+      entry links to it in error → correct the link:** relink or split as *Splitting a row namesakes
+      share* says.
 14. **Candidate ORCID without independent identity linkage → do not record it.** The ORCID record itself
     must connect to this person or this work: its works list the software or its paper, its employment
     matches the commit address and the field of the work, its researcher URL leads to the contributor's
@@ -407,17 +411,28 @@ shortlog patterns.
   - The `UNKNOWN` placeholder (the Person whose stored given name is `UNKNOWN`, the Submitter/Curator
     default row) cannot be selected by `personId`, with or without `rename`: a 400. Never rename it. An
     entry that lists it stays patchable as rule 30 says.
-- **Splitting a row namesakes share (rules 11 and 15).** When one Person row serves entries by two people
-  of the same name, the person whose identifier the row carries keeps it. A PATCH moves the other person
-  onto a row of their own when they have a verified ORCID that no row carries: on each of their entries,
-  send them without `personId`, with their names, that ORCID and their affiliations. The ORCID matches no
-  row, and the attach path takes only an identifier-less current author (rule 16), so the first PATCH
-  creates their row and later ones bind it by the ORCID.
-  - If the shared row carries no identifier, first give it the ORCID of the person who keeps it, by
-    `personId` on one of their entries (rule 15). Until the second PATCH, that ORCID shows on the other
-    person's entries too, so put both plans to the user together and run them back to back.
-  - Without such an ORCID for the person moving off, the split is NON-PATCHABLE: a name sent without an
-    identifier binds a row with that exact split, here the shared row.
+- **Splitting a row namesakes share (rules 11, 13 and 15).** When one Person row serves entries by two
+  people of the same name, the person whose identifier the row carries keeps it, and the other person's
+  entries move off it, one update of each entry:
+  - **The moving person already has a row of their own**, verified as theirs by its identifier or by the
+    entries it serves → relink: send them with that row's `personId` (rule 30). No ORCID is needed.
+  - **Otherwise, create their row** from a verified ORCID that no row carries: send them without
+    `personId`, with their names, that ORCID and their affiliations. The ORCID matches no row and no
+    identifier-less current author takes it, so the PATCH creates their row; their later entries send
+    that row's `personId`. Each such entry needs all of these, checked at PREPARE and rechecked before
+    EXECUTE (`personChecks` in `update-payload`):
+    - both name parts are non-empty, since an empty `givenName` resolves to the entry's blank-given author
+      (*Empty stored given name*) and can keep the shared row;
+    - the shared row carries an identifier, and no other identifier-less current author of the entry has
+      the same full name: either would take the ORCID (rule 16), and listing that author too is a 400;
+    - the ORCID is still on no row.
+  - **The shared row carries no identifier, and the move creates a row** → first give the shared row the
+    ORCID of the person who keeps it, by `personId` on one of their entries (rule 15), as an update cycle
+    of its own: PREPARE, approval, EXECUTE. Then PREPARE the move fresh from the state that PATCH left; a
+    plan prepared earlier would correctly fail its baseline check. Tell the user at the first approval
+    that the kept person's ORCID shows on the moving person's entries until the second EXECUTE.
+  - With no destination row, no such ORCID, or a failed check, the split is NON-PATCHABLE: a name sent
+    without an identifier binds a row with that exact split, here the shared row.
 - **Affiliations accumulate.** Each sent affiliation is `.add()`ed to whichever Person row was resolved;
   re-sending an existing affiliation inserts nothing, and nothing is ever removed.
 - **Organization resolution** (affiliations): with an identifier, match on the identifier only, else

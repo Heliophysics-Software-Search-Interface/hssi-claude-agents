@@ -160,13 +160,13 @@ PREPARE and EXECUTE communicate through a transient update-plan file under the g
 - `softwareId` and `targetUrl` identify the exact PATCH URL; EXECUTE must not infer or override either.
 - `mode` records the actual Updater mode; the file-driven full-refresh workflow uses `apply`.
 - `baseline` contains exactly the fields in `patch`, represented in the same normalized API shapes used for comparison.
-- `renameChecks`, only when `patch` renames a Person (`fields/06` rule 11): for each renamed `personId`, the entries the row serves and the Person rows that already have the corrected full name.
+- `personChecks`, only when `patch` renames a Person (`fields/06` rule 11) or creates a row to split an author off a shared one (`fields/06` *Splitting a row namesakes share*): for each renamed `personId`, the entries the row serves and the Person rows that already have the corrected full name; for each split author, the shared row's identifier, the entry's identifier-less current authors with that full name, and the Person rows carrying the sent ORCID.
 - `patch` contains only changed metadata fields and never `submitter`.
 - `blockers` must exist and be empty before the plan can be approved or executed.
 - The HTTP body is the nested `patch` object only, never the wrapper.
 - The plan is disposable operational state. Do not commit it or treat it as the canonical metadata record.
 
-Immediately before PATCH, re-fetch the same UUID from the exact target and compare every recorded baseline field. For each rename, also rerun rule 11's sharing and target-name checks and compare them with `renameChecks`. Abort without sending anything if a value changed; return to PREPARE so the user can review and approve a newly based plan.
+Immediately before PATCH, re-fetch the same UUID from the exact target and compare every recorded baseline field. For each rename or split, also rerun the checks `personChecks` records and compare the results with it. Abort without sending anything if a value changed; return to PREPARE so the user can review and approve a newly based plan.
 
 ### Authors selected by `personId`
 
