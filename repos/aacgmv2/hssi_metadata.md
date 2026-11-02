@@ -4,7 +4,7 @@
 **Repository:** https://github.com/aburrell/aacgmv2
 **Source Revision:** 5f855791f04f4071f7ee12c4f901915b6a1d6b98
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-08-26
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -160,8 +160,8 @@ normalized name.
   family **van Kemenade**. His pre-existing Nord Software affiliation was preserved.*
 
 **Author identity history and shared-record limitation.** Person and organization identities are shared
-across HSSI entries, and the routine metadata update path cannot safely rename them without risking
-duplicates. The canonical identities are therefore recorded explicitly:
+across HSSI entries: an organization cannot be renamed through the API, and a person rename changes
+every entry that lists the row, so neither is done as part of one entry's update. The canonical identities are therefore recorded explicitly:
 
 - Christer van der Meeren's earlier duplicate and incorrectly split identities are represented as one
   correctly split identity, without the deactivated ORCID;

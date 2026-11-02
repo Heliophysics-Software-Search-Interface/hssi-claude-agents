@@ -4,7 +4,7 @@
 **Repository:** https://github.com/sunpy/pyflct
 **Source Revision:** 250028870f1eee77c2cf0093916634c8a8e64558
 **Extraction Date:** 2026-09-09
-**Validation Date:** 2026-09-11
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -262,9 +262,8 @@ but that record lists no employment or education and its single work is on appli
 for data recovery — telecommunications, not solar physics. There is no corroboration that it is the
 same person, so no ORCID is recorded for this author and a later refresh should not attach that one
 without new evidence. Second, an author change must be made by sending the intended author list, not
-by editing the existing entry in place: a metadata update cannot rename a stored person, and supplying
-an identifier for an author whose stored row has none creates a second row rather than annotating the
-first. Any departure from the recorded collective therefore needs its author list stated explicitly.
+by editing the existing entry in place: the author list is replaced as a whole, and a stored row is reached
+by its `personId` (a rename needs `"rename": true` beside it). Any departure from the recorded collective therefore needs its author list stated explicitly.
 
 ### 7. Software Name (MANDATORY)
 

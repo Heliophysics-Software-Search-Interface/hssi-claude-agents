@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/WMM2020
 **Source Revision:** db7be2cd4a84dc55e66e3bbf1523a62f25ec8ad3
 **Extraction Date:** 2026-09-06
-**Validation Date:** 2026-09-07
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -627,7 +627,7 @@ affiliation can be added to these authors on any later day. The argument is reco
 availability, so the research is recorded complete — the ROR above, and the alias that confirms it is
 the right organisation — and the value is left unasserted, which forecloses nothing.
 
-*Do not propose renaming any existing person or organization row* as part of resolving this field.
+*Do not propose renaming any existing organization row* as part of resolving this field.
 
 ### 7. Software Name (MANDATORY)
 WMM2020

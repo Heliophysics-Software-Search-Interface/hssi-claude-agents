@@ -4,7 +4,7 @@
 **Repository:** https://github.com/ConorMacBride/mcalf
 **Source Revision:** 8f2a3dfb6c7c4e99341371bcfed6f89ed6843964
 **Extraction Date:** 2026-08-07
-**Validation Date:** 2026-08-10
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -222,7 +222,7 @@ differences between sources are in name form, affiliation completeness, and orde
 `setup.cfg`, which carries a single packaging `author` field (`Conor MacBride`) and so names only
 the lead author — that is a limitation of the field, not evidence of a one-author work.
 
-#### Author 1: Conor D. MacBride
+#### Author 1: Conor MacBride
 - **Author Identifier:** https://orcid.org/0000-0002-9901-8723
 - **Affiliation 1:**
   - **Organization:** Astrophysics Research Centre, School of Mathematics and Physics, Queen's University Belfast
@@ -285,24 +285,15 @@ decision was to wait rather than to accept the duplicate. Anyone reopening this 
 stored organisation record still has a blank identifier before acting, since a correction may
 already have landed.
 
-**MacBride's authoritative given name is `Conor D.`; HSSI stores the bare `Conor`.** `Conor D.` is
+**MacBride's given name is recorded as the bare `Conor`; `Conor D.` is a style variant.** `Conor D.` is
 what every citation-bearing source in and around the repository uses: `CITATION.cff`
-(`given-names: "Conor D."`), `.zenodo.json` (`"name": "Conor D. MacBride"`), the DataCite records for
-both DOIs (`"givenName": "Conor D."`), and the JOSS paper byline. `CITATION.cff` is the author's own
-instruction for how to cite this software, which makes it the authoritative attribution form. The
-counter-evidence is his ORCID public record, whose `given-names` field is the bare `Conor` with no
-credit name — but an ORCID personal-name field is an identity record, not a publication byline, and
-it is common for it to omit a middle initial. `setup.cfg` also uses the bare `Conor MacBride` as the
-package author, and the LICENSE copyright line reads "Copyright (c) 2020 Conor MacBride".
-
-**Durable upstream limitation — this correction cannot be applied through the routine update path.**
-HSSI matches an author by ORCID and then fills only a *blank* stored name, so a differing given name
-is accepted and silently discarded: the stored `Conor` survives unchanged and the request reports
-success. The person record is also a shared row that other software entries may cite, so a
-database-level correction would change their attribution too and must be checked against those other
-references first. `Conor D.` is therefore recorded here as the authoritative value while HSSI
-continues to store `Conor`; treat that divergence as known rather than as an unextracted
-difference.
+(`given-names: "Conor D."`), `.zenodo.json` (`"name": "Conor D. MacBride"`), the DataCite records for both
+DOIs (`"givenName": "Conor D."`), and the JOSS paper byline. The bare `Conor` is what his ORCID public
+record carries as `given-names` (with no credit name or other name), what `setup.cfg` uses as the package
+author, and what the LICENSE copyright line reads ("Copyright (c) 2020 Conor MacBride"). HSSI stores
+`Conor`, which matches his ORCID primary name, so it is kept and the fuller form is documented here
+(Field 6 rule 10). It is deliberately not sent as a rename: a middle initial is a style variant, and the
+Person row is shared with the SunPy entry, whose dossier records `Conor MacBride`.
 
 **Author order: MacBride first, Jess second.** Every authoritative source lists MacBride first:
 `CITATION.cff`, `.zenodo.json`, both DataCite records, `paper/paper.md`, the JOSS citation in

@@ -4,7 +4,7 @@
 **Repository:** https://github.com/peijin94/LOFAR-Sun-tools
 **Source Revision:** f44502475496d46a6cde17b9881aa19d852debfb
 **Extraction Date:** 2026-08-06
-**Validation Date:** 2026-08-07
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -423,9 +423,8 @@ operating the observation." That is a real authorship claim by the maintainer, s
 here rather than discarded. It is not recorded because there is no defensible identifier for it: ROR has
 no record for the Key Science Project (queries for its expanded name and for "International LOFAR
 Telescope" return only unrelated organizations), and an organization author without a `ror.org`
-identifier is stored by HSSI as a person with a blank given name — a state that is known to reject the
-entire authors field on a later metadata update, so adding it would make this record harder to maintain
-in future. Borrowing ASTRON's ROR for an author named after the KSP was also rejected: the identifier
+identifier is stored and rendered by HSSI as a Person,
+so the credit would read as a person's name. Borrowing ASTRON's ROR for an author named after the KSP was also rejected: the identifier
 would denote a different entity from the name. The ASTRON connection is instead carried by Authors 2
 and 3, both of whom are ASTRON people. The credit itself is real; it is the absence of a safe
 identifier, not any doubt about the maintainer's intent, that decides the field.

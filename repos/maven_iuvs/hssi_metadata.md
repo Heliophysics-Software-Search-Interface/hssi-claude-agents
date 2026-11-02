@@ -4,7 +4,7 @@
 **Repository:** https://github.com/lasp/maven_iuvs
 **Source Revision:** 1759ab562d379f177a61ed85aed26542b2b82894
 **Extraction Date:** 2026-08-06
-**Validation Date:** 2026-08-23
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -400,12 +400,11 @@ login handle standing in for a person. The human identities and ORCIDs above are
 records should say, and the evidence establishing each is set out in the bullets above so the
 usernames are not mistaken for names again.
 
-**A durable HSSI constraint worth knowing before any future author change.** The API cannot rename
-an existing person record, and it matches people by ORCID. A person whose stored record carries no
-ORCID therefore presents no reliable key to match on and no way to correct a wrong stored name, so
-an author-identity defect of that kind is not something a routine metadata update can repair. That
-is also why an ORCID is recorded for each of the six authors above: the ORCID is what keeps an
-author record durably identifiable across later updates.
+**What to know before any future author change.** A PATCH matches an author sent with an ORCID by that
+identifier, and an author whose stored record carries no ORCID has no such key. That row is reached by
+sending its `personId`, which can also rename it (`"rename": true`) on every entry that lists the row, so
+a wrong stored name no longer needs a database edit. That is also why an ORCID is recorded for each of the
+six authors above: the ORCID is what keeps an author record durably identifiable across later updates.
 
 **Considered and not listed as authors.**
 

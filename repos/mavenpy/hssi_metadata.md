@@ -4,7 +4,7 @@
 **Repository:** https://github.com/rjolitz/mavenpy
 **Source Revision:** fb05d5202815a6713224de8ab33e98de22852e4c
 **Extraction Date:** 2026-08-07
-**Validation Date:** 2026-08-10
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -322,7 +322,7 @@ Laboratory" and the parent university rather than "SSL" or "UC Berkeley".
 two counts: ORCID documents one employment rather than two, and the existing organization row's name
 already spells out the parent university, so a second entry would be redundant rather than additive.
 
-**How this correction lands, and the durable constraint it leaves behind.** The `rjolitz` placeholder
+**How this correction lands, and where it leaves the placeholder.** The `rjolitz` placeholder
 is not relabelled — author records are matched by `identifier` first, and supplying the ORCID
 `https://orcid.org/0000-0001-6360-0140` **creates a correctly identified author record and repoints
 this software at it**. The placeholder is left behind unreferenced by MavenPy, which is the accepted
@@ -330,14 +330,10 @@ outcome rather than a fault to clean up: at the time of this correction it was r
 software record, and no author record carried this ORCID beforehand, so nothing else was affected and
 no duplicate was created.
 
-**The constraint that outlives this correction: the `rjolitz` placeholder can never be carried in an
-authors payload for this record.** Author names are normalized on the way in, and a blank given name
-is rejected outright — the failure fires whenever a blank-named author appears in the submitted set,
-and it rejects the entire authors field, not just the offending entry. The placeholder has a blank
-given name. So any future edit to MavenPy's authors must send the **complete corrected author set**;
-full replacement is the only expressible operation. There is no way to add a second author while
-leaving the placeholder in place, and an agent that tries an incremental append including the
-placeholder will see the whole field refused.
+**The `rjolitz` placeholder is no longer linked to this record and is not to be re-added.** A person with
+an empty given name is never created, and a PATCH carries one only as a current author of the entry (by
+name) or by `personId`. Any future edit to MavenPy's authors therefore sends the complete corrected
+author set, full replacement being the only operation, with the identified row for this person.
 
 ---
 

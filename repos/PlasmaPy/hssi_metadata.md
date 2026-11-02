@@ -4,7 +4,7 @@
 **Repository:** https://github.com/PlasmaPy/PlasmaPy
 **Source Revision:** 02d1c194a5b054516167b24503abe27b4e77825d
 **Extraction Date:** 2026-08-07
-**Validation Date:** 2026-08-22
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 **Scope note — read the evidence with this in mind.** The pinned source revision is 97 commits ahead
 of the most recent release, `v2026.2.0` (2026-02-20). Some evidence cited below therefore comes from
@@ -471,8 +471,8 @@ identifier points at the authoritative contributor roster.
 > eleven handles `BH4`, `Bzero`, `CBrown345`, `cicciope`, `flaixman`, `itsraashi`, `lgoenner`,
 > `nrb1234`, `Physics-is-awesome`, `seanjunheng2`, and `WineDarkMoon`, plus the mononyms `Oscar`
 > (alias `0scvr`) and `Zaid` (alias `zaid646`). Mononyms are folded rather than stored because
-> HSSI's author serializer rejects the entire authors field when a stored `givenName`/`familyName`
-> pair is incomplete, so a single-name Person is not a safe representation.
+> a new Person needs both a non-empty given name and a non-empty family name, so a single-name Person
+> cannot be stored.
 >
 > One handle that looks like it belongs on that list does **not**: `CITATION.cff`'s bare
 > `- alias: sandshrew118` entry is GitHub user `sandshrew118`, whose profile name is **Andrew
@@ -1012,7 +1012,7 @@ identifiers are shown after an em dash where one is stored or was newly resolved
   alongside LPP and must not be folded into it on the strength of the shared École Polytechnique
   parentage.
 
-**Known divergence between HSSI and `CITATION.cff` that cannot be fixed by a metadata update.** For
+**Known divergence between HSSI and `CITATION.cff`, kept deliberately.** For
 four contributors, `CITATION.cff` gives a fuller or more current name than HSSI stores:
 
 | Stored in HSSI (recorded above) | `CITATION.cff` at this revision |
@@ -1022,12 +1022,15 @@ four contributors, `CITATION.cff` gives a fuller or more current name than HSSI 
 | Peter Heuer | Peter V. Heuer |
 | Diego Diaz | Diego A. Diaz Riega |
 
-The upstream names are the more correct ones. They are **not** recorded as the field value because
-HSSI's API cannot rename an existing Person: a metadata update that supplies a different
-`givenName`/`familyName` for an already-linked ORCID silently no-ops rather than renaming, so
-proposing a rename would produce a diff that can never be applied. Correcting these requires a
-direct database change by an HSSI administrator, outside the submission and update APIs. A future
-agent should not re-propose these as achievable field changes. Note that the divergence runs both
+The stored names are kept. Each is a spelling that a project source or the person's ORCID record also
+carries: `.mailmap` at the pin writes `Erik Everson` and `Diego Diaz`, the project's changelogs write
+`Dominik Stańczak`, the ORCID record of Dominik Stańczak lists `Dominik Stańczak` as an other name, and
+Peter Heuer's ORCID record gives `Peter` / `Heuer` as its primary name and `Peter V. Heuer` as its
+credit name (the fuller `CITATION.cff` form); Dominik Stańczak's ORCID primary name is `Dominik` /
+`Stańczak-Marikin`, which `.mailmap` also writes. The fuller upstream forms are
+therefore style variants, not corrections (Field 6 rule 10). A `personId` rename (`"rename": true`)
+could apply them, and it would show the new name on every entry the row serves; it has not been applied
+and is not proposed. Note that the divergence runs both
 ways — HSSI stores the fuller form for Nicholas A. Murphy, Jasper P. Beckers, Manas Satish Bedmutha,
 Samuel J. Langendorf, Trestan F. Simon, and Colby C. Haggerty, where `CITATION.cff` currently gives
 the shorter one — so this is a difference in vintage rather than a systematic error on either side.

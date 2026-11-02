@@ -4,7 +4,7 @@
 **Repository:** https://github.com/SWMFsoftware/SWMF
 **Source Revision:** 0aaf3a0a65f45742f1ab42836bb64d3254c3e0ff
 **Extraction Date:** 2026-08-13
-**Validation Date:** 2026-08-15
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -414,21 +414,18 @@ previously carried — lands on the dead account again. Take it from ORCID direc
 "Al Shidi". The record originally split it wrongly, as given name "Qusai Al" and family name
 "Shidi"; it now carries the correct split, given name "Qusai" and family name "Al Shidi".
 
-*Why this field once could not be corrected, and what that leaves behind.* Six of the record's
-author entries were stored as bare GitHub logins with an empty given name. That is not merely
-untidy: while any author linked to a record has a blank given name, **an update touching the authors
-field is rejected outright**, so identifiers, affiliations and additional authors could not be
-applied to this record at all; and a person's name cannot be changed through a metadata update in any
-case — renames submitted that way are silently ignored even when the update is accepted. The two
-failure modes compound, because the only thing that would have unblocked the field was precisely the
-thing a metadata update cannot do. The six rows were therefore corrected at the database level rather
-than through a metadata refresh, and the table above is now the record's actual state rather than an
-aspiration.
-
-The durable lesson is about the shape of the problem, not the repair: **a blank given name on any
-linked author silently disables the whole authors field**, and a metadata refresh cannot fix it. An
-agent that meets an author whose family name looks like a username should expect both symptoms
-together and should not read the rejection as a fault in the values it is submitting.
+*Why this field once could not be corrected, and what that leaves behind.* Six of the record's author
+entries were stored as bare GitHub logins with an empty given name. At the time that was not merely
+untidy: the update API rejected an authors update outright while any linked author had a blank given
+name, so identifiers, affiliations and additional authors could not be applied to this record at all, and
+a person's name could not be changed through an update either — renames were silently ignored. The two
+failure modes compounded, because the only thing that would have unblocked the field was precisely the
+thing an update could not do. The six rows were therefore corrected at the database level, and the table
+above is now the record's actual state rather than an aspiration. Both limits have since been lifted: a
+PATCH carries an author stored with an empty given name (by `personId`, or by name when it is the
+entry's only such author with that family name) and renames a row by `personId` with `"rename": true`.
+The durable lesson is the shape of the problem: an author whose family name looks like a username is a
+stored defect to repair, and its repair is now a rename.
 
 *Two entries were duplicate person records, and person records are shared.* Two of the fourteen —
 Qusai Al Shidi and Daniel T. Welling — existed as second, ORCID-less person records duplicating

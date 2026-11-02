@@ -4,7 +4,7 @@
 **Repository:** https://github.com/HelioML/HelioML
 **Source Revision:** 8d1b5102bf6e2954fbb0b306cf8578cd37c80d3e
 **Extraction Date:** 2026-08-04
-**Validation Date:** 2026-08-05
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -450,23 +450,21 @@ corrected forms below take precedence over it.
   title-page list is quoted verbatim further below and is deliberately left exactly as the book
   prints it — but the unaccented form is what this record should carry.
 
-**Why these corrections could not be made the ordinary way, and still cannot.** Two limitations
-constrain how author and organisation names can be corrected at all, and both still hold, so a
-future agent should not re-attempt any of this the ordinary way. First, an existing person or
-organisation record cannot be renamed: a corrected name offered for an entry that already exists
-leaves that entry's name exactly as it was, and does so silently. Second, the author list is
-replaced as a whole rather than amended entry by entry, so any change to it must restate all
-thirteen authors — and every author's given name is validated before anything else is accepted, so a
-single empty given name rejects the entire list. While four entries carried an empty given name
-(those recorded with the family names `Brandon`, `Colinrsmall`, `Tbloch1` and `Tfelipe`), the author
-list could not be written at all, which is why even the three straightforward ORCID additions for
-Craig, Holdgraf and Rokem — which needed no rename — were unreachable until those four names were
-fixed. Neither workaround would have served: supplying the four correct given names would not have
-repaired the entries, because an author carrying no identifier is matched by exact given name plus
-family name, so a corrected name matches nothing and would have created four duplicate people while
-dropping the four that existed; and omitting the four would have deleted authors the record
-legitimately carries. The names and identifiers had therefore to be set directly at the source,
-which is the only place they can be set.
+**Why these corrections were made at the source rather than through an update.** The update API then in
+force could not rename an existing person or organisation record: a corrected name offered for an entry
+that already existed left its name exactly as it was, silently. The author list is also replaced as a
+whole, so any change must restate all thirteen authors, and every author's given name was validated
+before anything else was accepted, so a single empty given name rejected the entire list. While four
+entries carried an empty given name (those recorded with the family names `Brandon`, `Colinrsmall`,
+`Tbloch1` and `Tfelipe`), the author list could not be written at all, which is why even the three
+straightforward ORCID additions for Craig, Holdgraf and Rokem — which needed no rename — were
+unreachable until those four names were fixed. Neither workaround would have served: supplying the four
+correct given names would not have repaired the entries, because an author carrying no identifier is
+matched by exact given name plus family name, so a corrected name matches nothing and would have created
+four duplicate people while dropping the four that existed; and omitting the four would have deleted
+authors the record legitimately carries. The names and identifiers were therefore set directly at the
+source. A PATCH can now rename a person by `personId` with `"rename": true` and can carry an empty
+stored given name; renaming an organisation record is still not possible.
 
 **Colin Small carries no ORCID, and should not be given one.** Two ORCID records exist under that
 name, https://orcid.org/0000-0002-1126-4744 and https://orcid.org/0000-0001-5889-4316. Neither lists

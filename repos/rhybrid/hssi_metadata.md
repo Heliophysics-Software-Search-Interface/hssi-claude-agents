@@ -4,7 +4,7 @@
 **Repository:** https://github.com/fmihpc/rhybrid
 **Source Revision:** 2df55d510629504a7c654d189031c6f9d598fda6
 **Extraction Date:** 2026-08-10
-**Validation Date:** 2026-08-22
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -424,16 +424,14 @@ ORCID legal name.
   third-party file, so University of Helsinki is not an author of RHybrid; the relationship is
   recorded in Field 30 instead.
 
-**Standing platform limitation affecting this field.** HSSI's update API cannot rename an existing
-person: a rename is silently accepted and discarded, and the whole `authors` field is rejected if any
-row carries a blank given name. The two malformed rows here — a blank given name with the family name
-`eganhila`, and a blank given name with the family name `Ilja` — were therefore unfixable through a
-normal metadata update, and were corrected at the row level instead. A person row can be shared with
-other software records, so any such fix has to be checked for other references first; that check was
-done before these two were changed. The consequence for a future refresh is that author *names* on
-this record cannot be altered by an ordinary update, only identifiers and affiliations can — if a name
-here ever needs to change again, it needs the same row-level route and the same shared-reference
-check.
+**Name corrections on this field.** A person row can be shared with other software records, so any name
+change has to be checked for other references first. The two malformed rows here — a blank given name
+with the family name `eganhila`, and a blank given name with the family name `Ilja` — were corrected at
+the row level, because the update API then in force could neither rename a person nor carry a blank given
+name; the shared-reference check was done before they were changed. A PATCH can now correct a row's name
+by sending its `personId` with `"rename": true`, and can carry an author stored with an empty given name.
+If a name here ever needs to change again, send that rename after the same shared-reference check; the
+new name shows on every entry that lists the row.
 
 ### 7. Software Name (MANDATORY)
 `RHybrid`

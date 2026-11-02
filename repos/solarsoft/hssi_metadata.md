@@ -4,7 +4,7 @@
 **Repository:** https://www.lmsal.com/solarsoft/
 **Source Revision:** Not applicable — SolarSoft has no version control, tags, or releases. See the source-currency note below.
 **Extraction Date:** 2026-08-11
-**Validation Date:** 2026-08-26
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ## Scope note — how to read the evidence in this file
@@ -421,8 +421,9 @@ data-shape error: the intended entity is the SolarSoft Consortium — the collec
 names as copyright holder — which is an organisation, not a person. The correct representation would
 be an organisation author identified by a ROR. **ROR was searched for "SolarSoft Consortium" and has
 no record for it**, so there is no ROR to supply and the organisation form cannot be constructed
-today. Two durable constraints bear on any attempt to fix this: HSSI's update API cannot rename an
-existing Person row, and the row may be referenced by other software records, so it cannot be
+today. Two constraints bear on any attempt to fix this: the organisation form needs a ROR, and none exists for
+the SolarSoft Consortium, so the `SolarSoft development` / `team` row cannot be turned into an
+organisation author; and the row may be referenced by other software records, so it cannot be
 repurposed unilaterally. The row is therefore preserved as-is and the defect recorded here rather
 than papered over.
 

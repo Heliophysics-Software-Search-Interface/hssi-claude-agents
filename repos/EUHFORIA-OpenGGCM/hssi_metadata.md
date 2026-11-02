@@ -4,7 +4,7 @@
 **Repository:** https://github.com/anweshaM/EUHFORIA-OpenGGCM
 **Source Revision:** afe57c9c1a8982eeac5e691c612974d26f5f6dac
 **Extraction Date:** 2026-07-31
-**Validation Date:** 2026-08-03
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -375,12 +375,11 @@ distinction is a fact about the record rather than a detail of presentation: non
 ORCIDs above previously existed anywhere in HSSI, so the three authors are new Person identities
 standing in place of the old one, and no row was carried forward under a corrected name.
 
-Renaming was not an available alternative in any case, and the reason is a durable HSSI limitation
-worth carrying forward: HSSI silently discards a rename of an existing Person row — the new name is
-accepted and then not applied. A related hazard is that an authors update is rejected outright when
-a Person in the list carries a blank `givenName`, as the `anweshaM` row did. Both behaviours will
-matter again for any future correction to an author's name on this record; neither affects what the
-correct values are, which are the three recorded above.
+Replacement rather than a rename was the route taken because the update API then in force could not
+rename an existing Person row (the new name was accepted and not applied) and rejected an authors
+update when a Person in the list carried a blank `givenName`, as the `anweshaM` row did. A PATCH can now
+rename a row by `personId` with `"rename": true` and can carry an author stored with an empty given
+name; neither affects what the correct values are, which are the three recorded above.
 
 ### 7. Software Name (MANDATORY)
 **EUHFORIA OpenGGCM**

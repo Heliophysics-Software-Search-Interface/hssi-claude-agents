@@ -4,7 +4,7 @@
 **Repository:** https://github.com/MihailoMartinovic/SAVIC
 **Source Revision:** d7a1b2a52ecddedd64c94d6341de42cc4f9c162f
 **Extraction Date:** 2026-09-09
-**Validation Date:** 2026-09-10
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -314,7 +314,7 @@ held appointments when the paper was written rather than which institution the s
 attributed to.
 
 **Author 2:**
-- **Name:** Kristopher G. Klein
+- **Name:** Kristopher Gregory Klein
 - **Author Identifier:** https://orcid.org/0000-0001-6038-1923
 - **Affiliation:**
   - **Organization:** University of Arizona
@@ -342,17 +342,17 @@ deposit (see Field 2 — the `IsSupplementTo .../tree/v1.2.7` relation is that i
 signature), and a bare repository-owner login is not a considered statement of authorship. The
 hand-curated contributors block is, and it names two people.
 
-*Operational consequence, and why this addition owes no follow-up.* HSSI already holds a person
-record for ORCID `0000-0001-6038-1923` carrying the same `University of Arizona` organization
-(`https://ror.org/03m2x1q45`) that SAVIC's first author uses, so recording Klein here reuses that
-existing identity rather than creating a new person or a new organization, and leaves no pending
-database correction behind. That record renders his given name as `Kristopher Gregory`, whereas
-SAVIC's own papers and the deposit both write `Kristopher G.` HSSI will not rewrite an existing
-non-blank person name in response to a software entry's metadata, and the record is shared with at
-least one other catalogue entry, so the divergence is neither SAVIC's to change nor changeable from
-here. It is recorded so a later refresh reads it as known rather than as drift — and because it is a
-claim about a shared record that this file cannot keep current on its own, it should be re-confirmed
-against the live record at any future refresh.
+*Operational consequence.* HSSI already holds a person record for ORCID `0000-0001-6038-1923` carrying
+the same `University of Arizona` organization (`https://ror.org/03m2x1q45`) that SAVIC's first author
+uses, so recording Klein here reuses that existing identity rather than creating a new person or a new
+organization. That record renders his given name as `Kristopher Gregory`, which is the value recorded
+above. SAVIC's own papers and the deposit write `Kristopher G.`, and his ORCID record gives only
+`Kristopher`; no authorship statement writes the stored form, and the only tracked occurrence is the
+bibliography entry for his 2013 thesis (`docs/Latex_Refs.bib:314`). A fuller given name is a style
+variant, so the stored form is kept and the shorter one documented here (Field 6 rule 10). It is
+deliberately not sent as a rename, because the record is shared with the PLUME entry, whose dossier
+records `Kristopher Gregory Klein`. Because this is a claim about a shared record that this file cannot
+keep current on its own, it should be re-confirmed against the live record at any future refresh.
 
 ### 7. Software Name (MANDATORY)
 

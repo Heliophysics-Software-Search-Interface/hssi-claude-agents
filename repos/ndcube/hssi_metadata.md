@@ -4,7 +4,7 @@
 **Repository:** https://github.com/sunpy/ndcube
 **Source Revision:** ac348c6fd2832dfb7b587cfdbb2a41ccb343f80f
 **Extraction Date:** 2026-09-08
-**Validation Date:** 2026-10-29
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -413,9 +413,9 @@ Khetarpal 6, Eero Vaher 1.
 > `Andrew J. Leonard` and `Matthew West`. Each pair is one person, and the differences are cosmetic.
 > They are recorded here rather than acted on, for two reasons: a stored person is a shared record
 > that other software in the catalogue may also credit, so renaming one is not a decision this entry
-> can make alone; and a routine metadata update cannot rename a stored person in any case, so any
-> alignment would be a deliberate database-side correction. Do not attempt it as part of a field
-> patch.
+> can make alone; and a rename (a `personId` entry with `"rename": true`) changes the name on every entry the row
+> serves, so any alignment is a deliberate catalogue-wide correction. None has been applied; do not
+> attempt it as part of a field patch.
 >
 > **This repository's `.mailmap` is an authoritative identity source beyond ndcube itself.** Among
 > others it maps `Ghaithq` → **Ghaith Kdimati**, `Brett Graham` → **Brett J Graham**, `ankit` →

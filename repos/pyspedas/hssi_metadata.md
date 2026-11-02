@@ -4,7 +4,7 @@
 **Repository:** https://github.com/spedas/pyspedas
 **Source Revision:** bbfdd632a0eb42953a8c83a489c140b13c508927
 **Extraction Date:** 2026-08-11
-**Validation Date:** 2026-11-01
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 *Unqualified citations are at the header's Source Revision `bbfdd632` (on `master`, just after the
@@ -474,13 +474,12 @@ ten additions below each rest on repository evidence, and none of the five was r
   roster was reconciled: the stored values were preserved rather than overwritten by `CITATION.cff`.
   They are recorded here so a future refresh recognises them as known, settled divergences rather
   than fresh drift.
-- **Durable platform limitation.** An author *name* correction is not expressible through a routine
-  metadata update: the update path silently no-ops a rename of an existing person record, it cannot
-  *replace* an existing affiliation (adding one that matches by ROR is idempotent, so additions do
-  work), and it rejects the entire authors field if any stored given name is blank. Person records
-  are also shared across software entries, so changing one here could affect other entries that
-  reference it. Any name repair therefore has to happen at the data layer with the other references
-  checked first, and should not be re-proposed as part of an ordinary metadata refresh.
+- **Name corrections and affiliations.** An author *name* correction is a `personId` entry with
+  `"rename": true`, which changes the name on every entry that lists the row; person records are shared
+  across software entries, so check the other references first. A stored empty given name is carried by
+  sending the row's `personId`. The update path still cannot *replace* an existing affiliation (adding one
+  that matches by ROR is idempotent, so additions do work). Any name repair should be a deliberate,
+  checked rename, not part of an ordinary metadata refresh.
 
 ### 7. Software Name (MANDATORY)
 - **Name:** PySPEDAS

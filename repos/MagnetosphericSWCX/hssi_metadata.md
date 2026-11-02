@@ -4,7 +4,7 @@
 **Repository:** https://github.com/rebeccaringuette/MagnetosphericSWCX/tree/MSWCX
 **Source Revision:** adf9ff435acb9fc36dc21e16d7bf538bd97df5ef (tag `MSWCX`)
 **Extraction Date:** 2026-08-06
-**Validation Date:** 2026-08-26
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -330,13 +330,13 @@ the reference publication. It is worth knowing because the change is one-way —
 be added to a `Person` but not removed through a metadata update — so a later pass that regrets one
 cannot simply undo it.
 
-**Renaming an existing `Person` or `Organization` row is not possible through a metadata update.**
-The stored affiliation is already correct, so no rename is required here; this note exists for a
-future pass that finds one that is not. A
-Person rename is silently ignored, and an attempt to edit an Organization's name can duplicate the
-affiliation instead of changing it. So if a later refresh finds an affiliation whose *name* is
-genuinely wrong — as distinct from the ADNET label above, which is not — the fix is a database-level
-correction, and it should be flagged as such rather than attempted through the normal update path.
+**An existing `Organization` row cannot be renamed through a metadata update.** The stored affiliation is
+already correct, so no rename is required here; this note exists for a future pass that finds one that is
+not. An attempt to edit an Organization's name can duplicate the affiliation instead of changing it, so if
+a later refresh finds an affiliation whose *name* is genuinely wrong — as distinct from the ADNET label
+above, which is not — the fix is a database-level correction, and it should be flagged as such rather
+than attempted through the normal update path. (A `Person` row, by contrast, can be renamed by
+`personId` with `"rename": true`.)
 The Heliophysics Digital Resource Library and ADNET affiliations are distinct entries rather than
 renames, so they are expressible, but the duplication behavior makes the resulting affiliation list
 worth checking.

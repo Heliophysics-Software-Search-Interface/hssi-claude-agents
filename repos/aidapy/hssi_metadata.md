@@ -4,7 +4,7 @@
 **Repository:** https://gitlab.com/aidaspace/aidapy
 **Source Revision:** d023f091a9cdf07fb48f232b654a4e15913b668c
 **Extraction Date:** 2026-08-27
-**Validation Date:** 2026-08-27
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -546,27 +546,26 @@ rather than added, so that a future agent does not read the absence as an oversi
 author list from a `shortlog`.
 
 **Durable limitation — how HSSI resolves a person, and what that means for these ORCIDs.** Person
-resolution branches on whether an identifier is supplied. **With** an identifier, HSSI matches on the
-identifier alone and does not fall back to the name: supplying an ORCID for an author already stored
-*without* one does not enrich that stored row, it creates a second person row and leaves the original
-behind. **Without** an identifier, resolution matches on the exact, case-sensitive given and family
+resolution branches on whether an identifier is supplied. **With** an identifier, HSSI matches on the identifier alone and does not fall back to the name: when this record was
+refreshed, supplying an ORCID for an author already stored *without* one did not enrich that stored row, it created a
+second person row and left the original behind (a PATCH now attaches the identifier to the entry's one
+identifier-less current author of that full name, or to the row selected by `personId`). **Without** an identifier, resolution matches on the exact, case-sensitive given and family
 name and reuses the existing row. Affiliations are added to whichever row was matched, so submitting
-an author with no identifier still attaches the affiliation to the row that already exists. Two
-further constraints sit alongside that: the whole authors field is rejected if any stored given name
-is blank, and an existing affiliation cannot be replaced (adding one whose ROR already matches is
-idempotent).
+an author with no identifier still attaches the affiliation to the row that already exists. A
+further constraint sits alongside that: an existing affiliation cannot be replaced (adding one whose ROR
+already matches is idempotent).
 
 **The settled consequence for AIDApy.** All five ORCIDs recorded above were applied to their authors'
 person rows when this record was refreshed, two of them through submitted metadata and three directly
 against the database. As with the affiliation name above, the three database-applied identifiers do
 not travel with a submitted field value: an HSSI instance that has not received that correction will
-still hold those three authors without identifiers, and putting them right there is a database change
-rather than anything this field can carry. Those three —
+still hold those three authors without identifiers, and a PATCH can now supply them by sending each author's `personId` with the
+ORCID. Those three —
 `https://orcid.org/0000-0003-1320-8428` (Amaya), `https://orcid.org/0000-0002-7976-1034` (Dupuis) and
 `https://orcid.org/0000-0002-3123-4024` (Lapenta) — belong to the three authors the record already
 carried before this refresh, and were applied directly against the database rather than as submitted
 field values. The mechanism above is the reason: because those three rows existed with no identifier,
-an ORCID accompanying them in submitted metadata would have created a second person row and left the
+an ORCID accompanying them in submitted metadata would then have created a second person row and left the
 original behind, so the KU Leuven affiliation recorded above would have attached to the duplicate
 instead of to the row this software points at. Correcting the existing rows instead put each author's
 identifier and affiliation on the person this software is actually associated with.

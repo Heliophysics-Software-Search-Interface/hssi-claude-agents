@@ -4,7 +4,7 @@
 **Repository:** https://github.com/NCAR/SolarProtons
 **Source Revision:** f84c06ce14e58bba8123cefc1ed06d436df04503
 **Extraction Date:** 2026-08-11
-**Validation Date:** 2026-08-12
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -260,22 +260,17 @@ so the institutional credit stands alongside the three individual authors below.
 *The previous value, and why it was corrected.* This author was stored with `given_name` empty and
 `family_name` set to the bare acronym `NCAR`, so it read as `NCAR` rather than as the institution's
 name. Two problems followed. The displayed name did not match the ROR display name for the identifier
-the entry carries. More seriously, a blank given name is not expressible through a routine metadata
-update at all: the update path rejects an empty given name outright, and when it matches an existing
-person by identifier it fills a blank given name from whatever is supplied while leaving a non-blank
-family name untouched. Any update that listed this author was caught either way. Leaving the given
-name blank failed validation for the whole `authors` array, so the field could not be written at all,
-and Bardeen and Jackman were held up by this row rather than by anything of their own. Supplying a
-value instead wrote it into the blank field and left the acronym standing beside it as the family
-name, producing a worse name than the one it replaced and no route back by the same means. The entry
+the entry carries. More seriously, the update API then in force could not carry the row: it rejected an empty given name
+outright, and when it matched an existing person by identifier it filled only a blank name part from
+whatever was supplied, leaving a non-blank family name untouched. Leaving the given
+name blank failed validation for the whole `authors` array, so the field could not be written at all, and Bardeen and Jackman were held up by this row rather than by anything of their own. Supplying a value instead wrote it into the blank field and left the acronym standing beside it as the family name, producing a worse name than the one it replaced. The entry
 was corrected directly in the database to the given name `NSF` and the family name `National Center
 for Atmospheric Research` — which is both the ROR display name for `https://ror.org/05cvfcr44` and the
 name of the organization record HSSI already held for that identifier, so it now matches
 idempotently, and the individual authors below can be recorded alongside it.
 
-*What remains actionable in a later refresh.* A person's stored name still cannot be changed through a
-routine metadata update once it is non-blank, so any future correction to this author's name needs the
-same direct database route. Check first which records reference the entry: it was referenced by
+*What remains actionable in a later refresh.* Any future correction to this author's name can be sent as a `personId` rename on a PATCH
+(`"rename": true`), which changes the name on every record that lists the row. Check first which records reference the entry: it was referenced by
 SolarProtons and by no other software record when this was written, which is what made the correction
 safe to make, but that set can change and should not be assumed.
 

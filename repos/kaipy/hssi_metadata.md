@@ -4,7 +4,7 @@
 **Repository:** https://github.com/JHUAPL/kaipy
 **Source Revision:** 0028c69c52a91ff378a5798708daaba4cdfb5790
 **Extraction Date:** 2026-09-04
-**Validation Date:** 2026-10-29
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 ---
@@ -425,20 +425,20 @@ the repository's first external pull request, and the Zenodo 1.1.3 deposit lists
 Whether the project chooses to add him to `CITATION.cff` is theirs to decide; dropping him from HSSI
 because a later `CITATION.cff` omits him would be a silent removal of a credited contributor.
 
-**The stored "Michael Wiltbeger" label could not be corrected by a metadata update, and this refresh
-did not try.** Before this refresh, the record's Wiltberger author link pointed at an identifier-less
+**The stored "Michael Wiltbeger" label was not repaired in place, and this refresh moved the link
+instead.** Before this refresh, the record's Wiltberger author link pointed at an identifier-less
 Person row spelled **Wiltbeger** (transposed letters), affiliated to NSF National Center for
 Atmospheric Research. The correctly spelled row — Michael J. Wiltberger, ORCID
 `0000-0002-4844-3148`, affiliated to both NSF NCAR and NSF NCAR High Altitude Observatory — existed
 separately and was already the row the Kaiju and TIEGCM v3.0 entries used, so the misspelling was
 specific to this entry's link rather than a shared label those entries depend on.
 
-**Why sending metadata could never have repaired that label, recorded so a later refresh does not
-re-attempt it.** A metadata update never *renames* an existing Person: once an author is matched to a
-stored row, only a blank given or family name is filled in, and a name already present is left
-untouched. Sending the correct spelling would therefore have changed nothing on the misspelled row.
-The route to the correct label was never to repair that row through metadata, but to stop pointing at
-it — the identified row listed as author 1 above was always the correct target state.
+**Why this refresh moved the link rather than repairing the label.** Sending the correct spelling
+without the row's `personId` would have changed nothing on the misspelled row, since a name already
+present is left untouched. A `personId` rename could have respelled it, but the correctly spelled row
+already existed, and renaming would have left two rows of one name. The route to the correct label was to
+stop pointing at the misspelled row — the identified row listed as author 1 above was always the correct
+target state.
 
 **What this refresh did instead, and how the misspelled row ended.** The author list carries each
 author's ORCID. An author carrying an identifier is matched on that identifier alone — the stored
@@ -463,10 +463,11 @@ this entry to the correct row. (An author sent with *no* identifier is matched i
 given-and-family-name pair and created when none matches, which is the path by which a misspelling
 can acquire a row of its own.)
 
-**One consequence worth knowing when comparing sources later.** Because a populated name is never
-renamed, the stored given names persist through this refresh exactly as they already stood — notably
-`Kevin H.` where `CITATION.cff` writes `Kevin`. A later comparison that finds the two disagreeing is
-seeing correct behaviour, not a failed update.
+**One consequence worth knowing when comparing sources later.** Because this refresh sent no `personId` rename, the
+stored given names persist through it exactly as they already stood — notably `Kevin H.` where
+`CITATION.cff` writes `Kevin`. A later comparison that finds the two disagreeing is seeing a known, kept
+divergence (a middle initial is a style variant, Field 6 rule 10), not a failed update. A `personId`
+rename could change it; it has not been applied.
 
 **Where the seed's author list came from, and why it is not used.** A 2025 extraction recorded twelve
 authors including `vmerkin`, `Jeff`, `phamkh`, `atmichael18` and `ksorat`, with no ORCIDs. Those are

@@ -4,7 +4,7 @@
 **Repository:** https://github.com/punch-mission/regularizepsf
 **Source Revision:** 8bd926e16460cc8af127c05469606df230c100ce
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-07-28
+**Validation Date:** 2026-11-02
 **Validation Status:** PASS
 
 **Seed sources:** live HSSI record (`GET http://localhost/api/view/software/ec808735-972e-41e7-8549-a96d93881e26/`,
@@ -192,7 +192,7 @@ in **none** of CITATION.cff, the DataCite/Zenodo creator list for the concept DO
 any other file in the repository (a case-insensitive grep for "lowder" across `.rst`/`.cff`/`.toml`/`.md`/
 `.json` returns nothing), and no ORCID or affiliation is discoverable. HSSI Field 6 mirrors the project's
 own citation metadata, so this name is **not** added unilaterally: doing so would create an unverifiable
-`Person` row that the update API cannot later rename or correct. The correct remedy is upstream — ask the
+`Person` row whose later correction would change every entry the row serves. The correct remedy is upstream — ask the
 PUNCH SOC to add Chris Lowder to CITATION.cff, after which a later refresh will pick the name up
 automatically. Recorded here so the gap is visible rather than silently absent.
 
