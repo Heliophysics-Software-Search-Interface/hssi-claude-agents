@@ -89,6 +89,8 @@ If ambiguous, ask which mode the user wants. If clear, proceed.
 9. On approval: invoke **submitter** in EXECUTE mode (payload file, target URL) → returns submission results
 10. Present results to user
 
+If the submitter reports **Version watch: not covered**, ask in step 8's approval exchange whether to open an [hssi-website](https://github.com/Heliophysics-Software-Search-Interface/hssi-website) issue titled `Version check misses <name>` that says where the project publishes its releases, and open it once the POST succeeds. Skip it if an issue with that title already exists, open or closed.
+
 ### Update / Release / Enrich / Targeted
 
 1. Determine software identity (name, repo URL, or UUID) and mode from request
