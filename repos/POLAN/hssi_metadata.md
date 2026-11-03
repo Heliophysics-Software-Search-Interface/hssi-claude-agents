@@ -943,9 +943,10 @@ distribution, so the case for recording it here would be weak.
 Not found
 
 **Note.** No award is recorded, for the same reasons as Field 25 — there is no acknowledgement,
-grant number or award title anywhere in the tree. This field is also structurally dependent on
-Field 25: an award with no title cannot be stored at all, so recording a funder without a titled
-award would not be possible even if a funder were identified.
+grant number or award title anywhere in the tree. HSSI stores an award only with a title, which
+Field 26 rule 9 supplies as a descriptive label when a source names an award without one; no source
+consulted names any award (the papers' own acknowledgements could not be read, see Field 25), and a
+funder can stand without an award (Field 25 rule 11).
 
 ---
 

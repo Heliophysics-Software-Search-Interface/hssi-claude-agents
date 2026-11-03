@@ -273,13 +273,14 @@ unidentified.
 
 *Given names.* `CITATION.cff` and the Zenodo record give fuller forms for three authors — "Angeline
 G. Burrell", "Leslie L. Lamarche", "Ashton S. Reimer" — while the shorter forms recorded above are
-the ones the HSSI record carried into this refresh and keeps. The short forms stand because renaming
-a stored Person is not something a metadata update can do: a patch carrying a changed given or family
-name silently leaves the stored row unchanged, so a diff asking for the fuller forms could never
-close. Which form is right is an open question across the catalogue rather than an ApexPy defect —
-these Person rows are shared with other software crediting the same people, so the answer has to be
-the same everywhere. If the fuller forms are wanted they are a shared-record correction, and the
-ORCIDs above are the reliable key for making it.
+the ones the HSSI record carried into this refresh and keeps. The short forms stand because a middle
+initial or a fuller given name is a style variant, not a correction (Field 6 rule 10): these Person
+rows are shared with other software crediting the same people, so sending the fuller forms would
+change them everywhere. Which form is right is an open question across the catalogue rather than an
+ApexPy defect, so the answer has to be the same everywhere. A PATCH can apply the fuller forms by
+sending each author's `personId` with `"rename": true` (a changed word is applied only with that
+flag), so if they are wanted it is a deliberate shared-row decision, and the ORCIDs above are the
+reliable key for finding the rows.
 
 *"van der Meeren" versus "Meeren".* The Zenodo record for v2.1.1 lists the creator as "Meeren,
 Christer", dropping the particle. That is an artifact of Zenodo parsing `CITATION.cff`'s

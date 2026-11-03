@@ -870,9 +870,9 @@ sunpy core entry, not on this one.
 
 Deliberately empty, for the same reason and on the same evidence as Field 25: no funding reference
 exists on any Zenodo/DataCite record for this software, and no award number or title appears anywhere
-in the repository. An award cannot be recorded without a funder in any case, and this field must not
-be populated speculatively from a maintainer's grants — those belong to whatever software those
-grants actually funded.
+in the repository. An award is recorded only with its funder in Field 25 (Field 25 rule 11), and this
+field must not be populated speculatively from a maintainer's grants — those belong to whatever
+software those grants actually funded.
 
 ---
 

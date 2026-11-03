@@ -383,9 +383,12 @@ created without one, and an ORCID found for either later would be filled on the 
 selection, not sent with a bare name.
 
 Separately, the collective is stored split as given name "The SunPy" and family name "Community",
-which is a person-shaped split of an organization name; correcting that is a database-side change, not
-something a metadata update can do, and it is recorded here as a known blemish rather than as a
-proposal.
+which is a person-shaped split of an organization name. The same words split as `The` / `SunPy
+Community` (Field 6 rule 27 gives that split for a new collective) are a respelling a PATCH can apply
+with the row's `personId`, and it would change the row on every entry that lists it, so those
+entries would have to be checked before it is sent (Field 6, *Stored-row sharing*). Rule 26 sends a
+stored collective under its stored split, so the stored split is recorded here as a known blemish
+rather than as a proposal.
 
 ### 7. Software Name (MANDATORY)
 

@@ -1159,8 +1159,8 @@ the package's contact (`coordinator.aida@kuleuven.be`), is an author affiliation
 "under grant agreement No 776262" (quoted in full in Field 25). The number is confirmed independently
 by Crossref and by the AGU 2021 abstract cited there. Retained unchanged from the published record.
 
-**Length check.** The award title is 60 characters, comfortably inside the undocumented 128-character
-cap on the award name column that causes a database-level failure rather than a validation error. The
+**Length check.** The award title is 60 characters, comfortably inside the 128-character
+cap on the award name, which the API rejects with a 400 (`award.name`) when it is exceeded. The
 award number is 6 characters. No length risk in this field.
 
 ---

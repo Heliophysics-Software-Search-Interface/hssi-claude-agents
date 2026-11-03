@@ -378,13 +378,19 @@ form. The record split the name as given `Damian Barrous` / family `Dume` until 
 rendered as "Damian Barrous Dume", losing the hyphen and putting the split in the wrong place; it now
 holds given `Damian`, family `Barrous-Dume`, matching ORCID and both Zenodo poster records.
 
-**Standing constraint on any future name correction.** A Person's name cannot be changed through the
-metadata API: a request carrying a corrected name silently mints a duplicate Person row and orphans
-the original, stranding every software association the original carried. That risk is concrete here,
-because this Person row is shared — the same row, with the same ORCID, is an author of the SWxSOC
-catalogue entry, so a careless attempt would have damaged that entry too. A name correction must
-therefore be made directly in the database rather than sent as a metadata value, which is the route
-this one took; the corrected spelling reaches both entries because they share the row.
+**How a name correction lands, and what it touches.** When this one was made, an update could not
+change a stored name: a request carrying a corrected name minted a duplicate Person row and orphaned
+the original, stranding every software association the original carried, so the correction was made
+directly in the database. An update now can change it. Sent with the row's `personId`, a respelling
+of the same words (a different split, hyphen, capitalization or accents; fewer accent marks only with
+`"rename": true`) is applied to the row, and a changed word is applied only with `"rename": true`.
+Sent with the row's own ORCID and no `personId`, the row is selected by that identifier and a
+respelling of the same words that carries no fewer accent marks than the stored name is applied the
+same way; a changed word is not. A name sent with no `personId` and no identifier matches only an
+exact given-and-family pair and otherwise still mints a duplicate. A name an update does apply
+changes on every entry the row serves, and this Person row is shared — the same row, with the same
+ORCID, is an author of the SWxSOC catalogue entry — so a correction reaches both entries, as the
+database correction did.
 
 **Negative research on the four authors without identifiers — do not repeat.** ORCID's public
 expanded search on 2026-09-01 returned, for `Kreisler`, thirteen same-surname records, none of them

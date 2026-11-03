@@ -331,8 +331,8 @@ follows the test the repository itself demonstrates.
 
 *A durable fact for anyone who reopens this.* No `Person` row exists for Kaspar Emanuel, and no stored
 person carries `kaspar` or `emanuel` in a name field. Adding him would therefore **mint** a new shared
-person row as a side effect, which makes the addition a database-side creation rather than a metadata
-patch value, and places it with whoever administers the database.
+person row as a side effect; a PATCH author whose name no stored Person carries creates that row, so
+no database-side step is needed.
 
 **Deliberately not proposed, for either Klaver or Emanuel: an ORCID or an affiliation.**
 - **No ORCID is identifiable for either**, but the searches are worth recording precisely, because one of
