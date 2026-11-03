@@ -4,7 +4,7 @@
 **Repository:** https://github.com/peijin94/LOFAR-Sun-tools
 **Source Revision:** f44502475496d46a6cde17b9881aa19d852debfb
 **Extraction Date:** 2026-08-06
-**Validation Date:** 2026-11-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -1021,8 +1021,8 @@ to the International LOFAR Telescope", i.e. infrastructure again.
 The full project title is confirmed from two sources: CORDIS's project page for grant 952439 titles it
 "Scientific and Technological Excellence by Leveraging LOFAR Advancements in Radio Astronomy | STELLAR
 | H2020", and ApJ 932, 17 spells out the same expansion in its acknowledgements. The title is 91
-characters, comfortably under the 128-character `Award.name` limit that would otherwise fail at the
-database write; the award number is 6 characters.
+characters, comfortably under the 128-character `Award.name` limit, which the API enforces with a
+400 (`award.name`); the award number is 6 characters.
 
 The acronym `STELLAR` alone was considered for the title field and rejected — Field 26 asks for the
 full award title, and the acronym is not one.

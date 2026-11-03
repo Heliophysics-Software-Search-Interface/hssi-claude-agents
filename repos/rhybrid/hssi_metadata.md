@@ -4,7 +4,7 @@
 **Repository:** https://github.com/fmihpc/rhybrid
 **Source Revision:** 2df55d510629504a7c654d189031c6f9d598fda6
 **Extraction Date:** 2026-08-10
-**Validation Date:** 2026-11-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -984,8 +984,8 @@ MEOW, named in full on `https://planets.fmi.fi/missions.html` with the grant rec
 `https://doi.org/10.3030/101124960` (European Commission grant 101124960).
 
 The title is recorded as the funder states it, without the "(MEOW)" acronym suffix, since the form asks
-for the full award title. Its length is 102 characters, within the `Award.name` 128-character storage
-limit that would otherwise fail the write.
+for the full award title. Its length is 102 characters, within the `Award.name` 128-character limit,
+which the API enforces with a 400 (`award.name`).
 
 The record previously pointed at a blank award row — no name, no identifier, no funder — which
 carried no information and was not a value worth preserving. It was unlinked from this software and

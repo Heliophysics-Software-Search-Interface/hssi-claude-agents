@@ -4,7 +4,7 @@
 **Repository:** https://github.com/ConorMacBride/mcalf
 **Source Revision:** 8f2a3dfb6c7c4e99341371bcfed6f89ed6843964
 **Extraction Date:** 2026-08-07
-**Validation Date:** 2026-11-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -825,9 +825,8 @@ cascade. It exists only in the papers.
 
 ### 26. Award Title (OPTIONAL)
 
-All three titles are well under the 128-character limit that applies to award names — a limit that
-is enforced at storage but not reported by validation, so an over-long title fails late rather than
-being rejected up front.
+All three titles are well under the 128-character limit that applies to award names — a limit the
+API enforces up front, rejecting a longer name with a 400 (`award.name`).
 
 1. **Award Title:** Research and Development Grant
    **Award Number:** 059RDEN-1

@@ -4,7 +4,7 @@
 **Repository:** https://github.com/nasa/Kamodo
 **Source Revision:** 6706989574997795ce1b16b75af31c382eba0611
 **Extraction Date:** 2026-08-13
-**Validation Date:** 2026-11-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 **Scope note.** The GitHub repository `nasa/Kamodo` ships the CCMC *analysis suite* (`kamodo_ccmc`).
@@ -974,8 +974,7 @@ That is the wording of the official record at
 value. `U.S. National Science Foundation grant` (38 characters) is the display title that stands in
 for it — a deliberate consequence of that cap rather than an imprecise reading of the source. The
 formal title is preserved above so the award stays identifiable, and so a later refresh does not
-put it forward as a value: it will not fit, and the attempt fails at the database write rather than
-at validation, where the cause would be easier to see.
+put it forward as a value: it will not fit, and the API rejects it with a 400 naming `award.name`.
 
 **Award funders.** Each award row carries its funder: National Aeronautics and Space Administration
 for 80NSSC20C0290 and 80NSSC21C0585, and the U.S. National Science Foundation for 1503389.

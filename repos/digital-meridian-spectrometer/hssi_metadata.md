@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/digital-meridian-spectrometer
 **Source Revision:** 22924f707a4a3027e059a359695e69e4a80140c2
 **Extraction Date:** 2026-08-29
-**Validation Date:** 2026-08-29
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -1193,7 +1193,7 @@ URL (which serves HTML).
 character limits: the longest URL-typed value is the repository/documentation URL at 62 characters
 against a 200-character limit, and the longest related-item URL is 61 characters against a
 128-character effective limit. No award is recorded, so the 128-character award-title limit is not
-engaged. These limits are enforced at the database layer without a prior validation error, so the
+engaged. The URL limits are enforced at the database layer without a prior validation error, so the
 sweep is worth repeating whenever a longer URL is proposed.
 
 **Values whose correctness is time-bounded.** Field 23 (Development Status) is derived from the age of

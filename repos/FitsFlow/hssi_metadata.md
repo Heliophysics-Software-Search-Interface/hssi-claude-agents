@@ -4,7 +4,7 @@
 **Repository:** https://github.com/indiajacksonphd/FitsFlow
 **Source Revision:** 6111c361d58f4ccd60b0ee49b0da6165ab01a78b
 **Extraction Date:** 2026-08-03
-**Validation Date:** 2026-08-04
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 **Scope note.** FitsFlow is a deployed cloud service, not an installable library. The repository
@@ -822,8 +822,8 @@ considered and rejected: NSF's bare title (drops the fellowship-programme contex
 include) and the SPASE record's `Project` value, which is the same bare NSF title.
 
 Length constraint recorded because it is a real hazard for this particular value: the stored title is
-116 characters and `Award.name` is a 128-character CharField that fails at the database write rather
-than at serializer validation. 116 fits, with only 12 characters of headroom — so any future
+116 characters and `Award.name` is a 128-character CharField, so the API rejects a longer name with
+a 400 (`award.name`). 116 fits, with only 12 characters of headroom — so any future
 expansion of this title (adding "National Science Foundation" or the award number to the string, for
 instance) would exceed the cap and must not be attempted.
 
