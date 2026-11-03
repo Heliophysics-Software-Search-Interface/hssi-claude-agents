@@ -99,7 +99,7 @@ Execute these steps in order:
 
 ### Step 3: Verification Pass
 
-Run three sub-checks:
+Run these sub-checks:
 
 **A. Completeness** — Every section with usable data maps to a payload field, or has an explicit justified omission. Flag any dropped content.
 
@@ -113,6 +113,8 @@ Run three sub-checks:
 **D. Organization-name sanity** — For `affiliation[].name` (Field 6) and `funder[].name` (Field 25), a bare acronym (e.g., `ESA` rather than `European Space Agency`) should already have been expanded upstream by the extractor. Do not auto-expand here. If one remains, report it in the verification report as an upstream normalization defect and resolve it under the field's own rule (the organization's ROR display name from `fields/06` / `fields/25`), routing the correction back through the extractor rather than editing the value yourself; ask only when the organization's identity is genuinely ambiguous under that rule. Also flag funder entries that combine multiple organizations into one value (one organization per entry).
 
 **E. Instrument/Observatory SPASE gate** — Every `relatedInstruments`/`relatedObservatories` entry in the payload **must carry a `https://spase-metadata.org/` identifier that matches exactly one row of the live `InstrumentObservatory` vocabulary, with the row's stored `name` byte for byte** — the prefix alone is not enough, because an identifier the vocabulary does not hold creates a new row with whatever name was sent — per the ladder and gate in `fields/31` (Field 32 follows it). An entry marked `NEEDS MANUAL RESOLUTION`, an unresolved multi-row match with no evidence selecting among the rows, or a `name` with no identifier at all must have been **omitted** from the payload — a bare name would bind to an arbitrary same-name row or create a new identifierless row. An evidence-backed multi-row expansion is legitimate; verify each row has an identifier and let it through. Surface every omission in the report. This is a **hard blocker for EXECUTE:** PREPARE may produce the report, but do **not** POST while any unresolved or identifierless entry remains — the user must pick the SPASE identifier or confirm dropping the entry first.
+
+**F. Version watch** — Report only; never a blocker. HSSI hears of new releases from a nightly check, `django/website/management/commands/check_software_versions.py` on `main` of the [hssi-website repo](https://github.com/Heliophysics-Software-Search-Interface/hssi-website). Read it and decide, from Field 12's evidence, whether it would notice this software's next release: whether one of its sources reads the place the project publishes releases, and whether it would sort the project's version numbers in release order. If it would not, report **Version watch: not covered**, saying where the project publishes releases and what the check misses.
 
 ### Step 4: Present Payload and Verification Report
 
