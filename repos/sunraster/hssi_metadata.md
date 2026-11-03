@@ -4,7 +4,7 @@
 **Repository:** https://github.com/sunpy/sunraster
 **Source Revision:** f950bcd0a2c2ff470bfa89da2d675561269f550d
 **Extraction Date:** 2026-09-09
-**Validation Date:** 2026-09-11
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -374,13 +374,13 @@ commit count — is genuine and is preserved rather than dismissed. It lost to t
 as it stands names exactly one author, and that is the author the catalogue reflects.
 
 **A note that constrains how this field could ever be changed:** the stored collective author has an
-empty identifier. Sending an identifier for an author row that already exists without one creates a
-duplicate row and orphans the original, so the collective must not be "upgraded" in place through a
-routine metadata update. It has no ROR to send in any case. The same rule would bind any of the draft's
-authors if they were ever added: the draft gives Baptiste Pellorce and Ankit Kumar Baruah no ORCID, so
-they would be created without one, and a later refresh must not "improve" them by sending an ORCID
-through a metadata update — that mints a second row and orphans the first. Attaching an identifier to
-an existing identifier-less author is a database-side correction, not a metadata update.
+empty identifier, and it has no ROR to send in any case. An identifier fills a stored row only through
+an update that selects it (the row's `personId`, or the name when it is the entry's one current author
+stored without an identifier under that full name); sent with a name that selects no row, it mints a
+second row and leaves the original unidentified. The same applies to any of the draft's authors if they
+were ever added: the draft gives Baptiste Pellorce and Ankit Kumar Baruah no ORCID, so they would be
+created without one, and an ORCID found for either later would be filled on the stored row through that
+selection, not sent with a bare name.
 
 Separately, the collective is stored split as given name "The SunPy" and family name "Community",
 which is a person-shaped split of an organization name; correcting that is a database-side change, not

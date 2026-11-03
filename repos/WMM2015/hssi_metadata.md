@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/WMM2015
 **Source Revision:** fb4e06f5f66ac707f1799aa12ef1687904926d56
 **Extraction Date:** 2026-09-05
-**Validation Date:** 2026-09-07
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -361,14 +361,15 @@ independent of the name: the WMM2015 Technical Report (Field 27) lists "Nair, M.
 authors, and the University of Colorado Boulder is where the NOAA geomagnetism group's academic
 affiliate sits, at the same Boulder address the vendored C prints.
 
-This identifier could not be applied through the metadata API and was **not** sent in this entry's
-PATCH. The author's HSSI row was created without an identifier, and attaching one through an ordinary
-metadata update matches on the identifier rather than the name, which would mint a second person row
-and orphan the existing one. It was therefore applied on **2026-09-07 by a database-side correction**
-to the existing person row, leaving that row's identity — and every other entry referencing it —
-intact. A later refresh should expect to find the ORCID already present on the row and must still not
-send it in a PATCH: the mint-and-orphan hazard is a property of the update path, not of the value, and
-it does not go away now that the value is stored.
+This identifier was **not** sent in this entry's PATCH. The author's HSSI row was created without an
+identifier, and when this entry was refreshed an update could not attach one to it: it matched on the
+identifier rather than the name, which would have minted a second person row and orphaned the existing
+one. It was therefore applied on **2026-09-07 by a database-side correction** to the existing person
+row, leaving that row's identity — and every other entry referencing it — intact. A later refresh
+should expect to find the ORCID already present on the row; sending it again binds that row, so no
+duplicate arises, and the author goes under the row's stored name. Where a row lacks it, an update can
+now fill it with the row's `personId`; the row is shared by every entry it serves, so the ORCID then
+shows on all of them.
 
 **Adam Woods — researched, and deliberately not asserted.** `https://orcid.org/0000-0003-1831-5038`
 is a plausible candidate: the name matches, the sole employment is University of Colorado Boulder,

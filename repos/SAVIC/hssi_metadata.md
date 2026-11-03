@@ -4,7 +4,7 @@
 **Repository:** https://github.com/MihailoMartinovic/SAVIC
 **Source Revision:** d7a1b2a52ecddedd64c94d6341de42cc4f9c162f
 **Extraction Date:** 2026-09-09
-**Validation Date:** 2026-11-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -996,15 +996,15 @@ this decision.
 are NASA awards; USAspending gives "National Aeronautics and Space Administration" as the awarding
 agency for each. The acronym is deliberately expanded, per the organization-name rule.
 
-**The operational asymmetry, which is the practical reason this is not a free choice.** Exactly one
+**The operational asymmetry between the five awards.** Exactly one
 of the five — `80NSSC19K0912` — already has an Award record in HSSI, carrying the identifier
 `80NSSC19K0912`, the name `National Aeronautics and Space Administration grant`, and the
 `National Aeronautics and Space Administration` organization as its funder. Selecting that award
 binds to the existing record and nothing is created. Selecting any of the other four creates a new
-award record keyed on its number alone, with **no funder attached**, and an award record's funder
-cannot subsequently be set through any API path — it is writable only by a direct database
-correction. So each additional award chosen here is a permanently funder-less record unless someone
-follows up at the database level.
+award record keyed on its number alone, and that record takes the funder sent with it
+(`award[].funder`, the same NASA organization Field 25 records), so the funder link is not itself a
+cost of recording more than one award. What no update can do is replace a funder a record already
+carries, so a wrong funder on a shared award record would still be a database correction.
 
 **Which awards were recorded, and why the other four were not.**
 
@@ -1017,9 +1017,9 @@ author's award rather than the first author's.
 
 Three alternatives were rejected. Recording the three awards acknowledged by **both** papers —
 `80NSSC19K0912`, `80NSSC19K1390` and `80NSSC19K0829` — is best supported by the acknowledgments read
-across the series, but it creates two permanently funder-less award records, one of them held by a
+across the series, but it creates two new award records, one of them held by a
 different institution. Recording all five awards named in Paper II's Acknowledgments is the most
-literal reading of the form's instruction and the most complete, but it creates four funder-less
+literal reading of the form's instruction and the most complete, but it creates four new award
 records and includes an Earth-ionosphere award whose description has nothing to do with this
 software. Leaving both fields empty is defensible only if no award can be attributed to the
 *software* as distinct from the *authors*, and it discards evidence the form explicitly directs us

@@ -4,7 +4,7 @@
 **Repository:** https://github.com/CosmicStudioSoftware/OMMBV
 **Source Revision:** e4b36778fd99ed01b9d68d2d565761937a9fa4a6
 **Extraction Date:** 2026-09-08
-**Validation Date:** 2026-09-08
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -1126,9 +1126,10 @@ matching happens on the identifier first. Where an award record already exists u
 identifier, attaching it creates nothing new and does not overwrite the title that record already
 carries. Where none exists, recording the award creates a new record — which requires a title,
 because an award with no title cannot be recorded at all. Award titles are capped at 128 characters.
-And a durable limitation worth knowing before anyone plans a repair: an award's *funder* link cannot
-be written through any submission or update path, so a newly created award record will have no
-funder attached until someone makes a database-side correction.
+A durable limit worth knowing before anyone plans a repair: an award's *funder* is set when the record
+is created, by the `funder` sent with the award, or filled by an update while the record has none; no
+update replaces a funder a record already carries, so a wrong or retargeted funder is a database-side
+correction.
 
 **Three of the four attach existing award records, so nothing new is created for them.**
 
@@ -1172,8 +1173,7 @@ source. An absence established by one literal spelling is not an absence.**
 An award record already exists for it and its funder is already one of this software's funders.
 `NASA grant` is plainly a placeholder, and the same placeholder appears on at least one other NASA
 award record, so it neither describes nor distinguishes this award. It cannot be improved by
-recording: attaching by identifier reuses the record and leaves its existing title alone, and the
-funder link is unwritable in any case. The federal spending record for this award confirms it went
+recording: attaching by identifier reuses the record and leaves its existing title alone. The federal spending record for this award confirms it went
 to the University of Texas at Dallas from NASA, running 2018-06-07 to 2021-08-31, but supplies only
 an all-capitals proposal abstract of 2,790 characters. It opens
 `A THREE-YEAR RESEARCH PROGRAM IS PROPOSED TO STUDY THE ONSET AND EVOLUTION OF EQUATORIAL PLASMA BUBBLES THAT DEVELOP IN THE POST-MIDNIGHT EQUATORIAL IONOSPHERE.`
@@ -1231,11 +1231,11 @@ would be second-guessing the people who wrote the acknowledgement.
 *The case against, which did not prevail but leaves a consequence worth carrying forward.* The
 awardee is UCAR and the principal investigator is not an author of this software, and the award funds
 COSMIC constellation operations rather than this package. More concretely, and this is the durable
-part: an award's funder link cannot be written through any submission or update path, so the award
-record created for `AGS-1033112` carried no funder at first. That gap was closed by a database-side
-change on 2026-09-09, which attached the U.S. National Science Foundation record already used by this
-software's other NSF award (`AGS-1651393`) as the funder. A later refresh should expect the funder
-already present and must not attempt to send it.
+part: the award record created for `AGS-1033112` carried no funder at first, because a funder could
+not yet be sent with an award. That gap was closed by a database-side change on 2026-09-09, which
+attached the U.S. National Science Foundation record already used by this software's other NSF award
+(`AGS-1651393`) as the funder. A later refresh should expect the funder already present; an update
+fills a funder only while the record has none, so there is nothing for it to send.
 
 The title, principal investigator, awardee and dates are set down above so that nobody has to
 re-derive them for a later audit of why this award is here.

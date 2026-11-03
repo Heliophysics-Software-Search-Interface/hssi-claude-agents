@@ -4,7 +4,7 @@
 **Repository:** https://github.com/geospace-code/sciencedates
 **Source Revision:** 8cfe3540b77dba4083e42aa91bb32942e1e26a04
 **Extraction Date:** 2026-09-07
-**Validation Date:** 2026-09-08
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -232,9 +232,8 @@ second contributor.
 
 The ORCID resolves to given name `Michael`, family name `Hirsch`, and is the identifier already
 carried by this author's stored record. No change is needed for it — it is noted here as context so
-that a future refresh does not attempt to "add" an identifier that is already present, which for an
-already-stored identifier-less author would mint a duplicate record rather than update the existing
-one.
+that a future refresh does not attempt to "add" an identifier that is already present; sending it
+again binds that stored record.
 
 Why Zenodo is not the authority for the author name. The v1.5.1 deposit's creator block is
 `[{"name": "Michael", "affiliation": null}]` — a first name with no surname and no affiliation. That

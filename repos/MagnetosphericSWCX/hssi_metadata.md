@@ -4,7 +4,7 @@
 **Repository:** https://github.com/rebeccaringuette/MagnetosphericSWCX/tree/MSWCX
 **Source Revision:** adf9ff435acb9fc36dc21e16d7bf538bd97df5ef (tag `MSWCX`)
 **Extraction Date:** 2026-08-06
-**Validation Date:** 2026-11-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -1071,13 +1071,14 @@ not the award's title, and it would put fabricated wording into the catalogue. T
 funder-grant name differs in kind: it names the funder and the nature of the record rather than
 asserting a title the grant does not have.
 
-**The award carries no link back to its funder.** HSSI's `Award` model has a `funder` field, but the
-submission path does not populate it — an award is created or matched from its name and identifier
-alone. So this award sits unlinked to the National Aeronautics and Space Administration entry in
-Field 25, even though the acknowledgement and Crossref both name NASA as the grantor. The connection
-is not lost, because the funder's name is embedded in the award name itself, but a later pass should
-expect `Award.funder` to be empty here and should not read that emptiness as missing evidence or as
-a defect in this record.
+**The award's funder link.** HSSI's `Award` model has a `funder` field, which the `funder` sent with
+an award fills when the record is created and which an update fills while it is empty. This award was
+created from its name and identifier alone, with no funder sent, so it first sat unlinked to the
+National Aeronautics and Space Administration entry in Field 25, even though the acknowledgement and
+Crossref both name NASA as the grantor. The record carries that funder as of 2026-11-03, and the
+funder's name is also embedded in the award name itself. A later pass should read `Award.funder` from
+the record before assuming either state; an empty one is not evidence against NASA as the grantor, and
+an update can fill it while it is empty.
 
 ---
 

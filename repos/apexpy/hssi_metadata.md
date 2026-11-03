@@ -4,7 +4,7 @@
 **Repository:** https://github.com/aburrell/apexpy
 **Source Revision:** eed96cf34d8256fbf37a3818c4b696eb802b0a4a
 **Extraction Date:** 2026-08-29
-**Validation Date:** 2026-08-29
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -262,12 +262,14 @@ trigger for reopening this is narrow and specific: if a live replacement ORCID f
 is the field to revisit.
 
 One mechanical fact keeps the question from being settled by a routine field update in either
-direction, and is worth carrying forward. Supplying an ORCID for an author whose stored Person row
-has none does not annotate that row; it resolves to a different person and mints a duplicate,
-orphaning the original and any other software that references it. So the stored Person row is left as
-it is, without an identifier — and that row is not ApexPy's alone: another catalogued package credits
-the same author against it, which makes this a cross-record decision rather than an ApexPy-local
-preference. Anyone changing it here would be changing it everywhere.
+direction, and is worth carrying forward. The stored Person row is left as it is, without an
+identifier, and that row is not ApexPy's alone: another catalogued package credits the same author
+against it, so an identifier filled on it shows on every entry it serves. That makes this a
+cross-record decision rather than an ApexPy-local preference — anyone changing it here would be
+changing it everywhere. An update fills an empty ORCID on that row only by selecting it (its
+`personId`, or the name when this author is the entry's one current author stored without an
+identifier); an ORCID sent in any other way mints a duplicate Person, leaving the original row
+unidentified.
 
 *Given names.* `CITATION.cff` and the Zenodo record give fuller forms for three authors — "Angeline
 G. Burrell", "Leslie L. Lamarche", "Ashton S. Reimer" — while the shorter forms recorded above are

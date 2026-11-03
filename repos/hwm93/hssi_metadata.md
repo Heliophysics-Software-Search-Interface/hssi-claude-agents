@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/hwm93
 **Source Revision:** 5575db756404ae9de34d396835f54c28479f332b
 **Extraction Date:** 2026-08-30
-**Validation Date:** 2026-09-01
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -315,9 +315,9 @@ diacritic) and Anna Isabel Hedin-Urrutia. Only two of those five list any instit
 index — Swedish universities in one case, a US hospital and university in the other — and neither is
 a heliophysics employer. He was a NASA Goddard scientist who died before ORCID existed in any
 practical sense, so an ORCID for him is very unlikely to exist at
-all. A name match must never be used to mint one: sending an identifier for an already-stored
-identifier-less author does not annotate the existing row, it creates a second Person row and orphans
-the first.
+all. A name match must never be used to supply one: an ORCID filled on his stored Person row shows
+on every entry that row serves, and one sent so that it selects no row creates a second Person row,
+so it needs the identity evidence this note records as absent.
 
 **Deliberate omission — no affiliation is recorded for A. E. Hedin.** NASA Goddard Space Flight
 Center (`https://ror.org/0171mag52`, whose ROR display name is the shorter

@@ -4,7 +4,7 @@
 **Repository:** https://github.com/wtbarnes/hissw
 **Source Revision:** 39765a546300ab2e56598bf45d57fc4b5dd735db
 **Extraction Date:** 2026-09-01
-**Validation Date:** 2026-09-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -214,15 +214,15 @@ from the University of Virginia, and a works list dominated by solar radio astro
 fields, microwave imaging spectroscopy, OVRO-LWA). That matches the `bin.chen@njit.edu` commit
 address and the `New Jersey Institute of Technology` affiliation on the Zenodo records exactly.
 
-**Durable platform caution — an ORCID must never be introduced through a routine metadata update.**
-Supplying an ORCID for an author whose stored record carries no identifier does not fill that record
-in: it resolves to a *different* person, creating a second record and orphaning the original along
-with its affiliation. That is general platform behaviour, and it is why Bin Chen's ORCID could not be
-supplied the ordinary way — his catalogued author record held no identifier before this refresh. It
-was applied instead by a direct database correction on 2026-09-02, which kept his New Jersey
-Institute of Technology affiliation attached and created no duplicate record for him. The identifier
-above is therefore an applied value rather than a target state, and the caution stands for any author
-found in the same position later.
+**How Bin Chen's ORCID reached the record, and what governs a later one.** His catalogued author
+record held no identifier before this refresh, and at that time an update could not fill it:
+supplying an ORCID for an author whose stored record carries no identifier resolved to a *different*
+person, creating a second record and orphaning the original along with its affiliation. The ORCID was
+applied instead by a direct database correction on 2026-09-02, which kept his New Jersey Institute of
+Technology affiliation attached and created no duplicate record for him. The identifier above is
+therefore an applied value rather than a target state. An update can now fill such an identifier on
+the stored row, with its `personId` or by name when he is the entry's one current author stored
+without one; an ORCID that no stored row carries, sent in any other way, creates a new Person.
 
 **Will Barnes's four affiliations were examined individually and all four are kept.** His ORCID
 record is stale (its most recent employment is the 2020 National Research Council associateship

@@ -4,7 +4,7 @@
 **Repository:** https://github.com/PolarMesosphericClouds/SkyWinder
 **Source Revision:** 1fd4fbc0e52029b88095b7dd0b542f74da9d4abe
 **Extraction Date:** 2026-09-09
-**Validation Date:** 2026-09-11
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -274,6 +274,8 @@ The software paper assigns NASA Grant `80NSSC20K0178` to PyHC SkyWinder developm
 - **Award Number:** 80NSSC20K0178
 
 The software paper explicitly says this NASA grant funded PyHC SkyWinder. `NASA grant` is a descriptive API-safe label for the identified award, not an authoritative formal title; no authoritative full award title was found. NASA Contract `80NSSC18K0050` is excluded because the paper assigns it to the precursor PMC-Turbo mission rather than SkyWinder development.
+
+**TODO for the next Updater — HSSI is missing this value:** production's Award row `d9d28457-4c1c-4089-939d-6ce358f99715` (`NASA grant`, `80NSSC20K0178`) stores no funder (as of 2026-11-03). The value to fill is `National Aeronautics and Space Administration`, ROR `https://ror.org/027ka1x80` (production Organization row `a4e07475-572f-48db-b2e7-5d59ea194465`), which Field 25 above records and ties to this grant. Send it as `award[].funder` (`{"name": ..., "identifier": ...}`) on that award in the update's `award` list, sent with the award identifier `80NSSC20K0178` so that it binds this row (an identifier match is exact, while a name-only match on `NASA grant` would bind one of three production rows with that name); it fills only an empty funder and never replaces one. Among the entries visible on production, only SkyWinder lists this Award row, so the funder shows nowhere else. Re-run all of these checks (the row's funder is still empty, which entries list it, the serializer behavior) before sending.
 
 ---
 

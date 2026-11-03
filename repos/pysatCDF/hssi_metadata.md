@@ -4,7 +4,7 @@
 **Repository:** https://github.com/pysat/pysatCDF
 **Source Revision:** 0d0d0fa843e26d269b17591fd27e4561bb32d40f
 **Extraction Date:** 2026-09-11
-**Validation Date:** 2026-09-12
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -284,17 +284,14 @@ recorded so a later pass does not "correct" it back to the release metadata.
 carries an empty identifier. A fielded ORCID search (`given-names:Asher AND family-name:Pembroke`,
 with the control `given-names:Russell AND family-name:Stoneback` returning exactly Stoneback's known
 0000-0001-7216-4336) returns a single record, `0000-0002-5718-1303`, named "Asher Pembroke". It is
-recorded here and deliberately **not used as his stored identifier**, for two independent reasons:
-
-1. That ORCID record lists no employments at all, so nothing corroborates it as *this* Asher
-   Pembroke beyond the name being uncommon. A unique name match is not identification.
-2. Writing an ORCID onto an HSSI author whose Person row holds no identifier does not update that
-   person — it resolves to a different person and leaves the original row orphaned. The correction
-   is therefore unavailable through a routine metadata update even if the identity were certain.
+recorded here and deliberately **not used as his stored identifier**, because the identification is
+not established: that ORCID record lists no employments at all, so nothing corroborates it as *this*
+Asher Pembroke beyond the name being uncommon. A unique name match is not identification.
 
 A future agent should not re-propose this as a straightforward enrichment. If the identity is ever
-confirmed from a primary source, it needs a direct database correction rather than an ordinary
-metadata update.
+confirmed from a primary source, an update can fill his empty identifier by selecting his stored row —
+with its `personId`, or by name when he is the entry's one current author stored without an
+identifier — and the ORCID then shows on every entry that row serves.
 
 **Author 5 — Ashton Reimer**
 - Identifier: `https://orcid.org/0000-0002-4621-3453`
@@ -1244,11 +1241,11 @@ deliberately.
   instrument's CDF identically. A fixture can evidence a community without evidencing an instrument,
   and the weight it carries in Fields 5 and 16 is explicitly described there as corroborating rather
   than decisive.
-- **Asher Pembroke's author identifier cannot be fixed by a routine metadata update.** His HSSI
-  Person row has an empty identifier; supplying an ORCID through a normal update does not fill it in
-  but resolves to a different person and strands the original row. A candidate ORCID
+- **Asher Pembroke's author identifier is deliberately empty.** His HSSI Person row has an empty
+  identifier, which an update can fill by selecting that row (its `personId`, or his name when he is
+  the entry's one current author stored without an identifier). A candidate ORCID
   (`0000-0002-5718-1303`) is recorded in Field 6 together with the reason it is *not* applied — it
-  has no employment history corroborating the identification. Both obstacles must be cleared before
+  has no employment history corroborating the identification. That identity gap must be closed before
   anything changes here.
 - **The repository has no wiki, no docs site and no Sphinx build**, despite `has_wiki` reporting true
   and a workflow named `Documentation Check` existing. Field 24 records how each was ruled out.

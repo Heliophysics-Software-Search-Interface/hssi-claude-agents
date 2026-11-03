@@ -4,7 +4,7 @@
 **Repository:** https://github.com/spacepy/dbprocessing
 **Source Revision:** dcaa21b614cf49ed4cdb5b290b4cd7d303fd80bd
 **Extraction Date:** 2026-08-12
-**Validation Date:** 2026-08-22
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -860,9 +860,10 @@ Applied Physics Laboratory; "NASA" → National Aeronautics and Space Administra
 organisations are already represented in HSSI under these RORs.
 
 **Which funder issued which award.** HSSI records funders at the software level and awards as
-separate entries, and the link between a particular award and the agency that issued it is not
-expressible through the submission or update interface — there is no per-award funder sub-field,
-and the view API returns awards as titles alone. The correspondence is: `80NSSC21K0307` is the NASA
+separate entries, so Fields 25 and 26 as this dossier records them carry no per-award pairing. The
+pairing lives on each award record's own funder (`award[].funder` in the payload), which a new record
+takes when created and an existing record takes from an update only while it is empty; the view API
+returns awards as titles alone, so it does not show it. The correspondence is: `80NSSC21K0307` is the NASA
 grant made directly for dbprocessing; `967399` (Van Allen Probes RBSP-ECT) and `136435` (Parker
 Solar Probe IS☉IS) are the two JHU/APL subcontracts, each let under a NASA prime contract —
 `NAS5-01072` and `NNN06AA01C` respectively. The two subcontracts are attributed to Johns Hopkins

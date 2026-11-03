@@ -4,7 +4,7 @@
 **Repository:** https://github.com/swxsoc/swxsoc
 **Source Revision:** 2bf3f8b31c57f22abf1c17b9e98a61f55a8f38f9
 **Extraction Date:** 2026-09-12
-**Validation Date:** 2026-09-12
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -316,8 +316,9 @@ parent company, `https://ror.org/05pyq8e17`
 would be a downgrade in precision, not an improvement. Both affiliations should stay identifier-less.
 
 **Do not attempt to add identifiers to these rows as part of a routine metadata update.** Sending an
-identifier for an already-stored identifier-less person or organization does not annotate the
-existing row; it resolves to a *new* row and orphans the original. If an identifier ever genuinely
+identifier for an already-stored identifier-less organization does not annotate the existing row; it
+resolves to a *new* row and orphans the original (an update can fill an empty identifier on a person
+row, not on an organization row). If an identifier ever genuinely
 needs to be attached to Navteca or General Dynamics Mission Systems, it requires a deliberate
 database-side correction with its own review, not a field update.
 

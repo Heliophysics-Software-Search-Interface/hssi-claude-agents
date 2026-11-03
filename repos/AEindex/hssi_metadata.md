@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/AEindex
 **Source Revision:** bcb6ac4aa2c1691d12dbf23ac4f9c9f7eb002c8c
 **Extraction Date:** 2026-08-29
-**Validation Date:** 2026-08-31
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -298,10 +298,10 @@ stronger: *these two specific keywords are traceable to lowtran's own keyword li
   - **Affiliation Identifier:** Not found
 
 These values are the ones HSSI already held as stored on 2026-08-29, and the identity evidence below
-confirms them rather than revising them. The ORCID must not be re-sent and the author entry must not
-be restructured: the stored Person row already carries that identifier, and re-supplying an identifier
-for an already-identified stored author risks creating a duplicate Person row rather than updating the
-existing one.
+confirms them rather than revising them. The stored Person row already carries that identifier, so
+there is nothing to add and the author entry is not restructured. An identifier a stored row carries
+binds that row, so sending it again creates no duplicate; the author goes under its stored name,
+since a differently spelled name sent with the identifier would respell the shared row.
 
 Identity evidence, recorded so a future agent can defend the entry without re-deriving it:
 

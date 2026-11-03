@@ -4,7 +4,7 @@
 **Repository:** https://github.com/HinodeXRT/xrtpy
 **Source Revision:** 0ef8e3636bde9c619dbcb1f74519f31829f238ad (branch `main`, 2026-07-22)
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-08-26
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -648,8 +648,12 @@ Both funders are corroborated by the repository.
 
 **Per-award funder attribution, and where it can and cannot be read.** The pairings are
 NASA ↔ `NNM07AB07C` and U.S. National Science Foundation ↔ `1931388`, each stated in the
-Acknowledgements sources cited above. HSSI stores the two organizations and the two awards as flat
-lists without a per-award funder relationship, so the pairings are recorded here for future use.
+Acknowledgements sources cited above. HSSI stores the two funder organizations and the two awards as
+separate lists (Fields 25 and 26). Each award record also carries a funder of its own (`award[].funder`):
+a new record takes it when created, an existing record with none takes it from an update, and a stored
+one is never replaced. The pairings are recorded here as the reference for each award's own funder;
+production stores NASA for `NNM07AB07C` and the U.S. National Science Foundation for `1931388` as of
+2026-11-03.
 
 ---
 

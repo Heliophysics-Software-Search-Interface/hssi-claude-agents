@@ -4,7 +4,7 @@
 **Repository:** https://github.com/sunpy/sunkit-image
 **Source Revision:** c0200cc20bcc751c9ee19e7b47aa2d8ac1de1c1c
 **Extraction Date:** 2026-09-09
-**Validation Date:** 2026-09-09
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -419,12 +419,14 @@ that either candidacy is weaker than the evidence above makes it look. A later r
 new evidence about either contributor is looking at a policy already applied, not at an argument
 that lost.
 
-**A standing limitation on identifier work in this field.** Four of the nineteen authors above carry
-no identifier, and a later refresh will be tempted to supply one. Recording an ORCID for an author
-already stored without an identifier is not a safe field write: it does not annotate the existing
-person record, it creates a second record for the same human and leaves the original in place,
-unidentified, on this entry. Supplying an identifier for any of those four is therefore a correction
-to the person record itself rather than a field update, which is why none is attempted here.
+**A standing note on identifier work in this field.** Four of the nineteen authors above carry
+no identifier, and a later refresh will be tempted to supply one. An ORCID fills a stored person
+record only through an update that selects it: the row's `personId`, or the name when that author is
+the entry's one current author stored without an identifier under that full name (several such authors
+are a 400). Sent in any other way it creates a second record for the same human and leaves the
+original in place, unidentified, on this entry. None is attempted here: this dossier records no
+ORCID evidence for any of the four, and no ORCID search for them is recorded either, so none is
+asserted.
 
 ### 7. Software Name (MANDATORY)
 **Name:** sunkit-image

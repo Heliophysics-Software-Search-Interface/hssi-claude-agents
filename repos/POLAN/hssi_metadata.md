@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/POLAN
 **Source Revision:** 23c00563c0906e024edd378e469a0310a37ce118
 **Extraction Date:** 2026-09-08
-**Validation Date:** 2026-09-08
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -317,11 +317,12 @@ University of Auckland.
 people (Grant, Laura, and Helena Titheridge of UCL), none of whom is the Auckland ionospheric
 physicist. The control search `given-names:Michael AND family-name:Hirsch` returned seven records
 including the one stored here, so the instrument was working. A future agent should not re-propose
-an ORCID for him. Separately, and independently of whether one is ever found: sending an ORCID for
-this author through a routine metadata update would **not** annotate the existing identifier-less
-person record — it would create a second person record and leave the original orphaned. Any
-correction to Titheridge's identifier must be applied directly to the person record itself, not
-through a routine metadata update.
+an ORCID for him. Separately, and independently of whether one is ever found: an update fills an
+ORCID on his existing identifier-less person record only by selecting that record — with its
+`personId`, or by name when he is the entry's one current author stored without an identifier under
+that full name. Sent in any other way, an ORCID no stored record carries creates a second person
+record and leaves the original unidentified. The record is shared by every entry it serves, so an
+identifier filled on it shows on all of them.
 
 **Michael Hirsch's ORCID `0000-0002-1637-6526`** is confirmed against the public ORCID record: the
 name is Michael Hirsch and the single employment entry is Boston University, department `ECE`, role

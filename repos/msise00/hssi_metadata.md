@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/msise00
 **Source Revision:** e4ab457c4e3f252c7ce748826d1e137ec9c563c0
 **Extraction Date:** 2026-09-08
-**Validation Date:** 2026-09-08
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -235,13 +235,13 @@ to `https://ror.org/043kppn11` — the identical ROR already stored for his affi
 commit to this repository is authored as `danielk <daniel.kastinen@irf.se>`, and `irf.se` is that
 institute's domain; and his publications include *Monitoring of lower thermospheric neutral density
 variations using meteor head echoes*, which is the very quantity this package computes.
-**This value must not be sent through a routine metadata update.** The stored person record for him
-was created without an identifier, and supplying one that way mints a second person record and orphans
-the first, splitting his authorship across two entities. It was therefore written directly to the
-existing record by a database-side correction on 2026-09-08, which preserves that record's identity. A
-later refresh should expect the ORCID already present and must still not send it in a metadata update:
-the mint-and-orphan hazard belongs to the update path, not to the value, and storing the value does not
-retire it.
+**How the value was applied.** The stored person record for him was created without an identifier,
+and when this refresh ran an update could not fill it: supplying one that way minted a second person
+record and orphaned the first, splitting his authorship across two entities. It was therefore written
+directly to the existing record by a database-side correction on 2026-09-08, which preserves that
+record's identity. A later refresh should expect the ORCID already present; sending it again binds
+that row, and where it is missing an update can fill it with the row's `personId`, or by name when he
+is the entry's one current author stored without an identifier.
 
 **A one-commit author is still an author.** His contribution at this revision is a single commit
 (`c89d8d9`, 2021-06-24, "update example to conform to wrapper API", modifying

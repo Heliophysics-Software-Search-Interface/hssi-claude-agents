@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/pyzenodo3
 **Source Revision:** 09bdb3f9f0ac9961f74220a21ca6d4fd666e198a
 **Extraction Date:** 2026-09-07
-**Validation Date:** 2026-09-08
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -351,9 +351,10 @@ patch value, and places it with whoever administers the database.
     software or publication at all. A name match alone does not identify a person, and Klaver is a common
     Dutch surname. Recorded here so a future refresh finds this record, recognises that it was already
     examined and rejected for want of any corroborating evidence, and does not attach it.
-- Klaver's stored person row exists **without** an identifier. Sending an ORCID for an already-stored
-  identifier-less author orphans his existing row and mints a duplicate, so no ORCID may be attached to
-  him through a metadata update even if one were later found.
+- Klaver's stored person row exists **without** an identifier. An ORCID found for him later would
+  attach to that row through an update that selects it (its `personId`, or his name when he is the
+  entry's one current author stored without an identifier); sent in any other way it would mint a
+  duplicate and leave his row unidentified. No candidate yet carries the corroboration it would need.
 - Klaver's PyPI `author_email` (`t.klaver@esciencecenter.nl`) implies the Netherlands eScience Center, but
   an email domain in a 2017 package is weak evidence of his affiliation *for this work*, and no
   `Organization` row exists for that institution. (The ROR is `https://ror.org/00rbjv475`, confirmed by its

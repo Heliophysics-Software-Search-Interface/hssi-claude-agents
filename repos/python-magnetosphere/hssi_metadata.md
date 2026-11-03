@@ -4,7 +4,7 @@
 **Repository:** https://github.com/dpq/python-magnetosphere
 **Source Revision:** 806be11d550eecdd372a9d5eb763bae1990aa4b2
 **Extraction Date:** 2026-09-08
-**Validation Date:** 2026-09-09
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -260,7 +260,7 @@ Field 29, which points at CXFORM's own repository. Making them authors of `pytho
 misattribute another work's authorship. The same reasoning excludes the IGRF-11 model authors, whose
 credit belongs to the model (Fields 27 and 28).
 
-**ORCID — identification, and why it cannot simply be patched.** A fielded ORCID search on
+**ORCID — identification.** A fielded ORCID search on
 `given-names:David AND family-name:Parunakian` returns exactly one record, `0000-0002-5468-4060`. The
 search is controlled: `given-names:Michael AND family-name:Hirsch` returns 7 and a nonsense
 given/family pair returns 0, so the route both finds and discriminates. Bare-name ORCID queries are
@@ -277,12 +277,11 @@ magnetometer works correspond to the DataCite deposits found under Field 2, whic
 Moscow State University affiliation — and SINP is an institute *of* Moscow State University. Name
 coincidence alone would not be enough; the agreement of domain, institution and date range is.
 
-**Durable limitation — this identifier can only be set on the person record directly, never sent as a
-metadata value.** Sending an ORCID for an author already stored without one does not fill in the
-existing entry: it resolves to a *new* person record and leaves the original orphaned while still
-attached elsewhere. The identifier above was therefore written to the existing record, and a later
-refresh must not "correct" it by pushing it through the ordinary metadata path — the gap it would be
-repairing is already closed, and the attempt would create the duplicate this note exists to prevent.
+**How the identifier was applied.** When it was applied, an ORCID sent for an author already stored
+without one did not fill in the existing entry: it resolved to a *new* person record and left the
+original orphaned while still attached elsewhere. The identifier above was therefore written to the
+existing record. A later refresh should expect it already present; the gap an update would repair is
+already closed, and sending it again binds that row rather than creating a duplicate.
 
 **Affiliation identifier — a researched absence.** A ROR search for `Skobeltsyn` returns zero results
 on both the v1 and v2 endpoints, while a control search for Lomonosov Moscow State University returns

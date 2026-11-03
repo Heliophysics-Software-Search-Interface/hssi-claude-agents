@@ -4,7 +4,7 @@
 **Repository:** https://github.com/pysat/pysat
 **Source Revision:** 3f0e5a43ad36f1eecfed02a3d1e3a740fd1a5f37
 **Extraction Date:** 2026-09-02
-**Validation Date:** 2026-09-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -384,10 +384,11 @@ Burrell, Klenzing and M. D. Depew; that co-authorship comes from the paper's own
 from the ORCID record, which lists no works at all. The employment and the uniqueness of the name in
 ORCID are the whole of the identification, and it is on that basis that the iD is recorded in HSSI.
 
-He was stored without any identifier before this refresh. The iD could not simply be sent as a value
-alongside the existing name, because an ORCID supplied for a stored person who carries none is matched
-as a new person rather than applied to the existing one — which is why the identification was
-established this carefully before it was recorded.
+He was stored without any identifier before this refresh. At that time the iD could not simply be sent
+as a value alongside the existing name, because an ORCID supplied for a stored person who carried none
+was matched as a new person rather than applied to the existing one; an update now fills it with the
+row's `personId`. Either way it lands on a Person row that every entry crediting him shares, which is
+why the identification was established this carefully before it was recorded.
 
 #### Author 8: Aadarsh Govada
 - **Identifier:** https://orcid.org/0009-0004-7873-5899
@@ -441,9 +442,10 @@ recorded iD rests on.
 
 The limit of the evidence is worth stating plainly so a later agent does not go looking for more: her
 ORCID record lists no works, and she is **not** an author of the 2018 JGR pysat paper. As with
-Author 7, she was stored without an identifier before this refresh, and an ORCID supplied for a stored
-person who carries none is matched as a new person rather than applied to the existing one — hence the
-care taken over the affiliation evidence before the iD was recorded.
+Author 7, she was stored without an identifier before this refresh (an ORCID supplied for such a
+person was then matched as a new person rather than applied to the existing one; an update now fills it
+with the row's `personId`), and the iD lands on a Person row that every entry crediting her shares —
+hence the care taken over the affiliation evidence before the iD was recorded.
 
 #### Author 14: Silvio Leite
 - **Identifier:** https://orcid.org/0000-0003-1707-7963

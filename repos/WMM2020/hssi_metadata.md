@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/WMM2020
 **Source Revision:** db7be2cd4a84dc55e66e3bbf1523a62f25ec8ad3
 **Extraction Date:** 2026-09-06
-**Validation Date:** 2026-11-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -402,13 +402,15 @@ way. Inheriting a criterion from a neighbouring entry is exactly how a list beco
 Manoj C. Nair and Adam Woods already existed at the time of this refresh, each with an empty
 identifier and each matching byte-exactly on given and family name, so crediting them attaches
 **existing** rows rather than minting new ones — the addition costs no new person records. Second, and
-against that: an ORCID for either must **not** be sent in a routine metadata update. A person row
-created without an identifier is found by name, whereas an update carrying an identifier is matched on
-that identifier instead — so sending one matches nothing, mints a duplicate row and orphans the
-original. Nair's verified ORCID was therefore **not** sent in this entry's PATCH; it was applied on
-2026-09-07 by a database-side correction to the existing row, which preserves that row's identity and
-every other entry referencing it. No ORCID is asserted for Woods at all, and none should be — see the
-Woods note below.
+against that: an ORCID reaches either existing row only through a `personId` selection while the
+author is new to the entry (once listed, the name alone selects the entry's one identifier-less
+author of that full name). A person row created without an identifier is found by name,
+whereas an update carrying an identifier is matched on that identifier instead — so, for an author
+new to the entry, an ORCID sent with a name alone matches nothing and mints a duplicate row. Nair's verified ORCID was **not** sent in
+this entry's PATCH, when an update could not yet attach it; it was applied on 2026-09-07 by a
+database-side correction to the existing row, which preserves that row's identity and every other
+entry referencing it. No ORCID is asserted for Woods at all, and none should be — see the Woods note
+below.
 
 **The commit-authorship evidence, exactly.** Five distinct author forms appear across all 28 commits
 in the pin's ancestry, and they sum to 28, so this is the whole history rather than a sample:
@@ -584,12 +586,10 @@ identifier is recorded — the name is corrected and the identifier left absent 
 Colorado Boulder and its works are geomagnetism throughout, including *International geomagnetic
 reference field: the thirteenth generation* and CrowdMag work. Corroboration independent of the name:
 the WMM2020 Technical Report recorded in Field 27 lists `Nair, Manoj` among its three authors. It was
-**not** sent through the metadata API, for the reason above: sending an ORCID for an author whose stored
-person row was created without an identifier matches on the identifier rather than the name, which mints
-a duplicate row and orphans the existing one. It was applied instead on **2026-09-07 by a database-side
-correction** to the existing row. A later refresh should expect the ORCID already present and must still
-not send it in a PATCH — the mint-and-orphan hazard belongs to the update path, not to the value, and
-storing the value does not retire it.
+**not** sent through the metadata API, for the reason above: when the entry was refreshed, an update
+could not attach it to the existing identifier-less row. It was applied instead on **2026-09-07 by a
+database-side correction** to the existing row. A later refresh should expect the ORCID already
+present; sending it again binds that row, and where it is missing a `personId` selection fills it.
 
 *Adam Woods — researched and deliberately not asserted.* `https://orcid.org/0000-0003-1831-5038` is a
 plausible candidate: the name matches and the sole employment is University of Colorado Boulder. But

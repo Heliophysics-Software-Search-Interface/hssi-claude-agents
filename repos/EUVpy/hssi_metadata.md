@@ -4,7 +4,7 @@
 **Repository:** https://github.com/DanBrandt/EUVpy
 **Source Revision:** 52f72d874a616f4e75b2d2f37424b0c2e6de9eac
 **Extraction Date:** 2026-08-03
-**Validation Date:** 2026-08-22
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -938,8 +938,9 @@ replacing the title would be an improvement - subject to Field 26's 128-characte
 title, which any replacement has to respect.
 
 This record's single funder and single award correspond directly: `80NSSC20K1581` is the National
-Aeronautics and Space Administration grant named in the Field 25 acknowledgment. Field 26 has no
-per-award funder sub-field of its own, so Field 25 is where the organization is named.
+Aeronautics and Space Administration grant named in the Field 25 acknowledgment. Field 26's form
+sub-fields are the title and the number, so Field 25 is where the organization is named; the award
+record's own funder (`award[].funder` in the API) would be the same organization.
 
 ## Section 3: Additional Metadata
 

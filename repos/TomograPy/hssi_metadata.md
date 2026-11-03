@@ -4,7 +4,7 @@
 **Repository:** https://github.com/nbarbey/TomograPy
 **Source Revision:** 357c66280ca7a8a02d3629611d8a73e42b6d3881
 **Extraction Date:** 2026-09-12
-**Validation Date:** 2026-09-12
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -342,13 +342,14 @@ source here.
   agent sweeping commit emails does not mistake them for additional contributors; the only other
   committer in this repository is `hughes.jmb@gmail.com`, with the single 2023 README commit.
 
-**Durable platform rule, and a fact about this author row that outlives this refresh.** An ORCID
-cannot be attached to an author HSSI already stores without one through the ordinary metadata-update
-path: that write resolves by identifier, finds no match, and creates a *second* author record,
-leaving the original stranded and still identifier-less. Supplying an identifier for an
-already-stored, identifier-less author therefore requires a direct database update, which is how
-Guennou's ORCID above came to be stored against her existing author row rather than a duplicate of
-it. The second fact matters as much and is easy to miss: this is HSSI's single `Chloé Guennou` author
+**How Guennou's ORCID reached her row, and a fact about that row that outlives this refresh.** When
+this refresh ran, an ORCID could not be attached through the metadata-update path to an author HSSI
+already stored without one: that write resolved by identifier, found no match, and created a *second*
+author record, leaving the original stranded and still identifier-less. A direct database update is
+therefore how Guennou's ORCID above came to be stored against her existing author row rather than a
+duplicate of it. An update now fills such an identifier on the stored row, with its `personId` or by
+name when she is the entry's one current author stored without one. The second fact matters as much
+and is easy to miss: this is HSSI's single `Chloé Guennou` author
 row, and the sunpy entry binds that same row. Anything done to it — a name correction, a different
 identifier — changes both entries at once, and must be weighed against both records rather than
 against this one alone.

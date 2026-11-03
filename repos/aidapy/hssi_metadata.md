@@ -4,7 +4,7 @@
 **Repository:** https://gitlab.com/aidaspace/aidapy
 **Source Revision:** d023f091a9cdf07fb48f232b654a4e15913b668c
 **Extraction Date:** 2026-08-27
-**Validation Date:** 2026-11-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -545,36 +545,37 @@ the code, not whom the project credits. Every contributor in this subsection is 
 rather than added, so that a future agent does not read the absence as an oversight and re-derive an
 author list from a `shortlog`.
 
-**Durable limitation — how HSSI resolves a person, and what that means for these ORCIDs.** Person
-resolution branches on whether an identifier is supplied. **With** an identifier, HSSI matches on the identifier alone and does not fall back to the name: when this record was
-refreshed, supplying an ORCID for an author already stored *without* one did not enrich that stored row, it created a
-second person row and left the original behind (a PATCH now attaches the identifier to the entry's one
-identifier-less current author of that full name, or to the row selected by `personId`). **Without** an identifier, resolution matches on the exact, case-sensitive given and family
+**How HSSI resolves a person, and what that means for these ORCIDs.** Person
+resolution branches on whether an identifier is supplied. **With** an identifier, HSSI matches on the
+identifier alone and does not fall back to the name. A PATCH whose identifier matches no stored row
+attaches it to the entry's one current author stored without an identifier under the same full name
+(several such authors are a 400), or to the row selected by `personId`; only when neither applies does
+it create a Person; a POST takes no `personId` and has no entry to attach to, so an identifier no
+stored row carries always creates one there. **Without** an identifier,
+resolution matches on the exact, case-sensitive given and family
 name and reuses the existing row. Affiliations are added to whichever row was matched, so submitting
 an author with no identifier still attaches the affiliation to the row that already exists. A
 further constraint sits alongside that: an existing affiliation cannot be replaced (adding one whose ROR
 already matches is idempotent).
 
-**The settled consequence for AIDApy.** All five ORCIDs recorded above were applied to their authors'
-person rows when this record was refreshed, two of them through submitted metadata and three directly
-against the database. As with the affiliation name above, the three database-applied identifiers do
-not travel with a submitted field value: an HSSI instance that has not received that correction will
-still hold those three authors without identifiers, and a PATCH can now supply them by sending each author's `personId` with the
-ORCID. Those three —
-`https://orcid.org/0000-0003-1320-8428` (Amaya), `https://orcid.org/0000-0002-7976-1034` (Dupuis) and
-`https://orcid.org/0000-0002-3123-4024` (Lapenta) — belong to the three authors the record already
-carried before this refresh, and were applied directly against the database rather than as submitted
-field values. The mechanism above is the reason: because those three rows existed with no identifier,
-an ORCID accompanying them in submitted metadata would then have created a second person row and left the
-original behind, so the KU Leuven affiliation recorded above would have attached to the duplicate
-instead of to the row this software points at. Correcting the existing rows instead put each author's
-identifier and affiliation on the person this software is actually associated with.
+**The settled consequence for AIDApy.** All five ORCIDs recorded above are on their authors' person
+rows. Two were applied through submitted metadata and three directly against the database, at a time
+when an update could not yet fill the empty ORCID of an author already stored. As with the
+affiliation name above, the three database-applied identifiers do not travel with a submitted field
+value: an HSSI instance that has not received that correction still holds those three authors without
+identifiers, and a PATCH can now supply them by sending each author's `personId` with the ORCID. Those
+three — `https://orcid.org/0000-0003-1320-8428` (Amaya), `https://orcid.org/0000-0002-7976-1034`
+(Dupuis) and `https://orcid.org/0000-0002-3123-4024` (Lapenta) — belong to the three authors the record
+already carried before this refresh. Putting each identifier on the existing row, as a `personId`
+selection does, keeps each author's identifier and the KU Leuven affiliation recorded above on the
+person this software is actually associated with, rather than on a duplicate.
 
-Breuillard's and Teunissen's ORCIDs were not exposed to that hazard, because both are authors this
+Breuillard's and Teunissen's ORCIDs needed no such handling, because both are authors this
 record added rather than rows already associated with this software; Behar carries no identifier at
-all, and Katakis carries an affiliation ROR and no ORCID. Identifier-only matching can still create a
-duplicate of a same-named person stored elsewhere in HSSI without that ORCID; what it cannot do is
-displace an association this record already holds.
+all, and Katakis carries an affiliation ROR and no ORCID. An ORCID that no stored row carries still
+creates a new Person when nothing on the entry can take it, so for an added author it can duplicate a
+same-named person stored elsewhere in HSSI without that ORCID (a `personId` selects that row instead);
+what it cannot do is displace an association this record already holds.
 
 The general rule behind the choice, and the reason it is recorded here rather than treated as a
 one-off: orphaning a shared row — a Person or an Organization, which other software records may
@@ -1135,9 +1136,10 @@ have worked in any case: organization resolution matches on the identifier and f
 name, so an existing row whose name differs keeps its stored label. Because the ROR-identified row
 already carried the right name, supplying the ROR was sufficient.
 
-A related constraint worth knowing before a later refresh: the funder-to-award association renders on
-the software's detail page but is not writable through any API path, so keeping the award linkage
-intact alongside a funder change is a database-level matter.
+A related constraint worth knowing before a later refresh: the funder shown beside an award on the
+software's detail page is the award record's own funder (`award[].funder`), separate from this field.
+An update fills it only while it is empty and never replaces a stored one, so moving an award from one
+funder organization row to another is a database-level matter, while an empty one can be filled.
 
 **Considered and rejected.** Crossref's funder block for the same ApJ paper also lists "Office of
 Science US Department of Energy", award `DE-AC02-05CH1123`. That award supports the paper's US

@@ -4,7 +4,7 @@
 **Repository:** https://github.com/PyGSDR/PyGS
 **Source Revision:** c12cc7a92352427a2cd6496d309e2417a7d87781
 **Extraction Date:** 2026-09-10
-**Validation Date:** 2026-09-11
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -279,9 +279,9 @@ in the thousands (3446 on that date), so a name-only match is unusable, and a no
 0. Corroboration: the DASH presentation's Zenodo record carries the same ORCID for Yu Chen, and
 Hu's ORCID `/employments` lists one employment, University of Alabama in Huntsville, Department of
 Space Science. Before this refresh HSSI's person rows for this entry carried no identifier.
-Because an identifier cannot be attached to an existing identifier-less person through the update
-API without creating a duplicate person, the two identifiers were recorded on the existing person
-rows on the database side.
+The two identifiers were recorded on those existing person rows on the database side, at a time
+when an update could not yet attach an identifier to an existing identifier-less person without
+creating a duplicate person; an update now can, with the row's `personId`.
 
 *No identifier for Jinlei Zheng.* `given-names:Jinlei+AND+family-name:Zheng` returns five ORCID
 records (0000-0002-9494-8921, 0009-0000-4591-6926, 0009-0009-1716-6166, 0009-0008-3053-9804,

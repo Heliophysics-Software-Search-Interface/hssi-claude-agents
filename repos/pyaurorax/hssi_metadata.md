@@ -4,7 +4,7 @@
 **Repository:** https://github.com/aurorax-space/pyaurorax
 **Source Revision:** 741938df29d05f20919f68597fabdad71aec3b13
 **Extraction Date:** 2026-09-08
-**Validation Date:** 2026-09-09
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -438,14 +438,16 @@ then confirmed against the full ORCID record:
 None of the four ORCID records carries a credit-name or any other-names entry, so there is no
 alternative name form to reconcile.
 
-**Why the ORCIDs are not a routine metadata update.** Each of the four author records existed in
-HSSI with no identifier at all before this refresh. Sending an ORCID for an identifier-empty stored
-person does not fill the existing record in place; it resolves to a *new* person and leaves the
-original orphaned and still attached elsewhere. That is why these four identifiers were applied as a
-database-side correction rather than through a field update, and the constraint outlives this
-refresh: a future agent that finds the identifiers present should read this note as the explanation
-of how they got there and leave them alone, and one that finds an identifier missing on any author
-must not try to add it through a field update.
+**Why the ORCIDs were applied as a database-side correction.** Each of the four author records
+existed in HSSI with no identifier at all before this refresh, and at that time sending an ORCID for
+an identifier-empty stored person did not fill the existing record in place; it resolved to a *new*
+person and left the original orphaned and still attached elsewhere. That is why these four
+identifiers were applied as a database-side correction rather than through a field update. A future
+agent that finds the identifiers present should read this note as the explanation of how they got
+there and leave them alone; one that finds an identifier missing on any author can fill it with an
+update that selects the stored row — by `personId`, or by name when that author is the entry's one
+current author stored without an identifier — and not by sending the ORCID with a name that selects no
+row, which creates a new person.
 
 **Affiliation.** `University of Calgary`, ROR `https://ror.org/03yjb2x39`. The ROR record's `names`
 give `University of Calgary` (`ror_display`, `label`), `Université de Calgary` (`label`) and `UoC`

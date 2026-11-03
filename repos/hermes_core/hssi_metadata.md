@@ -4,7 +4,7 @@
 **Repository:** https://github.com/HERMES-SOC/hermes_core
 **Source Revision:** 416231f5982f53d03ad04b206e33e8018b856792
 **Extraction Date:** 2026-09-01
-**Validation Date:** 2026-09-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -394,10 +394,12 @@ researcher); for `William Paterson`, seven same-name records, none with a NASA, 
 affiliation. **No ORCID can be attributed to any of the four**, and none should be attributed on a
 name match alone.
 
-**Structural hazard to observe if an ORCID is ever found.** Sending an ORCID for an author whose
-stored Person row has no identifier creates a duplicate Person row and orphans the original.
-Any ORCID discovered later for Kreisler, Mercer, Paterson or Skeberdis therefore belongs in a database
-correction, not in a metadata update.
+**What applies if an ORCID is ever found.** An update fills an empty ORCID on a stored Person row
+without creating a duplicate only when it selects that row — with its `personId`, or by name when the
+author is the entry's one current author stored without an identifier under that full name. An ORCID
+sent in any other way, with a name that selects no row, creates a duplicate Person row and leaves the
+original unidentified. Any ORCID discovered later for Kreisler, Mercer, Paterson or Skeberdis
+therefore goes in as that selection.
 
 **Considered and not applied: a second affiliation for Amy Rager.** The AGU poster's byline
 gives Rager superscripts `1,2` — NASA Goddard Space Flight Center *and* General Dynamics Mission

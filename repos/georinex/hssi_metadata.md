@@ -4,7 +4,7 @@
 **Repository:** https://github.com/geospace-code/georinex
 **Source Revision:** 8d1210a0f1ada71ff7b8d0484cfaf22ff154a38e
 **Extraction Date:** 2026-09-01
-**Validation Date:** 2026-09-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -503,7 +503,7 @@ supports the omission, so it is not re-litigated:
   and `blog` all empty, no public events, and one public repository, which is a fork of georinex.
 - Applying the standard used for the other three handles therefore yields nothing. Recording the bare
   handle as an author name would mint an HSSI Person row that cannot be attributed to anyone and
-  would tell a reader nothing. Note also that the ORCID rule below cuts the other way here: an
+  would tell a reader nothing. Note also that orphaning cuts the other way here: an
   author added by mistake cannot be quietly withdrawn later without leaving an orphan row.
 
 If a personal name for this account is ever established from a primary source, adding an eleventh
@@ -543,14 +543,15 @@ this record should follow that new list, rather than re-opening the question fro
 record; the four established below were added by a correction applied directly to the authors'
 existing Person rows. The remaining five are documented absences, set out after the evidence.
 
-**Why those four could not arrive through the ordinary update path — the general rule, because it
-will come up again.** Sending an identifier for an author whose Person row already exists *without*
-one does not annotate that row: it creates a second Person row and orphans the first. A metadata
-update that tries to "fill in" a missing ORCID that way makes the catalogue worse rather than
-better, so the identifier has to be written to the existing row instead. That is why these four were
-recorded here with their evidence before they could be stored, and it is the first thing to check
-before proposing an identifier for any author who still has none — the five below, and any author on
-any other record whose Person row is bare.
+**How those four reached the Person rows, and what governs any later one.** When they were stored,
+an update could not attach an identifier to a Person row that already existed *without* one: sending
+it created a second Person row and orphaned the first, so the identifier was written to the existing
+row instead. An update now fills such an identifier without a duplicate, sent with the row's
+`personId` or by name when the author is the entry's one current author stored without one. That is
+why these four were recorded here with their evidence before they could be stored, and the evidence
+is the first thing to check before proposing an identifier for any author who still has none — the
+five below, and any author on any other record whose Person row is bare. A Person row is shared by
+every entry it serves, so an identifier filled on it shows on all of them.
 
 - **Joakim Strandberg -> `https://orcid.org/0000-0002-1564-2976`.** The mapping is clinched by the
   contributor's own homepage. ORCID `0000-0002-1564-2976` (Joakim Strandberg, Chalmers University of
@@ -578,12 +579,9 @@ any other record whose Person row is bare.
   Mechanical Engineering education entry. An ORCID search for family name `Knowles` with given name
   `Derek` returns exactly this one record.
 
-**Where these four identifiers do and do not yet appear.** They sit on the authors' Person rows and
-are served as part of this record's authorship. Production still carries those same four rows
-without them, and will until the next seed-CSV promotion propagates the correction. A production
-check made before that happens will find the four fields empty; that is a known lag between
-environments, not drift in this dossier, and it needs no further research — the identifiers and the
-evidence for them are above.
+**Where these four identifiers appear.** They sit on the authors' Person rows and are served as part
+of this record's authorship; production carries them as of 2026-11-03, so a production check finds
+the four fields filled. The identifiers and the evidence for them are above.
 
 **No ORCID could be established for five authors, and this negative research should stop the search
 being repeated.**

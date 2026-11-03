@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/dascasi
 **Source Revision:** 18a3b4b0e025bface5385cd0f68f07aaea66c4d7
 **Extraction Date:** 2026-08-29
-**Validation Date:** 2026-08-30
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 **Scope note on the pinned revision.** `18a3b4b0` ("case insensitive exclude", 2026-03-26, branch
@@ -299,15 +299,15 @@ Boston University (department "ECE", role "PhD student", from 2016-09-01), which
 Space Physics, University of Colorado Boulder, and Johns Hopkins University Applied Physics
 Laboratory.
 
-**Why the identifier could not be applied as ordinary software metadata.** HSSI held no ORCID for
-this author before this refresh, and that gap could not be closed by editing this software's author
-list. Supplying an identifier for an author whose stored person record carries none does not annotate
-that record — it creates a second person record and leaves the original orphaned and still attached
-to the software. The identifier was therefore deliberately kept out of this software's metadata
-update, and the correction was directed at the person record itself. The limitation is durable and
-general: an identifier-less person record is repaired at the person record, never by adding the
-identifier to a software entry that references it. A person record can also be shared with other
-software, which is a second reason such a change does not belong in one software entry's update.
+**How the identifier reached the record.** HSSI held no ORCID for this author before this refresh,
+and at that time editing this software's author list could not close the gap: supplying an identifier
+for an author whose stored person record carries none did not annotate that record — it created a
+second person record and left the original orphaned and still attached to the software. The
+identifier was therefore kept out of this software's metadata update, and the correction was directed
+at the person record itself. An update can now fill such an identifier, with the row's `personId` or
+by name when the author is the entry's one current author stored without one. A person record can
+also be shared with other software, so an identifier filled on it shows on every entry that
+references it, however it is applied.
 
 **The correction was applied on 2026-08-30, and the divergence recorded here is closed.** The ORCID
 was written to Sebastijan Mrak's existing person record, which kept its identity and its Boston
@@ -316,12 +316,12 @@ orphaned. The identifier accordingly appears in the value line above, and nothin
 remains to be reconciled.
 
 **Boston University is recorded as Sebastijan Mrak's affiliation.** The record carried no affiliation
-for this author before this refresh. An affiliation, unlike an identifier, can be attached to an
-existing identifier-less person record without minting a duplicate, because the author is matched by
-name when no identifier is sent. That asymmetry is why the affiliation could be carried by this
-software's metadata update at a point when the ORCID could not, and it is worth remembering: for an
-author whose person record has no identifier, affiliations are safe to add from a software entry and
-identifiers are not. The evidence is his `smrak@bu.edu` commit address in this repository together
+for this author before this refresh. When this refresh ran, an affiliation, unlike an identifier,
+could be attached to an existing identifier-less person record without minting a duplicate, because
+the author is matched by name when no identifier is sent; that asymmetry is why the affiliation could
+be carried by this software's metadata update at a point when the ORCID could not. An update now
+fills the identifier too, with the row's `personId` or by name when the author is the entry's one
+current author stored without one. The evidence is his `smrak@bu.edu` commit address in this repository together
 with the ORCID employment recorded above: Boston University, department "ECE", from 2016-09-01,
 which brackets the 2018 dates in the files he contributed. The organization is the same Boston
 University row, ROR `https://ror.org/05qwgg493`, already carried by Michael Hirsch's affiliation.
