@@ -4,7 +4,7 @@
 **Repository:** https://github.com/sunpy/sunpy
 **Source Revision:** ed70935fa156a05f81926e4a2f4a0ea25dc37f36
 **Extraction Date:** 2026-08-13
-**Validation Date:** 2026-11-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 **Scope note.** sunpy is a general-purpose solar-physics library whose instrument coverage lives in
 data-driven subpackages (`sunpy/map/sources/`, `sunpy/timeseries/sources/`, `sunpy/net/`) rather than
@@ -1064,9 +1064,27 @@ instrument's data *is*.
   Downloader'". The 2020 paper describes the same grant in running prose ("from NumFocus for improving
   the usability of SunPy's Data Downloader"); the 2023 quoted form is used because it is the award's
   actual title. Neither paper gives an award number for it.
-- The NASA ROSES OSTFL award (Field 25) is deliberately **not** given an entry here. Neither paper
-  states its title or number, and inventing one from the program name would be fabrication. If a
-  future refresh finds the award identifier, this is the field for it.
+- The NASA ROSES OSTFL award (Field 25) has no entry here yet. Neither paper states its title or
+  number (see the TODO below).
+
+**TODO for the next Updater — an award is missing from this dossier and HSSI:** the NASA ROSES
+Open-Source Tools, Frameworks, and Libraries (OSTFL) award that the 2023 Frontiers Funding statement
+credits to WB, AS and SM, funder the National Aeronautics and Space Administration (Field 25, which
+quotes the statement and treats it as development funding for sunpy itself). It was left out only
+because neither paper gives a title or number, which Field 26 rule 9 does not treat as a bar: the
+source's own name for the award or program is the second route, after the funder's award record, and
+the descriptive label `<funder full name> grant` the last, recorded here as not the official title.
+No award number is known, so nothing can bind by identifier, and an award sent without one binds an
+existing row whose name is the same (compared ignoring case). That closes the label route while no
+number is known: production's Award rows (read 2026-11-03) hold 14 rows named exactly
+`National Aeronautics and Space Administration grant`, each with its own number, and a title equal to
+Astropy's row `NASA ROSES-2020 E.7 Support for Open Source Tools, Frameworks, and Libraries`
+(`80NSSC22K0347`) would bind that one. Without a number the Updater needs the funder's award record
+or the source's own name. Field 25 reads the Funding statement, which is phrased as support for three
+authors, as development funding for sunpy itself, and this entry rests on that reading; a later pass
+that changes it changes this entry too. The stored list is the entry's complete set (rule 7), so the
+update sends the recorded `Improving the Usability of sunpy's Data Downloader` award with it. Adding
+it is a Field 25/26 value change for the Updater's normal cycle, with the checks re-run first.
 
 ---
 

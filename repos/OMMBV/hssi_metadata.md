@@ -1118,8 +1118,8 @@ value in this field is drawn from either paper's acknowledgements.
 
 No awards were recorded for this software previously, while `README.md:46-54` (quoted under Field 25)
 names five grant numbers. Each of the five was resolved individually, and the answers differ enough
-that they are set out one at a time: four are recorded above, and the fifth is a documented
-omission.
+that they are set out one at a time: four are recorded above, and the fifth is left out for now
+(see its TODO).
 
 **A mechanism note that governs all five.** An award is recorded as a title plus an identifier, and
 matching happens on the identifier first. Where an award record already exists under a given
@@ -1199,29 +1199,43 @@ title, not a quotation of NSF's. NSF's own title for award 1651393 has two space
 105. The existing record's form is what to send — and since attaching by identifier does not
 overwrite a title anyway, the difference has no effect.
 
-**Omitted (1), with the reason.**
+**Omitted for now (1), with the reason.**
 
 *`NNG12FA45C`.* No award record exists for it, so recording it would require creating one, and no
-title is obtainable. A normalised search over the award records — comparing identifiers with all
+official title was found. A normalised search over the award records — comparing identifiers with all
 punctuation and case removed — found no match for it, and no record contains its distinctive
 numeric core. The federal spending data has exactly one matching award: a contract to the Regents of
 the University of California from NASA with a start date of 2012-01-11, whose description begins
 `PHASE A THROUGH F - ICON.  THIS CONTRACT IS FOR THE UNIVERSITY OF CALIFORNIA (UCB) AT BERKELEY
 SPACE SCIENCES LABORATORY`. That is the ICON mission prime contract, whose principal investigator is
-Thomas Immel. A contract description is not an award title, and an untitled award cannot be
-recorded. Substantively this is ICON mission funding that supported the earlier 'average'-basis
-versions of the software, which is exactly how `README.md:51-52` frames it — so the omission loses
-little, and the ICON relationship is captured under Field 32 instead.
+Thomas Immel. The record's full description is a statement of work of over 1,400 characters, not a
+title. Substantively this is ICON mission funding that supported the earlier 'average'-basis versions
+of the software, which is exactly how `README.md:51-52` frames it, and the README credits it as
+funding in the same way as the recorded `AGS-1033112` below, so the missing title is the only thing
+keeping it out; the ICON relationship is also captured under Field 32.
+
+**TODO for the next Updater — an award is missing from this dossier and HSSI:** NASA contract
+`NNG12FA45C`, which `README.md:51-52` credits as funding for the earlier versions (quoted under
+Field 25), funder the National Aeronautics and Space Administration (Field 25). It was left out only
+because no title was found, which Field 26 rule 9 does not treat as a bar. Rule 9 supplies the title in
+its order: the funder's award record (it names the USAspending description, but this one is a
+statement of work of over 1,400 characters, and rule 11 sends a title still over 128 characters, after
+an administrative prefix is dropped, to the Ask list, so the likely outcomes are an Ask or the next
+route), else the source's own name for the award or program, else the descriptive label
+`<funder full name> grant`; a descriptive title is recorded here as not the official one. Production's
+Award rows (read 2026-11-03) hold no row for this number, so sending it creates one. The stored list
+is the entry's complete set (rule 7), so the update sends the four recorded awards with it. Adding it
+is a Field 25/26 value change for the Updater's normal cycle, with the checks re-run first.
 
 **The fourth award, `AGS-1033112`: recorded, and recording it creates a new award record.**
 
 This is the README's `NOAA NSF AGS-1033112`. No award record existed for it. Unlike `NNG12FA45C`,
-**a real title is obtainable**: the NSF award record for 1033112 is
+**an official title is obtainable**: the NSF award record for 1033112 is
 `The Continued Operation of COSMIC in Support of Operational and Research Applications for Years 2012-2015`
 — 105 characters, comfortably inside the cap — with **William Schreiner** as principal investigator
 at the University Corporation for Atmospheric Research, running 2012-08-15 to 2019-12-31 under the
-Climate & Large-Scale Dynamics program. So recording it is possible in a way that `NNG12FA45C` is
-not, which is why this was a judgement call rather than a forced omission.
+Climate & Large-Scale Dynamics program. So it needed no descriptive label (Field 26 rule 9), and
+whether to record it was a judgement call about the award's fit.
 
 *Why it is recorded.* `README.md:53` credits this grant explicitly, in the authors' own words, as
 funding for previous versions of the software. Field 26's job is to record the awards the authors say

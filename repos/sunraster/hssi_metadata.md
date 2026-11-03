@@ -806,23 +806,34 @@ funder in every case would be the National Aeronautics and Space Administration,
 `https://ror.org/027ka1x80`.
 
 **Decided: the funder and the two awards above are recorded; the third grant in the acknowledgement
-is not.** That first-party character is what carries the values, and the deletion of the draft
-that records the statement was incidental: commit `595b06b` of 2024-06-18 is titled "bump python
-version (#257)" and removed the draft alongside other stale files while raising the Python floor and
-updating CI. It is housekeeping, not a withdrawal of the funding claim. That is the standing reason a
-deleted draft still supports a recorded value here.
+is not recorded yet (see the TODO below).** That first-party character is what carries the values, and
+the deletion of the draft that records the statement was incidental: commit `595b06b` of 2024-06-18
+is titled "bump python version (#257)" and removed the draft alongside other stale files while
+raising the Python floor and updating CI. It is housekeeping, not a withdrawal of the funding claim.
+That is the standing reason a deleted draft still supports a recorded value here.
 
 Both recorded award titles and numbers already exist in the catalogue's award vocabulary with NASA
 recorded as their funder, so the titles above are the catalogue's own wording rather than something
 composed for this entry, and associating them with sunraster reuses existing awards rather than
 creating new ones.
 
-**The third grant, NNG09FA40C, is deliberately not recorded, and this is durable negative research.**
-It is the IRIS grant in the acknowledgement, and unlike the other two it has no entry in the award
-vocabulary. No authoritative title for it was found — a Crossref bibliographic query on the award
-number returns nothing — and an award with no title cannot be recorded at all, so recording it would
-mean inventing wording. A later refresh should not re-derive that dead end from the same
-acknowledgement; the grant becomes recordable only if an authoritative title turns up.
+**The third grant, NNG09FA40C, is not recorded yet, and the search for its title is durable negative
+research.** It is the IRIS grant in the acknowledgement, and unlike the other two it has no entry in
+the award vocabulary. No authoritative title for it was found — a Crossref bibliographic query on the
+award number returns nothing. A later refresh should not repeat that search; the funder's award
+record is the route the TODO below names.
+
+**TODO for the next Updater — an award is missing from this dossier and HSSI:** NASA grant
+`NNG09FA40C`, the IRIS grant in the acknowledgement quoted above, is attributed to sunraster by the
+same first-party statement as the two recorded awards, and its funder is the National Aeronautics and
+Space Administration (Field 25). It was left out only because no title was found, which Field 26 rule 9
+does not treat as a bar: the title is the funder's award record, else the source's own name for the
+award or program, else the descriptive label `National Aeronautics and Space Administration grant`,
+and a descriptive label is recorded here as not the official title. USAspending holds a record for
+this number (as of 2026-11-03), for the Updater to read under rules 9 to 11. Production's Award rows
+(read 2026-11-03) hold no row with this number, so sending it creates one. The stored list is the
+entry's complete set (rule 7), so the update sends the two recorded awards with it. Adding it is a
+Field 25/26 value change for the Updater's normal cycle, with the checks re-run first.
 
 **The argument for leaving both fields empty, preserved because it is not frivolous:** the paper was
 never published and never peer-reviewed, the file no longer exists in the repository, the software as

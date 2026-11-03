@@ -4,7 +4,7 @@
 **Repository:** https://github.com/anweshaM/EUHFORIA-OpenGGCM
 **Source Revision:** afe57c9c1a8982eeac5e691c612974d26f5f6dac
 **Extraction Date:** 2026-07-31
-**Validation Date:** 2026-11-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -890,8 +890,8 @@ out here so that judgement can be made without re-reading the paper.
 | SIDC Data Exploitation | PRODEX-12 | recorded |
 | SWiM | B2/191/P1/SWiM | recorded |
 | Major Research Instrumentation | AGS-1919310 | recorded |
-| *(no title stated)* | FA9550-18-1-0483 | not expressible in HSSI |
-| *(no title stated)* | 80NSSC18K1220 | not expressible in HSSI |
+| *(no title stated)* | FA9550-18-1-0483 | not recorded yet (TODO below) |
+| *(no title stated)* | 80NSSC18K1220 | not recorded yet (TODO below) |
 | NASA Postdoctoral Program | *(no number stated)* | recorded |
 
 The field was empty. Taken verbatim from the paper's Acknowledgments, which reads: *"A.M.
@@ -910,18 +910,19 @@ Three points a future refresh should not have to rediscover:
   `FA9550-18-1-0483` with Unicode hyphens (U+2010), and the paper's PDF text layer additionally
   breaks `FA9550` as `F A9550`. Both are typesetting artifacts of the source, not part of the
   identifiers.
-- **Two awards have no stated title, and HSSI has no way to express them.** The Acknowledgments give
-  only grant numbers for AFOSR `FA9550-18-1-0483` and NASA `80NSSC18K1220`. HSSI normalizes an
-  award's *name* when it creates one and rejects a blank name outright, so an award that has a
-  number but no title has no representable form at all: six of the eight above are held in this
-  record and these two are not. Two ways of forcing them in were weighed and rejected. Inventing a
-  plausible project title would be fabrication — the paper states none, and no other source gives
-  one. Reusing the grant number as the award title would follow a convention no existing HSSI Award
-  row uses, and would leave a row whose name is not a name. The loss is contained: both funders, the
-  United States Air Force Office of Scientific Research and the National Aeronautics and Space
-  Administration, are recorded in Field 25, so the funding attribution survives and only the two
-  bare grant numbers go unrepresented. The table above stays complete at eight entries because it is
-  the authoritative record of what the Acknowledgments say, independent of what HSSI can hold.
+- **Two awards have no stated title and are not recorded yet.** The Acknowledgments give only grant
+  numbers for AFOSR `FA9550-18-1-0483` and NASA `80NSSC18K1220`. HSSI rejects a blank award name, so
+  a number needs a title to be recorded, and six of the eight above are held in this record and these
+  two are not. Two ways of forcing them in were weighed and rejected. Inventing a plausible project
+  title would be fabrication — the paper states none, and no source consulted gave one. Reusing the
+  grant number as the award title would follow a convention no existing HSSI Award row uses, and would
+  leave a row whose name is not a name. Field 26 rule 9 allows a different route: the funder's award
+  record first, then the source's own name for the award or program, and a descriptive label last (see
+  the TODO below). Both funders, the United States Air Force Office of Scientific Research and
+  the National Aeronautics and Space Administration, are recorded in Field 25, so the funding
+  attribution survives and only the two bare grant numbers are missing. The table above stays
+  complete at eight entries because it is the authoritative record of what the Acknowledgments say,
+  independent of what has been entered.
 - **`SIDC Data Exploitation` / `PRODEX-12` is the weakest entry.** The Acknowledgments write it as
   "SIDC Data Exploitation (ESA Prodex-12)", which names an ESA PRODEX programme contract rather than
   a numbered award in the usual sense. It is recorded as written; a curator may reasonably drop the
@@ -929,6 +930,19 @@ Three points a future refresh should not have to rediscover:
 
 All titles are far below the 128-character limit that applies to award names, and no value here is
 near any length boundary.
+
+**TODO for the next Updater — an award is missing from this dossier and HSSI:** two grants from the
+Acknowledgments quoted above — AFOSR `FA9550-18-1-0483` (funder: United States Air Force Office of
+Scientific Research) and NASA `80NSSC18K1220` (funder: National Aeronautics and Space Administration),
+both stated for the research at UNH. They were left out only because the paper gives no title, which
+Field 26 rule 9 does not treat as a bar: the title is the funder's award record, else the source's own
+name for the award or program, else the descriptive label `<funder full name> grant`, and a descriptive
+label is recorded here as not the official title. USAspending holds a record for each number (as of
+2026-11-03), for the Updater to read under rules 9 to 11. Production's Award rows (read 2026-11-03)
+hold neither number, so sending them creates two rows, each with its funder on `award[].funder`. The
+stored list is the entry's complete set (rule 7), so the update sends the six recorded awards with
+them. Adding them is a Field 25/26 value change for the Updater's normal cycle, with the checks
+re-run first.
 
 ---
 

@@ -4,7 +4,7 @@
 **Repository:** https://github.com/NCAR/tiegcm
 **Source Revision:** cedd16dfe6bdb745cb6a0f6163e7831bf84db95b (tag `TIEGCM-3.0.1`, branch `master`, 2026-05-07)
 **Extraction Date:** 2026-07-28
-**Validation Date:** 2026-08-26
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -441,12 +441,12 @@ https://tiegcm-docs.readthedocs.io/en/latest/
 ### 26. Award Title (OPTIONAL)
 Not found -- no award title or number is asserted anywhere in the repository (no funding statement in `README.md`, `CITATION.cff` or `LICENSE`; DataCite `fundingReferences` for the DOI is empty).
 
-*Deliberate non-population, with the raw material kept as evidence for why no defensible title exists. The reference publication's Crossref record does carry 20 award numbers, but no award **titles**, and they are the acknowledgements of a 24-author paper -- attributing all 20 to this software would over-claim, and creating 20 title-less Award rows in a shared table would degrade rather than improve the record. The numbers, with their Crossref funder attribution, are:*
+*Deliberate non-population, with the raw material kept as evidence for why the set is not entered. The reference publication's Crossref record does carry 20 award numbers, but no award **titles**, and they are the acknowledgements of a 24-author paper -- attributing all 20 to this software would over-claim, and creating 20 title-less Award rows in a shared table would degrade rather than improve the record. The numbers, with their Crossref funder attribution, are:*
 
 - *National Aeronautics and Space Administration: 80NSSC22M0163, 80NSSC21K1315, 80NSSC21K0008, 80NSSC23K1055, 80NSSC22K1635, 80NSSC21K1677, 80NSSC20K1784, 80NSSC21K1673, 80NSSC23K1123, NNG12FA45C, 80NSSC22K0018, NNX17AG10G, 80NSSC22K1010, 80NSSCK19K0810*
 - *National Science Foundation: 1852977, 2223931, 2431688, 2149695, 1753214, 2437053*
 
-*Were Field 26 ever populated, the most defensible entry would be NASA `80NSSC22M0163`, the DRIVE Science Center award behind the Center for Geospace Storms / MAGE effort in which TIEGCM is the ionosphere-thermosphere component (`src/mage_coupling.F`) -- but an award **title** would have to come from elsewhere, since neither the repository nor Crossref provides one. Left unpopulated by decision.*
+*Were Field 26 ever populated, the most defensible entry would be NASA `80NSSC22M0163`, the DRIVE Science Center award behind the Center for Geospace Storms / MAGE effort in which TIEGCM is the ionosphere-thermosphere component (`src/mage_coupling.F`) -- and its title would come from the funder's award record or the source's own name for the program (Field 26 rule 9) rather than from the repository or Crossref; production's Award rows (read 2026-11-03) already hold `NASA DRIVE Science Center for Geospace Storms` on this number. Left unpopulated by decision.*
 
 ---
 

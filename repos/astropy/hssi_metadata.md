@@ -4,7 +4,7 @@
 **Repository:** https://github.com/astropy/astropy
 **Source Revision:** bada72aa79a2d1fd7c705ddc8175800c2eb1312d
 **Extraction Date:** 2026-08-26
-**Validation Date:** 2026-10-30
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -1182,6 +1182,19 @@ Whether 80NSSC25M7029 is the award behind the "Investing in the Astropy Project 
 and Education in Astronomy" title rejected just above is **unconfirmed** — the recipient, the funder
 and the later-solicitation timing are all consistent, but no source examined states the link, and it
 must not be assumed on circumstantial agreement alone.
+
+**TODO for the next Updater — an award is missing from this dossier and HSSI:** NASA cooperative
+agreement `80NSSC25M7029` to NumFOCUS, Inc., funder the National Aeronautics and Space Administration
+(Field 25). The evidence is the Open Collective sub-account described above. It was left out only
+because the federal record carries no proposal title, which Field 26 rule 9 does not treat as a bar:
+the title is the funder's award record, else the source's own name for the award or program (as this
+field settled Award 2, with the funding call's name), else the descriptive label
+`<funder full name> grant`, recorded here as not the official title. Whether this is the award behind
+the "Investing in the Astropy Project to Enable Research and Education in Astronomy" title rejected
+above is unconfirmed. Production's Award rows (read 2026-11-03) hold no row for this number, so
+sending it creates one; `80NSSC22K0347`, Award 2, is a separate row. The stored list is the entry's
+complete set (rule 7), so the update sends Awards 1 and 2 with it. Adding it is a Field 25/26 value
+change for the Updater's normal cycle, with the checks re-run first.
 
 ---
 

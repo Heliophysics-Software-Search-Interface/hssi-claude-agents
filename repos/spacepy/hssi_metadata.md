@@ -4,7 +4,7 @@
 **Repository:** https://github.com/spacepy/spacepy
 **Source Revision:** cb983af96e06265dc35463e0d725a11eaf0682a6
 **Extraction Date:** 2026-08-12
-**Validation Date:** 2026-08-22
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 **Scope note.** Evidence below is drawn from the pinned source revision (authored 2026-03-15, the
@@ -934,11 +934,11 @@ publication's Funding section (quoted in full in Field 25) supplies one. It is t
 instrument in that statement for which the paper gives an actual award **title**, quoted there in
 full. The title is 85 characters, within HSSI's 128-character limit for an award name.
 
-**Other support instruments named in the same statement, deliberately not entered as awards
-(settled).** The paper names each of these by the mission or investigation it funded rather than by
-an award title, so entering them would require inventing titles the source does not provide, and
-that was decided against. Their numbers are preserved here as durable evidence of how SpacePy was
-funded, and so the decision does not have to be re-derived:
+**Other support instruments named in the same statement, not entered as awards.** The paper names
+each of the two JHU/APL contracts below by the mission or investigation it funded rather than by an
+award title, so no title was entered for them; the TODO after the list covers them. The third, the
+Los Alamos contract, is treated after that TODO. Their numbers are preserved here as durable evidence
+of how SpacePy was funded:
 
 - Van Allen Probes RBSP Energetic particle, Composition, and Thermal plasma (ECT) suite —
   JHU/APL contract **967399**, under NASA prime contract **NAS5-01072**.
@@ -949,6 +949,31 @@ funded, and so the decision does not have to be re-derived:
 
 Note that two of these carry nested numbers (a JHU/APL contract under a NASA prime contract), so
 even the choice of which number represents "the award" is not determined by the source.
+
+**TODO for the next Updater — an award is missing from this dossier and HSSI:** the two JHU/APL
+contracts above, `967399` and `136435`, which the paper's Funding section (quoted under Field 25)
+credits with supporting SpacePy development; their funder is Johns Hopkins University Applied Physics
+Laboratory, recorded in Field 25 for exactly this reason. They were left out only because the paper
+names them by mission rather than by an award title, which Field 26 rule 9 does not treat as a bar:
+the source's own name for the award or program is its second option, after the funder's award record,
+and the descriptive label `<funder full name> grant` is the last, recorded here as not the official
+title. Which number stands for "the award" in these nested cases is a choice the source leaves open
+(note above); this dossier follows the JHU/APL numbers because Field 25 records JHU/APL as the funder
+and production's existing rows for them already use them. Production's Award rows (read 2026-11-03)
+already hold both numbers, each with Johns Hopkins University Applied Physics Laboratory as funder
+and the paper's mission name as its title, so attaching them reuses the rows and keeps those titles;
+among the visible production entries only dbprocessing lists them, so a change to either row would
+show on dbprocessing too. `NNN06AA01C` is the NASA prime of the Parker Solar Probe contract; choosing
+it instead would bind a production row titled `National Aeronautics and Space Administration
+contract` (funder NASA), which only PyThea lists. The stored list is the entry's complete set
+(rule 7), so the update sends the recorded `80NSSC21K0304` award with them. Adding them is a Field
+25/26 value change for the Updater's normal cycle, with the checks re-run first.
+
+The Los Alamos contract `89233218CNA000001` is not part of that TODO, and it is not omitted for lack
+of a title. It is the laboratory's own management-and-operating contract, an employer's institutional
+agreement of the kind Field 26 rule 3 excludes; dbprocessing declines to record the same contract as
+a government-rights notice rather than a research award for the software, and RAM-SCB calls it
+institutional support.
 
 ---
 

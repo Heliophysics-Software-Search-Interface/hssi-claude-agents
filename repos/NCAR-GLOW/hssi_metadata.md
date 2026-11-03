@@ -4,7 +4,7 @@
 **Repository:** https://github.com/space-physics/NCAR-GLOW
 **Source Revision:** 2c099fdc2bd02b69fd1c3f36e1cc603ad3d34336
 **Extraction Date:** 2026-09-01
-**Validation Date:** 2026-09-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -37,8 +37,8 @@ in the vendored Fortran, and why authorship follows the packaging's creator list
 (why `Other` is the only defensible storable licence name, and why a licence URI cannot exist for this
 record at all), Field 17 (why a real, automatic GFZ retrieval one dependency away is still not a data
 source of this software), and Fields 25 and 26 together (why NASA is recorded as funder, why the
-National Science Foundation is not, and why the award numbers cannot be stored). Each keeps the
-alternatives that were rejected, so a later refresh can see what was weighed.
+National Science Foundation is not, and why the four NASA award numbers are not yet entered). Each
+keeps the alternatives that were rejected, so a later refresh can see what was weighed.
 
 ---
 
@@ -979,20 +979,31 @@ would have left a genuinely NASA-funded model looking unfunded.
 
 ### 26. Award Title (OPTIONAL)
 
-**Value:** None — and the reason is a mechanical limitation, not an absence of funding. Field 25
-records NASA precisely because the funding is documented.
+**Value:** None — the four NASA awards are documented but not yet entered (see the TODO below); the
+funding is real, which is why Field 25 records NASA.
 
-**The award numbers are known; the award titles are not.** The 2017 Acknowledgments and Crossref both
-give four NASA grant numbers — **NNX13AE15G, NNX14AH54G, NNX08AQ31G, NAG5-5335** — and no titles.
-Crossref's `award-info` entries carry `award-number` only.
+**The award numbers are known; no award title has been sourced yet.** The 2017 Acknowledgments and
+Crossref both give four NASA grant numbers — **NNX13AE15G, NNX14AH54G, NNX08AQ31G, NAG5-5335** — and
+no titles. Crossref's `award-info` entries carry `award-number` only. No title was found in the
+sources consulted for this dossier. The funder's award record, which Field 26 rule 9 consults first,
+was not read here: USAspending holds a record for each of the four numbers (as of 2026-11-03), for
+the next Updater to read under rules 9 and 10.
 
-**Durable limitation, recorded so a later refresh does not rediscover it the hard way: an award with
-no title is not writable.** HSSI's award structure requires a title, so a grant number alone cannot be
-recorded, and these four therefore cannot be entered in the form they are documented in. Closing this
-field would require resolving each number to its official project title — through NASA's award records
-or NSPIRES, for instance — which none of the sources consulted here provides. A second constraint
-applies once titles exist: the stored award name is capped at 128 characters, so a long official
-project title needs checking against that limit before use.
+**TODO for the next Updater — an award is missing from this dossier and HSSI:** the four NASA grants
+**NNX13AE15G, NNX14AH54G, NNX08AQ31G** and **NAG5-5335**, funder the National Aeronautics and Space
+Administration (Field 25). The evidence is the 2017 Acknowledgments quoted under Field 25, with
+Crossref's matching funder block. They were left out only because no title was found, which Field 26
+rule 9 does not treat as a bar: the title is the funder's award record, else the source's own name for
+the award or program, else the descriptive label `National Aeronautics and Space Administration
+grant`, and a descriptive label is recorded here as not the official title. Production's Award rows
+(read 2026-11-03) hold none of the four numbers, so sending them creates four rows, each with its
+funder on `award[].funder`. Send `NAG5-5335` with an ASCII hyphen: Crossref carries it with a Unicode
+hyphen (U+2010), and an award binds by its exact identifier. USAspending lists `NNX14AH54G` under the
+Regents of the University of Colorado rather than NCAR, which the paper names, so check that tie
+before sending it. Adding them is a Field 25/26 value change for the Updater's normal cycle, with the
+checks re-run first. Once titles exist, the stored award name is capped at 128 characters (the API
+rejects a longer one with a 400), so a long official project title needs checking against that limit
+before use.
 
 **Rejected, and recorded so it is not reintroduced from Crossref:** the NSF entry in Crossref's funder
 block, whose award number is the literal string "NCAR". That is institutional sponsorship of the

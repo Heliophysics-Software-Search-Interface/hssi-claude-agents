@@ -4,7 +4,7 @@
 **Repository:** https://github.com/ccsdspy/ccsdspy
 **Source Revision:** 4d91371fc9d07535d583fe9c28a4db39f5096a2a
 **Extraction Date:** 2026-07-30
-**Validation Date:** 2026-10-29
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 This file records the HSSI metadata for CCSDSPy, reconciled against the pinned source revision and
@@ -742,9 +742,25 @@ Not found
 ROSES High-Priority Open-Source Software award" — a solicitation-element description (NASA ROSES
 element F.15, "High Priority Open-Source Science"), not an award title. The repository has no
 acknowledgements section, no `FUNDING` file, and no grant number; a code search of the companion
-`CCSDSPy/SPaC-Kit` repository for `ROSES`, `award`, and `80NSSC` returns nothing. Recording a
-paraphrase of the changelog sentence as an "award title" would be fabrication, so this field is left
-empty.
+`CCSDSPy/SPaC-Kit` repository for `ROSES`, `award`, and `80NSSC` returns nothing. A paraphrase of the
+changelog sentence would be a guess, so this field is empty for now.
+
+**TODO for the next Updater — an award is missing from this dossier and HSSI:** the ROSES
+High-Priority Open-Source Software award that CHANGELOG.rst announces in its 2.0.0 entry (quoted
+under Field 25), funder the National Aeronautics and Space Administration (Field 25). It was left out
+only because no award title or number is published, which Field 26 rule 9 does not treat as a bar:
+the source's own name for the award or program is the second route, after the funder's award record,
+and the descriptive label `<funder full name> grant` the last, recorded here as not the official
+title. Whether the award belongs to CCSDSPy at all is the same settled reading as the funder in
+Field 25 (the changelog sentence's grammatical subject is SPaC-kit); a later pass that reopens that
+reading reopens this entry with it. No award number is known, so nothing can bind by identifier, and
+an award sent without one binds an existing row whose name is the same (compared ignoring case).
+That closes the label route while no number is known: production's Award rows (read 2026-11-03)
+hold 14 rows named exactly `National Aeronautics and Space Administration grant`, each with its own
+number. They hold no row named `ROSES High-Priority Open-Source Software` (ignoring case), though
+rows built on a ROSES element exist, and the Updater should look again before sending. Without a
+number the Updater needs the funder's award record or the source's own name. Adding it is a Field
+25/26 value change for the Updater's normal cycle, with the checks re-run first.
 
 ---
 
