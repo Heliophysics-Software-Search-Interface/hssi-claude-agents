@@ -353,9 +353,10 @@ were all `rilma/pyIRI2016`'s; it was retired as a duplicate of `pyIRI2016`. This
 - `pyIRI2016` / `scivision/pyIRI2016` — the abandoned former name, and the name of the separate
   `rilma/pyIRI2016` entry (rule 7).
 
-**Registry follow-up.** At registry commit `b1e3c973`, the PyHC `IRI-2016` entry's `hssi:` link points
-at `https://hssi.hsdcloud.org/software/pyiri2016/`, the other package's page; it should point to this
-entry's page instead.
+**Registry link, settled.** The PyHC `IRI-2016` entry's `hssi:` link pointed at
+`https://hssi.hsdcloud.org/software/pyiri2016/`, HSSI's page for the separate `rilma/pyIRI2016`, until
+registry commit `08f381b1` ("Point IRI-2016's HSSI link at its own HSSI entry", 2026-11-04 UTC), which
+changed it to `https://hssi.hsdcloud.org/software/iri-2016/`, this entry's page.
 
 ### 8. Description (MANDATORY)
 
@@ -402,17 +403,29 @@ later pin ships a map capability.
   month outside `ig_rz.dat`'s range, `tcon` in `irifun.for` prints `** OUT OF RANGE **` and returns
   without the indices; for a date outside `apf107.dat` the ap lookups return `-5`.
 
-**Preview.** The opening sentence stands alone; the result card's first 199 characters end inside the
-third sentence, before any markdown, so no markup shows in the plain-text preview.
+**Preview.** The opening sentence stands alone, and Field 8's first 199 characters end inside the third
+sentence, before any markdown. The result card's preview is Field 9's value.
 
 ### 9. Concise Description (OPTIONAL)
-Not found — Field 8's opening sentence serves as the preview.
+International Reference Ionosphere 2016 from Python and Matlab
 
-**Rule 6.** "Python and Matlab interfaces to the International Reference Ionosphere (IRI) 2016 model."
-tells a scanning user what the software is, so this optional field is left empty. Candidates the rule
-would otherwise take, recorded for a later editor: the PyHC registry and GitHub description
-`International Reference Ionosphere 2016 from Python and Matlab`, and the package description
-`IRI2016 International Reference Ionosphere from Python` (which omits MATLAB).
+**Source.** The curated PyHC registry `description:` for the entry whose `code:` is this repository
+(`_data/projects_unevaluated.yml`; the same text at registry commit `b1e3c973` and at `08f381b1`), which
+is also the GitHub repository description. It is the first source rule 6 names, 62 characters, and
+every claim in it holds at the pin: the package runs the IRI-2016 model from Python (`iri2016.IRI()`)
+and from MATLAB (the `+iri2016` package). `Matlab` is the project's own spelling throughout and is kept
+(rule 4 fixes errors only).
+
+**Why the field is filled.** By the user's decision, every new entry in this catalogue batch carries both
+a description and a concise description. That overrides rule 6's default for an empty field, which
+would have left it empty because Field 8's opening sentence ("Python and Matlab interfaces to the
+International Reference Ionosphere (IRI) 2016 model.") already works as a preview; that empty outcome
+is the alternative not taken. HSSI held no concise description for this entry before this value was
+added.
+
+**Other candidates not taken.** The package description `IRI2016 International Reference Ionosphere
+from Python` omits the MATLAB interface; the README H1 `IRI2016 ionosphere model from Python and Matlab`
+is a title line and does not name the model in full.
 
 ### 10. Publication Date (RECOMMENDED)
 2017-04-24
