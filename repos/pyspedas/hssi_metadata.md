@@ -4,7 +4,7 @@
 **Repository:** https://github.com/spedas/pyspedas
 **Source Revision:** bbfdd632a0eb42953a8c83a489c140b13c508927
 **Extraction Date:** 2026-08-11
-**Validation Date:** 2026-11-02
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 *Unqualified citations are at the header's Source Revision `bbfdd632` (on `master`, just after the
@@ -357,16 +357,44 @@ ten additions below each rest on repository evidence, and none of the five was r
 > upstream strings are preserved in those notes; a future refresh reading `CITATION.cff` must not
 > reintroduce `GithubUser` as a family name.
 12. **Ayris Narock** | ORCID: https://orcid.org/0000-0001-6746-7455 | Adnet Systems (United States)
-13. **Zijin Zhang**
+13. **Zijin Zhang** | ORCID: https://orcid.org/0000-0002-9968-067X | University of California, Los Angeles (https://ror.org/046rm7j60)
     - *Identity:* an earlier revision of this file recorded given "Beforerr", family "GithubUser". The git author is
       `Beforerr <58776897+Beforerr@users.noreply.github.com>`, and GitHub account ID 58776897 is login
       `Beforerr`, whose **profile publishes the name "Zijin Zhang"**. A real identity is proven, so the
-      record is canonicalized to the person rather than labelled as a handle. **No identifier recorded:**
-      thirteen ORCID records exist for this name; `0000-0002-9968-067X` (University of California, Los
-      Angeles + USTC) is the only plausible one for a PySPEDAS contributor, but institutional similarity
-      is not proof, so it was left unassigned.
+      record is canonicalized to the person rather than labelled as a handle.
+    - *Identifier linkage (rule 14):* the ORCID is tied to this contributor by his own project metadata,
+      not by name or institution. His commits here come from two addresses under the git name
+      `Beforerr`, `58776897+Beforerr@users.noreply.github.com` and `zzj956959688@gmail.com`, and GitHub's
+      commit API attributes a commit from the gmail address (`7d826503`) to the same account `Beforerr`
+      (ID 58776897). His Julia package `JuliaSpacePhysics/CDFDatasets.jl` (at
+      `27c070c3cf71bd060a90cd8096647ab0f444487e`) names its author `Beforerr <zzj956959688@gmail.com>` in
+      `Project.toml`, and its `CITATION.cff` gives `given-names: Zijin`, `family-names: Zhang`,
+      `orcid: 0000-0002-9968-067X` and `email: zijin@ucla.edu`. ORCID `0000-0002-9968-067X` is "Zijin
+      Zhang", publishes the email `zijin@ucla.edu`, records employment at the University of California,
+      Los Angeles (Earth, Planetary, and Space Sciences, graduate student researcher, from 2022, no end
+      date) and lists works in space plasma physics. PyCDFpp's dossier records the same linkage for him
+      as one of its authors.
+    - *Superseded non-assignment:* earlier revisions of this file left this ORCID unassigned, because a
+      fielded name search returns many same-name records and the UCLA employment alone was only
+      institutional similarity, which rule 14 does not accept as proof. The `Project.toml` and
+      `CITATION.cff` linkage above is the independent proof that was missing; a later refresh should not
+      reopen the identifier.
+    - *Affiliation:* University of California, Los Angeles, from his ORCID employment and corroborated by
+      the `zijin@ucla.edu` address in his own `CITATION.cff`; it reached his shared Person row through
+      PyCDFpp's author record. His PySPEDAS commits (2023–2026) fall within that employment, so it is
+      current rather than years-stale. This project's `CITATION.cff` gives him no affiliation (lines
+      50–51, `family-names: GithubUser`, `given-names: Beforerr`), so nothing conflicts.
 14. **Marc Pulupa** | ORCID: https://orcid.org/0000-0002-1573-7457 | University of California, Berkeley
-15. **Xiangning Chu** | ORCID: https://orcid.org/0000-0003-4109-0770 | University of Colorado Boulder
+15. **Xiangning Chu** | ORCID: https://orcid.org/0000-0003-4109-0770 | Laboratory for Atmospheric and Space Physics (https://ror.org/01fcjzv38); University of Colorado Boulder (https://ror.org/02ttsq026)
+    - *Affiliations:* University of Colorado Boulder is the affiliation this project's `CITATION.cff`
+      gives him (lines 56–59). Laboratory for Atmospheric and Space Physics reached his shared Person row
+      through PyTplot's author record: PyTplot's Zenodo deposit for v1.7.28
+      (https://doi.org/10.5281/zenodo.5510606) lists creator "X. N. Chu" with the affiliation "LASP",
+      recorded under ROR's display name. His ORCID record confirms it: open-ended employment since
+      2018-01-08 as a Research Associate at the University of Colorado Boulder's Laboratory for
+      Atmospheric and Space Physics, which covers his commits here (2020–2025, as `X. N. Chu` and
+      `Xiangning Chu`). The two do not conflict: LASP is a research institute of the University of
+      Colorado Boulder, so both name the same position.
 16. **Brent Smith** | Johns Hopkins University Applied Physics Laboratory
 17. **Tiger** *(stored as an empty given name with family name `Tiger`)*
     - *Identity:* the `GithubUser` family name this project's roster uses is factually wrong here. GitHub's
@@ -386,7 +414,14 @@ ten additions below each rest on repository evidence, and none of the five was r
 20. **Samuel T. Badman** | ORCID: https://orcid.org/0000-0002-6145-436X | Center for Astrophysics Harvard & Smithsonian
 21. **Anansa Keaton-Ashanti** | The University of Texas at Austin (https://ror.org/00hj54h04)
 22. **Tomo Hori** | Nagoya University (https://ror.org/04chrp450)
-23. **Takanobu Amano** | ORCID: https://orcid.org/0000-0002-2140-6961
+23. **Takanobu Amano** | ORCID: https://orcid.org/0000-0002-2140-6961 | The University of Tokyo (https://ror.org/057zh3y96)
+    - *Affiliation:* The University of Tokyo reached his shared Person row through PyTplot's author
+      record: PyTplot's Zenodo deposit for v1.7.28 (https://doi.org/10.5281/zenodo.5510606) lists
+      creator "Takanobu Amano" with the affiliation "The University of Tokyo". It is true of
+      his PySPEDAS work: his commits here (2019) come from `amano@eps.s.u-tokyo.ac.jp` and
+      `amano@dio.eps.s.u-tokyo.ac.jp`, University of Tokyo addresses. His ORCID record lists no
+      employment, so it neither confirms nor contradicts the affiliation. This project's `CITATION.cff`
+      gives him none (lines 80–82), so nothing conflicts.
 24. **Warren Rexroad** | University of California, Berkeley
 25. **krvidal (GitHub)** *(stored as givenName `krvidal`, familyName `(GitHub)`)*
     - *Identity:* a proven platform handle with no published human name. The git author is
@@ -403,7 +438,13 @@ ten additions below each rest on repository evidence, and none of the five was r
       publishes none, though the commit address `t.glissmann@protonmail.com` is consistent with the
       login.
 29. **Mykhaylo Shumko** | ORCID: https://orcid.org/0000-0002-0437-7521 | Johns Hopkins University Applied Physics Laboratory
-30. **Qusai Al Shidi** | ORCID: https://orcid.org/0000-0003-0426-038X | West Virginia University
+30. **Qusai Al Shidi** | ORCID: https://orcid.org/0000-0003-0426-038X | University of Michigan (https://ror.org/00jmfr291); West Virginia University (https://ror.org/011vxgd24)
+    - *Affiliations:* West Virginia University is the affiliation this project's `CITATION.cff` gives him
+      (lines 98–101). University of Michigan reached his shared Person row through SWMF's author record,
+      which credits him with it. Both are true: his ORCID record lists a postdoctoral position at the
+      University of Michigan (Climate and Space Sciences and Engineering, 2019-08-05 to 2023-12-31), which
+      covers his one commit here (2020-07-06), and one at West Virginia University from 2024-01-01.
+      Earlier revisions of this file listed West Virginia University alone.
 31. **Alex Antunes** | ORCID: https://orcid.org/0000-0002-3098-2602 | Johns Hopkins University Applied
     Physics Laboratory; Project Calliope
     - *Identity:* an earlier revision of this file recorded "Sandy Antunes" with the Project Calliope affiliation and no
@@ -442,7 +483,29 @@ ten additions below each rest on repository evidence, and none of the five was r
       handle itself, and this project's own `CITATION.cff` classifies it as a user handle. Hence
       `(Username)` rather than `(GitHub)`.
 36. **Benjamin Short** | ORCID: https://orcid.org/0000-0003-3945-6577
-37. **Elysia Lucas** | Laboratory for Atmospheric and Space Physics
+37. **Elysia Lucas** | ORCID: https://orcid.org/0009-0000-0784-8571 | Laboratory for Atmospheric and Space Physics (https://ror.org/01fcjzv38)
+    - *Identifier linkage (rule 14):* this project's `CITATION.cff` lists `given-names: Elysia`,
+      `family-names: Lucas` with the affiliation Laboratory for Atmospheric and Space Physics and no
+      ORCID (lines 117–119). Her commits
+      in this repository's history (2017–2019, to the `pytplot/` tree) reached it when PyTplot's history
+      was merged in (`40bf8cc6`, "merging pytplot"); they come from `elysia.lucas@lasp.colorado.edu` under
+      the git names `Elysia Lucas` and `esalvolucas`. GitHub account `esalvolucas` (ID 31627936)
+      publishes the name "Elysia Lucas", and GitHub's commit API attributes PyTplot commit `dabeb98a`
+      (2018-11-20), git-authored `Elysia Lucas` from its noreply address
+      (`31627936+esalvolucas@users.noreply.github.com`), to that account. ORCID `0009-0000-0784-8571` ("Elysia Lucas", credit name "Elysia S. Lucas") connects to
+      her beyond the name: its other name, "Elysia Salvo Lucas", spells out the login `esalvolucas`; its
+      employment, at the University of Colorado Boulder (CIRES, Data Analyst), is the institution of her
+      `lasp.colorado.edu` commit address; and its one work is the 2026 preprint "GOES-R Series X-Ray
+      Sensor (XRS): 2. On-orbit measurements and calibrations"
+      (https://doi.org/10.22541/essoar.177092672.25576917/v1), whose byline lists "Elysia S. Lucas" with
+      this ORCID beside LASP co-authors. The ORCID reached her shared Person row through PyTplot's author
+      record; PyTplot's dossier records the same linkage.
+    - *Rejected candidate:* `0009-0006-3139-2133`, a same-name ORCID record (ETH Zurich, Imperial
+      College London), has nothing tying it to this contributor and is not used.
+    - *Affiliation:* Laboratory for Atmospheric and Space Physics, as this project's `CITATION.cff` gives
+      it. Her ORCID employment is undated, so it does not show that the University of Colorado Boulder
+      covers the period of her commits (rule 21); nor does it conflict with LASP, a University of
+      Colorado Boulder institute.
 
 - **Roster completeness.** `CITATION.cff` at the pinned revision lists exactly these 37 people in
   this order, so no contributor has been added upstream since the roster was last reconciled and
@@ -474,6 +537,17 @@ ten additions below each rest on repository evidence, and none of the five was r
   roster was reconciled: the stored values were preserved rather than overwritten by `CITATION.cff`.
   They are recorded here so a future refresh recognises them as known, settled divergences rather
   than fresh drift.
+- **Stored values that reached shared Person rows from other catalogue entries.** A Person row is
+  shared by every entry that lists it, so an identifier or affiliation another entry's author list
+  supplies also shows here. The following arrived that way and are recorded with their evidence on
+  each author's line: Zijin Zhang's ORCID and University of California, Los Angeles
+  (PyCDFpp), Xiangning Chu's Laboratory for Atmospheric and Space Physics and Takanobu Amano's The
+  University of Tokyo (PyTplot), Elysia Lucas's ORCID (PyTplot), and Qusai Al Shidi's University of
+  Michigan (SWMF). Each is true of the person's PySPEDAS work, and none contradicts `CITATION.cff`,
+  which gives Chu University of Colorado Boulder, Al Shidi West Virginia University and Lucas
+  Laboratory for Atmospheric and Space Physics, carries no ORCID for Zhang or Lucas, and gives Zhang
+  and Amano no affiliation. A refresh reading `CITATION.cff` should treat them as settled additions,
+  not drift.
 - **Name corrections and affiliations.** An author *name* correction is a `personId` entry with
   `"rename": true`, which changes the name on every entry that lists the row; person records are shared
   across software entries, so check the other references first. A stored empty given name is carried by
