@@ -35,9 +35,26 @@ instead under the separate distribution name, imports as `pytplot`, and keeps `a
 `1a019705da713355d828b8ab0081e82e82192edc`, "PyTplot" section) states: "Previous releases of PySPEDAS
 depended on the external pytplot or pytplot-mpl-temp Python packages. Starting with PySPEDAS 2.0, these
 external packages are no longer required -- their functionality is now included directly in PySPEDAS."
-PySPEDAS 1.7.28 required `pytplot-mpl-temp>=2.2.78`. PySPEDAS 2.0.5 (2025-11-07) is the first PySPEDAS
-2.0 release that is not a pre-release (2.0.2a1 and 2.0.4a1 preceded it), and it and every later
-release declare no dependency on either distribution.
+The move came with the PySPEDAS 2.0 series, in stages on one day:
+- On 2025-08-04, in `spedas/pyspedas`, PyTplot's `matplotlib-backend` history was brought in.
+  - `b766eb13` (09:43, "moving pytplot files to pyspedas hierarchy") renames its 112 files into
+    `pyspedas/pytplot/`.
+  - `40bf8cc6` (10:19, "merging pytplot") merges that history into PySPEDAS's 2.0 development branch.
+- Later that day, `99fce477` (18:22, "Copy most of pytplot-mpl-temp into pyspedas/pytplot, update imports
+  to stop using external pytplot package") rewrote the imports in 419 existing files to use the vendored
+  copy. It added no files. It dropped `pytplot-mpl-temp>=2.2.79` from `pyproject.toml`,
+  `pyproject_pdm.toml` and `docs/requirements.txt`.
+- The vendored package was renamed `pyspedas.tplot_tools` on 2025-08-14 (`9d51e87e`).
+- PySPEDAS 1.7.28 (PyPI 2025-07-24) was the last release that depended on the external package
+  (`pytplot-mpl-temp>=2.2.78`).
+- The first releases without it were the pre-releases 2.0.2a1 (2025-08-29) and 2.0.4a1 (2025-10-01).
+- The first production release was 2.0.5 (PyPI 2025-11-07). Its release notes say "Initial release of
+  PySPEDAS 2.0 series" and "PyTplot utilities are now built into PySPEDAS, instead of depending on an
+  external package".
+- No PySPEDAS release from 2.0.2a1 through 2.2.2 declares a dependency on either distribution.
+- The README notice quoted above was added on 2025-11-03 (`995d566c`). No README on any PyTplot branch
+  carries a notice that PyTplot's functionality has moved into PySPEDAS. The `matplotlib-backend` README
+  mentions PySPEDAS only as the project this version is used with and can be installed through.
 
 ---
 
@@ -361,32 +378,74 @@ PyPI" (a generated locator plus release title, rule 1).
 >
 > This is the modified (matplotlib) version of the pytplot package. This version is used in the pyspedas project, which is a python rewrite of the IDL SPEDAS software.
 >
+> This matplotlib version is PyTplot's 2.x line, developed on the repository's matplotlib-backend branch and published on PyPI only as pytplot-mpl-temp (versions 2.0.0 through 2.2.79); it is imported as pytplot. It is not the original pytplot package on PyPI (versions up to 1.7.28), which plots with pyqtgraph (Qt) and Bokeh.
+>
+> PyTplot has since moved into PySPEDAS. In the words of the PySPEDAS README: "Previous releases of PySPEDAS depended on the external pytplot or pytplot-mpl-temp Python packages. Starting with PySPEDAS 2.0, these external packages are no longer required -- their functionality is now included directly in PySPEDAS." The first full PySPEDAS 2.0 release was 2.0.5, in November 2025.
+>
 > Pytplot can be used in python scripts, or interactively through IPython and the Jupyter notebook.
 >
 > Data is read into pytplot by using the "store_data" command. Each dataset is assigned a unique name by the user.
 >
 > The data is stored in a "tplot variable" class. The tplot variables contain all the information required to create a plot of the dataset. The details of the plot, such as axis titles, types, line colors, etc, can be changed through other functions in pytplot.
 
-(The `> ` markers are dossier formatting; the value is the five paragraphs, each on one line.)
+(The `> ` markers are dossier formatting; the value is the seven paragraphs, each on one line.)
 
-- **Source (rule 7).** No `CITATION.cff` exists. The value is the Source Revision's README, verbatim:
-  the lead paragraphs (`README.md:6`, `:8`, `:10`) and, because the lead says little about how the
-  package is used, the two whole paragraphs of its "How It Works" section (`:15`, `:17`) in the
-  project's order. The README's installation and contact sections are not used. The source's double
-  spaces after full stops are normalized to single spaces; nothing else is changed.
-- **Claims tested against the code at the Source Revision.** matplotlib plotting
-  (`pytplot/MPLPlotter/`, the default `tplot()` path), notebook and script use (`plt.show()`), PySPEDAS's
-  use of this line (PySPEDAS 1.7.28 required `pytplot-mpl-temp>=2.2.78`), `store_data` and the tplot
-  variable with per-variable plot options (`options`) all hold.
-- **Not used.** The docs introduction (`docs/source/introduction.rst:9-11`, the same text as on the 1.x
-  line) says "It can plot using either Qt via pytqtgraph, or using HTML files via Bokeh", which this
-  release does not do (Field 4); rule 2 keeps that claim out, and its "What does it do?" list adds
-  nothing the README lead and the structured fields do not carry. `setup.cfg` `description` ("A python
-  version of IDL tplot libraries") is too thin.
-- **Superseded values.** The earlier (2025) extraction's composed text ("…provides comprehensive support
-  for time series analysis operations including interpolation, resampling, power spectra calculation…")
-  was not written by the project; rule 7 forbids composed prose. The 1.x line's README and docs
-  introduction are not the source either: their Bokeh HTML and Qt claims do not hold for 2.2.79.
+- **Why the description carries more than the project's README.** A reader of the landing page has to
+  learn two things that no other part of the record states. First, which PyTplot this is: the
+  repository, its README on the default branch, its Read the Docs "latest" build and its Zenodo concept
+  all present the older `pytplot` line. Second, that PyTplot now lives inside PySPEDAS. That is a
+  settled decision. Paragraphs 3 and 4 carry those two facts, and every other paragraph is the project's
+  own text.
+- **Sources, paragraph by paragraph.**
+  - Paragraphs 1, 2, 5, 6 and 7 are the Source Revision's README, verbatim: the lead (`README.md:6`,
+    `:8`, `:10`) and the two whole paragraphs of its "How It Works" section (`:15`, `:17`), in the
+    project's order. The source's double spaces after full stops are normalized to single spaces.
+  - Paragraph 3 is written for this record. No project sentence states these facts, so it is limited to
+    facts with primary evidence:
+    - The branch name and the distribution name: `setup.cfg` at the Source Revision declares
+      `name = pytplot-mpl-temp`.
+    - The version range: PyPI's release list for `pytplot-mpl-temp` runs from 2.0.0 (2022-01-26) to 2.2.79,
+      and no 2.x release of `pytplot` exists. PyPI also lists a yanked `0.0.0` (2023-04-13, yanked as a
+      "typo in config file"). It is not part of the 2.x line, so the range stands as written.
+    - The import name: `pytplot`, the package both distributions install.
+    - The original package: PyPI's `pytplot` releases end at 1.7.28 (2021-09-15), and its plotting is
+      described in the 1.x docs ("It can plot using either Qt via pytqtgraph, or using HTML files via
+      Bokeh", `docs/source/introduction.rst:11` at `f7fb304`; the misspelt "pytqtgraph" is corrected to
+      pyqtgraph here).
+  - Paragraph 4 quotes the PySPEDAS README verbatim ("PyTplot" section, `spedas/pyspedas` at
+    `1a019705da713355d828b8ab0081e82e82192edc`). It is the maintainers' own statement of the move, written
+    by the people who released the 2.x line (Field 23); the source's "--" is kept as written. Its first
+    sentence and its date sentence are written for this record. The date sentence rests on the PySPEDAS
+    v2.0.5 release notes ("Initial release of PySPEDAS 2.0 series"; "PyTplot utilities are now built
+    into PySPEDAS, instead of depending on an external package") and its PyPI upload on 2025-11-07. The
+    staged details (vendored in August 2025, first shipped in the 2.0.2a1 pre-release) are in the scope
+    note.
+- **Claims tested.** The claims about this release were tested against the code at the Source Revision.
+  They are matplotlib plotting (`pytplot/MPLPlotter/`, the default `tplot()` path), notebook and script
+  use (`plt.show()`), `store_data`, and the tplot variable with per-variable plot options (`options`).
+  PySPEDAS's use of this line also holds: PySPEDAS 1.7.28 required `pytplot-mpl-temp>=2.2.78`.
+  Nothing claims Bokeh or Qt plotting for 2.2.79.
+- **Not used.**
+  - The README's "Since this version is designed to be used with pyspedas, you can also install it by
+    installing pyspedas" (`README.md:33`), which stopped being true with PySPEDAS 2.0 (rule 2).
+  - The docs introduction (`docs/source/introduction.rst:9-11`, the same text as on the 1.x line), whose
+    "It can plot using either Qt via pytqtgraph, or using HTML files via Bokeh" does not hold for this
+    release (Field 4). Its "What does it do?" list adds nothing the README lead and the structured fields
+    do not carry.
+  - `setup.cfg` `description` ("A python version of IDL tplot libraries"), which is too thin.
+- **Superseded values.**
+  - The description the entry was first published with: the same text without paragraphs 3 and 4. It
+    was the README's own wording, but it left the reader unable to tell which PyTplot the entry is or
+    that the package had moved into PySPEDAS.
+  - The earlier (2025) extraction's composed text ("…provides comprehensive support for time series
+    analysis operations including interpolation, resampling, power spectra calculation…"), which was
+    not written by the project.
+  - The 1.x line's README and docs introduction, whose Bokeh HTML and Qt claims do not hold for 2.2.79.
+- **Rubric gap.** fields/08 keeps a stored description (rule 6) and allows only the project's own
+  sentences in a new one (rule 7, "extending the quotation is allowed, composing is not"). It has no rule
+  for adding the record's identity (which release line) or a successor notice when the project's own
+  text states neither. Paragraph 3's sentences and paragraph 4's framing and date sentences are composed
+  for that reason, and the move itself is quoted from the successor project's README.
 
 ### 9. Concise Description (OPTIONAL)
 Based on IDL tplot, plots and manipulates time series data
@@ -444,7 +503,8 @@ distribution channels, never the publisher (rule 6).
 rubric gap below).
 - **Number.** 2.2.79 is the newest upload of `pytplot-mpl-temp` (wheel and sdist, neither yanked nor a
   pre-release), built from the Source Revision (scope note). The line runs from 2.0.0 (2022-01-26)
-  through 2.2.79 in 146 releases, continuing the version series after `pytplot` 1.7.28, and has no git
+  through 2.2.79 in 145 releases (PyPI's list for the distribution also holds a yanked `0.0.0`, uploaded
+  2023-04-13, which is outside the 2.x line), continuing the version series after `pytplot` 1.7.28, and has no git
   tags and no GitHub releases.
 - **Date.** With no tag and no release object, the release event is the PyPI upload (rule 7): wheel
   `2025-07-25T23:02:30Z`, sdist `23:02:48Z`, the same UTC day as the commit that set 2.2.79
@@ -629,9 +689,11 @@ Moved
   this line's README, is PySPEDAS's contact in the PyHC registry, and as `jameswilburlewis` he committed
   this line's version bumps, among them 2.2.79 (`2cd7b27`). That
   statement is the project's own account of where its functionality now lives, so it is read as coming
-  from the project. PySPEDAS 2.0.5 (2025-11-07) was the first PySPEDAS 2.0 release that was not a
-  pre-release, and it declared no pytplot dependency. The authoritative continuation is PySPEDAS (Field
-  29). The status was settled by the user's decision.
+  from the project. The move came with PySPEDAS 2.0. On 2025-08-04 PyTplot's `matplotlib-backend`
+  history was merged into PySPEDAS (`b766eb13`, `40bf8cc6`), and `99fce477` switched the imports to the
+  vendored copy and dropped the dependency. The move was first released in the pre-release 2.0.2a1
+  (2025-08-29) and in production with 2.0.5 (2025-11-07), as the scope note details. The authoritative continuation is PySPEDAS
+  (Field 29). The status was settled by the user's decision.
 - **Considered and not selected.**
   - `Inactive`: rule 6 measured literally on the repository's default branch, `master`, whose last commit
     is `f7fb304` on 2023-04-18. It would tell a user that support continues "as time allows" for a line
@@ -915,27 +977,34 @@ magnetometer"), with a nonsense token returning 0.
 - **GOES-15** (`…/SMWG/Observatory/GOES/15`), MMS and THEMIS — test fixtures only, not used.
 
 ### 33. Logo (OPTIONAL)
-https://avatars.githubusercontent.com/u/22352442?v=4
+Not found
 
-- **Image.** A 265×265 PNG, the "MAVEN Science Data Center" wordmark with Mars and an orbit arc — the
-  GitHub avatar of the `MAVENSDC` organization that owns the repository. It is served as `image/png`
-  (25,862 bytes) and was viewed.
-- **Why it is the logo (rule 2).** The PyHC registry entry for PyTplot (`_data/projects.yml`, matched by
-  its `code:` URL) presents this image as PyTplot's logo.
-  - The project has no logo of its own on either branch: no image in the README header (only the build
-    and DOI badges), and no file named for a logo.
-  - `docs/source/conf.py` has no `html_logo`; it sets `html_theme = 'sphinx_rtd_theme'` and no logo
-    option.
-  - The images under `docs/source/_images/` are example plots (rule 4).
-  - The mark belongs to the developing organization, which rule 5 would exclude had the registry not
-    presented it.
-- **URL form (rule 9).** The asset is not git-hosted, so there is no commit to pin. The value is the
-  `avatar_url` the GitHub API reports for the organization.
-  - Considered and not used: the registry's own string,
-    `https://avatars3.githubusercontent.com/u/22352442?s=460&v=4`. It is the same image, at the same
-    size, from a legacy avatar shard host with a sizing parameter (24,913 bytes; byte-identical to the
-    same query on the canonical host).
-  - It still answers, but the registry's string is never recorded without re-deriving it.
-- **Difference from CDFlib.** The CDFlib dossier declined the same avatar because cdflib has moved out of
-  the MAVENSDC organization and its registry entry is stale; neither holds for PyTplot, which still lives
-  under MAVENSDC.
+Evidenced empty. PyTplot has no logo of its own on either branch:
+- No image heads the README (only the build and DOI badges), and no file in the tree is named for a logo.
+- `docs/source/conf.py` has no `html_logo`; it sets `html_theme = 'sphinx_rtd_theme'` and no logo
+  option.
+- The images under `docs/source/_images/` are example plots and interface screenshots (rule 4).
+
+**Considered and rejected: the `MAVENSDC` organization's GitHub avatar.** It is a 265×265 PNG: the
+"MAVEN Science Data Center" wordmark with Mars and an orbit arc.
+- It is the mark of the organization that develops the software and owns its repository, not PyTplot's
+  own logo. Shown as PyTplot's logo, it would present the MAVEN SDC's identity as the software's.
+- The PyHC registry entry for PyTplot (`_data/projects.yml`, matched by its `code:` URL) gives it as the
+  `logo:`. That presentation does not make it the software's mark. This is a judgment about this image
+  for this software, not a general rule about logos that a registry presents.
+- Both forms of the image's address are rejected, so that a later refresh does not re-propose either:
+  - `https://avatars.githubusercontent.com/u/22352442?v=4` — the `avatar_url` the GitHub API reports for
+    the organization. This was the entry's logo when it was first published, and it was withdrawn
+    because it is the developing organization's mark, not PyTplot's own logo.
+  - `https://avatars3.githubusercontent.com/u/22352442?s=460&v=4` — the registry's own string: the same
+    image, from a legacy avatar shard host with a sizing parameter.
+- **Consistency with CDFlib.** The CDFlib dossier declined the same avatar on three grounds: the
+  organization avatar, the shard-host URL, and the stale registry entry.
+  - **The organization-avatar ground** holds here: it is the MAVENSDC organization's avatar, not the
+    software's own logo. Its cdflib-specific part, cdflib's move away from the MAVENSDC organization, does
+    not carry over; PyTplot still lives under MAVENSDC.
+  - **The shard-host ground** — an `avatars3.` URL with `?s=460&v=4` sizing parameters is not a permanent
+    place — decides nothing here. The same image also has the canonical address above, and both
+    addresses are rejected only because the image is the organization's mark.
+  - **The stale-registry-entry ground** is specific to cdflib, whose PyHC entry is stale in its other
+    URLs. It does not carry over.
