@@ -4,7 +4,7 @@
 **Repository:** https://github.com/rilma/pyIRI2016
 **Source Revision:** 1a47c6018aae8be93349fb2487c1911e95c1f99f
 **Extraction Date:** 2026-07-26
-**Validation Date:** 2026-08-26
+**Validation Date:** 2026-11-03
 **Validation Status:** PASS
 
 ---
@@ -246,6 +246,8 @@ The settled 2026-07-27 decision uses **`pyIRI2016`**. The lowercase `pyiri2016` 
 - thermosphere — `source/cira.for` (NRLMSIS-00) neutral densities O, O₂, N₂, He, H, N, Ar exposed via `LatVsFL()`
 
 *Considered and excluded by decision 6 (2026-07-27):* `CMake` and `scikit-build-core` are build tooling, not science keywords.
+
+*Excluded — `pyhc package` (rule 15):* the keyword marks official PyHC packages, and `rilma/pyIRI2016` is not one: none of the registry's `_data/projects_core.yml`, `_data/projects.yml` or `_data/projects_unevaluated.yml` lists it (heliophysicsPy/heliophysicsPy.github.io at `b1e3c973eebe77486b9530bf06667b8a0fb2be3e`). The registry's `IRI-2016` entry in `projects_unevaluated.yml` lists a different package, `https://github.com/space-physics/iri2016` (its `code`; see Field 7), but its `hssi:` link, `https://hssi.hsdcloud.org/software/pyiri2016/`, points at this entry. hssi-website #111 (commit `8c2d190`, 2026-10-08) gave the keyword to every record linked from a registry `hssi:` field, and tagged this entry knowingly: it noted that the two repositories differ but treated the link as deliberate, and noted that Michael Hirsch is a major contributor to both. HSSI held `pyhc package` from #111's deployment until 2026-11-03, when it was removed on Shawn Polson's decision that pyIRI2016 is not a PyHC package. This dossier reads rule 15's "listed" as the software a registry entry describes, which is its `code` repository; an `hssi:` link and a shared contributor do not make this entry that package. Re-add the keyword only if a registry list comes to name `rilma/pyIRI2016` itself.
 
 **Note on the seven published keywords:** the prior canonical file also listed `atmospheric-modelling`, `f2py`, `fortran`, `ionosphere`, `ionosphere-modeling`, `python`, `standard` — these are the raw GitHub repository topics, i.e. lowercase/hyphenated **variants of the same seven concepts** already published in HSSI in Title Case. They have been normalised into the published forms rather than listed twice, so HSSI does not acquire duplicate keyword rows. No concept is lost.
 
