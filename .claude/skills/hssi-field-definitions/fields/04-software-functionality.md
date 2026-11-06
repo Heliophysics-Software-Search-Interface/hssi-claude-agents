@@ -199,11 +199,18 @@ complete the parent rows, and rules 12–15 govern the whole set.
    titled "Assimilative Analysis…" does not make the software do data assimilation). Fires on: a candidate
    whose only support is such a name — exclude it, and record the source so it is not re-derived.
 
-8. **Mission-related means part of a mission's own chain.** A package that *reads* MMS data is
-   "Data Processing and Analysis: Data Access and Retrieval"; a package that is *part of the MMS ground
-   system* — or ships the code that produces a mission's archive-standard science files, and is used by
-   named missions for that — is "Mission-related". A third-party reader of finished archived products is
-   not Mission-related. Fires on: the software's role relative to a mission's pipeline.
+8. **Mission-related means part of a mission's own chain, except `Operations`, which means an operations
+   function.** A package that *reads* MMS data is "Data Processing and Analysis: Data Access and
+   Retrieval"; a package that is *part of the MMS ground system* — or ships the code that produces a
+   mission's archive-standard science files, and is used by named missions for that — is
+   "Mission-related". A third-party reader of finished archived products is not Mission-related.
+   `Mission-related: Operations` instead turns on what the software does, whether or not it is part of a
+   mission's own system: commanding instruments or spacecraft; planning, scheduling or coordinating
+   observations; selecting the data an instrument downlinks; monitoring telemetry health or limits; or
+   alerting the operations team. Software that only processes data, runs or checks a pipeline, or browses
+   past observations does not earn `Operations`. Fires on: `Operations` by the operations function the
+   software performs; every other Mission-related child by the software's role relative to a mission's
+   pipeline.
 
 9. **A same-name child under a second parent needs a different capability.** Computing a spectrogram is
    "Data Processing and Analysis: Spectrogram"; displaying a spectrogram is "Data Visualization:
@@ -403,7 +410,7 @@ BOTH `Data Visualization` and `Data Visualization: Spectrogram`.
 
 **What it means:** Software specifically designed to support a space mission's operations or data pipeline. This is distinct from general-purpose analysis software that happens to work with mission data.
 
-**Key distinction:** A package that *reads* MMS data is "Data Processing and Analysis: Data Access and Retrieval". A package that is *part of the MMS ground system* is "Mission-related".
+**Key distinction:** A package that *reads* MMS data is "Data Processing and Analysis: Data Access and Retrieval". A package that is *part of the MMS ground system* is "Mission-related". `Mission-related: Operations` is the exception: it is judged by the operations function the software performs, whether or not it is part of a mission's own system (rule 8).
 
 **Subcategories:** Analysis, Archive, Calibration, Distribution/Access, Infrastructure as Code, Ingest, Instrumentation, Instrument Response, Inventory, ML/AI, Monitoring, Observatory/Instrument Models, Operations, Orchestration, Packet Decommutation, Processing, Science Data Processing, System Testing
 
@@ -526,6 +533,11 @@ These mappings are **indicators**, not guarantees. Always verify the software ac
   Retrieval` came from SolarSoft's retrieval routines; hissw fetches nothing, so it is removed (rule 5).
   The stored `Servers and Environments: Software or Environment Container` gains its missing parent
   (rule 10).
+- **Multi-mission planning web app (HelioFleet).** The app shows where heliophysics spacecraft will be on
+  planned trajectories, which observers will see a chosen point, where instrument fields of view overlap,
+  and when spacecraft align or reach quadrature — observation-campaign planning, so the submitted
+  `Mission-related: Operations` is kept and its missing parent added (rules 8, 10). Its finder for past
+  coordinated observations, which browses as-run catalogues, would not earn the value on its own.
 
 ## Provenance
 
