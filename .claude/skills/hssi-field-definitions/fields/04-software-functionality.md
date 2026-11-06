@@ -199,11 +199,28 @@ complete the parent rows, and rules 12–15 govern the whole set.
    titled "Assimilative Analysis…" does not make the software do data assimilation). Fires on: a candidate
    whose only support is such a name — exclude it, and record the source so it is not re-derived.
 
-8. **Mission-related means part of a mission's own chain.** A package that *reads* MMS data is
-   "Data Processing and Analysis: Data Access and Retrieval"; a package that is *part of the MMS ground
+8. **A Mission-related pipeline child means part of a mission's own chain; `Operations` means an
+   operations function, whoever built the software.** A package that *reads* MMS data is "Data
+   Processing and Analysis: Data Access and Retrieval"; a package that is *part of the MMS ground
    system* — or ships the code that produces a mission's archive-standard science files, and is used by
-   named missions for that — is "Mission-related". A third-party reader of finished archived products is
-   not Mission-related. Fires on: the software's role relative to a mission's pipeline.
+   named missions for that — earns the Mission-related children for its role there (Ingest, Packet
+   Decommutation, Orchestration, Science Data Processing, Monitoring, Archive and the rest).
+   `Mission-related: Operations` names an activity and is judged by capability, in or out of a mission's
+   chain. The operations functions are commanding instruments or spacecraft; planning, scheduling or
+   coordinating observations, including multi-mission campaign planning by future observer geometry,
+   target visibility from each observer, field-of-view overlap, or alignment, quadrature or conjunction
+   searches; selecting the data an instrument downlinks; monitoring telemetry (watching health or limits,
+   not merely decoding packets); and alerting the operations team. Software whose user-facing function
+   is one of these earns `Operations`, with its parent (rule 10), even when a third party built it and no
+   mission runs it. A third-party telemetry monitor therefore earns `Operations` but not
+   `Mission-related: Monitoring`, which keeps the ownership test like every other child. Inside a chain,
+   running or re-running processing codes is Orchestration and checking the pipeline's own status is
+   Monitoring; a pipeline that only processes, orchestrates or checks its data, with no operations
+   function, does not earn `Operations`. Reading, plotting or retrieving a mission's data earns no
+   Mission-related value, and neither does a purely retrospective tool such as a browser of as-run
+   catalogues with no planning use. Fires on: any Mission-related candidate — `Operations` by the
+   operations function the software performs, every other child by the software's role relative to a
+   mission's pipeline.
 
 9. **A same-name child under a second parent needs a different capability.** Computing a spectrogram is
    "Data Processing and Analysis: Spectrogram"; displaying a spectrogram is "Data Visualization:
@@ -401,9 +418,9 @@ BOTH `Data Visualization` and `Data Visualization: Spectrogram`.
 
 #### 4. Mission-related
 
-**What it means:** Software specifically designed to support a space mission's operations or data pipeline. This is distinct from general-purpose analysis software that happens to work with mission data.
+**What it means:** Software that is part of a mission's own data pipeline or ground system, or that performs an operations function, whoever built it: commanding instruments or spacecraft, planning, scheduling or coordinating observations, selecting downlinked data, monitoring telemetry, or alerting the operations team. This is distinct from general-purpose analysis software that happens to work with mission data.
 
-**Key distinction:** A package that *reads* MMS data is "Data Processing and Analysis: Data Access and Retrieval". A package that is *part of the MMS ground system* is "Mission-related".
+**Key distinction:** A package that *reads* MMS data is "Data Processing and Analysis: Data Access and Retrieval". A package that is *part of the MMS ground system* is "Mission-related", with the children for its role there. `Operations` is judged by capability instead: software with one of those operations functions earns `Mission-related: Operations` whether a mission team or a third party built it, and a pipeline that only processes, orchestrates or checks its data does not (rule 8).
 
 **Subcategories:** Analysis, Archive, Calibration, Distribution/Access, Infrastructure as Code, Ingest, Instrumentation, Instrument Response, Inventory, ML/AI, Monitoring, Observatory/Instrument Models, Operations, Orchestration, Packet Decommutation, Processing, Science Data Processing, System Testing
 
@@ -526,6 +543,19 @@ These mappings are **indicators**, not guarantees. Always verify the software ac
   Retrieval` came from SolarSoft's retrieval routines; hissw fetches nothing, so it is removed (rule 5).
   The stored `Servers and Environments: Software or Environment Container` gains its missing parent
   (rule 10).
+- **Multi-mission planning web app (HelioFleet).** Besides drawing heliophysics spacecraft past, present
+  and on planned future trajectories, the app searches for radial alignments, quadratures and magnetic
+  connections, lists which observers see a chosen point, and projects coronagraph and
+  heliospheric-imager fields of view — observation-campaign planning, so the submitted
+  `Mission-related: Operations` is kept and its missing parent added (rules 8, 10), though a third party
+  built it and no mission runs it. Its coordinated-observation finder lists past joint observations from
+  as-run catalogues and would not earn the value alone. The submitted
+  `Mission-related: Observatory/Instrument Models` moves to
+  `Models and Simulations: Observatory/Instrument Models`: the fields of view are generic geometric models
+  no mission's chain owns (rule 8), and rule 9 forbids keeping both twins.
+  Contrast fisspy, the FISS team's own ground software: it carries Mission-related pipeline children but
+  not `Operations`, because nothing in it commands the instrument, schedules observations or monitors
+  telemetry.
 
 ## Provenance
 
