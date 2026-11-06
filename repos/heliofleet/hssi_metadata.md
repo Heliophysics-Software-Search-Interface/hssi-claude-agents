@@ -293,9 +293,9 @@ HelioFleet: an interactive map of heliophysics spacecraft positions
     heliophysics spacecraft positions, is a web tool …"), Field 9 would be 246 characters, and fitting
     it would mean rewriting the submitter's wording. Field 9 therefore stays as recorded there.
 
-  So the submitted name is kept for now. The curator is asking the submitter, by email (2026-11-06),
-  whether they are content for the clause to be dropped. Until the submitter agrees, a later refresh
-  must not shorten the name on rule 1 alone.
+  So the submitted name is kept for now. The curator is putting the question to the submitter: are
+  they content for the clause to be dropped? Until the submitter agrees, a later refresh must not
+  shorten the name on rule 1 alone.
 - **Prior value:** HSSI held `HelioFleet` from an earlier refresh on 2026-11-06, which shortened the
   submitted name under rule 1, until this update restored the submitted name.
 - **The house-style alternative, held back rather than rejected: `HelioFleet`.** It is the name the
@@ -522,6 +522,7 @@ MIT License
   - spacecraft
   - sunpy
   - visualization
+  - total solar eclipse
 - **Kept from the submitted record (rule 13):** all 17 stored keywords. Twelve are, exactly, keywords
   of the project's `CITATION.cff` and `.zenodo.json`; `multi spacecraft observations` is the thirteenth,
   the project's `multi-spacecraft observations` with a space for the hyphen; `multi-spacecraft` is one of
@@ -535,6 +536,20 @@ MIT License
 - **Added — domain terms the code computes (rule 10):** `Parker spiral` (existing row, stored
   capitalisation) and `magnetic connectivity` (existing row): the Parker-spiral field lines and
   footpoints and the magnetic-connection search (`js/frames.js:89-95`, `findAlignments`).
+- **Added at the submitter's request (rules 10 and 12):** `total solar eclipse`, a new lower-case
+  row. The submitter asked for "Total Solar Eclipse" as a related phenomenon (hssi-website issue #172,
+  2026-11-06); Field 22 has no row for it, so its rule 1 records it here. It is the code's own label,
+  and the software finds and lists these eclipses:
+  - the event search labels each eclipse preset "Total solar eclipse" (`js/app.js:540`); the presets
+    come from the `ECLIPSES` catalogue of total and hybrid solar eclipses from 2010 to 2034
+    (`js/catalog.js:126`);
+  - the calendar feed lists the upcoming ones, each as "Total solar eclipse: <place>" or, for a hybrid
+    eclipse, "Hybrid solar eclipse: <place>" (`scripts/build_calendar.py:11`, `:103`, `:194`);
+  - the README's event search covers eclipses (`README.md:23`).
+
+  It names a narrower thing than the stored `solar eclipse` (the project's declared keyword), not a
+  case, separator or plural variant of it, so rule 11 does not bind that row; no live row spells it in
+  any variant, so it is minted (rule 12).
 - **Not added:**
   - the topics `astrophysical-data`, `astrophysics`, `astrophysics-data`, `astrophysics-research` and
     `astrophysics-simulation` — a rule-4 judgment, with a caveat. GitHub topics are project
@@ -652,6 +667,9 @@ CPU Independent
   `Solar Wind` — the Parker spiral takes the solar-wind speed as a user parameter to draw connection geometry;
   the software does not model or analyse the solar wind itself (Field 5 carries the place).
   `Solar Corona`, `Coronal Heating`, `X-ray emission` — no code works on them.
+- **Requested, with no row:** the submitter asked for "Total Solar Eclipse" here (hssi-website issue
+  #172, 2026-11-06). The Phenomena vocabulary has no eclipse row, and the API accepts only its rows, so
+  rule 1 records it as the Field 16 keyword `total solar eclipse`.
 
 ### 23. Development Status (RECOMMENDED)
 Active
