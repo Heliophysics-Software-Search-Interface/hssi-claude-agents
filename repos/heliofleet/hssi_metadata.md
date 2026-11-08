@@ -4,7 +4,7 @@
 **Repository:** https://github.com/sr-dash/heliofleet
 **Source Revision:** de4b623b0b0692354e2ca35166c24c5e68edccda
 **Extraction Date:** 2026-11-06
-**Validation Date:** 2026-11-06
+**Validation Date:** 2026-11-07
 **Validation Status:** PASS
 
 ---
@@ -275,31 +275,25 @@ https://github.com/sr-dash/heliofleet
   (rule 21).
 
 ### 7. Software Name (MANDATORY)
-HelioFleet: an interactive map of heliophysics spacecraft positions
+HelioFleet
 
-- **Source:** the submitted value, kept for now by the curator (2026-11-06) for the reason below. It
-  is the title the author gives the software wherever the project asks to be cited: `CITATION.cff`
-  `title`, `.zenodo.json` `title` (and with it the DataCite and Zenodo title of every deposit, Field 2),
-  the README's "Citing HelioFleet" reference (`README.md:221`), the application's own citation
-  (`CITATION.title`, `js/tools.js:334`, which the site's APA and BibTeX citations use) and
-  `llms.txt:75`.
-- **House style would list the name as just `HelioFleet` (Field 7 rule 1, below).** The curator did
-  not feel justified in dropping the clause "an interactive map of heliophysics spacecraft positions"
-  from the submitter's title without a place to put it back where people would see it:
-  - with the name shortened, the clause appears in no field of the entry: neither the description
-    (Field 8) nor the concise description (Field 9) uses it;
-  - the concise description was the natural place, but the submitter's sentence plus the clause runs
-    past Field 9's 200-character limit. Worked in as an appositive ("HelioFleet, an interactive map of
-    heliophysics spacecraft positions, is a web tool …"), Field 9 would be 246 characters, and fitting
-    it would mean rewriting the submitter's wording. Field 9 therefore stays as recorded there.
-
-  So the submitted name is kept for now. The curator is putting the question to the submitter: are
-  they content for the clause to be dropped? Until the submitter agrees, a later refresh must not
-  shorten the name on rule 1 alone.
-- **Prior value:** HSSI held `HelioFleet` from an earlier refresh on 2026-11-06, which shortened the
-  submitted name under rule 1, until this update restored the submitted name.
-- **The house-style alternative, held back rather than rejected: `HelioFleet`.** It is the name the
-  project uses for itself outside its citations:
+- **Value (Field 7 rule 1, with the author's agreement):** `HelioFleet` is the project's own name, and
+  the author, who also submitted the entry (Soumyaranjan Dash, GitHub `sr-dash`), agreed on
+  hssi-website issue #172 that the name be shortened to it, with the clause "an interactive map of
+  heliophysics spacecraft positions" moved to the concise description: "I'm fine with shortening it to
+  Heliofleet only with the phrase moved to Short description. Thanks!"
+  (https://github.com/Heliophysics-Software-Search-Interface/hssi-website/issues/172#issuecomment-6715990854,
+  2026-11-08T02:08:16Z). That answered the curator's question
+  (https://github.com/Heliophysics-Software-Search-Interface/hssi-website/issues/172#issuecomment-6699368664,
+  2026-11-07T00:12:26Z), which offered three choices: keep the clause in a title-cased name, shorten the
+  name and open the concise description with the clause, or shorten the name and add the clause to the
+  full description. The author chose the second. The clause stays visible on the entry: it now opens
+  Field 9.
+- **Casing:** the reply types "Heliofleet"; that is casual typing, not a request to change the casing.
+  The name is `HelioFleet`, the form the curator's question offered and the one the project writes
+  everywhere: the pinned tree never writes `Heliofleet` (the `HELIOFLEET` that the image exports draw,
+  `js/export.js`, is typography).
+- **`HelioFleet` is the name the project uses for itself** outside its citations:
   - README title: `# HelioFleet` (`README.md:1`); the README calls it HelioFleet throughout its prose,
     and its citation section is headed "Citing HelioFleet".
   - The application declares it as its name: `<meta name="application-name" content="HelioFleet">`,
@@ -307,35 +301,43 @@ HelioFleet: an interactive map of heliophysics spacecraft positions
     (`index.html`), and the web manifest `short_name` HelioFleet.
   - `CITATION.cff`'s own message says "If you use HelioFleet in your research, please cite it as below."
   - The GitHub releases are named `HelioFleet 1.0.0` … `HelioFleet 1.1.2`.
-- **The rule 1 reading behind house style:** the submitted value is the DataCite and Zenodo title of
-  the DOI (`titles` of `10.5281/zenodo.23328187`), and the stored description is that deposit's
-  description text, so the entry was filled from the DOI. The title is the software's name joined to a
-  descriptive subtitle, and rule 1 treats a stored value equal to the DOI title, with non-name text
-  attached, as an artifact rather than a name. Rule 3 does not keep it: the long form is a citation
-  title the project writes in `CITATION.cff` `title`, `.zenodo.json` `title` and its citation lines,
-  not a form it uses as its name in the README title, prose or application metadata, and Field 7's
-  sources take a `CITATION.cff` `title` only "when it is a name and not a paper title". Under house
-  style the clause is description, which Fields 8 and 9 carry. Rule 2 does not reject the long form
-  itself, because the project writes it. The curator accepts this reading; the name is held back only
-  for the reason above.
+- **The rule 1 reading:** the submitted value is the DataCite and Zenodo title of the DOI (`titles` of
+  `10.5281/zenodo.23328187`), and the stored description is that deposit's description text, so the
+  entry was filled from the DOI. The title is the software's name joined to a descriptive subtitle, and
+  rule 1 treats a stored value equal to the DOI title, with non-name text attached, as an artifact
+  rather than a name. Rule 3 does not keep it: the long form is a citation title the project writes in
+  `CITATION.cff` `title`, `.zenodo.json` `title` and its citation lines, not a form it uses as its name
+  in the README title, prose or application metadata, and Field 7's sources take a `CITATION.cff`
+  `title` only "when it is a name and not a paper title". The clause is description, which Field 9 now
+  carries. Rule 2 does not reject the long form itself, because the project writes it. The curator
+  accepted this reading, and the author's agreement settled the name.
+- **Prior value, superseded: `HelioFleet: an interactive map of heliophysics spacecraft positions`.**
+  The submitted name, which HSSI held until this update. It is the title the author gives the software
+  wherever the project asks to be cited: `CITATION.cff` `title`, `.zenodo.json` `title` (and with it the
+  DataCite and Zenodo title of every deposit, Field 2), the README's "Citing HelioFleet" reference
+  (`README.md:221`), the application's own citation (`CITATION.title`, `js/tools.js:334`, which the
+  site's APA and BibTeX citations use) and `llms.txt:75`. A later refresh must not restore it from
+  `CITATION.cff`, `.zenodo.json` or the DOI title: the author agreed that the entry's name is
+  `HelioFleet` and that the clause belongs in the concise description, so that title is a citation
+  title, not the name.
+- **Rejected: `HelioFleet: An Interactive Map of Heliophysics Spacecraft Positions`.** The title-cased
+  form the curator offered on issue #172 as the way to keep the clause in the name; the author chose the
+  shortened name instead.
+- **Earlier value:** HSSI first held `HelioFleet` briefly on 2026-11-06, from a refresh that shortened the
+  submitted name under rule 1 alone. The curator restored the submitted name the same day, because with
+  the name shortened the clause appeared in no field of the entry and the submitter's concise
+  description had no room for it (Field 9), and put the question to the author. The answer settled the
+  name, and the clause now has its place in Field 9.
 - **Other subtitles the project uses (context):** the project writes a different subtitle in almost
   every place it uses one — the citation title above; the page title `HelioFleet: Solar and Spacecraft
   Geometry`; the manifest `name` `HelioFleet: Spacecraft Positions Around the Sun`; the embed iframe
   title `HelioFleet: spacecraft positions around the Sun`; the JSON-LD `alternateName` `HelioFleet
   spacecraft position map`. The citation title is written the same way in every citation source; the
   constant across all of the forms is `HelioFleet`.
-- **Rule 7:** no other HSSI entry was named HelioFleet when this record was made (an HSSI name search on
-  2026-11-06 returned this entry only).
-- **Page address:** the curator set the detail-page slug to `heliofleet` on 2026-11-06, so the address
-  is shorter than the name; that is expected, not drift. It already matches the house-style name.
-
-**TODO for the next Updater — the name waits on the submitter's answer:** ask the curator whether the
-submitter ever said they are content for the clause "an interactive map of heliophysics spacecraft
-positions" to be dropped from the name.
-- If they agreed, shorten the name to `HelioFleet` under rule 1, and make sure the clause survives
-  somewhere visible on the entry if possible (Field 9 was the natural place; see above for why it did
-  not fit).
-- If they declined or never replied, keep the submitted name.
+- **Rule 7:** no other HSSI entry was named HelioFleet when this record was made: an HSSI name search on
+  2026-11-06, and a repeat on 2026-11-07 before the name was shortened, returned this entry only.
+- **Page address:** the curator set the detail-page slug to `heliofleet` on 2026-11-06; it matches the
+  name.
 
 ### 8. Description (MANDATORY)
 HelioFleet is a web tool that shows where heliophysics spacecraft (SDO, SOHO, Aditya-L1, ACE, Wind, DSCOVR, IMAP, SOLAR-1 (SWFO-L1), Carruthers, Solar Orbiter, Parker Solar Probe, BepiColombo, STEREO-A/B and MAVEN) are relative to the Sun and Earth on any date since 2010. It reports Stonyhurst and Carrington coordinates and Parker-spiral footpoints, searches for radial alignments, quadratures and magnetic connections, checks which observers see a given point on the Sun, and exports coordinates and time series. It draws the fields of view of coronagraphs and heliospheric imagers, summarises which solar longitudes are imaged on a solar surface map over SDO/HMI synoptic magnetograms, and shows flares, CMEs and geomagnetic storms from NASA DONKI. A viewing-geometry table gives each observer's light-time offset from Earth, apparent solar radius, B0 and L0. A sky view projects every instrument's field of view onto the plane of the sky seen from Earth or from a chosen spacecraft, with MLSO K-Cor and UCoMP fields, and draws the observation footprints of DKIST, IRIS, Hinode/EIS and Solar Orbiter (EUI-HRI, PHI-HRT, SPICE) over SDO/AIA and HMI images, with a finder for times when chosen facilities observed the same place together. Positions come from JPL Horizons ephemerides, refreshed monthly. The interface is available in English, Hindi and Spanish.
@@ -357,20 +359,46 @@ Live site: https://sr-dash.github.io/heliofleet/
   refresh (`.github/workflows/update-ephemeris.yml`) and the Hindi and Spanish interface (`i18n/`).
 
 ### 9. Concise Description (OPTIONAL)
-HelioFleet is a web tool that shows where heliophysics spacecraft are located in space in the past, present and planned future along with an option to overlay targeted limited FOV datasets
+An interactive map of heliophysics spacecraft positions. This web tool shows where the spacecraft are in the past, present and planned future, with an option to overlay targeted limited FOV datasets.
 
-- **Submitted value:** `HelioFleet is a web tool that shows where heliophysics spacecrafts are located
-  in space in past, present and planned future along with option to overlay targeted limited FOV
-  datasets` (182 characters). It is the submitter's own wording and is kept (rule 5) apart from three
-  grammar corrections (rule 4), each a single word:
-  - `spacecrafts` → `spacecraft` (the plural is `spacecraft`, as the project writes it throughout);
-  - `in past, present` → `in the past, present`;
-  - `along with option` → `along with an option`.
-- **Length:** 188 characters, within the 200-character limit.
-- **Claims checked (rule 2):** "planned future" — the timeline runs to 2030 and the README says
+- **Source: the author's chosen wording.** When the name was shortened to `HelioFleet` (Field 7), the
+  curator offered this sentence on hssi-website issue #172 as the way to keep the name's clause visible
+  (https://github.com/Heliophysics-Software-Search-Interface/hssi-website/issues/172#issuecomment-6699368664),
+  and the author chose it ("I'm fine with shortening it to Heliofleet only with the phrase moved to
+  Short description.",
+  https://github.com/Heliophysics-Software-Search-Interface/hssi-website/issues/172#issuecomment-6715990854).
+  - It opens with the clause from the project's citation title (`CITATION.cff` `title`, `.zenodo.json`
+    `title`; Field 7), then gives the submitter's own sentence trimmed to fit: "HelioFleet is a web tool
+    that shows" became "This web tool shows", "heliophysics spacecraft" became "the spacecraft" (the
+    first sentence names them), "located in space" was dropped, and "along with" became ", with".
+  - It is the author's chosen wording, not an agent paraphrase, so Field 9 rule 3's ban on composing a
+    shorter paraphrase does not reach it, and rule 5 protects it as the stored value from now on. A
+    later refresh must not restore either earlier sentence below, or reword this one on stylistic
+    grounds; rules 2 and 4 still apply to it.
+- **Length:** 199 characters, measured after trimming; within the 200-character limit.
+- **Prior values, superseded:**
+  - The submitted value, `HelioFleet is a web tool that shows where heliophysics spacecrafts are
+    located in space in past, present and planned future along with option to overlay targeted limited
+    FOV datasets` (182 characters). It is the submitter's own wording and was kept (rule 5) apart from
+    three grammar corrections (rule 4), each a single word:
+    - `spacecrafts` → `spacecraft` (the plural is `spacecraft`, as the project writes it throughout);
+    - `in past, present` → `in the past, present`;
+    - `along with option` → `along with an option`.
+  - The corrected form, `HelioFleet is a web tool that shows where heliophysics spacecraft are located
+    in space in the past, present and planned future along with an option to overlay targeted limited
+    FOV datasets` (188 characters), which HSSI held until this update. The author's chosen sentence
+    superseded it; the three corrections carry into its trimmed second sentence (`the spacecraft`,
+    `in the past`, `an option`).
+- **Rejected: the clause as an appositive** ("HelioFleet, an interactive map of heliophysics spacecraft
+  positions, is a web tool …"). With the rest of the corrected sentence unchanged it measures 246
+  characters, past the 200-character limit (rule 3).
+- **Claims checked (rule 2):** "interactive map of heliophysics spacecraft positions" — the project's
+  own citation title, and the JSON-LD `WebApplication` `description` opens "Interactive map of SDO,
+  SOHO, …" (`index.html:103`); "planned future" — the timeline runs to 2030 and the README says
   "Positions past each mission's latest tracking data are planning trajectories." (`README.md:94`);
   "targeted limited FOV datasets" — the IRIS, Hinode/EIS, DKIST and Solar Orbiter high-resolution
-  observation footprints of the sky view.
+  observation footprints of the sky view. Field 8 is consistent with it: it describes the same
+  positions and the same observation footprints.
 
 ### 10. Publication Date (RECOMMENDED)
 2026-10-12
@@ -1046,10 +1074,6 @@ https://raw.githubusercontent.com/sr-dash/heliofleet/de4b623b0b0692354e2ca35166c
 
 ## Follow-ups for the next refresh
 
-- Field 7: ask the curator whether the submitter agreed to drop "an interactive map of heliophysics
-  spacecraft positions" from the name, and act on the answer as Field 7's TODO says: shorten it to
-  `HelioFleet` under rule 1 only if they agreed, keeping the clause visible on the entry if possible;
-  otherwise keep the submitted name.
 - Look for a release after v1.1.2, and repeat the literature search (Fields 14, 27).
 - Re-run the observatory sweeps for Aditya-L1, IMAP, SOLAR-1, Carruthers and Proba-3 and the instrument
   sweeps for VELC, CCOR-1, CCOR-2, ASPIICS, UCoMP and the DKIST instruments; rows added upstream would
