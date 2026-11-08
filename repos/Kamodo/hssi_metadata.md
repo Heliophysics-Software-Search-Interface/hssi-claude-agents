@@ -4,7 +4,7 @@
 **Repository:** https://github.com/nasa/Kamodo
 **Source Revision:** 6706989574997795ce1b16b75af31c382eba0611
 **Extraction Date:** 2026-08-13
-**Validation Date:** 2026-11-03
+**Validation Date:** 2026-11-08
 **Validation Status:** PASS
 
 **Scope note.** The GitHub repository `nasa/Kamodo` ships the CCMC *analysis suite* (`kamodo_ccmc`).
@@ -24,27 +24,30 @@ evidence with it in mind.
 
 ### 2. Persistent Identifier (RECOMMENDED)
 - **Value:** Not found
-- **Negative research (re-verified against DataCite and Zenodo for the 26.10.1 release).** A DataCite
-  search for "kamodo" returned 15 records when this section was first written and returns 18 on
-  2026-11-01; the three added are `10.5281/zenodo.23107919`, `10.5281/zenodo.23107920` and
-  `10.5281/zenodo.23182507`, all titled "CCMC Tools to Enhance Scientific Analysis", the 2026
-  DASH/IHDEA presentation (a Zenodo presentation; Field 27). DataCite records `HasVersion` relations
-  from `10.5281/zenodo.23107919` to the other two. Exactly two of the 18 carry `resourceTypeGeneral:
-  Software`: `10.5281/zenodo.6773395` and its concept DOI `10.5281/zenodo.6773394`. Both are titled
-  "Kamodo: A functional API for space weather models and data" and both archive a **single file,
-  `kamodo-core-22.6.0.tar.gz`** — i.e. they are the JOSS review archive of `kamodo-core`, not of the
-  CCMC analysis suite in this repository. Recording either as this record's persistent identifier
-  would mis-identify a different software product; they are captured under Field 29 instead.
+- **Negative research (re-verified against DataCite and Zenodo for the 26.10.1 and 26.11.1 releases).**
+  A DataCite search for "kamodo" returned 15 records when this section was first written, and returns
+  18 on 2026-11-01 and the same 18 on 2026-11-07; the three added are `10.5281/zenodo.23107919`,
+  `10.5281/zenodo.23107920` and `10.5281/zenodo.23182507`, all titled "CCMC Tools to Enhance Scientific
+  Analysis", the 2026 DASH/IHDEA presentation (a Zenodo presentation; Field 27). DataCite records
+  `HasVersion` relations from `10.5281/zenodo.23107919` to the other two. Exactly two of the 18 carry
+  `resourceTypeGeneral: Software`: `10.5281/zenodo.6773395` and its concept DOI
+  `10.5281/zenodo.6773394`. Both are titled "Kamodo: A functional API for space weather models and
+  data" and both archive a **single file, `kamodo-core-22.6.0.tar.gz`** — i.e. they are the JOSS review
+  archive of `kamodo-core`, not of the CCMC analysis suite in this repository. Recording either as this
+  record's persistent identifier would mis-identify a different software product; they are captured
+  under Field 29 instead.
 - The two Zenodo records `10.5281/zenodo.11121935` (concept) and `.11121936`, titled "Kamodo: A CCMC
   Open Source Toolkit for Space Physics Simulation Output" (2024), carry `resource_type.type =
   presentation`. Conference presentations are not a software persistent identifier.
 - The JOSS software-paper DOI is recorded under Reference Publication (Field 14), not here.
 - This repository has no Zenodo–GitHub integration file, no `CITATION.cff` and no `codemeta.json`
-  (still none at the 26.10.1 release commit `ca7ed8c`), so no software DOI is minted on release.
+  (still none at the 26.11.1 release commit `8decf77`), so no software DOI is minted on release.
   Neither GitHub release (`25.12.1-FINAL`, `v26.8.7`) nor any PyPI upload has an associated DOI, which
-  is also why Field 12's Version PID is empty. On 2026-11-01 a Zenodo free-text search for "kamodo"
-  and creator-keyed searches on De Zeeuw's and Rastaetter's ORCIDs return presentations and the
-  kamodo-core deposit only (the kamodo-core deposit is the positive control).
+  is also why Field 12's Version PID is empty. On 2026-11-07 a Zenodo free-text search for "kamodo"
+  and creator-keyed searches on De Zeeuw's and Rastaetter's ORCIDs return presentations, a 2023 poster
+  on CCMC's Runs-on-Request metadata, a geoelectric-field dataset (published 2018, deposited 2019) and the kamodo-core deposit (the
+  positive control), and no software deposit of this package; the same searches on 2026-11-01 found
+  no such deposit either.
 - The Astrophysics Source Code Library lists the software (ADS `2024ascl.soft10015C`, "Kamodo: Space
   weather data access, interpolation, and visualization"); the record carries no DOI, so it offers
   nothing for this field.
@@ -54,9 +57,11 @@ evidence with it in mind.
 - **Source:** git remote; the package metadata's repository URL — `setup.cfg` `url` and `project_urls`
   (`Repository = https://github.com/nasa/Kamodo`) at the Source Revision, and, after the August 2026
   build change deleted `setup.cfg`, `pyproject.toml` `[project.urls]` `Repository =
-  "https://github.com/nasa/Kamodo"` at the 26.10.1 release commit `ca7ed8c`, which PyPI publishes as
-  26.10.1's `project_urls`; the PyHC **core** package registry `code` field; and the GitHub API, which
-  on 2026-11-01 reports `nasa/Kamodo` under that name and not archived. All agree.
+  "https://github.com/nasa/Kamodo"` at the 26.10.1 and 26.11.1 release commits (`ca7ed8c`,
+  `8decf77`), which PyPI publishes as those releases' `project_urls`; PyPI's provenance attestation for
+  the 26.11.1 sdist, which names `nasa/Kamodo` and its `build-wheels.yml` workflow as the publisher;
+  the PyHC **core** package registry `code` field; and the GitHub API, which on 2026-11-07 reports
+  `nasa/Kamodo` under that name and not archived. All agree.
 
 ### 4. Software Functionality (MANDATORY)
 Every subcategory below also lists its bare parent top-level category, as the taxonomy requires — a
@@ -91,7 +96,8 @@ subcategory without its parent is an incomplete classification, not a shorter on
   which is netCDF4 by default; waccmx, wamipe and weimer write `format='NETCDF3_64BIT_OFFSET'`.
   `flythrough/SF_output.py` writes `.nc`, `.csv` and `.txt` and reads the same three back.
 - **Data Processing and Analysis: Field-line Tracing** — `tools/vectorfieldtracer.py`
-  (`KamodoVectorFieldTracer` with RK4 integration and numba acceleration; factory functions
+  (`KamodoVectorFieldTracer`, which at the 26.11.1 release commit `8decf77` traces many field lines
+  as one vectorised batch with adaptive stepping and an RK4 or Euler solver; factory functions
   `create_magnetic_tracer`, `create_velocity_tracer`, `create_current_tracer`,
   `create_electric_tracer`); `tools/lastclosedmag.py` (`find_last_closed_field_lines`).
 - **Data Processing and Analysis: 2D Slices** — `tools/plotfunctions.py` `GDZSlice4D`,
@@ -195,10 +201,17 @@ subcategory without its parent is an incomplete classification, not a shorter on
   interpolation in `SatelliteFlythrough.ModelFlythrough` (trajectories longer than 10000 points are
   processed in blocks of 10000), a `logCustom` colour-bar option in `plotfunctions.gm3DSlicePlus`,
   dark-mode styling matched to CCMC's ISWA, h5netcdf support in the TIE-GCM reader, and compatibility
-  fixes. None adds a capability outside the categories above, so the selection is unchanged. Work on
-  `master` after the release (`06702fe`, 2026-10-23, declared 26.10.2 and unreleased: a reworked
-  `vectorfieldtracer.py` and `lastclosedmag.py`, and new functions in `tools/timefunctions.py`) keeps
-  every function named in this section.
+  fixes. None adds a capability outside the categories above, so the selection is unchanged.
+- **Re-checked for the 26.11.1 release** at its commit `8decf77`. Its code changes rewrite the
+  vector-field tracer and the last-closed-field-line finder for speed and accuracy (`06702fe`:
+  batch-vectorised tracing with an RK4 or Euler solver replaces the numba-compiled per-line kernels
+  and the optional joblib parallelism, and `numba` leaves the declared dependencies), add Kamodo-object
+  time-offset helpers to `tools/timefunctions.py`, and give the ADELPHI, AMGeO, CTIPe, DTM, GITM,
+  HASDM, IRI, NRLMSIS, SWMF-GM, SWMF-IE and TIE-GCM readers a `MUTED` option that silences their
+  console output, adding a missing trailing `/` to their `file_dir` automatically. Every function
+  named in this section is still present, the matplotlib and plotly 3D renderers of the tracer and the
+  last-closed-field-line finder included, and none of the changes adds or removes a capability, so the
+  selection is unchanged.
 
 ### 5. Related Region (MANDATORY)
 Kamodo is a broad geospace suite, so this field carries both the two broad regions and the specific
@@ -413,7 +426,8 @@ in the TIE-GCM reader, where a code comment carries her name). Neither appears i
 `pyproject.toml` names only De Zeeuw — so both are committers, not authors. The new NRLMSIS reader's
 header credits De Zeeuw, already an author; the HASDM reader names no author. Maksym Petrenko, Leila
 Mays and Jia Yue, co-authors of the 2026 DASH/IHDEA presentation, appear in no software-metadata
-source and are not authors either.
+source and are not authors either. The 26.11.1 release adds no contributor: its five commits after
+`ca7ed8c` are all De Zeeuw's, and `pyproject.toml` `authors` at `8decf77` still names only him.
 
 ### 7. Software Name (MANDATORY)
 - **Value:** The CCMC Kamodo Analysis Suite
@@ -538,13 +552,14 @@ wording and is retained as written.
   institution and carries a ROR.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** 26.10.1
-- **Version Date:** 2026-10-22
+- **Version Number:** 26.11.1
+- **Version Date:** 2026-11-05
 - **Version Description:** Not found — the release has no notes of its own (see below).
 - **Version PID:** Not found — the release has no DOI (see Field 2).
 
-**Why `26.10.1`.** The release history, read on 2026-11-01 against the default branch's head `06702fe`
-(2026-10-23), the GitHub releases API and PyPI's JSON API for `kamodo-ccmc`, in release order:
+**Why `26.11.1`.** The release history, read on 2026-11-07 against the default branch's head `8decf77`
+(2026-11-05), the GitHub releases and tags APIs and PyPI's JSON API for `kamodo-ccmc`, in release
+order:
 - **`25.12.1`** — lightweight tag `25.12.1-FINAL` on `12a9cf5` and its GitHub release, published
   2026-07-01T20:05:02Z with the body "Final release before major change to build system." The tag's
   `setup.cfg` declares `version = 25.12.1`, so `-FINAL` is a release-line label and not part of the
@@ -558,44 +573,52 @@ wording and is retained as written.
 - **`26.8.7`** — tag `v26.8.7` on `9004ec1` ("ready for PyPI", 2026-08-25), a GitHub release named
   `26.8.7` published 2026-08-25T19:04:57Z with the body "Major code upgrades supporting Python 3.14
   and the latest version of dependencies.", and the first PyPI upload since 23.3.1 in 2023. Its
-  `pyproject.toml` writes `26.08.7`, which PyPI normalizes to `26.8.7`.
-- **`26.9.1`, `26.9.2`, `26.9.3` and `26.10.1`** — PyPI uploads of 2026-09-08, 2026-09-14, 2026-09-30
-  and 2026-10-22, each an sdist plus `macosx_14_0_arm64`, `manylinux_2_28_x86_64` and `win_amd64`
-  wheels, none yanked and none a pre-release, under PyPI `project_urls` naming
-  `https://github.com/nasa/Kamodo`. None has a tag or a GitHub release; each matches a version bump on
-  `master` (`50044f3`, `17c8d2d`, `e44a7c0` and `96b7223`). The repository's `build-wheels.yml`
-  publishes to PyPI on a `v*` tag push or on a manual run.
+  `pyproject.toml` writes `26.08.7`, which PyPI normalizes to `26.8.7`. It is still the newest GitHub
+  release and the newest tag.
+- **`26.9.1`, `26.9.2`, `26.9.3`, `26.10.1` and `26.11.1`** — PyPI uploads of 2026-09-08, 2026-09-14,
+  2026-09-30, 2026-10-22 and 2026-11-05, each an sdist plus `macosx_14_0_arm64`,
+  `manylinux_2_28_x86_64` and `win_amd64` wheels, none yanked and none a pre-release, under PyPI
+  `project_urls` naming `https://github.com/nasa/Kamodo`. None has a tag or a GitHub release; each
+  matches a version bump on `master` (`50044f3`, `17c8d2d`, `e44a7c0`, `96b7223` and `8decf77`). The
+  repository's `build-wheels.yml` publishes to PyPI on a `v*` tag push or on a manual run; 26.11.1
+  came from a manual run on `master` at `8decf77`, and PyPI's provenance attestation for its sdist
+  names `nasa/Kamodo` and `build-wheels.yml` as the publisher. HSSI held 26.10.1, dated 2026-10-22
+  with no description or PID, until the 26.11.1 update.
+- **Not a release: `26.10.2`.** `06702fe` (2026-10-23) set `pyproject.toml` on `master` to `26.10.2`,
+  but no tag, GitHub release or PyPI file ever carried that number, and `8decf77` replaced it with
+  `26.11.1`. It was declared and never released; its code shipped in 26.11.1.
 
-An untagged, unyanked PyPI upload of the project's own package is a release, so `26.10.1` is the
-newest release and replaces 25.12.1. The number is written without a `v`, as the stored number was and
-as PyPI and `pyproject.toml` write it. The `v26.8.7` tag that first drew attention to the new releases
-is an earlier release of the same series, not the newest.
+An untagged, unyanked PyPI upload of the project's own package is a release, so `26.11.1` is the
+newest release and replaces 26.10.1. The number is written without a `v`, as the stored number was and
+as PyPI and `pyproject.toml` write it. The `v26.8.7` tag that first drew attention to the 2026
+releases is an earlier release of the same series, not the newest.
 
-**The release's code.** The 26.10.1 sdist (`kamodo_ccmc-26.10.1.tar.gz`, sha256
-`6ddb2b7d6daeb11b57550e2203a384a12e3dbca4242d13dd6145cd72ee7619e2`) is file-for-file identical to
-commit `ca7ed8c` (2026-10-22, the merge of pull request #162), apart from the build-generated
-`PKG-INFO`, `egg-info` and two-line `setup.cfg`; the version-bump commit `96b7223` and the commit
-between them each differ from it. `ca7ed8c` is on `master`, and the fields this release brought into
-review cite it.
+**The release's code.** The 26.11.1 sdist (`kamodo_ccmc-26.11.1.tar.gz`, sha256
+`c38384c1de19acfe05bd84c0fc85902e6913a5e5ad72aa2caec5e1f344be05e0`) is file-for-file identical to
+commit `8decf77` (2026-11-05), the head of `master`, apart from the build-generated `PKG-INFO`,
+`egg-info` and `setup.cfg` `[egg_info]` stanza; `06702fe` and `ca7ed8c` each differ from it. The
+fields this release brought into review cite `8decf77`. The 26.10.1 sdist (sha256
+`6ddb2b7d6daeb11b57550e2203a384a12e3dbca4242d13dd6145cd72ee7619e2`) was likewise identical to commit
+`ca7ed8c` (2026-10-22, the merge of pull request #162), which the fields re-read for that release
+cite.
 
-**Not recorded: `26.10.2`.** `pyproject.toml` on `master` reads `version = "26.10.2"`, set by
-`06702fe` (2026-10-23, "upgrades to performance and accuracy of vector field tracing"). It has no tag,
-release or PyPI file, so it is unreleased code. A later update should look for its upload.
+**Version Date.** 2026-11-05, the UTC day of 26.11.1's PyPI upload (wheels from 19:23:00Z, the sdist
+at 19:23:06Z), which is the release date for a release with no tag or release object. The earlier
+value, 2026-10-22, was 26.10.1's upload day.
 
-**Version Date.** 2026-10-22, the UTC day of 26.10.1's PyPI upload (wheels from 20:10:42Z, the sdist
-at 20:10:47Z), which is the release date for a release with no tag or release object. The earlier
-value, 2026-07-01, was 25.12.1's GitHub release date.
+**Version Description.** Empty. 26.11.1 has no GitHub release or tag, so it has no release title or
+body. The README's "What's New?" section, the project's own version history, is dated by month; at
+`8decf77` its newest entry is still September 2026's "Added support for NRLMSIS output in Kamodo",
+which belongs to 26.9.2, whose version-bump commit added the NRLMSIS reader, and it has no October or
+November entry. The commit subjects in the range are not release notes and are never used. 26.10.1
+carried no description, so there is nothing to carry forward.
 
-**Version Description.** Empty. 26.10.1 has no GitHub release or tag, so it has no release title or
-body. The README's "What's New?" section, the project's own version history, is dated by month and at
-`ca7ed8c` has no October 2026 entry; its September entry, "Added support for NRLMSIS output in
-Kamodo", belongs to 26.9.2, whose version-bump commit added the NRLMSIS reader, and would be another
-release's note here. The commit subjects in the range ("added HASDM reader to Kamodo", "increment
-version for new features") are not release notes and are never used. 25.12.1's description belonged to
-that release and is not carried forward.
+**Version PID.** Empty: no Zenodo deposit or other DOI exists for any release (Field 2).
 
-**Version PID.** Empty: no Zenodo deposit or other DOI exists for any release (Field 2), 25.12.1
-included.
+**Release watch.** HSSI's daily version checker does not see Kamodo's PyPI-only releases
+(hssi-website #174): there has been no GitHub release since `v26.8.7`, and the checker does not look
+up the PyPI name `kamodo-ccmc`. A new release may therefore open no "New version of …" issue; a later
+update should read PyPI's `kamodo-ccmc` JSON directly.
 
 **Why not the PyPI version — superseded.** This section once rejected PyPI as a source because
 `kamodo-ccmc` stopped at 23.3.1 (2023-03-23), and expected the 2026 build-system rewrite to bring PyPI
@@ -708,8 +731,11 @@ model, pyhc package
     coupling region.
   - `tsyganenko model` — the containerized `readers/kamodo-tsyganenko/` wrapper.
 - `pyhc package` — the PyHC package marker, carried by every official PyHC package. Kamodo is listed
-  in the PyHC registry's `_data/projects_core.yml` (read 2026-11-01), so the record carries the term,
-  written exactly so. HSSI carried it before this list recorded it.
+  in the PyHC registry's `_data/projects_core.yml` (re-read 2026-11-07), so the record carries the
+  term, written exactly so. HSSI carried it before this list recorded it.
+- **No declared keywords or topics.** `pyproject.toml` at the 26.11.1 release commit `8decf77`
+  declares no `keywords`, and the GitHub repository carries no topics (read 2026-11-07), so neither
+  source contributes a term.
 - **Retained rejections:** the bare acronyms "CCMC" and "NASA" stay out; they are already carried by
   Publisher (Field 11) and Funder (Field 25).
 - **Reader model names weighed, not added.** The 26.x releases add NRLMSIS and HASDM readers, and the
@@ -770,6 +796,16 @@ model, pyhc package
   `SF_read` explicitly dispatches on the `csv` extension, which is how `SatelliteFlythrough.MyFlight`
   ingests a user-supplied trajectory. csv was already recorded as an output format; it is equally an
   input format.
+- **JSON** — three public plotting functions open JSON field-line files that nothing in the package
+  writes, so the files come from outside it (read at the 26.11.1 release commit `8decf77`):
+  `plotfunctions.BlinesFig` loads "a specially generated file of last closed fieldline traces" (keys
+  `x`, `y`, `z`, `nlines` and `type`), `BlinesMovie` globs a directory of such `*.json` files and
+  renders each through `BlinesFig`, and `gmLoadBtraces` loads the `x`, `y` and `z` arrays of a file of
+  computed B-field traces. No code or notebook in the repository writes the `nlines`/`type` layout —
+  `nlines` occurs only in `BlinesFig`'s read — and no Kamodo function writes field traces as `x`, `y`
+  and `z` arrays (`gmSaveSurface` writes those keys for a surface, which `gmLoadSurface` reads back);
+  no document describes either file. All three readers are present at the Source Revision; HSSI held
+  ascii, csv, HDF5, netCDF3/4 and Other, without JSON, until the 26.11.1 release update.
 - **Other** — assorted native binary and model-specific formats, most concretely the VERB `.plt`
   files that `readers/verb3d_tocdf.py` parses through `pyverbplt.load_plt`, plus OpenGGCM binary
   output and GAMERA grid files.
@@ -781,20 +817,43 @@ model, pyhc package
   `docs/notebooks/QuickStart.ipynb`. The earlier conclusion stands, and still holds at the 26.10.1
   release commit `ca7ed8c`, where `pyproject.toml` `dependencies` is the only place a word-anchored
   `git grep -P '\bcdflib\b'` finds it.
+- **The read-back loaders are not the basis for JSON (settled 2026-11-08).**
+  `vectorfieldtracer.load_traces_from_file` opens `npz`, `hdf5` and `json` files, but only the trace
+  files `save_traces_to_file` wrote, parsed by that pair's own key layout, and
+  `plotfunctions.gmLoadSurface` likewise reads back the surface files `gmSaveSurface` writes (both
+  read at the 26.11.1 release commit `8decf77`). Each reloads the software's own saved results rather
+  than a format a user brings, and on their own they would not earn a JSON input: a searcher filtering
+  on JSON input would be misled by them. JSON is listed on the strength of the three external-file
+  readers above alone. HDF5 is likewise recorded on its own evidence, and the formats the trace and
+  surface writers produce are recorded as outputs (Field 19).
 
 ### 19. Output File Formats (RECOMMENDED)
 - **netCDF3/4** — `SF_output.SFdata_tocdf` writes `.nc`; the converter family writes netCDF4
   intermediates that persist as user-facing artifacts.
 - **csv** — `SF_output.SFdata_tocsv`.
 - **ascii** — `SF_output.SFdata_toascii` writes tab-separated `.txt`.
+- **HDF5** — `tools/vectorfieldtracer.py` `save_traces_to_file(traces, filename, format='hdf5')`, a
+  public, documented writer, stores each field-line trace as an HDF5 group (`coordinates`,
+  `field_magnitude`, `field_components`, `length`) through `h5py`, a declared dependency (read at the
+  26.11.1 release commit `8decf77`).
+- **JSON** — the same function's `format='json'` option writes the traces with `json.dump`, and
+  `plotfunctions.gmSaveSurface` writes a computed magnetopause or bow-shock surface to a `.json` file
+  in a directory the user chooses. The vocabulary has a `JSON` row, so these are recorded under it
+  rather than folded into `Other`.
 - **Other** — formats with no vocabulary row: interactive plotly HTML and embeddable div files
   (`htmlfile`/`divfile` throughout the plotting API), static image export via kaleido, and — newly
   evidenced at this revision — Wavefront **OBJ** meshes, **MTL** materials and OpenSpace **`.asset`**
   scene files written by `tools/openspace.py` (`gmSaveOpenSpace`, `_write_obj_file`,
-  `_write_colored_obj_file`, `_write_mtl_file`, `_write_openspace_asset`), and the `.npz`/trace files
-  written by `vectorfieldtracer.save_traces_to_file`.
+  `_write_colored_obj_file`, `_write_mtl_file`, `_write_openspace_asset`), and the compressed NumPy
+  `.npz` archive that `vectorfieldtracer.save_traces_to_file` writes by default
+  (`np.savez_compressed`), a named format with no row.
 - The free-text value "Interactive HTML / Plotly figures" that this record once carried was replaced
   by `Other` because it is not a vocabulary row; that decision stands.
+- **Superseded: ascii, csv, netCDF3/4 and Other alone.** HSSI held those four until the 26.11.1
+  release update. The HDF5 and JSON writers predate that release — at the Source Revision
+  `save_traces_to_file` already writes both and `gmSaveSurface` writes JSON — but this section had
+  recorded the tracer's output only as `.npz`/trace files under `Other`, without weighing its `hdf5`
+  and `json` options.
 
 ### 20. Operating System (RECOMMENDED)
 - **Linux**
@@ -808,7 +867,8 @@ model, pyhc package
   `ubuntu-latest`, `macos-14` and `windows-latest`; `ci.yml` runs the tests on `ubuntu-latest`,
   `macos-latest` and `windows-latest`; and the README's installation section gives compiler
   instructions for Linux (apt `gcc gfortran`), macOS (Xcode CLT plus `brew install gcc`) and Windows
-  (conda `m2w64-gcc-fortran`).
+  (conda `m2w64-gcc-fortran`). 26.11.1 (`8decf77`) is published for the same three systems, from an
+  unchanged `build-wheels.yml`, `ci.yml` and README.
 - **Superseded: `Operating System Independent`.** HSSI held `Operating System Independent` until the
   26.10.1 release update, on the strength of the `Operating System :: OS Independent` classifier,
   which `pyproject.toml` still carries. A package with compiled extensions is never recorded as
@@ -823,20 +883,22 @@ model, pyhc package
 - **CPU Independent**
 - **x86-64**
 - **Apple Silicon arm64**
-- **Evidence, read at the 26.10.1 release commit `ca7ed8c`.** The C and Fortran sources are portable —
+- **Evidence, read at the 26.10.1 release commit `ca7ed8c` and re-read at the 26.11.1 release commit
+  `8decf77`.** The C and Fortran sources are portable —
   `setup.py` compiles them with `-O2` and `-fPIC` and no SIMD intrinsics, inline assembly,
   architecture-conditional code or CPU-specific flags — and the sdist compiles them on the user's
   machine, so `CPU Independent` stands. From 26.8.7 the project also publishes binary wheels, and each
-  published architecture is recorded beside it: for 26.10.1, `manylinux_2_28_x86_64` and `win_amd64`
-  (`x86-64`) and `macosx_14_0_arm64` (`Apple Silicon arm64`).
+  published architecture is recorded beside it: for 26.10.1 and again for 26.11.1,
+  `manylinux_2_28_x86_64` and `win_amd64` (`x86-64`) and `macosx_14_0_arm64` (`Apple Silicon arm64`).
 - **Not listed:** `Linux aarch64 or arm64` — `pyproject.toml` names a `manylinux-aarch64-image`, but
   `build-wheels.yml` builds on the x86_64 `ubuntu-latest` runner with no aarch64 target and PyPI
   carries no aarch64 wheel. This section previously said cibuildwheel targeted aarch64 manylinux
-  images; the published artifacts do not bear that out. Intel macOS wheels were dropped from the
-  matrix by `4cb67b4` (2026-08-25, "eliminating wheels build on intel Macs and x686 PCs"), so `x86-64`
-  rests on the Linux and Windows wheels alone. `GPU` — there is no CUDA, ROCm or GPU-array code; the
-  `numba` JIT in `vectorfieldtracer.py` compiles for the CPU. `HPC or HEC` — no MPI or batch-scheduler
-  code.
+  images; the published artifacts do not bear that out. Intel macOS wheels were dropped from the matrix
+  by `4cb67b4` (2026-08-25, "eliminating wheels build on intel Macs and x686 PCs"), so `x86-64` rests
+  on the Linux and Windows wheels alone. `GPU` — there is no CUDA, ROCm or GPU-array code; the
+  field-line tracer computes with NumPy on the CPU, and its `numba` JIT kernels, which also compiled
+  for the CPU, were removed in 26.11.1 along with the `numba` dependency. `HPC or HEC` — no MPI or
+  batch-scheduler code.
 - **Superseded:** HSSI held `CPU Independent` alone until the 26.10.1 release update; the architecture
   rows came with the binary wheels.
 
@@ -871,12 +933,12 @@ dynamics". Per the field's own guidance, a supported phenomenon with no row belo
 
 ### 23. Development Status (RECOMMENDED)
 - **Active**
-- **Dated anchors, read 2026-11-01:** the last commit on the default branch `master` is `06702fe`,
-  2026-10-23; the newest release is 26.10.1, uploaded to PyPI on 2026-10-22 and preceded by
-  26.9.1–26.9.3 and 26.8.7 since August (Field 12); the GitHub API reports `pushed_at: 2026-10-23` and
-  `archived: false`; and the README carries no status badge or status statement. The repository is a
-  PyHC **core** package rated "Good" for software maturity, documentation, Python 3 support and
-  license.
+- **Dated anchors, read 2026-11-07:** the last commit on the default branch `master` is `8decf77`,
+  2026-11-05; the newest release is 26.11.1, uploaded to PyPI on 2026-11-05 and preceded by 26.10.1,
+  26.9.1–26.9.3 and 26.8.7 since August (Field 12); the GitHub API reports `pushed_at: 2026-11-05` and
+  `archived: false`; and the README, unchanged at `8decf77`, carries no status badge or status
+  statement. The repository is a PyHC **core** package rated "Good" for software maturity,
+  documentation, Python 3 support and license.
 - **At the Source Revision:** HEAD `6706989574997795ce1b16b75af31c382eba0611` was dated 2026-08-07,
   the 25.12.1 release had been cut on 2026-07-01, and recent work was substantive: numpy ≥ 2.0
   support, a rewritten build system producing abi3 wheels, and a 180-degree-longitude correction.
@@ -884,12 +946,13 @@ dynamics". Per the field's own guidance, a supported phenomenon with no row belo
 ### 24. Documentation (RECOMMENDED)
 - **Value:** https://nasa.github.io/Kamodo/ (verified reachable; site title "Kamodo Analysis Suite",
   page heading "Kamodo Documentation")
-- **Re-checked for the 26.10.1 release** on 2026-11-01: the site answers 200 with title "Kamodo
-  Analysis Suite" and heading "Kamodo Documentation"; `mkdocs.yml` at the release commit `ca7ed8c`
-  keeps `site_name: Kamodo Analysis Suite` and the same tutorial navigation under the Material theme;
-  and `pyproject.toml` `[project.urls]` gives `Documentation = "https://nasa.github.io/Kamodo"`. The
-  README now also links `https://nasa.github.io/Kamodo-core/`, which documents kamodo-core (Field 29),
-  not this package.
+- **Re-checked for the 26.11.1 release** on 2026-11-07: the site answers 200 with title "Kamodo
+  Analysis Suite" and heading "Kamodo Documentation", as it did for the 26.10.1 release on 2026-11-01;
+  `mkdocs.yml`, unchanged between the release commits `ca7ed8c` and `8decf77`, keeps `site_name: Kamodo
+  Analysis Suite` and the same tutorial navigation under the Material theme; and `pyproject.toml`
+  `[project.urls]` at `8decf77` gives `Documentation = "https://nasa.github.io/Kamodo"`, which PyPI
+  publishes for 26.11.1. The README now also links `https://nasa.github.io/Kamodo-core/`, which
+  documents kamodo-core (Field 29), not this package.
 - **Also available:** the package metadata names the same URL (`setup.cfg` `project_urls` at the
   Source Revision); `mkdocs.yml` builds it from the in-repo `docs/notebooks/` tutorials (Quick Start,
   Introduction, Data Functionalization, HAPI, Choosing Models and Variables, Satellite Trajectories,
@@ -1051,9 +1114,9 @@ poster abstract rather than a publication". It is a deposited poster, which the 
 README's own citation list asks for it.
 
 **Papers that use Kamodo.** Kamodo's citing literature is small — on 2026-11-01 ADS finds 11 records
-citing the JOSS, Frontiers or ASR paper or the preprint — so each deliberate use still tells a
-searcher how and where the software is used. Three papers credit it for a specific result, and each is
-listed on that test alone, whoever wrote it:
+citing the JOSS, Frontiers or ASR paper or the preprint, and the same 11 on 2026-11-07 — so each
+deliberate use still tells a searcher how and where the software is used. Three papers credit it for a
+specific result, and each is listed on that test alone, whoever wrote it:
 - Waldron et al. (2024), read in full: the Acknowledgements thank "the CCMC-Kamodo Team who designed
   the Kamodo API", §3.1 connects Pygeodyn to "the NASA Goddard Community Coordinated Modeling Center's
   (CCMC) Kamodo API (Ringuette et al., 2023)" to bring physics-based density model output into the
@@ -1066,6 +1129,15 @@ listed on that test alone, whoever wrote it:
   electrodynamics along simulated Geospace Dynamics Constellation orbits; ADS's full text places
   "Kamodo" within a few words of "flythrough", "sampled", "extract", "interpolate", "ADELPHI" and
   "GDC". The publisher refuses automated requests (403), so the methods sentence itself was not read.
+
+**Last searched 2026-11-07.** ADS citations of the JOSS, Frontiers and ASR papers and the preprint
+return the 11 records weighed in this section; an ADS full-text search for "Kamodo" among records
+entered since 2026-10-25 returns none (the same query for "SpacePy" returns a new record, and a
+nonsense token returns none); an acknowledgements search for "Kamodo" returns only the ASR and
+Waldron papers; and Zenodo's free-text search for "kamodo" and creator-keyed searches on De Zeeuw's
+and Rastaetter's ORCIDs show no deposit newer than the 2026 DASH/IHDEA deck. Ringuette's ORCID returns
+newer deposits, on SPASE, HSSI and community standards, none of which the free-text search matches.
+No publication about or using Kamodo has appeared since the 2026-11-01 search.
 
 **Method and model papers, judged as one list.** The README's "Kamodo currently supports:" list gives
 one model paper per supported model output — 15 distinct DOIs across its 16 entries at the 26.10.1
@@ -1125,9 +1197,10 @@ and the constellation poster, all recorded.
   and the repository-root `download_TestData.py` (neither is in the sdist) both set `BASE_URL =
   "https://ccmc.gsfc.nasa.gov/publicData/KAMODO_TestData"` and download and unpack a model's archive
   for its reader tests. The entry is that public HTTPS archive root, with the trailing slash the
-  README uses (the bare form redirects to it). CCMC's `publicData/` index lists `KAMODO_TestData/`; on
-  2026-11-01 and 2026-11-02 the directory itself answered 503 with a CCMC Runs-on-Request "scheduled
-  maintenance" page.
+  README uses (the bare form redirects to it). CCMC's `publicData/` index lists `KAMODO_TestData/`.
+  The directory answered 503 with a CCMC Runs-on-Request "scheduled maintenance" page on 2026-11-01
+  and 2026-11-02, and on 2026-11-07 answers 200 with its listing (page title "Kamodo Test Data", one
+  `.tgz` archive per model).
 - **Superseded: https://ccmc.gsfc.nasa.gov/RoR_WWW/output_files/KAMODO_DEMO/.** HSSI held this URL
   until the 26.10.1 release update. It has returned 404 since at least 2026-08-13 (again on
   2026-11-01), and its parent listing no longer contains a `KAMODO_DEMO` entry; probes of several
@@ -1154,13 +1227,13 @@ and the constellation poster, all recorded.
 ### 29. Related Software (OPTIONAL)
 - **kamodo-core** — https://github.com/nasa/Kamodo-core — the functional core that `kamodo_ccmc` is
   built on. It is a separate product with its own JOSS paper and its own Zenodo software DOI. Its
-  declaration changed with the 26.x releases: at the 26.10.1 release commit `ca7ed8c`,
-  `pyproject.toml` lists `kamodo-core-official` first in `dependencies` (the PyPI project of that
-  name, home page `https://github.com/nasa/Kamodo-core`, newest upload 26.9.1 on 2026-09-25), where
-  `setup.cfg` at the Source Revision listed `kamodo` (the earlier PyPI name, last uploaded as 23.3.0
-  in 2023); and the README's Resources now link the Kamodo-core GitHub page and documentation. **Why
-  this URL.** It is the upstream repository root, live and pushed 2026-10-15, and a repository URL is
-  what this field records for software that has one.
+  declaration changed with the 26.x releases: at the 26.10.1 and 26.11.1 release commits (`ca7ed8c`,
+  `8decf77`), `pyproject.toml` lists `kamodo-core-official` first in `dependencies` (the PyPI project
+  of that name, home page `https://github.com/nasa/Kamodo-core`, newest upload 26.9.1 on 2026-09-25),
+  where `setup.cfg` at the Source Revision listed `kamodo` (the earlier PyPI name, last uploaded as
+  23.3.0 in 2023); and the README's Resources now link the Kamodo-core GitHub page and documentation.
+  **Why this URL.** It is the upstream repository root, live and pushed 2026-10-15, and a repository
+  URL is what this field records for software that has one.
 - **Superseded: https://pypi.org/project/kamodo-core/.** HSSI held that PyPI page until the 26.10.1
   release update. It is the page of an older distribution name for the same library (`kamodo-core`,
   last 1.0.11 on 2021-09-24, whose home page `github.com/ensemblegov/kamodo-core` is dead), not of
@@ -1210,9 +1283,10 @@ and the constellation poster, all recorded.
     conversion, time handling, HAPI access), but the 2026-06-10 reconciliation judged them ordinary
     dependencies rather than *distinguishing* related software, and nothing at this revision changes
     that. Left excluded rather than relitigated.
-  - **numpy, pandas, scipy, plotly, matplotlib, netCDF4, h5py, h5netcdf, numba, psutil, boto3, s3fs,
+  - **numpy, pandas, scipy, plotly, matplotlib, netCDF4, h5py, h5netcdf, psutil, boto3, s3fs,
     setuptools, nbformat, cdflib** — generic scientific-Python and infrastructure packages. Listing
-    them would say nothing that is not equally true of most Python packages.
+    them would say nothing that is not equally true of most Python packages. `numba`, judged the same
+    way while it was declared, left the dependencies in 26.11.1.
   - **pysat** — belongs under Interoperable Software (Field 30), not here.
   - **GCMprocpy** — its HSSI entry lists Kamodo as related software (both post-process TIE-GCM and
     WACCM-X output), but nothing in Kamodo's sources or its developers' papers names it, and a
@@ -1353,24 +1427,27 @@ and the constellation poster, all recorded.
 ## Provenance and Sources
 
 - **No `CITATION.cff`, `codemeta.json`, `.zenodo.json`, `AUTHORS` or `CONTRIBUTORS` file** exists in
-  this repository, and a whole-history sweep (`git log --all --diff-filter=A`) shows none has ever
-  been added on any branch (re-run at `06702fe`, 2026-11-01). Author, identifier and citation metadata
-  therefore has to be assembled from the package metadata (`setup.cfg` until commit `03e3d14` of
-  2026-08-24 deleted it, `pyproject.toml`'s `[project]` table since), the README (including its team
-  section and "Citing Kamodo" list), the LICENSE, the four Kamodo publications, in-source `@author:`
-  headers, ORCID, ROR and the PyHC core registry. A future refresh should re-check for these files
-  first — adding one upstream would make several fields directly authoritative.
+  this repository, and a whole-history sweep (`git log --all --diff-filter=A`) shows none has ever been
+  added on any branch (re-run on 2026-11-07, with `8decf77` as the default branch's head). Author,
+  identifier and citation metadata therefore has to be assembled from the package metadata (`setup.cfg`
+  until commit `03e3d14` of 2026-08-24 deleted it, `pyproject.toml`'s `[project]` table since), the
+  README (including its team section and "Citing Kamodo" list), the LICENSE, the four Kamodo
+  publications, in-source `@author:` headers, ORCID, ROR and the PyHC core registry. A future refresh
+  should re-check for these files first — adding one upstream would make several fields directly
+  authoritative.
 - **PyHC registry**: Kamodo is a PyHC **core** package (`_data/projects_core.yml`), with `code`,
   `docs` and `url` matching Fields 3, 24 and the CCMC page, `contact: Darren De Zeeuw`, and "Good"
   ratings for documentation, software maturity, Python 3 and license. Its keyword list is a useful
   cross-check but is not reader evidence — see the SAMI3/Enlil correction in Field 28. Re-read
-  2026-11-01: the entry is unchanged apart from an added link to this record's HSSI page.
+  2026-11-07: the entry has not changed since the registry added its link to this record's HSSI page on
+  2026-10-01.
 - **Repository shape at the Source Revision**, for orientation: 93 Python modules, 83 Jupyter
   notebooks, 16 C sources with 8 headers, 6 Fortran 90 and 3 Fortran 77 sources, 2 C++ sources, 8
   Dockerfiles, and a `tests/` suite of 11 pytest modules covering ADELPHI, AMGeO, CTIPe, DTM, GITM,
   IRI, SWMF-GM, SWMF-IE, TIE-GCM, VERB-3D and the time utilities. At the 26.10.1 release commit
   `ca7ed8c` the tree holds 100 Python modules and 85 notebooks with the same compiled sources, and 14
-  pytest modules (HASDM, NRLMSIS and TIE-GCM netCDF masking added).
-- **Fields re-read for the 26.10.1 release** cite the release commit
-  `ca7ed8c6f515b3527e00600bc20c0888659bb278` beside their evidence; the other sections were read at
-  the Source Revision.
+  pytest modules (HASDM, NRLMSIS and TIE-GCM netCDF masking added). The 26.11.1 release commit
+  `8decf77` only modifies existing files, so those counts hold there too.
+- **Fields re-read for a release** cite its release commit beside their evidence —
+  `ca7ed8c6f515b3527e00600bc20c0888659bb278` for 26.10.1 and `8decf77227028e68b566f3058e340988019d5221`
+  for 26.11.1; the other sections were read at the Source Revision.
