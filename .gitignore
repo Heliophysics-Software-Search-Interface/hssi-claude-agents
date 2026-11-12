@@ -21,6 +21,10 @@ repos/*/*/**
 repos/asilib/tests/
 repos/solarsoft/lmco-SolarSoft/
 
+# Source-tree paths re-included by an upstream clone's own .gitignore negation
+# (SpiceyPy's .gitignore has `!docs/scratchpad.ipynb`)
+repos/SpiceyPy/docs/
+
 # Payloads — only track reference examples
 payloads/*
 !payloads/.gitkeep
