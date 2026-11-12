@@ -338,28 +338,33 @@ head of `main`). The tag `v8.4.0` names `222264e`, and `v8.3.0` is its ancestor
 (`git merge-base --is-ancestor v8.3.0 v8.4.0` holds). PyPI's JSON API lists 8.4.0 with an sdist and wheels
 for CPython 3.10–3.15 (the same platform tags as 8.3.0), none yanked, which alone makes it a release under
 rule 3; `__version__` in `src/spiceypy/__init__.py` reads `8.4.0` at the tag (the package version is
-dynamic, scraped from that string); and the GitHub release "SpiceyPy 8.4.0" was published and archived by
-the Zenodo integration. No later tag or PyPI upload existed on 2026-11-12. The number keeps the `v` of the
+dynamic, scraped from that string); and the GitHub release "SpiceyPy 8.4.0", on `v8.4.0` at `222264e`, is
+published, labelled Latest and not a pre-release (its page, read on 2026-11-12), and was archived by the
+Zenodo integration. No later tag, GitHub release or PyPI upload existed on 2026-11-12. The number keeps the `v` of the
 tags and of the superseded value; PyPI and the release name write it bare.
 
-**The tag was re-pointed after the release was published; the code is the same.** `222264e` ("Trigger
-release CI for v8.4.0", 2026-11-11T17:20:08Z) is an empty commit on top of `b3c842c` ("[8.4.0] -
+**The tag was re-pointed after the release was first published; the code is the same.** `222264e`
+("Trigger release CI for v8.4.0", 2026-11-11T17:20:08Z) is an empty commit on top of `b3c842c` ("[8.4.0] -
 2026-11-11", 17:08:09Z, marked `[no ci]`): `git diff b3c842c 222264e` is empty. The Zenodo deposit,
 created 2026-11-11T17:15:47Z, before `222264e` existed, archives `b3c842c` (its zip's top folder is
-`AndrewAnnex-SpiceyPy-b3c842c`). The deposit, the tag and the PyPI files therefore carry the same tree,
-and a tagged commit dated after the deposit is not an anomaly here.
+`AndrewAnnex-SpiceyPy-b3c842c`), so the release was first published with its tag on `b3c842c`. The release
+page now shows the release on `222264e` with the timestamp 2026-11-11T17:21:17Z. That is later than both
+the deposit and the re-pointed commit, so it dates the release in its present form, not the first
+publication the deposit records. The deposit, the tag and the PyPI files carry the same tree, and a
+tagged commit dated after the deposit is not an anomaly here.
 
-**Version Date** (rule 7). The release was published on 2026-11-11 UTC: the Zenodo GitHub integration,
-which archives a release when it is published, created the v8.4.0 deposit at 2026-11-11T17:15:47Z; the
-release object's own `published_at` is not recorded here. Every other date falls on the same UTC day:
+**Version Date** (rule 7). The release event falls on 2026-11-11 UTC. The release was first published by
+2026-11-11T17:15:47Z, when the Zenodo GitHub integration, which archives a release when it is published,
+created the v8.4.0 deposit; the release page gives 2026-11-11T17:21:17Z for the release in its present
+form on `222264e`. Every other date falls on the same UTC day:
 `b3c842c` at 17:08:09Z, the tagged commit at 17:20:08Z, the first PyPI file at 19:06:12Z, the Zenodo
 `publication_date` and DataCite `Issued` date (2026-11-11), and the `CHANGELOG.md` heading
 `## [8.4.0] - 2026-11-11`.
 
 **Version Description** (rules 13–15). The release name, "SpiceyPy 8.4.0" (mirrored by the deposit title
 "AndrewAnnex/SpiceyPy: SpiceyPy 8.4.0"), says no more than the tag, so the text comes from the release
-body, which the deposit's description reproduces item for item and which matches the `CHANGELOG.md`
-`[8.4.0]` section (25 items). Kept whole: cyice in the Pyodide/WebAssembly wheel (a supported platform),
+body (read on the release page on 2026-11-12), which matches the `CHANGELOG.md` `[8.4.0]` section item for
+item (25 items) and which the deposit's description reproduces. Kept whole: cyice in the Pyodide/WebAssembly wheel (a supported platform),
 the two changes to what cyice array inputs accept and raise, and twelve fixes a user could hit (editable
 installs; cyice error checks, precision, integer dtypes, NumPy import, read-only and length handling;
 buffer overruns; `etcal_v` output; the `oscelt_v` error message; `SpiceInt` storage on 32-bit targets).
@@ -470,9 +475,12 @@ planetary science field"; `coordinate transformations`: the frame/coordinate con
 `orbit`: ephemeris/orbital-element API (`spkezr`, `oscelt`, `conics`, `prop2b`); `wrapper`:
 `README.rst` line 4 "SpiceyPy is a Python wrapper for the NAIF C SPICE Toolkit"; `pyhc package`: SpiceyPy is a listed PyHC **community** package (`_data/projects.yml`), and `pyhc package` is HSSI's catalogue-wide marker for official PyHC packages. It replaced the ad hoc `pyhc` keyword this record used to carry; `pyhc` should not be restored. `hacktoberfest` is preserved even though
 it is no longer among the repository's GitHub topics — set-union never drops an existing entry.
-Current GitHub topics (`ephemeris`, `nasa`, `navigation`, `python`, `space`, `spice`, `toolkit`) and
-`pyproject.toml` keywords (`spiceypy`, `spice`, `cspice`, `naif`, `jpl`, `space`, `geometry`,
-`ephemeris`) are all already covered.
+The GitHub topics (`ephemeris`, `nasa`, `navigation`, `python`, `space`, `spice`, `toolkit`; re-read on
+2026-11-12 and unchanged) and the `pyproject.toml` keywords (`spiceypy`, `spice`, `cspice`, `naif`, `jpl`,
+`space`, `geometry`, `ephemeris`; unchanged at `222264e`) are all already covered. The PyHC registry
+entry's tags, read on 2026-11-12, are `solar`, `magnetosphere`, `ionosphere_thermosphere_mesosphere` and
+`general`: `general` is a registry scope tag (rule 2), and the three domain tags are weighed as Field 5
+evidence, not added as keywords (rule 3).
 
 ### 17. Data Sources (OPTIONAL)
 Not found — intentionally left empty.
@@ -550,8 +558,8 @@ Active
 The value matches the live `RepoStatus` vocabulary. Rules 1–4 do not fire: nothing points to a new
 location, the repository is not archived (the GitHub API gave `archived: false`, `disabled: false` on
 2026-10-29, and on 2026-11-11 the repository accepted the v8.4.0 commits, tag and release, which an
-archived, read-only repository cannot), and the README carries no repostatus.org badge or status statement
-(checked at `222264e`). Rule 6 (recency, for software that reached a stable, usable state) gives `Active`.
+archived, read-only repository cannot; on 2026-11-12 its GitHub page showed no archived banner), and the
+README carries no repostatus.org badge or status statement (checked at `222264e`). Rule 6 (recency, for software that reached a stable, usable state) gives `Active`.
 The dated anchors, read on 2026-11-12: the last commit on `main` is
 `222264e51c42cdbaec2f78f7fc133167f9c7707a`, dated 2026-11-11, and the latest release is v8.4.0
 (2026-11-11). Stable releases go back to 1.0.0 (2016); the `pyproject.toml` classifier
@@ -686,7 +694,7 @@ element-set transmission format (behind `getelm`) and a Wikipedia page on Chebys
 `chbigr`). None of these count. Each method or model paper beyond the two Acton papers documents
 one routine or subsystem and is incidental to SpiceyPy as a whole; listed together they would bury the
 papers about SpiceyPy, so none is listed. Only the two Acton papers, which the project asks every user to
-cite, stay. A later refresh should not propose the per-routine or Required Reading references.
+cite, stay. The per-routine and Required Reading references are settled as excluded.
 
 **Third-party uses (rule 5): none, because SpiceyPy is widely used.** On 2026-10-29 ADS found SpiceyPy in
 the full text of 173 records (110 refereed) and in the acknowledgements of 53 (51 refereed), and the
@@ -702,14 +710,45 @@ acknowledgements; Zenodo keyed on Annex's ORCID and name variants; DataCite rela
 Semantic Scholar. Nonsense-token controls returned nothing, and a comparable package name (`sunpy`)
 returned full-text hits.
 
-**Search since 2026-10-29** (run 2026-11-12): Zenodo keyed on Annex's ORCID (it returns the 2024 decks
-above, the positive control) and on the term `SpiceyPy` (a nonsense token returns 0); DataCite on titles
-and on relations to the concept DOI and to the JOSS DOI; Crossref bibliographic search. Nothing new about
-the software, or asked for by it, appeared: only the v8.4.0 software deposit, a supporting dataset for a
-Mars-geology paper Annex co-authored (`10.5281/zenodo.23981822`, not about SpiceyPy) and a release deposit
-of napari, which he co-authors. Semantic Scholar counted 136 citations of the JOSS paper. ADS/SciX
-full-text and acknowledgement searches were not run for this period, so the next update should run them
-from 2026-10-29; the rule-5 conclusion above does not depend on them.
+**Search since 2026-10-29** (2026-11-12). Nothing new qualifies; the list stays at the two Acton papers.
+- *ADS*, for records entered since 2026-10-29 (each count confirmed on a second ADS route): `full:"SpiceyPy"` 4, `ack:"SpiceyPy"` 1 (one of the four), `abs:"SpiceyPy"` 0, Annex's
+  ORCID 0, and `author:"Annex, A"` 1, a 2022 rioxarray release deposit he co-authors (`2022zndo...6476279S`,
+  a software record, not about SpiceyPy; rule 1). `title:"SpiceyPy"` over all years returns 13 records, all
+  by Annex and none newer than 2023: the version deposits, the ASCL entry, the PDART proposal, the JOSS
+  paper (Field 14) and the 2017, 2019 and 2023 abstracts weighed above. Controls over the same period:
+  `full:"sunpy"` returns 18, a nonsense token 0.
+- *The four full-text records are third-party uses* (rule 5), and SpiceyPy is widely used, so none is
+  added:
+  - Collard et al. (2026), "Proton Specific Entropy as a Proxy for the O7+/O6+ Charge State Ratio over
+    Heliocentric Distance", *ApJ* (`10.3847/1538-4357/aeacc8`; `2026ApJ..1011...86C`): SpiceyPy appears in
+    the acknowledgements' list of software used.
+  - Ravishankar et al. (2026), "HEL1OS on Aditya-L1 Mission: Operations, data processing and monitoring
+    of Sun in Hard X-rays", *Journal of Astrophysics and Astronomy* (`10.1007/s12036-026-10196-7`;
+    `2026JApA...47...78R`): spiceypy 6.0.0 is named among the packages of the instrument's processing
+    pipeline.
+  - Kinrade et al. (2026), "Coincident ENA and Narrowband Radio Emissions as Diagnostics of Inward Plasma
+    Transport at Saturn", *JGR Space Physics* (`10.1029/2026JA035237`; `2026JGRA..13135237K`): its software
+    statement credits SpiceyPy for processing Cassini trajectories.
+  - Weigel et al. (2026), "Coordinate Systems and Transforms in Space Physics: Terms, Definitions,
+    Implementations, and Recommendations for Reproducibility", *JGR Space Physics*
+    (`10.1029/2026JA035196`; `2026JGRA..13135196W`; read as arXiv 2601.07605v6), weighed next.
+- *Weigel et al. is a use, not a publication about SpiceyPy.* It is an open-access, peer-reviewed article.
+  None of its nine authors is a SpiceyPy author, and its subject is the definitions and implementations of
+  space-physics coordinate systems as a whole, so rule 3 does not add it; the project does not cite it
+  (rule 4). SpiceyPy 8.1.0 is one of five libraries whose transforms it compares (with Geopack-08,
+  PySPEDAS, SpacePy and SunPy), run through the hxform package with two sets of SPICE kernels: one used for
+  the Van Allen Probes mission, and one whose `MAG` frame uses a newer IGRF dipole. The libraries'
+  transforms differ by 0.001°–0.04°. SpiceyPy appears in one bullet of the software comparison, in the
+  figure legends and in the reference list, and what is compared for it are the frame definitions its
+  kernels supply. Its results are built partly with SpiceyPy and name it in a methods section, which makes
+  it a substantive use under rule 5, and no use is added for widely used software. hxform, the interface
+  it ran on, is recorded in Field 30.
+- *Zenodo* keyed on Annex's ORCID (it returns the 2024 decks above, the positive control) and on the term
+  `SpiceyPy` (a nonsense token returns 0), *DataCite* on titles and on relations to the concept DOI and to
+  the JOSS DOI, and *Crossref* bibliographic search found nothing further about the software or asked for
+  by it: only the v8.4.0 software deposit, a supporting dataset for a Mars-geology paper Annex co-authored
+  (`10.5281/zenodo.23981822`) and a napari release deposit he co-authors. Semantic Scholar counted 136
+  citations of the JOSS paper.
 
 ### 28. Related Datasets (OPTIONAL)
 Not found.
@@ -751,25 +790,83 @@ Two entries pass the relevance gate.
 - `JSPICE` — named only in a 2014 early commit message (`ab0890a`) as structural inspiration; no URL,
   no durable relationship.
 - `Pyodide` / `PyScript` — generic runtime/browser infrastructure, not a heliophysics peer tool.
+- maven_iuvs, SunPy and MavenPy, the three HSSI entries that list SpiceyPy (catalogue inbound sweep,
+  2026-11-12), and hxform — each relation is code in the other package written against SpiceyPy and
+  nothing more, so it is recorded in Field 30 alone (Field 29 rule 3; Field 30 rule 9: a listing in both
+  fields needs independent ground in each).
 
 ### 30. Interoperable Software (OPTIONAL)
-Not found — intentionally left empty.
 
-No package meets the demonstrated-exchange bar for this field. SpiceyPy exposes
-no adapter/converter API to another domain tool, defines no shared or convertible data model with a
-peer package, ships no plugin/extension relationship, and provides no cross-language bridge to a named
-domain tool. Its only runtime dependency is `numpy` (Tier A — being a dependency is not
-interoperability). The `cyice` submodule shares the CSPICE kernel pool with the ctypes wrappers, but
-that is *intra*-package, not interoperability with other software. CSPICE itself is the wrapped
-library and is recorded in Field 29. The `docs/pyodide.rst` PyScript examples demonstrate running in a
-browser runtime, which is infrastructure, not a peer-tool exchange. The docs example gallery added on
-`main` after v8.3.0 (read at `fb98550`) runs in a browser environment that also installs astropy, scipy
-and sympy; its scratchpad page shows `spice.str2et(Time("2019-06-10", scale="utc").isot)`, which hands an
-astropy time to SpiceyPy as an ISO-8601 string. A string any time library can produce is not a
-package-specific exchange (Tier B, rule 4), so astropy is not listed. The JupyterLite scratchpad notebook
-added in v8.4.0 (`docs/scratchpad.ipynb`, read at `222264e`) installs the same packages plus matplotlib and
-repeats that `str2et(Time(...).isot)` line; it is a documentation page and adds no exchange. A documented
-empty value is the correct outcome.
+Four packages pass rule 7. Each has code written against SpiceyPy on its own side, which counts as the
+exchange (the consumer side counts): a bridge module (SunPy), modules that load and query MAVEN kernels
+through it (MavenPy, maven_iuvs) and a transform backend (hxform). Read on 2026-11-12.
+
+1. **SunPy** — https://github.com/sunpy/sunpy
+   *Evidence:* `sunpy.coordinates.spice` (read in the sunpy 8.0.1 sdist) is a "Bridge module to use the
+   SkyCoord API for SPICE computations" that wraps SpiceyPy: loading kernels creates a SkyCoord frame and
+   its transformations for each SPICE frame (through `furnsh`, `kplfrm`, `frinfo`, `sxform` and `spkpos`),
+   and `to_helioprojective()` hands a SPICE-based coordinate to SunPy's own frames. SunPy declares the
+   bridge through a `spice` extra (`spiceypy>=7.0.0`), shows it in a gallery example
+   (`examples/units_and_coordinates/spice.py`) and tests it (`sunpy/coordinates/tests/test_spice.py`).
+   SunPy's HSSI entry lists SpiceyPy as interoperable software, so the relation now points both ways. The
+   URL is that entry's stored `code_repository_url` (Field 29 rule 11); SunPy's concept DOI,
+   `https://doi.org/10.5281/zenodo.591887`, is passed over because the site renders the raw URL (Field 29
+   rule 13).
+2. **MavenPy** — https://github.com/rjolitz/mavenpy
+   *Evidence:* its `mavenpy.spice` module (read at `fb05d52`) downloads MAVEN kernels from NAIF and loads
+   and queries them through SpiceyPy (`furnsh`, `ktotal`, `kdata`, `str2et`, `spkpos`), and
+   `mavenpy/sep_anc.py` and `mavenpy/euv.py` compute instrument geometry and clock corrections with it
+   (`getfov`, `sincpt`, `ilumin`, `scs2e`); its README lists "Spice: Downloading from NAIF, loading via
+   SpiceyPy". MavenPy's HSSI entry lists SpiceyPy as related software. The URL is that entry's stored
+   `code_repository_url`. MavenPy has no DOI: Zenodo and DataCite title searches for it return nothing,
+   while the same searches find hxform's deposits.
+3. **hxform** — https://github.com/rweigel/hxform
+   *Evidence:* hxform provides heliophysics reference-frame transforms "using various libraries, Python
+   packages, and web services via a common interface", and SpiceyPy is one of its backends:
+   `hxform/transform.py` (read at `4142179`) loads SPICE kernels and transforms vectors with SpiceyPy's
+   `furnsh`, `str2et`, `pxform` and `mxv` when called with `lib='spiceypy1'` or `lib='spiceypy2'`, its
+   README names SpiceyPy among the packages it interfaces, and it requires `spiceypy>=6.0.0`. Weigel et al.
+   (2026, Field 27) compare SpiceyPy's transforms with other libraries' through it. hxform is not in the
+   HSSI catalogue, so its upstream repository root is recorded (Field 29 rule 12); its concept DOI,
+   `https://doi.org/10.5281/zenodo.18663931`, is passed over because the site renders the raw URL (Field 29
+   rule 13).
+
+4. **maven_iuvs** — https://github.com/lasp/maven_iuvs
+   *Evidence:* the MAVEN IUVS team's Python routines (read at `1759ab5`) list "Integration with spiceyPy"
+   among what the package provides (`README.md` line 7) and require `spiceypy>=2.2.0` (`setup.py`).
+   `maven_iuvs/spice.py` loads the generic and MAVEN kernels through SpiceyPy (`load_iuvs_spice` calls
+   `spice.furnsh`), and `maven_iuvs/geometry.py` computes observation geometry with it (`spice.sincpt`,
+   line 261; `spice.pxform('IAU_MARS', 'MAVEN_MSO', …)`, line 837). maven_iuvs's HSSI entry lists SpiceyPy,
+   by its concept DOI, as interoperable software, so the relation now points both ways. The URL is that
+   entry's stored `code_repository_url` (Field 29 rule 11). maven_iuvs has no DOI: DataCite has no record
+   titled for it, and the Zenodo records that name it are third-party datasets and papers.
+
+**How the candidates were found.** The catalogue inbound sweep (rule 10) on 2026-11-12 read the related
+and interoperable software in the record of every HSSI entry (129) and matched SpiceyPy's repository URL,
+its name, its concept and version DOIs and the JOSS DOI. Reading the records is necessary: a name search
+misses DOI-form entries, which carry a placeholder name. maven_iuvs lists SpiceyPy's concept DOI as
+interoperable software; SunPy lists its repository URL as interoperable software and MavenPy as related
+software; the JOSS DOI is listed nowhere. (Control: 26 lists in the same records contain SunPy's
+repository URL.) hxform surfaced through Weigel et al. (Field 27).
+
+**Considered and excluded (audit trail):**
+- SpiceyPy's own side offers no exchange: it exposes no adapter or converter API to another domain tool,
+  defines no shared or convertible data model with a peer package, ships no plugin or extension
+  relationship, and provides no cross-language bridge to a named domain tool.
+- `numpy`, its only runtime dependency — Tier A; being a dependency is not interoperability.
+- The `cyice` submodule shares the CSPICE kernel pool with the ctypes wrappers, but that is *intra*-package.
+  CSPICE itself is the wrapped library and is recorded in Field 29.
+- The `docs/pyodide.rst` PyScript examples run in a browser runtime, which is infrastructure, not a
+  peer-tool exchange.
+- astropy (Tier B). The docs example gallery added on `main` after v8.3.0 (read at `fb98550`) runs in a
+  browser environment that also installs astropy, scipy and sympy; its scratchpad page shows
+  `spice.str2et(Time("2019-06-10", scale="utc").isot)`, which hands an astropy time to SpiceyPy as an
+  ISO-8601 string. A string any time library can produce is not a package-specific exchange (rule 4). The
+  JupyterLite scratchpad notebook added in v8.4.0 (`docs/scratchpad.ipynb`, read at `222264e`) installs
+  the same packages plus matplotlib and repeats that `str2et(Time(...).isot)` line; it is a documentation
+  page and adds no exchange.
+- HSSI held no Interoperable Software for SpiceyPy until the 2026-11-12 update; that empty value
+  predated the inbound sweep and the hxform evidence.
 
 ### 31. Related Instruments (OPTIONAL)
 None — no entries. Documented omission (SPASE ladder rule 5).
@@ -807,8 +904,7 @@ Mars Global Surveyor, the Saturn-barycenter Cassini position example in `docs/ex
 tutorial lessons or documentation examples, which the Field 31/32 relevance gate excludes as tutorial,
 demo and gallery name-drops and as platforms the software *could* support. Consistent with Field 17
 being empty (no observatory-specific data source) — the two fields agree.
-No related entity reaches the resolution ladder. Should a future release add mission-specific
-support, those entries should be resolved against the then-current SPASE-backed HSSI vocabulary.
+No related entity reaches the resolution ladder.
 
 ### 33. Logo (OPTIONAL)
 Not found.
