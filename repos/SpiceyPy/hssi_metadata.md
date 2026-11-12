@@ -4,8 +4,8 @@
 **Repository:** https://github.com/AndrewAnnex/SpiceyPy
 **Source Revision:** 388c219808f5b0dc9ec10acee2ca1b3cbe3c6e47
 **Extraction Date:** 2026-07-29
-**Validation Date:** 2026-10-29
-**Validation Status:** PASS
+**Validation Date:** Pending
+**Validation Status:** Pending
 
 ---
 
@@ -21,25 +21,33 @@
 https://doi.org/10.5281/zenodo.593914
 
 This is the Zenodo **concept** DOI
-(`conceptdoi` / `conceptrecid` 593914 on the Zenodo records for v8.2.0 and v8.3.0) and it is listed in
-`CITATION.cff` under `identifiers` with description "Zenodo archive". The v8.3.0 version deposit
-(`10.5281/zenodo.23304845`, the Field 12 Version PID) carries `IsVersionOf 10.5281/zenodo.593914` at
-DataCite. On 2026-10-29 the concept presented that newest deposit: DataCite gave the concept's `version`
-as `v8.3.0` and its title as "AndrewAnnex/SpiceyPy: SpiceyPy 8.3.0", matching the newest tag `v8.3.0`.
+(`conceptdoi` / `conceptrecid` 593914 on the Zenodo records for v8.2.0, v8.3.0 and v8.4.0) and it is listed
+in `CITATION.cff` under `identifiers` with description "Zenodo archive". The v8.4.0 version deposit
+(`10.5281/zenodo.24142483`, the Field 12 Version PID) carries `IsVersionOf 10.5281/zenodo.593914` at
+DataCite, and the concept's `HasVersion` list includes it. On 2026-11-12 the concept presented that newest
+deposit: DataCite gave the concept's `version` as `v8.4.0` and its title as "AndrewAnnex/SpiceyPy:
+SpiceyPy 8.4.0", matching the newest tag `v8.4.0`, and the concept DOI resolved to record 24142483.
 
 ### 3. Code Repository (MANDATORY)
 https://github.com/AndrewAnnex/SpiceyPy
 
 Confirmed by `pyproject.toml` `[project.urls]` (Homepage / Repository /
 Source), `CITATION.cff` `repository-code`, the PyHC community registry `code` field, and the live
-GitHub API (not archived, default branch `main`; on 2026-10-29 the last commit on `main` was
-`fb98550`, dated 2026-10-25).
+GitHub API on 2026-10-29 (not archived, default branch `main`). At `222264e` (the v8.4.0 tag and the head
+of `main`, 2026-11-11) the clone's `origin`, those project files, the PyHC entry and PyPI's
+`project_urls` still name this repository, and the v8.4.0 Zenodo deposit links
+`https://github.com/AndrewAnnex/SpiceyPy/tree/v8.4.0`.
 
 ### 4. Software Functionality (RECOMMENDED)
 
 The previous value contained only the bare parent `Coordinate Transforms`; the comprehensive set
 below replaces it. All 12 values match the live `FunctionCategory` vocabulary with the exact
 parent→child pairings shown.
+
+v8.4.0 adds and removes no capability here (read at `222264e`): the module-level functions of
+`src/spiceypy/spiceypy.py` are the same as at `388c219`, `cyice` gained only internal helpers (its
+`__all__` is unchanged from v8.3.0), and the release's other changes are cyice fixes, cyice in the
+Pyodide/WebAssembly wheel (a platform, Fields 20–21) and documentation pages.
 
 - **Coordinate Transforms**
 - **Coordinate Transforms > Mission-Specific**
@@ -130,9 +138,11 @@ parent→child pairings shown.
   are not time-series signal analysis.
 - All `Data Visualization` values — the package contains no plotting code. `docs/exampleone.rst`
   (Cassini position plot) uses `matplotlib` in *documentation example* code only. The docs example
-  gallery added on `main` after v8.3.0 (`docs/examples/plot_*.py`, read at `fb98550`) also draws its
-  figures with `matplotlib` in documentation code (the Mars 2020 rover traverse and the Santa Monica
-  eclipse pages); gallery pages are not the library's capability (Field 4 rule 4).
+  gallery added on `main` after v8.3.0 and released in v8.4.0 (`docs/examples/plot_*.py`, read at
+  `fb98550`) also draws its figures with `matplotlib` in documentation code (the Mars 2020 rover traverse
+  and the Santa Monica eclipse pages), and so does the starter cell of the JupyterLite scratchpad notebook
+  added in v8.4.0 (`docs/scratchpad.ipynb`, read at `222264e`, plotting the inner planets' 2019 orbits);
+  gallery and docs pages are not the library's capability (Field 4 rule 4).
 - `Servers and Environments > Software or Environment Container` — Pyodide/WebAssembly wheels are a
   build target, not a container or server product.
 - `Models and Simulations > Mission-Specific` / `> Theory` — SpiceyPy is deliberately
@@ -169,7 +179,10 @@ supporting evidence in the repository.
 **Canonical roster: 22 authors.** The union of the 21 people HSSI listed before the v8.3.0 refresh
 (2026-10-29), `.zenodo.json` (22 creators at `fb98550`), the DataCite creators of the v8.3.0 deposit (21,
 matched by ORCID), and `CITATION.cff` (15 authors, a subset) is exactly these 22 people; Anton Soloviev
-(22) entered `.zenodo.json` after the v8.3.0 release (see below). Matched by ORCID first, then normalized name. Affiliations record the complete shared HSSI organization set
+(22) entered `.zenodo.json` after the v8.3.0 release (see below). The v8.4.0 deposit
+(`10.5281/zenodo.24142483`, 2026-11-11), the first made after that change, lists exactly these 22 creators
+with the same ORCIDs; at `222264e` `.zenodo.json` is unchanged from `fb98550` and `CITATION.cff` from
+`388c219`. Matched by ORCID first, then normalized name. Affiliations record the complete shared HSSI organization set
 for each person, reconciled against the `CITATION.cff` and `.zenodo.json` affiliations.
 
 | # | Name (HSSI stored form) | Identifier (ORCID) | Affiliation |
@@ -231,7 +244,8 @@ organizations on the shared person record; neither is discarded in favour of the
 **Anton Soloviev — added in the v8.3.0 refresh (2026-10-29; rule 8).** Commit `373782e` (pull request #582, 2026-10-21, after
 the v8.3.0 release) added `{"name": "Anton Soloviev"}` to the `.zenodo.json` creators (read at `fb98550`).
 `.zenodo.json` is one of the project's own author sources, so he is an attested author although the v8.3.0
-Zenodo deposit predates the change: a deposit's creator list is a snapshot.
+Zenodo deposit predates the change: a deposit's creator list is a snapshot. The v8.4.0 deposit, made after
+the change, lists him.
 - *Identity and name.* The commit that added him (`373782e`) and a later commit by the same account
   (`a676028`) are git-authored as "Anthony", and the commit API attributes both to the GitHub account
   `antonsoo`. The name and its split (`Anton` /
@@ -246,7 +260,8 @@ Zenodo deposit predates the change: a deposit's creator list is a snapshot.
 
 **Committers not added (rule 5).** Apart from Andrew Annex, Anton Soloviev and dependabot, the commits in
 `388c219..fb98550` are by Mark Mentovai (`8209dea`, long kernel paths in the test meta-kernel) and Sammy
-Dabbas (`1e387fd`, the `py.typed` marker); neither appears in any author source.
+Dabbas (`1e387fd`, the `py.typed` marker); neither appears in any author source. The commits in
+`fb98550..222264e` (the rest of v8.4.0) are by Andrew Annex and dependabot only.
 
 ### 7. Software Name (MANDATORY)
 SpiceyPy
@@ -287,72 +302,96 @@ Correct per the Field 11 guidance (DOI obtained through the GitHub–Zenodo
 workflow) and confirmed by DataCite `publisher: "Zenodo"` for the concept DOI.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** v8.3.0
-- **Version Date:** 2026-10-11
+- **Version Number:** v8.4.0
+- **Version Date:** 2026-11-11
 - **Version Description:** exactly the text in the block below: three `###` section headings, each item
   line beginning with a space and `- `, single newlines within a section and one blank line between
   sections.
 
 ```text
 ### Added
- - Python 3.15 support: cp315 wheel builds, CI test matrix, and PyPI classifier
- - PEP 561 `py.typed` marker and `Typing :: Typed` classifier so type checkers use spiceypy's annotations
- - Top-level cyice functions now accept NumPy scalars and 0-d arrays (numeric and string) and dispatch them to the scalar `_s` implementations
+ - cyice is now built and shipped in the Pyodide/WebAssembly wheel
 
 ### Changed
- - Refined type hints throughout spiceypy, callbacks, and support types for smoother mypy usage
+ - cyice double array inputs now accept any float64 array-like (lists, strided or read-only views), coerced once via the NumPy C API; wrong ndim raises ValueError
+ - cyice double array inputs given a non-float64 dtype (ints, bools, float32, complex, strings) now raise TypeError rather than the ValueError buffer dtype mismatch previously raised by Cython
 
 ### Fixed
- - String-input cyice `_v` functions (str2et_v, utc2et_v, scencd_v, scs2e_v) segfaulted on 0-d or multi-dimensional arrays; they now raise ValueError
- - cyice functions rejected `np.str_` and `bytes` for string arguments with a TypeError due to Cython 3 exact-type checks
- - Missing commas in cyice `__all__` that merged "azlcpo_v"/"azlrec" and "reset"/"rpd"
- - ekgc return type annotation had the tuple element order wrong
+ - Editable installs now find the bundled cspice library via importlib.resources; on Windows the library directory is also added for cyice, fixes #512
+ - cyice evsgp4 now raises CSPICE propagation errors instead of returning garbage
+ - cyice georec, pgrrec, recgeo, recpgr, srfrec (scalar and vectorized) and unload did not check the SPICE error state, returning uninitialized values and leaving the error pending for a later unrelated call
+ - cyice scalar coordinate conversions returning 3-tuples (cyllat_s, cylsph_s, latcyl_s, latsph_s, recazl_s, reccyl_s, recgeo_s, reclat_s, recpgr_s, recrad_s, recsph_s, sphcyl_s, sphlat_s, and their top-level dispatchers) truncated results to single precision because `tuple[float, ...]` compiled to a C float ctuple
+ - cyice getelm_v (and getelm with array input) rejected int64 arrays, NumPy's default integer type, with a buffer dtype mismatch; frstyr now accepts int32 or int64 arrays
+ - cyice import failed on supported NumPy versions that do not expose `numpy.typing` on initial import
+ - cyice array inputs rejected read-only arrays (flags.writeable=False, np.broadcast_to views) with "buffer source array is read-only"
+ - cyice fixed-size array inputs (3-vectors, states, SPK descriptors, conic and SGP4 elements) are now length-checked; short or empty arrays were read out of bounds and silently returned garbage
+ - cyice ckgp_v and ckgpav_v wrote 4-byte found flags into a uint8 buffer, overrunning it
+ - cyice etcal_v truncated B.C. and 5-digit-year output that etcal_s returns in full
+ - cyice oscelt_v length-mismatch error message
+ - cyice passed `int` storage to CSPICE `SpiceInt *` outputs (et2lst, limbpt, occult, spkpvn, termpt), which is wrong on 32-bit targets where SpiceInt is `long`
 ```
 
-- **Version PID:** https://doi.org/10.5281/zenodo.23304845
+- **Version PID:** https://doi.org/10.5281/zenodo.24142483
 
-**Why v8.3.0** (rule 3; read at `fb9855023083371735c0423ae30cfa0db46f7d4f`, the head of `main`, and at the
-tag). The tag `v8.3.0` names `b27a33dd55395e8d212f77dfb4969953808a61da`, which lies on `main`'s own lineage
-(`git merge-base --is-ancestor v8.3.0 fb98550` holds), and `v8.2.0` is its ancestor. Its GitHub release,
-"SpiceyPy 8.3.0", is neither a draft nor a pre-release; PyPI's JSON API lists 8.3.0 with an sdist and
-wheels for CPython 3.10–3.15, none yanked; and `__version__` in `src/spiceypy/__init__.py` reads `8.3.0` at
-the tag (the package version is dynamic, scraped from that string). No later tag, GitHub release or PyPI
-upload existed on 2026-10-29. The number keeps the `v` of the tags and of the superseded value; PyPI and
-the release name write it bare.
+**Why v8.4.0** (rule 3; read at `222264e51c42cdbaec2f78f7fc133167f9c7707a`, which is both the tag and the
+head of `main`). The tag `v8.4.0` names `222264e`, and `v8.3.0` is its ancestor
+(`git merge-base --is-ancestor v8.3.0 v8.4.0` holds). PyPI's JSON API lists 8.4.0 with an sdist and wheels
+for CPython 3.10–3.15 (the same platform tags as 8.3.0), none yanked, which alone makes it a release under
+rule 3; `__version__` in `src/spiceypy/__init__.py` reads `8.4.0` at the tag (the package version is
+dynamic, scraped from that string); and the GitHub release "SpiceyPy 8.4.0" was published and archived by
+the Zenodo integration. No later tag or PyPI upload existed on 2026-11-12. The number keeps the `v` of the
+tags and of the superseded value; PyPI and the release name write it bare.
 
-**Version Date** (rule 7). The GitHub release was published 2026-10-11T20:49:50Z. The tagged commit is
-dated 2026-10-11T13:14:55-07:00 (20:14:55Z), the first PyPI file was uploaded 2026-10-11T21:20:23Z, the
-Zenodo deposit's `publication_date` and DataCite's `Issued` date are 2026-10-11, and `CHANGELOG.md` heads
-the section `## [8.3.0] - 2026-10-11`.
+**The tag was re-pointed after the release was published; the code is the same.** `222264e` ("Trigger
+release CI for v8.4.0", 2026-11-11T17:20:08Z) is an empty commit on top of `b3c842c` ("[8.4.0] -
+2026-11-11", 17:08:09Z, marked `[no ci]`): `git diff b3c842c 222264e` is empty. The Zenodo deposit,
+created 2026-11-11T17:15:47Z, before `222264e` existed, archives `b3c842c` (its zip's top folder is
+`AndrewAnnex-SpiceyPy-b3c842c`). The deposit, the tag and the PyPI files therefore carry the same tree,
+and a tagged commit dated after the deposit is not an anomaly here.
 
-**Version Description** (rules 13–15). The release name says no more than the tag, so the text comes from
-the release body, which matches the `CHANGELOG.md` `[8.3.0]` section. Kept whole: the items on supported
-Python versions, type-checker support, cyice input handling and four fixes a user could hit. Dropped whole
-as build, CI, packaging or documentation housekeeping (rule 14): "mypy type checking CI job and `typecheck`
-dependency group", "Zero-argument ctypes functions now declare empty argtypes rather than None", "Updated
-to cibuildwheel v4.3.1 for the final CPython 3.15.0 release", the Pyodide/wasm build-configuration item,
-"Docs updated to PyScript 2026.7.3 (Pyodide 314.0.3)", "Various CI action pin updates" and "Various typos
-in docstrings and docs". The body's `## [8.3.0] - 2026-10-11` heading, which repeats the number and date,
-and each kept item's trailing pull-request references (`(#575)` and the like) are dropped (rule 15); the
-items' own words and the leading space before each `-` are kept, with the body's CRLF line endings written
-as LF.
+**Version Date** (rule 7). The release was published on 2026-11-11 UTC: the Zenodo GitHub integration,
+which archives a release when it is published, created the v8.4.0 deposit at 2026-11-11T17:15:47Z; the
+release object's own `published_at` is not recorded here. Every other date falls on the same UTC day:
+`b3c842c` at 17:08:09Z, the tagged commit at 17:20:08Z, the first PyPI file at 19:06:12Z, the Zenodo
+`publication_date` and DataCite `Issued` date (2026-11-11), and the `CHANGELOG.md` heading
+`## [8.4.0] - 2026-11-11`.
 
-**Version PID** (rule 17). `10.5281/zenodo.23304845` is v8.3.0's GitHub-integration deposit: its Zenodo
-`version` and DataCite `version` are `v8.3.0`, its title is "AndrewAnnex/SpiceyPy: SpiceyPy 8.3.0", it
-carries `IsSupplementTo https://github.com/AndrewAnnex/SpiceyPy/tree/v8.3.0` and
+**Version Description** (rules 13–15). The release name, "SpiceyPy 8.4.0" (mirrored by the deposit title
+"AndrewAnnex/SpiceyPy: SpiceyPy 8.4.0"), says no more than the tag, so the text comes from the release
+body, which the deposit's description reproduces item for item and which matches the `CHANGELOG.md`
+`[8.4.0]` section (25 items). Kept whole: cyice in the Pyodide/WebAssembly wheel (a supported platform),
+the two changes to what cyice array inputs accept and raise, and twelve fixes a user could hit (editable
+installs; cyice error checks, precision, integer dtypes, NumPy import, read-only and length handling;
+buffer overruns; `etcal_v` output; the `oscelt_v` error message; `SpiceInt` storage on 32-bit targets).
+Dropped whole (rule 14): the docs example gallery and the JupyterLite scratchpad page (documentation
+pages, not a change to the installed package, which is all rule 14 keeps); "Removed redundant
+np.ascontiguousarray calls in cyice `_v` functions, cutting ~0.7us overhead per small call" (a refactor);
+"cyice array parameters annotated with NDArray aliases so Sphinx signatures show array shapes" (it serves
+the rendered docs, unlike v8.3.0's kept type-hint item, which served users' type checkers); "Updated
+astral-sh/setup-uv action to v10.3.0" (CI); "Pyodide wheel tests now run the full test suite in random
+order instead of only test_wrapper" and the three test-suite fixes (long meta-kernel paths, fixtures
+calling reset before kclear, `test_metakernel_long_paths`) (tests); and the cyice extension-module naming
+from `SKBUILD_SOABI` (build). The body's `## [8.4.0] - 2026-11-11` heading, which repeats the number and
+date, and each kept item's trailing pull-request references (`(#588)`, `(#586) (#587)` and the like) are
+dropped (rule 15); "fixes #512" belongs to its item's own sentence and stays. The items' own words and the
+leading space before each `-` are kept.
+
+**Version PID** (rule 17). `10.5281/zenodo.24142483` is v8.4.0's GitHub-integration deposit: its Zenodo
+`version` and DataCite `version` are `v8.4.0`, its title is "AndrewAnnex/SpiceyPy: SpiceyPy 8.4.0", it
+carries `IsSupplementTo https://github.com/AndrewAnnex/SpiceyPy/tree/v8.4.0` and
 `IsVersionOf 10.5281/zenodo.593914`, the concept's `HasVersion` list includes it, and the DOI resolves.
 
-**Previous values.** HSSI held v8.2.0 (released 2026-07-24, Version PID
-`https://doi.org/10.5281/zenodo.21540077`) until the v8.3.0 refresh (2026-10-29), and v8.0.0 before that; each was superseded
-by a newer release (rule 3). The v8.2.0 description was a condensed summary of that release's changelog
-section; it belongs to that release and is not carried onto v8.3.0 (rule 10). **Stored form is the bare
-`v8.3.0`**: the view API renders it as `SpiceyPy - v8.3.0`, and that rendered prefix must never be written
-back.
+**Previous values.** HSSI held v8.3.0 (released 2026-10-11, Version PID
+`https://doi.org/10.5281/zenodo.23304845`) until the v8.4.0 update (2026-11-12), v8.2.0 (released
+2026-07-24, Version PID `https://doi.org/10.5281/zenodo.21540077`) until the v8.3.0 refresh (2026-10-29),
+and v8.0.0 before that; each was superseded by a newer release (rule 3). Each earlier description was that
+release's own filtered notes; it belongs to that release and is not carried onto v8.4.0 (rule 10).
+**Stored form is the bare `v8.4.0`**: the view API renders it as `SpiceyPy - v8.4.0`, and that rendered
+prefix must never be written back.
 
-**After v8.3.0.** `CHANGELOG.md` at `fb98550` opens an `## [Unreleased]` section: cyice built and shipped
-in the Pyodide/WebAssembly wheel, the start of a docs example gallery, and cyice fixes (error checks,
-double-precision returns, integer dtypes). That code is unreleased and is not recorded here (rule 2); a
-later update should look for the release that ships it.
+**Settled: the code that followed v8.3.0 is released.** The `## [Unreleased]` section `CHANGELOG.md`
+opened after v8.3.0 (cyice in the Pyodide/WebAssembly wheel, the start of the docs example gallery, cyice
+fixes) shipped as v8.4.0 and is recorded above.
 
 ### 13. Programming Language (RECOMMENDED)
 - **Python 3.x**
@@ -382,8 +421,10 @@ Read at `fb98550`.
   the rest of the tree is Python, reStructuredText, JSON, YAML, Markdown, TOML and plain text, one PNG
   image, `CITATION.cff`, the `py.typed` marker, docs tooling (`docs/mini-coi.js`,
   `docs/_static/css/pyscript_editor.css`, `docs/make.bat`, `docs/Makefile`) and the JOSS paper's
-  bibliography (`joss/paper.bib`, which linguist counts as TeX). `Other` should not be restored unless a
-  language without a row enters the package.
+  bibliography (`joss/paper.bib`, which linguist counts as TeX). v8.4.0 adds one Jupyter notebook,
+  `docs/scratchpad.ipynb` (the JupyterLite scratchpad docs page, read at `222264e`), whose cells are
+  Python; a notebook is not a language. `Other` should not be restored unless a language without a row
+  enters the package.
 - **Java — removed earlier.** No evidence supports it: the GitHub languages API returns
   `{Python, Cython, CMake, TeX}` only, and the *entire* git history contains **zero** `.java` files
   (`git log --all --name-only | grep -ci '\.java$'` → 0). The likely origin is an early commit message
@@ -507,11 +548,13 @@ vocabulary is closed, so an unsupported term cannot be added. Documented empty v
 Active
 
 The value matches the live `RepoStatus` vocabulary. Rules 1–4 do not fire: nothing points to a new
-location, the repository is not archived (GitHub API `archived: false`, `disabled: false`), and the README
-carries no repostatus.org badge or status statement. Rule 6 (recency, for software that reached a stable,
-usable state) gives `Active`. The dated anchors, read on 2026-10-29: the last commit on `main` is
-`fb9855023083371735c0423ae30cfa0db46f7d4f`, dated 2026-10-25, and the latest release is v8.3.0
-(2026-10-11). Stable releases go back to 1.0.0 (2016); the `pyproject.toml` classifier
+location, the repository is not archived (the GitHub API gave `archived: false`, `disabled: false` on
+2026-10-29, and on 2026-11-11 the repository accepted the v8.4.0 commits, tag and release, which an
+archived, read-only repository cannot), and the README carries no repostatus.org badge or status statement
+(checked at `222264e`). Rule 6 (recency, for software that reached a stable, usable state) gives `Active`.
+The dated anchors, read on 2026-11-12: the last commit on `main` is
+`222264e51c42cdbaec2f78f7fc133167f9c7707a`, dated 2026-11-11, and the latest release is v8.4.0
+(2026-11-11). Stable releases go back to 1.0.0 (2016); the `pyproject.toml` classifier
 `Development Status :: 5 - Production/Stable`, a weekly scheduled CI run (`.github/workflows/ci-build.yml`,
 cron `0 4 * * 0`) and the funded Cyice work (Fields 25–26) corroborate. Matches the repostatus.org
 definition of `Active` ("reached a stable, usable state and is being actively developed").
@@ -557,8 +600,9 @@ best-supported match to the repository's award number and program evidence.
 ### 27. Related Publications (OPTIONAL)
 
 Two publications: the SPICE toolkit papers the project asks every user to cite alongside SpiceyPy, both
-distinct from the Field 14 reference publication. Project files read at `fb98550`; literature searched on
-2026-10-29, all years.
+distinct from the Field 14 reference publication. Project files read at `fb98550` and rechecked at
+`222264e` (`CITATION.cff`, the README citation section and `docs/citation.rst` are unchanged); literature
+searched on 2026-10-29, all years, and on 2026-11-12 for the period since.
 
 1. https://doi.org/10.1016/0032-0633(95)00107-7
    Acton, C. H., Jr. (1996). Ancillary data services of NASA's Navigation and Ancillary Information
@@ -658,6 +702,15 @@ acknowledgements; Zenodo keyed on Annex's ORCID and name variants; DataCite rela
 Semantic Scholar. Nonsense-token controls returned nothing, and a comparable package name (`sunpy`)
 returned full-text hits.
 
+**Search since 2026-10-29** (run 2026-11-12): Zenodo keyed on Annex's ORCID (it returns the 2024 decks
+above, the positive control) and on the term `SpiceyPy` (a nonsense token returns 0); DataCite on titles
+and on relations to the concept DOI and to the JOSS DOI; Crossref bibliographic search. Nothing new about
+the software, or asked for by it, appeared: only the v8.4.0 software deposit, a supporting dataset for a
+Mars-geology paper Annex co-authored (`10.5281/zenodo.23981822`, not about SpiceyPy) and a release deposit
+of napari, which he co-authors. Semantic Scholar counted 136 citations of the JOSS paper. ADS/SciX
+full-text and acknowledgement searches were not run for this period, so the next update should run them
+from 2026-10-29; the rule-5 conclusion above does not depend on them.
+
 ### 28. Related Datasets (OPTIONAL)
 Not found.
 
@@ -713,8 +766,10 @@ browser runtime, which is infrastructure, not a peer-tool exchange. The docs exa
 `main` after v8.3.0 (read at `fb98550`) runs in a browser environment that also installs astropy, scipy
 and sympy; its scratchpad page shows `spice.str2et(Time("2019-06-10", scale="utc").isot)`, which hands an
 astropy time to SpiceyPy as an ISO-8601 string. A string any time library can produce is not a
-package-specific exchange (Tier B, rule 4), so astropy is not listed. A documented empty value is the
-correct outcome.
+package-specific exchange (Tier B, rule 4), so astropy is not listed. The JupyterLite scratchpad notebook
+added in v8.4.0 (`docs/scratchpad.ipynb`, read at `222264e`) installs the same packages plus matplotlib and
+repeats that `str2et(Time(...).isot)` line; it is a documentation page and adds no exchange. A documented
+empty value is the correct outcome.
 
 ### 31. Related Instruments (OPTIONAL)
 None — no entries. Documented omission (SPASE ladder rule 5).
