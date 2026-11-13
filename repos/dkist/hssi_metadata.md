@@ -4,7 +4,7 @@
 **Repository:** https://github.com/DKISTDC/dkist
 **Source Revision:** 8ce3cc9b34116e4d58211ed2824629f2828c3e0f
 **Extraction Date:** 2026-07-30
-**Validation Date:** 2026-10-29
+**Validation Date:** 2026-11-13
 **Validation Status:** PASS
 Metadata for the DKIST User Tools (`dkist`) Python package, derived from the repository at the source
 revision above (commit `8fec76d`, the original `v1.18.0` tag, plus 8 commits) together with the
@@ -12,10 +12,12 @@ project's own Zenodo/DataCite release metadata, PyPI, conda-forge, ror.org and O
 the project re-pointed its `v1.18.0` tag to `8fa6aed` on its `1.18` release branch, so that revision
 no longer sits 8 commits after the tag in upstream terms. Sections whose evidence was re-read after
 that revision name the revision they cite: the default branch at
-`2a4b15ba7ea5ae33970e43716192f5b4236905a0` or the release tag `v1.18.1`
-(`9ad7a3ba12e9ecda4f611bfec2ec902d62697d62`). Every field carries its evidence. Controlled-list
-values are quoted verbatim from the HSSI controlled vocabularies; Fields 31 and 32 are resolved to
-SPASE identifiers.
+`2a4b15ba7ea5ae33970e43716192f5b4236905a0`, the release tag `v1.18.1`
+(`9ad7a3ba12e9ecda4f611bfec2ec902d62697d62`), or, for what the v1.19.0 release changed, the default
+branch at `83226a805ba946066c5a87f77cf9c96e1b34b80c`, one commit after the `v1.19.0` tag
+(`be9d256c48856ad80c5521c4cc39325a81168dc9`) that changes only the README's CI badge. Every field
+carries its evidence. Controlled-list values are quoted verbatim from the HSSI controlled
+vocabularies; Fields 31 and 32 are resolved to SPASE identifiers.
 
 ---
 
@@ -31,11 +33,13 @@ https://doi.org/10.5281/zenodo.18494047
 - This is the Zenodo **concept** DOI, which is what the field asks for ("the concept DOI for all
   versions"). An earlier record held `https://zenodo.org/records/18494048` — a version-record URL for
   v1.17.0, which is neither a DOI nor a concept identifier.
-- Evidence: every dkist Zenodo version record (v1.17.0, v1.18.0 and v1.18.1) reports
-  `conceptdoi = 10.5281/zenodo.18494047` and `conceptrecid = 18494047`. DataCite for
-  `10.5281/zenodo.18494047` lists the three version DOIs as `HasVersion` (the v1.18.1 DOI carries
-  `IsVersionOf` back to it), and in October 2026 it reported `version = "v1.18.1"`, the latest
-  release. The version-specific DOI belongs in Field 12 (Version PID), not here.
+- Evidence: every dkist Zenodo version record (v1.17.0, v1.18.0, v1.18.1, v1.19.0rc1 and v1.19.0)
+  reports `conceptdoi = 10.5281/zenodo.18494047` and `conceptrecid = 18494047`. DataCite for
+  `10.5281/zenodo.18494047` lists the five version DOIs as `HasVersion` (the v1.19.0 DOI carries
+  `IsVersionOf` back to it), and in November 2026 it reported `version = "v1.19.0"`, the latest
+  release, whose deposit is also the most recently created, so the concept resolves to it. The
+  `v1.19.0rc1` deposit (`10.5281/zenodo.24164396`) records a GitHub pre-release, which is not a
+  release (Field 12). The version-specific DOI belongs in Field 12 (Version PID), not here.
 
 ### 3. Code Repository (MANDATORY)
 https://github.com/DKISTDC/dkist
@@ -86,6 +90,14 @@ listed together with its parent category.
   instrument geometry that is specific to one observatory's instruments and is implemented in this
   package rather than inherited from `sunpy`/`astropy`. Defensible but not literal; noted so a reader
   can judge it rather than assume a spacecraft-frame case.
+  Since v1.19.0 (#713; read at `83226a8`), `dkist/wcs/models.py` also implements the FITS
+  `-GRA`/`-GRI` grating/grism spectral-coordinate formalism (`RefractedAngleSineModel`,
+  `WavelengthFromGrismEquation`, `build_grating_spectral_transform`): a pixel-to-wavelength transform
+  for the non-linear dispersion of some DKIST spectral axes, which the DKIST ASDF schemas
+  (`dkist-wcs-1.6.0` manifest) carry in each dataset's gWCS (`docs/whatsnew/1.19.rst`). It adds to
+  the evidence for the parent `Coordinate Transforms` but brings no new value, since no child row
+  describes a spectral-axis transform. Nor is it calibration: it evaluates grating parameters the
+  FITS headers already carry (`CRVALn`, `CDELTn`, `PVn_*`), which is reading the product.
 - *Data Processing and Analysis (+ Data Access and Retrieval, 2D Slices, Data Reduction,
   Processing).* `dkist.net.DKISTClient` is a `sunpy.net.Fido` client that searches the DKIST Data
   Center dataset inventory and fetches dataset ASDF files; `dkist.io.DKISTFileManager.download()`
@@ -100,6 +112,12 @@ listed together with its parent category.
   `Processing` covers the remaining structural operations the package implements itself: masking
   (`TiledDataset.mask`), cropping, flattening (`TiledDataset.flat`), header-table slicing
   (`Dataset._slice_headers`) and lazy per-file array assembly (`dkist/io/dask/striped_array.py`).
+  Since v1.19.0 (#694; read at `83226a8`), `Dataset.meta["extras"]` also exposes a dataset's extras,
+  "diagnostic or intermediate products created during processing" (`docs/whatsnew/1.19.rst`), as
+  `DatasetExtra` objects whose headers come from the ASDF file and whose arrays load lazily from the
+  FITS files (`dkist/dataset/extras.py`), and `DKISTFileManager.download_dataset_extras()` transfers
+  them over Globus. That is more `Data Access and Retrieval` and `Mission-related:
+  Distribution/Access`; the package computes none of these products.
 - *Data Visualization (+ 2D Graphics, 2D Slices, Line Plots, Mission-Specific, Movies).*
   `TiledDataset.plot()` builds a WCSAxes gridspec mosaic of image tiles with shared z-scaling and
   optional axis inversion (`swap_tile_limits`, needed for DL-NIRSP) and titles drawn from the DKIST
@@ -118,7 +136,11 @@ listed together with its parent category.
   Data Center. Inventory: `dkist/utils/inventory.py` defines `INVENTORY_KEY_MAP` with ~60 DKIST
   inventory keys and `humanize_inventory`/`dehumanize_inventory`/`path_format_inventory`;
   `Dataset.inventory` and `TiledDataset.inventory` expose the dataset inventory record, and
-  `DKISTQueryResponseTable` renders it.
+  `DKISTQueryResponseTable` renders it. To the transfer layer v1.19.0 adds
+  `DKISTFileManager.download_dataset_extras()` and `dkist.net.globus.use_transfer_client` (#771),
+  which lets an application supply an already-authorized Globus transfer client; to
+  `INVENTORY_KEY_MAP`, which holds 59 keys at `83226a8`, it adds `qualityDataObjectKey` ("Quality Data
+  Filename", #748).
 - *Mission-related: Archive.* Repository evidence supports this as the mission archive's official
   **client**: it queries the DKIST Data Center dataset search service, retrieves archived Level 1
   ASDF metadata, FITS data, quality reports and preview movies, and exposes archive-side provenance
@@ -181,7 +203,10 @@ source. Both were removed; the reasons are recorded here so the omission is not 
   value already listed: the Level 2 `Inversion`/`Profiles` classes *hold and display* inversion results
   computed elsewhere (`Data Visualization` + `Mission-Specific`); the quality/seeing surface is the
   `FriedParameter` search attribute plus a downloaded report (`Data Access and Retrieval`); `rebin` is
-  `Data Reduction`; masking and cropping are `Processing`. A justification of the form "derived
+  `Data Reduction`; masking and cropping are `Processing`. A fifth, added in v1.19.0 (#713), is the
+  grating/grism models: they compute each pixel's wavelength coordinate, a WCS transform recorded
+  under `Coordinate Transforms`, not a derived physical quantity. The sweeps above were rerun at
+  `83226a8` with the same result. A justification of the form "derived
   quantities are computed on the Dask array backing `Dataset.data`" would be equally true of any
   array-backed package and so carries no information.
 - `Data Processing and Analysis: File Format Conversion` — `dkist.save_dataset()` writes a
@@ -217,13 +242,15 @@ instrument specifically.
 
 ### 6. Authors (MANDATORY)
 
-**16 authors.** The project's own release metadata for v1.18.1 — the Zenodo record, mirrored by
-DataCite — credits 15 people. One further author is an organization, credited in the repository itself
+**17 authors.** The project's own release metadata for v1.19.0 — the Zenodo record, mirrored by
+DataCite — credits 16 people. One further author is an organization, credited in the repository itself
 by `pyproject.toml`, `LICENSE.rst` and `docs/conf.py`. Stuart J. Mumford is credited in both places and
-counted once, giving 16. There is no `CITATION.cff`, `codemeta.json` or `.zenodo.json` in the
-repository (at `2a4b15b` or at `v1.18.1`), so the release record is the most complete author list
-available and no credited author is omitted. The v1.18.1 record credits two creators the v1.18.0 record
-did not, Thomas Robitaille and Soumyaranjan Dash, who are authors 15 and 16 below.
+counted once, giving 17. There is no `CITATION.cff`, `codemeta.json` or `.zenodo.json` in the
+repository (at `2a4b15b`, at `v1.18.1` or at `83226a8`), so the release record is the most complete
+author list available and no credited author is omitted. The v1.18.1 record credited two creators the
+v1.18.0 record did not, Thomas Robitaille and Soumyaranjan Dash (authors 15 and 16 below), and the
+v1.19.0 record credits one more, Jim Arnow (author 17). Its other creators, and the affiliations it
+gives them, are those of the v1.18.1 record in a different order.
 
 Affiliations come from two kinds of source, distinguished per author below: those given directly in the
 **DKIST release metadata** (Mumford's Aperio Software Ltd.; the National Solar Observatory affiliations
@@ -231,9 +258,9 @@ of Johansson, Eigenbrot, Larson and Dash, corroborated by `@nso.edu` commit addr
 his ORCID employment; Freij's SETI Institute and Lockheed Martin Solar and Astrophysics Laboratory;
 Dencheva's and Jamieson's Space Telescope Science Institute), and those **documented in other
 authoritative sources** where the DKIST record gives no such affiliation (Leonard's Aperio Software
-Ltd., Van Kooten's Southwest Research Institute, Derks's National Solar Observatory, resting on her
-institutional commit address, and Freij's third affiliation, Bay Area Environmental Research
-Institute).
+Ltd., Van Kooten's Southwest Research Institute, the National Solar Observatory affiliations of Derks
+and Arnow, resting on their institutional commit addresses, and Freij's third affiliation, Bay Area
+Environmental Research Institute).
 
 1. **Stuart J. Mumford** — https://orcid.org/0000-0003-4217-4642
    - Affiliation: Aperio Software Ltd. (no ROR found)
@@ -270,8 +297,8 @@ Institute).
      is `Drew Leonard <andy.j.leonard@gmail.com>`, whose `andy.j.leonard` prefix ties the credited
      "Drew" to "Andrew" and supplies the middle initial J. Keeping the alias on record means a reader
      comparing this entry against the DKIST release metadata can see why the names differ.
-   - He is the second-largest contributor to the repository by commit count (`git shortlog -sne --all`:
-     112 commits, behind only Mumford), so the credit is substantial.
+   - He is the second-largest contributor to the repository by commit count (`git shortlog -sne` at
+     `83226a8`: 121 commits on the default branch, behind only Mumford), so the credit is substantial.
 4. **Brett J Graham** — https://orcid.org/0000-0001-6315-4507
    - *Affiliation:* Space Telescope Science Institute — https://ror.org/036f5mx38
    - *Evidence:* an earlier revision of this file recorded "Brett Graham" with no identifier, reasoning
@@ -399,11 +426,28 @@ Institute).
       institutions Indian Institute of Science Education and Research Mohali and Utkal University), has
       no link to this work and is not used.
 
-**Two repository contributors are deliberately not credited.** They have commits in the repository
-but appear in no authorship source — neither the Zenodo v1.18.1 creator list nor the 16 authors above:
-`Zach Burnett <zachary.r.burnett@gmail.com>` (1 commit, `bf3dc0a` 2024-08-26, PR #422) and
-`Jim Arnow <jimarnow@gmail.com>` (1 commit, `2a4b15b` 2026-10-15, PR #771, which adds
-`dkist.net.globus.use_transfer_client`).
+17. **Jim Arnow** — identifier Not found
+    - Affiliation: National Solar Observatory — https://ror.org/00b9pg524
+    - *Evidence:* Zenodo/DataCite creator for v1.19.0, with no affiliation given there (absent from the
+      v1.17.0, v1.18.0 and v1.18.1 creator lists). His one commit, `2a4b15b` (PR #771, 2026-10-15,
+      which adds `dkist.net.globus.use_transfer_client`), is authored as
+      `Jim Arnow <jimarnow@gmail.com>` from the GitHub account `JimArnow` and carries the trailer
+      `Co-authored-by: Jim Arnow <jarnow@nso.edu>`, which GitHub attributes to a second account,
+      `JimArnow-nso`. The pull request says the change "enables integration tests within the data
+      center test systems". The name is written as the release metadata and the commit write it.
+    - *Affiliation source — repository evidence, as for Derks:* the institutional `@nso.edu` address on
+      his October 2026 commit, corroborated by the NSO-suffixed account and by the Data Center test
+      systems the pull request serves. Neither GitHub profile names a company.
+    - *ORCID candidate reviewed and rejected — not an unexplored gap.* The sole ORCID record a fielded
+      search returns for the name, https://orcid.org/0009-0005-7147-1381 ("Jim Arnow"), lists only an
+      undated University of Colorado Boulder employment with no role, and no works, researcher URLs or
+      keywords. Nothing ties it to this work or to his `@nso.edu` address, so the binding is not made.
+      Do not adopt it in a later pass without new corroboration.
+
+**One repository contributor is deliberately not credited.** `Zach Burnett
+<zachary.r.burnett@gmail.com>` (1 commit, `bf3dc0a` 2024-08-26, PR #422) has a commit in the
+repository but appears in no authorship source — neither the Zenodo v1.19.0 creator list nor the 17
+authors above. Every other human committer on the default branch at `83226a8` is a credited author.
 
 Field 6 is headed "Authors" and defined as "The author(s) of this software". It has no contributor
 sub-field and no wording that extends it to everyone who has landed a commit, so it records **credited
@@ -411,13 +455,12 @@ authors**, not all contributors — and the authoritative statement of whom this
 own archival creator list, which the DKIST team controls through its GitHub-Zenodo release process.
 Crediting people the project has not credited would assert authorship on the project's behalf.
 
-The two cases differ, and one is worth revisiting. Arnow's commit post-dates the v1.18.1 release
-(2026-08-21) whose Zenodo record supplied the creator list, so his absence is a timing artifact: the
-next release's creator list should settle it, and if it credits him he should be added then. Thomas
-Robitaille was in the same position after v1.18.0, whose creator list predated his July 2026 commits,
-and the v1.18.1 list settled it by crediting him (author 15). Burnett's commit predates every archived
-release, so his absence from the v1.17.0, v1.18.0 *and* v1.18.1 creator lists is a persistent
-editorial state rather than a timing gap.
+Burnett's commit predates every archived release, so his absence from the v1.17.0, v1.18.0, v1.18.1
+*and* v1.19.0 creator lists is a persistent editorial state rather than a timing gap. Two later
+committers were in a different position, and in each case the next release settled it: Thomas
+Robitaille's July 2026 commits post-dated the v1.18.0 creator list, and the v1.18.1 list credits him
+(author 15); Jim Arnow's October 2026 commit post-dated the v1.18.1 list, and the v1.19.0 list credits
+him (author 17).
 
 All organization names are spelled out rather than abbreviated.
 
@@ -490,7 +533,7 @@ The three candidates as evaluated:
 |---|---|---|
 | GitHub repository creation | 2017-11-30 | Verifiable, but not a publication of software, and it corresponds to **no version at all** — so it fails the "initial version of the software" half outright. |
 | First PyPI upload, `0.1.dev254` | 2019-04-09 | A publication, but a one-off: it is the **only** `dev`-style release in the project's entire PyPI history, a single file, with **no matching git tag**, followed by 11½ months of silence. It reads as a name-reservation or trial upload rather than a published version of the software. |
-| First tagged release, `v0.1a1` | 2020-03-27 | **Selected.** The first version the project deliberately cut: it exists as both a git tag and a PyPI release, and it opens the unbroken release series that runs to 1.18.1. Being an alpha does not disqualify it — it is unambiguously the initial version, and its upload is a genuine publication. |
+| First tagged release, `v0.1a1` | 2020-03-27 | **Selected.** The first version the project deliberately cut: it exists as both a git tag and a PyPI release, and it opens the unbroken release series that runs to 1.19.0. Being an alpha does not disqualify it — it is unambiguously the initial version, and its upload is a genuine publication. |
 
 ### 11. Publisher (RECOMMENDED)
 - **Organization:** Zenodo
@@ -501,52 +544,115 @@ identifier. That is a Zenodo version-record URL, not a publisher name. DataCite 
 `publisher = "Zenodo"` for the concept DOI and the dkist version DOIs, and this field's instructions
 name Zenodo as the correct entry for software whose DOI came from the GitHub-Zenodo workflow — which
 this is: each Zenodo version record is `isSupplementTo` the GitHub tree of its release tag, the latest
-being `https://github.com/DKISTDC/dkist/tree/v1.18.1`.
+being `https://github.com/DKISTDC/dkist/tree/v1.19.0`.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** 1.18.1
-- **Version Date:** 2026-08-21
-- **Version PID:** https://doi.org/10.5281/zenodo.22047512
-- **Version Description:** Fix coordinate clipping behaviour of Ravel model.
+- **Version Number:** 1.19.0
+- **Version Date:** 2026-11-12
+- **Version PID:** https://doi.org/10.5281/zenodo.24175960
+- **Version Description:** the indented block below, exactly, with four spaces removed from the start
+  of each line. Its blank lines are part of it, and its nested items keep a further four-space indent.
 
-- 1.18.1 is the newest release, superseding 1.18.0 (released 2026-06-23, version DOI
-  `10.5281/zenodo.20819708`), which HSSI held until this update. This patch release was cut on a release
-  branch: `v1.18.1` tags `9ad7a3b` on the `1.18` branch, which was cut from the default branch
-  at `8fec76d` ("Prepare for release of v1.18 (#728)", the merge base of `1.18` and `main`). The GitHub
-  release `v1.18.1` is not a pre-release, targets `1.18` and was published `2026-08-21T15:19:11Z`; PyPI
-  received `dkist` 1.18.1 at `2026-08-21T15:42:45Z`; the Zenodo version record `22047512` has
-  `version = "v1.18.1"`, `publication_date = 2026-08-21` and `isSupplementTo`
-  `https://github.com/DKISTDC/dkist/tree/v1.18.1`. No later release exists: there is no newer tag or
-  GitHub release, and the default branch's commits after the branch point (to `2a4b15b`) are
-  unreleased; their towncrier fragments in `changelog/` describe work for a future release and are not
-  used here.
-- *Tag history:* on 2026-08-20 the project re-pointed `v1.18.0` from `8fec76d` on the default branch to
-  `8fa6aed` on `1.18` (a signed annotated tag) and uploaded 1.18.0 to PyPI that day; the GitHub release
-  `v1.18.0` keeps its 2026-06-23 publication date. `v1.18.1` is the single commit after the re-pointed
-  tag, the Ravel fix from PR #751, which the default branch carries separately as `e71f49b`.
-- The version number is recorded as the bare `1.18.1`, the form the stored 1.18.0 used, although the
-  tag writes `v1.18.1`; the version PID is a full DOI URL as the field requires.
-- *Date:* the GitHub release's publication day in UTC, corroborated by the PyPI upload and the Zenodo
-  deposit on the same day. The `CHANGELOG.rst` heading "1.18.1 (2026-08-26)" on the default branch is
-  not the release date and is not used.
+    ## Backwards Incompatible Changes
+
+    - Drop support for Python 3.11 and update minimum versions of dependencies:
+        - Python >= 3.12
+        - aiohttp >= 3.12
+        - asdf-standard >= 1.2
+        - asdf-wcs-schemas >= 0.5
+        - astropy >= 7.0
+        - dask >= 2024.12.0
+        - matplotlib >= 3.10
+        - sunpy >= 6.1
+        - tqdm >= 4.68
+
+    ## Deprecations and Removals
+
+    - Rename the `figure=` keyword argument of `.TiledDataset.plot`, `.Inversion.plot`, and `.Profiles.plot` to `fig=`, for consistency with `ndcube.NDCube.plot`.
+
+    ## Features
+
+    - Add support for dataset extras in `.Dataset.meta`, including reading headers from the ASDF file and lazy-loading the arrays from the FITS files.
+    - Added `dkist.wcs.models.RefractedAngleSineModel` and `dkist.wcs.models.WavelengthFromGrismEquation`, which implement the FITS `-GRA`/`-GRI` grating/grism spectral-coordinate formalism (Greisen et al. 2006), along with ASDF serialization for both. Added `dkist.wcs.models.build_grating_spectral_transform` to compose them into a pixel-to-wavelength transform from FITS-facing grating parameters.
+    - Add a human readable name for the `qualityDataObjectKey` inventory key, which is displayed as "Quality Data Filename" and can be used as the `{quality_data_filename}` path interpolation key.
+    - Add `dkist.net.globus.use_transfer_client` to allow applications to supply an already-authorized Globus Transfer client for directory listings and dataset downloads.
+
+    ## Bug Fixes
+
+    - Fix silent data corruption when combining two file-backed arrays in a single dask graph (for example stacking or mosaicking tiles of a `~dkist.TiledDataset`): every array built by `dkist.io.dask.utils.stack_loader_array` shared the dask graph layer name `load_files`, so dask deduplicated their file loading tasks and used one array's data for all of them. Each array now gets a unique layer name.
+    - `ignore_version_mismatch` is now honored when `dkist.load_dataset` is given a string path, a list of inputs or `~parfive.Results`; previously it was silently ignored for these input types and only worked for `~pathlib.Path` input.
+    - Fix coordinate clipping behaviour of Ravel model.
+    - Fix `~dkist.wcs.models.VaryingCelestialTransform` and `~dkist.wcs.models.Ravel` returning NaN at the far pixel edge of an even-length axis. A lookup halfway between two table rows now always uses the later row.
+    - Fix three bugs in varying celestial transforms:
+        - Fix 3D `~dkist.wcs.models.VaryingCelestialTransform` lookups that ignored the third index.
+        - Return NaN for inverse lookups outside the table.
+        - Allow scalar pixel coordinates without units alongside an array of lookup indices.
+
+- 1.19.0 is the newest release, superseding 1.18.1 (released 2026-08-21, version DOI
+  `10.5281/zenodo.22047512`), which HSSI held until this update. Unlike 1.18.1 it was cut on the
+  default branch: `v1.19.0` is a lightweight tag on `be9d256` ("Prepare for release of v1.19.0
+  (#779)", committed 2026-11-12T21:12:20Z), an ancestor of the default branch, whose head `83226a8`
+  adds only a README badge change. The GitHub release `v1.19.0` is marked Latest, is not a
+  pre-release, and was published `2026-11-12T21:12:43Z`; PyPI received `dkist` 1.19.0 at
+  `2026-11-12T21:29:32Z` (wheel and sdist, neither yanked); the Zenodo version record `24175960` has
+  `version = "v1.19.0"`, `publication_date = 2026-11-12` and `isSupplementTo`
+  `https://github.com/DKISTDC/dkist/tree/v1.19.0`. The version is dynamic (`setuptools_scm`), so the
+  tag is what declares it. No later tag, GitHub release or PyPI upload exists, and the `1.18` release
+  branch has nothing after `v1.18.1`.
+- *Not a release:* `v1.19.0rc1` (a tag on `e00481c`, a GitHub release marked Pre-release and published
+  2026-11-12T14:09:54Z, the PyPI upload 1.19.0rc1 and the Zenodo deposit `10.5281/zenodo.24164396`) is
+  a release candidate and never counts.
+- The version number is recorded as the bare `1.19.0`, the form the stored 1.18.1 and 1.18.0 used,
+  although the tag writes `v1.19.0`; the version PID is a full DOI URL as the field requires.
+- *Date:* the GitHub release's publication day in UTC, corroborated by the tagged commit, the PyPI
+  upload and the Zenodo deposit (created 2026-11-12T21:12:54Z) on the same day; the `CHANGELOG.rst`
+  heading "1.19.0 (2026-11-12)" agrees.
 - *Description:* the release title is only the tag name, so the text comes from the release body,
-  whose single item, under "Bug Fixes", is kept verbatim; `CHANGELOG.rst` carries the same item. The
-  fix makes the `dkist.wcs.models.Ravel` model return NaN for pixel coordinates outside the array,
-  where it previously clipped indices past the upper edge to the last pixel (`dkist/wcs/models.py` and
-  `test_ravel_oob_nan` at `9ad7a3b`). The body's closing "**Full Changelog**" comparison link is a
-  generated pointer and is dropped.
-- *PID:* `10.5281/zenodo.22047512` is the version DOI of exactly this release: it is one of the concept
-  DOI's `HasVersion` entries, and its deposit carries `version = "v1.18.1"` and the `tree/v1.18.1`
+  which is the `1.19.0 (2026-11-12)` section of `CHANGELOG.rst` at the tag as towncrier compiled it,
+  rendered to markdown. Kept verbatim, under the body's own section headings:
+  - the backwards-incompatible item, whole. Its subject is the dropped Python 3.11 support, and its
+    nested list is the project's own statement of the minimum versions an installation of this release
+    needs; leaving the nested items out would leave the item's "update minimum versions of
+    dependencies:" pointing at nothing;
+  - the `fig=` keyword rename, an API change;
+  - four features: dataset extras (#694), the grating/grism spectral models (#713), the "Quality Data
+    Filename" inventory key (#748) and `use_transfer_client` (#771);
+  - all five bug fixes (#735, #737, #751, #764, #765). The Ravel clipping fix (#751) also shipped in
+    1.18.1, as a backport on the `1.18` branch, but it is this release's own item, and a user upgrading
+    from the 1.18.0 line meets it here.
+
+  Dropped whole, as documentation and housekeeping a user does not meet in the software: the example
+  notebook for retrieving dataset metadata (#723, filed under Features but a documentation page,
+  `docs/examples/dataset_retrieval_and_metadata.md`), the ViSP-extent example (#578, Improved
+  Documentation), and both Trivial/Internal items, release-process fixes (#730) and `repr` consistency
+  for `Inversion` and `Profiles` (#745). Also dropped are the body's opening heading
+  `1.19.0 (2026-11-12)`, which repeats the number and date shown beside the description, and the
+  pull-request link that ends each item.
+- *How the text is represented, so a later refresh does not "fix" it:* the release body wraps each
+  Sphinx cross-reference in `<span class="title-ref">…</span>`, which HSSI's release-notes renderer
+  strips, so each is written as a markdown code span with the characters `CHANGELOG.rst` gives it,
+  its leading `.` or `~` included. The `:func:` role on `build_grating_spectral_transform` is markup,
+  and the release body drops it too. Nested items are indented four spaces because the renderer nests
+  a list only at that depth. Item by item, the words are the release body's and the CHANGELOG's own.
+- *PID:* `10.5281/zenodo.24175960` is the version DOI of exactly this release: it is one of the concept
+  DOI's `HasVersion` entries, and its deposit carries `version = "v1.19.0"` and the `tree/v1.19.0`
   link.
-- *Distribution channels:* PyPI carries 1.18.0 and 1.18.1, while conda-forge still showed 1.17.0 as its
-  newest version in October 2026. The GitHub release and the DOI record are the authoritative sources
-  this field points at; the conda-forge lag is recorded so it is not mistaken for an error.
+- *Superseded:* the 1.18.1 row's description was that release's single item, "Fix coordinate clipping
+  behaviour of Ravel model.", and does not carry over; the new release's description is derived
+  afresh. 1.18.1 was cut on the `1.18` release branch: `v1.18.1` tags `9ad7a3b`, the single commit
+  after the `v1.18.0` tag, which the project re-pointed on 2026-08-20 from `8fec76d` on the default
+  branch to `8fa6aed` on `1.18` (a signed annotated tag); the GitHub release `v1.18.0` kept its
+  2026-06-23 publication date. The default branch carries the same Ravel fix separately as `e71f49b`.
+- *Distribution channels:* PyPI carries 1.19.0, while conda-forge still showed 1.17.0 as its newest
+  version in November 2026. The GitHub release and the DOI record are the authoritative sources this
+  field points at; the conda-forge lag is recorded so it is not mistaken for an error.
 
 ### 13. Programming Language (RECOMMENDED)
 - Python 3.x
 
-*Evidence:* `pyproject.toml` sets `requires-python = ">=3.11"`, CI runs py311–py314, and `.cruft.json`
-records `use_compiled_extensions: "n"` (pure Python).
+*Evidence:* `pyproject.toml` sets `requires-python = ">=3.12"` (raised from `">=3.11"` in v1.19.0,
+#777), CI runs py312–py314, and `.cruft.json` records `use_compiled_extensions: "n"` (pure Python);
+read at `83226a8`.
 
 *Note:* Shell also appears in the repository, in two CircleCI helper scripts
 (`.circleci/codecov_upload.sh`, `.circleci/early_exit.sh`). Excluded — this field is for the languages
@@ -554,7 +660,7 @@ records `use_compiled_extensions: "n"` (pure Python).
 
 ### 14. Reference Publication (OPTIONAL)
 Not found — the repository contains no `CITATION.cff`, no `codemeta.json`, and no "how to cite"
-section in `README.rst`, `CONTRIBUTING.md` or the documentation (rechecked at `2a4b15b`); there is no
+section in `README.rst`, `CONTRIBUTING.md` or the documentation (rechecked at `83226a8`); there is no
 JOSS or software paper referenced anywhere in the source tree, and the literature search recorded
 under Field 27 found no peer-reviewed paper describing the package. The developers' presentations
 about it, a 2018 slide deck and five meeting abstracts, are not a reference publication, and the 2016
@@ -674,8 +780,9 @@ the package.
 - Windows
 
 *Evidence:* `.github/workflows/ci.yml` (formerly `main.yml`) runs the test matrix as `- linux: py314`,
-`- windows: py312`, `- macos: py313`, `- linux: py311`, `- linux: py311-oldestdeps`, at both `v1.18.1`
-and `2a4b15b`. Windows support is actively
+`- windows: py312`, `- macos: py313`, `- linux: py312`, `- linux: py312-oldestdeps` and
+`- linux: py314-devdeps` at `83226a8`, the v1.19.0 code; `v1.18.1` and `2a4b15b` ran the same three
+platforms, with py311 where py312 now stands. Windows support is actively
 maintained (CHANGELOG 1.17.0: "Fixes the format of paths being passed to `ds.files.download()` on
 Windows so that globus can understand it").
 
@@ -707,12 +814,13 @@ instead because they are what CI actually verifies.
 ### 23. Development Status (RECOMMENDED)
 Active
 
-*Evidence:* release `v1.18.1` on 2026-08-21; the last commit on the default branch is `2a4b15b`,
-dated 2026-10-15; a weekly scheduled CI cron plus mypy, docs, benchmark and downstream-test workflows;
-a live towncrier changelog with unreleased fragments in `changelog/`; the GitHub repository is not
-archived, and the README carries no repostatus.org badge or status statement. The software has
-reached a stable, usable state and was last committed to on 2026-10-15, which places it in
-repostatus.org "Active": reached a stable, usable state and being actively developed.
+*Evidence:* release `v1.19.0` on 2026-11-12; the last commit on the default branch is `83226a8`,
+dated 2026-11-12 (read on 2026-11-13); a weekly scheduled CI cron plus mypy, docs, benchmark and
+downstream-test workflows; a towncrier changelog, whose fragments under `changelog/` the v1.19.0
+release compiled into `CHANGELOG.rst`; the GitHub repository is not archived, and the README carries no
+repostatus.org badge or status statement. The software has reached a stable, usable state and was
+last committed to on 2026-11-12, which places it in repostatus.org "Active": reached a stable, usable
+state and being actively developed.
 
 ### 24. Documentation (RECOMMENDED)
 https://docs.dkist.nso.edu/projects/python-tools/en/stable/
@@ -824,6 +932,10 @@ documentation, and the DataCite records' related identifiers are the GitHub sour
 - Bauer, A. E. et al., "Petabytes to Science" (`2019arXiv190505116B`) — a community white paper on
   petabyte-scale astronomy data whose full text matches the package name; it presents no results built
   with the package.
+- "DASH 2023 Videos of presentations" (`https://doi.org/10.5281/zenodo.23771193`, a video deposit made
+  in October 2026 by the Johns Hopkins University Applied Physics Laboratory) — recordings of the DASH
+  2023 talks, among them Davey's VSO / DKIST perspective weighed above. A talk recording is not an
+  eligible publication, and that talk is not about the package.
 - Developers' publications: the items above are what ADS searches for DKIST papers and abstracts
   bylined by any of the package's credited authors, and Zenodo creator searches for Mumford, Leonard and
   Davey with "DKIST", returned that bear on the package or the Data Center.
@@ -832,8 +944,18 @@ documentation, and the DataCite records' related identifiers are the GitHub sour
   paper that credits results to this package. Three 2026 papers whose acknowledgements name DKIST
   (`2026Natur.656..595K`, `2026ApJ..1008...29P`, `2026ApJ..1008...44Z`) contain none of those package
   phrases, `dkist.net` or `load_dataset` in their full text. Controls: a nonsense phrase returned
-  nothing, and `ack:"sunpy"` returned recent papers. The searches were run in October 2026; a later
-  update searches from then.
+  nothing, and `ack:"sunpy"` returned recent papers. The searches were run in October 2026 and
+  repeated in November 2026 for records entered from 2026-10-01, together with ADS author searches for
+  Mumford, Leonard, Davey, Larson and Arnow and Zenodo creator searches, which found nothing new by
+  them. The package phrases, `dkist.net`, the concept DOI and the documentation path again matched
+  nothing. Seven papers entered since then acknowledge DKIST (`2026ApJ..1011L..25Y`,
+  `2026ApJ..1011L..16P`, `2026ApJ..1011...56R`, `2026ApJ..1010...85F`, `2026ApJ..1010..179D`,
+  `2026ApJ..1010...79C`, `2026A&A...714A.313A`), and none credits the package: their full texts
+  contain none of those phrases, Yadav et al. credit matplotlib and SunPy, and Fischer et al. fit with
+  lmfit. The one full-text match for `load_dataset` with `dkist`, the SoFTg granulation-segmentation
+  preprint (`2026arXiv261035100B`), matches only "loading the dataset" and lists PyTorch and Astropy as
+  its software. Controls: a nonsense phrase again returned nothing, and `ack:"sunpy"` returned 14
+  records. A later update searches from 2026-11-13.
 
 ### 28. Related Datasets (OPTIONAL)
 Not found — no dataset DOI is referenced in the repository.
@@ -958,7 +1080,7 @@ instrument-specific guides.
 
 **No instrument record exists.** Searching the controlled instrument/observatory vocabulary for
 `dkist`, `inouye`, `nirsp`, `visp`, `vbi`, `vtf`, `broadband`, `spectro-polarim` and `cryo` finds no
-instrument-type record for VBI, ViSP, DL-NIRSP, Cryo-NIRSP or VTF (rechecked in October 2026). The
+instrument-type record for VBI, ViSP, DL-NIRSP, Cryo-NIRSP or VTF (rechecked in November 2026). The
 only DKIST match is the observatory record in Field 32; the other matches are unrelated resources
 (`broadband` matches the GO-ABOVE observatory and the TIMED/SABER instrument, `spectro-polarim` the
 NAOJ instrument "SFT/T2 full-disk infrared full-Stokes spectro-polarimeter"). Following SPASE/HDRL guidance that a missing instrument record must not
