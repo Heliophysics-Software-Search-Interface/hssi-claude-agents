@@ -4,8 +4,8 @@
 **Repository:** https://github.com/louis-richard/irfu-python
 **Source Revision:** 40505b6a6e69c6c6ade8ff57062fbb21f23734b8
 **Extraction Date:** 2026-07-26
-**Validation Date:** Pending
-**Validation Status:** Pending
+**Validation Date:** 2026-11-13
+**Validation Status:** PASS
 
 **Source revision context:** `40505b6a6e69c6c6ade8ff57062fbb21f23734b8` (2026-02-27, "Bump version 2.4.20 -> 2.4.21"), the `v2.4.21` tag commit, was the head of `master` at extraction (2026-07-26), checked against `GET https://api.github.com/repos/louis-richard/irfu-python/branches/master`; the repository's later `pushed_at` then came only from the unreleased `devel` branch. The releases since, and the revisions their evidence was read at, are in the next paragraph.
 

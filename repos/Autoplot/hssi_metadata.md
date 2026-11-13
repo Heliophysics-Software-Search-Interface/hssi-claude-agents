@@ -4,8 +4,8 @@
 **Repository:** https://github.com/autoplot/autoplot
 **Source Revision:** f792e887adb886bb002326adc30b22c4e37b9ffc (2026-07-23, Jeremy Faden, "release notes")
 **Extraction Date:** 2026-07-30
-**Validation Date:** Pending
-**Validation Status:** Pending
+**Validation Date:** 2026-11-13
+**Validation Status:** PASS
 
 This file was seeded from the existing HSSI record, then enriched and corrected from the pinned
 source revision and authoritative external sources. Autoplot's source migrated from the frozen
