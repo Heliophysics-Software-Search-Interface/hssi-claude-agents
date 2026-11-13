@@ -4,7 +4,7 @@
 **Repository:** https://github.com/autoplot/autoplot
 **Source Revision:** f792e887adb886bb002326adc30b22c4e37b9ffc (2026-07-23, Jeremy Faden, "release notes")
 **Extraction Date:** 2026-07-30
-**Validation Date:** 2026-11-02
+**Validation Date:** 2026-11-13
 **Validation Status:** PASS
 
 This file was seeded from the existing HSSI record, then enriched and corrected from the pinned
@@ -20,12 +20,14 @@ model, dasCore/dasCoreUtil/dasCoreDatum/QStream) uses an SSH URL and was inspect
 lists) were supplementary sources only.
 
 **Release builds bundle das2java's main branch, not the gitlink.** The `das2java` gitlink has stayed
-at `c87f2744f783e378679e13fa04562ad5227b1300` (2025-06-12) while the published releases carry far
-newer das2java code: the v2026a_8 jar contains `org.das2.qds.buffer.CcsdsReader`, which das2java
-added in September 2026. Evidence for what a release can do is therefore read in das2java at the
-last commit before that release was built, not at the gitlink. For v2026a_8 that is das2java
-`256ede719f03309bab6c19763db2595c595a5bd6` (2026-09-25), paired with Autoplot
-`acdaee73a` (see Field 12); sections that cite those revisions were read there.
+at `c87f2744f783e378679e13fa04562ad5227b1300` (2025-06-12), and is still there at the default
+branch's head `ffadec23c7c1e2d1e88c233996c16246356d4c0a` (2026-11-13), while the published releases
+carry far newer das2java code: the v2026a_8 jar contains `org.das2.qds.buffer.CcsdsReader`, which
+das2java added in September 2026. Evidence for what a release can do is therefore read in das2java
+at the last commit before that release was built, not at the gitlink. For v2026a_8 that is das2java
+`256ede719f03309bab6c19763db2595c595a5bd6` (2026-09-25), paired with Autoplot `acdaee73a`; for
+v2026a_9 it is das2java `580c7d2c2c6e9190e3157ba34cafbd4f3e3c40a4` (2026-11-11), paired with
+Autoplot `6455ad60e` (see Field 12). Sections that cite those revisions were read there.
 
 All controlled-vocabulary values below were checked against the HSSI vocabulary available during
 validation.
@@ -94,13 +96,13 @@ child is accompanied by its parent.
 - **: 2D Slices** — `das2java:Ops.slice0/slice1/slice2/slice3`, `Ops.slices`, `Ops.collapse0..collapse3`, the `das2java:Slice0DataSet`–`Slice3DataSet` classes, `das2java:org.das2.qds.filters.SliceFilterEditorPanel`/`SlicesFilterEditorPanel`/`CollapseFilterEditorPanel`; interactive `das2java:VerticalSlicerMouseModule` and `HorizontalSlicerMouseModule` extract 1-D cross-sections from rank-2 spectrograms.
 - **: Analysis** — the `das2java:org.das2.qds.ops.Ops` statistical and derived-quantity library (`mean`, `median`, `stddev`, `variance`, `mode`, `meanAverageDeviation`, `extent`, `cumulativeMax/Min`, `diff`, `accum`, `total`, `where`); `CdfJavaDataSource/src/org/autoplot/cdf/CdfVirtualVars.java` reimplements CDAWeb/ISTP virtual variables in QDataSet, computing derived physical quantities (`calc_p` = solar-wind dynamic pressure `1.6726e-6 * np * Vp**2`, `compute_magnitude`, `convert_log10`, `sum_values`) and applying instrument quality flags (`apply_qflag`, `apply_esa_qflag`, `apply_filter_flag`, `region_filt`); event-list algebra (`das2java:Ops.eventsCoalesce/eventsComplement/eventsConjunction/eventsDiff/createEvents`); `das2java:CutoffMouseModule` for cutoff analysis.
 - **: Data Access and Retrieval** — URI-driven remote access is the software's central capability. Dedicated modules `CDAWebDataSource`, `HapiDataSource`, `Das2ServerDataSource`, `FedCatDataSource` (federated das2 catalog), `OpenDapDataSource`, `TsdsDataSource`, `PDSPPIDataSource`; virtual filesystems `org/autoplot/wgetfs` (HTTP/HTTPS), `DataSource/src/ftpfs` and bundled ftp4j (FTP/FTPS), `DataSource/src/zipfs`; `DataSetURI.getFile`/`downloadResourceAsTempFile` with local caching; `org/autoplot/aggregator` aggregates many remote files into one dataset via `$Y$m$d` URI templates and wildcards.
-- **: Data Reduction** — `das2java:Ops.decimate`, `reducex`-family (`reduceMean/reduceMax/reduceMin/reduceMedian/reduceSum`, `reduceBins`), `binData`, `histogram`, `histogram2d`, `autoHistogram`, `das2java:org.das2.qds.util.BinAverage`; filter editors `das2java:ReducexFilterEditorPanel`, `BinAverage2dFilterEditorPanel`, `HistogramFilterEditorPanel`, `Histogram2dFilterEditorPanel`; render-time reduction to one bin per pixel column, with the v2026a_6 release note "Keep track of data reduction and render error bars to show extent of the data in each pixel column."
+- **: Data Reduction** — `das2java:Ops.decimate`, `reducex`-family (`reduceMean/reduceMax/reduceMin/reduceMedian/reduceSum`, `reduceBins`), `binData`, `histogram`, `histogram2d`, `autoHistogram`, `das2java:org.das2.qds.util.BinAverage`; filter editors `das2java:ReducexFilterEditorPanel`, `BinAverage2dFilterEditorPanel`, `HistogramFilterEditorPanel`, `Histogram2dFilterEditorPanel`; render-time reduction to one bin per pixel column, with the v2026a_6 release note "Keep track of data reduction and render error bars to show extent of the data in each pixel column."; largest-triangle-three-buckets downsampling (`das2java:org.das2.qds.util.LttbDownsampler`, with `LttbFilterEditorPanel`), read at das2java `580c7d2c2`.
 - **: File Format Conversion** — the QDataSet model decouples readers from writers, so any readable dataset can be re-emitted in another format. Registered `DataSourceFormat` writers (`META-INF/org.autoplot.datasource.DataSourceFormat.extensions`): ASCII tables, CSV, CDF, HDF5/netCDF4, IDLSave, MATLAB `.mat`, Excel `.xls`, WAV, das2 stream `.d2s`, QStream `.qds`, HTML tables, raw binary, PNG/JPG/GIF, HAPI. Driven by `ExportDataPanel`/`ExportDataFormatPanel` in the GUI, `AutoplotDataServer` from the command line, and `AutoplotServlet`'s `DataServlet` ("Data Servlet sends data for URI in requested form", `web.xml`).
 - **: Image Processing** — `ImageDataSource/src/org/autoplot/imagedatasource/ImageDataSource.java` reads PNG/JPG/GIF into rank-2/rank-3 datasets and applies a `ConvolveOp` with an explicit blur `Kernel` (line 236) and `AffineTransform` rotation (lines 193–195), and extracts EXIF and GPS metadata (`ExifSubIFDDirectory`, `GpsDirectory`); `org/autoplot/pngwalk` supplies `ScalePerspectiveImageOp`, `ImageResize`, `RichPngUtil`, and `ClickDigitizer` (digitizing values off rendered images); `das2java:org.imgscalr.Scalr` in dasCoreUtil.
 - **: Processing** — the chained filter/operations pipeline: `das2java:org.das2.qds.OperationsProcessor` plus ~40 filter editors in `das2java:org.das2.qds.filters` (detrend, butterworth, median, normalize, cleanData, expandToFillGaps, dbAboveBackgroundDim1, contour, rebundle, applyIndex, exponent, pow, add/divide/multiply, get/putProperty, setUnits, setDepend0Cadence/setDepend1Cadence/setDepend0Units), surfaced in the GUI through `Autoplot/src/org/autoplot/OperationsPanel.java` and appendable directly to a URI.
-- **: Spectrogram** *(computation)* — `das2java:Ops.fft`, `ifft`, `fftPower`, `fftPowerMultiThread`, `fftPowerSpectrum`, `fftPowerSpectralDensity`, `fftLinearSpectrum`, `fftLinearSpectralDensity`, `fftFilter`, `fftWindow`, `hanning`, `windowFunction`, `hilbert`, `hilbertSciPy`, `chirp`, plus `das2java:org.das2.qds.math.fft`; filter editors `das2java:FftPowerFilterEditorPanel`, `FftOutputsFilterEditorPanel`, `HanningFilterEditorPanel`; CDAWeb virtual variables `fftPower512`, `fftPower1024`, `fftpowerdelta512/1024/2048`; regression tests `VATesting/src/org/autoplot/test/Test_050_FftFilter.java`, `Test_054_FftFilter.java`, `Test_051_HanningFilter.java`.
+- **: Spectrogram** *(computation)* — `das2java:Ops.fft`, `ifft`, `fftPower`, `fftPowerMultiThread`, `fftPowerSpectrum`, `fftPowerSpectralDensity`, `fftLinearSpectrum`, `fftLinearSpectralDensity`, `fftFilter`, `fftWindow`, `hanning`, `windowFunction`, `hilbert`, `hilbertSciPy`, `chirp`, plus `das2java:org.das2.qds.math.fft`; filter editors `das2java:FftPowerFilterEditorPanel`, `FftOutputsFilterEditorPanel`, `HanningFilterEditorPanel`; CDAWeb virtual variables `fftPower512`, `fftPower1024`, `fftpowerdelta512/1024/2048`; regression tests `VATesting/src/org/autoplot/test/Test_050_FftFilter.java`, `Test_054_FftFilter.java`, `Test_051_HanningFilter.java`. `das2java:Ops.totalSpectralPower`, added in the v2026a_9 release ("New totalSpectralPower function added, showing total power in waveform components.") and read at das2java `580c7d2c2`, computes the power spectrum of each component of a three-component vector with `fftPower` and sums them, `Ptotal(f) = Px(f) + Py(f) + Pz(f)`.
 - **: Time Series Analysis** — the `TimeSeriesBrowse` capability (`DataSource/src/org/autoplot/datasource/capability/`) re-reads data as the time axis is panned or zoomed, which is the application's defining interaction; `das2java:Ops.detrend`, `detrend1`, `butterworth`, `medianFilter`, `smooth`, `smooth1`, `smooth2d`, `smoothFit`, `timeShift`, `sortInTime`, `synchronize`, `synchronizeNN`, `ensureMonotonic`, `identifyContinuousBlocks`, `expandToFillGaps`, `timegen`; `org/autoplot/aggregator` builds a single continuous time series from a directory of per-day files.
-- **: Packet Decommutation** — added with the v2026a_8 release, read at Autoplot `acdaee73a` and das2java `256ede719` (see Field 12). `das2java:org.das2.qds.buffer.CcsdsReader` ("Utility class for reading CCSDS telemetry streams") walks a CCSDS space-packet stream header by header, decoding each packet's APID, sequence count and data length and handing each packet to the handler registered for its APID. `BinaryDataSource/src/org/autoplot/binarydatasource/BinaryDataSource.java` (lines 182–210) exposes it as the `ccsds=<packetId>` URI parameter, in decimal or `0x` hex, extracting one packet type from the stream and failing with "No ccsds records with packetId=… found" when none match; its new `mask=` and `bitField=` parameters (lines 353–363) AND out individual bit fields of the decoded words and shift them right. `BinaryDataSourceFactory.java` completes `ccsds=` with the APIDs actually present in the file. The release page lists the feature as "Experimental ccsds switch to the BinaryDataSource, to parse simple ccsds files." and "BinaryDataSource can have hex values for offsets, like 0x1A, and new mask and bitField controls extract individual bits." The release's `autoplot.jar` carries the `ccsds=`, `mask=` and `bitField=` parameters in its `BinaryDataSource` classes. "Experimental" does not change the classification: the switch ships in the released application and is offered to users. It is generic CCSDS support for any packet stream, not part of a mission's ground system, so `Mission-related: Packet Decommutation` does not apply (rule 8).
+- **: Packet Decommutation** — added with the v2026a_8 release, read at Autoplot `acdaee73a` and das2java `256ede719` (see Field 12). `das2java:org.das2.qds.buffer.CcsdsReader` ("Utility class for reading CCSDS telemetry streams") walks a CCSDS space-packet stream header by header, decoding each packet's APID, sequence count and data length and handing each packet to the handler registered for its APID. `BinaryDataSource/src/org/autoplot/binarydatasource/BinaryDataSource.java` (lines 182–210) exposes it as the `ccsds=<packetId>` URI parameter, in decimal or `0x` hex, extracting one packet type from the stream and failing with "No ccsds records with packetId=… found" when none match; its new `mask=` and `bitField=` parameters (lines 353–363) AND out individual bit fields of the decoded words and shift them right. `BinaryDataSourceFactory.java` completes `ccsds=` with the APIDs actually present in the file. The release page lists the feature as "Experimental ccsds switch to the BinaryDataSource, to parse simple ccsds files." and "BinaryDataSource can have hex values for offsets, like 0x1A, and new mask and bitField controls extract individual bits." The release's `autoplot.jar` carries the `ccsds=`, `mask=` and `bitField=` parameters in its `BinaryDataSource` classes. "Experimental" does not change the classification: the switch ships in the released application and is offered to users. It is generic CCSDS support for any packet stream, not part of a mission's ground system, so `Mission-related: Packet Decommutation` does not apply (rule 8). The v2026a_9 release adds the `ccsdsOffsetCorrection=` parameter (Autoplot `8eb726c99`, read at `6455ad60e`; completion text "CCSDS correction to incorrect packet lengths found in file"), so streams whose packets record wrong lengths can still be parsed.
 
 - **Data Visualization** — retained from HSSI; parent of all children below.
 - **: 2D Graphics** — `das2java:` dasCore renderers `SpectrogramRenderer`, `RGBImageRenderer`, `ContoursRenderer`, `ColorSeriesRenderer`, `PolarPlotRenderer`, `PitchAngleDistributionRenderer`, `PolyMeshRenderer`, `BoundsRenderer`, `HugeScatterRenderer`, with `das2java:DasColorBar`; `RenderType` enum values `spectrogram`, `nnSpectrogram`, `image`, `contour`, `colorScatter`, `polar`, `vectorPlot`, `bounds`, `hugeScatter`, `pitchAngleDistribution`, `stackedHistogram`, and matching style panels in `Autoplot/src/org/autoplot/renderer/`.
@@ -113,7 +115,7 @@ child is accompanied by its parent.
 
 - **Servers and Environments** — parent of the two children below.
 - **: Data servers processing and handling** — `HapiServerDemo` is a working HAPI server implementation (`CapabilitiesServlet`, `CatalogServlet`, `InfoServlet`, `DataServlet`, `AboutServlet`, `HapiServerSupport`, `CsvDataFormatter`, `BinaryDataFormatter`, `GZIPFilter`); `AutoplotServlet`'s `DataServlet` serves data for a URI in a requested form; `Autoplot/src/org/autoplot/AutoplotDataServer.java` streams data for a URI from the command line; `Autoplot/src/org/autoplot/server/RequestHandler.java` and `RequestListener.java` accept commands on a socket.
-- **: Distribution/Access** — the servlet stack distributes both data and rendered graphics over HTTP; `JnlpServlet` distributes the application itself, `URITemplatesServlet` and `UnaggregrateServlet` distribute URI-template services, and `HapiDataSourceFormat` writes a HAPI-servable directory (`info/<id>.json`, `capabilities.json`, CSV data) so an Autoplot user can publish a dataset as a HAPI service.
+- **: Distribution/Access** — the servlet stack distributes both data and rendered graphics over HTTP; `URITemplatesServlet` and `UnaggregrateServlet` distribute URI-template services, and `HapiDataSourceFormat` writes a HAPI-servable directory (`info/<id>.json`, `capabilities.json`, CSV data) so an Autoplot user can publish a dataset as a HAPI service. `JnlpServlet`, which generates Java Web Start launch files for the application, is still in the servlet but no longer counts toward this value: the project has dropped JNLP (`24ab4719d`, 2026-11-02: "remove old JNLP file, since JNLP is no longer supported.").
 
 **Considered and deliberately excluded** (recorded so the omissions are auditable):
 
@@ -125,10 +127,11 @@ child is accompanied by its parent.
 - **Data Processing and Analysis: Energy Spectra** — Autoplot slices and renders energy-time spectrograms with generic rank-2 machinery; the energy-aware code (`apply_qflag`'s `flux_h`/`flux_o`/`flux_he_1`/`flux_he_2` channel mapping) applies quality flags rather than computing or analysing spectra. Excluded as not evidenced.
 - **Data Processing and Analysis: Calibration** — applying instrument quality flags (`apply_qflag`, `apply_esa_qflag`) is not conversion of raw counts to physical units. No calibration files, response functions, or gain corrections in the tree.
 - **Data Processing and Analysis: Wavelet Analysis** — no wavelet code anywhere in Autoplot or das2java (searched).
-- **Data Processing and Analysis: Wave Polarization Analysis, Curlometer, Linear Gradient Estimation, Magnetic Null Finding, 3D Particle Distribution Processing, Field-line Tracing, Data Assimilation, ML/AI** — no supporting code found for any of these. (`Packet Decommutation` stood in this list until the v2026a_8 release added CCSDS packet parsing; see above.)
+- **Data Processing and Analysis: Wave Polarization Analysis, Curlometer, Linear Gradient Estimation, Magnetic Null Finding, 3D Particle Distribution Processing, Field-line Tracing, Data Assimilation, ML/AI** — no supporting code found for any of these. (`Packet Decommutation` stood in this list until the v2026a_8 release added CCSDS packet parsing; see above.) `das2java:Ops.totalSpectralPower` (v2026a_9) takes three-component vectors but only sums their power spectra; it computes no polarization, ellipticity or coherence quantity. The "ChatGPT" mentions in the tree and its commit messages credit a coding assistant used to write code (the new PDS4 reader, for one); the software itself contains no ML/AI.
 - **Data Visualization: 3D Graphics** — no 3D rendering. No JOGL/OpenGL/VTK/jzy3d; `das2java:PolyMeshRenderer` draws a 2-D polygon mesh. Search hits for "3D" are array-rank comments.
 - **Data Visualization: Hodograms** — component-vs-component plots are achievable with the generic `xyScatter` scheme but there is no hodogram feature, renderer, or style panel.
 - **Data Visualization: ML/AI, Mission-Specific, Spacecraft Formation Plots** — no supporting code.
+- **The Jython script debugger** added in v2026a_9 (breakpoints, conditional breakpoints, stepping and tracing in the script editor; `JythonSupport/src/org/autoplot/jythonsupport/ui/JythonDebugger.java`, read at `6455ad60e`) is a scripting-environment tool with no row in the taxonomy; scripting is carried by Fields 8 and 16.
 - **Servers and Environments: Software or Environment Container** — no Dockerfile, no Singularity/Apptainer definition, no container manifest in the repository.
 - **Servers and Environments: High Performance Computing, Infrastructure as Code** — `das2java:Ops.fftPowerMultiThread` and `das2java:OpsParl` use a local `java.util.concurrent` thread pool; that is desktop multithreading, not HPC. No MPI, no batch scheduler scripts, no Kubernetes/Terraform manifests.
 
@@ -214,7 +217,7 @@ affiliation.
 ### 7. Software Name (MANDATORY)
 Autoplot
 
-*Source: existing HSSI record, unchanged. Confirmed by `README.md` ("# Introduction to Autoplot"), `aboutAutoplot.html`, the release page title "Autoplot Application (v2026a_8)", and the repository name.*
+*Source: existing HSSI record, unchanged. Confirmed by `README.md` ("# Introduction to Autoplot"), `aboutAutoplot.html`, the release page title "Autoplot Application (v2026a_9)", and the repository name.*
 
 ### 8. Description (MANDATORY)
 
@@ -252,108 +255,124 @@ maintained by Cottage Systems" and distributes the binaries; the field definitio
 for the repository host.*
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** v2026a_8
-- **Version Date:** 2026-09-28
-- **Version Description:** the v2026a_8 release's own notes, verbatim:
+- **Version Number:** v2026a_9
+- **Version Date:** 2026-11-12
+- **Version Description:** the v2026a_9 release's own notes, trimmed as described below:
 
 ```
-Bugfixes (2026-09-22):
-- 2897: record window sizes with the screen resolution, so that undocked laptop works properly.
-- rte_1195634314: StaticCodeAnalysis still loaded old 2017 python file, somehow causing crash on startup. Thanks, nicolec!
-- 2878: Run Batch Tool removes dynamic arguments from constant values. Thanks, Sadie!
-- findgen can be used to create enumeration of values, as well as range.
-- 2896: transition from slice1(5) to slice(5) failed because of incorrect test.
-- 184: excessive https listing for URL with aggregation.
-- Correction to annotation when crosshash fill was used on data, where clipping was incorrect.
-- 2895: improve feedback when default timerange is not parseable. timerange min and max are used to constrain input time.
-- 186: University onedrive with spaces in the name causes problems with %20.
-- 2893: DasAnnotation split anchor code had a path where plot member variable was assumed to be non-null.
-- 877: Browse source didn't apply the "https : //..." logic, causing runtime exception.
-- 2882: CDF metadata should reload when "reload" action (^L) is invoked.
-- Reduce severity of console error messages when ASCII table source tries to parse "color" as a color.
-- 2874: Support enumerations in aggregation with availability. TimeParser.format now has code to generate example extra data.
-- 2888: Tools->Cache->"Clear cache" happens on event thread. Bugfix when ro_cache.txt file is within filesystem.
-- 185: More carefully use getSubTaskMonitor to imply progress.
-- 2887: NRT TimeRange dialog doesn't update DasAxis.
-- 2883: recent changes to SubtaskMonitor caused runtime error with old scripts.
-- 2884: improve vap+orbit:, useful for getting events lists for any spececraft.
-- Put in fast specialized code for total on rank 3 on the last index. Thanks, Darrelle!
-- Correct Util.generateTimeRanges when orbit is used. Thanks, Jim!
-- Correct one-pixel error when annotation box is outside plot bounds, where the axes were damaged because annotations are always the top-most layer.
-- Correct toString of ISO8601 duration object, when all components are zero.
-- Return "P0S" for ISO8601 duration of zero length.
-- 2878: Run Batch Tool shows constant arguments. Thanks, Sadie!
-- 2857: improve static code analysis by handling list comprehensions.
-- rte 0188745986: runtime error with full reset and two added tabs caused index out of bounds error.
-- 2880: Display warning when CDF variable name is not proper Python variable name or will cause problems.
-- 2845: improvements to Jython completions.
+Bugfixes (2026-11-11):
+- TimeUtil.next(SECOND,t) didn't increment property.
+- new code in restoreState assumed that the "deltas" was non-null, breaking the "vapfile:" prefix.
+- Slice filter dialog properly enables the datum field.
+- 2916: Sequence to loose work in editor fixed.
+- 2918: ASCII file with start, stop times is treated as events list.
+- 2917: Windows would grow each time a dialog was opened and closed. Thanks, Dave!
+- Improve formatting of DatumRanges, using the same DatumFormatter on min and max and using new improved code to pick the formatter.
+- "Save As" dialog is sized properly. Thanks, Ivar!
+- Delay resolution of macros like %{RANGE} until necessary.
+- More tweaks to HAPI dataset filter, after noticing it still is doing things with each keystroke.
+- Some overly verbose logging with --script argument quieted.
+- "slices" function explicitly checks for ":" so that one doesn't assume "10:20" would be acceptable. Thanks, Dave!
+- 2913: TimeRangeDialog and others are resizeable.
+- 2906: Embed data in .vap works with orbit datum ranges with local file references. Thanks, Dave!
+- 2882: ASCII data source also kept state which caused runtime error on reload.
+- splitAnchorType with verticalAnchorType=PLOT was incorrectly implemented, locating the plot as if it were "DATA".
+- 2903: delim-based ASCII parser will always skip empty lines. Thanks Darrelle!
+- Das2 PropertyEditor doesn't show the button for the custom property editor if it is the (useless) default editor.
+- Support Rank 3 data in Export All Data. Don't assume data has timetags. Thanks, Ivar!
+- 192:: synchronizeNN had incorrect test on "close" point, resulting in fill value when NN was possible. Thanks, Darrelle!
+- 2901: Revert change which broke UIowa digitizing script.
+- 2900: Clean up event handling in HAPI Data Source Editor, correct recents.
 
 Features:
-- Experimental ccsds switch to the BinaryDataSource, to parse simple ccsds files.
-- BinaryDataSource can have hex values for offsets, like 0x1A, and new mask and bitField controls extract individual bits.
-- 884: Annotation anchor box style controls have GUI.
-- 884: Annotation anchor box should have style controls.
-- 2879: HTML table source allows depend0 and units to be specified.
-- 883: Select time range by Orbits allows simple search.
+- Slice filter dialog supports mouse wheel events on the time, incrementing or decrementing the component.
+- 893: Jython debugger is used to implement trace when running scripts (ctrl+Run).
+- 893: Jython editor double-click is Jython-aware and is more likely to select useful fragments.
+- 893: new Jython debugger enabled with environment variable "jythonDebugger=true"
+- 892: floating stdout bubbles in Jython editor.
+- New totalSpectralPower function added, showing total power in waveform components. Thanks, Dave and George!
+- 889: CDAWeb, HapiDataSource now uses simple filter strings, like "rbsp AND density NOT source".
+- 890: New PDS4 reader supports Java 8 and will be maintained within Autoplot.
+- Huge Scatter performance gain with 126M-point dataset, from 2800ms -> 500ms per draw, by using addValue to increment count and removing loop invariants.
+- Kludgy unit "rgbColor" detected now and colorbar is turned off.
+- 888: support rank 3 and rank 4 data in .mat files. Thanks, Ivar!
+- 2901: New code for simplifyScriptToGetParams operates on the AST, not the source, so is more reliable.
+- 2902: HAPI JSON read capability is available in the GUI.
 ```
 
 - **Version PID:** Not found
 
 **Where Autoplot publishes releases.** Autoplot has no git tags, no GitHub releases and no Maven or
-PyPI distribution of the application; it publishes each release as a directory of the release
-archive `https://autoplot.org/jnlp/`, named `v<year><series>_<n>` (`v2026a_1` … `v2026a_8`), holding
+PyPI distribution of the application; the repository's GitHub releases and tags pages still list none
+on 2026-11-13. It publishes each release as a directory of the release archive
+`https://autoplot.org/jnlp/`, named `v<year><series>_<n>` (`v2026a_1` … `v2026a_9`), holding
 `autoplot.jar` and a release page whose notes are the release body. The archive's `latest/` entry is
-the production release page, and the Install4J installers it links (`autoplot_windows-x64_2026_08.exe`,
-`autoplot_macos_2026_08.dmg`, `.deb`, `.rpm`) are named for the same release. The dated directories
-(for example `20260926a` and `20261101a`) are development builds; the archive's `devel/` entry points at the newest
-of them. They are not releases (Field 12 rule 2), which is why this field records the newest
-`v2026a_n` directory. The PyPI project `autoplot` (0.9.2) is the separate `autoplot/python` bridge
-(Field 30), not this application, so its versions are not Autoplot's.
+the production release page, and the Install4J installers it links (`autoplot_windows-x64_2026_09.exe`,
+`autoplot_macos_2026_09.dmg`, `.deb`, `.rpm`) are named for the same release. The dated directories
+(for example `20260926a` and `20261111b`) are development builds; the archive's `devel/` entry points
+at the newest of them. They are not releases (Field 12 rule 2), which is why this field records the
+newest `v2026a_n` directory. The PyPI project `autoplot` (0.9.5, uploaded 2026-11-09) is the separate
+`autoplot/python` bridge (Field 30), not this application, so its versions are not Autoplot's.
 
-**Why v2026a_8.** `v2026a_7` (archive entry 2026-08-13) and `v2026a_8` (2026-09-28) were published
-after `v2026a_6` (2026-07-03), which HSSI held until this update; `v2026a_8` is the newest release and
-is what `https://autoplot.org/latest/` serves ("Autoplot Application (v2026a_8)", byte-identical to
-`https://autoplot.org/jnlp/v2026a_8/`). The release is on the v2026a production series ("This is the
+**Why v2026a_9.** `v2026a_9` (archive entry 2026-11-12) was published after `v2026a_8` (2026-09-28),
+which HSSI held until this update; `v2026a_9` is the newest release and is what
+`https://autoplot.org/latest/` serves ("Autoplot Application (v2026a_9)", byte-identical to
+`https://autoplot.org/jnlp/v2026a_9/`). The release is on the v2026a production series ("This is the
 Autoplot v2026a branch. This is an update to the production version containing bugfixes and minor new
 features. Java 8 is required."). The number is written as the archive writes it, with the leading `v`.
 Field 12's rules speak of tags, GitHub releases and PyPI uploads; Autoplot's release-archive
-directories are its equivalent release event, and are read as such here.
+directories are its equivalent release event, and are read as such here. Before `v2026a_8`, HSSI held
+`v2026a_6` (2026-07-03), which `v2026a_7` (2026-08-13) and `v2026a_8` superseded.
 
-**Release date.** 2026-09-28 is the UTC day of the release: the release page's `Last-Modified` is
-`Mon, 28 Sep 2026 12:19:14 GMT`, the release jar's is 12:11:18 GMT, and the jar's own
-`buildTime.txt` reads `2026-09-28T12:10Z`. The archive listing shows the server's local time
-(`2026-09-28 07:19`), the same day.
+**Release date.** 2026-11-12 is the UTC day of the release: the release page's `Last-Modified` is
+`Thu, 12 Nov 2026 14:02:18 GMT`, the release jar's is 13:52:30 GMT, and the jar's own
+`buildTime.txt` reads `2026-11-12T13:52Z`. The archive listing shows the server's local time
+(`2026-11-12 08:02`), the same day. The notes' own heading, "Bugfixes (2026-11-11):", dates the last
+listed fixes, not the release (rule 8).
 
 **Which code the release holds.** No commit is tagged for it, so the release revision is read from the
-jar. It was built at 2026-09-28T12:10Z from Autoplot `acdaee73a` (2026-09-26 08:14 -05:00, "release
-notes"), the last default-branch commit before the build: the next commit, `8eb726c99` (2026-09-28
-15:50 -05:00, "add ccsdsOffsetCorrection"), is absent from the jar (its `BinaryDataSource` class has no
-`ccsdsOffsetCorrection`), and the jar differs in size by one byte from the `20260926a` development
-build of the same code. Its das2java code is das2java `256ede719` (see the header note). `acdaee73a` is
-an ancestor of the default branch's head, so the repository holds the release's code.
+jar, whose `META-INF/build.txt` names it (`build.tag: v2026a_9`). Every entry of the jar except
+`buildTime.txt` and `META-INF/build.txt` has the same CRC as in the `20261111b` development build,
+which was built at 2026-11-11T23:26Z, so the release is that build's code. The last commits before it
+are Autoplot `6455ad60ed10ee271a00c15fe05e0cd6bee6f560` (2026-11-11 17:19 -06:00, "release notes") and
+das2java `580c7d2c2` (2026-11-11 17:17 -06:00), then the head of das2java's main branch (see the
+header note); the next Autoplot commit, `eb1ada209` (2026-11-12 15:28 -06:00, a bindings fix for bug
+2920), came after both builds, and the `LayoutPanel` change made after it (`a45f1952b`, selecting a
+plot's bindings) is absent from the jar's `LayoutPanel` classes. `6455ad60e` is an ancestor of the
+default branch's head, so the repository holds the release's code.
 
-**Description.** Taken from the v2026a_8 release page, which is the release body (rule 13). That page
-carries four blocks: "Bugfixes (2026-09-22):" and "Features:" are this release's own; "Older
-Bugfixes (2026-08-15):" and "Less recent features:" repeat v2026a_7's notes (its page heads the same
-items "Bugfixes (2026-08-12):" and "Features:"), so they are inherited and left out (rule 11). Every
-item of the two own blocks is a user-facing fix or feature, so all are kept, whole and in the page's
-order (rules 14–15); whitespace is collapsed as the page renders it, the bug numbers that are links on
-the page are kept as plain text, and the contributors' "Thanks, …!" credits are kept. HSSI held a
-curator-written summary of v2026a_6's notes until this update, which rule 15 would not admit; it
-belonged to the replaced release and is not carried forward (rule 10).
+**Description.** Taken from the v2026a_9 release page, which is the release body (rule 13). That page
+carries four blocks. "Bugfixes (2026-11-11):" and "Features:" are this release's own. "Older Bugfixes
+(2026-09-28):" repeats v2026a_8's "Bugfixes (2026-09-22):" item for item, so it is inherited and left
+out (rule 11). "Less recent features:" repeats v2026a_8's "Features:" and adds one item, "BinaryDataSource
+has ccsds control to select binary from telemetry stream.", which the project wrote into its notes on
+2026-09-28 (`69af15b2c`), just after v2026a_8 was built and beside the commit that added
+`ccsdsOffsetCorrection` (`8eb726c99`). It describes the ccsds control v2026a_8 already shipped, not
+the offset correction that is new, and the project files it among the less recent features, so it is
+left out with the rest of that block (rule 14). Of the 37 items in the two own blocks, two are dropped
+under rule 14: "Minor clean up of PngWalkTool while considering more major corrections with ChatGPT."
+(a cleanup that changes nothing a user sees) and "2900: Jemmy regression testing of HAPI server
+dialog." (test housekeeping). The other 35 are user-facing fixes or features and are kept whole and in
+the page's order (rules 14–15); whitespace is collapsed as the page renders it, the bug numbers that
+are links on the page are kept as plain text, and the contributors' "Thanks, …!" credits are kept. The
+doubled colon in "192:: synchronizeNN …" is the page's own text (its link text is "192:", followed by
+a second colon), as is "didn't increment property." in the first item. HSSI held v2026a_8's own two
+blocks until this update; they belonged to the replaced release and are not carried forward (rule 10).
 
-*Version PID: none. The project deposits no DOI per release.*
+*Version PID: none. The project deposits no DOI per release; DataCite and Zenodo searches on
+2026-11-13 found no deposit of the software.*
 
 **View-layer rendering.** HSSI stores this field as a bare version string, but the view API renders
-it as `<software> - <number>` (`Autoplot - v2026a_8`). The value above is the bare string `v2026a_8`;
+it as `<software> - <number>` (`Autoplot - v2026a_9`). The value above is the bare string `v2026a_9`;
 the `Autoplot - ` prefix must never be written into the field.
 
-**Repository head is ahead of the release.** The default branch's head (`a7bfad681`, 2026-11-01)
-carries work not in any published release: a Jython script debugger with breakpoints
-(`JythonSupport/src/org/autoplot/jythonsupport/ui/JythonDebugger.java`), a new PDS4 reader
-(`PDSDataSource/src/org/autoplot/pds4/Pds4Reader.java`), a `totalSpectralPower` function, and the
-release page's "Bugfixes (2026-11-01)" notes. None of it is recorded here. A later release update
-reads it once a `v2026a_n` (or later series) directory publishes it.
+**Repository head is ahead of the release.** The default branch's head (`ffadec23c`, 2026-11-13)
+carries four commits made after v2026a_9 was built: a fix for bug 2920 (only bindings without
+converters are registered), showing and selecting a plot's bindings in the layout panel, and a warning
+that axis labels will not be updated. None of it is recorded here. A later release update reads it
+once a `v2026a_n` (or later series) directory publishes it. The work the head carried beyond v2026a_8
+(the Jython debugger, the new PDS4 reader, `totalSpectralPower`) shipped in v2026a_9 and is recorded
+above and in Fields 4, 18 and 29.
 
 ### 13. Programming Language (RECOMMENDED)
 - Java
@@ -433,6 +452,10 @@ Field 18 has no CCSDS row, so it joins the format keywords above under rule 10. 
 `decommutation`, `packet parsing` and `packets` were weighed and not added: each only restates the
 Field 4 value (rule 6).*
 
+*`debugger` was weighed when v2026a_9 added a Jython script debugger, and not added: it names a
+script-editor tool, not a subject a searcher would type to find Autoplot (rule 10), and scripting is
+already carried by `jython`.*
+
 ### 17. Data Sources (OPTIONAL)
 - CDAWeb
 - das2
@@ -461,7 +484,7 @@ Field 4 value (rule 6).*
 
 *Added during the 2026-07-30 refresh. Enumerated from the authoritative registration files `META-INF/org.autoplot.datasource.DataSourceFactory.extensions` in every module.*
 
-**Evidence.** `ascii` — `org.autoplot.ascii.AsciiTableDataSourceFactory` (`dat txt csv tab`) and `OdlDataSourceFactory` (`sts odl`). `CDF` — `org.autoplot.cdf.CdfJavaDataSourceFactory` (`cdfj cdfn cdf`), a 77-file vendored pure-Java reader (`gov.nasa.gsfc.spdf.cdfj`) plus `cdfjava.3.3.2.tt2000.jar`. `csv` — `AsciiTableDataSourceFactory` (`csv`) and `org.autoplot.csv.CsvDataSourceFactory` (`csv0`). `FITS` — `org.autoplot.fits.FitsDataSourceFactory` (`fits fts`) with `jfits-0.93.jar`. `HDF5` — `org.autoplot.netCDF.NetCDFDataSourceFactory` (`h5 hdf5 hdf`). `IDL.sav` — `org.autoplot.idlsupport.IdlsavDataSourceFactory` (`sav idlsav`) with `ReadIDLSav.java`. `ISTP-Compliant` — `DataSource/src/org/autoplot/metatree/IstpMetadataModel.java` interprets the ISTP metadata conventions (`DEPEND_0`, `VAR_TYPE`, `DISPLAY_TYPE`, `FILLVAL`, `VALIDMIN`/`VALIDMAX`, `LABL_PTR`), and `CdfVirtualVars` implements the ISTP/CDAWeb virtual-variable functions. `JSON` — `org.autoplot.json.JSONDataSourceFactory` (`jsonl`), plus HAPI info/catalog JSON parsed by `HapiDataSource`/`HapiServer` and TFCat (`tfcat`). `netCDF3/4` — `NetCDFDataSourceFactory` (`nc ncml nc4`) on `netcdfAll-5.5.3.jar`. `Other` — formats with no row: PDS3 and PDS4 labels (`org.autoplot.pds.Pds3DataSourceFactory`/`PdsDataSourceFactory`, `pds pds4 lblx lbl`, with `pds4-jparser-1.10.0-SNAPSHOT.jar`), Cluster Exchange Format (`org.autoplot.cefdatasource.CefDataSourceFactory`, `cef`), MATLAB `.mat` (`org.autoplot.matsupport.MatDataSourceFactory`, on `com.jmatio`), Excel `.xls` (`org.autoplot.excel.ExcelSpreadsheetDataSourceFactory`, on Apache POI), raw binary (`org.autoplot.binarydatasource.BinaryDataSourceFactory`, `bin`), CCSDS space-packet streams (the same factory's `ccsds=` switch, added in the v2026a_8 release and read at `acdaee73a`; Field 4, `Packet Decommutation`; the FileFormat vocabulary has no CCSDS row), WAV audio (`org.autoplot.wav.WavDataSourceFactory`) and live audio input (`AudioSystemDataSourceFactory`), images (`org.autoplot.imagedatasource.ImageDataSourceFactory`, `jpg png gif`), das2 streams and QStream (`d2s d2t das2Stream qds qdst`), XML and HTML tables (`xml`, `htm html`), orbit/ephemeris tables (`orbit`), NumPy `.npy`, `sps`/`spd`, and `wdc`.
+**Evidence.** `ascii` — `org.autoplot.ascii.AsciiTableDataSourceFactory` (`dat txt csv tab`) and `OdlDataSourceFactory` (`sts odl`). `CDF` — `org.autoplot.cdf.CdfJavaDataSourceFactory` (`cdfj cdfn cdf`), a 77-file vendored pure-Java reader (`gov.nasa.gsfc.spdf.cdfj`) plus `cdfjava.3.3.2.tt2000.jar`. `csv` — `AsciiTableDataSourceFactory` (`csv`) and `org.autoplot.csv.CsvDataSourceFactory` (`csv0`). `FITS` — `org.autoplot.fits.FitsDataSourceFactory` (`fits fts`) with `jfits-0.93.jar`. `HDF5` — `org.autoplot.netCDF.NetCDFDataSourceFactory` (`h5 hdf5 hdf`). `IDL.sav` — `org.autoplot.idlsupport.IdlsavDataSourceFactory` (`sav idlsav`) with `ReadIDLSav.java`. `ISTP-Compliant` — `DataSource/src/org/autoplot/metatree/IstpMetadataModel.java` interprets the ISTP metadata conventions (`DEPEND_0`, `VAR_TYPE`, `DISPLAY_TYPE`, `FILLVAL`, `VALIDMIN`/`VALIDMAX`, `LABL_PTR`), and `CdfVirtualVars` implements the ISTP/CDAWeb virtual-variable functions. `JSON` — `org.autoplot.json.JSONDataSourceFactory` (`jsonl`), plus HAPI info/catalog JSON parsed by `HapiDataSource`/`HapiServer` and TFCat (`tfcat`). `netCDF3/4` — `NetCDFDataSourceFactory` (`nc ncml nc4`) on `netcdfAll-5.5.3.jar`. `Other` — formats with no row: PDS3 and PDS4 labels (`org.autoplot.pds.Pds3DataSourceFactory`/`PdsDataSourceFactory`, `pds pds4 lblx lbl`; since v2026a_9, read at `6455ad60e`, PDS4 products are read by Autoplot's own `org.autoplot.pds4.Pds4Reader` through `Pds4DataSource`, with the earlier `pds4-jparser-1.10.0-SNAPSHOT.jar` path kept behind the URI parameter `newP=F`), Cluster Exchange Format (`org.autoplot.cefdatasource.CefDataSourceFactory`, `cef`), MATLAB `.mat` (`org.autoplot.matsupport.MatDataSourceFactory`, on `com.jmatio`), Excel `.xls` (`org.autoplot.excel.ExcelSpreadsheetDataSourceFactory`, on Apache POI), raw binary (`org.autoplot.binarydatasource.BinaryDataSourceFactory`, `bin`), CCSDS space-packet streams (the same factory's `ccsds=` switch, added in the v2026a_8 release and read at `acdaee73a`; Field 4, `Packet Decommutation`; the FileFormat vocabulary has no CCSDS row), WAV audio (`org.autoplot.wav.WavDataSourceFactory`) and live audio input (`AudioSystemDataSourceFactory`), images (`org.autoplot.imagedatasource.ImageDataSourceFactory`, `jpg png gif`), das2 streams and QStream (`d2s d2t das2Stream qds qdst`), XML and HTML tables (`xml`, `htm html`), orbit/ephemeris tables (`orbit`), NumPy `.npy`, `sps`/`spd`, and `wdc`.
 
 *`Zarr` explicitly excluded — searched the whole tree; there is no Zarr support.*
 
@@ -509,7 +532,7 @@ Field 4 value (rule 6).*
 ### 23. Development Status (RECOMMENDED)
 Active
 
-*Added during the 2026-07-30 refresh. Evidence as of 2026-11-02: the default branch has near-daily commits, the latest of them `a7bfad681` on 2026-11-01; the release archive `https://autoplot.org/jnlp/` shows a steady cadence of releases (`v2026a_1` 2026-01-09 through `v2026a_8` 2026-09-28) plus dated development builds through `20261101a`; the release-page template at the default branch's head carries bugfix notes dated 2026-11-01; the GitHub repository is not archived. Autoplot has been in continuous stable use since 2008 and is being actively developed — the definition of `Active`.*
+*Added during the 2026-07-30 refresh. Evidence as of 2026-11-13: the default branch has near-daily commits, the latest of them `ffadec23c` on 2026-11-13; the release archive `https://autoplot.org/jnlp/` shows a steady cadence of releases (`v2026a_1` 2026-01-09 through `v2026a_9` 2026-11-12) plus dated development builds through `20261111b`; the GitHub repository is not archived; `README.md` carries no status badge or status statement. Autoplot has been in continuous stable use since 2008 and is being actively developed — the definition of `Active`.*
 
 ### 24. Documentation (RECOMMENDED)
 https://github.com/autoplot/documentation/blob/main/md/help.md
@@ -579,6 +602,18 @@ reads "Comparison of radio dynamic spectra (ground/space) in Autoplot", beside f
 TOPCAT. The deck is about the VESPA infrastructure, not Autoplot. None of these decks qualifies on its subject, so whether they stand alone
 does not arise.
 
+**Searched again 2026-11-13, at the v2026a_9 release update.** ADS full-text and acknowledgement
+searches over records entered since 2026-11-02 (`full:"Autoplot"`, `ack:"Autoplot"`; over the same
+window a nonsense token returns 0 and `full:"pyspedas"` returns hits) find none, and a title and
+abstract search since 2026-07-01 finds only the agricultural "AutoPlot grid" paper. DataCite and
+Zenodo free-text searches for "autoplot" find nothing deposited since 2026-11-02. The Zenodo creator
+searches (Jeremy Faden by name and by ORCID, Robert Weigel by name) find two developers' deposits not
+weighed above, neither about Autoplot (rule 3): *ISTP Metadata Guidelines: Current Status and Future
+Development* (https://doi.org/10.5281/zenodo.23111203, deposited 2026-10-03), on the ISTP metadata
+conventions, and Weigel's *Heliophysics Data API (HAPI)* presentation
+(https://doi.org/10.5281/zenodo.23889215, deposited 2026-11-02, dated 2023-10-12), on HAPI. No new
+paper names a funder for Fields 25–26.
+
 ### 28. Related Datasets (OPTIONAL)
 Not found
 
@@ -587,7 +622,7 @@ Not found
 ### 29. Related Software (OPTIONAL)
 - https://github.com/das-developers/das2java — **das2java**. The das2 Java library that Autoplot is built on and developed alongside: the QDataSet data model, the `dasCore` graphics engine and renderers, `dasCoreDatum` units, and `QStream`. It is a declared git submodule of this repository (`README.md:15-17`: "uses another repo for the Das2 library which has developed along with Autoplot.  The dependency library is linked as as git submodule." — the doubled "as as" is in the source), and `aboutAutoplot.html` states "Autoplot uses Das2, an open-source java library for data visualization and data analysis created by the Radio and Plasma Wave Group at the University of Iowa." A domain-specific dependency without which Autoplot is not describable. *(Also in Field 30 — see there for the interoperability evidence.)*
 - https://github.com/autoplot/cdfj — **cdfj**, "Pure-Java code for reading NASA/GSFC CDF (Common Data Format) files". Vendored into `CdfJavaDataSource/src/gov/nasa/gsfc/spdf/cdfj/` (77 Java files; the enclosing `CdfJavaDataSource` module is 96 in total, the other 19 being Autoplot's own adapter code) and shipped as `APLibs/lib/cdfjava.3.3.2.tt2000.jar`. A heliophysics-specific dependency: it is what makes Autoplot's flagship CDF and CDAWeb support possible.
-- https://github.com/autoplot/pds4-jparser — **pds4-jparser**, "Java Library providing APIs for parsing and exporting information on PDS4 products". Shipped as `APLibs/lib/pds4-jparser-1.10.0-SNAPSHOT.jar` and used by `PDSDataSource`'s `PdsDataSourceFactory` for the `pds4`/`lblx` extensions. A planetary-science-specific dependency.
+- https://github.com/autoplot/pds4-jparser — **pds4-jparser**, "Java Library providing APIs for parsing and exporting information on PDS4 products". Shipped as `APLibs/lib/pds4-jparser-1.10.0-SNAPSHOT.jar`; until v2026a_9 it read every PDS4 product (`PDSDataSource`'s `PdsDataSourceFactory`, `pds4`/`lblx` extensions). A planetary-science-specific dependency. Its role narrowed in v2026a_9, and it is kept: that release made Autoplot's own reader the default ("890: New PDS4 reader supports Java 8 and will be maintained within Autoplot."), and at `6455ad60e` `PdsDataSourceFactory.newparser` is `true`, so PDS4 products go to `Pds4DataSource` and `org.autoplot.pds4.Pds4Reader`, neither of which imports `gov.nasa.pds`. The pds4-jparser reader (`PdsDataSource`) is still offered through the URI parameter `newP=F`, the jar is still in the tree, and the v2026a_9 `autoplot.jar` still carries its `gov.nasa.pds` classes, so the relation is current (rule 7). Remove the entry once a release no longer ships the library or drops the `newP` switch.
 
 *Considered and excluded as generic infrastructure (Tier A), each of which would read the same for any Java desktop application: Apache POI, Apache Batik, iText, Apache Commons (compress/math/net/vfs), netCDF-Java, the OPeNDAP client, jmatio, jfits, jsyntaxpane, FlatLaf, MigLayout, JavaHelp, metadata-extractor, ProGuard, Jemmy, JUnit, javacsv, JSch, org.json, java-diff-utils, ProGAL, Install4J. netCDF-Java and jfits are Tier-B-adjacent format libraries, but the relationship is plain dependency use with no documented exchange, so they belong to Fields 18/19 as format support rather than here. Jython is excluded as a language runtime — infrastructure equally at home in any JVM application — even though the scripting layer it enables is recorded in Fields 4, 13, and 16. JSAMP (`jsamp-1.3.5.jar`, `AddSampListener`, `external/AddCfaSampListener`) is genuinely interoperability plumbing — Autoplot can join or start a SAMP hub and receive URIs from other applications. `Autoplot/src/org/autoplot/AddSampListener.java:42-44` does name counterpart clients: "Listener for the Cluster Final Archive SAMP protocol. Other clients include the SOHO archive viewer, and Ulysses, will include the Cluster Final Archive viewer." The exclusion stands on a narrower ground than "no counterpart exists": those clients are named only informally, in a prose javadoc comment, with no citable package identity, version, or canonical URL, so no entry that satisfies Field 29's requirement — enter the DOI for the software code, otherwise link to its code repository — can be constructed. JSAMP itself is a protocol library rather than a peer tool.*
 
@@ -661,8 +696,8 @@ In-repository alternatives (`Autoplot/src/logoA16x16.png`, `icon.png`, `smallSpl
 - Autoplot's authoritative source migrated from SourceForge SVN to
   `https://github.com/autoplot/autoplot` in June 2025. The former Field 3 value was a release page,
   not a source repository.
-- The current published release is `v2026a_8` dated 2026-09-28, built from Autoplot `acdaee73a`
-  and das2java `256ede719`. Repository head contains later, unreleased work, so Field 12 describes the
+- The current published release is `v2026a_9` dated 2026-11-12, built from Autoplot `6455ad60e`
+  and das2java `580c7d2c2`. Repository head contains later, unreleased work, so Field 12 describes the
   published release rather than head.
 - The final author set contains six credited people. A prior sentence fragment recorded as
   `"the Autoplot development"` / `"team"` was removed because it was neither a person nor an
