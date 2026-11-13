@@ -4,8 +4,8 @@
 **Repository:** https://github.com/DKISTDC/dkist
 **Source Revision:** 8ce3cc9b34116e4d58211ed2824629f2828c3e0f
 **Extraction Date:** 2026-07-30
-**Validation Date:** Pending
-**Validation Status:** Pending
+**Validation Date:** 2026-11-13
+**Validation Status:** PASS
 Metadata for the DKIST User Tools (`dkist`) Python package, derived from the repository at the source
 revision above (commit `8fec76d`, the original `v1.18.0` tag, plus 8 commits) together with the
 project's own Zenodo/DataCite release metadata, PyPI, conda-forge, ror.org and ORCID. On 2026-08-20
