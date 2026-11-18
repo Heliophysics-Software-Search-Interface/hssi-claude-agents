@@ -4,7 +4,7 @@
 **Repository:** https://github.com/astropy/astropy
 **Source Revision:** bada72aa79a2d1fd7c705ddc8175800c2eb1312d
 **Extraction Date:** 2026-08-26
-**Validation Date:** 2026-11-03
+**Validation Date:** 2026-11-18
 **Validation Status:** PASS
 
 ---
@@ -23,12 +23,17 @@ alongside it so the balance of the argument stays visible.
 (`v8.0.x`): no final release tagged after `v0.4` (2014-07-16) is an ancestor of `main`, and `main`
 carries code for the next minor version that no release has shipped. The Source Revision above is a
 `main` commit. Every file in this repository that the record cites exists at the `v8.0.2` tag
-(`2268dbf1155e8ad10161c188afc60af3d35b3c8b`), and these capability claims hold there too: the solar
-CTYPE map and observer parameters, `HeliocentricMeanEcliptic`, the MESA and TDAT reader modules,
-FTPS support, `use_fsspec`, the `astropy.samp` deprecation, `NDSlicingMixin` and
-`footprint_to_file`. Sections rewritten at the v8.0.2 release update (2026-10-29) name the revision
-their evidence was read at. Code that exists only on `main` adds no value to a capability field
-until a release ships it.
+(`2268dbf1155e8ad10161c188afc60af3d35b3c8b`) and at the `v8.0.3` tag
+(`b31ef844b284a16ce40ad44468de233ccf8be052`, the current release; no file was deleted or renamed
+between the two), and these capability claims hold at both: the solar CTYPE map and observer
+parameters, `HeliocentricMeanEcliptic`, the planetary WCS frames and bodycentric representations, the
+MESA and TDAT reader modules, FTPS support, `use_fsspec`, the `astropy.samp` deprecation,
+`NDSlicingMixin` and `footprint_to_file`. v8.0.3 is a bug-fix release (Field 12) that added, removed
+or re-scoped no capability any field records. Sections rewritten at the v8.0.2 release update
+(2026-10-29) and the v8.0.3 release update (2026-11-18) name the revision their evidence was read at.
+Code that exists only on `main` adds no value to a capability field until a release ships it: `main`
+at `4be093a6d4c61aecab1a60c60433902c3d40c09f` (2026-11-17) already requires Python 3.12 and adds a
+`configobj` dependency, neither of which any release carries.
 
 ---
 
@@ -52,10 +57,10 @@ DOI`; the README's Zenodo badge targets it; and Zenodo's own record for 4670728 
 concept record and not a version record.
 
 *Considered and not selected:* a version-specific DOI. Those belong in Field 12 (Version PID), not
-here. Read on 2026-10-29, DataCite's record for this concept DOI presents the title `Astropy` and the
-`version` `v8.0.1`, the newest deposit (10.5281/zenodo.21262391), while the current release is
-v8.0.2, which has no deposit (Field 12). A concept DOI identifies the software across its versions, so
-that lag does not affect this field.
+here. Read on 2026-11-18, DataCite's record for this concept DOI presents the title `Astropy` and the
+`version` `v8.0.3`, the newest deposit (10.5281/zenodo.24340642), the version recorded in Field 12. On
+2026-10-29 it presented `v8.0.1` while v8.0.2 had no deposit yet; a concept DOI identifies the software
+across its versions, so neither the lag then nor its end affects this field.
 
 *Also present in the same `identifiers:` block and deliberately not used here:* the ASCL entry
 `https://ascl.net/1304.002`. It is a registry listing rather than a persistent identifier that
@@ -438,7 +443,8 @@ the paper). Those names belong to Field 14's publication, not to this field.
 distribution name in `pyproject.toml` is lowercase `astropy`, which is also the import name. Both
 forms are in first-party use, so both are recorded.
 
-**PyHC negative research.** Astropy appears in **none** of the three PyHC registries. All three —
+**PyHC negative research.** Astropy appears in **none** of the three PyHC registries (re-checked
+2026-11-18, still absent). All three —
 `projects_core.yml` (core packages), `projects.yml` (community packages) and
 `projects_unevaluated.yml` — were fetched fresh and parsed as YAML in full rather than grepped, and a
 case-insensitive search for "astropy" across all three returns nothing: no entry name, no `code`
@@ -497,195 +503,149 @@ The DataCite record for the concept DOI names Zenodo as publisher. Zenodo is the
 that mints and holds the DOI in Field 2.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** v8.0.2
-- **Version Date:** 2026-10-15
-- **Version PID:** Not found — no Zenodo deposit exists for v8.0.2 (see *Version PID* below)
-- **Version Description:** the "Version 8.0.2 (2026-10-15)" section of `CHANGES.rst` at the `v8.0.2`
+- **Version Number:** v8.0.3
+- **Version Date:** 2026-11-18
+- **Version PID:** https://doi.org/10.5281/zenodo.24340642
+- **Version Description:** the "Version 8.0.3 (2026-11-17)" section of `CHANGES.rst` at the `v8.0.3`
   tag, with whole items trimmed as *Version Description* below explains; the value is the text inside
   this fence, exactly:
 
 ```markdown
-### API Changes
-
-#### astropy.wcs
-
-- Integer indices beyond the size of an axis are now rejected when slicing a ``SlicedLowLevelWCS`` with a known shape, as for Numpy arrays. In addition, ``simplify_basic_index`` now accepts `None` entries in ``shape`` for dimensions whose size is not known, in which case the index for that dimension is returned unchanged, except that a negative integer or slice start raises a ``ValueError``. [#20544]
-
 ### Bug Fixes
-
-#### astropy.coordinates
-
-- Fixed ``BaseRepresentation.represent_as`` mutating a source representation when converting attached differentials to another class, which could cause a repeated ``SkyCoord.apply_space_motion`` call after displaying the coordinate to fail. [#20095]
-
-- Fixed two rounding errors in ``Angle.to_string``. The seconds were carried into the next minute half a unit too early, so that, e.g., ``Angle("1d2m59.49999s").to_string(precision=0)`` gave ``1d03m00s`` instead of ``1d02m59s``. And with ``fields=1`` the seconds were rounded into the minutes before the minutes were rounded into the degrees, rounding twice, so that, e.g., ``Angle("285d29m41.76s").to_string(fields=1)`` gave ``286d`` instead of ``285d``. [#20227]
 
 #### astropy.io.ascii
 
-- The ``latex`` and ``aastex`` readers no longer treat an ampersand inside a braced ``{...}`` group or an escaped ``\&`` as a column separator, so tables with a reference column such as ``\cite{2013A&A...558A..33A}`` now read correctly. [#20333]
+- Fixed the fast ASCII reader corrupting the collected comment lines when a comment appears after the header line. Comments read before the header were truncated and replaced by spurious empty entries in ``table.meta['comments']``. [#20464]
+
+- Fixed a bug where masks attached to a ``QTable`` 's columns would be lost on exports to MRT. [#20728]
 
 #### astropy.io.fits
 
-- Fixed ``fitsinfo`` and ``fitsheader`` crashing with a traceback when run on an LZW-compressed ``.Z`` file while the optional ``uncompresspy`` dependency is not installed. The scripts now broadly catch exceptions and report a clean error message, matching the behaviour of the ``fitscheck`` and ``fitsdiff`` scripts. [#19869]
+- Fixed a bug in :class:`~astropy.io.fits.FITS_rec` where an empty entry in a variable-length array column that has a ``TDIM`` (``dim``) set was reshaped using the column dimension, producing a spurious shape such as ``(0, 5)`` instead of the natural ``(0,)`` required by the FITS standard. [#20128]
 
-- The ``ZQUANTIZ`` keyword is no longer written to the header of compressed image HDUs when no quantization is applied (i.e., for integer data, or floating point data compressed with ``quantize_method=NO_DITHER``). A few FITS readers, including DS9 and ``fv``, currently treat the mere presence of ``ZQUANTIZ`` as an indication that the data are quantized, regardless of its value, and cannot read the files.  Omitting the keyword when it is not needed is fully standards-compliant, as a missing ``ZQUANTIZ`` is already interpreted as ``NO_DITHER``. [#20313]
+- Fixed slicing of a ``GroupData`` object created from arrays rather than read from a file, which raised ``TypeError: 'NoneType' object is not subscriptable``. [#20514]
+
+- Fix handling of ``ignore_blank`` keyword for uncompressed integer data. Set to True, will keep original integer data with 'BLANK' values, to False, convert to float with NaNs, for both signed and unsigned integers, and primary as well as extension HDUs. [#20517]
+
+- Reading tile-compressed images now raises a ``ValueError`` if the dimensions stored in ``HCOMPRESS_1`` compressed data do not match the tile shape given in the header, or if the ``BYTEPIX`` value for ``RICE_1`` compressed data is not 1, 2 or 4. [#20829]
 
 #### astropy.io.misc
 
-- Fixed the ``format="ecsv"`` ECSV reader to correctly read an empty table that has no columns. Previously this was raising an ``InconsistentTableError``. The legacy ``format="ascii.ecsv"`` ECSV reader was already handling this case correctly. [#19909]
+- Loading a numpy array or void scalar with an object dtype from YAML now always raises a ``TypeError``. Previously only the exact spelling ``dtype: object`` was refused, so others such as ``O``, or a structured dtype with an object field, built an array from pointers in the YAML buffer. Accessing that array could crash the interpreter, and this could be triggered by the metadata of an ECSV file. Dumping a numpy void scalar that contains objects to YAML now also raises a ``TypeError`` instead of writing out memory addresses. [#20792]
 
 #### astropy.io.votable
 
-- Prevent overflow on 32-bit systems and WebAssembly when reading binary VOTables by changing the ambiguous types of ``null_value`` to fixed-width equivalents (e.g., from ``long`` to ``int64_t``). [#20302]
-
-- Passing an integer column index equal to the number of fields in ``columns`` now raises the intended ``ValueError``. [#20547]
-
-#### astropy.modeling
-
-- Fixed the step size used by the non-linear least-squares fitters (``LevMarLSQFitter``, ``TRFLSQFitter``, ``DogBoxLSQFitter``, and ``LMLSQFitter``) to estimate the Jacobian by finite differences when a model has no ``fit_deriv`` or when ``estimate_jacobian=True``. The relative step was the fourth root of the machine precision (about 1.2e-4) instead of the square root (about 1.5e-8), so fits could stop short of the minimum for parameters with large values, such as a position far from the coordinate origin. [#20462]
-
-#### astropy.nddata
-
-- Fix ``block_replicate`` with ``conserve_sum=True`` inadvertently promoting ``float16``, ``float32``, and ``complex64`` input arrays to wider dtypes. [#20364]
+- Reading a TABLEDATA table with ``invalid="mask"`` put values in the wrong columns since astropy 7.0: when a value could not be converted, each value after it in the row moved one column to the left. That value is now masked and the rest of the row stays in place. [#20836]
 
 #### astropy.stats
 
-- Fixed a bug where ``astropy.stats.histogram()`` raised a ``ValueError`` when both ``range`` and ``weights`` were provided with a scalar number of bins. For scalar bin counts, ``calculate_bin_edges()`` now delegates range filtering directly to ``numpy.histogram_bin_edges()``, avoiding an array shape mismatch between data and weights while reserving manual range filtering for Astropy's string-based bin width estimators. [#20008]
+- Fixed ``sigma_clip`` and ``SigmaClip`` with ``axis=None`` so that the masked output masks all values when a clipping iteration rejects every remaining value. Previously, no values were masked and the returned bounds were NaN, unlike the ``masked=False`` output and the output with ``axis`` set. [#20852]
 
-- Fixed an out-of-bounds memory read in the C implementation of ``sigma_clip`` (used when ``axis`` is given with ``cenfunc``/``stdfunc`` set to their string values) that occurred when a clipping iteration rejected all remaining values. This could cause a crash or return incorrect (unmasked) results; the fast path now returns the same result as the pure-python implementation in this case. [#20393]
+- Fixed ``biweight_location``, ``biweight_scale``, and ``biweight_midvariance`` so that a scalar initial location guess (``M``) works with ``axis=None`` and with an integer ``axis`` on multidimensional data. Previously, an ``AttributeError`` or ``AxisError`` was raised. These functions now raise a ``ValueError`` if an array ``M`` does not have the shape of the input data reduced along ``axis``, including any array ``M`` when ``axis=None``. Previously, such inputs could silently return incorrect results.
 
-#### astropy.table
+  Fixed ``biweight_location`` to return NaN, instead of the input ``M``, when the data contain NaN values and ``ignore_nan=False``.
 
-- Fixed issue with table groups for zero-length tables in ``astropy.table``. Previously operations like ``len(tbl.group_by("a").groups)`` or ``len(tbl.groups)`` would fail or give inconsistent results if the table ``tbl`` had no rows. [#20031]
-
-- Fixed an issue when deep-copying a ``Table`` where the copied columns lost their link to the new parent table. This led to problems in ``rename_columns`` and ``info.name`` assignment. Other potential problems included table-aware unit conversion/replacement in QTable, grouped-column linkage to table group metadata, and synchronized pprint include/exclude name bookkeeping on rename or delete. [#20088]
-
-- Fixed an issue where ``vstack`` was returning the input table itself when given a single table. It now returns a copy of that table, consistent with the documented behavior of always returning a new table. [#20097]
-
-- Fixed ``Table.to_pandas()`` and ``Table.to_df()`` silently corrupting masked integer columns whose values are too large to be represented exactly as a float64, e.g. Gaia source ids. The nullable integer column is now built directly from the integer data and the mask instead of via a float64 intermediate. Only the pandas backend was affected; polars and pyarrow already round-tripped these values exactly. [#20240]
-
-- Fixed a bug where a numpy function used on a ``MaskedColumn`` produced output with a different dtype than the input (e.g., ``np.strings.find``), which would later lead to a ``TypeError`` from a stale ``fill_value`` dtype. Now, when the fill_value is no longer valid for the output dtype, fall back to the default fill_value for that dtype instead of propagating the stale value. This can now raise a castings warnings following standard numpy casting rules. [#20265]
-
-- Fixed a memory leak when repeatedly slicing a table that has an index on a ``MaskedColumn``, e.g. ``t[t["idx"] == value]``. Each such access used to make a deep copy of the whole index that was never freed, and any slice of a slice of an indexed ``MaskedColumn`` (or a derived array such as a comparison result) silently shared the original column's index. [#20456]
+  Also clarified in the ``biweight_location`` docstring that when the MAD is zero, ``M`` (the median, or the input initial location guess if it was provided) is returned. [#20858]
 
 #### astropy.time
 
-- Fixed ``Time.__setitem__`` silently dropping the mask when a masked ``Time`` was assigned into an unmasked one. As a result, ``vstack`` no longer loses the mask on ``Time`` mixin columns. [#20178]
-
-- Fixed a bug where ``Time.insert`` (and therefore ``Table.add_row`` for a ``Time`` column) silently dropped the mask, exposing values that should have stayed masked.  This affected both the mask of the original object and the mask of the inserted values. [#20232]
-
-- Fixed ``Time.strftime`` and the string formats (``iso``, ``isot``, ``fits``, ``yday``) returning values at the wrong index for a ``Time`` array that is not C-contiguous in memory, for example after ``.T`` or ``np.moveaxis``, or when built from a Fortran-ordered array. [#20496]
-
-#### astropy.utils
-
-- Fixed an issue where, in a multi-threaded context, astropy's logger could race with imports, leading to an exception being raised. [#20064]
-
-- Flipped ``astropy.utils.data.conf.dataurl`` and ``astropy.utils.data.conf.dataurl_mirror`` to reduce URL redirect, in hope to reduce service denial. [#20169]
-
-- Fix XML regex bugs and improve speed of token check. [#20439]
+- Leap seconds have been discontinued (CGPM 2026, Resolution 5), so the leap-second table built into ERFA is final. ``Time`` therefore no longer checks whether that table has expired on the first conversion to or from UTC. That check read a file, and once the available leap-second files were within 150 days of expiring it would try to download newer ones, warning if it could not find an unexpired table. Conversion results are unchanged. For pyerfa versions that still consider the built-in table expired, ``LeapSeconds.from_erfa()`` now sets ``erfa.leap_seconds.expires`` to 180 days in the future, so that ``erfa.leap_seconds.expired`` is ``False``, consistent with newer pyerfa. [#20627]
 
 #### astropy.visualization
 
-- Fixed a number of bugs in WCSAxes:
-  * Setting the number of ticks to zero no longer crashes drawing, minor ticks, or the mouseover coordinate display.
-  * Contour-type grids no longer crash for a longitude coordinate with fewer than two ticks or for a coordinate sliced out of the plot, and no longer draw a spurious gridline along the longitude wrap for a single tick.
-  * Drawing a gridline sampled with fewer than three points no longer crashes.
-  * Transforming empty coordinate arrays no longer crashes for 1-d WCS and now returns correctly shaped arrays.
-  * Simplifying tick labels no longer crashes when one label is a prefix of an adjacent one.
-  * Tick values for longitude coordinates in non-degree units are no longer corrupted when a tick intersects a spine more than once.
-  * ``%``-style tick formats now use the format unit instead of the coordinate's native unit.
-  * Invalid tick format strings now raise a ``ValueError`` instead of being silently accepted with reduced precision.
-  * ``get_coords_overlay`` no longer ignores a supplied ``coord_meta`` when passed a WCS.
-  * The default conversion of right ascension format units to hourangle no longer depends on unit object identity.
-  * ``custom_ucd_coord_meta_mapping`` no longer applies earlier keys when a later key conflicts, and now raises for keys specified more than once.
-  * The cursor coordinate display no longer breaks after ``reset_wcs`` and now preserves the pixel display mode.
-  * Automatically-placed coordinates are now hidden instead of crashing when no spine assignment is consistent with fixed tick positions.
-  * Formatting a coordinate for the mouseover display no longer crashes for a degenerate (zero-size) coordinate range. [#20221]
+- Fixed ``add_beam`` and ``add_scalebar`` drawing beams and scale bars at the wrong size, and contour-type grids (``grid_type="contours"``) being drawn incorrectly or raising an error, in ``WCSAxes`` for celestial WCS with world units other than degrees, such as WCS created with ``preserve_units=True`` from a header in arcseconds. [#20780]
 
-- Fixed a bug which caused WCSAxes to fail when having to transform coordinate frames in the case where APE 14 WCS implementations used frame names or non-instantiated classes in ``world_axis_object_classes`` (which is valid). [#20480]
-
-- Fixed ``WCSAxes.get_transform`` dropping the unit conversion when given a coordinate frame that matches the frame of the axes' WCS. [#20600]
+- Fixed an error when saving a figure containing ``WCSAxes`` with the PGF backend and ``layout="constrained"``. [#20783]
 
 #### astropy.wcs
 
-- Fixed a bug that could cause a segmentation fault when using a WCS object with ``preserve_units=True`` and where units has already been defined and the WCS had been ``set()`` but the scaling factors were found to be 1, and when cdelt or crval were subsequently set. [#20418]
+- Fix a bug that caused a crash if observer information was present in a ``WCS`` but neither ``mjdobs`` nor ``mjdavg`` was set, or ``specsys`` was not set. A warning is now emitted if this is the case and the observer is ignored. [#20051]
 
-- Fix ``WCS.to_header()`` for cases where ``preserve_units=True``, units were set programmatically, and ``WCS.set()`` was not called. [#20422]
+- Fixed several bugs related to slicing WCS objects:
+  * Slicing with a step gave a wrong ``cdelt`` for WCS objects with non-SI units on which ``wcs.set()`` had not yet been called
+  * Slicing with a step failed with ``ValueError: assignment destination is read-only`` for WCS objects created with ``preserve_units=True`` and non-SI units
+  * ``pixel_bounds`` were not updated when all items were slices (e.g. ``wcs[2:5]``)
+  * ``SlicedLowLevelWCS.pixel_bounds`` failed when the bounds were `None` for only some dimensions [#20541]
 
-- Fixed a race condition in which concurrent failing transforms on the same ``WCS`` object could allocate the internal error buffer twice, leaking one allocation. The buffer is now allocated once when the object is created. [#20423]
+- Fix a bug that caused ``world_axis_object_classes``, ``pixel_to_world``, and ``world_to_pixel`` to use a stale observer location if ``obsgeo`` was changed on a ``WCS`` after it had already been used. [#20624]
 
-- Fixed a race condition in which deepcopying a ``WCS`` object while another thread used it could raise ``RuntimeError: dictionary changed size during iteration``. [#20425]
+- Fixed a use-after-free when deallocating ``Celprm`` objects (and ``Prjprm`` objects referencing them) obtained from a ``Wcsprm``, such as ``WCS().wcs.cel``, which could cause segmentation faults on some systems. [#20675]
 
-- Fixed slicing of WCS objects with negative values, which were previously used as literal pixel offsets rather than being interpreted relative to the end of the axis as for Numpy arrays. Negative values are now resolved when the shape of the data is known, and a negative integer or slice start now raises a ``ValueError`` when it is not. Also fixed nested ``SlicedLowLevelWCS`` objects rejecting slices with an explicit step of 1. [#20544]
-
-- Fix bug in ``astropy.wcs.utils.fit_wcs_from_points`` so the ``proj_point`` will be transformed to the ``world_coords`` coordinate frame. [#20588]
+- Fixed slicing of ``astropy.wcs.WCS`` objects with steps greater than 1 when non-diagnonal CD or PC matrices were present, or when SIP distortions were present. [#20677]
 ```
 
-HSSI held v8.0.1 (release date 2026-07-04, Version PID https://doi.org/10.5281/zenodo.21262391) until
-the v8.0.2 release update, and v7.2.0 (release date 2025-11-25, Version PID
+HSSI held v8.0.2 (release date 2026-10-15, no Version PID) until the v8.0.3 release update
+(2026-11-18), v8.0.1 (release date 2026-07-04, Version PID https://doi.org/10.5281/zenodo.21262391)
+until the v8.0.2 release update (2026-10-29), and v7.2.0 (release date 2025-11-25, Version PID
 https://doi.org/10.5281/zenodo.17756022) before the 2026-08-26 refresh replaced it; each was
 superseded by a newer release (rule 3). The number keeps the leading `v` the stored values used; the
-tag writes `v8.0.2` and PyPI writes `8.0.2`. HSSI's view renders a stored number as
+tag writes `v8.0.3` and PyPI writes `8.0.3`. HSSI's view renders a stored number as
 `Astropy - <number>`; that rendering is not the stored number and must not be written back.
 
-**Why v8.0.2** (rule 3; release evidence read on 2026-10-29, with `main` at
-`d3ad3b66f24bda0f3e5efadda4a5d78fea0714c2`).
+**Why v8.0.3** (rule 3; release evidence read on 2026-11-18, with `main` at
+`4be093a6d4c61aecab1a60c60433902c3d40c09f`).
 
 - **Releases are cut on release branches.** No final release tagged after `v0.4` (2014-07-16) is
-  an ancestor of `main`; only the final releases `v0.1`, `v0.2` and `v0.4` are. The annotated tag
-  `v8.0.2` ("Tagging v8.0.2", 2026-10-15 21:55:02 +0100) names
-  `2268dbf1155e8ad10161c188afc60af3d35b3c8b`, "Finalizing changelog for v8.0.2 (#20614)", on the
-  release branch `v8.0.x`. That branch shares `main`'s history up to
-  `de3f7ecde9ac78393fa3ccfbbe6cee2ae6998fa0` (2026-05-05), the merge base of `main` with `v8.0.0`,
-  `v8.0.1` and `v8.0.2` alike, and `v8.0.0` and `v8.0.1` are both ancestors of `v8.0.2`.
-- **PyPI.** `info.version` is `8.0.2`. Its eight wheels and its sdist were uploaded between
-  2026-10-15T21:44:23Z and 21:44:45Z; none is yanked, and `project_urls` names this repository.
-- **v7.2.3 does not supersede it.** Tagged and uploaded the same evening (tag 2026-10-15 21:54:21
-  +0100, PyPI 21:42:22Z), v7.2.3 is a maintenance release of the 7.2 series, which 8.0 replaced; a
-  backport never supersedes the current series, whatever order the creation dates give.
+  an ancestor of `main`. The annotated tag `v8.0.3` ("Tagging v8.0.3", tagger date
+  2026-11-17 21:59:05 +0000) names `b31ef844b284a16ce40ad44468de233ccf8be052`, "Merge pull request
+  #20887 from astrofrog/v8.0.3-changelog" (2026-11-17T15:17:01Z), the head of the release branch
+  `v8.0.x`. `v8.0.2` is an ancestor of `v8.0.3` (70 commits between them), and the branch shares
+  `main`'s history up to `de3f7ecde9ac78393fa3ccfbbe6cee2ae6998fa0` (2026-05-05), the merge base of
+  `main` with every 8.0 release.
+- **PyPI.** `info.version` is `8.0.3`. Its eight wheels and its sdist were uploaded between
+  2026-11-17T22:41:38Z and 22:41:59Z; none is yanked, and `project_urls` names this repository.
+- **GitHub.** The Release object `v8.0.3` carries the Latest label, was published
+  2026-11-18T11:38:39Z, and has as its name the tag and as its body a link to the version's changelog
+  page (`https://docs.astropy.org/en/v8.0.3/changelog.html`).
+- **v7.2.4 does not supersede it.** Tagged and uploaded the same evening (tag 2026-11-17 21:58:23
+  +0000, PyPI 22:45:31Z to 22:45:50Z, GitHub Release 2026-11-18T11:38:17Z), v7.2.4 is a maintenance
+  release of the 7.2 series, which 8.0 replaced; a backport never supersedes the current series,
+  whatever order the creation dates give.
 - **Not releases.** `v8.1.0.dev` is a development marker on `main`, and `v8.0.0b1`, `v8.0.0rc1` and
   `v8.0.0rc2` are pre-releases (rule 2). No later tag, PyPI upload or GitHub release existed on
-  2026-10-29.
+  2026-11-18.
 
-**Version Date** (rules 7–8). No GitHub Release object existed for `v8.0.2` on 2026-10-29 (the
-releases API had none for the tag), and the newest Release object was v8.0.1's. The date is therefore the
-annotated tag's UTC day, 2026-10-15 (20:55:02Z). The tagged commit (2026-10-15T15:10:17Z), the PyPI
-upload and the changelog heading "Version 8.0.2 (2026-10-15)" fall on the same day. Astropy's dates
-have not always agreed this well: v7.2.2 and v8.0.1 carry the changelog heading 2026-07-03, their
-annotated tags and PyPI uploads are dated 2026-07-05 (UTC), and their GitHub Releases and Zenodo
-deposits 2026-07-08. If a GitHub Release is published for v8.0.2 later, a refresh applies rule 7 to
-it.
+**Version Date** (rules 7–8). The date is the GitHub Release's `published_at` UTC day, 2026-11-18
+(11:38:39Z); the Zenodo deposit, made by the GitHub integration when the Release was published, was
+created 2026-11-18T11:38:54Z. The other dates fall a day earlier and do not override it (rule 8): the
+annotated tag (2026-11-17 21:59:05Z), the tagged commit (2026-11-17T15:17:01Z), the PyPI upload
+(2026-11-17T22:41:38Z to 22:41:59Z) and the changelog heading "Version 8.0.3 (2026-11-17)". The project
+published the GitHub Releases for v7.2.3, v8.0.2, v7.2.4 and v8.0.3 together, between 11:37:34Z and
+11:38:39Z on 2026-11-18 (v8.0.2's at 11:37:56Z, a month after its tag and PyPI upload of 2026-10-15), so Astropy's
+Release objects can trail the tag and PyPI upload; earlier, v7.2.2 and v8.0.1 had their tags and PyPI
+uploads on 2026-07-05 (UTC) and their GitHub Releases and Zenodo deposits on 2026-07-08.
 
-**Version Description** (rules 10, 13–16). With no GitHub Release there is no release name or body,
-so the text comes from the changelog section for the tag: `CHANGES.rst` at `v8.0.2`, from
-"Version 8.0.2 (2026-10-15)" to the next heading, "Version 8.0.1 (2026-07-03)". The section is
-identical on `main` at `d3ad3b66`. It is kept verbatim under the changelog's own headings: the RST
-section and subpackage underlines are written as markdown `###` and `####` headings, each item's hard
-line wraps are joined, and the RST double-backtick literals and the trailing pull-request numbers are
-left as written. Kept: the API change to index checking when slicing a `SlicedLowLevelWCS` (#20544)
-and every Bug Fixes item, in thirteen subpackage groups, including the WCSAxes item with its fourteen
-sub-items; each is a changed API or a bug a user could hit (rule 14). Dropped whole: the one "Other
-Changes and Additions" item, "Fixed an incorrect build-time definition for ``NPY_TARGET_VERSION`` .
-[#20481]", a build chore, and with it that section's heading. Every kept item and heading matches the
-source once whitespace is normalised. The v8.0.1 description this replaces was a summary composed from
-that release's changelog rather than its items, a form rule 15 does not allow; nothing of it carries
-onto v8.0.2 (rule 10).
+**Version Description** (rules 10, 13–16). The release name is only the tag and the release body is a
+pointer to the changelog page, so neither supplies text (rule 16), and the text comes from the
+changelog section for the tag: `CHANGES.rst` at `v8.0.3`, from "Version 8.0.3 (2026-11-17)" to the
+next heading, "Version 8.0.2 (2026-10-15)". It is kept verbatim under the changelog's own headings: the
+RST section and subpackage underlines are written as markdown `###` and `####` headings, each item's
+hard line wraps are joined, an item's further paragraphs stay indented under it, and the RST
+double-backtick literals, the one Sphinx role (``:class:`~astropy.io.fits.FITS_rec` ``) and the
+trailing pull-request numbers are left as written. Kept: every Bug Fixes item, eighteen in eight
+subpackage groups, each a bug a user could hit or a changed behaviour (rule 14); among them the
+`astropy.time` item recording that leap seconds were discontinued and `Time` no longer checks for or
+downloads newer leap-second tables. Dropped whole: the one "Other Changes and Additions" item,
+"Updated the bundled CFITSIO library to 4.7.0. [#20255]", a vendored-dependency update, and with it
+that section's heading. Every kept item and heading matches the source once whitespace is normalised.
+Nothing of the v8.0.2 description carries onto v8.0.3 (rule 10). The 8.0.3 section is not on `main`
+at `4be093a6`, whose changelog has not yet been synchronised with the release branch.
 
-**Version PID** (rules 17–18). Not found: no deposit exists for v8.0.2. On 2026-10-29 the Zenodo
-versions of the concept 10.5281/zenodo.4670728 numbered 42, the newest `v8.0.1`
-(10.5281/zenodo.21262391, published 2026-07-08), and DataCite's concept record listed the same 42
-under `HasVersion` and presented `version` `v8.0.1`. Astropy's deposits are made by Zenodo's GitHub
-integration (the v8.0.1 deposit carries `IsSupplementTo https://github.com/astropy/astropy/tree/v8.0.1`),
-which deposits a release when its GitHub Release is published, and v8.0.2 has none. The PID is
-therefore cleared rather than carried over; the v8.0.1 DOI must not be used for v8.0.2.
+**Version PID** (rules 17–18). https://doi.org/10.5281/zenodo.24340642, the Zenodo deposit for
+exactly this release: its `version` is `v8.0.3`, it carries `IsSupplementTo
+https://github.com/astropy/astropy/tree/v8.0.3`, its concept DOI is 10.5281/zenodo.4670728 (Field 2),
+and DataCite's concept record, updated 2026-11-18, presents `version` `v8.0.3` among 46 `HasVersion`
+entries. The DOI resolves. v8.0.2 now has a deposit too (10.5281/zenodo.24340628, created
+2026-11-18T11:38:11Z when its GitHub Release was published), which is why HSSI's v8.0.2 row had none.
 
 *Superseded observation.* The 2026-08-26 record found no `HasVersion` relations on DataCite's concept
-record and took the version DOI from the Zenodo API instead. DataCite's record, updated 2026-09-15, now
-lists all 42 versions, so either route serves.
+record and took the version DOI from the Zenodo API instead. DataCite's record has listed the versions
+since 2026-09-15, so either route serves.
 
 *`CITATION.cff` cannot arbitrate any of this:* it has no top-level `version` or `date-released` key.
 Its complete top-level key set is `cff-version`, `message`, `title`, `authors`, `repository-code`,
 `url`, `license`, `identifiers`, `preferred-citation` and `references`, and the file is byte-identical
-at the Source Revision and at `v8.0.2`.
+at the Source Revision, at `v8.0.2`, at `v8.0.3` and at `main` `4be093a6`.
 
 ### 13. Programming Language (RECOMMENDED)
 - Python 3.x
@@ -764,9 +724,10 @@ particular value is present on both, so no target-specific hazard applies to it.
 - python
 
 The first fifteen are the entries of `pyproject.toml`'s `keywords` array, in the order the project
-lists them; the array is unchanged at the `v8.0.2` tag. The last two are the repository's GitHub
-topics that the array lacks: the topics read on 2026-10-29 are `astronomy`, `astrophysics`, `astropy`,
-`python` and `science`, and the other three are already in the array. Topics are project-declared, so
+lists them; the array is unchanged at the `v8.0.2` and `v8.0.3` tags and at `main` `4be093a6`. The
+last two are the repository's GitHub topics that the array lacks: the topics read on 2026-10-29, and
+again unchanged on 2026-11-18, are `astronomy`, `astrophysics`, `astropy`, `python` and `science`, and
+the other three are already in the array. Topics are project-declared, so
 fields/16 rule 9 includes them unless rules 2–4 exclude them, and none does; rule 7's exclusion of a
 catalogue-wide generic such as `python` applies only to terms an extractor proposes. The 2026-08-26
 record listed the array alone and did not weigh the topics. Both terms bind existing lower-case rows.
@@ -897,10 +858,11 @@ correctly unselected.
 `ubuntu-latest`, `macos-latest` and `windows-latest`, plus `ubuntu-24.04-arm` and named
 `windows: py313-test-alldeps` and `macos: py313-test-alldeps` jobs.
 
-The published release matches. PyPI's 8.0.2 files, uploaded 2026-10-15, are abi3 wheels for macOS
+The published release matches. PyPI's 8.0.3 files, uploaded 2026-11-17, are abi3 wheels for macOS
 (`macosx_10_9_x86_64`, `macosx_11_0_arm64`), Linux (manylinux `x86_64` and `aarch64`, musllinux
-`x86_64`) and Windows (`win32`, `win_amd64`, `win_arm64`), the same set as 8.0.1, and the cibuildwheel
-targets and CI runners described above are the same at the `v8.0.2` tag.
+`x86_64`) and Windows (`win32`, `win_amd64`, `win_arm64`), the same set as 8.0.1 and 8.0.2, and the
+cibuildwheel targets and CI runners described above are the same at the `v8.0.2` and `v8.0.3` tags
+(between them the CI workflows changed only the versions of the actions they use).
 
 **Considered and rejected: `Operating System Independent`.** It is a real vocabulary row and it is
 literally what the `pyproject.toml` classifier says. The three named platforms are chosen instead
@@ -917,8 +879,8 @@ The same cibuildwheel configuration determines this: macOS `x86_64` and `arm64` 
 (x86-64) and `aarch64` wheels, with `test-skip = "*-musllinux_x86_64"` and `skip = ["cp*t-*"]`.
 `ppc64le` is a live vocabulary row but no ppc64le wheel is built, so it is not selected.
 
-PyPI's 8.0.2 wheels confirm the three rows: `x86_64` for macOS, Linux and Windows (`win_amd64`) →
-`x86-64`; `macosx_11_0_arm64` → `Apple Silicon arm64`; manylinux `aarch64` → `Linux aarch64 or arm64`.
+PyPI's 8.0.3 wheels, the same set as 8.0.2's, confirm the three rows: `x86_64` for macOS, Linux
+and Windows (`win_amd64`) → `x86-64`; `macosx_11_0_arm64` → `Apple Silicon arm64`; manylinux `aarch64` → `Linux aarch64 or arm64`.
 Two further Windows wheels, `win32` (32-bit x86) and `win_arm64`, map to no row of their own. `Other`
 is not selected for them: fields/21 rule 8 admits it without requiring it, and it would tell a
 searcher nothing that the three rows and Field 20's `Windows` do not.
@@ -946,16 +908,17 @@ X-ray astronomy support in this ecosystem lives in separate packages.
 ### 23. Development Status (RECOMMENDED)
 - **Status:** Active
 
-Rule 6, recency for software with stable releases. The anchors, read on 2026-10-29: the last commit
-on the default branch `main` is `d3ad3b66f24bda0f3e5efadda4a5d78fea0714c2` (2026-10-29T16:38:43Z),
-and the latest release is v8.0.2 of 2026-10-15 (Field 12), with v7.2.3, a 7.2-series maintenance
-release, the same day. The repository is not archived. The README carries no repostatus.org badge or
-status statement — its status line shows CI, coverage and documentation badges — and displays a
-pyOpenSci peer-reviewed badge linking to https://github.com/pyOpenSci/software-review/issues/251. The
-next minor version is in development on `main`, whose nearest tag is `v8.1.0.dev`.
+Rule 6, recency for software with stable releases. The anchors, read on 2026-11-18: the last commit
+on the default branch `main` is `4be093a6d4c61aecab1a60c60433902c3d40c09f` (2026-11-17T20:35:30Z),
+and the latest release is v8.0.3, published 2026-11-18 (Field 12), with v7.2.4, a 7.2-series
+maintenance release, the same day. The repository is not archived. The README carries no
+repostatus.org badge or status statement — its status line shows CI, coverage and documentation
+badges — and displays a pyOpenSci peer-reviewed badge linking to
+https://github.com/pyOpenSci/software-review/issues/251; the README is unchanged since the 2026-10-29
+reading. The next minor version is in development on `main`, whose nearest tag is `v8.1.0.dev`.
 
-The status is unchanged from earlier records, which rested it on v7.2.0 (2025-11-25) and, at
-2026-08-26, on v8.0.1 (2026-07-04).
+The status is unchanged from earlier records, which rested it on v7.2.0 (2025-11-25), at 2026-08-26
+on v8.0.1 (2026-07-04), and at 2026-10-29 on v8.0.2 (2026-10-15).
 
 ### 24. Documentation (RECOMMENDED)
 - **URL:** https://docs.astropy.org
@@ -987,7 +950,8 @@ Administration" rather than "NASA").
   for their continued financial support." See Field 26 for the grant itself.
 - **National Aeronautics and Space Administration** — "This work is partially supported by NASA under
   Grant No. 80NSSC22K0347 issued through the NASA ROSES program." The body text describes it as ~$600k
-  over three years from the ROSES-2020 call, section E.7.
+  over three years from the ROSES-2020 call, section E.7. NASA is also the funder of the later
+  cooperative agreement 80NSSC25M7029 (Field 26, Award 3).
 - **International Gemini Observatory** — the entity recorded is the **proximate named supporter**.
   The paper's body text is decisive and more specific than the acknowledgement boilerplate: "the
   Project benefited from a Gemini Observatory contract under its Science User Support Department,
@@ -1130,7 +1094,7 @@ text, and because it sits three words from the Moore award's official title, "Su
 Growing** the Astropy Project". The call-name title recorded above has neither drawback. This
 alternative is documented so it is not re-proposed as a discovery.
 
-**The two awards must not be merged.** `GBMF8435` (Gordon and Betty Moore Foundation) and
+**Awards 1 and 2 must not be merged.** `GBMF8435` (Gordon and Betty Moore Foundation) and
 `80NSSC22K0347` (National Aeronautics and Space Administration) are distinct awards from different
 funders, with different amounts, terms and titles. They are recorded as two separate entries and
 neither should be folded into or "corrected" against the other.
@@ -1141,11 +1105,18 @@ in Astronomy"** (PI Erik Tollerud, NumFOCUS). **This is a different, later award
 foundation/sustainment awards — alongside Astroquery, Matplotlib and Cartopy, the SunPy Ecosystem and
 NumPy/SciPy/scikit-learn — under a later solicitation, not ROSES-2020.
 
-**Known follow-up for a future refresh:** Astropy holds NASA funding subsequent to 80NSSC22K0347 (the
-award just described), under award number **80NSSC25M7029** — a cooperative agreement to NumFOCUS,
-Inc. from the National Aeronautics and Space Administration, $614,468, with a period of performance
-running 2025-03-01 to 2030-02-28. It is recorded as a federal assistance award, so the number appears
-as the FAIN rather than a PIID.
+**Award 3**
+- **Award Title:** Astropy NASA ROSES 24
+- **Award Number:** 80NSSC25M7029
+- **Funder:** National Aeronautics and Space Administration
+
+Added at the v8.0.3 release update (2026-11-18). Astropy holds this NASA funding subsequent to
+80NSSC22K0347 (Award 2): a cooperative agreement to NumFOCUS, Inc. from the National Aeronautics and
+Space Administration, $614,468, with a period of performance running 2025-03-01 to 2030-02-28
+(USAspending, re-read 2026-11-18; a nonsense-number control returns nothing). It is recorded as a
+federal assistance award, so the number appears as the FAIN rather than a PIID. Earlier versions of
+this record carried it only as a follow-up, for want of a title; Field 26 rule 9 does not treat a
+missing official title as a bar, so it is now recorded.
 
 **What ties that number to Astropy specifically, and why the tie is needed.** The federal record
 alone cannot establish it: NumFOCUS is a fiscal sponsor for many projects, and it held **nine** NASA
@@ -1157,44 +1128,50 @@ nothing but generic ROSES boilerplate in the description field. Two are actively
 therefore **not** sufficient to identify an Astropy award, and any future refresh that matches on
 those two fields alone will pick the wrong one.
 
-The distinguishing evidence is first-party: the Astropy Project's own Open Collective account carries
-a dedicated sub-account named **"Astropy NASA ROSES24 80NSSC25M7029"** (typed a Project in Open
-Collective's account taxonomy, at `opencollective.com/astropy/projects/roses-24`). Because the
+The distinguishing evidence is first-party, and it is the qualifying source for this award (rule 7):
+the Astropy Project's own Open Collective account carries a dedicated sub-account named **"Astropy NASA
+ROSES24 80NSSC25M7029"**, described "Astropy NASA ROSES 24" (typed a Project in Open Collective's
+account taxonomy, at `opencollective.com/astropy/projects/roses-24`; re-read 2026-11-18). Because the
 project itself names the award number on an account it controls, the attribution does not rest on
 inference from the federal record.
 
-The scope of that precedent is worth stating precisely, because it is narrower than it first appears.
-Open Collective was already used earlier in this field, but only for **Award 2** (`80NSSC22K0347`),
-and there only to source a *rejected* title alternative — not to establish the award number, which
-came from the paper and the federal record. **Award 1** (Moore, `GBMF8435`) has no Open Collective
-citation elsewhere in this field at all; its number and official title rest on the Moore Foundation's
-own grant record. The sibling sub-accounts "Astropy NASA ROSES20 80NSSC22K0347" and "Astropy Moore
-8435" (described "Sustaining and Growing the Astropy Project") are noted here as **additional
-corroboration**, not as evidence this field previously relied on for either award.
+**Title** (rule 9). No official title exists in a primary source. The federal record's description is
+the generic ROSES solicitation boilerplate ("THE ROSES FUNDING OPPORTUNITY GOALS ARE: EXECUTE A
+BALANCED SCIENCE PROGRAM…"), shared by many awards, not a title of this one. NASA's selected-proposal
+abstracts in the ADS proposal collection (searched 2026-11-18 for Astropy in title or abstract) hold no
+Astropy ROSES-2024 proposal, so no proposal title is available either. The title is therefore the
+qualifying source's own name for the award: the Open Collective sub-account's description, "Astropy
+NASA ROSES 24", which names the project, the agency and the program year, without the award number
+that renders beside it (rule 10). It is the grantee's label, **not NASA's official title**; it must not
+be read as one, nor "corrected" to empty. The rest of Field 26 rule 9's order was weighed: the
+descriptive label `National Aeronautics and Space Administration grant` comes only after a source's
+own name, and would tell a reader less. If a NASA-primary title for 80NSSC25M7029 is ever published,
+it is the better title, but the Award row is shared and its name is not changed through the update
+API, so substituting it is a database correction rather than a routine refresh.
 
-This is not yet a complete third entry for this field, because it has the same defect as
-80NSSC22K0347: the federal spending record carries no title, only the generic ROSES solicitation
-boilerplate ("THE ROSES FUNDING OPPORTUNITY GOALS ARE: EXECUTE A BALANCED SCIENCE PROGRAM…"), so no
-official proposal title is available from a primary source. Adding it would require settling a title
-of record the same way this field settled the other two.
+*Why this differs from Award 2's handling.* Award 2's title is the funding call's element name,
+NASA-primary text that the reference publication quotes. For this award no source names the ROSES-2024
+element, and the federal record names none; reading one in would be an inference.
+
+**Funder** (rule 16): the National Aeronautics and Space Administration, as Field 25 records it
+(`https://ror.org/027ka1x80`), so the award binds the same Organization row as Award 2's funder. No
+Award row in HSSI carried this number in any punctuation form before this entry (rule 13; production's
+Award list read 2026-11-18).
 
 Whether 80NSSC25M7029 is the award behind the "Investing in the Astropy Project to Enable Research
-and Education in Astronomy" title rejected just above is **unconfirmed** — the recipient, the funder
-and the later-solicitation timing are all consistent, but no source examined states the link, and it
-must not be assumed on circumstantial agreement alone.
+and Education in Astronomy" title rejected above is **unconfirmed** — the recipient, the funder and the
+later-solicitation timing are all consistent, but no source examined states the link, and it must not
+be assumed on circumstantial agreement alone. That title is therefore not used for Award 3.
 
-**TODO for the next Updater — an award is missing from this dossier and HSSI:** NASA cooperative
-agreement `80NSSC25M7029` to NumFOCUS, Inc., funder the National Aeronautics and Space Administration
-(Field 25). The evidence is the Open Collective sub-account described above. It was left out only
-because the federal record carries no proposal title, which Field 26 rule 9 does not treat as a bar:
-the title is the funder's award record, else the source's own name for the award or program (as this
-field settled Award 2, with the funding call's name), else the descriptive label
-`<funder full name> grant`, recorded here as not the official title. Whether this is the award behind
-the "Investing in the Astropy Project to Enable Research and Education in Astronomy" title rejected
-above is unconfirmed. Production's Award rows (read 2026-11-03) hold no row for this number, so
-sending it creates one; `80NSSC22K0347`, Award 2, is a separate row. The stored list is the entry's
-complete set (rule 7), so the update sends Awards 1 and 2 with it. Adding it is a Field 25/26 value
-change for the Updater's normal cycle, with the checks re-run first.
+**The three awards are distinct.** `GBMF8435`, `80NSSC22K0347` and `80NSSC25M7029` are separate awards;
+none should be merged into or "corrected" against another.
+
+The scope of the Open Collective evidence elsewhere in this field is narrower. For **Award 2**
+(`80NSSC22K0347`) it sources only a *rejected* title alternative — not the award number, which came
+from the paper and the federal record. **Award 1** (Moore, `GBMF8435`) rests on the Moore Foundation's
+own grant record. The sibling sub-accounts "Astropy NASA ROSES20 80NSSC22K0347" and "Astropy Moore
+8435" (described "Sustaining and Growing the Astropy Project") are **additional corroboration** for
+those two, not evidence they rely on.
 
 ---
 
@@ -1251,8 +1228,23 @@ change for the Updater's normal cycle, with the checks re-run first.
   users. No rule in fields/27 covers an outside publication whose subject is the software, so the user
   decided it.
 
-**Search record.** Literature searched on 2026-10-29 across all years; no earlier search had been
-recorded here, and the next refresh searches from this date.
+**Search record.** Literature searched on 2026-10-29 across all years, and again on 2026-11-18 for
+records entered since 2026-10-29; the next refresh searches from 2026-11-18. The 2026-11-18 search
+added nothing:
+
+- ADS/SciX (anonymous API), entry date 2026-10-29 onward: `title:"astropy"` (5 records, all Zenodo
+  deposits of other Astropy-organization packages — astroquery, specutils, reproject, ccdproc —
+  software, not publications); `abs:"astropy"` excluding meeting abstracts, circulars, software and
+  catalogues (3 records: two papers that use Astropy, which rule 5 excludes, and a DASH 2023
+  collection of presentation videos, whose subject is not Astropy);
+  `author:"Astropy Collaboration"` (0).
+- Crossref `query.title=astropy` indexed since 2026-10-29 (5 results, all re-indexed records of
+  publications already weighed in this field or listed in Field 14).
+- DataCite, titles containing "astropy" created since 2026-10-29 (8 records: the Zenodo deposits of
+  Astropy v7.2.3, v8.0.2, v7.2.4 and v8.0.3, and of astropy-iers-data and pyvo releases — software).
+- Controls: a nonsense token returned 0 on ADS and on Crossref.
+
+The 2026-10-29 search:
 
 - ADS/SciX (anonymous API): `author:"Astropy Collaboration"` (12 records: the three Astropy papers,
   seven Zenodo deposits of Astropy releases, and two transient-classification circulars that list the
