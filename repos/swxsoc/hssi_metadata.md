@@ -4,7 +4,7 @@
 **Repository:** https://github.com/swxsoc/swxsoc
 **Source Revision:** 2bf3f8b31c57f22abf1c17b9e98a61f55a8f38f9
 **Extraction Date:** 2026-09-12
-**Validation Date:** 2026-11-03
+**Validation Date:** 2026-11-18
 **Validation Status:** PASS
 
 ---
@@ -23,6 +23,14 @@ A second caveat that changes how the code should be read: the package absorbed t
 packages during 2026 — `sdc_aws_utils` and a MetaTracker package — so its functional surface is
 substantially wider at this source revision than its published description suggests. Evidence drawn
 from before those merges understates what the software does.
+
+A third caveat about revisions: the Source Revision above is the commit at which most of this dossier's
+evidence was read. Release `0.2.4` (tag `0.2.4`, commit `d63ae4df835a221907f438942482371f8a4d912a`)
+followed it; the fields that release could have changed were re-read at that commit, and each such
+passage names `d63ae4d` beside the evidence it cites. Between the two revisions the software gained a
+GDC Trailblazer mission configuration, revised IMPAX data levels, reshaped the `demo` mission, added a
+warning for an undefined mission, fixed a filename-parsing bug, and overhauled its documentation; it
+gained no new capability category.
 
 ---
 
@@ -153,16 +161,20 @@ and schema-driven handling supports both `Analysis` entries.
   Decommutation happens in the per-instrument downstream packages, not here.
 - `Mission-related: Calibration` and `Data Processing and Analysis: Calibration` — rejected, and the
   rejection rests on what the word "calibrat" marks where it appears rather than on its absence,
-  because it appears in production code as well as in documentation. `docs/cmad/index.rst` is a
-  Calibration and Measurement Algorithm Document stub which states that the individual missions host
-  their own CMADs — the project's own statement that the algorithms live downstream.
+  because it appears in production code as well as in documentation. At the Source Revision,
+  `docs/cmad/index.rst` was a Calibration and Measurement Algorithm Document stub stating that the
+  individual missions host their own CMADs — the project's own statement that the algorithms live
+  downstream. Release `0.2.4` removed that page ("Removed the CMAD and tour documentation pages.",
+  `CHANGELOG.rst` at `d63ae4d`) without adding any calibration code, so the rejection stands; the
+  remaining occurrences listed here were re-checked at `d63ae4d` and are unchanged in kind.
   `swxsoc/io/s3.py` takes a `calibrated_filename` argument in `push_science_file`: the local path of
   a file some other component has already calibrated, which this function only keys and uploads;
   nothing in it inspects or transforms the data. `swxsoc/io/tests/test_io.py` builds a CDF fixture
   carrying a support-data variable named `Calibration_Factor` with `CATDESC` "Calibration factor",
   and `docs/examples/tutorial1.rst` and `docs/user-guide/reading_writing_data.rst` name an example
-  variable `calibration_const` and `Calibration_const` respectively — payload names in example and
-  test metadata, not code that derives them. `docs/dev-guide/downstream_testing.rst` cites "a
+  variable `calibration_const` (at `d63ae4d` the rewritten user guide also mentions "calibration
+  tables" and "calibration constants" as examples of time-invariant support data) — payload names
+  and examples in documentation and test metadata, not code that derives them. `docs/dev-guide/downstream_testing.rst` cites "a
   calibration helper" as an example of the kind of shared utility a downstream package might depend
   on, and `docs/user-guide/cdf_format_guide.rst` mentions "change in calibration" when explaining
   what a data-version bump signifies. The bundled sample CDF matches too, again as a variable name
@@ -194,8 +206,8 @@ and schema-driven handling supports both `Analysis` entries.
   packages noted in Field 29), to which swxsoc contributes a single trigger function.
 - `Mission-related: System Testing` — rejected, and it is the closest of the four to warranting
   inclusion. `.github/workflows/downstream-testing.yml` and `.github/downstream-packages.json`
-  register eleven downstream packages at this revision (ten of them enabled; `padre_sharp` carries
-  `"enabled": false`) and run each package's own test suite against a candidate swxsoc branch, which
+  register twelve downstream packages at `d63ae4d` (eleven of them enabled; `padre_sharp`
+  carries `"enabled": false`; release `0.2.4` added `gdctb_cape_eea`) and run each package's own test suite against a candidate swxsoc branch, which
   is system-level integration testing in substance. It is nevertheless the project's own continuous
   integration configuration, not a capability the software offers anyone who installs it — by the
   same rule that a package's `pytest` suite does not make it testing software. A searcher looking
@@ -251,8 +263,21 @@ exists as a Related Phenomena row, where it is excluded on the same reasoning; s
 
 **Considered and rejected:** every Earth-specific region (`Earth Ionosphere`, `Earth Magnetosphere`,
 `Earth Thermosphere` and the rest), all planetary magnetospheres, `Corona`, `Chromosphere`,
-`Photosphere`, `Solar Interior` and `Heliosheath`. None of the shipped missions targets these
-regions, and the package contains no region-specific code at all.
+`Photosphere`, `Solar Interior` and `Heliosheath`. The package contains no region-specific code at
+all.
+
+**Considered and not selected: `Earth Ionosphere`, `Earth Thermosphere` and their coarse row
+`Earth Atmosphere`, from the GDC Trailblazer configuration.** Release `0.2.4` added a `gdctb` mission
+to `swxsoc/data/config.yml` ("The GDC Trailblazer Mission", with a `cape-eea` instrument and a `craft`
+spacecraft entry, at `d63ae4d`), so the earlier statement that no shipped mission targets an Earth
+region no longer holds: the GDC-Trailblazer GitHub organization describes the mission as "a NASA
+mission to study Earth's coupled Ionosphere/Thermosphere (IT) System". The rows were still not added.
+What the configuration contributes is filename parsing, data-level definitions and bucket naming for
+that mission; swxsoc computes, models and analyses no ionospheric or thermospheric physics, and the
+Field 5 rubric (rules 3 and 4) does not accept a region whose only support is a mission the
+software's downstream packages serve. Only ionosphere or thermosphere capability in swxsoc itself
+would warrant revisiting this. (The two stored rows rest on the mission-inheritance reading recorded
+above; that reasoning predates this release and was not reopened by it.)
 
 ### 6. Authors (MANDATORY)
 
@@ -274,12 +299,55 @@ credit order that will be displayed and re-sent. Do not alphabetise or reorder b
 - **Author Identifier:** `https://orcid.org/0009-0008-6857-0882`
 - **Affiliations:** General Dynamics Mission Systems (no identifier); Goddard Space Flight Center — `https://ror.org/0171mag52`
 
-**The author set is complete at three people, and that is a checked claim rather than an assumption.**
-`pyproject.toml` declares exactly three authors. The Zenodo deposit for the current release lists
-four `creators` entries but only three distinct people, because Damian Barrous-Dume appears twice
-(see below). The deposit's `contributors` array is empty. There is no `CITATION.cff` and no
-`.zenodo.json` in the tracked tree; `swxsoc/CITATION.rst` is a prose acknowledgement page naming no
-individuals. No source names a fourth person, so no one is being dropped.
+**Author 4 — Richard Strub**
+- **Given / Family:** Richard / Strub
+- **Author Identifier:** none (see below)
+- **Affiliation:** Aurora Engineering (no identifier)
+
+**Author 5 — James Ray**
+- **Given / Family:** James / Ray
+- **Author Identifier:** none (see below)
+- **Affiliation:** none (see below)
+
+**The author set is five people, and that is a checked claim rather than an assumption.** Authors 1–3
+are the three people `pyproject.toml` declares (unchanged at `d63ae4d`). Authors 4 and 5 were added
+because the Zenodo deposit for release `0.2.4` (record `24325350`, DOI
+`10.5281/zenodo.24325350`) names them as `creators` — "Richard Strub" with affiliation
+"Aurora Engineering" and "James Ray" with the affiliation string "@NASA via @Navteca prev @NASA-JPL" —
+and a Zenodo creator is an author attestation under the Field 6 rubric (rule 8). Both are real
+contributors to that release: the GitHub release for `0.2.4` lists pull requests by `@rstrub`
+(among them "Make CDF Support Optional", "Merge MetaTracker Package into swxsoc" and the multi-timeseries
+CDF read/write work) and by `@jamesray` ("Skip the broken Mattermost driver 11.10.x wheels", "Make the
+demo mission a working craft-only mission"), and git history commits them as
+`rstrub <richard.f.strub@nasa.gov>` and `James Ray <jamesarthurray@gmail.com>`. Neither appears in the
+`0.2.3` deposit, which is why the set was three before this release. They are appended after the
+three stored authors in the order the `0.2.4` deposit lists them. The deposit lists six `creators`
+entries but five distinct people, because Damian Barrous-Dume still appears twice (see below); its
+`contributors` array is empty. There is no `CITATION.cff` and no `.zenodo.json` in the tracked tree;
+`swxsoc/CITATION.rst` is a prose acknowledgement page naming no individuals. No source names a sixth
+person. `pyproject.toml` still lists only the original three; that is a packaging file lagging the
+deposit, not a demotion of the two new authors.
+
+**No ORCID is recorded for either new author — negative research, so it is not re-hunted.** A fielded
+ORCID search (`given-names:Richard AND family-name:Strub`, 2026-11-18) returned one record,
+`0000-0001-6050-4540`, which carries only the name: no employment, no works, no researcher URL, no
+public email. `given-names:James AND family-name:Ray` returned eleven records; the only one with a
+plausible link is `0009-0005-2814-7228`, whose sole content is an undated employment at the National
+Aeronautics and Space Administration, with no works and no URL. A positive control in the same query
+shape (`given-names:Andrew AND family-name:Robbertz`) returned exactly the stored ORCID. Neither
+candidate connects to this person or this work beyond the name (a same-name, same-institution record
+with no works is not linkage), so both are rejected under rule 14. Adopt one only when the ORCID record
+itself lists swxsoc or its deposits, or a project source carries it beside the name.
+
+**Affiliations of the new authors.** Richard Strub's "Aurora Engineering" is the institution the
+project's own deposit gives him and is recorded as written. It has no ROR: a ROR v2 query for
+"Aurora Engineering" (2026-11-18) returned only unrelated organizations, the nearest being Aurora
+Offshore Engineering (Australia, `https://ror.org/04r1k8748`), a different company, while the positive
+control "Goddard Space Flight Center" returned `https://ror.org/0171mag52` first. James Ray's deposit
+string is a GitHub profile line made of organization handles (`@NASA`, `@Navteca`, `@NASA-JPL`), which
+is not an affiliation (rule 18), so none is asserted for him. Navteca or NASA might well be correct for
+him, but an added affiliation cannot be withdrawn, so neither is recorded until a source names his
+institution in words.
 
 **Each ORCID was resolved and confirmed to be the right person.** `0000-0001-6127-795X` returns
 given name Steven, family name Christe, with a current employment at NASA Goddard Space Flight
@@ -322,7 +390,7 @@ row, not on an organization row). If an identifier ever genuinely
 needs to be attached to Navteca or General Dynamics Mission Systems, it requires a deliberate
 database-side correction with its own review, not a field update.
 
-**One divergence between sources, deliberately not acted on.** `pyproject.toml` at this revision
+**One divergence between sources, deliberately not acted on.** (Still present at `d63ae4d`.) `pyproject.toml` at this revision
 gives Robbertz the address `andrew.l.robbertz@nasa.gov`, while the published 0.2.3 distribution
 carries `a.robbertz@gmail.com`. HSSI stores no author emails, so nothing follows for the record; it
 is noted only so a future agent does not read the difference as evidence of two different people.
@@ -363,6 +431,12 @@ operations dashboards. That is a candidate for a future rewrite, but it is a mat
 judgement about maintainer-authored prose rather than a factual error, so the maintainers' own
 wording stands.
 
+Release `0.2.4` gave the documentation front page (`docs/index.rst` at `d63ae4d`) a new summary:
+"``swxsoc`` helps space weather and heliophysics missions create, validate, and manage archive-ready CDF
+data files, and provides shared tools for running mission science data pipelines." It is the
+maintainers' own wording and a good source for any future rewrite, but it does not make the stored
+description wrong, so it was not substituted.
+
 ### 9. Concise Description (OPTIONAL)
 **Value:**
 
@@ -391,57 +465,69 @@ other publisher is claimed by any source.
 
 ### 12. Version (RECOMMENDED)
 
-- **Version Number:** `0.2.3`
-- **Version Date:** `2026-01-12`
-- **Version Description:** Maintenance and pipeline release: adds PADRE spacecraft support and Unix
-  timestamp parsing, adds a data descriptor, extends Timestream recording to arrays, NaNs and
-  boolean types, updates logger formatting, migrates linting to ruff, and fixes a bad time match and
-  a ReadTheDocs build failure.
-- **Version PID:** `https://doi.org/10.5281/zenodo.18226255`
+- **Version Number:** `0.2.4`
+- **Version Date:** `2026-11-17`
+- **Version Description:**
 
-**This supersedes `v0.2.2`, the version HSSI recorded before this refresh, which had gone stale.**
-Release `0.2.3` was published `2026-01-12T21:37:03Z` on GitHub, uploaded to PyPI at
-`2026-01-12T21:37:43Z`, and archived as Zenodo record `18226255` with `metadata.version` `0.2.3`.
-PyPI's own `info.version` for the project is `0.2.3`. That was an objective advance on the superseded
-value, not a matter of taste.
+  * Added optional ``cdf`` dependency extra for reading and writing CDF files with the ``spacepy`` and ``sammi-cdf`` package.
+  * Added optional ``tracker`` dependency extra with SQLAlchemy and tenacity for MetaTracker under ``swxsoc.db.tracker``.
+  * Issued a ``SWXUserWarning`` when ``SWXSOC_MISSION`` or ``selected_mission`` names a mission that is not defined in ``missions_data`` of the config file, instead of failing silently.
+  * Changed the default ``demo`` mission to a single ``craft`` instrument (``instrument_package: demo_craft``) with a ``raw`` data level and the ``csv`` file extension, so the SWxSOC demo pipeline can sort and process its files. The ``MyInstrument1`` and ``MyInstrument2`` placeholder instruments are removed; their optional keys remain in ``config.yml`` as a commented template.
+  * Fixed ``parse_science_filename`` reading a data level that is not two characters long, such as ``raw``, as an instrument mode in standard-format file names.
+- **Version PID:** `https://doi.org/10.5281/zenodo.24325350`
 
-**The number is recorded without a leading `v`, and dropping the prefix is deliberate.** The version
-entry HSSI held before this refresh spelled the number `v0.2.2`, with a prefix the project itself
-does not use: all five tags in the repository — `0.1.0`, `0.2.0`, `0.2.1`, `0.2.2`, `0.2.3` — are
-unprefixed, as the tag inventory below records, and every published form of the release agrees with
-the tags rather than with the prefixed spelling (PyPI's releases are `0.1.0`, `0.2.1`, `0.2.2` and
-`0.2.3`; each GitHub release `name` is identical to its `tag_name`; the Zenodo deposit's
-`metadata.version` is `0.2.3` and its title is "swxsoc/swxsoc: 0.2.3"). So `0.2.3` drops the `v` as
-well as advancing the number, and that drop is intentional rather than a transcription slip. Record
-the number in the project's own unprefixed form in future refreshes; do not restore the `v` for
-consistency with the older entry. The same superseded entry recorded a release date of `2025-06-07`,
-a version PID of `https://doi.org/10.5281/zenodo.15615510`, and an **empty** description — which is
-why a version description is supplied above.
+**This supersedes `0.2.3`, which HSSI held until this update** (released 2026-01-12, version PID
+`https://doi.org/10.5281/zenodo.18226255`, with a curator-written summary of its release body as the
+description). Release `0.2.4` is the next release on the project's single release line: tag `0.2.4`
+points at `d63ae4df835a221907f438942482371f8a4d912a` on `main`, a descendant of both `0.2.3` and this
+dossier's Source Revision. The GitHub release for `0.2.4` was published `2026-11-17T21:32:04Z`,
+marked Latest and not a pre-release; the tagged commit is dated `2026-11-17T21:31:08Z`; Zenodo created
+deposit `24325350` at `2026-11-17T21:32:11Z` with `metadata.version` `0.2.4`, title
+"swxsoc/swxsoc: 0.2.4", concept DOI `10.5281/zenodo.15546486` and an `isSupplementTo` link to
+`https://github.com/swxsoc/swxsoc/tree/0.2.4`; and PyPI received `swxsoc-0.2.4.tar.gz` at
+`2026-11-17T21:35:00Z` (not yanked; PyPI's `info.version` is `0.2.4`). The version is dynamic
+(`setuptools_scm`), so the tag is the declared version. The date is the GitHub release's UTC day.
 
-**The version description was derived from the release body, because the release `name` carries no
-information.** Both the `0.2.3` and `0.2.2` GitHub releases have a `name` identical to their
-`tag_name` — the project does not title its releases. The description above therefore summarises the
-eleven merged pull requests listed in the release body, which is the only substantive content
-available. A future refresh should check the `name` again rather than assuming it stays empty.
+**The number is recorded without a leading `v`, and that form is deliberate.** All six tags in the
+repository — `0.1.0`, `0.2.0`, `0.2.1`, `0.2.2`, `0.2.3`, `0.2.4` — are unprefixed, every GitHub release
+`name` is identical to its tag, PyPI's releases are unprefixed, and the Zenodo titles are
+"swxsoc/swxsoc: <number>". An older HSSI entry spelled `v0.2.2`; the prefix was dropped when `0.2.3`
+was recorded and must not be restored.
 
-**Two version anomalies, established rather than guessed at, so they are not re-investigated later.**
+**The description is the project's own `CHANGELOG.rst` entry for `0.2.4`, trimmed to whole items.** The
+release `name` is just the tag. The release body is GitHub's auto-generated "What's Changed" list of
+pull-request titles (from `#61` to `#127`, i.e. everything between `0.2.3` and `0.2.4`), with
+contributor credits and a "Full Changelog" link; an auto-generated pull-request list is never recorded,
+so the next source in order, the changelog heading `0.2.4 (2026-11-17)` at `d63ae4d`, was used. Its
+twelve items were kept or dropped whole, never reworded: the five above are new optional extras,
+changed behaviour, a changed default configuration and a user-facing bug fix. Dropped as documentation,
+lint and build housekeeping: the documentation reorganization, the removal of the CMAD and tour pages,
+the documentation fixes, `sphinx-llms-txt`, the switch from `black`/`flake8` to `ruff`, the doctest
+conversion, and the new Installation Guide and Release Process pages. The items keep their
+reStructuredText double backticks verbatim; they render as code in markdown too. The changelog entry
+does not mention the GDC Trailblazer configuration or the IMPAX data-level change, which the release
+also contains; those are not added, because a description composed from commits is never recorded. The
+`0.2.3` description that HSSI held was a curator's summary of that release's pull-request list; it was
+not carried onto the new number.
 
-*There is no orphan-lineage problem.* All five tags — `0.1.0`, `0.2.0`, `0.2.1`, `0.2.2`, `0.2.3` —
-are ancestors of this source revision, and five tags is the repository's complete tag set. Version
-history can be read from the pinned lineage directly.
+**Version anomalies, established rather than guessed at, so they are not re-investigated later.**
+
+*There is no orphan-lineage problem.* All six tags are ancestors of `d63ae4d`, and six tags is the
+repository's complete tag set. Version history can be read from the pinned lineage directly.
 
 *Release `0.2.0` was tagged and released on GitHub but never published to PyPI.* PyPI carries
-`0.1.0`, `0.2.1`, `0.2.2` and `0.2.3` only, while GitHub carries a non-draft, non-prerelease `0.2.0`
-published `2025-05-29`. This is a declared-but-not-distributed release. It does not affect the
-current value and requires no action; it is recorded so a later agent reconciling GitHub against
-PyPI does not treat the gap as a fetch failure.
+`0.1.0`, `0.2.1`, `0.2.2`, `0.2.3` and `0.2.4` only, while GitHub carries a non-draft, non-prerelease
+`0.2.0` published `2025-05-29`. This is a declared-but-not-distributed release. It does not affect the
+current value and requires no action; it is recorded so a later agent reconciling GitHub against PyPI
+does not treat the gap as a fetch failure.
 
-*The changelog is stale and internally inconsistent — do not date anything from it.* `CHANGELOG.rst`
-contains two separate headings reading `Latest` and a single numbered heading, `0.0.0 (2023-03-22)`.
-That entry cannot describe a real release: no `0.0.0` tag exists in the repository, and the earliest
-commit in this lineage is dated 2024-01-12, more than nine months after the claimed date. It is
-leftover template text. All release dates in this dossier come from GitHub releases, PyPI upload
-timestamps and Zenodo deposits instead.
+*The changelog was template text until `0.2.4`; date nothing from its old part.* At the Source Revision,
+`CHANGELOG.rst` held two `Latest` headings and a single numbered heading, `0.0.0 (2023-03-22)`, which
+cannot describe a real release (no `0.0.0` tag exists, and the earliest commit in this lineage is dated
+2024-01-12). Release `0.2.4` added a real `0.2.4 (2026-11-17)` heading, whose date agrees with the
+release, and left one empty `Latest` heading and the `0.0.0` template entry below it. Earlier releases
+have no changelog entries; their dates come from GitHub releases, PyPI upload timestamps and Zenodo
+deposits. The `Latest` heading describes unreleased code and is never a source for this field.
 
 ### 13. Programming Language (RECOMMENDED)
 **Value:** `Python 3.x`
@@ -476,7 +562,7 @@ instructs users to cite the version-specific Zenodo DOI and then states plainly:
 "A paper citation does not yet exist."
 
 That is the maintainers' own declaration that no reference publication exists, and it outranks any
-inference from a literature search. A future agent should re-read that file: if the sentence has
+inference from a literature search. The sentence is unchanged at `d63ae4d` (release `0.2.4`). A future agent should re-read that file: if the sentence has
 been replaced by a citation, this field should be filled from it.
 
 Note the distinction from Field 27: conference material *about* this software does exist and is
@@ -533,17 +619,36 @@ Creative Commons row in the vocabulary and is not this software's licence, per t
 ### 16. Keywords (OPTIONAL)
 
 **Values:**
-`cdf`, `data analysis`, `data container`, `hermes`, `nasa mission`, `padre`, `space weather`,
-`swxsoc`, `impax`
+`cdf`, `data analysis`, `data container`, `hermes`, `impax`, `nasa mission`, `padre`,
+`pyhc package`, `space weather`, `swxsoc`, `gdc trailblazer`
 
 These are the stored lowercase row names; compare against those rather than against HSSI's
-title-cased display form. Eight of the nine were on the record before this refresh; `impax` is the
-ninth, and is argued below.
+title-cased display form. `impax` and `gdc trailblazer` are argued below; `pyhc package` is the PyHC
+package marker.
+
+**`pyhc package` is required, not optional.** swxsoc is listed in the PyHC registry
+(`_data/projects.yml` of `heliophysicsPy/heliophysicsPy.github.io`, entry `swxsoc`, read 2026-11-18),
+and every official PyHC package carries exactly the keyword `pyhc package` so that
+`keyword:"pyhc package"` finds all of them. HSSI already held it; an earlier version of this dossier
+omitted it from its list, which was the dossier's error, not HSSI's. Keep it for as long as the
+registry lists swxsoc.
+
+**`gdc trailblazer` is recorded on the same evidence that justifies `hermes`, `padre` and `impax`.**
+Release `0.2.4` registers `gdctb` as a first-class mission in `swxsoc/data/config.yml` at `d63ae4d`
+("The GDC Trailblazer Mission", with data levels and two instrument entries, `cape-eea` and `craft`),
+and `.github/downstream-packages.json` adds the downstream package
+`GDC-Trailblazer/gdctb_cape_eea`, whose `__init__.py` selects `SWXSOC_MISSION = "gdctb"`. The mission
+has no SPASE observatory row (Field 32), so the keyword restates no other field. The spelled-out
+mission name is used rather than the configuration key `gdctb` because it is how the project names the
+mission in prose (the configuration comment and the GitHub organization `GDC-Trailblazer`), and a
+search for `gdc` or `trailblazer` finds it; no row for either form existed in the keyword vocabulary,
+so this term creates one.
 
 `pyproject.toml` declares `keywords = ["swxsoc", "nasa mission", "space weather"]`, and the PyHC
-registry adds `data_container`, `cdf`, `data_analysis` and `hermes`. The eight that predate this
-refresh — every value above except `impax` — cover both, normalised to spaced lowercase, and
-additionally carry `padre`, which is supported by the shipped mission configuration.
+registry adds `data_container`, `cdf`, `data_analysis` and `hermes`. Both lists are unchanged at
+`d63ae4d`. The values `cdf`, `data analysis`, `data container`, `hermes`, `nasa mission`,
+`space weather` and `swxsoc` cover both, normalised to spaced lowercase, and `padre` is supported by
+the shipped mission configuration.
 
 A caution about case: this vocabulary is open, so an unmatched value creates a new row, but a
 case variant binds the existing row rather than duplicating it. Record the lowercase forms above.
@@ -619,7 +724,13 @@ test suite asserts the absence directly: `swxsoc/io/tests/test_io.py` contains t
 configuration's FITS entries drive MetaTracker's filename parsing and bookkeeping, not file I/O.
 
 **`csv` and `JSON` excluded** for the same reason: the configuration's `.csv` and `.json` file rules
-parse *filenames* to extract timestamps and data levels; no CSV or JSON science reader exists.
+parse *filenames* to extract timestamps and data levels; no CSV or JSON science reader exists. Release
+`0.2.4` set the `demo` mission's `file_extension` to `csv` "so the SWxSOC demo pipeline can sort and
+process its files"; that drives filename sorting too, and at `d63ae4d` the package still contains no
+CSV reader or writer (its only `.csv` code is the file-type definition in `swxsoc/util/config.py` and
+filename-parsing examples). The new Installation Guide's remark that "Astropy, which provides FITS
+support, is already a base dependency" describes the empty `fits` extra, not a swxsoc FITS handler,
+and does not change the FITS exclusion above.
 JSON appears otherwise only as HTTP request payloads to the Grafana, Slack and Mattermost APIs,
 which is API plumbing rather than a data format the software supports.
 
@@ -636,8 +747,11 @@ values are therefore actively verified by the project itself.
 
 `Operating System Independent` was considered and rejected in favour of naming the three tested
 platforms, which is more informative to a user deciding whether the package runs on their machine —
-particularly because the optional CDF support depends on NASA's CDF library being installable
-separately, a platform-sensitive step the README warns about. `Solaris`, `MobilePlatform` and
+particularly because CDF support depends on NASA's CDF library. (The README still warns that the
+library must be installed separately; the Installation Guide added in release `0.2.4`
+(`docs/user-guide/installation.rst` at `d63ae4d`) instead says "SpacePy includes the NASA CDF library,
+so you do not need to install the CDF library separately." The CI matrix is unchanged at `d63ae4d`,
+so the three values stand either way.) `Solaris`, `MobilePlatform` and
 `Other` are untested and unclaimed.
 
 ### 21. CPU Architecture (RECOMMENDED)
@@ -689,18 +803,19 @@ analysis capability entering the package would warrant reopening it.
 HSSI held no development status for this entry before this refresh. `Active` is recorded verbatim
 as the live `RepoStatus` vocabulary's row name.
 
-Based on commit activity, not on a repository timestamp. The pinned lineage carries 113 commits, of
-which 32 fall in 2026, and the most recent is dated 2026-09-09 — three days before this extraction.
+Based on commit activity, not on a repository timestamp. At the Source Revision the lineage carried 113
+commits, the most recent dated 2026-09-09. By release `0.2.4` it carried 118, with commits on
+2026-10-12, 2026-10-22, 2026-11-03 and 2026-11-17, and release `0.2.4` itself was published
+2026-11-17; the repository's GitHub page showed no archived banner on 2026-11-18.
 Recent work is substantive rather than cosmetic: two formerly separate packages were merged in
 during August 2026 (`sdc_aws_utils` and MetaTracker), a Mattermost client was added, and CDF support
-was made optional. The most recent release, 0.2.3, shipped 2026-01-12, and continuous integration
-runs on a daily schedule.
+was made optional. Continuous integration runs on a daily schedule.
 
 `Unsupported` is ruled out because the repository is not archived (measured 2026-09-12 via the
-GitHub API). `Inactive` is ruled out by the commit record above — this is not a quiet-but-open
+GitHub API, and again on 2026-11-18 from the repository page). `Inactive` is ruled out by the commit record above — this is not a quiet-but-open
 repository. `WIP` was considered, since `pyproject.toml` still declares the classifier
 `Development Status :: 3 - Alpha`; it was rejected because that classifier has not been revised
-since early in the project's life and is contradicted by five tagged releases — four of them
+since early in the project's life and is contradicted by six tagged releases — five of them
 published to PyPI, the exception being `0.2.0`, as Field 12 records — downstream mission packages
 depending on the library, and daily CI. `Concept`,
 `Moved`, `Suspended` and `Abandoned` are all plainly inapplicable.
@@ -711,14 +826,18 @@ advances on stars, forks and metadata edits. Derive this field from the commit l
 ### 24. Documentation (RECOMMENDED)
 **Value:** `https://swxsoc.readthedocs.io/en/latest/`
 
-Retained. Fetched and confirmed reachable (HTTP 200, no redirect away from the URL). This exact URL
+Retained. Fetched and confirmed reachable (HTTP 200, no redirect away from the URL; rechecked
+2026-11-18, page title "SWxSOC Core Documentation"). This exact URL
 is declared in `pyproject.toml` under `[project.urls] Documentation`, is linked from the README, and
 matches the PyHC registry's `docs` entry apart from the explicit `/en/latest/` suffix, which is the
 more precise form and is preferred.
 
-The documentation is substantial and version-controlled in the repository: 38 of the 138 tracked
-files are `.rst`, organised into a user guide (twelve topic pages), a developer guide, an API
-reference, a CMAD section and examples.
+The documentation is substantial and version-controlled in the repository: at `d63ae4d`, 41 of the
+140 tracked files are `.rst`. Release `0.2.4` reorganized it: the user guide is split into Data
+Management and Pipeline Management sections, with new Installation, Quick Reference and CDF validation
+pages; the examples gained a `SWXData` examples page; the developer guide gained a Release Process page;
+and the CMAD and tour pages were removed. There is also an API reference. The URL above still serves
+it.
 
 **The GitHub wiki did not exist when this was checked (2026-09-12).** The durable point is the trap,
 not the result: a repository's wiki lives in a *separate* git repository, and the API's `has_wiki`
@@ -743,7 +862,9 @@ acknowledges the OpenAstronomy and SunPy *package template*, not any funder; `sw
 uses "acknowledgement" in the sense of how to cite the software; and the two remaining hits are the
 generic ISTP `Acknowledgement` attribute definition in the default global CDF attribute schema and a
 table row naming that attribute in the CDF format guide. Neither Zenodo deposit metadata nor PyPI
-metadata carries funding information either.
+metadata carries funding information either. Rechecked for release `0.2.4`: the lines it added
+contain no funding statement, and neither the `0.2.4` deposit (`grants` absent) nor its DataCite record
+(`fundingReferences` empty) names a funder.
 
 **Rejected on principle, not merely on absence: author-level support statements from related
 publications.** The conference material recorded in Field 27 is NASA-affiliated work and its
@@ -772,8 +893,8 @@ and authorship.
 The first is squarely about this software's project: a presentation on SWxSOC's role in data release
 and cloud processing, describing the Science Operations Center that `swxsoc` is the core library of.
 Its author list — Damian Barrous-Dume, Amy Catherine Rager, Andrew Robbertz, Daniel Skeberdis,
-Steven Christe, Steve Kreisler, Tony Mercer, William R Paterson — includes all three of this
-software's authors.
+Steven Christe, Steve Kreisler, Tony Mercer, William R Paterson — includes this software's three
+original authors.
 
 The second is a poster on the architecture of the HERMES core and instrument Python packages, by the
 same team. It is included deliberately even though it names `hermes_core` rather than `swxsoc`: the
@@ -801,6 +922,25 @@ for Multi-Mission Data Processing and Expedited Release" (`2024AGUFMIN13C2176B` 
 is the closest thing to a paper about these packages. None carries a DOI in the literature index,
 and this field is filled with DOIs. They are recorded here with their bibcodes so that a future agent
 who does locate DOIs for them can add them without repeating the search.
+
+**Literature search for release `0.2.4` (2026-11-18), covering items entered since 2026-09-12.** NASA
+ADS was queried for `full:"swxsoc"`, `abs:"SWxSOC" OR title:"SWxSOC"`,
+`full:"Space Weather Science Operations Center"`, `full:"zenodo.15546486"` and `abs:"GDC Trailblazer"`
+(a positive control, `full:"sunpy"` over the same entry-date window, returned 75 records); Crossref
+(`query=swxsoc`, indexed since 2026-09-01) returned nothing, and DataCite reports zero citations of the
+concept DOI. Three records were weighed and none was added:
+
+- "The PADRE Science Data System: Cloud Infrastructure, Data Pipelines, and Open-Source Tools"
+  (Robbertz, Christe, Kreisler et al., `2026SPD....5710502R`) — by this software's developers about
+  the platform it serves, but it is a meeting abstract with no deposited poster or paper, which is not
+  an eligible publication. Add the deposit if one appears.
+- "DASH 2023 Videos of presentations" (`10.5281/zenodo.23771193`, `2023dash.confE..70J`, deposited
+  2026-10-29) — a collection of conference session videos, one of which (`DASH-701.mp4`) is Damian
+  Barrous-Dume's talk "Open Science in Action: SWxSOC's Role", whose written deposit is already listed
+  above as `10.5281/zenodo.8408028`. A video of a talk is not a publication.
+- "Scientific Code Search at Scale: A Multi-Domain Dataset and Benchmark" (`10.48550/arXiv.2607.05443`)
+  — a code-search benchmark whose full text matches "swxsoc" incidentally; a mention, not a use or a
+  description of the software.
 
 ### 28. Related Datasets (OPTIONAL)
 **Value:** Not found.
@@ -852,20 +992,23 @@ than in Field 30 is deliberate.** It is heliophysics software, not generic infra
 Tier A exclusion does not reach it. It is also genuinely load-bearing and user-visible: all CDF
 reading and writing goes through `spacepy.pycdf`, the `cdf` extra installs it, and the README warns
 that "CDF support requires the NASA CDF library to be installed separately on your system", pointing
-users at spacepy's installation guide. A user who needs CDF support from swxsoc must deal with
+users at spacepy's installation guide (the Installation Guide added in release `0.2.4` adds that
+SpacePy bundles the library; see Field 20). A user who needs CDF support from swxsoc must deal with
 spacepy directly, which makes the relationship worth surfacing. Why it is *not* in Field 30 is
 argued there.
 
 **Considered and not selected: the downstream mission packages.** The repository's
-`.github/downstream-packages.json` lists eleven packages that build on swxsoc and are tested against
-it: `padre_meddea`, `padre_sharp`, `padre_craft`, `swxsoc_reach`, `impax_iaxis`, `impax_ifire`,
-`impax_craft`, and four `sdc_aws_*` Lambda functions. Each is a genuine companion, and a case can be
-made for listing them. They were not added for two reasons: listing eleven repository URLs would
+`.github/downstream-packages.json` lists twelve packages that build on swxsoc and are tested against
+it at `d63ae4d`: `padre_meddea`, `padre_sharp`, `padre_craft`, `swxsoc_reach`, `impax_iaxis`,
+`impax_ifire`, `impax_craft`, `gdctb_cape_eea` (added in release `0.2.4`), and four `sdc_aws_*` Lambda
+functions. Each is a genuine companion, and a case can be
+made for listing them. They were not added for two reasons: listing a dozen repository URLs would
 swamp the field and bury the three relationships that actually explain what this software is, and
 none of them is catalogued in HSSI, so each would render as a bare external URL. `hermes_core` was
 selected from this group because it alone is the lineage ancestor and is already known to the
 catalogue. **The scope of this field is settled at three — sammi-cdf, `hermes_core` and `spacepy` —
-and the eleven downstream packages stay out.** The reasoning above stands as the reason for a
+and the downstream packages stay out.** On 2026-11-18 none of the twelve repositories returned an HSSI
+entry by repository URL. The reasoning above stands as the reason for a
 rejected alternative, not as an open question. The one condition that would justify reopening it is
 those packages being catalogued in HSSI themselves, at which point each would render as a real
 in-catalogue relation instead of a bare external URL.
@@ -956,6 +1099,8 @@ configured instruments with target names, file rules and data levels:
   `spani` (Solar Probe Analyzer for Ions)
 - PADRE — `meddea`, `sharp` ("Solar HARd X-ray Polarimeter"), `craft` (PADRE Spacecraft)
 - IMPAX — `iaxis`, `ifire`, `craft` (IMPAX Spacecraft)
+- GDC Trailblazer (added in release `0.2.4`, at `d63ae4d`) — `cape-eea` (full name given only as
+  "CAPE-EEA"), `craft` (GDCTB Spacecraft)
 - SWxSOC pipeline grouping — `reach`
 
 These pass the designed-to-support test comfortably: this is not a tutorial mention or a
@@ -989,10 +1134,21 @@ identifier counts only when a row for it has actually been resolved.
 record, the correct action is to associate the software with the instrument's platform rather than
 to drop the relationship or invent a value. Both HERMES and PADRE resolve cleanly at observatory
 level, and are recorded in Field 32. REACH and IMPAX had no SPASE row at either level as of
-2026-09-12 and were therefore genuinely unrepresentable; they are documented here so the omission
+2026-09-12, and still had none on 2026-11-18, and were therefore genuinely unrepresentable; they are documented here so the omission
 reads as a known gap rather than an oversight, and so a future refresh re-checks the vocabulary
 rather than re-deriving the question. New instruments enter this vocabulary through its upstream
 refresh, never through a submission.
+
+**GDC Trailblazer and CAPE-EEA, checked for release `0.2.4` (2026-11-18): no row at either level.**
+The vocabulary (7,604 rows, all but the two `UNKNOWN` placeholders carrying a
+`https://spase-metadata.org/` identifier) was searched by name, abbreviation and identifier for
+`trailblazer`, `gdc`, `geospace dynamics`, `cape-eea`/`cape eea`/`CAPE`, `impax`, `imaging microburst`,
+`reach` and `responsive environmental`: every one returned zero relevant rows. (`cape` alone matches
+61 rows, all of them Cape-named ground stations such as Cape Chelyuskin, which are unrelated.) Under
+the same command, the controls `AIA`, `magnetometer` and `Solar Orbiter` returned matches, `HERMES` and
+`PADRE` each returned their one observatory row, and a nonsense token returned zero. GDC Trailblazer is
+planned to launch in December 2027, according to its GitHub organization, so a later vocabulary
+refresh may add it; re-check then.
 
 ### 32. Related Observatories (OPTIONAL)
 
@@ -1043,7 +1199,11 @@ row as of 2026-09-12 — searches for `REACH`, `Responsive Environmental`, `IMPA
 is the correct outcome here, and is strictly better than recording a bare name. IMPAX is a recent
 CubeSat (its configuration sets a minimum valid time of 2026-01-01), so a future vocabulary refresh
 may well add it; that is the
-route by which it should be revisited.
+route by which it should be revisited. Rechecked 2026-11-18: still no row for either.
+
+**Considered and rejected: GDC Trailblazer.** Release `0.2.4` added it as a configured mission, so it
+would qualify on the same reasoning as HERMES and PADRE, but no SPASE row exists for it (Field 31
+records the search and its controls). It stays out until the vocabulary carries it.
 
 **Ordering note:** unlike Fields 4, 5, 6 and 22, `relatedObservatories` is not a sortedm2m field, so
 the order of the two entries above is presentational rather than stored data.
@@ -1068,8 +1228,9 @@ about its suitability.
 `fbbc26e70863f8acc4df53dee4876a40b5cca154`, contains no branch name and no `blob/` segment, and is
 114 characters, well inside the 200-character field limit. Crucially, the blob it serves is still the
 project's present logo: the object hash of `docs/logo/swxsoc_logo.png` is identical
-(`f9cce44ddaf6a8b1f4478fe05b884813c5047356`) at both the pinned logo commit and this dossier's source
-revision, so the file has not changed in between. The same URL, character for character, is what the
+(`f9cce44ddaf6a8b1f4478fe05b884813c5047356`) at the pinned logo commit, at this dossier's source
+revision and at release `0.2.4` (`d63ae4d`), so the file has not changed in between. Rechecked
+2026-11-18: still HTTP 200, `image/png`, 77,970 bytes. The same URL, character for character, is what the
 PyHC registry carries in its `logo` field for this project.
 
 **Do not "fix" this to a branch URL.** Replacing the commit SHA with `main` would make the link
