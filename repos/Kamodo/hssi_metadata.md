@@ -4,7 +4,7 @@
 **Repository:** https://github.com/nasa/Kamodo
 **Source Revision:** 6706989574997795ce1b16b75af31c382eba0611
 **Extraction Date:** 2026-08-13
-**Validation Date:** 2026-11-13
+**Validation Date:** 2026-11-18
 **Validation Status:** PASS
 
 **Scope note.** The GitHub repository `nasa/Kamodo` ships the CCMC *analysis suite* (`kamodo_ccmc`).
@@ -24,31 +24,30 @@ evidence with it in mind.
 
 ### 2. Persistent Identifier (RECOMMENDED)
 - **Value:** Not found
-- **Negative research (re-verified against DataCite and Zenodo for the 26.10.1, 26.11.1 and 26.11.3
-  releases).** A DataCite search for "kamodo" returned 15 records when this section was first written,
-  and returns 18 on 2026-11-01 and the same 18 on 2026-11-07 and 2026-11-13; the three added are
-  `10.5281/zenodo.23107919`,
-  `10.5281/zenodo.23107920` and `10.5281/zenodo.23182507`, all titled "CCMC Tools to Enhance Scientific
-  Analysis", the 2026 DASH/IHDEA presentation (a Zenodo presentation; Field 27). DataCite records
-  `HasVersion` relations from `10.5281/zenodo.23107919` to the other two. Exactly two of the 18 carry
-  `resourceTypeGeneral: Software`: `10.5281/zenodo.6773395` and its concept DOI
-  `10.5281/zenodo.6773394`. Both are titled "Kamodo: A functional API for space weather models and
-  data" and both archive a **single file, `kamodo-core-22.6.0.tar.gz`** — i.e. they are the JOSS review
-  archive of `kamodo-core`, not of the CCMC analysis suite in this repository. Recording either as this
-  record's persistent identifier would mis-identify a different software product; they are captured
-  under Field 29 instead.
+- **Negative research (re-verified against DataCite and Zenodo for the 26.10.1, 26.11.1, 26.11.3 and
+  26.11.4 releases).** A DataCite search for "kamodo" returned 15 records when this section was first
+  written, and returns 18 on 2026-11-01 and the same 18 on 2026-11-07, 2026-11-13 and 2026-11-18; the
+  three added are `10.5281/zenodo.23107919`, `10.5281/zenodo.23107920` and `10.5281/zenodo.23182507`,
+  all titled "CCMC Tools to Enhance Scientific Analysis", the 2026 DASH/IHDEA presentation (a Zenodo
+  presentation; Field 27). DataCite records `HasVersion` relations from `10.5281/zenodo.23107919` to
+  the other two. Exactly two of the 18 carry `resourceTypeGeneral: Software`: `10.5281/zenodo.6773395`
+  and its concept DOI `10.5281/zenodo.6773394`. Both are titled "Kamodo: A functional API for space
+  weather models and data" and both archive a **single file, `kamodo-core-22.6.0.tar.gz`** — i.e. they
+  are the JOSS review archive of `kamodo-core`, not of the CCMC analysis suite in this repository.
+  Recording either as this record's persistent identifier would mis-identify a different software
+  product; they are captured under Field 29 instead.
 - The two Zenodo records `10.5281/zenodo.11121935` (concept) and `.11121936`, titled "Kamodo: A CCMC
   Open Source Toolkit for Space Physics Simulation Output" (2024), carry `resource_type.type =
   presentation`. Conference presentations are not a software persistent identifier.
 - The JOSS software-paper DOI is recorded under Reference Publication (Field 14), not here.
 - This repository has no Zenodo–GitHub integration file, no `CITATION.cff` and no `codemeta.json`
-  (still none at the 26.11.3 release commit `5583cc6`), so no software DOI is minted on release.
+  (still none at the 26.11.4 release commit `959b163`), so no software DOI is minted on release.
   Neither GitHub release (`25.12.1-FINAL`, `v26.8.7`) nor any PyPI upload has an associated DOI, which
-  is also why Field 12's Version PID is empty. On 2026-11-13 a Zenodo free-text search for "kamodo"
+  is also why Field 12's Version PID is empty. On 2026-11-18 a Zenodo free-text search for "kamodo"
   and creator-keyed searches on De Zeeuw's and Rastaetter's ORCIDs return presentations, a 2023 poster
   on CCMC's Runs-on-Request metadata, a geoelectric-field dataset (published 2018, deposited 2019) and
   the kamodo-core deposit (the positive control), and no software deposit of this package; the same
-  searches on 2026-11-01 and 2026-11-07 found no such deposit either.
+  searches on 2026-11-01, 2026-11-07 and 2026-11-13 found no such deposit either.
 - The Astrophysics Source Code Library lists the software (ADS `2024ascl.soft10015C`, "Kamodo: Space
   weather data access, interpolation, and visualization"); the record carries no DOI, so it offers
   nothing for this field.
@@ -58,13 +57,13 @@ evidence with it in mind.
 - **Source:** git remote; the package metadata's repository URL — `setup.cfg` `url` and `project_urls`
   (`Repository = https://github.com/nasa/Kamodo`) at the Source Revision, and, after the August 2026
   build change deleted `setup.cfg`, `pyproject.toml` `[project.urls]` `Repository =
-  "https://github.com/nasa/Kamodo"` at the 26.10.1, 26.11.1 and 26.11.3 release commits (`ca7ed8c`,
-  `8decf77`, `5583cc6`), which PyPI publishes as those releases' `project_urls`; PyPI's provenance
-  attestations for the 26.11.1 and 26.11.3 sdists, which name `nasa/Kamodo` and its `build-wheels.yml`
-  workflow as the publisher; the PyHC **core** package registry `code` field; the GitHub API, which on
-  2026-11-07 reported `nasa/Kamodo` under that name and not archived; and the repository page, which on
-  2026-11-13 answers at `https://github.com/nasa/Kamodo` with no redirect and no archived banner. All
-  agree.
+  "https://github.com/nasa/Kamodo"` at the 26.10.1, 26.11.1, 26.11.3 and 26.11.4 release commits
+  (`ca7ed8c`, `8decf77`, `5583cc6`, `959b163`), which PyPI publishes as those releases'
+  `project_urls`; PyPI's provenance attestations for the 26.11.1, 26.11.3 and 26.11.4 sdists, which
+  name `nasa/Kamodo` and its `build-wheels.yml` workflow as the publisher; the PyHC **core** package
+  registry `code` field; the GitHub API, which on 2026-11-07 reported `nasa/Kamodo` under that name
+  and not archived; and the repository page, which on 2026-11-18 answers at
+  `https://github.com/nasa/Kamodo` with no redirect and no archived banner. All agree.
 
 ### 4. Software Functionality (MANDATORY)
 Every subcategory below also lists its bare parent top-level category, as the taxonomy requires — a
@@ -223,6 +222,13 @@ subcategory without its parent is an incomplete classification, not a shorter on
   "for external script compatibility"; and `KamodoVectorFieldTracer.trace_multiple_lines` returns an
   empty list when given no start points. None adds or removes a capability, so the selection is
   unchanged.
+- **Re-checked for the 26.11.4 release** at its commit `959b163`. Its one code change, `eb1ec13`
+  ("delay reading initial data until time desired is set"), fixes two faults in
+  `KamodoVectorFieldTracer`: the tracer no longer probes the field at the model's first time step when
+  it is constructed, but works out how to call the field components on the first trace, at the time
+  the user asked for; and the `zeroX`/`zeroY`/`zeroZ` options now zero a component before the field
+  magnitude is computed, so the magnitudes and unit vectors match the zeroed field. Neither adds or
+  removes a capability, so the selection is unchanged.
 
 ### 5. Related Region (MANDATORY)
 Kamodo is a broad geospace suite, so this field carries both the two broad regions and the specific
@@ -440,7 +446,8 @@ Mays and Jia Yue, co-authors of the 2026 DASH/IHDEA presentation, appear in no s
 source and are not authors either. The 26.11.1 release adds no contributor: its five commits after
 `ca7ed8c` are all De Zeeuw's, and `pyproject.toml` `authors` at `8decf77` still names only him. Nor
 does 26.11.3: its seven commits after `8decf77` are De Zeeuw's too, and `pyproject.toml` `authors` at
-`5583cc6` is unchanged.
+`5583cc6` is unchanged. Nor does 26.11.4: its two commits after `5583cc6` are De Zeeuw's, and
+`pyproject.toml` `authors` at `959b163` is unchanged.
 
 ### 7. Software Name (MANDATORY)
 - **Value:** The CCMC Kamodo Analysis Suite
@@ -565,13 +572,13 @@ wording and is retained as written.
   institution and carries a ROR.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** 26.11.3
-- **Version Date:** 2026-11-12
+- **Version Number:** 26.11.4
+- **Version Date:** 2026-11-17
 - **Version Description:** Not found — the release has no notes of its own (see below).
 - **Version PID:** Not found — the release has no DOI (see Field 2).
 
-**Why `26.11.3`.** The release history, read on 2026-11-13 against the default branch's head `5583cc6`
-(2026-11-12), the repository's tags, its GitHub releases page and PyPI's JSON API for `kamodo-ccmc`,
+**Why `26.11.4`.** The release history, read on 2026-11-18 against the default branch's head `959b163`
+(2026-11-17), the repository's tags, its GitHub releases page and PyPI's JSON API for `kamodo-ccmc`,
 in release order:
 - **`25.12.1`** — lightweight tag `25.12.1-FINAL` on `12a9cf5` and its GitHub release, published
   2026-07-01T20:05:02Z with the body "Final release before major change to build system." The tag's
@@ -587,19 +594,21 @@ in release order:
   `26.8.7` published 2026-08-25T19:04:57Z with the body "Major code upgrades supporting Python 3.14
   and the latest version of dependencies.", and the first PyPI upload since 23.3.1 in 2023. Its
   `pyproject.toml` writes `26.08.7`, which PyPI normalizes to `26.8.7`. It is still the newest GitHub
-  release, labelled "Latest" on the releases page, and the newest tag.
-- **`26.9.1`, `26.9.2`, `26.9.3`, `26.10.1`, `26.11.1` and `26.11.3`** — PyPI uploads of 2026-09-08,
-  2026-09-14, 2026-09-30, 2026-10-22, 2026-11-05 and 2026-11-12, each an sdist plus a
-  `manylinux_2_28_x86_64`, a `win_amd64` and a macOS arm64 wheel (tagged `macosx_14_0_arm64` up to
-  26.11.1 and `macosx_26_0_arm64` for 26.11.3; Fields 20 and 21), none yanked and none a
+  release, labelled "Latest" on the releases page, and the newest tag (re-read 2026-11-18).
+- **`26.9.1`, `26.9.2`, `26.9.3`, `26.10.1`, `26.11.1`, `26.11.3` and `26.11.4`** — PyPI uploads of
+  2026-09-08, 2026-09-14, 2026-09-30, 2026-10-22, 2026-11-05, 2026-11-12 and 2026-11-17, each an sdist
+  plus a `manylinux_2_28_x86_64`, a `win_amd64` and a macOS arm64 wheel (tagged `macosx_14_0_arm64` up
+  to 26.11.1 and `macosx_26_0_arm64` from 26.11.3; Fields 20 and 21), none yanked and none a
   pre-release, under PyPI `project_urls` naming `https://github.com/nasa/Kamodo`. None has a tag or a
   GitHub release; each matches a version bump on `master` (`50044f3`, `17c8d2d`, `e44a7c0`,
-  `96b7223`, `8decf77` and `2fe4dfb`). The repository's `build-wheels.yml` publishes to PyPI on a `v*`
-  tag push or on a manual run; 26.11.1 came from a manual run on `master` at `8decf77` and 26.11.3
-  from one at `5583cc6`, and PyPI's provenance attestation for each sdist names `nasa/Kamodo` and
-  `build-wheels.yml` as the publisher, for 26.11.3 at commit `5583cc6` on `refs/heads/master`. HSSI
-  held 26.10.1, dated 2026-10-22 with no description or PID, until the 26.11.1 update, and 26.11.1,
-  dated 2026-11-05 with no description or PID, until the 26.11.3 update.
+  `96b7223`, `8decf77`, `2fe4dfb` and `959b163`). The repository's `build-wheels.yml` publishes to PyPI
+  on a `v*` tag push or on a manual run; 26.11.1 came from a manual run on `master` at `8decf77`,
+  26.11.3 from one at `5583cc6` and 26.11.4 from one at `959b163`, and PyPI's provenance attestation
+  for each sdist names `nasa/Kamodo` and `build-wheels.yml` as the publisher, for 26.11.4 at commit
+  `959b163` on `refs/heads/master` from a `workflow_dispatch` run. HSSI held 26.10.1, dated 2026-10-22
+  with no description or PID, until the 26.11.1 update; 26.11.1, dated 2026-11-05 with no description
+  or PID, until the 26.11.3 update; and 26.11.3, dated 2026-11-12 with no description or PID, until
+  the 26.11.4 update.
 - **Not a release: `26.10.2`.** `06702fe` (2026-10-23) set `pyproject.toml` on `master` to `26.10.2`,
   but no tag, GitHub release or PyPI file ever carried that number, and `8decf77` replaced it with
   `26.11.1`. It was declared and never released; its code shipped in 26.11.1.
@@ -608,38 +617,42 @@ in release order:
   that number, and `2fe4dfb` (2026-11-12) replaced it with `26.11.3`. It was declared and never
   released; its code shipped in 26.11.3.
 
-An untagged, unyanked PyPI upload of the project's own package is a release, so `26.11.3` is the
-newest release and replaces 26.11.1. The number is written without a `v`, as the stored number was and
+An untagged, unyanked PyPI upload of the project's own package is a release, so `26.11.4` is the
+newest release and replaces 26.11.3. The number is written without a `v`, as the stored number was and
 as PyPI and `pyproject.toml` write it. The `v26.8.7` tag that first drew attention to the 2026
 releases is an earlier release of the same series, not the newest.
 
-**The release's code.** The 26.11.3 sdist (`kamodo_ccmc-26.11.3.tar.gz`, sha256
-`e0e2a0de6d88e6bdd734b1f7c7153b2161a216fa2db7b33ae766080270a2ee1c`) is file-for-file identical to
-commit `5583cc6` (2026-11-12), the head of `master`, apart from the build-generated `PKG-INFO`,
-`egg-info` and `setup.cfg` `[egg_info]` stanza. `2fe4dfb` holds the same package files, since the two
-commits after it change only `.github/workflows/build-wheels.yml`, which the sdist does not ship;
-`8decf77` differs from it in `pyproject.toml` and three `tools/` modules (Field 4). The fields this
-release brought into review cite `5583cc6`. The 26.11.1 sdist (sha256
-`c38384c1de19acfe05bd84c0fc85902e6913a5e5ad72aa2caec5e1f344be05e0`) was likewise identical to commit
-`8decf77` (2026-11-05), and the 26.10.1 sdist (sha256
-`6ddb2b7d6daeb11b57550e2203a384a12e3dbca4242d13dd6145cd72ee7619e2`) to commit `ca7ed8c` (2026-10-22,
-the merge of pull request #162); the fields re-read for those releases cite them.
+**The release's code.** The 26.11.4 sdist (`kamodo_ccmc-26.11.4.tar.gz`, sha256
+`bd896d1593848fb9a1bfe16247c5cd079971f5747e493fb6fafc74ccda75e85e`) is file-for-file identical to
+commit `959b163` (2026-11-17), the head of `master`, apart from the build-generated `PKG-INFO`,
+`egg-info` and `setup.cfg` `[egg_info]` stanza. `959b163` differs from `5583cc6` only in the
+`pyproject.toml` version and in `tools/vectorfieldtracer.py`, changed by `eb1ec13` (Field 4). The
+fields this release brought into review cite `959b163`. The 26.11.3 sdist (sha256
+`e0e2a0de6d88e6bdd734b1f7c7153b2161a216fa2db7b33ae766080270a2ee1c`) was likewise identical to commit
+`5583cc6` (2026-11-12), the 26.11.1 sdist (sha256
+`c38384c1de19acfe05bd84c0fc85902e6913a5e5ad72aa2caec5e1f344be05e0`) to commit `8decf77` (2026-11-05),
+and the 26.10.1 sdist (sha256 `6ddb2b7d6daeb11b57550e2203a384a12e3dbca4242d13dd6145cd72ee7619e2`) to
+commit `ca7ed8c` (2026-10-22, the merge of pull request #162); the fields re-read for those releases
+cite them.
 
-**Version Date.** 2026-11-12, the UTC day of 26.11.3's PyPI upload (wheels from 21:15:14Z, the sdist
-at 21:15:19Z), which is the release date for a release with no tag or release object. The earlier
-value, 2026-11-05, was 26.11.1's upload day.
+**Version Date.** 2026-11-17, the UTC day of 26.11.4's PyPI upload (wheels from 21:39:19Z, the sdist
+at 21:39:24Z), which is the release date for a release with no tag or release object. The
+version-bump commit `959b163` is dated 2026-11-17 16:07:51 −05:00 (21:07:51Z), the same UTC day. The
+earlier value, 2026-11-12, was 26.11.3's upload day.
 
-**Version Description.** Empty. 26.11.3 has no GitHub release or tag, so it has no release title or
+**Version Description.** Empty. 26.11.4 has no GitHub release or tag, so it has no release title or
 body. The README's "What's New?" section, the project's own version history, is dated by month; at
-`5583cc6` its newest entry is still September 2026's "Added support for NRLMSIS output in Kamodo",
-which belongs to 26.9.2, whose version-bump commit added the NRLMSIS reader, and it has no October or
-November entry. The commit subjects in the range are not release notes and are never used. 26.11.1
-carried no description, so there is nothing to carry forward.
+`959b163`, where the README is unchanged since `5583cc6`, its newest entry is still September 2026's
+"Added support for NRLMSIS output in Kamodo", which belongs to 26.9.2, whose version-bump commit added
+the NRLMSIS reader, and it has no October or November entry. The commit subjects in the range are not
+release notes and are never used. 26.11.3 carried no description, so there is nothing to carry
+forward.
 
 **Version PID.** Empty: no Zenodo deposit or other DOI exists for any release (Field 2).
 
 **Release watch.** HSSI's daily version checker reads PyPI's `kamodo-ccmc` project for this entry,
-so a PyPI-only release opens a "New version of …" issue, as hssi-website #185 did for 26.11.3. The
+so a PyPI-only release opens a "New version of …" issue, as hssi-website #185 did for 26.11.3 and
+#193 for 26.11.4. The
 checker finds that project through a table keyed by the entry's HSSI name (hssi-website #175 maps "The
 CCMC Kamodo Analysis Suite" to `kamodo-ccmc`), so renaming the entry (Field 7) needs that table
 changed with it. Before #175 (2026-11-08) the checker did not look up `kamodo-ccmc` and missed the
@@ -757,10 +770,10 @@ model, pyhc package
     coupling region.
   - `tsyganenko model` — the containerized `readers/kamodo-tsyganenko/` wrapper.
 - `pyhc package` — the PyHC package marker, carried by every official PyHC package. Kamodo is listed
-  in the PyHC registry's `_data/projects_core.yml` (re-read 2026-11-13), so the record carries the
+  in the PyHC registry's `_data/projects_core.yml` (re-read 2026-11-18), so the record carries the
   term, written exactly so. HSSI carried it before this list recorded it.
-- **No declared keywords or topics.** `pyproject.toml` at the 26.11.3 release commit `5583cc6`
-  declares no `keywords`, and the GitHub repository carries no topics (read 2026-11-13), so neither
+- **No declared keywords or topics.** `pyproject.toml` at the 26.11.4 release commit `959b163`
+  declares no `keywords`, and the GitHub repository carries no topics (read 2026-11-18), so neither
   source contributes a term.
 - **Retained rejections:** the bare acronyms "CCMC" and "NASA" stay out; they are already carried by
   Publisher (Field 11) and Funder (Field 25).
@@ -900,7 +913,8 @@ model, pyhc package
   the Windows wheel with MSYS2's UCRT64 gfortran in place of MINGW64; PyPI's 26.11.3 wheels are
   `manylinux_2_28_x86_64`, `macosx_26_0_arm64` and `win_amd64`. That macOS wheel installs only on macOS
   26 or later; on an earlier macOS, pip falls back to the sdist, which the README's macOS compiler
-  instructions cover, so `Mac` stands either way.
+  instructions cover, so `Mac` stands either way. 26.11.4 (`959b163`) changes none of these files and is published
+  for the same three systems, as the same three wheel tags.
 - **Superseded: `Operating System Independent`.** HSSI held `Operating System Independent` until the
   26.10.1 release update, on the strength of the `Operating System :: OS Independent` classifier,
   which `pyproject.toml` still carries. A package with compiled extensions is never recorded as
@@ -915,14 +929,14 @@ model, pyhc package
 - **CPU Independent**
 - **x86-64**
 - **Apple Silicon arm64**
-- **Evidence, read at the 26.10.1 release commit `ca7ed8c` and re-read at the 26.11.1 and 26.11.3
-  release commits `8decf77` and `5583cc6`.** The C and Fortran sources are portable — `setup.py`
+- **Evidence, read at the 26.10.1 release commit `ca7ed8c` and re-read at the 26.11.1, 26.11.3 and
+  26.11.4 release commits `8decf77`, `5583cc6` and `959b163`.** The C and Fortran sources are portable — `setup.py`
   compiles them with `-O2` and `-fPIC` and no SIMD intrinsics, inline assembly,
   architecture-conditional code or CPU-specific flags — and the sdist compiles them on the user's
   machine, so `CPU Independent` stands. From 26.8.7 the project also publishes binary wheels, and each
   published architecture is recorded beside it: for 26.10.1 and 26.11.1, `manylinux_2_28_x86_64` and
-  `win_amd64` (`x86-64`) and `macosx_14_0_arm64` (`Apple Silicon arm64`); for 26.11.3, the same Linux
-  and Windows wheels and `macosx_26_0_arm64`, whose compiled readers (`libinterpolate_amrdata.so`,
+  `win_amd64` (`x86-64`) and `macosx_14_0_arm64` (`Apple Silicon arm64`); for 26.11.3 and 26.11.4, the same
+  Linux and Windows wheels and `macosx_26_0_arm64`, whose compiled readers (`libinterpolate_amrdata.so`,
   `libinterpolate_tri2d.so`, `libreadOpenGGCM.dylib`) are arm64 Mach-O binaries.
 - **Not listed:** `Linux aarch64 or arm64` — `pyproject.toml` names a `manylinux-aarch64-image`, but
   `build-wheels.yml` builds on the x86_64 `ubuntu-latest` runner with no aarch64 target and PyPI
@@ -967,10 +981,10 @@ dynamics". Per the field's own guidance, a supported phenomenon with no row belo
 
 ### 23. Development Status (RECOMMENDED)
 - **Active**
-- **Dated anchors, read 2026-11-13:** the last commit on the default branch `master` is `5583cc6`,
-  2026-11-12; the newest release is 26.11.3, uploaded to PyPI on 2026-11-12 and preceded by 26.11.1,
-  26.10.1, 26.9.1–26.9.3 and 26.8.7 since August (Field 12); the repository page shows no archived
-  banner; and the README, unchanged at `5583cc6`, carries no status badge or status
+- **Dated anchors, read 2026-11-18:** the last commit on the default branch `master` is `959b163`,
+  2026-11-17; the newest release is 26.11.4, uploaded to PyPI on 2026-11-17 and preceded by 26.11.3,
+  26.11.1, 26.10.1, 26.9.1–26.9.3 and 26.8.7 since August (Field 12); the repository page shows no
+  archived banner; and the README, unchanged at `959b163`, carries no status badge or status
   statement. The repository is a PyHC **core** package rated "Good" for software maturity,
   documentation, Python 3 support and license.
 - **At the Source Revision:** HEAD `6706989574997795ce1b16b75af31c382eba0611` was dated 2026-08-07,
@@ -980,12 +994,12 @@ dynamics". Per the field's own guidance, a supported phenomenon with no row belo
 ### 24. Documentation (RECOMMENDED)
 - **Value:** https://nasa.github.io/Kamodo/ (verified reachable; site title "Kamodo Analysis Suite",
   page heading "Kamodo Documentation")
-- **Re-checked for the 26.11.3 release** on 2026-11-13: the site answers 200 with title "Kamodo
-  Analysis Suite" and heading "Kamodo Documentation", as it did for the 26.10.1 and 26.11.1 releases on
-  2026-11-01 and 2026-11-07; `mkdocs.yml`, unchanged between the release commits `ca7ed8c`, `8decf77`
-  and `5583cc6`, keeps `site_name: Kamodo Analysis Suite` and the same tutorial navigation under the
-  Material theme; and `pyproject.toml` `[project.urls]` at `5583cc6` gives `Documentation =
-  "https://nasa.github.io/Kamodo"`, which PyPI publishes for 26.11.3. The README now also links
+- **Re-checked for the 26.11.4 release** on 2026-11-18: the site answers 200 with title "Kamodo
+  Analysis Suite" and heading "Kamodo Documentation", as it did for the 26.10.1, 26.11.1 and 26.11.3
+  releases on 2026-11-01, 2026-11-07 and 2026-11-13; `mkdocs.yml`, unchanged between the release
+  commits `ca7ed8c`, `8decf77`, `5583cc6` and `959b163`, keeps `site_name: Kamodo Analysis Suite` and
+  the same tutorial navigation under the Material theme; and `pyproject.toml` `[project.urls]` at
+  `959b163` gives `Documentation = "https://nasa.github.io/Kamodo"`, which PyPI publishes for 26.11.4. The README now also links
   `https://nasa.github.io/Kamodo-core/`, which
   documents kamodo-core (Field 29), not this package.
 - **Also available:** the package metadata names the same URL (`setup.cfg` `project_urls` at the
@@ -1149,8 +1163,8 @@ poster abstract rather than a publication". It is a deposited poster, which the 
 README's own citation list asks for it.
 
 **Papers that use Kamodo.** Kamodo's citing literature is small — on 2026-11-01 ADS finds 11 records
-citing the JOSS, Frontiers or ASR paper or the preprint, and the same 11 on 2026-11-07 and
-2026-11-13 — so each
+citing the JOSS, Frontiers or ASR paper or the preprint, and the same 11 on 2026-11-07,
+2026-11-13 and 2026-11-18 — so each
 deliberate use still tells a searcher how and where the software is used. Three papers credit it for a
 specific result, and each is listed on that test alone, whoever wrote it:
 - Waldron et al. (2024), read in full: the Acknowledgements thank "the CCMC-Kamodo Team who designed
@@ -1166,16 +1180,17 @@ specific result, and each is listed on that test alone, whoever wrote it:
   "Kamodo" within a few words of "flythrough", "sampled", "extract", "interpolate", "ADELPHI" and
   "GDC". The publisher refuses automated requests (403), so the methods sentence itself was not read.
 
-**Last searched 2026-11-13.** ADS citations of the JOSS, Frontiers and ASR papers and the preprint
+**Last searched 2026-11-18.** ADS citations of the JOSS, Frontiers and ASR papers and the preprint
 return the 11 records weighed in this section; an ADS full-text search for "Kamodo" among records
-entered since 2026-10-25, and an abstract and title search among those entered since 2026-11-01,
-return none (the same full-text query for "SpacePy" returns three new records, and a nonsense token
-returns none); an acknowledgements search for "Kamodo" returns only the ASR and Waldron papers;
-DataCite's "kamodo" search returns the 18 records weighed in Field 2; and Zenodo's free-text search for
-"kamodo" and creator-keyed searches on De Zeeuw's and Rastaetter's ORCIDs show no deposit newer than
-the 2026 DASH/IHDEA deck. Ringuette's ORCID returns newer deposits, the latest from 2026-10-30, on
-SPASE, HSSI and community standards, none of which the free-text search matches. No publication about
-or using Kamodo has appeared since the 2026-11-07 search.
+entered since 2026-10-01, and an abstract and title search among those entered since 2026-11-01,
+return none (full-text queries over records entered since 2026-11-13 return two for "pysat" and 171
+for "magnetosphere", and a nonsense token returns none); an acknowledgements search for "Kamodo"
+returns only the ASR and Waldron papers; DataCite's "kamodo" search returns the 18 records weighed in
+Field 2; and Zenodo's free-text search for "kamodo" and creator-keyed searches on De Zeeuw's and
+Rastaetter's ORCIDs show no deposit newer than the 2026 DASH/IHDEA deck. Ringuette's ORCID returns
+newer deposits, the latest four from 2026-11-16 (an LLM agent for SPASE metadata, an HSSI poster and
+two MSW2026 breakout-session packages), none of which names Kamodo in its metadata. No publication
+about or using Kamodo has appeared since the 2026-11-13 search.
 
 **Method and model papers, judged as one list.** The README's "Kamodo currently supports:" list gives
 one model paper per supported model output — 15 distinct DOIs across its 16 entries at the 26.10.1
@@ -1452,8 +1467,8 @@ and the constellation poster, all recorded.
   alongside the CCMC logo, which is why it is preferred over the alternatives. The URL pins commit
   `9004ec1` (the `v26.8.7` tag, 2026-08-25) rather than the `master` branch, so no upstream rename,
   move or deletion can silently break it. The file's blob is the same at the Source Revision, at
-  `9004ec1`, at the 26.10.1 release commit `ca7ed8c`, at `06702fe` and at the 26.11.1 and 26.11.3
-  release commits `8decf77` and `5583cc6`, and on 2026-11-13 the URL served it as `image/png` (5,883
+  `9004ec1`, at the 26.10.1 release commit `ca7ed8c`, at `06702fe` and at the 26.11.1, 26.11.3 and
+  26.11.4 release commits `8decf77`, `5583cc6` and `959b163`, and on 2026-11-18 the URL served it as `image/png` (5,883
   bytes, the Kamodo wordmark).
 - **Alternatives:** the repository also carries `logos/Kamodo1.png`, `Kamodo2.png` and `Kamodo3.png`;
   the PyHC core registry points at
@@ -1467,7 +1482,7 @@ and the constellation poster, all recorded.
 
 - **No `CITATION.cff`, `codemeta.json`, `.zenodo.json`, `AUTHORS` or `CONTRIBUTORS` file** exists in
   this repository, and a whole-history sweep (`git log --all --diff-filter=A`) shows none has ever been
-  added on any branch (re-run on 2026-11-13, with `5583cc6` as the default branch's head). Author,
+  added on any branch (re-run on 2026-11-18, with `959b163` as the default branch's head). Author,
   identifier and citation metadata therefore has to be assembled from the package metadata (`setup.cfg`
   until commit `03e3d14` of 2026-08-24 deleted it, `pyproject.toml`'s `[project]` table since), the
   README (including its team section and "Citing Kamodo" list), the LICENSE, the four Kamodo
@@ -1478,16 +1493,17 @@ and the constellation poster, all recorded.
   `docs` and `url` matching Fields 3, 24 and the CCMC page, `contact: Darren De Zeeuw`, and "Good"
   ratings for documentation, software maturity, Python 3 and license. Its keyword list is a useful
   cross-check but is not reader evidence — see the SAMI3/Enlil correction in Field 28. Re-read
-  2026-11-13: the entry has not changed since the registry added its link to this record's HSSI page on
+  2026-11-18: the entry has not changed since the registry added its link to this record's HSSI page on
   2026-10-01.
 - **Repository shape at the Source Revision**, for orientation: 93 Python modules, 83 Jupyter
   notebooks, 16 C sources with 8 headers, 6 Fortran 90 and 3 Fortran 77 sources, 2 C++ sources, 8
   Dockerfiles, and a `tests/` suite of 11 pytest modules covering ADELPHI, AMGeO, CTIPe, DTM, GITM,
   IRI, SWMF-GM, SWMF-IE, TIE-GCM, VERB-3D and the time utilities. At the 26.10.1 release commit
   `ca7ed8c` the tree holds 100 Python modules and 85 notebooks with the same compiled sources, and 14
-  pytest modules (HASDM, NRLMSIS and TIE-GCM netCDF masking added). The 26.11.1 and 26.11.3 release
-  commits `8decf77` and `5583cc6` only modify existing files, so those counts hold there too.
+  pytest modules (HASDM, NRLMSIS and TIE-GCM netCDF masking added). The 26.11.1, 26.11.3 and 26.11.4
+  release commits `8decf77`, `5583cc6` and `959b163` only modify existing files, so those counts hold there too.
 - **Fields re-read for a release** cite its release commit beside their evidence —
   `ca7ed8c6f515b3527e00600bc20c0888659bb278` for 26.10.1, `8decf77227028e68b566f3058e340988019d5221`
-  for 26.11.1 and `5583cc6931c1a987a8809c71f0d64e758b030072` for 26.11.3; the other sections were read
+  for 26.11.1, `5583cc6931c1a987a8809c71f0d64e758b030072` for 26.11.3 and
+  `959b1630314934d88a927d51e127aff2b94354f6` for 26.11.4; the other sections were read
   at the Source Revision.
