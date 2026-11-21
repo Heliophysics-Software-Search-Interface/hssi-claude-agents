@@ -20,6 +20,7 @@ repos/*/*/**
 # Source-tree directories exposed by the two-level dossier exception above
 repos/asilib/tests/
 repos/solarsoft/lmco-SolarSoft/
+repos/PLUME/scripts/
 
 # Source-tree paths re-included by an upstream clone's own .gitignore negation
 # (SpiceyPy's .gitignore has `!docs/scratchpad.ipynb`)
