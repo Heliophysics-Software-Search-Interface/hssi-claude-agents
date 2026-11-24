@@ -4,7 +4,7 @@
 **Repository:** https://github.com/sr-dash/heliofleet
 **Source Revision:** de4b623b0b0692354e2ca35166c24c5e68edccda
 **Extraction Date:** 2026-11-06
-**Validation Date:** 2026-11-07
+**Validation Date:** 2026-11-24
 **Validation Status:** PASS
 
 ---
@@ -12,28 +12,40 @@
 ## Scope note
 
 HelioFleet is a static web application, served from the repository by GitHub Pages at
-https://sr-dash.github.io/heliofleet/. The pinned tree holds two kinds of code, and the field notes say
-which one each piece of evidence comes from:
+https://sr-dash.github.io/heliofleet/. The pinned tree holds two kinds of code, and release 1.2.0 adds a
+third; the field notes say which one each piece of evidence comes from:
 
 - **The browser application** (`index.html`, `sky.html`, `help.html`, `methods.html`, `js/`, `css/`).
   The coordinates, geometry, searches, fields of view and maps a visitor sees are computed in the
   browser. The page reads its data from files the repository itself serves (`data/`, `i18n/`); the SDO
   context images of the sky view's observation panel are requested from the Helioviewer API at run time
   (`js/observations.js:134`).
-- **The data pipeline** (`scripts/*.py`), run monthly by `.github/workflows/update-ephemeris.yml` and
+- **The data pipeline** (`scripts/*.py`), run monthly by `.github/workflows/update-ephemeris.yml` (and,
+  from release 1.2.0, weekly for the DONKI events by `.github/workflows/update-events.yml`) and
   documented in the README for local use. It is the code that reads JPL Horizons, NASA DONKI, JSOC, the
   LMSAL Heliophysics Coverage Registry, the Hinode/EIS as-run catalogue, the DKIST Data Center and the
   Solar Orbiter Archive, and writes the files under `data/`. Two products are computed here rather
   than in the browser: the calendar of upcoming perihelia, alignments, quadratures and conjunctions
   (`scripts/build_calendar.py`) and the coordinated-observation groups
   (`scripts/fetch_observations.py`).
+- **The figure script** (`download/plot_heliofleet.py`, from release 1.2.0). The page's "Figure code and
+  data (ZIP)" button packs it with the CSV and JSON files behind the current map; the user runs it on
+  their own machine (Python 3.9 or newer, NumPy and Matplotlib) to redraw the map without the page's
+  annotations.
 
-Unqualified file citations are at the Source Revision. The newest release is v1.1.2 (2026-10-30); the
-eight commits between that tag and the Source Revision (2026-10-30 to 2026-11-05) are unreleased: the
-1.1.2 version DOI added to the citation files, two monthly data updates, workflow maintenance, an
-accessible date picker and back-to-top buttons, and README and footer requests for feedback. None of
-them adds or removes a capability that any field below records, so the pinned tree and the v1.1.2
-release support the same values.
+Unqualified file citations are at the Source Revision. The newest release is v1.2.0 (2026-11-23), tag
+commit `f66865580b65c15d8f53a746cdfdd56baeba39f8`, whose ancestry contains the Source Revision: the
+eight commits from v1.1.2 to the Source Revision (the 1.1.2 version DOI in the citation files, two
+monthly data updates, workflow maintenance, an accessible date picker and back-to-top buttons, and
+requests for feedback) and the fifteen from the Source Revision to the tag all belong to it. Those
+fifteen add seven spacecraft, the Hi-C and CLASP sounding-rocket footprints, full-disk imager fields,
+the figure code and data ZIP, wider and weekly DONKI events, and pointers to the companion package
+heliofleet-mcp. A section that rests on those changes names `f668655` beside the evidence read there; a
+section that names no other revision rests on evidence release 1.2.0 left as it was. The two commits on
+`main` after the tag change no logic: `6aa8c38` adds the 1.2.0 version DOI to `CITATION.cff`, to the
+`versionDoi` constant in `js/tools.js` (so the page's citation text links the 1.2.0 DOI), to
+`README.md` and to `llms.txt`, and re-stamps the cache-busting hashes in the pages' import maps;
+`6911038` lists more of heliofleet-mcp's tools in `llms.txt`.
 
 ---
 
@@ -52,9 +64,10 @@ https://doi.org/10.5281/zenodo.23328187
 
 - **Source:** From the submitted HSSI record; confirmed as the software's Zenodo **concept** DOI.
 - **Concept, not version (Field 2 rule 5, kept under rule 9):** DataCite's record for
-  `10.5281/zenodo.23328187` is `resourceTypeGeneral` Software and carries four `HasVersion` relations:
-  `10.5281/zenodo.23328188` (v1.0.0), `10.5281/zenodo.23330591` (1.1.0), `10.5281/zenodo.23752828`
-  (1.1.1) and `10.5281/zenodo.23818629` (1.1.2). Each of those version records names
+  `10.5281/zenodo.23328187` is `resourceTypeGeneral` Software and carries five `HasVersion` relations
+  (read 2026-11-24): `10.5281/zenodo.23328188` (v1.0.0), `10.5281/zenodo.23330591` (1.1.0),
+  `10.5281/zenodo.23752828` (1.1.1), `10.5281/zenodo.23818629` (1.1.2) and `10.5281/zenodo.24479917`
+  (1.2.0). Each of those version records names
   `10.5281/zenodo.23328187` as its `conceptdoi` at Zenodo and carries `IsVersionOf` it at DataCite. The
   project's own files cite the same DOI as the all-versions identifier: `CITATION.cff` `doi:` and its
   `identifiers` entry described as "All versions (resolves to the latest release)", the README DOI badge
@@ -66,11 +79,13 @@ https://doi.org/10.5281/zenodo.23328187
   GitHub release was published (v1.0.0: release 2026-10-12T23:38:11Z, deposit 2026-10-12T23:38:15Z).
   These are GitHub–Zenodo integration deposits. They carry no `IsSupplementTo …/tree/<tag>` relation;
   their one URL relation is `IsDocumentedBy` the live site, which `.zenodo.json` declares.
-- **What the citation shows:** the concept currently presents version 1.1.2 (DataCite `version`), the
-  same release Field 12 records.
+- **What the citation shows:** the concept presents version 1.2.0 (DataCite `version`, read
+  2026-11-24), the same release Field 12 records; it presented 1.1.2 until release 1.2.0 was deposited.
 - **Other concept DOIs:** a Zenodo creator-keyed search on the author's ORCID returned five records on
-  2026-11-06; the only HelioFleet concept among them is this one (the others are HelioField, HelioField imagery and two
-  SFT-1D deposits), so Field 2 rule 7 does not arise.
+  2026-11-06 and six on 2026-11-24; the only HelioFleet concept among them is this one. The others are
+  HelioField, HelioField imagery, two SFT-1D deposits and, new since the first search, heliofleet-mcp
+  (concept `10.5281/zenodo.24409982`), a separate package recorded in Fields 29 and 30. Field 2 rule 7
+  does not arise.
 - The version DOI of 1.1.2 belongs to Field 12's Version PID, not here.
 
 ### 3. Code Repository (MANDATORY)
@@ -223,6 +238,17 @@ https://github.com/sr-dash/heliofleet
     "this constant-speed picture ignores drag, so real arrivals are usually later"; they are not a
     forecast product, and the Parker spiral is carried by `Field-line Tracing`.
   - `Servers and Environments` — a static site with no server component.
+- **Release 1.2.0 (read at `f668655`) adds no value and removes none.** The seven new fleet members are
+  handled by the same per-spacecraft code as the rest (`SPACECRAFT`, `js/catalog.js:5`; the alignment
+  search lists every one, `js/workbench.js:166-168`). The full-disk imager fields and the ASO-S LST SCI
+  coronagraph extend `Models and Simulations: Observatory/Instrument Models`: `INSTRUMENTS`
+  (`js/instruments.js`) models 27 fields, six of them drawn only in the sky view. The Hi-C and CLASP
+  flights join the coordinated-observation finder (`FACILITY`, `js/sky.js:851`), which `Mission-related:
+  Operations` already records. The figure ZIP's script (`download/plot_heliofleet.py`) redraws the map's
+  orbits, trails and spirals, which `Orbit Plots` and `2D Graphics` carry. `Data Visualization: Line
+  Plots` and `Data Processing and Analysis: File Format Conversion` were weighed again for the script and
+  the ZIP and still do not apply: the script draws positions and paths, not a quantity against time, and
+  the ZIP exports the page's own positions rather than converting a file a user supplies.
 
 ### 5. Related Region (RECOMMENDED)
 - **Values (stored order, then additions):**
@@ -251,7 +277,9 @@ https://github.com/sr-dash/heliofleet
     the software handles).
   - `Chromosphere` — the IRIS and DKIST footprints are observing geometry only.
   - Earth and planetary rows — Earth, Mercury, Venus, Mars and the Moon appear as positions; no
-    magnetospheric or atmospheric physics.
+    magnetospheric or atmospheric physics. The planetary missions release 1.2.0 adds (MESSENGER at
+    Mercury, Venus Express, Juno at Jupiter, Rosetta at comet 67P, and JUICE, Europa Clipper and Psyche
+    in cruise) are positions too, shown as in situ solar-wind observers (`f668655`).
 
 ### 6. Authors (MANDATORY)
 - **Author:** Soumyaranjan Dash
@@ -300,7 +328,7 @@ HelioFleet
     `og:site_name` HelioFleet on every page, the JSON-LD `WebApplication` `name` HelioFleet
     (`index.html`), and the web manifest `short_name` HelioFleet.
   - `CITATION.cff`'s own message says "If you use HelioFleet in your research, please cite it as below."
-  - The GitHub releases are named `HelioFleet 1.0.0` … `HelioFleet 1.1.2`.
+  - The GitHub releases are named `HelioFleet 1.0.0` … `HelioFleet 1.2.0`.
 - **The rule 1 reading:** the submitted value is the DataCite and Zenodo title of the DOI (`titles` of
   `10.5281/zenodo.23328187`), and the stored description is that deposit's description text, so the
   entry was filled from the DOI. The title is the software's name joined to a descriptive subtitle, and
@@ -340,13 +368,19 @@ HelioFleet
   name.
 
 ### 8. Description (MANDATORY)
-HelioFleet is a web tool that shows where heliophysics spacecraft (SDO, SOHO, Aditya-L1, ACE, Wind, DSCOVR, IMAP, SOLAR-1 (SWFO-L1), Carruthers, Solar Orbiter, Parker Solar Probe, BepiColombo, STEREO-A/B and MAVEN) are relative to the Sun and Earth on any date since 2010. It reports Stonyhurst and Carrington coordinates and Parker-spiral footpoints, searches for radial alignments, quadratures and magnetic connections, checks which observers see a given point on the Sun, and exports coordinates and time series. It draws the fields of view of coronagraphs and heliospheric imagers, summarises which solar longitudes are imaged on a solar surface map over SDO/HMI synoptic magnetograms, and shows flares, CMEs and geomagnetic storms from NASA DONKI. A viewing-geometry table gives each observer's light-time offset from Earth, apparent solar radius, B0 and L0. A sky view projects every instrument's field of view onto the plane of the sky seen from Earth or from a chosen spacecraft, with MLSO K-Cor and UCoMP fields, and draws the observation footprints of DKIST, IRIS, Hinode/EIS and Solar Orbiter (EUI-HRI, PHI-HRT, SPICE) over SDO/AIA and HMI images, with a finder for times when chosen facilities observed the same place together. Positions come from JPL Horizons ephemerides, refreshed monthly. The interface is available in English, Hindi and Spanish.
+HelioFleet is a web tool that shows where heliophysics spacecraft (SDO, SOHO, Aditya-L1, ACE, Wind, DSCOVR, IMAP, SOLAR-1 (SWFO-L1), Carruthers, Solar Orbiter, Parker Solar Probe, BepiColombo, STEREO-A/B, MAVEN, MESSENGER, Venus Express, Juno, Rosetta, JUICE, Europa Clipper and Psyche) are relative to the Sun and Earth on any date since 2010. It reports Stonyhurst and Carrington coordinates and Parker-spiral footpoints, searches for radial alignments, quadratures and magnetic connections, checks which observers see a given point on the Sun, and exports coordinates and time series. It draws the fields of view of coronagraphs and heliospheric imagers, summarises which solar longitudes are imaged on a solar surface map over SDO/HMI synoptic magnetograms, and shows flares, CMEs and geomagnetic storms from NASA DONKI. A viewing-geometry table gives each observer's light-time offset from Earth, apparent solar radius, B0 and L0. A sky view projects every instrument's field of view onto the plane of the sky seen from Earth or from a chosen spacecraft, with MLSO K-Cor and UCoMP fields, and draws the observation footprints of DKIST, IRIS, Hinode/EIS and Solar Orbiter (EUI-HRI, PHI-HRT, SPICE) over SDO/AIA and HMI images, with a finder for times when chosen facilities observed the same place together. Positions come from JPL Horizons ephemerides, refreshed monthly. The interface is available in English, Hindi and Spanish.
 Live site: https://sr-dash.github.io/heliofleet/
 
-- **Source:** From the submitted HSSI record, kept (Field 8 rule 6). It is the `.zenodo.json`
-  description at the pin with its two HTML paragraphs rendered as two lines; the `CITATION.cff`
-  `abstract` is the same text except that it writes `SOLAR-1` without `(SWFO-L1)` and has no live-site
-  line.
+- **Source: the project's own description at release 1.2.0, adopted verbatim (Field 8 rule 3).** It is
+  the `.zenodo.json` description at `f668655` with its two HTML paragraphs rendered as two lines; the
+  `CITATION.cff` `abstract` there is the same text except that it writes `SOLAR-1` without `(SWFO-L1)`
+  and has no live-site line.
+- **Prior value, superseded:** the same author's text one revision earlier, the `.zenodo.json`
+  description at the Source Revision, which HSSI held until this update. It had been kept from the
+  submitted record (rule 6) and differs only in the spacecraft list, which ended "STEREO-A/B and
+  MAVEN)". Release 1.2.0 added MESSENGER, Venus Express, Juno, Rosetta, JUICE, Europa Clipper and Psyche
+  to the project's description (`.zenodo.json` and `CITATION.cff` at `f668655`), so the stored text
+  became an earlier revision of it, which rule 3 replaces with the current one.
 - **The "Live site" line is kept:** it is the author's own deposit text, not integration boilerplate, a
   heading or release notes (rule 1 does not fire), and it gives a reader the address of the tool.
 - **Every capability named was checked in the pinned code (rule 2):** the coordinate and footpoint
@@ -356,7 +390,10 @@ Live site: https://sr-dash.github.io/heliofleet/
   CMEs and storms (`js/events.js`, `scripts/fetch_events.py`), the viewing-geometry table
   (`geometryRows`), the sky view with K-Cor and UCoMP (`js/skyproj.js:35`), the observation footprints
   and coordinated-observation finder (`scripts/fetch_observations.py`, `js/sky.js`), monthly Horizons
-  refresh (`.github/workflows/update-ephemeris.yml`) and the Hindi and Spanish interface (`i18n/`).
+  refresh (`.github/workflows/update-ephemeris.yml`) and the Hindi and Spanish interface (`i18n/`). The
+  seven spacecraft release 1.2.0 adds are in the fleet list `SPACECRAFT` (`js/catalog.js:5` at
+  `f668655`), each with its Horizons ID in `BODIES` and its ephemeris fetched by
+  `scripts/fetch_ephemeris.py` into `data/<body>/`.
 
 ### 9. Concise Description (OPTIONAL)
 An interactive map of heliophysics spacecraft positions. This web tool shows where the spacecraft are in the past, present and planned future, with an option to overlay targeted limited FOV datasets.
@@ -426,51 +463,57 @@ An interactive map of heliophysics spacecraft positions. This web tool shows whe
   `publisher` is Zenodo). Zenodo has no ROR, and CERN's ROR identifies its operator, not the repository.
 
 ### 12. Version (RECOMMENDED)
-- **Version Number:** 1.1.2
-- **Version Date:** 2026-10-30
+- **Version Number:** 1.2.0
+- **Version Date:** 2026-11-23
 - **Version Description:**
 
-HelioFleet 1.1.2 adds links to HelioField for any date, a How to use page, and a reworked navigation and layout.
-
-**Links to HelioField**
-- A HelioField button in the navigation bar opens HelioField at the same date.
-  - From the map, it opens HelioField's coronal field and fleet view, with the spirals' wind speed.
-  - From the sky view, it opens HelioField's Connectivity page for the chosen observer.
-
-**Pages and navigation**
-- A How to use page, and a flat navigation bar on every page with shareable links to each tool.
-
-**Observations**
-- Observation footprints export as CSV, with a SunPy script for JSOC FITS figures.
+HelioFleet 1.2.0 adds seven spacecraft, sounding-rocket footprints, full-disk imager fields, a figure download with Python code, and more complete space-weather events.
 
 **Fleet**
-- SWFO-L1 is renamed SOLAR-1.
-- Proba-3 ASPIICS is skipped during its 2026 outage.
+- MESSENGER, Venus Express, Juno and Rosetta as in situ observers for 2010–2016, with mission milestones.
+- JUICE, Europa Clipper and Psyche from launch, refreshed with the monthly update.
 
-- **Version PID:** https://doi.org/10.5281/zenodo.23818629
-- **Release history at the pin:** tags `v1.0.0`, `v1.1.0`, `v1.1.1`, `v1.1.2`, all on the pinned
+**Sky view**
+- Hi-C (2012, 2018) and CLASP (2015, 2019) sounding-rocket footprints, with pointing and times read from each flight's FITS headers. They join IRIS, Hinode/EIS, DKIST and Solar Orbiter in the coordinated-observation finder.
+- Full-disk imager fields: SDO AIA and HMI, Aditya-L1 SUIT, PROBA2 SWAP, GOES SUVI and ASO-S SDI and WST, plus the ASO-S SCI coronagraph.
+
+**Space weather**
+- DONKI events now include M1 flares, CMEs of 500 km/s and faster, and G1 storms, refreshed every week.
+- CME fronts are off by default and coloured by speed, with a key.
+
+**Figures and data**
+- "Figure code and data (ZIP)" saves the positions behind the map as CSV files with a short Python script that redraws the map without the page's annotations, and a README.
+
+**Site**
+- Installable as an app, an accessible calendar on every date field, and back-to-top buttons on the help and methods pages.
+
+- **Version PID:** https://doi.org/10.5281/zenodo.24479917
+- **Release history:** tags `v1.0.0`, `v1.1.0`, `v1.1.1`, `v1.1.2` and `v1.2.0`, all on `main`'s
   ancestry, each with a GitHub release named `HelioFleet <version>` and a Zenodo version deposit. No
-  PyPI or other package distribution exists; the software is published as a web site. The commits after
-  `v1.1.2` are unreleased (rule 2); a later refresh should look for a newer tag.
-- **Number, date and PID — from the submitted record, kept:** `1.1.2` is the newest release (rule 4);
-  the date is the GitHub release's `published_at` (2026-10-30T20:14:44Z), which the tagged commit
-  `dd7bf41` (2026-10-30T10:14:40-10:00) and `CITATION.cff` `date-released` corroborate (rule 7); the
-  PID is the 1.1.2 version DOI (DataCite `version` 1.1.2, `IsVersionOf` the concept; rule 17).
-- **Description — re-derived (rule 11, then rules 13–16):** the entry was submitted with release notes
-  that copied the software description (Field 8, including its "Live site" line). No clause of that text
-  is accounted for by the v1.1.2 release notes or the `v1.1.1..v1.1.2` range; every clause was
-  unattributable, so the description is re-derived. The release title `HelioFleet 1.1.2` is no more than the tag, so the source is the
-  GitHub release body, kept verbatim with whole items removed (rule 15):
-  - removed `- HelioField 1.2.1 links back.` — a change in a different software (HelioField);
-  - removed `- Methods and help pages with a contents sidebar, larger text and the theme picker.` —
-    documentation-page presentation;
-  - removed `- Shorter page titles and descriptions, and a sky-view preview image.` — page-metadata
-    housekeeping;
-  - removed `- The monthly update reports failed observation and image fetches.` — maintenance of the
-    data pipeline.
-
-  This corrects a sub-value of the same release, so the number stays 1.1.2 (Field 12, *Correcting the
-  same release*).
+  PyPI or other package distribution of HelioFleet exists; the software is published as a web site (the
+  PyPI package `heliofleet-mcp` is a separate companion, Fields 29 and 30). The two commits on `main`
+  after `v1.2.0` are unreleased (rule 2); a later refresh should look for a newer tag.
+- **Number (rule 3):** release 1.2.0 (tag `v1.2.0` at `f668655`, GitHub release `HelioFleet 1.2.0`,
+  not a pre-release) is newer than 1.1.2, so it replaces that release, and its number is written without
+  a `v`, as 1.1.2 was. The tagged code declares it: `CITATION.cff` `version: 1.2.0`,
+  `.zenodo.json` `"version": "1.2.0"` and `CITATION.version` in `js/tools.js`.
+- **Date (rule 7):** the GitHub release's `published_at`, 2026-11-23T19:38:11Z. The tagged commit is
+  dated 2026-11-23T09:36:21-10:00 (19:36 UTC), the Zenodo deposit was created at 19:38:22Z, and
+  `CITATION.cff` `date-released` is 2026-11-23: all the same UTC day.
+- **PID (rule 17):** `10.5281/zenodo.24479917` — DataCite `version` 1.2.0, `IsVersionOf` the concept DOI
+  of Field 2 and listed among its `HasVersion` relations; the Zenodo deposit holds
+  `sr-dash/heliofleet-v1.2.0.zip`. The project names it "Version 1.2.0" in `CITATION.cff`
+  `identifiers` from commit `6aa8c38`, the commit after the tag.
+- **Description (rule 10, then rules 13–16):** derived afresh for the new release. The release title
+  `HelioFleet 1.2.0` is no more than the tag, so the source is the GitHub release body, kept verbatim with
+  one whole item removed (rule 15): `- The link check now fails only on links that are gone; blocked or
+  slow sites are warnings.` — maintenance of the site's own link check (rule 14). The remaining **Site**
+  item is kept whole: installing the site as an app and the calendar on every date field are changes a
+  user meets, and an item is never split to drop its back-to-top buttons.
+- **Prior value, superseded:** release 1.1.2 (2026-10-30, `10.5281/zenodo.23818629`), which HSSI held
+  until this update, with a description taken from the v1.1.2 release body less four items (HelioField
+  1.2.1's links back, the methods and help pages' presentation, page titles and a preview image, and
+  failed-fetch reporting in the monthly update). None of it carries onto the new number (rule 10).
 
 ### 13. Programming Language (RECOMMENDED)
 - **Values:**
@@ -492,6 +535,8 @@ HelioFleet 1.1.2 adds links to HelioField for any date, a How to use page, and a
     CI) builds the data files under `data/` that the site shows, computes the calendar's alignments, quadratures and
     conjunctions (`scripts/build_calendar.py`) and the coordinated-observation groups
     (`scripts/fetch_observations.py`); the site also generates SunPy (Python) scripts for its users.
+    From release 1.2.0 the figure code and data ZIP also hands users `download/plot_heliofleet.py`
+    (Python 3.9 or newer), which redraws the map from the exported files (`f668655`).
   - `Other` — kept as the submitter's value, not as a rule 7 qualification. The only languages in the
     tree without a vocabulary row are HTML and CSS, the application's pages (`index.html`, `sky.html`,
     `help.html`, `methods.html`) and styles (`css/style.css`), and Shell, which is CI tooling (below).
@@ -514,9 +559,10 @@ Not found
 - The project's citation guidance names only Zenodo DOIs of the software — the concept DOI, which is
   Field 2's value, and the version DOIs (README "Citing HelioFleet"; `CITATION.cff` has no
   `preferred-citation`) — so no publication qualifies (rule 1).
-- No paper describes HelioFleet: on 2026-11-06 an ADS full-text search for `"HelioFleet"` and for the
-  concept DOI returned no records (controls: `"Solar-MACH"` returned 163, a nonsense token 0). The software was
-  first released on 2026-10-12; a later refresh should repeat the search.
+- No paper describes HelioFleet: ADS full-text searches for `"HelioFleet"` and for the concept DOI
+  returned no records on 2026-11-06 and again on 2026-11-24, when `"sr-dash/heliofleet"` returned none
+  as well (controls on 2026-11-24: `"Solar-MACH"` returned 167, a nonsense token 0). The software was
+  first released on 2026-10-12; a later refresh should repeat the search from 2026-11-24.
 
 ### 15. License (RECOMMENDED)
 MIT License
@@ -595,6 +641,15 @@ MIT License
     genuinely new domain term"; `visualizations` is the plural of the existing `visualization` row
     (rule 11);
   - `solar-eclipse` and `solar-physics` — stored already as `solar eclipse` and `solar physics`.
+  - terms for what release 1.2.0 adds (`f668655`): the new fleet spacecraft, `sounding rocket`, `hi-c`
+    and `clasp`. None is declared by the project: the `CITATION.cff` and `.zenodo.json` keywords are
+    unchanged by the release, and every repository topic is one this section already decides (read
+    2026-11-24). MESSENGER, Venus Express, Juno, Rosetta and JUICE are recorded in Field 32, which an
+    added keyword would only restate (rule 6). Europa Clipper, Psyche and the Hi-C and CLASP flights have
+    no vocabulary rows, but each is one member of the fleet or one facility of the observation panel, not
+    what the software computes or produces (rule 10), the same footing on which no keyword was added for
+    the fleet members and instruments without rows before (Aditya-L1, IMAP, UCoMP, the DKIST
+    instruments).
 - **PyHC marker (rule 15):** HelioFleet is not listed in `_data/projects_core.yml`, `_data/projects.yml`
   or `_data/projects_unevaluated.yml` of the PyHC registry (each parsed in full; no entry's name, code
   URL or description refers to it), so `pyhc package` does not apply.
@@ -630,7 +685,13 @@ MIT License
   HMI synoptic directory, a single mission's archive already carried by `Observatory/Mission-specific`
   (rule 9). `CDAWeb` — a link on Wind's spacecraft card (`js/catalog.js:51`), not access (rule 2); a
   case-insensitive sweep of `js/`, `scripts/` and the pages for CDAWeb, HAPI, VSO, SSCWeb, OMNIWeb,
-  AMDA, das2, Madrigal, GFZ, WDC, VirES and S3 finds that link and nothing else.
+  AMDA, das2, Madrigal, GFZ, WDC, VirES and S3 finds that link and nothing else. `The Virtual Solar
+  Observatory.` — release 1.2.0 adds the Hi-C and CLASP sounding-rocket footprints (`f668655`), but no
+  code fetches them: `rockets()` (`scripts/fetch_observations.py:124`) reads `data/flights.json`, a list
+  the author curated in the repository from each flight's FITS headers at the MSFC Virtual Solar
+  Observatory, and the observation list only links each flight's archive page (rules 2 and 5). The
+  weekly DONKI refresh added in the same release (`.github/workflows/update-events.yml`) reads the DONKI
+  API already recorded under `Other`.
 
 ### 18. Input File Formats (RECOMMENDED)
 Not found (evidenced empty)
@@ -642,6 +703,12 @@ Not found (evidenced empty)
   memory (`read_fits(get(...))`, `scripts/fetch_synoptic.py:142`); it cannot be pointed at a user's own
   file of any of these formats, so none is an input format a user can bring (rule 9). `FITS` in
   particular was weighed and rejected on that ground.
+- **The figure script (release 1.2.0, `f668655`) reads only HelioFleet's own export.**
+  `download/plot_heliofleet.py` reads `positions.csv`, `trails.csv`, `orbits.csv`, `spirals.csv` and
+  `settings.json` from the ZIP the page wrote for it (its `--data` option names that folder) and redraws
+  the same map. These are the software's own files in its own layout (rule 4, as for the application's
+  data files above), recorded as outputs in Field 19; `csv` or `JSON` here would tell a searcher that
+  HelioFleet reads their data files, which it does not.
 
 ### 19. Output File Formats (RECOMMENDED)
 - **Values:**
@@ -649,30 +716,41 @@ Not found (evidenced empty)
   - csv
   - Other
 - **Kept from the submitted record:** `JSON` — the coordinate table, time series and viewing-geometry
-  table download as JSON (`toJSON`, `js/tools.js:80`; `js/workbench.js`).
+  table download as JSON (`toJSON`, `js/tools.js:80`; `js/workbench.js`); from release 1.2.0 the figure
+  ZIP also carries the view's `settings.json` (`js/bundle.js` at `f668655`).
 - **Added (rules 6–7):**
   - `csv` — the coordinate table and time series (`toCSV`, `js/tools.js:66`), the alignment windows
     (`windowsCSV`, `js/tools.js:297`), the viewing-geometry table, and the observation footprints
-    (`js/sky.js`).
+    (`js/sky.js`); from release 1.2.0 also the figure code and data ZIP's `positions.csv`,
+    `trails.csv`, `orbits.csv` and `spirals.csv` (`bundleData`, `js/bundle.js:29` at `f668655`).
   - `Other` — PNG and PDF snapshots (`downloadPNG`, `downloadPDF`, `js/export.js:224`, `:244`); MP4,
     WebM and GIF animations (`js/animate.js`); the iCalendar feed `calendar.ics`
     (`write_ics`, `scripts/build_calendar.py:217`); and Python (SunPy) scripts that reproduce the tables
     and footprint figures (`sunpyCode`, `geometrySunpy`, `js/tools.js:120`, `:201`; `footprintsSunpy`,
-    `js/sky.js:950`).
+    `js/sky.js:950`). From release 1.2.0 also the figure code and data ZIP itself (`figureBundle`,
+    `js/bundle.js:111` at `f668655`), which carries the Python script `plot_heliofleet.py`, a README and
+    a PNG preview, and whose script writes PNG and PDF figures; the vocabulary has no archive, script or
+    image row.
 
 ### 20. Operating System (RECOMMENDED)
 Operating System Independent
 
 - **Source:** From the submitted HSSI record, kept (Field 20 rule 1): a web application used through a
   browser with nothing to install; the site's JSON-LD gives `"operatingSystem": "Any (web browser)"`.
-  The CI runner (`ubuntu-26.04`) is the maintainer's pipeline platform, not a user's.
+  The CI runner (`ubuntu-26.04`) is the maintainer's pipeline platform, not a user's. Release 1.2.0
+  (`f668655`) keeps this: installing the site as an app (`site.webmanifest`) happens in the browser, and
+  the figure script it adds is plain Python with NumPy and Matplotlib that names no operating system;
+  CI only byte-compiles that script as one of the site's checks, which shows no platform a user runs it
+  on.
 
 ### 21. CPU Architecture (RECOMMENDED)
 CPU Independent
 
 - **Submitted value:** `Linux aarch64 or arm64`. Replaced (rule 9): a browser application computes on
   whatever machine runs the browser (rule 1), and nothing in the repository targets arm64 — no binary,
-  build or job for it; every workflow runs on `ubuntu-26.04`.
+  build or job for it; every workflow runs on an Ubuntu runner (`ubuntu-26.04`, and `ubuntu-latest`
+  for the weekly events update added in release 1.2.0). The figure script added in that release is plain
+  Python and adds no CPU dependence.
 
 ### 22. Related Phenomena (OPTIONAL)
 - **Values:**
@@ -702,9 +780,11 @@ CPU Independent
 ### 23. Development Status (RECOMMENDED)
 Active
 
-- **Source:** From the submitted HSSI record, re-derived (rule 6): stable releases exist (four, 1.0.0 to
-  1.1.2), the last commit on `main` is the Source Revision (2026-11-05), the last release v1.1.2
-  (2026-10-30); the repository is not archived and carries no status badge or statement.
+- **Source:** From the submitted HSSI record, re-derived (rule 6; anchors read 2026-11-24): stable
+  releases exist (five, 1.0.0 to 1.2.0); the last release is v1.2.0 (2026-11-23) and the last commit on
+  `main` is `6911038` (2026-11-23T15:15:20-10:00); the repository is not archived and carries no status
+  badge or statement. At the Source Revision the anchors were that commit (2026-11-05) and v1.1.2
+  (2026-10-30).
 
 ### 24. Documentation (RECOMMENDED)
 https://sr-dash.github.io/heliofleet/
@@ -725,10 +805,14 @@ Not found (evidenced empty)
   about the software exists (Field 14). A case-insensitive sweep of the pinned tree outside `data/`
   for `\bfund|\bgrant\b|\baward|brinson|\bnsf\b|national science foundation|supported by|sponsor`
   matches one line, the author's JSON-LD `jobTitle` "Solar Physicist & Brinson Postdoctoral Fellow"
-  (`index.html:73`), which also serves as the sweep's positive control.
+  (`index.html:73`), which also serves as the sweep's positive control; the same sweep at `f668655`
+  matches the same line alone.
 - **Considered and rejected:** the Brinson postdoctoral fellowship — support of a person, not of the
   software (rule 3); the National Science Foundation as the sponsor of the National Solar Observatory,
-  the author's employer — an institutional sponsor (rule 6).
+  the author's employer — an institutional sponsor (rule 6); the NASA Open Science 101 badge that
+  release 1.2.0 adds to the README (`README.md:7` at `f668655`) — a training credential that NASA Open
+  Science issued to the author (the linked Credly badge): it funds nothing, and it concerns a person,
+  not the software (rule 3).
 
 ### 26. Award Title (OPTIONAL)
 Not found (evidenced empty)
@@ -739,7 +823,8 @@ Not found (evidenced empty)
 ### 27. Related Publications (OPTIONAL)
 Not found (evidenced empty)
 
-- **No publication about or using HelioFleet:** the ADS full-text searches of Field 14 found none.
+- **No publication about or using HelioFleet:** the ADS full-text searches of Field 14 found none on
+  2026-11-06 or on 2026-11-24, the last search; a later refresh searches from that date.
 - **Instrument papers weighed and not listed (rule 4):** the README's "Instrument field-of-view sources"
   and the methods page cite nine papers — Brueckner et al. 1995 (LASCO), Howard et al. 2008 (SECCHI
   COR2), Eyles et al. 2009 (STEREO HI), Antonucci et al. 2020 (Metis), Howard et al. 2020 (SoloHI),
@@ -748,6 +833,10 @@ Not found (evidenced empty)
   NOAA pages. Each supplies the field-of-view extent of one instrument, so each is incidental to one
   parameter of the software; as a list they would describe the instruments rather than HelioFleet, and
   the project does not present any of them as the software's foundation or ask users to cite them.
+  Release 1.2.0 adds more of the same kind for the full-disk imagers and ASO-S — Lemen et al. 2012
+  (AIA), Schou et al. 2012 (HMI), Seaton et al. 2013 (SWAP), Darnel et al. 2022 (SUVI), Tripathi et al.
+  2025 (SUIT), Chen et al. 2019 and Li et al. 2019 (ASO-S) in `js/instruments.js`, most of them also on
+  the methods page (`f668655`) — and they are weighed the same way.
 
 ### 28. Related Datasets (OPTIONAL)
 - **Values:**
@@ -772,10 +861,30 @@ Not found (evidenced empty)
   - JPL Horizons ephemerides, the DONKI catalogue, the IRIS, EIS, DKIST and Solar Orbiter observation
     catalogues — the code reads these services' records or archive metadata, and no dataset DOI
     identifies what it reads; their services are recorded in Field 17.
+  - the Hi-C and CLASP flight data at the MSFC Virtual Solar Observatory, whose footprints release 1.2.0
+    draws — HelioFleet has no reader for them: the author transcribed each flight's pointing and times
+    from its FITS headers into `data/flights.json` (`f668655`), and the observation list links each
+    flight's archive page (rule 2).
 
 ### 29. Related Software (OPTIONAL)
-Not found (evidenced empty)
-
+- **Values:**
+  - https://github.com/sr-dash/heliofleet-mcp
+- **Added with release 1.2.0 (rule 9, a companion package):** heliofleet-mcp, by HelioFleet's author,
+  carries HelioFleet's geometry out of the browser into a command line, a Python API and a Model Context
+  Protocol server. HelioFleet's README introduces it: it "answers the same questions outside the
+  browser: positions, alignment windows, the event calendar and viewing geometry, plus HelioField's
+  magnetic connectivity. It reads this site's data files and ports its frame and alignment code, so its
+  numbers match the page" (`README.md:72` at `f668655`; the help page's "Command line, Python and MCP"
+  section and `llms.txt` describe it likewise). heliofleet-mcp's own README calls its frame and
+  alignment code "a line-by-line port of the page's own JavaScript" (heliofleet-mcp `7be498f`). A front
+  end in another environment that ports this software's code is the companion ground of rule 9; the
+  data exchange between the two is a separate ground, recorded in Field 30 (Field 30 rule 9).
+- **URL (rules 12–13):** heliofleet-mcp has no HSSI entry (a repository-URL lookup on 2026-11-24 found
+  none), so its upstream repository root is recorded. It also has the Zenodo concept DOI
+  `10.5281/zenodo.24409982`; the repository form was chosen because the site shows the raw URL as link
+  text. It is published on PyPI as `heliofleet-mcp`, under the MIT License.
+- **Earlier state:** the field was evidenced empty until release 1.2.0; heliofleet-mcp's repository was
+  created on 2026-11-20, after the Source Revision.
 - **Considered and not used:**
   - HelioField (`https://github.com/sr-dash/heliofield`), the same author's coronal-field viewer — the
     relationship the project documents is the link between the two tools, so it is recorded in Field 30
@@ -796,6 +905,7 @@ Not found (evidenced empty)
   - https://github.com/Helioviewer-Project/helioviewer.org
   - https://github.com/sr-dash/heliofield
   - https://github.com/sr-dash/cryonirsp-viewer
+  - https://github.com/sr-dash/heliofleet-mcp
 - **Submitted value:** empty.
 - **Added (rule 7), with the exchange each rests on:**
   - **SunPy** — HelioFleet writes its results into SunPy code for the user: the coordinate and
@@ -818,10 +928,18 @@ Not found (evidenced empty)
   - **Cryo-NIRSP viewer** — HelioFleet imports the viewer's DKIST Cryo-NIRSP dataset inventory
     (`scripts/fetch_ground.py:20`) and links each footprint to that dataset's page in the viewer
     (`js/sky.js:708`). No DOI was found for it.
+  - **heliofleet-mcp** (added with release 1.2.0) — it reads HelioFleet's published data files, and its
+    answers link back to the page: "It reads this site's data files" and "every answer carries a
+    HelioFleet link to the same moment" (`README.md:72` at `f668655`). On its side, its data module
+    fetches the files from HelioFleet's site ("Files come from the public site
+    (https://sr-dash.github.io/heliofleet/)", `src/heliofleet_mcp/data.py` at heliofleet-mcp `7be498f`),
+    and its `build_heliofleet_link` tool builds map and sky-view links. One package's output read by
+    the other, with a documented hand-off back (rule 7). It is also in Field 29, on the separate ground
+    that it ports HelioFleet's code. URL: the upstream repository; its concept DOI is named in Field 29.
 - **Considered and not used:** JPL Horizons and NASA DONKI — data services read by the pipeline,
-  recorded in Field 17. No HSSI entry's Fields 29/30 pointed at HelioFleet on 2026-11-06 (a sweep of the
-  catalogue's related-item rows for the repository, the concept DOI and the project name found none),
-  so no reverse relation was waiting to be tested.
+  recorded in Field 17. No HSSI entry's Fields 29/30 pointed at HelioFleet on 2026-11-06 or on
+  2026-11-24 (sweeps of the catalogue's related-item rows for the repository, the concept DOI, the
+  version DOIs and the project name found none), so no reverse relation was waiting to be tested.
 
 ### 31. Related Instruments (OPTIONAL)
 - **Values** (each `name` copied byte for byte from its vocabulary row; every identifier resolves to
@@ -882,6 +1000,14 @@ Not found (evidenced empty)
     - **Instrument Identifier:** https://spase-metadata.org/NASA/Instrument/PUNCH/WFI/3
   - **Instrument Name:** MLSO K-Coronagraph
     - **Instrument Identifier:** https://spase-metadata.org/NSF/Instrument/Ground/MLSO/K-Cor
+  - **Instrument Name:** Proba 2 Sun Watcher using APS detectors and Image Processing
+    - **Instrument Identifier:** https://spase-metadata.org/SMWG/Instrument/PROBA2/SWAP
+  - **Instrument Name:** Solar Ultraviolet Imager
+    - **Instrument Identifier:** https://spase-metadata.org/NOAA/Instrument/GOES/16/SUVI
+  - **Instrument Name:** Solar Ultraviolet Imager
+    - **Instrument Identifier:** https://spase-metadata.org/NOAA/Instrument/GOES/18/SUVI
+  - **Instrument Name:** Solar Ultraviolet Imager
+    - **Instrument Identifier:** https://spase-metadata.org/NOAA/Instrument/GOES/19/SUVI
 
 - **Removed:** the entry was submitted with a single `UNKNOWN` row here (type 1, no identifier). It
   names no instrument and carries no SPASE identifier, so it is never a value of this field (rule 22);
@@ -891,10 +1017,12 @@ Not found (evidenced empty)
   modelling is a primary feature that the project's own description names ("It draws the fields of
   view of coronagraphs and heliospheric imagers", and "A sky view projects every instrument's field of
   view onto the plane of the sky"), and someone working with those instruments' data who is checking
-  which viewpoints overlap could reasonably reach for it. The decision covers the 18 rows of the third
-  group here and, in Field 32, the GOES-19 and Mauna Loa Solar Observatory rows; the fleet and PUNCH
+  which viewpoints overlap could reasonably reach for it. The decision covered the 18 rows the third
+  group then held and, in Field 32, the GOES-19 and Mauna Loa Solar Observatory rows; the fleet and PUNCH
   rows of Field 32 rest on the same reading (see there). A later refresh should not reopen it on the
-  ground that these instruments' data are not read.
+  ground that these instruments' data are not read. The four rows release 1.2.0 adds to the third group
+  (SWAP and three SUVI rows), and their GOES observatory rows in Field 32, are listed under the same
+  reading: they are further fields of the same modelling, not a new kind of support.
 - **Evidence, by group (Stage A rule 6, Stage C rules 17–18):**
   - *Observation footprints.* `scripts/fetch_observations.py` reads, for each instrument, its own
     observation catalogue — IRIS raster and slit-jaw fields from the LMSAL Heliophysics Coverage
@@ -926,19 +1054,45 @@ Not found (evidenced empty)
     them. The choice rests on that one comment together with the full-annulus shape it explains. If a
     later refresh finds the comment gone and the field redrawn for one camera, the WFI rows follow it,
     and so do the PUNCH observatory rows of Field 32.
+  - *Full-disk imagers (release 1.2.0, `f668655`).* `INSTRUMENTS` (`js/instruments.js`) adds fields for
+    SDO AIA and HMI, Aditya-L1 SUIT, PROBA2 SWAP, GOES SUVI and the ASO-S LST imagers SDI and WST, drawn
+    in the sky view only, as squares or a disk of their published size centred on the Sun (`sky: true`;
+    `SKY_SHAPES`, `js/skyproj.js`), and the ASO-S LST SCI coronagraph, drawn on the map as well; "Who sees
+    this point" names each one whose field contains a point. AIA and HMI already have their rows above.
+    SWAP resolves to one row, `Proba 2 Sun Watcher using APS detectors and Image Processing`; the
+    `SMWG/Instrument/PROBA2/LYRA` row carries SWAP's expansion as its name, an upstream defect, and is a
+    different instrument (rule 23).
+  - *GOES SUVI, settled under rule 18.* The code models one SUVI field (`suvi`, mission `GOES`, drawn from
+    2016-11-19) with no per-satellite branch, and the methods page says which instruments it stands for:
+    "GOES SUVI is drawn from the launch of GOES-16; the instruments on GOES-16, -18 and -19 have the same
+    field." (`methods.html:280` at `f668655`). The vocabulary's four `Solar Ultraviolet Imager` rows are
+    four instruments, one per satellite (rule 14), and that statement names three of them, so the
+    GOES-16, GOES-18 and GOES-19 rows are recorded. The GOES-17 row (`NOAA/Instrument/GOES/17/SUVI`) is
+    not, because the project does not name it; a later refresh adds it if the project does.
 - **Resolution choices (rules 13–16):** EUI, PHI and Metis exist only under `ESA/`, SoloHI only under
   `NASA/`, and COR1 and HI-1/HI-2 only under `NASA/` (COR2 only under `SMWG/`), so each is the single row
   for its entity. The `SMWG/Instrument/STEREO-A/SECCHI` and `…/STEREO-B/SECCHI` suite rows and the
   `SMWG/Instrument/ParkerSolarProbe/WISPR` suite row (`PSP WISPR`) were not used: the code supports the
   individual telescopes, which have rows (rule 7). The long WISPR telescope names are the rows' own.
+  SWAP has a single row, under `SMWG/`, and the GOES SUVI rows exist only under `NOAA/` (rule 15's own
+  example).
 - **Substituted to Field 32 (rule 20):** the DKIST instruments Cryo-NIRSP, VBI, ViSP, DL-NIRSP and VTF
   (footprints from the DKIST Data Center and the Cryo-NIRSP viewer) have no instrument rows → `Daniel K
   Inouye Solar Telescope`; MLSO UCoMP has no row → `Mauna Loa Solar Observatory`; GOES-19 CCOR-1 has no
-  row → `Geostationary Operational Environmental Satellite 19`.
+  row → `Geostationary Operational Environmental Satellite 19` (each still without a row on
+  2026-11-24).
 - **Documented omissions (rule 21):** Aditya-L1 VELC, SOLAR-1 CCOR-2 and Proba-3 ASPIICS — no row for
   the instrument, and no row for its platform (sweeps of name, abbreviation, identifier and definition
   for `VELC`, `Visible Emission Line`, `Aditya`, `CCOR`, `Compact Coronagraph`, `SWFO`, `SOLAR-1`,
-  `ASPIICS` and `Proba-3` returned nothing; controls: `SUVI` positive, a nonsense token negative).
+  `ASPIICS` and `Proba-3` returned nothing on 2026-11-06 and again on 2026-11-24; controls: `SUVI`
+  positive, a nonsense token negative). From release 1.2.0, likewise Aditya-L1 SUIT, the ASO-S LST
+  imagers (SCI, SDI, WST) and the Hi-C and CLASP sounding-rocket instruments, whose footprints the sky
+  view draws from `data/flights.json`: no row for them or for their platforms. Sweeps of the four
+  columns on 2026-11-24 for `Solar Ultraviolet Imaging Telescope`, `ASO-S`, `ASOS`, `Advanced
+  Space-based Solar Observatory`, `Lyman-alpha Solar Telescope`, `LST`, `SDI`, `WST`, `Kuafu`, `Hi-C`,
+  `HiC`, `High-resolution Coronal Imager`, `CLASP` and `Chromospheric Lyman-Alpha` returned nothing;
+  `SUIT` matched one unrelated CNES ion instrument, and `sounding rocket` matched only rows of other
+  campaigns, such as BARREL and RENU2.
 - **Considered and not used:** instruments that appear only as Helioviewer.org link layers on the
   spacecraft cards (SOHO EIT, STEREO EUVI, Solar Orbiter EUI FSI, GONG H-alpha; `js/helioviewer.js`) —
   links to another viewer, not support (rule 3); the Hinode SOT and XRT rows — the code reads EIS only;
@@ -970,12 +1124,26 @@ Not found (evidenced empty)
     - **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/STEREO-B
   - **Observatory Name:** Mars Atmosphere and Volatile EvolutioN
     - **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/MAVEN
+  - **Observatory Name:** Mercury Surface, Space Environment, Geochemistry and Ranging
+    - **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/MESSENGER
+  - **Observatory Name:** Venus Express
+    - **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/VenusExpress
+  - **Observatory Name:** Juno Orbiter
+    - **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/Juno
+  - **Observatory Name:** Rosetta Comet Rendezvous
+    - **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/Rosetta
+  - **Observatory Name:** JUpiter ICy moons Explorer
+    - **Observatory Identifier:** https://spase-metadata.org/CNES/Observatory/CDPP-AMDA/Juice
   - **Observatory Name:** Daniel K Inouye Solar Telescope
     - **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/DKIST
   - **Observatory Name:** Mauna Loa Solar Observatory
     - **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/Ground/MaunaLoaSO
   - **Observatory Name:** Geostationary Operational Environmental Satellite 19
     - **Observatory Identifier:** https://spase-metadata.org/NOAA/Observatory/GOES/19
+  - **Observatory Name:** Geostationary Operational Environmental Satellite 16
+    - **Observatory Identifier:** https://spase-metadata.org/SMWG/Observatory/GOES/16
+  - **Observatory Name:** Geostationary Operational Environmental Satellite 18
+    - **Observatory Identifier:** https://spase-metadata.org/NOAA/Observatory/GOES/18
   - **Observatory Name:** PUNCH-NFI
     - **Observatory Identifier:** https://spase-metadata.org/NASA/Observatory/PUNCH/NFI
   - **Observatory Name:** PUNCH-WFI-1
@@ -988,25 +1156,37 @@ Not found (evidenced empty)
   names no observatory and carries no SPASE identifier, so it is never a value of this field (rule 22);
   the curator directed its removal.
 - **Evidence:**
-  - *The fleet (the first eleven rows).* These rest on the curator's broad reading (Field 31),
-    applied to the spacecraft themselves, and not on any reading of these missions' data: HelioFleet
-    reads no SOHO, ACE, Wind, DSCOVR, MAVEN, BepiColombo, Parker Solar Probe or STEREO data — their
-    positions come from JPL Horizons ephemerides, and the spacecraft cards link to each mission's
-    archive — and for SDO and Solar Orbiter the data it reads are those of their instruments in Field 31
-    (AIA and HMI images; EUI, PHI and SPICE observation metadata), not anything the spacecraft rows
-    themselves rest on. What it
-    does is model and display where each spacecraft is, with per-spacecraft code: the
-    supported-spacecraft list `SPACECRAFT` (`js/catalog.js:5`), with each body's Horizons ID, launch date
-    and mission and archive links in `BODIES`; the near-Earth inset fleet `L1_FLEET` (`:11`); the
-    loss-of-contact dates after which positions are treated as predictions (`lost`, `:107` for STEREO-B
-    and `:116` for MAVEN); and, for each spacecraft, its perihelia (`perihelia`, `js/bodyinfo.js:37`),
-    light time and speed (`liveFacts`, `js/bodyinfo.js:15`), and alignment, quadrature and Parker-spiral
-    connection geometry (`findAlignments`, `js/tools.js:257`). The software targets the platforms (Field
-    32 rule 1), and a scientist working with any of these missions' data who needs the spacecraft's
-    position, viewpoint or magnetic connection on a date could reasonably reach for it. Rows are the
-    per-spacecraft ones the code names; the fleet-level `SMWG/Observatory/STEREO` row and the BepiColombo
-    sub-spacecraft rows (`Mercury Planetary Orbiter`, `Mio`) were not used, because the code tracks
-    STEREO-A and STEREO-B separately and BepiColombo as one body.
+  - *The fleet (the first eleven rows, and the five after them).* These rest on the curator's broad
+    reading (Field 31), applied to the spacecraft themselves, and not on any reading of these missions'
+    data: HelioFleet reads no SOHO, ACE, Wind, DSCOVR, MAVEN, BepiColombo, Parker Solar Probe or STEREO
+    data — their positions come from JPL Horizons ephemerides, and the spacecraft cards link to each
+    mission's archive — and for SDO and Solar Orbiter the data it reads are those of their instruments in
+    Field 31 (AIA and HMI images; EUI, PHI and SPICE observation metadata), not anything the spacecraft
+    rows themselves rest on. What it does is model and display where each spacecraft is, with
+    per-spacecraft code: the supported-spacecraft list `SPACECRAFT` (`js/catalog.js:5`), with each body's
+    Horizons ID, launch date and mission and archive links in `BODIES`; the near-Earth inset fleet
+    `L1_FLEET` (`:11`); the loss-of-contact dates after which positions are treated as predictions
+    (`lost`, `:107` for STEREO-B and `:116` for MAVEN); and, for each spacecraft, its perihelia
+    (`perihelia`, `js/bodyinfo.js:37`), light time and speed (`liveFacts`, `js/bodyinfo.js:15`), and
+    alignment, quadrature and Parker-spiral connection geometry (`findAlignments`, `js/tools.js:257`).
+    The software targets the platforms (Field 32 rule 1), and a scientist working with any of these
+    missions' data who needs the spacecraft's position, viewpoint or magnetic connection on a date could
+    reasonably reach for it. Rows are the per-spacecraft ones the code names; the fleet-level
+    `SMWG/Observatory/STEREO` row and the BepiColombo sub-spacecraft rows (`Mercury Planetary Orbiter`,
+    `Mio`) were not used, because the code tracks STEREO-A and STEREO-B separately and BepiColombo as one
+    body.
+  - *The planetary missions (release 1.2.0, `f668655`).* MESSENGER, Venus Express, Juno, Rosetta, JUICE,
+    Europa Clipper and Psyche join `SPACECRAFT` (`js/catalog.js:5`) with the same per-spacecraft code as
+    the rest: each body's Horizons ID, launch date, mission and archive links and, where it has them,
+    its end and loss-of-contact dates in `BODIES`, its own timeline lane and mission milestones, its
+    ephemeris from `scripts/fetch_ephemeris.py`, and a place in the alignment search, which lists every
+    fleet member (`js/workbench.js:166-168`). The README places them "as in situ observers"
+    (`README.md:16`), and the catalogue's comment describes them as planetary missions with solar-wind and energetic-particle
+    instruments used in multi-spacecraft CME studies; a scientist using their in situ data in such a
+    study needs the spacecraft's position and magnetic connection, which is what HelioFleet gives. As for
+    the rest of the fleet, HelioFleet reads none of these missions' data; their positions come from JPL
+    Horizons. The curator's reading for the fleet applies to them unchanged. Europa Clipper and Psyche
+    have no row (below).
   - *DKIST.* The pipeline reads the DKIST Data Center dataset API for the observatory's instruments and
     the Cryo-NIRSP viewer inventory, and the sky view computes the Sun's daylight window at Haleakalā
     for DKIST (`SITES`, `observingWindow`, `js/skyproj.js:164-184`); it is also the substitution for the
@@ -1015,19 +1195,31 @@ Not found (evidenced empty)
     (`js/skyproj.js:35`, `:164-184`); it is also the substitution for UCoMP. Listed under the curator's
     broad reading.
   - *GOES-19.* Substitution for the CCOR-1 coronagraph (`js/instruments.js`, mission `GOES-19`), which
-    has no instrument row (Field 31 rule 20). Listed under the curator's broad reading.
+    has no instrument row (Field 31 rule 20). Listed under the curator's broad reading. From release
+    1.2.0 it is also the observatory of the GOES-19 SUVI row in Field 31.
+  - *GOES-16 and GOES-18 (release 1.2.0).* Field 31 records the SUVI rows of GOES-16, -18 and -19, so the
+    observatory row of each of those satellites belongs here too (rule 1); each SUVI row's SPASE
+    `ObservatoryID` is the matching row (`spase://SMWG/Observatory/GOES/16`,
+    `spase://NOAA/Observatory/GOES/18`, `spase://NOAA/Observatory/GOES/19`).
   - *PUNCH (the last four rows).* Field 32 rule 1: Field 31 records an instrument row for each unit of
     the PUNCH fleet — NFI and WFI 1–3 — so the per-unit observatory row for each of those units belongs
     here too; each instrument row's SPASE `ObservatoryID` is the matching row here
     (`spase://NASA/Observatory/PUNCH/NFI`, `…/WFI/1`, `…/WFI/2`, `…/WFI/3`). Each unit is supported
     through its modelled field under the curator's broad reading. The methods page notes that
-    "Proba-3, GOES-19 and PUNCH are in Earth orbit and are drawn from Earth's position" (`methods.html`);
+    "Proba-3, GOES-19 and PUNCH are in Earth orbit and are drawn from Earth's position" (`methods.html`
+    at the Source Revision; at `f668655` the list also names PROBA2 and ASO-S);
     that is a drawing simplification, not an exception rule 1 lists, so it does not keep the rows out.
     These rows follow the WFI decision in Field 31: if the WFI rows change, the `PUNCH-WFI-n` rows
     change with them.
 - **Resolution choices (rules 13–15, Field 32 rule 4):** SMWG rows were chosen over the same-entity
   CNES/CDPP-AMDA or CDPP-Archive twins for SOHO, ACE, Wind (`ISTP/Wind`, not CNES `NASA Mission` or
-  `Wind`), DSCOVR, PSP, BepiColombo, STEREO-A, STEREO-B and MAVEN. Solar Orbiter has no SMWG row; the
+  `Wind`), DSCOVR, PSP, BepiColombo, STEREO-A, STEREO-B and MAVEN, and, from release 1.2.0, MESSENGER
+  (the SMWG row carries the mission's full name; its CNES twin adds "Mission"), Venus Express (not the
+  CNES `Venus Express` or `Venus-Express`), Juno (`Juno Orbiter`, not the CNES `Juno`) and Rosetta
+  (`Rosetta Comet Rendezvous`, not the CNES `ROSETTA` or `ESA mission to the comet
+  Churjumov-Gerasimenko`). JUICE has a single row, `CNES/Observatory/CDPP-AMDA/Juice`, used although it
+  is not SMWG (rule 15). GOES-16's row is SMWG and GOES-18's NOAA, each the only row for its
+  satellite. Solar Orbiter has no SMWG row; the
   ESA row is chosen over `CNES/Observatory/CDPP-AMDA/SolO` as the mission agency's authority (rule 15's
   own example). Mauna Loa Solar Observatory has two identically named rows,
   `NSF/Observatory/Ground/MLSO` and `SMWG/Observatory/Ground/MaunaLoaSO`; the K-Cor instrument row's
@@ -1042,14 +1234,23 @@ Not found (evidenced empty)
   Observatory are in the fleet but have no observatory row (sweeps of all four columns for `Aditya`,
   `IMAP`, `Interstellar Mapping`, `SWFO`, `SOLAR-1`, `Space Weather Follow`, `Carruthers` and
   `Geocorona` found only unrelated rows, such as Interball's `IMAP-3` magnetometer and the TWINS
-  neutral-atom imagers); Proba-3 has no row.
+  neutral-atom imagers); Proba-3 has no row. The same sweeps on 2026-11-24 found the same. From release
+  1.2.0, Europa Clipper and Psyche are in the fleet with no row either (sweeps of the four columns for
+  `Europa Clipper`, `Clipper`, `Europa`, `Psyche` and `asteroid` found only other missions' rows, such
+  as Galileo, Dawn and JUICE), and ASO-S, Aditya-L1 and the Hi-C and CLASP rocket flights have no
+  observatory row for the instruments Field 31 omits.
 - **Considered and not used:** the `Interface Region Imaging Spectrograph` and `Hinode` observatory
   rows (`SMWG/Observatory/IRIS`, `SMWG/Observatory/Hinode`) — the software targets the IRIS and EIS
   instruments, recorded in Field 31, not the platforms (rule 7); the fleet-level `PUNCH Mission` row
   (`NASA/Observatory/PUNCH`) — the software supports PUNCH only through the modelled NFI and WFI
   fields, recorded with their per-unit rows; it does not show the PUNCH spacecraft or target the mission
   as a whole (`SPACECRAFT`, `js/catalog.js:5`, has no PUNCH entry), so a fleet-level row is not
-  independently right (rule 1).
+  independently right (rule 1). From release 1.2.0: the `PROBA 2` row (`SMWG/Observatory/PROBA2`), the
+  observatory of the SWAP row in Field 31 — the software supports SWAP through its modelled field and
+  neither shows nor otherwise supports the platform, so the instrument row alone is recorded (Field 31
+  rule 7; rule 1); the fleet-level `Geostationary Operational Environmental Satellites` row
+  (`SMWG/Observatory/GOES`) — the software supports two GOES instruments, not the series, so it is not
+  independently right (rule 1); and the GOES-17 row, whose SUVI the project does not name (Field 31).
 
 ### 33. Logo (OPTIONAL)
 https://raw.githubusercontent.com/sr-dash/heliofleet/de4b623b0b0692354e2ca35166c24c5e68edccda/assets/og-image.png
@@ -1074,7 +1275,8 @@ https://raw.githubusercontent.com/sr-dash/heliofleet/de4b623b0b0692354e2ca35166c
 
 ## Follow-ups for the next refresh
 
-- Look for a release after v1.1.2, and repeat the literature search (Fields 14, 27).
-- Re-run the observatory sweeps for Aditya-L1, IMAP, SOLAR-1, Carruthers and Proba-3 and the instrument
-  sweeps for VELC, CCOR-1, CCOR-2, ASPIICS, UCoMP and the DKIST instruments; rows added upstream would
-  replace the substitutions and omissions above.
+- Look for a release after v1.2.0, and repeat the literature search from 2026-11-24 (Fields 14, 27).
+- Re-run the observatory sweeps for Aditya-L1, IMAP, SOLAR-1, Carruthers, Proba-3, Europa Clipper,
+  Psyche and ASO-S and the instrument sweeps for VELC, CCOR-1, CCOR-2, ASPIICS, UCoMP, the DKIST
+  instruments, SUIT, the ASO-S LST imagers, Hi-C and CLASP; rows added upstream would replace the
+  substitutions and omissions above.
